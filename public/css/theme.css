@@ -12,3 +12,10 @@ body {
 .theme-showcase > p > .btn {
   margin: 5px 0;
 }
+
+#logo{
+	width: 95%;
+	display: block;
+	margin: auto;
+	padding: 0px 0px 10px;
+}
