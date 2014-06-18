@@ -70,11 +70,11 @@ class UserController extends BaseController {
         {
             // If user is logged, redirect to internal 
             // page, change it to '/admin', '/dashboard' or something
-            return Redirect::to('/');
+            return Redirect::to('dashboard');
         }
         else
         {
-            return View::make(Config::get('confide::login_form'));
+            return View::make('login');
         }
     }
 
@@ -85,8 +85,8 @@ class UserController extends BaseController {
     public function do_login()
     {
         $input = array(
-            'email'    => Input::get( 'email' ), // May be the username too
-            'username' => Input::get( 'email' ), // so we have to pass both
+            'email'    => Input::get( 'username' ), // May be the username too
+            'username' => Input::get( 'username' ), // so we have to pass both
             'password' => Input::get( 'password' ),
             'remember' => Input::get( 'remember' ),
         );
@@ -95,13 +95,13 @@ class UserController extends BaseController {
         // with the second parameter as true.
         // logAttempt will check if the 'email' perhaps is the username.
         // Get the value from the config file instead of changing the controller
-        if ( Confide::logAttempt( $input, Config::get('confide::signup_confirm') ) ) 
+        if ( Confide::logAttempt( $input,true) ) 
         {
             // Redirect the user to the URL they were trying to access before
             // caught by the authentication filter IE Redirect::guest('user/login').
             // Otherwise fallback to '/'
             // Fix pull #145
-            return Redirect::intended('/'); // change it to '/admin', '/dashboard' or something
+            return Redirect::intended('dashboard'); // change it to '/admin', '/dashboard' or something
         }
         else
         {
@@ -225,6 +225,12 @@ class UserController extends BaseController {
         Confide::logout();
         
         return Redirect::to('/');
+    }
+
+    public function dashboard()
+    {
+        return View::make('dashboard');
+
     }
 
 }
