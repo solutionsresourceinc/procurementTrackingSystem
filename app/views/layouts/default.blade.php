@@ -7,9 +7,38 @@
 		{{ HTML::style('css/bootstrap-theme.min.css') }}
 		{{ HTML::style('css/theme.css') }}
 		{{ HTML::style('css/signin.css') }}
+<<<<<<< HEAD
 		{{ HTML::style('css/custom.css') }}
+=======
+		{{ HTML::script('http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js') }}
+>>>>>>> d316789d5f0c14ab6477fa6c727abc9f8a17c484
 		{{ HTML::script('js/bootstrap.min.js') }}
-		@yield('header')
+
+
+		{{ HTML::style('colvix/css/jquery.dataTables.css')}}
+		{{ HTML::style('colvix/css/dataTables.colVis.css')}}
+		{{ HTML::style('colvix/css/shCore.css')}}
+		
+
+		{{ HTML::script('colvix/js/jquery.js')}}
+		{{ HTML::script('colvix/js/jquery.dataTables.js')}}
+		{{ HTML::script('colvix/js/dataTables.colVis.js')}}
+		{{ HTML::script('colvix/js/shCore.js')}}
+		{{ HTML::script('colvix/js/demo.js')}}
+		{{ HTML::script('js/bootstrap-dropdown.js') }}
+
+		<script type="text/javascript" language="javascript" class="init">
+			$(document).ready(function() {
+				$('#table_id').DataTable( {
+					dom: 'C<"clear">lfrtip'
+				} );
+			} );
+		</script>
+
+		<style>
+			body { background-image:url('../bg.png'); }
+		}
+		</style>
 	</head>
 	<body role="document">
 		<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">

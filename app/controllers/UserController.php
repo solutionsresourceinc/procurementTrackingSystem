@@ -31,70 +31,185 @@ class UserController extends BaseController {
 
         $user->username = Input::get( 'username' );
         $user->email = Input::get( 'email' );
+
         $user->password = Input::get( 'password' );
         $user->firstname = Input::get( 'firstname' );
-        $user->lastname = Input::get( 'firstname' );
+        $user->lastname = Input::get( 'lastname' );
         // The password confirmation will be removed from model
         // before saving. This field will be used in Ardent's
         // auto validation.
         $user->password_confirmation = Input::get( 'password_confirmation' );
-
-
-
-    
-
-
         // Save if valid. Password field will be hashed before save
-        $user->save();
-
-        if ( $user->id )
-        {
-                        $notice = "User created successfullly! ";         
-            // Redirect with success message, You may replace "Lang::get(..." for your custom message.
-                        return Redirect::action('viewuser')
-                            ->with( 'notice', $notice );
-        }
-        else
-        {
 
 
 
-
-//Validations
-     
-   
+$errorcheck=0;
+//Validations     
         if(ctype_alnum($user->username)&&(strlen($user->username)>=6))
         {}
-        else
-            Session::put('username_error', 'Username is required to be in alphanumeric form.');
+        else{
+            $errorcheck=1;
+            Session::put('username_error', 'Username cannot contain special characters and must have a minimum of 6 characters.');}
 
+        
         if(ctype_alpha(str_replace(' ','',$user->firstname)))
         {}
-        else
-            Session::put('firstname_error', 'First Name cannot containt special characters.');
+        else{
+            $errorcheck=1;
+            Session::put('firstname_error', 'First Name cannot containt special characters.');}
 
         if(ctype_alpha(str_replace(' ','',$user->lastname)))
           {}
-        else
-            Session::put('lastname_error', 'Last Name cannot containt special characters.');
+        else{
+            $errorcheck=1;
+            Session::put('lastname_error', 'Last Name cannot containt special characters.');}
 
         if(filter_var($user->email, FILTER_VALIDATE_EMAIL))
           {}
-        else
-            Session::put('email_error', 'Invalid Email');
+        else{
+            $errorcheck=1;
+            Session::put('email_error', 'Invalid email.');}
 
         if(ctype_alnum($user->password))
         {
             if ($user->password!=$user->password_confirmation){
+                $errorcheck=1;
             Session::put('password_error', 'Password did not match with confirm password.');
             }
         }
+        else{
+            $errorcheck=1;
+            Session::put('password_error', 'Password is required to be in alphanumeric form and must have a minimum of 6 characters.');
+        }
+                       
+
+        if ( $errorcheck==0 )
+        {
+
+    $user->save();
+    $username=$user->username;
+    $new_role = new Role;
+
+                $user->utype = Input::get('role');
+
+                if($user->utype == 1) 
+                    $new_role = Role::where('name','=','Administrator')->first();
+                elseif ($user->utype == 2) 
+                    $new_role = Role::where('name','=','Procurement Personnel')->first();
+                else
+                    $new_role = Role::where('name','=','Requisitioner')->first();
+            
+            $get_user = new User;
+            $get_user = User::where('username','=',$username)->first();   
+            $get_user->attachRole( $new_role );
+
+                  
+                        $notice = "User created successfullly! ";         
+            // Redirect with success message, You may replace "Lang::get(..." for your custom message.
+                        return Redirect::action('user/view')
+                            ->with( 'notice', $notice );
+        }
         else
-            Session::put('password_error', 'Password is required to be in alphanumeric form.');
+        {
+Session::put('msg', 'Failed to create user.');
+      
+     
                         return Redirect::action('UserController@create')
                             ->withInput(Input::except('password'));
         }
     }
+
+
+
+public function edit()
+    {
+        $id=Input::get( 'id' );
+        $user = User::find($id);
+   
+        $user->email = Input::get( 'email' );
+           $password = Input::get( 'password' );
+        $user->password = Hash::make($password);
+        $user->firstname = Input::get( 'firstname' );
+        $user->lastname = Input::get( 'lastname' );
+        // The password confirmation will be removed from model
+        // before saving. This field will be used in Ardent's
+        // auto validation.
+
+
+        $user->password_confirmation = Input::get( 'password_confirmation' );
+        // Save if valid. Password field will be hashed before save
+
+
+
+$errorcheck=0;
+
+//Validations     
+        
+        if(ctype_alpha(str_replace(' ','',$user->firstname)))
+        {}
+        else{
+            $errorcheck=1;
+            Session::put('firstname_error', 'First Name cannot containt special characters.');}
+
+        if(ctype_alpha(str_replace(' ','',$user->lastname)))
+          {}
+        else{
+            $errorcheck=1;
+            Session::put('lastname_error', 'Last Name cannot containt special characters.');}
+
+        if(filter_var($user->email, FILTER_VALIDATE_EMAIL))
+          {}
+        else{
+            $errorcheck=1;
+            Session::put('email_error', 'Invalid email.');}
+
+        if(ctype_alnum($password))
+        {
+            if ($password!=$user->password_confirmation){
+                $errorcheck=1;
+            Session::put('password_error', 'Password did not match with confirm password.');
+            }
+        }
+        else{
+            $errorcheck=1;
+            Session::put('password_error', 'Password is required to be in alphanumeric form and must have a minimum of 6 characters.');
+        }
+                       
+
+if($errorcheck==1)
+                      {
+Session::put('msg', 'Failed to edit user.');
+                       return Redirect::back();}
+        
+     else
+        {
+                  
+$roles=input::get('role');
+if($roles=="1")
+    $role=3;
+elseif($roles=="2")
+    $role=2;
+else
+    $role=1;
+DB::table('assigned_roles')
+            ->where('user_id', $id)
+            ->update(array( 'role_id' => $role));
+         
+DB::table('users')
+            ->where('id', $id)
+            ->update(array( 'email' => $user->email, 'password' => $user->password, 'firstname' => $user->firstname, 'lastname' => $user->lastname));
+                        $notice = "successfully edited user. ";         
+            // Redirect with success message, You may replace "Lang::get(..." for your custom message.
+                        return Redirect::action('viewuser')
+                            ->with( 'notice', $notice );
+        }
+       
+
+
+}
+
+
+
 
     /**
      * Displays the login form
@@ -114,6 +229,20 @@ class UserController extends BaseController {
         }
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * Attempt to do login
      *
@@ -121,23 +250,39 @@ class UserController extends BaseController {
     public function do_login()
     {
         $input = array(
-            'email'    => Input::get( 'username' ), // May be the username too
-            'username' => Input::get( 'username' ), // so we have to pass both
+            'email'    => Input::get( 'username' ), 
+            'username' => Input::get( 'username' ), 
             'password' => Input::get( 'password' ),
             'remember' => Input::get( 'remember' ),
         );
 
-        // If you wish to only allow login from confirmed users, call logAttempt
-        // with the second parameter as true.
-        // logAttempt will check if the 'email' perhaps is the username.
-        // Get the value from the config file instead of changing the controller
-        if ( Confide::logAttempt( $input,true) ) 
+        $username = Input::get( 'username' ); 
+
+        // Authenticate User
+        if ( Confide::logAttempt($input,true) ) 
         {
-            // Redirect the user to the URL they were trying to access before
-            // caught by the authentication filter IE Redirect::guest('user/login').
-            // Otherwise fallback to '/'
-            // Fix pull #145
-            return Redirect::intended('dashboard'); // change it to '/admin', '/dashboard' or something
+
+            $fetched_user = User::whereUsername($username)->get();
+
+            // get username from fetched data on DB
+            foreach ($fetched_user as $key ) 
+            {
+               $fetched_username = $key->username;
+            }
+
+            // compare input username on fetched username
+            $result = strcmp($fetched_username,$username);
+            
+            if($result == 0)
+            {
+                return Redirect::intended('dashboard'); 
+            }
+
+            Confide::logout();
+
+            $err_msg = Lang::get('confide::confide.alerts.wrong_credentials');
+            return Redirect::to('login')->withInput(Input::except('password'))->with( 'error', $err_msg );
+
         }
         else
         {
@@ -160,7 +305,7 @@ class UserController extends BaseController {
                         return Redirect::action('UserController@login')
                             ->withInput(Input::except('password'))
                 ->with( 'error', $err_msg );
-        }
+        } 
     }
 
     /**
@@ -266,7 +411,28 @@ class UserController extends BaseController {
     public function dashboard()
     {
         return View::make('dashboard');
-
+    }
+    
+    public function viewUser()
+    {
+        return View::make('viewuser');
     }
 
+    public function getRole()
+    {
+        
+        $admin = new Role();
+        $admin->name = 'Requisitioner';
+        $admin->save();
+     
+        $member = new Role();
+        $member->name = 'Procurement Personnel';
+        $member->save();
+
+        $member = new Role();
+        $member->name = 'Administrator';
+        $member->save();
+
+        return Redirect::to('login'); 
+    }
 }
