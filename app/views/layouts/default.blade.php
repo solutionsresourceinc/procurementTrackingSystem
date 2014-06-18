@@ -23,6 +23,11 @@
 			        <a class="navbar-brand" href="#">PTS</a>
 	        	</div>
 	        	<div class="navbar-collapse collapse">
+			        <ul class="nav navbar-nav navbar-right">
+			        	<li><a href="{{ URL::to('/logout') }}">Logout</a></li>
+			        </ul>
+	        	</div>
+	        	<div class="navbar-collapse collapse">
           			<ul class="nav navbar-nav">
           				@yield('menu')
           			</ul>

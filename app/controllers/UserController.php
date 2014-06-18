@@ -18,7 +18,7 @@ class UserController extends BaseController {
      */
     public function create()
     {
-        return View::make(Config::get('confide::signup_form'));
+        return View::make("user_create");
     }
 
     /**
@@ -32,31 +32,67 @@ class UserController extends BaseController {
         $user->username = Input::get( 'username' );
         $user->email = Input::get( 'email' );
         $user->password = Input::get( 'password' );
-
+        $user->firstname = Input::get( 'firstname' );
+        $user->lastname = Input::get( 'firstname' );
         // The password confirmation will be removed from model
         // before saving. This field will be used in Ardent's
         // auto validation.
         $user->password_confirmation = Input::get( 'password_confirmation' );
+
+
+
+    
+
 
         // Save if valid. Password field will be hashed before save
         $user->save();
 
         if ( $user->id )
         {
-                        $notice = Lang::get('confide::confide.alerts.account_created') . ' ' . Lang::get('confide::confide.alerts.instructions_sent'); 
-                    
+                        $notice = "User created successfullly! ";         
             // Redirect with success message, You may replace "Lang::get(..." for your custom message.
-                        return Redirect::action('UserController@login')
+                        return Redirect::action('viewuser')
                             ->with( 'notice', $notice );
         }
         else
         {
-            // Get validation errors (see Ardent package)
-            $error = $user->errors()->all(':message');
 
+
+
+
+//Validations
+     
+   
+        if(ctype_alnum($user->username)&&(strlen($user->username)>=6))
+        {}
+        else
+            Session::put('username_error', 'Username is required to be in alphanumeric form.');
+
+        if(ctype_alpha(str_replace(' ','',$user->firstname)))
+        {}
+        else
+            Session::put('firstname_error', 'First Name cannot containt special characters.');
+
+        if(ctype_alpha(str_replace(' ','',$user->lastname)))
+          {}
+        else
+            Session::put('lastname_error', 'Last Name cannot containt special characters.');
+
+        if(filter_var($user->email, FILTER_VALIDATE_EMAIL))
+          {}
+        else
+            Session::put('email_error', 'Invalid Email');
+
+        if(ctype_alnum($user->password))
+        {
+            if ($user->password!=$user->password_confirmation){
+            Session::put('password_error', 'Password did not match with confirm password.');
+            }
+        }
+        else
+            Session::put('password_error', 'Password is required to be in alphanumeric form.');
                         return Redirect::action('UserController@create')
-                            ->withInput(Input::except('password'))
-                ->with( 'error', $error );
+                            ->withInput(Input::except('password'));
         }
     }
 
@@ -70,11 +106,11 @@ class UserController extends BaseController {
         {
             // If user is logged, redirect to internal 
             // page, change it to '/admin', '/dashboard' or something
-            return Redirect::to('/');
+            return Redirect::to('dashboard');
         }
         else
         {
-            return View::make(Config::get('confide::login_form'));
+            return View::make('login');
         }
     }
 
@@ -85,8 +121,8 @@ class UserController extends BaseController {
     public function do_login()
     {
         $input = array(
-            'email'    => Input::get( 'email' ), // May be the username too
-            'username' => Input::get( 'email' ), // so we have to pass both
+            'email'    => Input::get( 'username' ), // May be the username too
+            'username' => Input::get( 'username' ), // so we have to pass both
             'password' => Input::get( 'password' ),
             'remember' => Input::get( 'remember' ),
         );
@@ -95,13 +131,13 @@ class UserController extends BaseController {
         // with the second parameter as true.
         // logAttempt will check if the 'email' perhaps is the username.
         // Get the value from the config file instead of changing the controller
-        if ( Confide::logAttempt( $input, Config::get('confide::signup_confirm') ) ) 
+        if ( Confide::logAttempt( $input,true) ) 
         {
             // Redirect the user to the URL they were trying to access before
             // caught by the authentication filter IE Redirect::guest('user/login').
             // Otherwise fallback to '/'
             // Fix pull #145
-            return Redirect::intended('/'); // change it to '/admin', '/dashboard' or something
+            return Redirect::intended('dashboard'); // change it to '/admin', '/dashboard' or something
         }
         else
         {
@@ -225,6 +261,12 @@ class UserController extends BaseController {
         Confide::logout();
         
         return Redirect::to('/');
+    }
+
+    public function dashboard()
+    {
+        return View::make('dashboard');
+
     }
 
 }
