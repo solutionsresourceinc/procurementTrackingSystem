@@ -30,4 +30,8 @@ Route::get('/', function()
 });
 
 Route::get('/dashboard', 'UserController@dashboard');
+
 Route::get('create_roles','UserController@getRole');
+
+Route::patch('user/edit/{id}',['as'=>'user.update', 'uses' => 'UserController@edit'])->before('auth');
+
