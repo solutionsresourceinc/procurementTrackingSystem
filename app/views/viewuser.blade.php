@@ -52,23 +52,19 @@
 	        <th>Lastname</th>
 	        <th>Role</th>
 	        <th>Office</th>
-            @if(Entrust::can('can_update') || Entrust::can('can_delete'))
-	            <th>Action</th>
-            @endif
+	        <?php
+	        	$adm = Assigned::where('user_id', Auth::User()->id)->first();
+				$users= new User; $users = DB::table('users')->get();
+				if($adm->role_id == 3) {
+			?>
+				<th>Action</th>
+			<?php } ?>
 	    </tr>
 	</thead>
 
 	<tbody>
-
-		<?php
-			$users= new User; $users = DB::table('users')->get();
-		?>
-
 		@foreach ($users as $user)
-		<?php
-
-			$assigned = Assigned::where('user_id', $user->id)->first();
-		?>
+		<?php $assigned = Assigned::where('user_id', $user->id)->first(); ?>
 
 	        <tr>
 	        	@if($user->confirmed == 0)
@@ -76,40 +72,39 @@
 			        <td><strike> {{ $user->firstname; }} </strike></td>
 			        <td><strike> {{ $user->lastname; }} </strike></td>
 			        
-			        @if($assigned->role_id == 1)
+			        @if($assigned->role_id == 3)
 						<td><strike>Administrator</strike></td>
+					@elseif ($assigned->role_id == 2)
+						<td><strike>Procurement Personnel</strike></td>
 					@else
-						<td><strike>Member</strike></td>
+						<td><strike>Requisitioner</strike></td>
 					@endif
+
 	       		@else
 					<td> {{ $user->username; }}</td>
 			        <td> {{ $user->firstname; }}</td>
 			        <td> {{ $user->lastname; }}</td>
 
-			        @if($assigned->role_id == 1)
-						<td>Administrator</td>
+			        @if($assigned->role_id == 3)
+						<td>Administrator</strike></td>
+					@elseif ($assigned->role_id == 2)
+						<td>Procurement Personnel</td>
 					@else
-						<td>Member</td>
+						<td>Requisitioner</td>
 					@endif
+
 			    @endif
 				
 				<td>OFFICE</td>
-
-				@if(Entrust::can('can_update') || Entrust::can('can_delete'))
-
-             	@endif
-
-	            @if(Entrust::can('can_update') ||Entrust::can('can_delete') )
+				<?php if($adm->role_id == 3) {?>
 		        <td>
 		        	<div class='btn-group'>
 						<button class='btn dropdown-toggle btn-primary' data-toggle='dropdown'>Action <span class='caret'></span></button>
 						
 						<ul class='dropdown-menu'>
-		              		@if(Entrust::can('can_update'))
+		              		<?php if($adm->role_id == 3) {?>
 								<li><a class='iframe btn' href='edit/{{$user->id}}'>Edit</a></li>
-		            		@endif
-
-		            		@if(Entrust::can('can_delete'))
+							<?php } ?>
 		            			@if($user->confirmed == 1)
 									<li>
 										<form method="POST" action="delete"/ id="myForm_{{ $user->id }}" name="myForm">
@@ -128,12 +123,11 @@
 											</center>
 										</form>
 									</li>
-								@endif
 							@endif
 						</ul>
 					</div>
 	       		</td>
-	        	@endif
+	       		<?php } ?>
 			</tr>
         @endforeach	    
 	</tbody>
