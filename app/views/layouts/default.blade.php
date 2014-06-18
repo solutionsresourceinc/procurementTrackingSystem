@@ -32,6 +32,9 @@
 	    <div class="container theme-showcase" role="main">
 			@yield('content')
 		</div>
+		<script>
+			@yield('footer')
+		</script>
 	</body>
 </body>
 </html>
