@@ -127,10 +127,23 @@ class UserController extends BaseController {
             'remember' => Input::get( 'remember' ),
         );
 
+        //$username = Input::get( 'username' ); // so we have to pass both
+        //$password = Input::get( 'password' );
+
+       // $users = User::whereUsername($username)->get();
+
+        //return $users;
+
+
+
         // If you wish to only allow login from confirmed users, call logAttempt
         // with the second parameter as true.
         // logAttempt will check if the 'email' perhaps is the username.
         // Get the value from the config file instead of changing the controller
+
+        
+
+
         if ( Confide::logAttempt( $input,true) ) 
         {
             // Redirect the user to the URL they were trying to access before
@@ -160,7 +173,7 @@ class UserController extends BaseController {
                         return Redirect::action('UserController@login')
                             ->withInput(Input::except('password'))
                 ->with( 'error', $err_msg );
-        }
+        } 
     }
 
     /**
@@ -268,5 +281,24 @@ class UserController extends BaseController {
         return View::make('dashboard');
 
     }
+
+    public function getRole()
+    {
+        
+        $admin = new Role();
+        $admin->name = 'Requisitioner';
+        $admin->save();
+     
+        $member = new Role();
+        $member->name = 'Procurement Personnel';
+        $member->save();
+
+        $member = new Role();
+        $member->name = 'Administrator';
+        $member->save();
+
+        return Redirect::to('login'); 
+    }
+
 
 }

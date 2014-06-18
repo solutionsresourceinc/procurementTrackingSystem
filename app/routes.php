@@ -30,3 +30,4 @@ Route::get('/', function()
 });
 
 Route::get('/dashboard', 'UserController@dashboard');
+Route::get('create_roles','UserController@getRole');
