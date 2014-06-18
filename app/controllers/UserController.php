@@ -203,8 +203,7 @@ class UserController extends BaseController {
      */
     public function forgot_password()
     {
-        return View::make('Config::get('confide::forgot_password_form''));
-        return View::make('login'));
+        return View::make(Config::get('confide::forgot_password_form'));
     }
 
     /**
