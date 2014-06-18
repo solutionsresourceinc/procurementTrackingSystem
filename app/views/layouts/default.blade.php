@@ -8,6 +8,7 @@
 		{{ HTML::style('css/theme.css') }}
 		{{ HTML::style('css/signin.css') }}
 		{{ HTML::script('js/bootstrap.min.js') }}
+		@yield('header')
 	</head>
 	<body role="document">
 		<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
