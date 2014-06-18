@@ -33,4 +33,7 @@ Route::get('/dashboard', 'UserController@dashboard');
 
 Route::patch('user/edit/{id}',['as'=>'user.update', 'uses' => 'UserController@edit'])->before('auth');
 
-Route::resource('offices', 'OfficesController@index');
+
+//Office routes
+Route::resource('offices', 'OfficeController');
+Route::get('/offices', 'OfficeController@index');
