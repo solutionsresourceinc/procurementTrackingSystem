@@ -376,7 +376,11 @@ DB::table('users')
     public function dashboard()
     {
         return View::make('dashboard');
-
+    }
+    
+    public function viewUser()
+    {
+        return View::make('viewuser');
     }
 
     public function getRole()
