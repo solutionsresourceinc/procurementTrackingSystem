@@ -46,6 +46,7 @@ Route::get('create_roles','UserController@getRole');
 
 Route::patch('user/edit/{id}',['as'=>'user.update', 'uses' => 'UserController@edit'])->before('auth');
 
+
 Route::post( 'user/delete', function()
 {
 	$errors="Account Deactivated.";

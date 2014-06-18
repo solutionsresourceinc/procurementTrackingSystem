@@ -22,6 +22,6 @@ class User extends ConfideUser implements UserInterface, RemindableInterface {
 	 *
 	 * @var array
 	 */
-	protected $hidden = array('password', 'remember_token');
+	//protected $hidden = array('password', 'remember_token');
 
 }
