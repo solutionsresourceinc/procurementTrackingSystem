@@ -2,9 +2,6 @@
 
 @section('content')
 
-
-
-
 <div>
     <h2>Create User</h2>
 </div>    
@@ -12,6 +9,12 @@
 <form method="POST" action="{{{ (Confide::checkAction('UserController@store')) ?: URL::to('user')  }}}" accept-charset="UTF-8" class = 'form-signin'>
     <input type="hidden" name="_token" value="{{{ Session::getToken() }}}">
     <fieldset>
+ 
+    @if ( Session::get('msg') )
+    <div class="alert alert-error alert-danger">
+          {{ Session::get('msg'); }} 
+          </div>
+    @endif
 
         <div class="form-group">
             <label for="username">{{{ Lang::get('confide::confide.username') }}}</label>
@@ -19,7 +22,7 @@
 
             @if ( Session::get('username_error') )
 
-                   <h6> {{ Session::get('username_error'); }}</h6>
+                     <small> {{ Session::get('username_error'); }}   </small>
       
     
             @endif
@@ -30,7 +33,7 @@
             <label for="firstname">First Name</label>
             <input class="form-control"  type="test" name="firstname" id="firstname" value="{{{ Input::old('firstname') }}}" required>
             @if ( Session::get('firstname_error') )
-          <h6> {{ Session::get('firstname_error'); }}</h6>
+             <small> {{ Session::get('firstname_error'); }}   </small>
       
            
             @endif
@@ -39,8 +42,8 @@
             <label for="lastname">Last Name</label>
             <input class="form-control" type="text" name="lastname" id="lastname" value="{{{ Input::old('lastname') }}}" required>
             @if ( Session::get('lastname_error') )
-          <h6>{{ Session::get('lastname_error'); }}
-            </h6>
+             <small>{{ Session::get('lastname_error'); }}
+           </small>
       
             @endif
         </div>
@@ -49,7 +52,7 @@
             <label for="email">{{{ Lang::get('confide::confide.e_mail') }}}</label>
             <input class="form-control"  type="text" name="email" id="email" value="{{{ Input::old('email') }}}" required>
             @if ( Session::get('email_error') )
-           <h6> {{ Session::get('email_error'); }} </h6>
+              <small>{{ Session::get('email_error'); }}    </small>
       
   
             @endif
@@ -58,7 +61,7 @@
             <label for="password">{{{ Lang::get('confide::confide.password') }}}</label>
             <input class="form-control" type="password" name="password" id="password" required>
              @if ( Session::get('password_error') )
-        <h6>{{ Session::get('password_error'); }} </h6>
+           <small>{{ Session::get('password_error'); }}   </small>
             @endif
         </div>
         <div class="form-group">
@@ -96,6 +99,7 @@ Session::forget('firstname_error');
 Session::forget('lastname_error');
 Session::forget('password_error');
 Session::forget('email_error');
+Session::forget('msg');
 ?>
 
 
