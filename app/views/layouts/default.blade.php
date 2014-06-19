@@ -7,8 +7,19 @@
 		{{ HTML::style('css/bootstrap-theme.min.css') }}
 		{{ HTML::style('css/theme.css') }}
 		{{ HTML::style('css/signin.css') }}
+
 		{{ HTML::style('css/custom.css') }}
+
+		{{ HTML::script('http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js') }}
+
 		{{ HTML::script('js/bootstrap.min.js') }}
+	
+<!-- Agile Image Uploader-->
+	{{ HTML::script('jquery-1.4.min.js')}}
+	{{ HTML::script('jquery.flash.min.js')}}
+	{{ HTML::script('agile-uploader-3.0.js')}}
+{{ HTML::style('unrelated.css') }}
+{{ HTML::style('agile-uploader.css') }}
 
 
 		{{ HTML::style('colvix/css/jquery.dataTables.css')}}

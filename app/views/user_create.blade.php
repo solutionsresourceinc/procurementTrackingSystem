@@ -37,6 +37,7 @@
               @endif
           </div>
              <div class="form-group">
+
               <label for="lastname">Last Name</label>
               <input class="form-control" type="text" name="lastname" id="lastname" value="{{{ Input::old('lastname') }}}" required>
               @if ( Session::get('lastname_error') )
@@ -77,12 +78,25 @@
              
           </div>
                <div class="form-group">
-              <label for="role">Office</label>
-              <select class="form-control" name="office">
-                  <option value="Office">Office</option>
-                  <option value="Office1">Office1</option>
-              </select>
-          </div>
+            
+            <label for="role">Office</label>
+            <select class="form-control" name="office">
+
+                <option value=0 >none</option>
+                <?php 
+$office= new Office; $office = DB::table('offices')->get();
+
+?>
+@foreach ($office as $offices)
+<option value= {{ $offices->id }}> {{ $offices->officeName }}</option>
+
+
+@endforeach
+         
+            </select>
+        </div>
+
+       
 
           <br/>
           <div class="form-actions form-group">

@@ -39,6 +39,7 @@ $checkusername = User::where('username', $user->username)->first();
         $user->password = Input::get( 'password' );
         $user->firstname = Input::get( 'firstname' );
         $user->lastname = Input::get( 'lastname' );
+         $user->office_id = Input::get( 'office' );
         // The password confirmation will be removed from model
         // before saving. This field will be used in Ardent's
         // auto validation.
@@ -149,6 +150,8 @@ public function edit()
         $user->password = Hash::make($password);
         $user->firstname = Input::get( 'firstname' );
         $user->lastname = Input::get( 'lastname' );
+
+        $user->office_id= Input::get('office');
         // The password confirmation will be removed from model
         // before saving. This field will be used in Ardent's
         // auto validation.
@@ -215,10 +218,10 @@ DB::table('assigned_roles')
          
 DB::table('users')
             ->where('id', $id)
-            ->update(array( 'email' => $user->email, 'password' => $user->password, 'firstname' => $user->firstname, 'lastname' => $user->lastname));
+            ->update(array( 'email' => $user->email, 'password' => $user->password, 'office_id' => $user->office_id, 'firstname' => $user->firstname, 'lastname' => $user->lastname));
                         $notice = "successfully edited user. ";         
             // Redirect with success message, You may replace "Lang::get(..." for your custom message.
-                        return Redirect::action('viewuser')
+                        return Redirect::action('user/view')
                             ->with( 'notice', $notice );
         }
        

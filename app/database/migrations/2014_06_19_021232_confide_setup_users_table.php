@@ -23,6 +23,7 @@ class ConfideSetupUsersTable extends Migration {
             $table->string('confirmation_code');
             $table->boolean('confirmed')->default(true);
             $table->timestamps();
+            $table->integer('office_id');
         });
 
         // Creates password reminders table
