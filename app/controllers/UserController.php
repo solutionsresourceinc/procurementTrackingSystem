@@ -68,20 +68,20 @@ if ($checkusername!=0){
         {}
         else{
             $errorcheck=1;
-            Session::put('username_error', 'Username cannot contain special characters and must have a minimum of 6 characters.');}
+            Session::put('username_error', 'Invalid username.');}
 
         
         if(ctype_alpha(str_replace(' ','',$user->firstname)))
         {}
         else{
             $errorcheck=1;
-            Session::put('firstname_error', 'First Name cannot containt special characters.');}
+            Session::put('firstname_error', 'Invalid first name.');}
 
         if(ctype_alpha(str_replace(' ','',$user->lastname)))
           {}
         else{
             $errorcheck=1;
-            Session::put('lastname_error', 'Last Name cannot containt special characters.');}
+            Session::put('lastname_error', 'Invalid last name.');}
 
         if(filter_var($user->email, FILTER_VALIDATE_EMAIL))
           {}
@@ -98,7 +98,7 @@ if ($checkusername!=0){
         }
         else{
             $errorcheck=1;
-            Session::put('password_error', 'Password is required to be in alphanumeric form and must have a minimum of 6 characters.');
+            Session::put('password_error', 'Invalid password.');
         }
                        
 
