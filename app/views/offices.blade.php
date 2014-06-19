@@ -1,4 +1,4 @@
-<@extends('layouts.default')
+@extends('layouts.default')
 
 @section('content')
     <h1 class="page-header">Offices</h1>
@@ -44,13 +44,9 @@
 			    		</tr>
 			    	@endforeach
 			    @else
-					<tr><td colspan="2">There are no users.</td></tr>
+					<tr><td colspan="2"><span class="error-view">There are no offices.</span></td></tr>
 				@endif
 	    	</tbody>
 	    </table>
 	</div>
-@stop
-
-@section('footer')
-	
 @stop

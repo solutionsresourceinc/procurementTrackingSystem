@@ -37,7 +37,7 @@ Route::get('/dashboard', 'UserController@dashboard');
 
 Route::get( 'user/edit/{id}', function($id)
 {
-	return View::make('user_edit')->with('id',$id);
+	return View::make('useredit')->with('id',$id);
 });
 
 Route::post('user/edit/{id}',[ 'uses' => 'UserController@edit']);

@@ -2,3 +2,52 @@
 	font-size: 15px;
 	margin-top: 8px;
 }
+
+.error-view{
+	display: block;
+	text-align: center;
+	font-style: italic;
+}
+
+.form-create{
+	background: white;
+	padding: 45px 50px;
+	width: 85%;
+	-webkit-box-shadow: 0 1px 3px rgba(0,0,0,.13);
+	box-shadow: 0 1px 3px rgba(0,0,0,.13);
+	margin: auto;
+}
+
+.bs-docs-footer {
+	padding-top: 40px;
+	padding-bottom: 30px;
+	margin-top: 70px;
+	color: #777;
+	text-align: center;
+	border-top: 1px solid #e5e5e5;
+	background: #ECFDE6;
+}
+
+#logout{
+	font-family: Arial;
+	margin-left: 7px;
+}
+
+.glyphicon-log-out:before{
+	font-size: 13px;
+	position: relative;
+	top: 1px;
+}
+
+#copyright-section{
+	font-size: 13px;
+}
+
+a{
+	color: #63962A;
+}
+
+a:hover, a:focus{
+	color: #89BA53;
+	text-decoration: none;
+}
