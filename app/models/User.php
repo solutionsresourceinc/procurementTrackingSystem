@@ -9,7 +9,7 @@ use Zizaco\Entrust\HasRole;
 class User extends ConfideUser implements UserInterface, RemindableInterface {
 
 	use UserTrait, RemindableTrait;
-use HasRole;
+	use HasRole;
 	/**
 	 * The database table used by the model.
 	 *
@@ -22,6 +22,6 @@ use HasRole;
 	 *
 	 * @var array
 	 */
-	protected $hidden = array('password', 'remember_token');
+	//protected $hidden = array('password', 'remember_token');
 
 }

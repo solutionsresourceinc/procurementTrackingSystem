@@ -1,3 +1,4 @@
+
 <?php
 
 /*
@@ -12,6 +13,9 @@
 */
 
 Route::get('/', 'AuthController@showLogin');
+
+Route::get('user/view',                    'UserController@viewuser');
+
 // Confide routes
 Route::get( 'user/create',                 'UserController@create');
 Route::post('user',                        'UserController@store');
@@ -31,15 +35,10 @@ Route::get('/', function()
 
 Route::get('/dashboard', 'UserController@dashboard');
 
-
-
-Route::get( 'user/edit/{id}',                 function($id){
-
-
-
+Route::get( 'user/edit/{id}', function($id)
+{
 	return View::make('user_edit')->with('id',$id);
-
-	});
+});
 
 Route::post('user/edit/{id}',['as'=>'user.update', 'uses' => 'UserController@edit']);
 
@@ -47,4 +46,26 @@ Route::get('create_roles','UserController@getRole');
 
 Route::patch('user/edit/{id}',['as'=>'user.update', 'uses' => 'UserController@edit'])->before('auth');
 
+
+Route::post( 'user/delete', function()
+{
+	$errors="Account Deactivated.";
+	$id=Input::get('hide');
+
+	DB::table('users')->where('id', $id)->update(array('confirmed' => 0));
+	
+	Session::flash('message','Successfully deleted the user.');
+	return Redirect::to('user/view');
+});
+
+Route::post( 'user/activate', function()
+{
+	$errors="Account Activated.";
+	$id=Input::get('hide');
+
+	DB::table('users')->where('id', $id)->update(array('confirmed' => 1));
+	
+	//Session::flash('message','Successfully activated the user.');
+	return Redirect::to('user/view');
+});
 

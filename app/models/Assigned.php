@@ -20,7 +20,4 @@ class Assigned extends Eloquent{
 	 * @var array
 	 */
 	protected $hidden = array('password', 'remember_token');
-
-
-
 }
