@@ -7,11 +7,7 @@
 		{{ HTML::style('css/bootstrap-theme.min.css') }}
 		{{ HTML::style('css/theme.css') }}
 		{{ HTML::style('css/signin.css') }}
-<<<<<<< HEAD
 		{{ HTML::style('css/custom.css') }}
-=======
-		{{ HTML::script('http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js') }}
->>>>>>> d316789d5f0c14ab6477fa6c727abc9f8a17c484
 		{{ HTML::script('js/bootstrap.min.js') }}
 
 
@@ -37,7 +33,6 @@
 
 		<style>
 			body { background-image:url('../bg.png'); }
-		}
 		</style>
 	</head>
 	<body role="document">
@@ -54,10 +49,12 @@
 	        	</div>
 	        	<div class="navbar-collapse collapse">
           			<ul class="nav navbar-nav">
+          				<li><a>Puchase Requests</a></li>
+          				<li><a>Users</a></li>
           				<li>{{ link_to('/offices', 'Offices') }}</li>
           			</ul>
           			<ul class="nav navbar-nav navbar-right">
-			        	<li>{{ link_to('/logout', 'Logout') }}<!--a href="{{ URL::to('/logout') }}">Logout</a--></li>
+			        	<li><a href="{{ URL::to('/logout') }}" class="glyphicon glyphicon-log-out" title="Logout"><span id="logout">Logout</span></a></li>
 			        </ul>
           		</div>
 	        </div>
@@ -68,6 +65,10 @@
 		<script type="text/javascript">
 			@yield('footer')
 		</script>
+		<footer class="bs-docs-footer" role="contentinfo">
+			<div class="container">
+				<p id="copyright-section">Developed by {{ link_to('http://solutionsresource.com/', 'Solutions Resource, Inc.') }} All rights reserved. © 2014</p>
+			</div>
+		</footer>
 	</body>
-</body>
 </html>
