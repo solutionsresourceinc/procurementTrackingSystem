@@ -82,3 +82,9 @@ Route::get( 'pr_imageupload', function()
 {
 	return View::make('pr_imageupload');
 });
+
+//Purchase Request Routes
+//Route::resource('preqList', 'PreqController');
+Route::get('preqList/edit','PreqController@edit');
+Route::get('preqList/view','PreqController@view');
+

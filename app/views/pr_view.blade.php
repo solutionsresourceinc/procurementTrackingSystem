@@ -47,88 +47,55 @@
 <table id="table_id" class="display">
     <thead>
 		<tr>
-	    	<th>Username</th>
-	        <th>Firstname</th>
-	        <th>Lastname</th>
-	        <th>Role</th>
-	        <th>Office</th>
+	    	<th>Project/Purpose</th>
+	        <th>Status</th>
+	        <th>Date Created</th>
 	        <?php
 	        	$adm = Assigned::where('user_id', Auth::User()->id)->first();
-				$users= new User; $users = DB::table('users')->get();
-				if($adm->role_id == 3) {
+	        	$requests = new Purchase;
+				$requests = DB::table('purchase_request')->get();
 			?>
-				<th>Action</th>
-			<?php } ?>
+			<th>Action</th>
 	    </tr>
 	</thead>
 
 	<tbody>
-		@foreach ($users as $user)
-		<?php $assigned = Assigned::where('user_id', $user->id)->first(); ?>
-
+		@foreach ($requests as $request)
 	        <tr>
-	        	@if($user->confirmed == 0)
-	        		<td><strike> {{ $user->username; }} </strike></td>
-			        <td><strike> {{ $user->firstname; }} </strike></td>
-			        <td><strike> {{ $user->lastname; }} </strike></td>
-			        
-			        @if($assigned->role_id == 3)
-						<td><strike>Administrator</strike></td>
-					@elseif ($assigned->role_id == 2)
-						<td><strike>Procurement Personnel</strike></td>
-					@else
-						<td><strike>Requisitioner</strike></td>
-					@endif
-
-	       		@else
-					<td> {{ $user->username; }}</td>
-			        <td> {{ $user->firstname; }}</td>
-			        <td> {{ $user->lastname; }}</td>
-
-			        @if($assigned->role_id == 3)
-						<td>Administrator</strike></td>
-					@elseif ($assigned->role_id == 2)
-						<td>Procurement Personnel</td>
-					@else
-						<td>Requisitioner</td>
-					@endif
-
-			    @endif
-				
-				<td>OFFICE</td>
-				
-				<?php if($adm->role_id == 3) {?>
-		        <td>
-		        	<div class='btn-group'>
+					<td> {{ $request->projectPurpose; }}</td>
+			        <td> {{ $request->status; }}</td>
+			        <td> {{ $request->created_at; }}</td>
+			        <td>
+			        	<div class='btn-group'>
 						<button class='btn dropdown-toggle btn-primary' data-toggle='dropdown'>Action <span class='caret'></span></button>
 						
 						<ul class='dropdown-menu'>
 		              		<?php if($adm->role_id == 3) {?>
-								<li><a class='iframe btn' href='edit/{{$user->id}}'>Edit</a></li>
+								<li><a class='iframe btn' href='edit/{{$request->id}}'>Edit</a></li>
 							<?php } ?>
-		            			@if($user->confirmed == 1)
+		            			@if($adm->role_id == 3)
 									<li>
-										<form method="POST" action="delete"/ id="myForm_{{ $user->id }}" name="myForm">
-											<input type="hidden" name="hide" value="{{ $user->id }}">
+										<form method="POST" action="delete"/ id="myForm_{{ $request->id }}" name="myForm">
+											<input type="hidden" name="hide" value="{{ $request->id }}">
 			  								<center>
-			    							<button class="iframe btn" style="background-color:transparent" type="button" data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $user->id }})"  data-title="Delete User" data-message="Are you sure you want to disable account?">Disable</button>
+
+			    							<button class="iframe btn" style="background-color:transparent" type="button" data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $request->id }})"  data-title="Delete User" data-message="Are you sure you want to disable account?">Disable</button>
 											</center>
 										</form>
 									</li>
 								@else
 									<li>
-										<form method="POST" action="activate"/ id="myForm_{{ $user->id }}" name="myForm">
-											<input type="hidden" name="hide" value="{{ $user->id }}">
+										<form method="POST" action="activate"/ id="myForm_{{ $request->id }}" name="myForm">
+											<input type="hidden" name="hide" value="{{ $request->id }}">
 			  								<center>
-			    							<button class="iframe btn" style="background-color:transparent" type="button" data-toggle="modal" data-target="#confirmActivate" onclick="hello( {{ $user->id }})"  data-title="Activate User" data-message="Are you sure you want to activate account?">Activate</button>
+			    							<button class="iframe btn" style="background-color:transparent" type="button" data-toggle="modal" data-target="#confirmActivate" onclick="hello( {{ $request->id }})"  data-title="Activate User" data-message="Are you sure you want to activate account?">Activate</button>
 											</center>
 										</form>
 									</li>
 							@endif
 						</ul>
 					</div>
-	       		</td>
-	       		<?php } ?>
+			    </td>
 			</tr>
         @endforeach	    
 	</tbody>

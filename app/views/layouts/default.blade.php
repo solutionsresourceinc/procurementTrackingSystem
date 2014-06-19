@@ -3,6 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Tarlac Procurement Tracking System</title>
+
 		{{ HTML::style('css/bootstrap.min.css') }}
 		{{ HTML::style('css/bootstrap-theme.min.css') }}
 		{{ HTML::style('css/theme.css') }}
@@ -10,6 +11,9 @@
 
 		{{ HTML::style('css/custom.css') }}
 
+		{{ HTML::script('http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js') }}
+
+		{{ HTML::style('css/custom.css') }}
 		{{ HTML::script('http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js') }}
 
 		{{ HTML::script('js/bootstrap.min.js') }}
@@ -55,9 +59,13 @@
 	        	</div>
 	        	<div class="navbar-collapse collapse">
           			<ul class="nav navbar-nav">
-          				<li><a>Puchase Requests</a></li>
-          				<li><a>Users</a></li>
-          				<li>{{ link_to('/offices', 'Offices') }}</li>
+          				<!--change request path for PRs and Users -->
+          				<li class="{{Request::is('purchase_requests') ? 'active':''}}"><a>Puchase Requests</a></li>
+          				<li class="{{Request::is('user') ? 'active':''}}"><a>Users</a></li>
+          				<li class="{{Request::is('offices') ? 'active':''}}">{{ link_to('/offices', 'Offices') }}</li>
+          			</ul>
+          			<ul class="nav navbar-nav">
+          				<li>{{ link_to('/preqList/edit', 'PURCH LIST') }}</li>
           			</ul>
           			<ul class="nav navbar-nav navbar-right">
 			        	<li><a href="{{ URL::to('/logout') }}" class="glyphicon glyphicon-log-out" title="Logout"><span id="logout">Logout</span></a></li>

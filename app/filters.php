@@ -90,10 +90,10 @@ Route::filter('csrf', function()
 });
 
 
-Entrust::routeNeedsRole( 'dashboard', array('Administrator'), Redirect::to('/') );
-//Entrust::routeNeedsRole( 'user/edit/*', array('Administrator'), Redirect::to('/') );
-//Entrust::routeNeedsRole( 'user/delete', array('Administrator'), Redirect::to('/') );
-//Entrust::routeNeedsRole( 'user/activate', array('Administrator'), Redirect::to('/') );
+/*Entrust::routeNeedsRole( 'dashboard', array('Administrator'), Redirect::to('/') );
+Entrust::routeNeedsRole( 'user/edit/*', array('Administrator'), Redirect::to('/') );
+Entrust::routeNeedsRole( 'user/delete', array('Administrator'), Redirect::to('/') );
+Entrust::routeNeedsRole( 'user/activate', array('Administrator'), Redirect::to('/') );*/
 //Entrust::routeNeedsRole( 'user/create', array('Administrator'), Redirect::to('/') );
 
 
