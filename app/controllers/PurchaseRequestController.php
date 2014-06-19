@@ -44,5 +44,4 @@ class PurchaseRequestController extends Controller {
 	{
 		return View::make('pr_view');
 	}
-
 }

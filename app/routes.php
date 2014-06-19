@@ -14,7 +14,7 @@
 
 Route::get('/', 'AuthController@showLogin');
 
-Route::get('user/view',                    'UserController@viewuser');
+Route::get('user/view',                    'UserController@viewUser');
 
 // Confide routes
 Route::get( 'user/create',                 'UserController@create');
@@ -90,6 +90,12 @@ Route::get( 'pr_imageupload', function()
 //Route::resource('preqList', 'PreqController');
 Route::get('purchaseRequest/edit','PurchaseRequestController@edit');
 Route::get('purchaseRequest/view','PurchaseRequestController@view');
+
+Route::get( 'purchaseRequest/edit/{id}', function($id)
+{
+	return View::make('pr_edit')->with('id',$id);
+});
+Route::post('purchaseRequest/edit/{id}',[ 'uses' => 'PurchaseRequestController@edit']);
 
 
 Route::get('/offices', 'OfficeController@index');
