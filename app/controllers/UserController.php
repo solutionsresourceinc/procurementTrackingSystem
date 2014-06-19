@@ -31,24 +31,61 @@ class UserController extends BaseController {
 
         $user->username = Input::get( 'username' );
         $user->email = Input::get( 'email' );
+
         $user->password = Input::get( 'password' );
         $user->firstname = Input::get( 'firstname' );
-        $user->lastname = Input::get( 'firstname' );
+        $user->lastname = Input::get( 'lastname' );
         // The password confirmation will be removed from model
         // before saving. This field will be used in Ardent's
         // auto validation.
         $user->password_confirmation = Input::get( 'password_confirmation' );
-
-
-
-    
-
-
         // Save if valid. Password field will be hashed before save
-        $user->save();
 
-        if ( $user->id )
+
+
+
+//Validations     
+        if(ctype_alnum($user->username))
+        {}
+        else{
+            $errorcheck=1;
+            Session::put('username_error', 'Username cannot containt special characters.');}
+
+        
+        if(ctype_alpha(str_replace(' ','',$user->firstname)))
+        {}
+        else{
+            $errorcheck=1;
+            Session::put('firstname_error', 'First Name cannot containt special characters.');}
+
+        if(ctype_alpha(str_replace(' ','',$user->lastname)))
+          {}
+        else{
+            $errorcheck=1;
+            Session::put('lastname_error', 'Last Name cannot containt special characters.');}
+
+        if(filter_var($user->email, FILTER_VALIDATE_EMAIL))
+          {}
+        else{
+            $errorcheck=1;
+            Session::put('email_error', 'Invalid Email');}
+
+        if(ctype_alnum($user->password))
         {
+            if ($user->password!=$user->password_confirmation){
+                $errorcheck=1;
+            Session::put('password_error', 'Password did not match with confirm password.');
+            }
+        }
+        else{
+            $errorcheck=1;
+            Session::put('password_error', 'Password is required to be in alphanumeric form.');
+        }
+                       
+
+        if ( $errorcheck==0 )
+        {
+                    $user->save();
                         $notice = "User created successfullly! ";         
             // Redirect with success message, You may replace "Lang::get(..." for your custom message.
                         return Redirect::action('viewuser')
@@ -57,44 +94,90 @@ class UserController extends BaseController {
         else
         {
 
-
-
-
-//Validations
      
-   
-        if(ctype_alnum($user->username)&&(strlen($user->username)>=6))
-        {}
-        else
-            Session::put('username_error', 'Username is required to be in alphanumeric form.');
-
-        if(ctype_alpha(str_replace(' ','',$user->firstname)))
-        {}
-        else
-            Session::put('firstname_error', 'First Name cannot containt special characters.');
-
-        if(ctype_alpha(str_replace(' ','',$user->lastname)))
-          {}
-        else
-            Session::put('lastname_error', 'Last Name cannot containt special characters.');
-
-        if(filter_var($user->email, FILTER_VALIDATE_EMAIL))
-          {}
-        else
-            Session::put('email_error', 'Invalid Email');
-
-        if(ctype_alnum($user->password))
-        {
-            if ($user->password!=$user->password_confirmation){
-            Session::put('password_error', 'Password did not match with confirm password.');
-            }
-        }
-        else
-            Session::put('password_error', 'Password is required to be in alphanumeric form.');
                         return Redirect::action('UserController@create')
                             ->withInput(Input::except('password'));
         }
     }
+
+
+
+public function edit()
+    {
+        $id=Input::get( 'id' );
+        $user = User::find($id);
+   
+        $user->email = Input::get( 'email' );
+           $password = Input::get( 'password' );
+        $user->password = Hash::make($password);
+        $user->firstname = Input::get( 'firstname' );
+        $user->lastname = Input::get( 'lastname' );
+        // The password confirmation will be removed from model
+        // before saving. This field will be used in Ardent's
+        // auto validation.
+
+
+        $user->password_confirmation = Input::get( 'password_confirmation' );
+        // Save if valid. Password field will be hashed before save
+
+
+
+$errorcheck=0;
+
+//Validations     
+        
+        if(ctype_alpha(str_replace(' ','',$user->firstname)))
+        {}
+        else{
+            $errorcheck=1;
+            Session::put('firstname_error', 'First Name cannot containt special characters.');}
+
+        if(ctype_alpha(str_replace(' ','',$user->lastname)))
+          {}
+        else{
+            $errorcheck=1;
+            Session::put('lastname_error', 'Last Name cannot containt special characters.');}
+
+        if(filter_var($user->email, FILTER_VALIDATE_EMAIL))
+          {}
+        else{
+            $errorcheck=1;
+            Session::put('email_error', 'Invalid Email');}
+
+        if(ctype_alnum($password))
+        {
+            if ($password!=$user->password_confirmation){
+                $errorcheck=1;
+            Session::put('password_error', 'Password did not match with confirm password.');
+            }
+        }
+        else{
+            $errorcheck=1;
+            Session::put('password_error', 'Password is required to be in alphanumeric form.');
+        }
+                       
+
+if($errorcheck==1)
+                       return Redirect::back();
+        
+     else
+        {
+                  
+DB::table('users')
+            ->where('id', $id)
+            ->update(array( 'email' => $user->email, 'password' => $user->password, 'firstname' => $user->firstname, 'lastname' => $user->lastname));
+                        $notice = "successfully edited user. ";         
+            // Redirect with success message, You may replace "Lang::get(..." for your custom message.
+                        return Redirect::action('viewuser')
+                            ->with( 'notice', $notice );
+        }
+       
+
+
+}
+
+
+
 
     /**
      * Displays the login form
@@ -113,6 +196,20 @@ class UserController extends BaseController {
             return View::make('login');
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * Attempt to do login

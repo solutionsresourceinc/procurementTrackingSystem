@@ -31,4 +31,14 @@ Route::get('/', function()
 
 Route::get('/dashboard', 'UserController@dashboard');
 
-Route::patch('user/edit/{id}',['as'=>'user.update', 'uses' => 'UserController@edit'])->before('auth');
+
+
+Route::get( 'user/edit/{id}',                 function($id){
+
+
+
+	return View::make('user_edit')->with('id',$id);
+
+	});
+
+Route::post('user/edit/{id}',['as'=>'user.update', 'uses' => 'UserController@edit']);

@@ -1,27 +1,29 @@
+@extends('layouts.login')
+
+@section('content')
+<?php $user = User::find($id); ?>
+
 <div>
     <h2>Edit User</h2>
 </div>    
 
-<form method="POST" action="{{{ (Confide::checkAction('UserController@store')) ?: URL::to('user')  }}}" accept-charset="UTF-8" class = 'form-signin'>
-    <input type="hidden" name="_token" value="{{{ Session::getToken() }}}">
+<form method="POST" action="edit"  class = 'form-signin'>
+
     <fieldset>
+        <input type="hidden" name="id" value="{{{ $id }}}">
+         
 
         <div class="form-group">
             <label for="username">{{{ Lang::get('confide::confide.username') }}}</label>
-            <input class="form-control"  type="text" name="username" id="username" value="{{{ Input::old('username') }}}" required>
+            <input class="form-control"  type="text" name="username" id="username" value="{{{$user->username}}}" disabled>
 
-            @if ( Session::get('username_error') )
-            <div class="alert alert-error alert-danger">
-                   <small> {{ Session::get('username_error'); }}</small>
-      
-            </div>
-            @endif
+         
 
         </div>
 
          <div class="form-group">
             <label for="firstname">First Name</label>
-            <input class="form-control"  type="test" name="firstname" id="firstname" value="{{{ Input::old('firstname') }}}" required>
+            <input class="form-control"  type="test" name="firstname" id="firstname" value="{{{ $user->firstname }}}" required>
             @if ( Session::get('firstname_error') )
             <div class="alert alert-error alert-danger">
                    <small> {{ Session::get('firstname_error'); }}</small>
@@ -31,7 +33,7 @@
         </div>
            <div class="form-group">
             <label for="lastname">Last Name</label>
-            <input class="form-control" type="text" name="lastname" id="lastname" value="{{{ Input::old('lastname') }}}" required>
+            <input class="form-control" type="text" name="lastname" id="lastname" value="{{{ $user->lastname }}}" required>
             @if ( Session::get('lastname_error') )
             <div class="alert alert-error alert-danger">
                    <small> {{ Session::get('lastname_error'); }}</small>
@@ -42,7 +44,7 @@
 
         <div class="form-group">
             <label for="email">{{{ Lang::get('confide::confide.e_mail') }}}</label>
-            <input class="form-control"  type="text" name="email" id="email" value="{{{ Input::old('email') }}}" required>
+            <input class="form-control"  type="text" name="email" id="email" value="{{{ $user->email }}}" required>
             @if ( Session::get('email_error') )
             <div class="alert alert-error alert-danger">
                    <small> {{ Session::get('email_error'); }}</small>
@@ -83,7 +85,7 @@
 
       
         <div class="form-actions form-group">
-          <button type="submit" class="btn btn-default" name="submit">{{{ Lang::get('confide::confide.signup.submit') }}}</button>
+          <button type="submit" class="btn btn-default" name="submit">Save</button>
         </div>
 
     </fieldset>
@@ -95,3 +97,8 @@ Session::forget('lastname_error');
 Session::forget('password_error');
 Session::forget('email_error');
 ?>
+
+
+
+
+@stop
