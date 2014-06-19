@@ -146,8 +146,19 @@ public function edit()
         $user = User::find($id);
    
         $user->email = Input::get( 'email' );
-           $password = Input::get( 'password' );
+           
+  $password = " ".Input::get( 'password' );
+  $passnotchange=0;
+     if($password==" "){
+$passnotchange=1;
+
+
+     }
+else{
+    $password = substr($password, 1);
         $user->password = Hash::make($password);
+}
+
         $user->firstname = Input::get( 'firstname' );
         $user->lastname = Input::get( 'lastname' );
 
@@ -184,7 +195,11 @@ $errorcheck=0;
             $errorcheck=1;
             Session::put('email_error', 'Invalid email.');}
 
-        if(ctype_alnum($password))
+        if($passnotchange==1){
+
+
+        }
+        elseif(ctype_alnum($password)&&(strlen($password)>=6))
         {
             if ($password!=$user->password_confirmation){
                 $errorcheck=1;

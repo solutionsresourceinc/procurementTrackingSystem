@@ -51,7 +51,7 @@
 
         <div class="form-group">
             <label for="password">{{{ Lang::get('confide::confide.password') }}}</label>
-            <input class="form-control" type="password" name="password" id="password" required>
+            <input class="form-control" type="password" name="password" id="password"  >
              @if ( Session::get('password_error') )
                 <small>{{ Session::get('password_error'); }}   </small>
             @endif
@@ -59,7 +59,7 @@
 
         <div class="form-group">
             <label for="password_confirmation">{{{ Lang::get('confide::confide.password_confirmation') }}}</label>
-            <input class="form-control"  type="password" name="password_confirmation" id="password_confirmation" required>
+            <input class="form-control"  type="password" name="password_confirmation" id="password_confirmation"  >
         </div>
      <div class="form-group">
             <label for="role">Role</label>
