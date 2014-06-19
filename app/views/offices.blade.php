@@ -3,7 +3,7 @@
 @section('content')
     <h1 class="page-header">Offices</h1>
 
-    <div id="office-create-form">
+    <div id="office-create-form" class="well div-form">
 	    {{ Form::open(['route'=>'offices.store'], 'POST', array('role' => 'form')) }}
 	    	<div class="col-md-3">
 	    		{{ Form::label('officename', 'Create New  Requisitioner Office:', array('class' => 'create-label')) }}
@@ -35,11 +35,9 @@
 			    				<button type="button" class="btn btn-success" title="Edit Office">
 			    					<span class="glyphicon glyphicon-edit"></span>
 			    				</button>
-			    				<!--button type="button" class="btn btn-danger" title="Delete Office" onClick="confirm('Are you sure you want to delete this?');">
+			    				<a href="{{ URL::to('offices/delete/'.$office->id) }}" class="btn btn-danger" title="Delete Office" onclick="return confirm('Are you sure you want to delete this?')">
 			    					<span class="glyphicon glyphicon-trash"></span>
-			    				</button-->
-			    				{{ link_to( '/', '', array('class'=>'btn btn-danger glyphicon glyphicon-trash') ) }}
-			    				
+			    				</a>
 			    			</td>
 			    		</tr>
 			    	@endforeach
