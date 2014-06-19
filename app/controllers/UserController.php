@@ -49,7 +49,7 @@ $errorcheck=0;
         {}
         else{
             $errorcheck=1;
-            Session::put('username_error', 'Username cannot containt special characters.');}
+            Session::put('username_error', 'Username cannot contain special characters and must have a minimum of 6 characters.');}
 
         
         if(ctype_alpha(str_replace(' ','',$user->firstname)))
@@ -68,7 +68,7 @@ $errorcheck=0;
           {}
         else{
             $errorcheck=1;
-            Session::put('email_error', 'Invalid Email');}
+            Session::put('email_error', 'Invalid email.');}
 
         if(ctype_alnum($user->password))
         {
@@ -79,7 +79,7 @@ $errorcheck=0;
         }
         else{
             $errorcheck=1;
-            Session::put('password_error', 'Password is required to be in alphanumeric form.');
+            Session::put('password_error', 'Password is required to be in alphanumeric form and must have a minimum of 6 characters.');
         }
                        
 
@@ -160,7 +160,7 @@ $errorcheck=0;
           {}
         else{
             $errorcheck=1;
-            Session::put('email_error', 'Invalid Email');}
+            Session::put('email_error', 'Invalid email.');}
 
         if(ctype_alnum($password))
         {
@@ -171,7 +171,7 @@ $errorcheck=0;
         }
         else{
             $errorcheck=1;
-            Session::put('password_error', 'Password is required to be in alphanumeric form.');
+            Session::put('password_error', 'Password is required to be in alphanumeric form and must have a minimum of 6 characters.');
         }
                        
 
