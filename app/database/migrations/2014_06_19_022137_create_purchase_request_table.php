@@ -22,8 +22,8 @@ class CreatePurchaseRequestTable extends Migration {
 			$table->string('requisitioner', 255);
 			$table->string('modeOfProcurement', 255);
 			$table->string('ControlNo', 255);
+			$table->string('status', 255);
 			$table->timestamps();
-
 		});
 	}
 

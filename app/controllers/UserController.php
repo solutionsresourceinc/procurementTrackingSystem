@@ -125,7 +125,7 @@ if ($checkusername!=0){
                   
                         $notice = "User created successfullly! ";         
             // Redirect with success message, You may replace "Lang::get(..." for your custom message.
-                        return Redirect::action('user/view')
+                        return Redirect::action('UserController@view')
                             ->with( 'notice', $notice );
         }
         else
