@@ -54,12 +54,12 @@
 	        	<div class="navbar-collapse collapse">
           			<ul class="nav navbar-nav">
           				<!--change request path for PRs and Users -->
-          				<li class="{{Request::is('purchase_requests') ? 'active':''}}"><a>Puchase Requests</a></li>
-          				<li class="{{Request::is('user') ? 'active':''}}"><a>Users</a></li>
+          				<li class="{{Request::is('purchase_requests') ? 'active':''}}">{{ link_to('/purchaseRequest/view', 'Purchase List') }}</li>
+          				<li class="{{Request::is('user') ? 'active':''}}">{{ link_to('/user/view', 'Users') }}</li>
           				<li class="{{Request::is('offices') ? 'active':''}}">{{ link_to('/offices', 'Offices') }}</li>
           			</ul>
           			<ul class="nav navbar-nav">
-          				<li>{{ link_to('/preqList/edit', 'PURCH LIST') }}</li>
+          				<li></li>
           			</ul>
           			<ul class="nav navbar-nav navbar-right">
 			        	<li><a href="{{ URL::to('/logout') }}" class="glyphicon glyphicon-log-out" title="Logout"><span id="logout">Logout</span></a></li>

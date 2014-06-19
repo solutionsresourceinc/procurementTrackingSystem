@@ -87,8 +87,8 @@ Route::get( 'pr_imageupload', function()
 
 //Purchase Request Routes
 //Route::resource('preqList', 'PreqController');
-Route::get('preqList/edit','PreqController@edit');
-Route::get('preqList/view','PreqController@view');
+Route::get('purchaseRequest/edit','PurchaseRequestController@edit');
+Route::get('purchaseRequest/view','PurchaseRequestController@view');
 
 
 Route::get('/offices', 'OfficeController@index');
