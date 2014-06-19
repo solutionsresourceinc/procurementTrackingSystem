@@ -11,6 +11,7 @@
 <form method="POST" action="edit"  class = 'form-signin'>
     <fieldset>
 
+
     @if ( Session::get('msg') )
     <div class="alert alert-error alert-danger">
           {{ Session::get('msg'); }} 
