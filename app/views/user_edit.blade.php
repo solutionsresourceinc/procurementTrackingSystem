@@ -1,12 +1,5 @@
-@extends('layouts.login')
-
-@section('content')
-
-
-
-
 <div>
-    <h2>Create User</h2>
+    <h2>Edit User</h2>
 </div>    
 
 <form method="POST" action="{{{ (Confide::checkAction('UserController@store')) ?: URL::to('user')  }}}" accept-charset="UTF-8" class = 'form-signin'>
@@ -102,8 +95,3 @@ Session::forget('lastname_error');
 Session::forget('password_error');
 Session::forget('email_error');
 ?>
-
-
-
-
-@stop
