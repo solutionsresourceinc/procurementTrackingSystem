@@ -42,3 +42,9 @@ Route::get( 'user/edit/{id}',                 function($id){
 	});
 
 Route::post('user/edit/{id}',['as'=>'user.update', 'uses' => 'UserController@edit']);
+
+Route::get('create_roles','UserController@getRole');
+
+Route::patch('user/edit/{id}',['as'=>'user.update', 'uses' => 'UserController@edit'])->before('auth');
+
+
