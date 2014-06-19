@@ -14,12 +14,7 @@
 
 		{{ HTML::script('js/bootstrap.min.js') }}
 	
-<!-- Agile Image Uploader-->
-	{{ HTML::script('jquery-1.4.min.js')}}
-	{{ HTML::script('jquery.flash.min.js')}}
-	{{ HTML::script('agile-uploader-3.0.js')}}
-{{ HTML::style('unrelated.css') }}
-{{ HTML::style('agile-uploader.css') }}
+
 
 
 		{{ HTML::style('colvix/css/jquery.dataTables.css')}}

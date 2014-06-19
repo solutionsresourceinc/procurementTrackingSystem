@@ -1,18 +1,22 @@
 <html>
 <head>
+		<title>Tarlac Procurement Tracking System</title>
+
 	<script src="jquery-1.4.min.js" type="text/javascript"></script>
 	<script src="jquery.flash.min.js" type="text/javascript"></script>
 	<link type="text/css" rel="stylesheet" href="unrelated.css" />
-	
 	<script src="agile-uploader-3.0.js" type="text/javascript"></script>
 	<link type="text/css" rel="stylesheet" href="agile-uploader.css" />
 </head>
-<body>
+<body >
 
-<div id="demo">
-<h1>Resize Before Upload Demo (multiple)</h1>
+<div id="demo"  >
+<h1>Upload Attachments</h1>
 
 
+@if ( Session::get('typeerror') )
+             {{ Session::get('typeerror'); }}        
+ @endif
 
 <form id="multipleDemo" enctype="multipart/form-data">
 <label for="title"> Document Title</label><br />
@@ -34,9 +38,9 @@
     		formId: 'multipleDemo',
 		flashVars: {
 			firebug: false,
-    			form_action: 'process.php',
-			file_limit: 5,
-			max_post_size: (10000 * 10240)
+    			form_action: 'process.blade.php',
+			file_limit: 10,
+			max_post_size: (100000 * 102400)
     		}
     	});	
     </script>

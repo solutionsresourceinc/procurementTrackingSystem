@@ -8,11 +8,11 @@
 // CHANGE THIS ACCORDINGLY
 $target_path = "temp/";
 
-$myFile = $target_path."post_data.txt";
-$fh = fopen($myFile, 'w') or die("can't open file");
-fwrite($fh, "Title: ".$_POST['title']."\n");
-fwrite($fh, "Another Field: ".$_POST['testdata']."\n");
-fclose($fh);
+//$myFile = $target_path."post_data.txt";
+//$fh = fopen($myFile, 'w') or die("can't open file");
+//fwrite($fh, "Title: ".$_POST['title']."\n");
+//fwrite($fh, "Another Field: ".$_POST['testdata']."\n");
+//fclose($fh);
 
 $uploads_dir = $target_path;
 
@@ -27,8 +27,6 @@ if(count($_FILES["Filedata"]["error"]) < 2) {
 		case 'png':
 		case 'gif':
 		case 'png':
-		case 'doc':
-		case 'txt':
 			move_uploaded_file($tmp_name, "$uploads_dir/$name");
 		break;
 		default:
@@ -44,19 +42,36 @@ if(count($_FILES["Filedata"]["error"]) < 2) {
 	        $ext = substr(strrchr($name, '.'), 1);
 	        switch(strtolower($ext)) {
 				case 'jpg':	
+
+					move_uploaded_file($tmp_name, "$uploads_dir/$name");
+				break;
 				case 'jpeg':
+
+					move_uploaded_file($tmp_name, "$uploads_dir/$name");
+				break;
 				case 'png':
+
+					move_uploaded_file($tmp_name, "$uploads_dir/$name");
+				break;
 				case 'gif':
+
+					move_uploaded_file($tmp_name, "$uploads_dir/$name");
+				break;
 				case 'png':
-				case 'doc':
-				case 'txt':
+		
 					move_uploaded_file($tmp_name, "$uploads_dir/$name");
 				break;
 				default:
+				Session::put('typeerror', 'Invalid file type.');
+
+
 					exit();
 				break;
 			}
 	    }
+
+
+
 	}
 }
 
