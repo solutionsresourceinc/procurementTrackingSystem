@@ -74,15 +74,16 @@
      <div class="form-group">
             <label for="role">Role</label>
             <select class="form-control" name="role">
-                <option value="1">Admin</option>
-                <option value="2">Procurement Personel</option>
-                <option value="3">Requisitioner</option>
+            	{{ $role=Input::old('role'); }}
+                <option value="1" <?php if($role==3) echo "selected"; ?> >Admin</option>
+                <option value="2" <?php if($role==2) echo "selected"; ?> >Procurement Personel</option>
+                <option value="3" <?php if($role==1) echo "selected"; ?> >Requisitioner</option>
             </select>
            
         </div>
              <div class="form-group">
             <label for="role">Office</label>
-            <select class="form-control" name="role">
+            <select class="form-control" name="office">
                 <option value="Office">Office</option>
                 <option value="Office1">Office1</option>
             </select>

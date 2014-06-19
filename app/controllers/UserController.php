@@ -43,9 +43,9 @@ class UserController extends BaseController {
 
 
 
-
+$errorcheck=0;
 //Validations     
-        if(ctype_alnum($user->username))
+        if(ctype_alnum($user->username)&&(strlen($user->username)>=6))
         {}
         else{
             $errorcheck=1;
@@ -85,7 +85,25 @@ class UserController extends BaseController {
 
         if ( $errorcheck==0 )
         {
-                    $user->save();
+
+    $user->save();
+    $username=$user->username;
+    $new_role = new Role;
+
+                $user->utype = Input::get('role');
+
+                if($user->utype == 1) 
+                    $new_role = Role::where('name','=','Administrator')->first();
+                elseif ($user->utype == 2) 
+                    $new_role = Role::where('name','=','Procurement Personnel')->first();
+                else
+                    $new_role = Role::where('name','=','Requisitioner')->first();
+            
+            $get_user = new User;
+            $get_user = User::where('username','=',$username)->first();   
+            $get_user->attachRole( $new_role );
+
+                  
                         $notice = "User created successfullly! ";         
             // Redirect with success message, You may replace "Lang::get(..." for your custom message.
                         return Redirect::action('viewuser')
@@ -163,6 +181,17 @@ if($errorcheck==1)
      else
         {
                   
+$roles=input::get('role');
+if($roles=="1")
+    $role=3;
+elseif($roles=="2")
+    $role=2;
+else
+    $role=1;
+DB::table('assigned_roles')
+            ->where('user_id', $id)
+            ->update(array( 'role_id' => $role));
+         
 DB::table('users')
             ->where('id', $id)
             ->update(array( 'email' => $user->email, 'password' => $user->password, 'firstname' => $user->firstname, 'lastname' => $user->lastname));
