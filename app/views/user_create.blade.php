@@ -20,7 +20,7 @@
 
               @if ( Session::get('username_error') )
 
-                       <small> {{ Session::get('username_error'); }}   </small>
+                       <small><font color="red"> {{ Session::get('username_error'); }}   </font></small>
         
       
               @endif
@@ -31,7 +31,7 @@
               <label for="firstname">First Name</label>
               <input class="form-control"  type="test" name="firstname" id="firstname" value="{{{ Input::old('firstname') }}}" required>
               @if ( Session::get('firstname_error') )
-               <small> {{ Session::get('firstname_error'); }}   </small>
+               <small><font color="red"> {{ Session::get('firstname_error'); }}   </font></small>
         
              
               @endif
@@ -41,7 +41,7 @@
               <label for="lastname">Last Name</label>
               <input class="form-control" type="text" name="lastname" id="lastname" value="{{{ Input::old('lastname') }}}" required>
               @if ( Session::get('lastname_error') )
-               <small>{{ Session::get('lastname_error'); }}
+               <small><font color="red">{{ Session::get('lastname_error'); }}</font>
              </small>
         
               @endif
@@ -51,7 +51,7 @@
               <label for="email">{{{ Lang::get('confide::confide.e_mail') }}}</label>
               <input class="form-control"  type="text" name="email" id="email" value="{{{ Input::old('email') }}}" required>
               @if ( Session::get('email_error') )
-                <small>{{ Session::get('email_error'); }}    </small>
+                <small><font color="red">{{ Session::get('email_error'); }}   </font> </small>
         
     
               @endif
@@ -60,7 +60,7 @@
               <label for="password">{{{ Lang::get('confide::confide.password') }}}</label>
               <input class="form-control" type="password" name="password" id="password" required>
                @if ( Session::get('password_error') )
-             <small>{{ Session::get('password_error'); }}   </small>
+             <small><font color="red">{{ Session::get('password_error'); }}   </font></small>
               @endif
           </div>
           <div class="form-group">

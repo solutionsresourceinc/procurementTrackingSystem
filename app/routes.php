@@ -72,6 +72,7 @@ Route::post( 'user/activate', function()
 
 //Office routes
 Route::resource('offices', 'OfficeController');
+
 Route::get('offices', 'OfficeController@index');
 Route::get('offices/delete/{id}',['as' => 'offices.delete', 'uses' => 'OfficeController@deleteOffice']);
 Route::post('offices/{id}/edit',['as' => 'offices.update', 'uses' => 'OfficeController@update']);
@@ -89,4 +90,11 @@ Route::get( 'pr_imageupload', function()
 //Route::resource('preqList', 'PreqController');
 Route::get('preqList/edit','PreqController@edit');
 Route::get('preqList/view','PreqController@view');
+
+
+Route::get('/offices', 'OfficeController@index');
+
+//Purchase Request Routes
+Route::get('purchaseRequest/create', 'PurchaseRequestController@create');
+Route::post('purchaserRequest/create', ['as' => 'purchaserRequest_submit', 'uses' => 'PurchaseRequestController@create_submit']);
 
