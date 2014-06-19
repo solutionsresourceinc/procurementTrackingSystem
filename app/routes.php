@@ -35,14 +35,6 @@ Route::get('/', function()
 
 Route::get('/dashboard', 'UserController@dashboard');
 
-<<<<<<< HEAD
-Route::patch('user/edit/{id}',['as'=>'user.update', 'uses' => 'UserController@edit'])->before('auth');
-
-
-//Office routes
-Route::resource('offices', 'OfficeController');
-Route::get('/offices', 'OfficeController@index');
-=======
 Route::get( 'user/edit/{id}', function($id)
 {
 	return View::make('user_edit')->with('id',$id);
@@ -74,4 +66,7 @@ Route::post( 'user/activate', function()
 	return Redirect::to('user/view');
 });
 
->>>>>>> d316789d5f0c14ab6477fa6c727abc9f8a17c484
+
+//Office routes
+Route::resource('offices', 'OfficeController');
+Route::get('/offices', 'OfficeController@index');
