@@ -32,13 +32,24 @@ class OfficeController extends BaseController {
 		}
 	}
 
+	public function update($id)
+	{
+		$rules = ['ofcname' => 'required'];
+		$validation = Validator::make(Input::all(), $rules);
+
+		if($validation->fails()){
+			return Redirect::back();
+		}
+		
+		$updateOffice = Office::find($id);
+		$updateOffice->officeName = Input::get('ofcname');
+		$updateOffice->save();
+		return Redirect::to('/offices')->with('success','Successfully deleted');
+	}
+
 	public function deleteOffice($id)
 	{
-		//$offices = $this->office->all();
-		/*$offices=$this->office->orderBy('officeName','asc')->paginate(50);
-		return View::make('offices', compact('offices'));*/
 		$deleteoffice = Office::find($id);
-		//dd($editOpcr);
 		$deleteoffice->delete();
 		return Redirect::to('/offices')->with('success','Successfully deleted');
 	}

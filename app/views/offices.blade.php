@@ -22,7 +22,13 @@
         <table class="table table-striped">
 	    	<thead>
 				<tr>
-			    	<th>Requisitioning Office</th>
+			    	<th>
+			    		@if($offices->count()>1)
+			    			Requisitioning Offices
+			    		@else
+			    			Requisitioning Office
+			    		@endif
+			    	</th>
 			    	<th>Actions</th>
 			    </tr>
 	    	</thead>
@@ -30,14 +36,20 @@
 	    		@if($offices->count())
 	    			@foreach($offices as $office)
 			    		<tr>
-			    			<td>{{  $office->officeName }}</td>
-			    			<td>
-			    				<button type="button" class="btn btn-success" title="Edit Office">
-			    					<span class="glyphicon glyphicon-edit"></span>
-			    				</button>
-			    				<a href="{{ URL::to('offices/delete/'.$office->id) }}" class="btn btn-danger" title="Delete Office" onclick="return confirm('Are you sure you want to delete this?')">
-			    					<span class="glyphicon glyphicon-trash"></span>
-			    				</a>
+			    			<td class=".col-md-8">
+			    				<span class="current-text mode1">
+			    					{{  $office->officeName }}
+			    				</span>
+			    				{{ Form::open(['url' => "offices/$office->id/edit", 'class' => 'form-inline', 'role' => 'form']) }}
+									<input type = "text" name = "ofcname" class = "edit-text form-control mode2"/>
+								{{ Form::close() }}
+			    			</td>
+			    			<td class=".col-md-4">
+
+							{{HTML::decode (Form::button('<span class="glyphicon glyphicon-edit"></span>', ['class' => 'btn btn-success table-actions allow-edit mode1', 'data-original-title' => 'Edit Office', 'data-placement' => 'bottom', 'data-toggle' => 'tooltip']))}}
+							{{HTML::decode (link_to("offices/delete/$office->id", '<span class="glyphicon glyphicon-trash"></span>', ['class'=>'btn btn-danger table-actions mode1', 'onclick' => "return confirm('Are you sure you want to delete this?');",'title'=>'Delete Office']))}}
+							{{Form::button('Save', ['class' => 'btn btn-success save-edit mode2'])}}
+							{{Form::button('Cancel', ['class' => 'btn btn-default cancel-edit mode2'])}}
 			    			</td>
 			    		</tr>
 			    	@endforeach
@@ -47,4 +59,39 @@
 	    	</tbody>
 	    </table>
 	</div>
+@stop
+
+@section('footer')
+	<script type = "text/javascript">
+		$(document).ready(function() {
+			$(".mode2").hide();
+			$(".allow-edit").on("click", function() {
+				var current = $(this).closest("tr").find(".current-text");
+				var textfield = $(this).closest("tr").find(".edit-text");
+				var text = current.text().trim();
+				current.hide();
+				textfield.val(text);
+				textfield.attr({"placeholder": text, "value": text}).show().focus();
+				$(this).closest("tr").find(".mode1").hide();
+				$(this).closest("tr").find(".mode2").show();
+			});
+
+			$(".save-edit").on("click", function(event) {
+				var current = $(this).closest("tr").find(".current-text");
+				var textfield = $(this).closest("tr").find(".edit-text");
+				var text = textfield.val();
+				textfield.hide();
+				current.text(text);
+				current.show();
+				textfield.parent().submit();
+				$(this).closest("tr").find(".mode1").show();
+				$(this).closest("tr").find(".mode2").hide();
+			});
+			
+			$(".cancel-edit").on("click", function() {
+				$(this).closest("tr").find(".mode2").hide();
+				$(this).closest("tr").find(".mode1").show();
+			});
+		});
+	</script>
 @stop

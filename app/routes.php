@@ -74,6 +74,7 @@ Route::post( 'user/activate', function()
 Route::resource('offices', 'OfficeController');
 Route::get('offices', 'OfficeController@index');
 Route::get('offices/delete/{id}',['as' => 'offices.delete', 'uses' => 'OfficeController@deleteOffice']);
+Route::post('offices/{id}/edit',['as' => 'offices.update', 'uses' => 'OfficeController@update']);
 
 
 //For Image Upload Testing
