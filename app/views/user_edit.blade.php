@@ -74,11 +74,20 @@ $role =$assigned->role_id;
             </select>
            
         </div>
-             <div class="form-group">
-            <label for="office">Office</label>
-            <select class="form-control" name="office">
-                <option value="Office">Office</option>
-                <option value="Office1">Office1</option>
+
+
+
+       <div class="form-group">
+          <select class="form-control" name="office">
+                <option value=0 >none</option>
+                <?php 
+                echo "fghj,mn";
+$office= new Office; $office = DB::table('offices')->get();
+?>
+@foreach ($office as $offices)
+<option value= {{ $offices->id }} > {{ $offices->officeName }}</option>
+@endforeach
+         
             </select>
         </div>
 

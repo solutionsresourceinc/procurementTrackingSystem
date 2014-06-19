@@ -40,9 +40,12 @@ Route::get( 'user/edit/{id}', function($id)
 	return View::make('user_edit')->with('id',$id);
 });
 
-Route::post('user/edit/{id}',['as'=>'user.update', 'uses' => 'UserController@edit']);
+Route::post('user/edit/{id}',[ 'uses' => 'UserController@edit']);
 
 Route::get('create_roles','UserController@getRole');
+
+
+
 
 Route::post( 'user/delete', function()
 {
@@ -70,3 +73,12 @@ Route::post( 'user/activate', function()
 //Office routes
 Route::resource('offices', 'OfficeController');
 Route::get('/offices', 'OfficeController@index');
+
+
+//For Image Upload Testing
+
+
+Route::get( 'pr_imageupload', function()
+{
+	return View::make('pr_imageupload');
+});
