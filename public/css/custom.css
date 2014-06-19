@@ -64,3 +64,9 @@ a:hover, a:focus{
 	width: 100%;
 	margin-top: 15px;
 }
+
+.error-message{
+	color: red;
+	font-size: 12px;
+	font-style: italic;
+}

@@ -10,7 +10,7 @@
 	    	</div>
 	    	<div class="col-md-6">
 		    	{{ Form::text('officeName', null, array('class' => 'form-control', 'placeholder' => 'Office Name')) }}
-		    	{{ $errors->first('officename', '<span style="color: red">:message</span>') }}
+		    	{{ $errors->first('officeName', '<span class="error-message">Invalid input for office name.</span>') }}
 		    </div>
 		    <div class="col-md-3">
 		    	{{ Form::submit('Create', array('class' => 'btn btn-success btn-block')) }}
@@ -36,15 +36,16 @@
 	    		@if($offices->count())
 	    			@foreach($offices as $office)
 			    		<tr>
-			    			<td class=".col-md-8">
+			    			<td class="col-md-8">
 			    				<span class="current-text mode1">
 			    					{{  $office->officeName }}
 			    				</span>
 			    				{{ Form::open(['url' => "offices/$office->id/edit", 'class' => 'form-inline', 'role' => 'form']) }}
 									<input type = "text" name = "ofcname" class = "edit-text form-control mode2"/>
+									{{ $errors->first('ofcname', '<span class="error-message">Invalid input for office name.</span>') }}
 								{{ Form::close() }}
 			    			</td>
-			    			<td class=".col-md-4">
+			    			<td class="col-md-4">
 
 							{{HTML::decode (Form::button('<span class="glyphicon glyphicon-edit"></span>', ['class' => 'btn btn-success table-actions allow-edit mode1', 'data-original-title' => 'Edit Office', 'data-placement' => 'bottom', 'data-toggle' => 'tooltip']))}}
 							{{HTML::decode (link_to("offices/delete/$office->id", '<span class="glyphicon glyphicon-trash"></span>', ['class'=>'btn btn-danger table-actions mode1', 'onclick' => "return confirm('Are you sure you want to delete this?');",'title'=>'Delete Office']))}}

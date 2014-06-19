@@ -10,15 +10,31 @@ class OfficeController extends BaseController {
 		$this->office = $office;
 	}
 
+	/**
+	 * Display an arranged listing of all offices in the database.
+	 *
+	 * @return Response
+	 */
 	public function index()
 	{
-		//$offices = $this->office->all();
 		$offices=$this->office->orderBy('officeName','asc')->paginate(50);
 		return View::make('offices', compact('offices'));
 	}
 
+	/**
+	 * Store a newly created office in the database.
+	 *
+	 * @return Response
+	 */
 	public function store()
 	{
+		$rules = ['officeName' => 'required'];
+		$validation = Validator::make(Input::all(), $rules);
+
+		if($validation->fails()){
+			return Redirect::back()->withInput()->withErrors($validation->messages());
+		}
+
 		$input=Input::all();
 
 		if(!$this->office->fill($input)->isValid()) 
@@ -32,13 +48,18 @@ class OfficeController extends BaseController {
 		}
 	}
 
+	/**
+	 * Update the specified office in the database.
+	 *
+	 * @return Response
+	 */
 	public function update($id)
 	{
 		$rules = ['ofcname' => 'required'];
 		$validation = Validator::make(Input::all(), $rules);
 
 		if($validation->fails()){
-			return Redirect::back();
+			return Redirect::back()->withInput()->withErrors($validation->messages());
 		}
 		
 		$updateOffice = Office::find($id);
@@ -47,6 +68,11 @@ class OfficeController extends BaseController {
 		return Redirect::to('/offices')->with('success','Successfully deleted');
 	}
 
+	/**
+	 * Remove a specific office in the database.
+	 *
+	 * @return Response
+	 */
 	public function deleteOffice($id)
 	{
 		$deleteoffice = Office::find($id);
