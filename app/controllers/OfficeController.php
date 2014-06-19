@@ -32,10 +32,14 @@ class OfficeController extends BaseController {
 		}
 	}
 
-	public function deleteOffice()
+	public function deleteOffice($id)
 	{
 		//$offices = $this->office->all();
-		$offices=$this->office->orderBy('officeName','asc')->paginate(50);
-		return View::make('offices', compact('offices'));
+		/*$offices=$this->office->orderBy('officeName','asc')->paginate(50);
+		return View::make('offices', compact('offices'));*/
+		$deleteoffice = Office::find($id);
+		//dd($editOpcr);
+		$deleteoffice->delete();
+		return Redirect::to('/offices')->with('success','Successfully deleted');
 	}
 }

@@ -13,14 +13,8 @@
 
 		{{ HTML::script('http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js') }}
 
-		{{ HTML::style('css/custom.css') }}
-		{{ HTML::script('http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js') }}
-
 		{{ HTML::script('js/bootstrap.min.js') }}
-	
-
-
-
+		
 		{{ HTML::style('colvix/css/jquery.dataTables.css')}}
 		{{ HTML::style('colvix/css/dataTables.colVis.css')}}
 		{{ HTML::style('colvix/css/shCore.css')}}
