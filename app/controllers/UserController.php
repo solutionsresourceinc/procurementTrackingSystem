@@ -30,6 +30,10 @@ class UserController extends BaseController {
         $user = new User;
 
         $user->username = Input::get( 'username' );
+$checkusername = User::where('username', $user->username)->first();
+
+
+
         $user->email = Input::get( 'email' );
 
         $user->password = Input::get( 'password' );
@@ -44,6 +48,20 @@ class UserController extends BaseController {
 
 
 $errorcheck=0;
+
+$checkusername=0;
+
+$users= new User; $users = DB::table('users')->get();
+
+        foreach ($users as $userx){
+if ($userx->username==$user->username)
+   { $checkusername=1; $errorcheck=1; }
+      }
+if ($checkusername!=0){
+   Session::put('username_error', 'Username is already in use.');}
+
+    
+
 //Validations     
         if(ctype_alnum($user->username)&&(strlen($user->username)>=6))
         {}
