@@ -1,21 +1,26 @@
-<@extends('layouts.default')
+@extends('layouts.default')
 
 @section('content')
 	<h2>Create New Purchase Request</h2>
 	<hr />
-	{{ Form::open(['route'=>'purchaserRequest_submit'],'POST') }}
+	{{ Form::open(['route'=>'purchaseRequest_submit'],'POST') }}
 		<div class="row">
 			<div class="col-md-9">	
+
+				@if(Session::get('notice'))
+					<div class="alert alert-success"> {{ Session::get('notice') }}</div> 
+				@endif
+
 				<div class="form-group">
 
 					<div class="input-group">
 					  	<span class="input-group-addon">Project/Purpose *</span>
-					  	{{ Form::text('project_purpose','',array('class'=>'form-control','required','oninput'=>'check2(this)')) }}
+					  	{{ Form::text('projectPurpose','',array('class'=>'form-control','required','oninput'=>'check2(this)')) }}
 					</div><br>					
 
 					<div class="input-group">
 					  	<span class="input-group-addon">Source of Fund *</span>
-					  	{{ Form::text('source','',array('class'=>'form-control','required','oninput'=>'check2(this)')) }}
+					  	{{ Form::text('sourceOfFund','',array('class'=>'form-control','required','oninput'=>'check2(this)')) }}
 					</div><br>
 
 					<div class="input-group">
@@ -26,7 +31,7 @@
 
 					<div class="input-group">
 					  	<span class="input-group-addon">Office *</span>
-					  	<select required class="form-control">
+					  	<select required class="form-control" name="office">
 							<option value="">Please select</option>
 							@foreach($office as $key)
 								<option value="{{ $key->officeName }} ">{{ $key->officeName }}</option>
@@ -34,9 +39,9 @@
 						</select>
 					</div><br>
 
-					<div class="input-group">
+					<div class="input-group" name="requisitioner">
 					  	<span class="input-group-addon">Requisitioner *</span>
-					  	<select required class="form-control">
+					  	<select required class="form-control" name="requisitioner">
 							<option value="">Please select</option>
 								<option value="Requisitioner 1">Requisitioner 1</option>
 								<option value="Requisitioner 2">Requisitioner 2</option>
@@ -45,8 +50,18 @@
 					</div><br>
 
 					<div class="input-group">
+					  	<span class="input-group-addon">Mode of Procurement *</span>
+					  	<select required class="form-control" name="modeOfProcurement">
+							<option value="">Please select</option>
+								<option value="Workflow 1">Workflow 1</option>
+								<option value="Workflow 2">Workflow 2</option>
+								<option value="Workflow 3">Workflow 3</option>
+						</select>
+					</div><br>
+
+					<div class="input-group">
 					  	<span class="input-group-addon">Control No. *</span>
-					  	<input pattern=".{6,}" oninput="check(this)" required id="control" class="form-control" oninput="check(this)" oninvalid="this.setCustomValidity('Control No. is minumum of 6 digits')">
+					  	<input type="text" pattern=".{6,}" oninput="check(this)" name="ControlNo" required  class="form-control" oninput="check(this)" oninvalid="this.setCustomValidity('Control No. is minumum of 6 digits')">
 					</div><br>
 
 
@@ -95,7 +110,9 @@
 			}
 
 		</script>
-    		
+    	
     			
 	{{ Form::close() }}	
+
+	{{ Session::forget('notice'); }}
 @stop

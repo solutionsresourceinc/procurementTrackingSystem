@@ -14,7 +14,13 @@
 		{{ HTML::script('http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js') }}
 
 		{{ HTML::script('js/bootstrap.min.js') }}
-		
+
+	<!-- Agile Image Uploader-->
+		{{ HTML::script('jquery-1.4.min.js')}}
+		{{ HTML::script('jquery.flash.min.js')}}
+		{{ HTML::script('agile-uploader-3.0.js')}}
+		{{ HTML::style('agile-uploader.css') }}
+
 		{{ HTML::style('colvix/css/jquery.dataTables.css')}}
 		{{ HTML::style('colvix/css/dataTables.colVis.css')}}
 		{{ HTML::style('colvix/css/shCore.css')}}
@@ -70,9 +76,9 @@
 	    <div class="container theme-showcase" role="main">
 			@yield('content')
 		</div>
-		<script type="text/javascript">
-			@yield('footer')
-		</script>
+		
+		@yield('footer')
+		
 		<footer class="bs-docs-footer" role="contentinfo">
 			<div class="container">
 				<p id="copyright-section">Developed by {{ link_to('http://solutionsresource.com/', 'Solutions Resource, Inc.') }} All rights reserved. © 2014</p>
