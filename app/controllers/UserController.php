@@ -106,12 +106,13 @@ $errorcheck=0;
                   
                         $notice = "User created successfullly! ";         
             // Redirect with success message, You may replace "Lang::get(..." for your custom message.
-                        return Redirect::action('viewuser')
+                        return Redirect::action('user/view')
                             ->with( 'notice', $notice );
         }
         else
         {
-
+Session::put('msg', 'Failed to create user.');
+      
      
                         return Redirect::action('UserController@create')
                             ->withInput(Input::except('password'));
@@ -176,7 +177,9 @@ $errorcheck=0;
                        
 
 if($errorcheck==1)
-                       return Redirect::back();
+                      {
+Session::put('msg', 'Failed to edit user.');
+                       return Redirect::back();}
         
      else
         {
