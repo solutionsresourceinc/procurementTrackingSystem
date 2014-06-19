@@ -88,3 +88,13 @@ Route::filter('csrf', function()
 		throw new Illuminate\Session\TokenMismatchException;
 	}
 });
+
+
+Entrust::routeNeedsRole( 'dashboard', array('Administrator'), Redirect::to('/') );
+Entrust::routeNeedsRole( 'user/edit/*', array('Administrator'), Redirect::to('/') );
+Entrust::routeNeedsRole( 'user/delete', array('Administrator'), Redirect::to('/') );
+Entrust::routeNeedsRole( 'user/activate', array('Administrator'), Redirect::to('/') );
+Entrust::routeNeedsRole( 'user/create', array('Administrator'), Redirect::to('/') );
+
+
+
