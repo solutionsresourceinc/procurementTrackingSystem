@@ -8,6 +8,7 @@
 		{{ HTML::style('css/theme.css') }}
 		{{ HTML::style('css/signin.css') }}
 		{{ HTML::script('js/bootstrap.min.js') }}
+		@yield('header')
 	</head>
 	<body role="document">
 		<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -20,6 +21,11 @@
 			        <span class="icon-bar"></span>
 			        </button>
 			        <a class="navbar-brand" href="#">PTS</a>
+	        	</div>
+	        	<div class="navbar-collapse collapse">
+			        <ul class="nav navbar-nav navbar-right">
+			        	<li><a href="{{ URL::to('/logout') }}">Logout</a></li>
+			        </ul>
 	        	</div>
 	        	<div class="navbar-collapse collapse">
           			<ul class="nav navbar-nav">
