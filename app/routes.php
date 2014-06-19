@@ -95,5 +95,5 @@ Route::get('/offices', 'OfficeController@index');
 
 //Purchase Request Routes
 Route::get('purchaseRequest/create', 'PurchaseRequestController@create');
-Route::post('purchaserRequest/create', ['as' => 'purchaserRequest_submit', 'uses' => 'PurchaseRequestController@create_submit']);
+Route::post('purchaseRequest/create', ['as' => 'purchaseRequest_submit', 'uses' => 'PurchaseRequestController@create_submit']);
 
