@@ -18,10 +18,10 @@
             <input class="form-control"  type="text" name="username" id="username" value="{{{ Input::old('username') }}}" required>
 
             @if ( Session::get('username_error') )
-            <div class="alert alert-error alert-danger">
-                   <small> {{ Session::get('username_error'); }}</small>
+
+                   <h6> {{ Session::get('username_error'); }}</h6>
       
-            </div>
+    
             @endif
 
         </div>
@@ -30,20 +30,18 @@
             <label for="firstname">First Name</label>
             <input class="form-control"  type="test" name="firstname" id="firstname" value="{{{ Input::old('firstname') }}}" required>
             @if ( Session::get('firstname_error') )
-            <div class="alert alert-error alert-danger">
-                   <small> {{ Session::get('firstname_error'); }}</small>
+          <h6> {{ Session::get('firstname_error'); }}</h6>
       
-            </div>
+           
             @endif
         </div>
            <div class="form-group">
             <label for="lastname">Last Name</label>
             <input class="form-control" type="text" name="lastname" id="lastname" value="{{{ Input::old('lastname') }}}" required>
             @if ( Session::get('lastname_error') )
-            <div class="alert alert-error alert-danger">
-                   <small> {{ Session::get('lastname_error'); }}</small>
-            
-            </div>
+          <h6>{{ Session::get('lastname_error'); }}
+            </h6>
+      
             @endif
         </div>
 
@@ -51,20 +49,16 @@
             <label for="email">{{{ Lang::get('confide::confide.e_mail') }}}</label>
             <input class="form-control"  type="text" name="email" id="email" value="{{{ Input::old('email') }}}" required>
             @if ( Session::get('email_error') )
-            <div class="alert alert-error alert-danger">
-                   <small> {{ Session::get('email_error'); }}</small>
+           <h6> {{ Session::get('email_error'); }} </h6>
       
-            </div>
+  
             @endif
         </div>
         <div class="form-group">
             <label for="password">{{{ Lang::get('confide::confide.password') }}}</label>
             <input class="form-control" type="password" name="password" id="password" required>
              @if ( Session::get('password_error') )
-            <div class="alert alert-error alert-danger">
-                   <small> {{ Session::get('password_error'); }}</small>
-      
-            </div>
+        <h6>{{ Session::get('password_error'); }} </h6>
             @endif
         </div>
         <div class="form-group">
