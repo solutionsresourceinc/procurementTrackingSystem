@@ -71,13 +71,13 @@ if ($checkusername!=0){
             Session::put('username_error', 'Invalid username.');}
 
         
-        if(ctype_alpha(str_replace(' ','',$user->firstname)))
+        if(ctype_alpha(str_replace(array(' ', '-', '.'),'',$user->firstname)))
         {}
         else{
             $errorcheck=1;
             Session::put('firstname_error', 'Invalid first name.');}
 
-        if(ctype_alpha(str_replace(' ','',$user->lastname)))
+        if(ctype_alpha(str_replace(array(' ', '-', '.'),'',$user->lastname)))
           {}
         else{
             $errorcheck=1;
