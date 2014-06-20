@@ -1,3 +1,17 @@
+html, body{
+	height: 100%;
+}
+
+.container{
+	min-height: 100%;
+	margin-bottom: -120px;
+}
+
+.container:after {
+  content: "";
+  display: block;
+}
+
 .create-label{
 	font-size: 15px;
 	margin-top: 8px;
@@ -26,6 +40,7 @@
 	text-align: center;
 	border-top: 1px solid #e5e5e5;
 	background: #ECFDE6;
+	height: 100px;
 }
 
 #logout{
