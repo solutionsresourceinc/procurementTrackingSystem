@@ -6,15 +6,21 @@ use Illuminate\Auth\Reminders\RemindableTrait;
 use Illuminate\Auth\Reminders\RemindableInterface;
 use Zizaco\Confide\ConfideUser;
 use Zizaco\Entrust\HasRole;
-class Purchase extends Eloquent implements UserInterface, RemindableInterface {
+use LaravelBook\Ardent\Ardent;
+class Purchase extends Ardent implements UserInterface, RemindableInterface {
 
 	use UserTrait, RemindableTrait;
 
-	/**
-	 * The database table used by the model.
-	 *
-	 * @var string
-	 */
+	public static $rules = array(
+		'projectPurpose' => 'required | alpha_spaces',
+		'sourceOfFund' => 'required | alpha_spaces',
+		'amount' => 'required | price',
+		'office' => 'required',
+		'requisitioner' => 'required',
+		'modeOfProcurement' => 'required',
+		'ControlNo' => 'required | numeric | min:6',
+	);
+
 	protected $table = 'purchase_request';
 
 	/**

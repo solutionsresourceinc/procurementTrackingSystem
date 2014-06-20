@@ -16,7 +16,12 @@
 					<div class="input-group">
 					  	<span class="input-group-addon">Project/Purpose *</span>
 					  	{{ Form::text('projectPurpose','',array('class'=>'form-control','required','oninput'=>'check2(this)')) }}
-					</div><br>					
+					</div><br>			
+
+					<div class="input-group">
+					  	<span class="input-group-addon">Control No. *</span>
+					  	<input type="number" pattern=".{6,}" oninput="check(this)"  name="ControlNo" required  class="form-control" oninvalid="this.setCustomValidity('Control No. is minumum of 6 digits')">
+					</div><br>		
 
 					<div class="input-group">
 					  	<span class="input-group-addon">Source of Fund *</span>
@@ -59,10 +64,7 @@
 						</select>
 					</div><br>
 
-					<div class="input-group">
-					  	<span class="input-group-addon">Control No. *</span>
-					  	<input type="text" pattern=".{6,}" oninput="check(this)" name="ControlNo" required  class="form-control" oninput="check(this)" oninvalid="this.setCustomValidity('Control No. is minumum of 6 digits')">
-					</div><br>
+					
 
 
 					

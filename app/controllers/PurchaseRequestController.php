@@ -28,6 +28,8 @@ class PurchaseRequestController extends Controller {
 			$office = Office::all();      
 			return View::make('purchaseRequest.purchaseRequest_create')
 				->with('office', $office);
+
+
 		}
 		else
 		{
