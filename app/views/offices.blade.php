@@ -64,7 +64,7 @@
 			    		</tr>
 			    	@endforeach
 			    @else
-					<tr><td colspan="2"><span class="error-view">There are no offices.</span></td></tr>
+					<tr><td colspan="2"><span class="error-view">No data available.</span></td></tr>
 				@endif
 	    	</tbody>
 	    </table>

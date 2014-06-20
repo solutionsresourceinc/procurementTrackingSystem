@@ -2,7 +2,7 @@
 
 @section('content')
 
-<h3>Dashboard</h3>
+<h1 class="page-header">Dashboard</h1>
 
 
 <div class="modal fade" id="confirmDelete" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
@@ -44,7 +44,7 @@
 
 
 
-<table id="table_id" class="display">
+<table id="table_id" class="table table-striped display">
     <thead>
 		<tr>
 	    	<th>Project/Purpose</th>

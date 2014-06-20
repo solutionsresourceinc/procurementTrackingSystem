@@ -95,3 +95,7 @@ a:hover, a:focus{
 .center-pagination{
 	text-align: center;
 }
+
+.fc-div form{
+	padding: 0px 15px;
+}
