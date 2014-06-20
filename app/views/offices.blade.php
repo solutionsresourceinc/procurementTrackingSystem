@@ -3,6 +3,14 @@
 @section('content')
     <h1 class="page-header">Offices</h1>
 
+	@if(Session::get('success'))
+		<div class="alert alert-success"> {{ Session::get('success') }}</div> 
+	@endif
+
+	@if(Session::get('duplicate-error'))
+		<div class="alert alert-danger"> {{ Session::get('duplicate-error') }}</div> 
+	@endif
+
     <div id="office-create-form" class="well div-form">
 	    {{ Form::open(['route'=>'offices.store'], 'POST', array('role' => 'form')) }}
 	    	<div class="col-md-3">
