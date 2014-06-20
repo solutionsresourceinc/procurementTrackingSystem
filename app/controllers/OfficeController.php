@@ -28,7 +28,7 @@ class OfficeController extends BaseController {
 	 */
 	public function store()
 	{
-		$rules = ['officeName' => 'required'];
+		$rules = ['officeName' => 'required|alpha_spaces'];
 		$validation = Validator::make(Input::all(), $rules);
 
 		if($validation->fails()){
@@ -55,7 +55,7 @@ class OfficeController extends BaseController {
 	 */
 	public function update($id)
 	{
-		$rules = ['ofcname' => 'required'];
+		$rules = ['ofcname' => 'required|alpha_spaces'];
 		$validation = Validator::make(Input::all(), $rules);
 
 		if($validation->fails()){

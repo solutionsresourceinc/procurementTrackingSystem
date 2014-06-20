@@ -18,6 +18,8 @@
 	    {{ Form::close() }}
 	</div>
 
+	{{ $errors->first('ofcname', '<div class="alert alert-danger error-div"><span>Invalid input for office name.</span></div>') }}
+
     <div class="table-responsive">
         <table class="table table-striped">
 	    	<thead>
@@ -42,7 +44,6 @@
 			    				</span>
 			    				{{ Form::open(['url' => "offices/$office->id/edit", 'class' => 'form-inline', 'role' => 'form']) }}
 									<input type = "text" name = "ofcname" class = "edit-text form-control mode2"/>
-									{{ $errors->first('ofcname', '<span class="error-message">Invalid input for office name.</span>') }}
 								{{ Form::close() }}
 			    			</td>
 			    			<td class="col-md-4">

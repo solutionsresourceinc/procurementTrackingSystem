@@ -70,3 +70,8 @@ a:hover, a:focus{
 	font-size: 12px;
 	font-style: italic;
 }
+
+.error-div{
+	float: left;
+	width: 100%;
+}
