@@ -33,6 +33,8 @@
 		{{ HTML::script('colvix/js/demo.js')}}
 		{{ HTML::script('js/bootstrap-dropdown.js') }}
 
+		@yield('header')
+
 		<script type="text/javascript" language="javascript" class="init">
 			$(document).ready(function() {
 				$('#table_id').DataTable( {
