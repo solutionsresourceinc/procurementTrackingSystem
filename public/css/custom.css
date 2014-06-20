@@ -1,17 +1,3 @@
-html, body{
-	height: 100%;
-}
-
-.container{
-	min-height: 100%;
-	margin-bottom: -120px;
-}
-
-.container:after {
-  content: "";
-  display: block;
-}
-
 .create-label{
 	font-size: 15px;
 	margin-top: 8px;
@@ -41,6 +27,7 @@ html, body{
 	border-top: 1px solid #e5e5e5;
 	background: #ECFDE6;
 	height: 100px;
+	width:100%;
 }
 
 #logout{
@@ -89,4 +76,22 @@ a:hover, a:focus{
 .error-div{
 	float: left;
 	width: 100%;
+}
+
+.pagination>li>a, .pagination>li>span{
+	color: #929292;
+}
+
+.pagination>.active>a, 
+.pagination>.active>span, 
+.pagination>.active>a:hover, 
+.pagination>.active>span:hover, 
+.pagination>.active>a:focus, 
+.pagination>.active>span:focus{
+	background-color: #636363;
+	border-color: #CECECE;
+}
+
+.center-pagination{
+	text-align: center;
 }

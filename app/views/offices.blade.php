@@ -69,6 +69,11 @@
 	    	</tbody>
 	    </table>
 	</div>
+	<div class="container">
+		<div class="center-pagination">
+			<?php echo $offices->links(); ?>
+		</span>
+	</div>
 @stop
 
 @section('footer')
