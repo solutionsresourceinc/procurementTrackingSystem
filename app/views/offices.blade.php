@@ -7,6 +7,10 @@
 		<div class="alert alert-success"> {{ Session::get('success') }}</div> 
 	@endif
 
+	@if(Session::get('invalid'))
+		<div class="alert alert-danger"> {{ Session::get('invalid') }}</div> 
+	@endif
+
 	@if(Session::get('duplicate-error'))
 		<div class="alert alert-danger"> {{ Session::get('duplicate-error') }}</div> 
 	@endif
