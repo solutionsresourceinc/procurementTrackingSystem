@@ -1,5 +1,21 @@
 @extends('layouts.default')
 
+@section('header')
+	{{ HTML::script('drop_search/bootstrap-select.js')}}
+	{{ HTML::style('drop_search/bootstrap-select.css')}}
+	<script type="text/javascript">
+        $(window).on('load', function () {
+
+            $('.selectpicker').selectpicker({
+                'selectedText': 'cat'
+            });
+
+            // $('.selectpicker').selectpicker('hide');
+        });
+    </script>
+
+@stop
+
 @section('content')
 	<h1 class="page-header">Create New Purchase Request</h1>
 	
@@ -50,7 +66,7 @@
 
 						<div>
 						  	{{ Form::label('office', 'Office *', array('class' => 'create-label')) }}
-						  	<select required class="form-control" name="office">
+						  	<select required class="form-control selectpicker" data-live-search="true" name="office">
 								<option value="">Please select</option>
 								@foreach($office as $key)
 									<option value="{{ $key->officeName }} ">{{ $key->officeName }}</option>
@@ -65,7 +81,7 @@
 
 						<div name="requisitioner">
 						  	{{ Form::label('requisitioner', 'Requisitioner *', array('class' => 'create-label')) }}
-						  	<select required class="form-control" name="requisitioner">
+						  	<select required name="requisitioner" class="form-control selectpicker" data-live-search="true">
 								<option value="">Please select</option>
 									<option value="Requisitioner 1">Requisitioner 1</option>
 									<option value="Requisitioner 2">Requisitioner 2</option>
@@ -80,7 +96,7 @@
 
 						<div>
 						  	{{ Form::label('modeOfProcurement', 'Mode of Procurement *', array('class' => 'create-label')) }}
-						  	<select required class="form-control" name="modeOfProcurement">
+						  	<select required  name="modeOfProcurement" class="form-control selectpicker" data-live-search="true">
 								<option value="">Please select</option>
 									<option value="Workflow 1">Workflow 1</option>
 									<option value="Workflow 2">Workflow 2</option>
@@ -139,7 +155,13 @@
 		function check(input) 
 		{
 
-			
+			if(!input.value.match(/^\d+/)) {
+				input.setCustomValidity('Invalid Input.');
+			} 
+			else {
+				// input is valid -- reset the error message
+				 input.setCustomValidity('');
+			}
 		}
 
 		function check2(input) 
@@ -149,7 +171,6 @@
 				input.setCustomValidity('letters, numbers and spaces only');
 			} 
 			else {
-				// input is valid -- reset the error message
 				 input.setCustomValidity('');
 			}
 		}
@@ -158,7 +179,6 @@
 		{
 			var num = input.value;
 			var len = num.length;
-			//alert(len);
 
 			if(!input.value.match(/^\d+$/)) {
 				input.setCustomValidity('Invalid Input');
@@ -171,14 +191,11 @@
 
 			else 
 			{
-				// input is valid -- reset the error message
 				 input.setCustomValidity('');
 			}			
 
 	
 		}
-
-
 
 	</script>
 @stop
