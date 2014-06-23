@@ -76,7 +76,7 @@ class PurchaseRequestController extends Controller {
 	{
 		$purchase = Purchase::find($id);
 		return View::make('purchaseRequest.purchaseRequest_view')
-				->with('purchase',$purchase);
+				->with('purchase', $purchase);
 		//return $purchase;
 	}
 
