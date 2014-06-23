@@ -33,7 +33,31 @@ class PurchaseRequestController extends Controller {
 		}
 		else
 		{
-			return 'Failed to create purchase request! <br>' . $purchase;
+			//return 'Failed to create purchase request! <br>' . $purchase;
+			
+			// Set Main Error
+			$message = "Failed to create purchase Request";
+			Session::put('main_error', $message );
+
+			// Get Other Error Messages
+			$m1 = $purchase->validationErrors->first('projectPurpose');
+			$m2 = $purchase->validationErrors->first('sourceOfFund');
+			$m3 = $purchase->validationErrors->first('amount');
+			$m4 = $purchase->validationErrors->first('office');
+			$m5 = $purchase->validationErrors->first('requisitioner');
+			$m6 = $purchase->validationErrors->first('modeOfProcurement');
+			$m7 = $purchase->validationErrors->first('ControlNo');
+
+			// Inserting Error Message To a Session
+			Session::put('m1', $m1 );
+			Session::put('m2', $m2 );
+			Session::put('m3', $m3 );
+			Session::put('m4', $m4 );
+			Session::put('m5', $m5 );
+			Session::put('m6', $m6 );
+			Session::put('m7', $m7 );
+
+			return Redirect::back()->withInput(Input::except('password'));
 		}
 	}
 
