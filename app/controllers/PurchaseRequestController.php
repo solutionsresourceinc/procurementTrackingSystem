@@ -70,4 +70,9 @@ class PurchaseRequestController extends Controller {
 	{
 		return View::make('pr_view');
 	}
+
+	public function vieweach()
+	{
+		return View::make('purchaseRequest.purchaseRequest_view');
+	}
 }
