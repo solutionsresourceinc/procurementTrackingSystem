@@ -17,7 +17,6 @@ copy ($source.$file, $destination.$file);
   }
 
 ?>
-
 <html>
 	<head>
 		<meta charset="utf-8">
@@ -35,13 +34,16 @@ copy ($source.$file, $destination.$file);
 	<body role="document">
 		 <div class="container theme-showcase" role="main">
 
+
 <h2>The following files have been successfully been uploaded:</h2>
-
-<p><?php echo $thelist; ?></p>
-
+<p><?php echo $thelist ?></p>
 <p>If a certain file is not within the list, it means that the file type of that file is invalid. The system only accept .png, jpeg, and .gif files.</p>
+";
+
+
 
 
 </div>
 	</body>
 </html>
+

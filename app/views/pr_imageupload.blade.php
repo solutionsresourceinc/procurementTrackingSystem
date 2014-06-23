@@ -13,8 +13,8 @@
 			<h1>Upload Attachments</h1>
 
 
-			@if ( Session::get('typeerror') )
-            	{{ Session::get('typeerror'); }}        
+			@if ( Session::get('pr_id') )
+            	{{ Session::get('pr_id'); }}        
 			@endif
 
 			<form id="multipleDemo" enctype="multipart/form-data">
@@ -32,7 +32,7 @@
 
 	    <script type="text/javascript">
 	    	$('#multiple').agileUploader({
-	    		submitRedirect: 'results.php',
+	    		submitRedirect: 'resultstest',
 	    		formId: 'multipleDemo',
 			flashVars: {
 				firebug: false,

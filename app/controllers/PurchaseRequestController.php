@@ -5,7 +5,8 @@ class PurchaseRequestController extends Controller {
 	public function create()
 	{
 		$office = Office::all();
-		return View::make('purchaseRequest.purchaseRequest_create')->with('office',$office);
+		$users = User::all();
+		return View::make('purchaseRequest.purchaseRequest_create')->with('office',$office)->with('users',$users);
 	}
 
 	public function create_submit()
@@ -26,10 +27,10 @@ class PurchaseRequestController extends Controller {
 
 			Session::put('notice', $notice);
 			$office = Office::all();      
+			$users = User::all();
 			return View::make('purchaseRequest.purchaseRequest_create')
-				->with('office', $office);
-
-
+				->with('office', $office)
+				->with('users',$users);
 		}
 		else
 		{
@@ -71,8 +72,58 @@ class PurchaseRequestController extends Controller {
 		return View::make('pr_view');
 	}
 
-	public function vieweach()
+	public function vieweach($id)
 	{
-		return View::make('purchaseRequest.purchaseRequest_view');
+		$purchase = Purchase::find($id);
+		return View::make('purchaseRequest.purchaseRequest_view')
+				->with('purchase',$purchase);
+		//return $purchase;
 	}
+
+	public function edit_submit()
+	{
+		$edit = new Purchase;
+		$edit->projectPurpose = Input::get('projectPurpose');
+		$edit->sourceOfFund = Input::get('sourceOfFund');
+		$edit->amount = Input::get( 'amount' );
+		$edit->office = Input::get( 'office' );
+		$edit->requisitioner = Input::get( 'requisitioner' );
+		$edit->modeOfProcurement = Input::get( 'modeOfProcurement' );
+		$edit->ControlNo = Input::get( 'ControlNo' );
+		$edit->status = "Pending";
+
+		if($edit->save())
+		{
+			$notice = "Purchase request has been edited! ";  
+
+			Session::put('notice', $notice);
+			$office = Office::all();      
+			return Redirect::back();
+		}
+		else
+		{
+			//return 'Failed to create purchase request! <br>' . $purchase;
+			// Set Main Error
+			$message = "Failed to edit purchase Request";
+			Session::put('main_error', $message );
+
+			// Get Other Error Messages
+			$m1 = $edit->validationErrors->first('projectPurpose');
+			$m2 = $edit->validationErrors->first('sourceOfFund');
+			$m3 = $edit->validationErrors->first('amount');
+			$m4 = $edit->validationErrors->first('modeOfProcurement');
+			$m5 = $edit->validationErrors->first('ControlNo');
+
+			// Inserting Error Message To a Session
+			Session::put('m1', $m1 );
+			Session::put('m2', $m2 );
+			Session::put('m3', $m3 );
+			Session::put('m4', $m4 );
+			Session::put('m5', $m5 );
+
+			$office = Office::all();   
+			return Redirect::back()->withInput();
+		}
+	}
+
 }

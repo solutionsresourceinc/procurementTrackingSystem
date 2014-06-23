@@ -1,8 +1,11 @@
 @extends('layouts.default')
 
 @section('content')
-    <h1 class="page-header">Dashboard</h1>
-
+    <h1 class="page-header">List of Purchase Request</h1>
+    <div>
+        <a href="{{ URL::to('purchaseRequest/create') }}" class="btn btn-success">Create New Purchase Request</a>
+        <br><br><br>
+    </div>
     <div class="modal fade" id="confirmDelete" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -57,7 +60,7 @@
       	<tbody>
       		  @foreach ($requests as $request)
       	        <tr>
-      					    <td> {{ $request->projectPurpose; }}</td>
+      					 <td> {{ $request->projectPurpose; }}</td>
       			        <td> {{ $request->status; }}</td>
       			        <td> {{ $request->created_at; }}</td>
       			        <td>
@@ -65,6 +68,9 @@
       						          <button class='btn dropdown-toggle btn-primary' data-toggle='dropdown'>Action <span class='caret'></span></button>
       						
       						          <ul class='dropdown-menu'>
+                                        <li>
+                                            <a class='iframe btn' href="{{ URL::to('purchaseRequest/vieweach/'. $request->id) }}">View</a>
+                                        </li>
       		              		    <?php if($adm->role_id == 3) {?>
       								          <li><a class='iframe btn' href='edit/{{$request->id}}'>Edit</a></li>
       							            <?php } ?>
@@ -86,6 +92,7 @@
                 											</center>
                 										</form>
                 									</li>
+
       							            @endif
       						          </ul>
       					        </div>

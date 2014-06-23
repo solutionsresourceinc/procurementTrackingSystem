@@ -3,16 +3,12 @@
 @section('header')
 	{{ HTML::script('drop_search/bootstrap-select.js')}}
 	{{ HTML::style('drop_search/bootstrap-select.css')}}
-	<script type="text/javascript">
-        $(window).on('load', function () {
+	
+    {{ HTML::script('js/jquery.chained.min.js') }} 
 
-            $('.selectpicker').selectpicker({
-                'selectedText': 'cat'
-            });
 
-            // $('.selectpicker').selectpicker('hide');
-        });
-    </script>
+	
+	</script>
 
 @stop
 
@@ -64,50 +60,53 @@
 						@endif
 						<br>
 
-						<div>
-						  	{{ Form::label('office', 'Office *', array('class' => 'create-label')) }}
-						  	<select required class="form-control selectpicker" data-live-search="true" name="office">
-								<option value="">Please select</option>
+						<div class="form-group" id="template">
+							{{ Form::label('office', 'Office *', array('class' => 'create-label')) }}
+		                	<select id="office" name="office" class="form-control selectpicker" data-live-search="true">
+		                		<option value="">Please select</option>
 								@foreach($office as $key)
-									<option value="{{ $key->officeName }} ">{{ $key->officeName }}</option>
+									<option value="{{ $key->id }}">{{{ $key->officeName }}}</option>
 								@endforeach
-							</select>
-						</div>
+		            		</select>
+			            		@if (Session::get('m4'))
+									<font color="red"><i>{{ Session::get('m4') }}</i></font>
+								@endif
+								<br>
+		            	</div>
 
-						@if (Session::get('m4'))
-							<font color="red"><i>{{ Session::get('m4') }}</i></font>
-						@endif
-						<br>
+						
 
-						<div name="requisitioner">
-						  	{{ Form::label('requisitioner', 'Requisitioner *', array('class' => 'create-label')) }}
-						  	<select required name="requisitioner" class="form-control selectpicker" data-live-search="true">
-								<option value="">Please select</option>
-									<option value="Requisitioner 1">Requisitioner 1</option>
-									<option value="Requisitioner 2">Requisitioner 2</option>
-									<option value="Requisitioner 3">Requisitioner 3</option>
-							</select>
-						</div>
+			
 
-						@if (Session::get('m5'))
-							<font color="red"><i>{{ Session::get('m5') }}</i></font>
-						@endif
-						<br>
+						<div class="form-group" id="template">
+		                	{{ Form::label('requisitioner', 'Requisitioner *', array('class' => 'create-label')) }}
+			                <select class="form-control" id="requisitioner" name="requisitioner"   >
+			                	<option value="">Please select</option>
+			                	@foreach($users as $key2)
+			                		{{{ $fullname = $key2->lastname . ", " . $key2->firstname }}}
+									<option value="{{ $key2->id }}" class="{{$key2->office_id}}">{{ $fullname }}</option>
+								@endforeach
+			                	
+			                </select>
+			                @if (Session::get('m5'))
+								<font color="red"><i>{{ Session::get('m5') }}</i></font>
+							@endif
+							<br>
+		            	</div>
 
 						<div>
 						  	{{ Form::label('modeOfProcurement', 'Mode of Procurement *', array('class' => 'create-label')) }}
-						  	<select required  name="modeOfProcurement" class="form-control selectpicker" data-live-search="true">
+						  	<select  name="modeOfProcurement" id="modeOfProcurement" class="form-control selectpicker" data-live-search="true">
 								<option value="">Please select</option>
 									<option value="Workflow 1">Workflow 1</option>
 									<option value="Workflow 2">Workflow 2</option>
 									<option value="Workflow 3">Workflow 3</option>
 							</select>
+							@if (Session::get('m6'))
+								<font color="red"><i>{{ Session::get('m6') }}</i></font>
+							@endif
+							<br>
 						</div>
-
-						@if (Session::get('m6'))
-							<font color="red"><i>{{ Session::get('m6') }}</i></font>
-						@endif
-						<br>
 
 						<div>
 						  	{{ Form::label('ControlNo', 'Control No. *', array('class' => 'create-label')) }}
@@ -119,7 +118,10 @@
 						@endif
 						<br>
 
-						<div><br>
+
+
+
+			<div><br>
 							{{ Form::submit('Create Purchase Request',array('class'=>'btn btn-success')) }}
 							{{ link_to( '/', 'Cancel Create', array('class'=>'btn btn-default') ) }}
 						</div>
@@ -127,7 +129,33 @@
 				</div>	
 			</div>		
 		{{ Form::close() }}	
+
+
+
+<div>
+<?php
+$id = 0;
+	$purchase = Purchase::orderBy('id', 'ASC')->get();
+?>
+@foreach ($purchase as $purchases) 
+<?php	$id = $purchases->id; 
+
+?>
+@endforeach
+<?php 
+$id=$id+1;
+?>
+
+<a href="/attach/{{$id}}">
+<button class="btn btn-default">
+Attach Image
+</button></a>
+</div>
+	
 	</div>
+
+
+
 
 	{{ Session::forget('notice'); }}
 	{{ Session::forget('main_error'); }}
@@ -198,4 +226,19 @@
 		}
 
 	</script>
+
+	<script type="text/javascript">
+        $("#requisitioner").chainedTo("#office");
+    </script>
+
+    <script type="text/javascript">
+        $(window).on('load', function () {
+
+            $('.selectpicker').selectpicker({
+                'selectedText': 'cat'
+            });
+
+            //$('.selectpicker').selectpicker('hide');
+        });
+    </script>
 @stop
