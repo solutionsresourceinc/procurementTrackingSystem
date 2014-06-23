@@ -115,7 +115,15 @@ Route::get( 'purchaseRequest/edit/{id}', function($id)
 	return View::make('pr_edit')->with('id',$id);
 });
 Route::post('purchaseRequest/edit/{id}',[ 'uses' => 'PurchaseRequestController@edit_submit']);
-
+Route::post( 'purchaseRequest/delete', function()
+{
+	$errors="Account Deactivated.";
+	$id=Input::get('del_pr');
+	Purchase::where('id',$id)->delete();
+	
+	Session::flash('message','Successfully deleted the user.');
+	return Redirect::to('purchaseRequest/view');
+});
 
 Route::get('/offices', 'OfficeController@index');
 

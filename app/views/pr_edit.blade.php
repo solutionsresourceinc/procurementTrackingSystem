@@ -65,9 +65,9 @@
                     @foreach ($requi as $requis)
                         @if($requis->office_id != 0)
                             @if($requis->id == $p_id->requisitioner )
-                                <option value="{{{ $requis->firstname }}}" class="{{{ $requis->office_id }}}" selected> {{{ $requis-> firstname }}} </option>
+                                <option value="{{{ $requis->id }}}" class="{{{ $requis->office_id }}}" selected> {{{ $requis-> firstname }}} </option>
                             @else
-                                <option value="{{{ $requis->firstname }}}" class="{{{ $requis->office_id }}}" > {{{ $requis-> firstname }}} </option>
+                                <option value="{{{ $requis->id }}}" class="{{{ $requis->office_id }}}" > {{{ $requis-> firstname }}} </option>
                             @endif
                         @endif
                     @endforeach

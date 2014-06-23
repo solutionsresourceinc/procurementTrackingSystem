@@ -110,6 +110,7 @@ class PurchaseRequestController extends Controller {
 			//Session::put('notice', $notice);
 			//$office = Office::all();      
 			//return Redirect::back();
+
 			$vari = Purchase::find($id);
 			$vari->projectPurpose = Input::get('projectPurpose');
 			$vari->sourceOfFund = Input::get('sourceOfFund');
