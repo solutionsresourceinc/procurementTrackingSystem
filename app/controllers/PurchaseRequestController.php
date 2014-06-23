@@ -5,7 +5,8 @@ class PurchaseRequestController extends Controller {
 	public function create()
 	{
 		$office = Office::all();
-		return View::make('purchaseRequest.purchaseRequest_create')->with('office',$office);
+		$users = User::all();
+		return View::make('purchaseRequest.purchaseRequest_create')->with('office',$office)->with('users',$users);
 	}
 
 	public function create_submit()
@@ -28,9 +29,11 @@ class PurchaseRequestController extends Controller {
 			$notice = "Purchase request created successfullly! ";  
 
 			Session::put('notice', $notice);
-			$office = Office::all();      
+			$office = Office::all();     
+			$users = User::all(); 
 			return View::make('purchaseRequest.purchaseRequest_create')
-				->with('office', $office);
+				->with('office', $office)
+				->with('users',$users);
 
 
 
@@ -92,5 +95,10 @@ if($attachs->doc_id==$Session::get('doc_id'))
 	public function view()
 	{
 		return View::make('pr_view');
+	}
+
+	public function vieweach()
+	{
+		return View::make('purchaseRequest.purchaseRequest_view');
 	}
 }

@@ -1,8 +1,11 @@
 @extends('layouts.default')
 
 @section('content')
-    <h1 class="page-header">Dashboard</h1>
-
+    <h1 class="page-header">List of Purchase Request</h1>
+    <div>
+        <a href="{{ URL::to('purchaseRequest/create') }}" class="btn btn-success">Create New Purchase Request</a>
+        <br><br><br>
+    </div>
     <div class="modal fade" id="confirmDelete" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -57,7 +60,7 @@
       	<tbody>
       		  @foreach ($requests as $request)
       	        <tr>
-      					    <td> {{ $request->projectPurpose; }}</td>
+      					 <td> {{ $request->projectPurpose; }}</td>
       			        <td> {{ $request->status; }}</td>
       			        <td> {{ $request->created_at; }}</td>
       			        <td>
