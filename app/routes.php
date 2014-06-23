@@ -81,22 +81,11 @@ Route::post('offices/{id}/edit',['as' => 'offices.update', 'uses' => 'OfficeCont
 //For Image Upload Testing
 
 
-Route::get( 'imagepass', function()
+Route::get( 'pr_imageupload', function()
 {
 	return View::make('pr_imageupload');
 });
-Route::get( 'attach/{id}', function($id)
-{ Session::put('pr_id', $id);
-	return Redirect::to('imagepass');
-});
-Route::get( 'resultstest', function()
-{
-	return View::make('resultstest');
-});
-Route::get( 'test', function()
-{
-	return View::make('testdisplay');
-});
+
 //Purchase Request Routes
 //Route::resource('preqList', 'PreqController');
 Route::get('purchaseRequest/edit','PurchaseRequestController@edit');
@@ -108,7 +97,7 @@ Route::get( 'purchaseRequest/edit/{id}', function($id)
 {
 	return View::make('pr_edit')->with('id',$id);
 });
-Route::post('purchaseRequest/edit/{id}',[ 'uses' => 'PurchaseRequestController@edit']);
+Route::post('purchaseRequest/edit/{id}',[ 'uses' => 'PurchaseRequestController@edit_submit']);
 
 
 Route::get('/offices', 'OfficeController@index');

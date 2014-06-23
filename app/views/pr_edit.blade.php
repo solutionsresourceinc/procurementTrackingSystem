@@ -3,70 +3,95 @@
 @section('content')
     <?php $p_id = Purchase::find($id); ?>
 
-    <h1 class="page-header">Purchase Request Edit</h1>  
+    <h1 class="page-header">Edit Purchase Request</h1>  
 
     <form method="POST" action="edit"  class = "form-create">
         <fieldset>
             <input type="hidden" name="id" value="">
+           
+            @if(Session::get('notice'))
+                <div class="alert alert-success"> {{ Session::get('notice') }}</div> 
+            @endif
+
+            @if(Session::get('main_error'))
+                <div class="alert alert-danger"> {{ Session::get('main_error') }}</div> 
+            @endif
 
             <div class="form-group">
-                <label for="project">Project/Purpose</label>
-                <input class="form-control"  type="text" name="project" id="project" value="{{{ $p_id->projectPurpose }}}" required>
+                <label for="projectPurpose">Project/Purpose</label>
+                <input class="form-control"  type="text" name="projectPurpose" id="projectPurpose" value="{{{ $p_id->projectPurpose }}}" required>
+                @if (Session::get('m1'))
+                    <font color="red"><i>{{ Session::get('m1') }}</i></font>
+                @endif
             </div>
 
             <div class="form-group">
-                <label for="funds">Source of Funds</label>
-                <input class="form-control" type="text" name="funds" id="funds" value="{{{ $p_id->sourceOfFund }}}" required>
+                <label for="sourceOfFund">Source of Funds</label>
+                <input class="form-control" type="text" name="sourceOfFund" id="sourceOfFund" value="{{{ $p_id->sourceOfFund }}}" required>
+                @if (Session::get('m2'))
+                    <font color="red"><i>{{ Session::get('m2') }}</i></font>
+                @endif
             </div>
 
             <div class="form-group">
-                <label for="amt">Amount</label>
-                <input class="form-control"  type="text" name="amt" id="amt" value="{{{ $p_id->amount }}}" required>
+                <label for="amount">Amount</label>
+                <input class="form-control"  type="text" name="amount" id="amount" value="{{{ $p_id->amount }}}" required>
+                @if (Session::get('m3'))
+                    <font color="red"><i>{{ Session::get('m3') }}</i></font>
+                @endif
             </div>
             
             <div class="form-group" id="template">
-                <select id="mark" name="mark" class="form-control">
-                <!--
-                <?php $offices = DB::table('offices')->lists('officeName') ?>
+                <label for="office">Office</label>
+                <select id="office" name="office" class="form-control">
+                <?php 
+                    //$offices = DB::table('offices')->lists('officeName');
+                    $offices = DB::table('offices')->get();
+                ?>
                 @foreach($offices as $office)
                     @if($p_id->office ==  $office)
-                        <option value="{{{ $office }}}" selected>{{$office;}}</option>
+                        <option value="{{{ $office->id }}}" selected>{{$office->officeName;}}</option>
                     @else
-                        <option value="{{{ $office }}}">{{$office;}}</option>
+                        <option value="{{{ $office->id }}}">{{$office->officeName;}}</option>
                     @endif
                 @endforeach
-                -->
-                <option value="">--</option>
-                <option value="bmw">BMW</option>
-                <option value="audi">Audi</option>
             </select>
             </div>
 
             <div class="form-group" id="template">
-                <label for="req">Requisitioner</label>
-                <select id="series" name="series" class="form-control">
-                    <option value="">--</option>
-                    <option value="series-3" class="bmw">3 series</option>
-                    <option value="series-5" class="bmw">5 series</option>
-                    <option value="series-6" class="bmw">6 series</option>
-                    <option value="a3" class="audi">A3</option>
-                    <option value="a4" class="audi">A4</option>
-                    <option value="a5" class="audi">A5</option>
+                <label for="requisitioner">Requisitioner</label>
+                <select id="requisitioner" name="requisitioner" class="form-control">
+                    <?php $requi = DB::table('users')->get(); ?>
+                    @foreach ($requi as $requis)
+                        @if($requis->office_id != 0)
+                            @if($requis->id == $p_id->requisitioner )
+                                <option value="{{{ $requis->firstname }}}" class="{{{ $requis->office_id }}}" selected> {{{ $requis-> firstname }}} </option>
+                            @else
+                                <option value="{{{ $requis->firstname }}}" class="{{{ $requis->office_id }}}" > {{{ $requis-> firstname }}} </option>
+                            @endif
+                        @endif
+                    @endforeach
                 </select>
             </div>
              
             <div class="form-group">
-                <label for="mop">Mode of Procurement</label>
-                <select class="form-control" name="mop" id="mop">
-                    <option value="Mode 1"> Mode 1 </option>
-                    <option value="Mode 2"> Mode 2 </option>
-                    <option value="Mode 3"> Mode 3 </option>
+                <label for="modeOfProcurement">Mode of Procurement</label>
+                <select class="form-control" name="modeOfProcurement" id="modeOfProcurement">
+                    <option value="Mode 1"> Below 50,000 </option>
+                    <option value="Mode 2"> Between 50,00 and 500,000 </option>
+                    <option value="Mode 3"> Above 500,000 </option>
                 </select>
+                @if (Session::get('m4'))
+                    <font color="red"><i>{{ Session::get('m4') }}</i></font>
+                @endif
             </div>
 
             <div class="form-group">
-                <label for="cnum">Control No.</label>
-                <input class="form-control"  type="text" name="cnum" id="cnum" value="{{{ $p_id->ControlNo }}}" required>
+                <label for="ControlNo">Control No.</label>
+                <input class="form-control"  type="text" name="ControlNo" id="ControlNo" value="{{{ $p_id->ControlNo }}}" required>
+                @if (Session::get('m5'))
+                    <font color="red"><i>{{ Session::get('m5') }}</i></font>
+                @endif
             </div>
           
             <div class="form-actions form-group">
@@ -76,18 +101,18 @@
     </form>
 
     <?php
-    /*
-    Session::forget('firstname_error');
-    Session::forget('lastname_error');
-    Session::forget('password_error');
-    Session::forget('email_error');
-    Session::forget('msg');
-    */
+        {{ Session::forget('notice'); }}
+        {{ Session::forget('main_error'); }}
+        {{ Session::forget('m1'); }}
+        {{ Session::forget('m2'); }}
+        {{ Session::forget('m3'); }}
+        {{ Session::forget('m4'); }}
+        {{ Session::forget('m5'); }}
     ?>
-
     <script type="text/javascript">
-        $("#series").chained("#mark");
+        $("#requisitioner").chained("#office");
     </script>
+
 @stop
 
 @section('footer')
