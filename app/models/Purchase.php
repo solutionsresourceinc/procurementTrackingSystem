@@ -25,7 +25,7 @@ class Purchase extends Ardent implements UserInterface, RemindableInterface {
 
 	// Customized Error Message
 	public static $customMessages = array(
-		'alpha_spaces' => 'The :attribute field should only contain letters, numbers and spaces',
+	//	'alpha_spaces' => 'The :attribute field should only contain letters, numbers and spaces',
 		'price' => 'The :attribute field should only contain numbers, dot, comma',
 
 

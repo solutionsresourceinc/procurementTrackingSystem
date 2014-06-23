@@ -44,7 +44,10 @@ Route::post('user/edit/{id}',[ 'uses' => 'UserController@edit']);
 
 Route::get('create_roles','UserController@getRole');
 
+Route::get('back', function(){
+return View::make('back');
 
+});
 
 
 Route::post( 'user/delete', function()

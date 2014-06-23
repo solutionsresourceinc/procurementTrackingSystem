@@ -28,6 +28,8 @@
 			</form>
 
 			<a href="#" onClick="document.getElementById('agileUploaderSWF').submit();"><button class ="btn btn-default">Submit</button></a>
+	
+
 		</div>
 
 	    <script type="text/javascript">
