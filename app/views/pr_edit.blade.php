@@ -1,7 +1,7 @@
 @extends('layouts.login')
 
 @section('content')
-    <?php //$user = User::find($id); ?>
+    <?php $p_id = Purchase::find($id); ?>
 
     <h1 class="page-header">Purchase Request Edit</h1>  
 
@@ -11,26 +11,35 @@
 
             <div class="form-group">
                 <label for="project">Project/Purpose</label>
-                <input class="form-control"  type="text" name="project" id="project" value="" required>
+                <input class="form-control"  type="text" name="project" id="project" value="{{{ $p_id->projectPurpose }}}" required>
             </div>
 
             <div class="form-group">
                 <label for="funds">Source of Funds</label>
-                <input class="form-control" type="text" name="funds" id="funds" value="" required>
+                <input class="form-control" type="text" name="funds" id="funds" value="{{{ $p_id->sourceOfFund }}}" required>
             </div>
 
             <div class="form-group">
                 <label for="amt">Amount</label>
-                <input class="form-control"  type="text" name="amt" id="amt" value="" required>
+                <input class="form-control"  type="text" name="amt" id="amt" value="{{{ $p_id->amount }}}" required>
             </div>
             
             <div class="form-group" id="template">
-                <label for="ofc">Office</label>
                 <select id="mark" name="mark" class="form-control">
-                    <option value="">--</option>
-                    <option value="bmw">BMW</option>
-                    <option value="audi">Audi</option>
-                </select>
+                <!--
+                <?php $offices = DB::table('offices')->lists('officeName') ?>
+                @foreach($offices as $office)
+                    @if($p_id->office ==  $office)
+                        <option value="{{{ $office }}}" selected>{{$office;}}</option>
+                    @else
+                        <option value="{{{ $office }}}">{{$office;}}</option>
+                    @endif
+                @endforeach
+                -->
+                <option value="">--</option>
+                <option value="bmw">BMW</option>
+                <option value="audi">Audi</option>
+            </select>
             </div>
 
             <div class="form-group" id="template">
@@ -57,7 +66,7 @@
 
             <div class="form-group">
                 <label for="cnum">Control No.</label>
-                <input class="form-control"  type="text" name="cnum" id="cnum" value="" required>
+                <input class="form-control"  type="text" name="cnum" id="cnum" value="{{{ $p_id->ControlNo }}}" required>
             </div>
           
             <div class="form-actions form-group">
@@ -75,10 +84,11 @@
     Session::forget('msg');
     */
     ?>
-@stop
 
-@section('footer')
     <script type="text/javascript">
         $("#series").chained("#mark");
     </script>
+@stop
+
+@section('footer')
 @stop
