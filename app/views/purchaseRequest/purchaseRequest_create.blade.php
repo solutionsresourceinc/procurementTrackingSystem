@@ -119,7 +119,10 @@
 						@endif
 						<br>
 
-						<div><br>
+
+
+
+			<div><br>
 							{{ Form::submit('Create Purchase Request',array('class'=>'btn btn-success')) }}
 							{{ link_to( '/', 'Cancel Create', array('class'=>'btn btn-default') ) }}
 						</div>
@@ -127,7 +130,33 @@
 				</div>	
 			</div>		
 		{{ Form::close() }}	
+
+
+
+<div>
+<?php
+$id = 0;
+	$purchase = Purchase::orderBy('id', 'ASC')->get();
+?>
+@foreach ($purchase as $purchases) 
+<?php	$id = $purchases->id; 
+
+?>
+@endforeach
+<?php 
+$id=$id+1;
+?>
+
+<a href="/attach/{{$id}}">
+<button class="btn btn-default">
+Attach Image
+</button></a>
+</div>
+	
 	</div>
+
+
+
 
 	{{ Session::forget('notice'); }}
 	{{ Session::forget('main_error'); }}

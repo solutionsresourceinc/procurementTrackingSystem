@@ -20,6 +20,9 @@ class PurchaseRequestController extends Controller {
 		$purchase->ControlNo = Input::get( 'ControlNo' );
 		$purchase->status = 'Pending';
 
+
+
+
 		if($purchase->save())
 		{
 			$notice = "Purchase request created successfullly! ";  
@@ -30,11 +33,31 @@ class PurchaseRequestController extends Controller {
 				->with('office', $office);
 
 
+
 		}
 		else
 		{
 			//return 'Failed to create purchase request! <br>' . $purchase;
 			
+
+$document = Document::find(Session::get('doc_id'));
+$document->delete();
+
+
+$attach= new Attachments; 
+$attach = DB::table('attachments')->get();
+?>
+@foreach ($attach as $attachs) 
+<?php
+if($attachs->doc_id==$Session::get('doc_id'))
+	$attachs->delete();
+?>	
+@endforeach
+<?php
+
+
+
+
 			// Set Main Error
 			$message = "Failed to create purchase Request";
 			Session::put('main_error', $message );
