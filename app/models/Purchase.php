@@ -12,8 +12,8 @@ class Purchase extends Ardent implements UserInterface, RemindableInterface {
 	use UserTrait, RemindableTrait;
 
 	public static $rules = array(
-		'projectPurpose' => 'required | alpha_spaces',
-		'sourceOfFund' => 'required | alpha_spaces',
+		'projectPurpose' => 'required',
+		'sourceOfFund' => 'required',
 		'amount' => 'required | price',
 		'office' => 'required',
 		'requisitioner' => 'required',
