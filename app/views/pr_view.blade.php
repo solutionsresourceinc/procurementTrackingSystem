@@ -68,14 +68,19 @@
       						          <button class='btn dropdown-toggle btn-primary' data-toggle='dropdown'>Action <span class='caret'></span></button>
       						
       						          <ul class='dropdown-menu'>
-                                        <li><a class='iframe btn' href="{{ URL::to('purchaseRequest/vieweach/'. $request->id) }}">View</a></li>
-                                        <li><a class='iframe btn' href='edit/{{$request->id}}'>Edit</a></li>
+                            <li><a class='iframe btn' href="{{ URL::to('purchaseRequest/vieweach/'. $request->id) }}">View</a></li>
+                      <?php
+                        $adm = Assigned::where('user_id', Auth::User()->id)->first();
+                        if($adm->role_id == 3) {
+                      ?>
+                        <li><a class='iframe btn' href='edit/{{$request->id}}'>Edit</a></li>
        									<li>
        										<form method="POST" action="delete"/ id="myForm_{{ $request->id }}" name="myForm">
-       										   <input type="hidden" name="del_pr" value="{{ $request->id }}">
-       			  							    <center><button class="iframe btn" style="background-color:transparent" type="button" data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $request->id }})"  data-title="Delete User" data-message="Are you sure you want to delete purchase request?">Delete</button></center>
+       									     <input type="hidden" name="del_pr" value="{{ $request->id }}">
+       			  					     <center><button class="iframe btn" style="background-color:transparent" type="button" data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $request->id }})"  data-title="Delete User" data-message="Are you sure you want to delete purchase request?">Delete</button></center>
         									</form>
         								</li>
+                      <?php } ?>
       						          </ul>
       					        </div>
       			        </td>
