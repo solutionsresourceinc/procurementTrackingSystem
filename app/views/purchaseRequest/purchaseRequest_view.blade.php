@@ -11,7 +11,7 @@
 	<!-- put control number (id) here -->
 	@foreach($purchase as $key)
 
-	</span><h2 class="pull-left">{{ $purchase->ControlNo }}</h2>
+	</span><h2 class="pull-left">{{ $key->ControlNo }}</h2>
 
 	<!-- change urls when when purchase request functions are final -->
 	<div class="btn-group pull-right options">
@@ -33,7 +33,7 @@
 		<table width="100%" class="pr-details-table">
 			<tr>
 				<td width="25%" class="pr-label">Category:</td>
-				<td>{{ $purchase->modeOfProcurment</td>
+				<td>Small Value Procurement (Below P 50,000)</td>
 			</tr>
 			<tr>
 				<td class="pr-label">Requisitioner</td>
