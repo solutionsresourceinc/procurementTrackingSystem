@@ -69,9 +69,12 @@ class PurchaseRequestController extends Controller {
 		return View::make('pr_view');
 	}
 
-	public function vieweach()
+	public function vieweach($id)
 	{
-		return View::make('purchaseRequest.purchaseRequest_view');
+		$purchase = Purchase::find($id);
+		return View::make('purchaseRequest.purchaseRequest_view')
+				->with('purchase',$purchase);
+		//return $purchase;
 	}
 
 	public function edit_submit()

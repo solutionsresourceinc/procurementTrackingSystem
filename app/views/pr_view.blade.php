@@ -68,6 +68,9 @@
       						          <button class='btn dropdown-toggle btn-primary' data-toggle='dropdown'>Action <span class='caret'></span></button>
       						
       						          <ul class='dropdown-menu'>
+                                        <li>
+                                            <a class='iframe btn' href="{{ URL::to('purchaseRequest/vieweach/'. $request->id) }}">View</a>
+                                        </li>
       		              		    <?php if($adm->role_id == 3) {?>
       								          <li><a class='iframe btn' href='edit/{{$request->id}}'>Edit</a></li>
       							            <?php } ?>
@@ -89,6 +92,7 @@
                 											</center>
                 										</form>
                 									</li>
+
       							            @endif
       						          </ul>
       					        </div>
