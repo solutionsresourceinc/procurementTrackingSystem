@@ -9,7 +9,7 @@
 		"laravelbook/ardent": "dev-master",
 	"zizaco/confide": "3.2.x",
 	"zizaco/entrust": "dev-master",
-	"intervention/image": "2.*"
+	
 	},
 	"autoload": {
 		"classmap": [

@@ -20,6 +20,7 @@ class CreateAttachtmentsTable extends Migration {
             $table->binary('data');
             $table->integer('doc_id');
               $table->timestamps();
+              $table->integer('saved')->default(0);
 		}
 	);
 }
