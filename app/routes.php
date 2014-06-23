@@ -91,6 +91,8 @@ Route::get( 'pr_imageupload', function()
 Route::get('purchaseRequest/edit','PurchaseRequestController@edit');
 Route::get('purchaseRequest/view','PurchaseRequestController@view');
 
+Route::get('purchaseRequest/vieweach','PurchaseRequestController@vieweach');	//change this for the view of each puchase request
+
 Route::get( 'purchaseRequest/edit/{id}', function($id)
 {
 	return View::make('pr_edit')->with('id',$id);

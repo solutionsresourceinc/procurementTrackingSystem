@@ -99,3 +99,28 @@ a:hover, a:focus{
 .fc-div form{
 	padding: 0px 15px;
 }
+
+.clear{
+	clear: both;
+}
+
+.options{
+	margin-top: 20px;
+}
+
+.pr-details-table{
+	margin: 15px;
+}
+
+.pr-label{
+	font-weight: bold;
+	padding: 2px 10px;
+}
+
+.img-thumbnail{
+	margin: 10px;
+}
+
+#img-section{
+	text-align: center;
+}
