@@ -76,12 +76,14 @@ class PurchaseRequestController extends Controller {
 	{
 		$purchase = Purchase::find($id);
 		return View::make('purchaseRequest.purchaseRequest_view')
-				->with('purchase',$purchase);
+				->with('purchase', $purchase);
 		//return $purchase;
 	}
 
 	public function edit_submit()
 	{
+		$id = Input::get('purch_id');
+
 		$edit = new Purchase;
 		$edit->projectPurpose = Input::get('projectPurpose');
 		$edit->sourceOfFund = Input::get('sourceOfFund');
@@ -92,16 +94,50 @@ class PurchaseRequestController extends Controller {
 		$edit->ControlNo = Input::get( 'ControlNo' );
 		$edit->status = "Pending";
 
-		if($edit->save())
-		{
-			$notice = "Purchase request has been edited! ";  
+		$e_val = true;
 
-			Session::put('notice', $notice);
-			$office = Office::all();      
-			return Redirect::back();
+		if(!ctype_alnum(str_replace(' ','',$edit->projectPurpose)))
+			$e_val = false;
+		if(!ctype_alnum(str_replace(' ','',$edit->sourceOfFund)))
+			$e_val = false;
+		if(!preg_match("/^[0-9,.]+$/", $edit->amount))
+			$e_val = false;
+		if(!is_numeric($edit->ControlNo))
+			$e_val = false;
+
+		if($e_val)
+		{
+			//Session::put('notice', $notice);
+			//$office = Office::all();      
+			//return Redirect::back();
+			$vari = Purchase::find($id);
+			$vari->projectPurpose = Input::get('projectPurpose');
+			$vari->sourceOfFund = Input::get('sourceOfFund');
+			$vari->amount = Input::get( 'amount' );
+			$vari->office = Input::get( 'office' );
+			$vari->requisitioner = Input::get( 'requisitioner' );
+			$vari->modeOfProcurement = Input::get( 'modeOfProcurement' );
+			$vari->ControlNo = Input::get( 'ControlNo' );
+			$vari->status = 'Pending';
+			$vari->save();
+
+			DB::table('purchase_request')
+            ->where('id', $id)
+            ->update(array( 'projectPurpose' => $edit->projectPurpose,
+            				'sourceOfFund' => $edit->sourceOfFund, 
+            				'amount' => $edit->amount, 
+            				'office' => $edit->office, 
+            				'requisitioner' => $edit->requisitioner,
+            				'modeOfProcurement' => $edit->modeOfProcurement, 
+            				'ControlNo' => $edit->ControlNo));
+
+           	$notice = "Successfully edited Purchase Request.";
+            // Redirect with success message, You may replace "Lang::get(..." for your custom message.
+            return Redirect::back()->with( 'notice', $notice );
 		}
 		else
 		{
+			$edit->save();
 			//return 'Failed to create purchase request! <br>' . $purchase;
 			// Set Main Error
 			$message = "Failed to edit purchase Request";

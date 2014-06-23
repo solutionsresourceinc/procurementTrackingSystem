@@ -7,7 +7,7 @@
 
     <form method="POST" action="edit"  class = "form-create">
         <fieldset>
-            <input type="hidden" name="id" value="">
+            <input type="hidden" name="purch_id" id="purch_id" value="{{{ $p_id->id }}}">
            
             @if(Session::get('notice'))
                 <div class="alert alert-success"> {{ Session::get('notice') }}</div> 

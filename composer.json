@@ -10,6 +10,7 @@
 	"zizaco/confide": "3.2.x",
 	"zizaco/entrust": "dev-master"
 	
+
 	},
 	"autoload": {
 		"classmap": [

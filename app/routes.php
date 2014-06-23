@@ -124,3 +124,7 @@ Route::get('purchaseRequest/create', 'PurchaseRequestController@create');
 Route::post('purchaseRequest/create', ['as' => 'purchaseRequest_submit', 'uses' => 'PurchaseRequestController@create_submit']);
 Route::get( 'purchaseRequest/vieweach/{id}', 'PurchaseRequestController@vieweach');
 
+
+Route::get('workflow/below-fifty', function(){
+	return View::make('workflows.below_fifty_workflow');
+});
