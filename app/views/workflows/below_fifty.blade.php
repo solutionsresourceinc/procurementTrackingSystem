@@ -10,9 +10,9 @@
 		<div class="panel-body">
 			<table border="1" class="workflow-table">
 				<tr>
-					<th width="25%"><center>TASK</center></th>
-					<th width="45%"><center>DESIGNATION ASSIGNED</center></th>
-					<th width="25%"><center>ACTION</center></th>
+					<th class="workflow-th" width="25%">TASK</th>
+					<th class="workflow-th" width="45%">DESIGNATION ASSIGNED</th>
+					<th class="workflow-th" width="25%">ACTION</th>
 				</tr>
 				<tr>
 					<td>1. PPMP CERTIFICATION</td>
@@ -95,9 +95,9 @@
 		<div class="panel-body">
 			<table border="1" class="workflow-table">
 				<tr>
-					<th width="25%"><center>TASK</center></th>
-					<th width="45%"><center>DESIGNATION ASSIGNED</center></th>
-					<th width="25%"><center>ACTION</center></th>
+					<th class="workflow-th" width="25%">TASK</th>
+					<th class="workflow-th" width="45%">DESIGNATION ASSIGNED</th>
+					<th class="workflow-th" width="25%">ACTION</th>
 				</tr>
 				<tr>
 					<td>1. 3 RFQ CANVASS</td>
@@ -130,9 +130,9 @@
 		<div class="panel-body">
 			<table border="1" class="workflow-table">
 				<tr>
-					<th width="25%"><center>TASK</center></th>
-					<th width="45%"><center>DESIGNATION ASSIGNED</center></th>
-					<th width="25%"><center>ACTION</center></th>
+					<th class="workflow-th" width="25%">TASK</th>
+					<th class="workflow-th" width="45%">DESIGNATION ASSIGNED</th>
+					<th class="workflow-th" width="25%">ACTION</th>
 				</tr>
 				<tr>
 					<td>1. GSD</td>
@@ -195,9 +195,9 @@
 		<div class="panel-body">
 			<table border="1" class="workflow-table">
 				<tr>
-					<th width="25%"><center>TASK</center></th>
-					<th width="45%"><center>DESIGNATION ASSIGNED</center></th>
-					<th width="25%"><center>ACTION</center></th>
+					<th class="workflow-th" width="25%">TASK</th>
+					<th class="workflow-th" width="45%">DESIGNATION ASSIGNED</th>
+					<th class="workflow-th" width="25%">ACTION</th>
 				</tr>
 				<tr>
 					<td>1. BUDGET</td>
