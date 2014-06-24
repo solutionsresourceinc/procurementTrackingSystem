@@ -90,11 +90,22 @@ Route::filter('csrf', function()
 });
 
 
-/*Entrust::routeNeedsRole( 'dashboard', array('Administrator'), Redirect::to('/') );
+// Filter on Dashboard
+Entrust::routeNeedsRole( 'dashboard', array('Administrator','Procurement Personnel','Requisitioner'), Redirect::to('/') );
+
+// Filter for User Crud Module
+Entrust::routeNeedsRole( 'user/create', array('Administrator'), Redirect::to('/') );
 Entrust::routeNeedsRole( 'user/edit/*', array('Administrator'), Redirect::to('/') );
+Entrust::routeNeedsRole( 'user/view', array('Administrator'), Redirect::to('/') );
 Entrust::routeNeedsRole( 'user/delete', array('Administrator'), Redirect::to('/') );
-Entrust::routeNeedsRole( 'user/activate', array('Administrator'), Redirect::to('/') );*/
-//Entrust::routeNeedsRole( 'user/create', array('Administrator'), Redirect::to('/') );
+Entrust::routeNeedsRole( 'user/activate', array('Administrator'), Redirect::to('/') );
+
+	// User Exra Modules
+	Entrust::routeNeedsRole( 'user/confirm/*', array('Administrator'), Redirect::to('/') );
+	Entrust::routeNeedsRole( 'user/forgot_password', array('Administrator'), Redirect::to('/') );
+	Entrust::routeNeedsRole( 'user/reset_password/{token}', array('Administrator'), Redirect::to('/') );
+	Entrust::routeNeedsRole( 'user/confirm/*', array('Administrator'), Redirect::to('/') );
+
 
 
 
