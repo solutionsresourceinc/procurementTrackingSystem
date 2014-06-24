@@ -13,9 +13,7 @@ $target_path = "temp/";
 //fwrite($fh, "Title: ".$_POST['title']."\n");
 //fwrite($fh, "Another Field: ".$_POST['testdata']."\n");
 //fclose($fh);
-//$title= $_POST['title']
 
-//Session::put('title', $title);
 $uploads_dir = $target_path;
 
 if(count($_FILES["Filedata"]["error"]) < 2) {

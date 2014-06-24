@@ -101,6 +101,10 @@ Route::get( 'resultstest', function()
 {
 	return View::make('resultstest');
 });
+Route::get( 'testdisplay', function()
+{
+	return View::make('testdisplay');
+});
 
 
 //Purchase Request Routes

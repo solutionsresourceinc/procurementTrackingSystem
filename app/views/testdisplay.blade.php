@@ -3,7 +3,7 @@
 
 
  <?php
-$id = 4;
+$id=$_REQUEST['id'];
   $attachments= new Attachments; 
  $attachments = DB::table('attachments')->find($id); 
 

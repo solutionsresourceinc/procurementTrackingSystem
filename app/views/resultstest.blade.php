@@ -18,10 +18,14 @@ $source= public_path()."\\temp\\";
  
 
 $document= new Document;
-//$document->doctitle=Session::get('title');
 $document->pr_id= Session::get('pr_id');
+//$document->doctitle= Session::get('doc_title');
+$sho=Session::get('doc_title');
+echo $sho;
 $document->work_id=1;
 $document->save();
+
+Session::put('doc_id', $document->id);
  if ($handle = opendir($source)) {
    while (false !== ($file = readdir($handle)))
       {
@@ -32,7 +36,7 @@ $attachments->doc_id = $document->id;
 $pathfile=$source.$file;
 $attachments->data= file_get_contents($pathfile);
 $attachments->save();
-
+Session::put('imageidentity', $attachments->update_at);
  unlink($source.$file);}}
 
 

@@ -100,7 +100,38 @@
         </fieldset>
     </form>
 
+
+<div id="img-section">
+
+<?php
+
+function data_uri($image, $mime) 
+{  
+
+  $base64   = base64_encode($image); 
+  return ('data:' . $mime . ';base64,' . $base64);
+}
+
+
+$doc = DB::table('document')->where('pr_id', $p_id->id)->first();
+
+
+ $attachments = DB::table('attachments')->where('doc_id', $doc->id)->get(); 
+
+?>
+
+@foreach ($attachments as $attachment)
+   <a href="delimage/{{$attachment->id}}"> <img data-src="holder.js/200x200" class="img-thumbnail" alt="200x200" src="<?php echo data_uri( $attachment->data, 'image/png'); ?>" style="width: 200px; height: 200px;" onmouseover="this.src='default.png'" onmouseout="this.src='<?php echo data_uri( $attachment->data, 'image/png'); ?>'"></a >             
+@endforeach
+
+<?php ?>
+
+
+
+</div>
+
     <?php
+
         {{ Session::forget('notice'); }}
         {{ Session::forget('main_error'); }}
         {{ Session::forget('m1'); }}

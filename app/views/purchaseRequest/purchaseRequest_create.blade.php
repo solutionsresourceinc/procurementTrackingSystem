@@ -142,9 +142,7 @@ $id = 0;
 
 ?>
 @endforeach
-<?php 
-$id=$id+1;
-?>
+
 
 <a href="/attach/{{$id}}">
 <button class="btn btn-default">
