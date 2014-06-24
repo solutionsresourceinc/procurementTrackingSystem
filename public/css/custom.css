@@ -9,6 +9,26 @@
 	font-style: italic;
 }
 
+.box {
+        position: relative;
+        float: left;
+        width: 300px;
+        height: 300px;
+}
+ 
+.caption {
+        display: none;
+        position: absolute;
+        background: #000;
+        opacity: 0.7;
+        top: 0;
+        left: 0;
+        width: 90%;
+        height: 90%;
+        padding: 5%;
+        color: #fff;
+}
+
 .form-create{
 	background: white;
 	padding: 45px 50px;
@@ -125,6 +145,20 @@ a:hover, a:focus{
 	text-align: center;
 }
 
+#img-per{
+	position:relative;
+    display:inline-block;
+    text-align:center;
+    border:1px solid red;
+}
+.button {
+    position:absolute;
+    bottom:10px;
+    right:10px;
+    width:100px;
+    height:30px;
+}
+
 .panel-body{
 	padding: 0;
 }
@@ -149,3 +183,7 @@ th.workflow-th{
 	border-left: none;
 	text-align: center;
 }
+
+
+
+

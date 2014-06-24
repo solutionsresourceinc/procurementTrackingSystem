@@ -215,7 +215,7 @@ $errorcheck=0;
 if($errorcheck==1)
                       {
 Session::put('msg', 'Failed to edit user.');
-                       return Redirect::back();}
+                       return Redirect::back()->withInput();}
         
      else
         {

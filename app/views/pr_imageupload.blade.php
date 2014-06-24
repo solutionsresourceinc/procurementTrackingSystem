@@ -13,9 +13,7 @@
 			<h1>Upload Attachments</h1>
 
 
-			@if ( Session::get('pr_id') )
-            	{{ Session::get('pr_id'); }}        
-			@endif
+			
 
 			<form id="multipleDemo" enctype="multipart/form-data">
 				<label for="title"> Document Title</label><br />

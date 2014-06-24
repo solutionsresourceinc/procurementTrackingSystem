@@ -88,6 +88,15 @@ Route::get('attach/{id}', function($id)
 
 });
 
+Route::post('purchaseRequest/edit/delimage', function()
+{
+	$id = Input::get('hide');
+	$attach = DB::table('attachments')->where('id', $id)->delete();
+$notice="Attachment successfully deleted.";
+	return Redirect::back()->with('notice', $notice);
+});
+
+
 Route::get( 'resultstest', function()
 {
 	return View::make('resultstest');

@@ -32,6 +32,7 @@
 		{{ HTML::script('colvix/js/shCore.js')}}
 		{{ HTML::script('colvix/js/demo.js')}}
 		{{ HTML::script('js/bootstrap-dropdown.js') }}
+<!--Hover Image Overlay  -->
 
 		@yield('header')
 
@@ -48,6 +49,8 @@
 		</style>
 	</head>
 	<body role="document">
+
+
 		<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 	    	<div class="container">
 	    		<div class="navbar-header">
@@ -89,5 +92,7 @@
 				<p id="copyright-section">Developed by {{ link_to('http://solutionsresource.com/', 'Solutions Resource, Inc.') }} All rights reserved. © 2014</p>
 			</div>
 		</footer>
+	
+
 	</body>
 </html>
