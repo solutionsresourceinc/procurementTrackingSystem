@@ -2,16 +2,25 @@
 
 class DatabaseSeeder extends Seeder {
 
-	/**
-	 * Run the database seeds.
-	 *
-	 * @return void
-	 */
 	public function run()
 	{
+		DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+
 		Eloquent::unguard();
 
-		// $this->call('UserTableSeeder');
+		$this->call('RoleSeeder');
+		$this->command->info('The Role table has been seeded!');
+
+		$this->call('UserTableSeeder');
+		$this->command->info('The User table has been seeded!');
+
+		$this->call('AssignedRolesSeeder');
+		$this->command->info('The Assigned table has been seeded!');
+
+		$this->call('OfficeSeeder');
+		$this->command->info('The Office table has been seeded!');
+
+		DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 	}
 
 }

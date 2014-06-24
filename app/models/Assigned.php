@@ -10,7 +10,7 @@ class Assigned extends Eloquent{
 	 * @var string
 	 */
 	
-
+	public $timestamps = false;
 	 
 	protected $table = 'assigned_roles';
 
