@@ -185,5 +185,6 @@ th.workflow-th{
 }
 
 
-
-
+table.table td{
+	word-break: break-all;
+}

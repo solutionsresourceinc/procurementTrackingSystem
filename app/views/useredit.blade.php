@@ -25,7 +25,7 @@
 if (NULL!=Input::old('firstname'))
 echo Input::old('firstname');
 else
-echo $user->firstname; ?>" required>
+echo $user->firstname; ?>" >
                 @if ( Session::get('firstname_error') )
                     <small><font color="red">{{ Session::get('firstname_error'); }} </font></small>
                 @endif
@@ -39,7 +39,7 @@ if (NULL!=Input::old('lastname'))
 echo Input::old('lastname');
 else
 echo $user->lastname; ?>
-                " required>
+                " >
                 @if ( Session::get('lastname_error') )
                     <small><font color="red">{{ Session::get('lastname_error'); }} </font> </small>
                 @endif
@@ -51,7 +51,7 @@ echo $user->lastname; ?>
 if (NULL!=Input::old('email'))
 echo Input::old('email');
 else
-echo $user->email; ?>" required>
+echo $user->email; ?>" >
                 @if ( Session::get('email_error') )
                     <small><font color="red">{{ Session::get('email_error'); }}   </font> </small>
                 @endif
@@ -113,7 +113,9 @@ echo $user->email; ?>" required>
             </div>
 
             <div class="form-actions form-group">
-                <button type="submit" class="btn btn-default" name="submit">Save</button>
+                <button type="submit" class="btn btn-success" name="submit">Save</button>
+                  {{ link_to( '/user/view', 'Cancel', array('class'=>'btn btn-default') ) }}
+          
             </div>
         </fieldset>
     </form>

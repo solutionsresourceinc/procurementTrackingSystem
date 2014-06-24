@@ -121,7 +121,6 @@ Route::get( 'purchaseRequest/edit/{id}', function($id)
 	return View::make('pr_edit')->with('id',$id);
 });
 
-
 Route::post( 'purchaseRequest/delete', function()
 {
 	$errors="Account Deactivated.";
@@ -133,13 +132,20 @@ Route::post( 'purchaseRequest/delete', function()
 });
 
 
-// Office Routes
-Route::get('/offices', 'OfficeController@index');
 
-// Workflow Routes
+//Workflow Routes
 Route::get('workflow/below-fifty', function(){
 	return View::make('workflows.below_fifty_workflow');
 });
+
+
+
+//Designation Routes
+Route::resource('designation', 'DesignationController');
+
+Route::get('designation', 'DesignationController@index');
+Route::get('designation/delete/{id}',['as' => 'designation.delete', 'uses' => 'DesignationController@deleteDesignation']);
+Route::post('designation/{id}/edit',['as' => 'desingation.update', 'uses' => 'DesignationController@update']);
 
 // JAN Routes
 Route::get('workflow/belowFifty', function(){
@@ -157,4 +163,3 @@ Route::get('workflow', function(){
 
 // Roles Create Routes (Disabled)
 	//Route::get('create_roles','UserController@getRole');
-

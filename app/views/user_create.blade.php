@@ -15,7 +15,7 @@
 
             <div class="form-group">
                 <label for="username">Username *</label>
-                <input class="form-control"  type="text" name="username" id="username" value="{{{ Input::old('username') }}}" required>
+                <input class="form-control"  type="text" name="username" id="username" value="{{{ Input::old('username') }}}" >
 
                 @if ( Session::get('username_error') )
                          <small><font color="red"> {{ Session::get('username_error'); }}   </font></small>
@@ -24,7 +24,7 @@
 
             <div class="form-group">
                 <label for="firstname">First Name *</label>
-                <input class="form-control"  type="test" name="firstname" id="firstname" value="{{{ Input::old('firstname') }}}" required>
+                <input class="form-control"  type="test" name="firstname" id="firstname" value="{{{ Input::old('firstname') }}}" >
                 
                 @if ( Session::get('firstname_error') )
                     <small><font color="red"> {{ Session::get('firstname_error'); }}   </font></small>
@@ -33,7 +33,7 @@
 
             <div class="form-group">
                 <label for="lastname">Last Name *</label>
-                <input class="form-control" type="text" name="lastname" id="lastname" value="{{{ Input::old('lastname') }}}" required>
+                <input class="form-control" type="text" name="lastname" id="lastname" value="{{{ Input::old('lastname') }}}" >
                 
                 @if ( Session::get('lastname_error') )
                     <small><font color="red">{{ Session::get('lastname_error'); }}</font></small>
@@ -42,7 +42,7 @@
 
             <div class="form-group">
                 <label for="email">Email *</label>
-                <input class="form-control"  type="text" name="email" id="email" value="{{{ Input::old('email') }}}" required>
+                <input class="form-control"  type="text" name="email" id="email" value="{{{ Input::old('email') }}}" >
                 @if ( Session::get('email_error') )
                     <small><font color="red">{{ Session::get('email_error'); }}   </font> </small>
                  @endif
@@ -50,7 +50,7 @@
 
             <div class="form-group">
                 <label for="password">Password *</label>
-                <input class="form-control" type="password" name="password" id="password" required>
+                <input class="form-control" type="password" name="password" id="password" >
                 @if ( Session::get('password_error') )
                     <small><font color="red">{{ Session::get('password_error'); }}   </font></small>
                 @endif
@@ -58,7 +58,7 @@
 
             <div class="form-group">
                 <label for="password_confirmation">Confirm Password *</label>
-                <input class="form-control"  type="password" name="password_confirmation" id="password_confirmation" required>
+                <input class="form-control"  type="password" name="password_confirmation" id="password_confirmation" >
             </div>
 
             <div class="form-group">
@@ -94,12 +94,12 @@ if(Input::old('office')==$offices->id)
             <br/>
             <div class="form-actions form-group">
                 <button type="submit" class="btn btn-success" name="submit">{{{ Lang::get('confide::confide.signup.submit') }}}</button>
-                {{ link_to( '/', 'Cancel Create', array('class'=>'btn btn-default') ) }}
+                {{ link_to( '/user/view', 'Cancel Create', array('class'=>'btn btn-default') ) }}
             </div>
-
-        </fieldset>
-    </form>
     
+      </fieldset>
+    </form>
+
     <?php
     Session::forget('username_error');
     Session::forget('firstname_error');

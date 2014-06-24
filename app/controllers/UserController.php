@@ -236,7 +236,7 @@ DB::table('users')
             ->update(array( 'email' => $user->email, 'password' => $user->password, 'office_id' => $user->office_id, 'firstname' => $user->firstname, 'lastname' => $user->lastname));
                         $notice = "successfully edited user. ";         
             // Redirect with success message, You may replace "Lang::get(..." for your custom message.
-                        return Redirect::action('user/view')
+                    return Redirect::action('UserController@viewUser')
                             ->with( 'notice', $notice );
         }
        
