@@ -10,9 +10,9 @@
 		<div class="panel-body">
 			<table border="1" class="workflow-table">
 				<tr>
-					<th width="25%"><center>TASK</center></th>
-					<th width="45%"><center>DESIGNATION ASSIGNED</center></th>
-					<th width="25%"><center>ACTION</center></th>
+					<th class="workflow-th" width="25%">TASK</th>
+					<th class="workflow-th" width="45%">DESIGNATION ASSIGNED</th>
+					<th class="workflow-th" width="25%">ACTION</th>
 				</tr>
 				<tr>
 					<td>1. DATE OF PR</td>
@@ -85,9 +85,9 @@
 		<div class="panel-body">
 			<table border="1" class="workflow-table">
 				<tr>
-					<th width="25%"><center>TASK</center></th>
-					<th width="45%"><center>DESIGNATION ASSIGNED</center></th>
-					<th width="25%"><center>ACTION</center></th>
+					<th class="workflow-th" width="25%">TASK</th>
+					<th class="workflow-th" width="45%">DESIGNATION ASSIGNED</th>
+					<th class="workflow-th" width="25%">ACTION</th>
 				</tr>
 				<tr>
 					<td>1. PHILGEPS DATE PUBLISHED</td>
@@ -190,9 +190,9 @@
 		<div class="panel-body">
 			<table border="1" class="workflow-table">
 				<tr>
-					<th width="25%"><center>TASK</center></th>
-					<th width="45%"><center>DESIGNATION ASSIGNED</center></th>
-					<th width="25%"><center>ACTION</center></th>
+					<th class="workflow-th" width="25%">TASK</th>
+					<th class="workflow-th" width="45%">DESIGNATION ASSIGNED</th>
+					<th class="workflow-th" width="25%">ACTION</th>
 				</tr>
 				<tr>
 					<td>1. RECEIVED GSD</td>
@@ -245,9 +245,9 @@
 		<div class="panel-body">
 			<table border="1" class="workflow-table">
 				<tr>
-					<th width="25%"><center>TASK</center></th>
-					<th width="45%"><center>DESIGNATION ASSIGNED</center></th>
-					<th width="25%"><center>ACTION</center></th>
+					<th class="workflow-th" width="25%">TASK</th>
+					<th class="workflow-th" width="45%">DESIGNATION ASSIGNED</th>
+					<th class="workflow-th" width="25%">ACTION</th>
 				</tr>
 				<tr>
 					<td>1. BUDGET</td>

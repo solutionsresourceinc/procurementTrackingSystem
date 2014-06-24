@@ -69,7 +69,15 @@
           				@if ( Entrust::hasRole('Administrator') || Entrust::hasRole('Procurement Personnel'))
           				<li class="{{Request::is('user') ? 'active':''}}">{{ link_to('/user/view', 'Users') }}</li>
           				<li class="{{Request::is('offices') ? 'active':''}}">{{ link_to('/offices', 'Offices') }}</li>
-          				<li class="{{Request::is('offices') ? 'active':''}}">{{ link_to('/workflow', 'Workflow') }}</li>
+          				<!--li class="{{Request::is('workflow') ? 'active':''}}">{{ link_to('/workflow', 'Workflow') }}</li-->
+          				<li class="{{Request::is('workflow') ? 'active':''}} dropdown">
+          					<a href="#" class="dropdown" data-toggle="dropdown">Workflow <b class="caret"></b></a>
+          					<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
+							  <li>{{ link_to('/workflow/belowFifty', 'Below P50,000') }}</li>
+							  <li>{{ link_to('/workflow/aboveFifty', 'Between P50,000 and P500,000') }}</li>
+							  <li>{{ link_to('/workflow/aboveFive', 'Above P500,000') }}</li>
+							</ul>
+          				</li>
           				@endif
           			</ul>
           			<ul class="nav navbar-nav">

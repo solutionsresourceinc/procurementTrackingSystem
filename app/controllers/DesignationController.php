@@ -27,7 +27,7 @@ class DesignationController extends BaseController {
 	 * @return Response
 	 */
 	public function store()
-	{
+	{/*
 		$checkdesignationname=0;
 
 		$designations = new Designation;
@@ -40,7 +40,7 @@ class DesignationController extends BaseController {
 			return Redirect::back()->withInput()->with('duplicate-error', 'Designation is already exisiting in the list.');
 		}
 
-		/*$rules = ['designationName' => 'required|alpha_spaces|max:100'];
+		$rules = ['designationName' => 'required|alpha_spaces|max:100'];
 		$validation = Validator::make(Input::all(), $rules);
 		$checker = 0;
 
@@ -48,7 +48,7 @@ class DesignationController extends BaseController {
 			//return Redirect::back()->withInput()->withErrors($validation->messages())->with('invalid', 'Designation entry not created.');
 			$checker = 1;
 			return 'failed';
-		}*/
+		}
 
 		$input=Input::all();
 		
@@ -60,7 +60,28 @@ class DesignationController extends BaseController {
 		{
 			$this->designation->save();
 			return Redirect::to('/designation')->with('success', 'Successfully created a designation');
+		}*/
+
+		$designation = new Designation;
+		$designation->designation = Input::get( 'designationName' );
+		if($designation->save())
+		{
+			return Redirect::to('/designation')->with('success', 'Successfully created a designation');
 		}
+		else
+		{
+			$m1 = $designation->validationErrors->first('designation');
+			if($m1 != 'The designation has already been taken.')
+			{
+				$message = "Invalid input for designation name.";
+				Session::put('main_error', $message );
+			}
+
+			
+			
+			return Redirect::back()->withInput()->withErrors($this->designation->errors)->with('invalid', $m1);
+		}
+
 	}
 
 	/**
@@ -93,5 +114,19 @@ class DesignationController extends BaseController {
 		$deletedesignation = Designation::find($id);
 		$deletedesignation->delete();
 		return Redirect::to('/designation')->with('success','Successfully deleted');
+	}
+
+	public function members($id)
+	{
+		$users = User::all();
+
+
+		 //$a = User::where('designation_id' = $id)->where('user_id');
+		$selected_users = DB::select("select * from users join user_has_designation on users.id = user_has_designation.user_id where user_has_designation.designation_id = $id");
+		return $selected_users;
+		//return View::make('designation_members')
+			//->with('designation',$designation)
+				//->with('users',$users);
+
 	}
 }
