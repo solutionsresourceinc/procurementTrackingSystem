@@ -100,14 +100,21 @@ Route::get( 'purchaseRequest/edit/{id}', function($id)
 Route::post('purchaseRequest/edit/{id}',[ 'uses' => 'PurchaseRequestController@edit_submit']);
 
 
-Route::get('/offices', 'OfficeController@index');
 
 //Purchase Request Routes
 Route::get('purchaseRequest/create', 'PurchaseRequestController@create');
 Route::post('purchaseRequest/create', ['as' => 'purchaseRequest_submit', 'uses' => 'PurchaseRequestController@create_submit']);
 Route::get( 'purchaseRequest/vieweach/{id}', 'PurchaseRequestController@vieweach');
 
-
+//Workflow Routes
 Route::get('workflow/below-fifty', function(){
 	return View::make('workflows.below_fifty_workflow');
 });
+
+
+//Designation Routes
+Route::resource('designation', 'DesignationController');
+
+Route::get('designation', 'DesignationController@index');
+Route::get('designation/delete/{id}',['as' => 'designation.delete', 'uses' => 'DesignationController@deleteDesignation']);
+Route::post('designation/{id}/edit',['as' => 'desingation.update', 'uses' => 'DesignationController@update']);

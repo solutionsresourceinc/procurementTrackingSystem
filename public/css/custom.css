@@ -149,3 +149,7 @@ th.workflow-th{
 	border-left: none;
 	text-align: center;
 }
+
+table.table td{
+	word-break: break-all;
+}
