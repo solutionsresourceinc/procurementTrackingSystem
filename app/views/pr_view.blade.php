@@ -2,10 +2,14 @@
 
 @section('content')
     <h1 class="page-header">List of Purchase Request</h1>
-    <div>
-        <a href="{{ URL::to('purchaseRequest/create') }}" class="btn btn-success">Create New Purchase Request</a>
-        <br><br><br>
-    </div>
+    
+    @if ( Entrust::hasRole('Administrator') || Entrust::hasRole('Procurement Personnel'))
+      <div>
+          <a href="{{ URL::to('purchaseRequest/create') }}" class="btn btn-success">Create New Purchase Request</a>
+          <br><br><br>
+      </div>
+    @endif
+
     <div class="modal fade" id="confirmDelete" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
