@@ -128,6 +128,7 @@ Route::get('workflow/below-fifty', function(){
 	return View::make('workflows.below_fifty_workflow');
 });
 
+// JAN Routes
 Route::get('workflow/belowFifty', function(){
 	return View::make('workflows.below_fifty');
 });

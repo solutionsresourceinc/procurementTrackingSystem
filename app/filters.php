@@ -91,21 +91,52 @@ Route::filter('csrf', function()
 
 
 // Filter on Dashboard
-Entrust::routeNeedsRole( 'dashboard', array('Administrator','Procurement Personnel','Requisitioner'), Redirect::to('/') );
+Entrust::routeNeedsRole( 'dashboard', array('Administrator','Procurement Personnel','Requisitioner'), Redirect::to('/'), false );
 
 // Filter for User Crud Module
 Entrust::routeNeedsRole( 'user/create', array('Administrator'), Redirect::to('/') );
 Entrust::routeNeedsRole( 'user/edit/*', array('Administrator'), Redirect::to('/') );
 Entrust::routeNeedsRole( 'user/view', array('Administrator'), Redirect::to('/') );
-Entrust::routeNeedsRole( 'user/delete', array('Administrator'), Redirect::to('/') );
-Entrust::routeNeedsRole( 'user/activate', array('Administrator'), Redirect::to('/') );
 
 	// User Exra Modules
 	Entrust::routeNeedsRole( 'user/confirm/*', array('Administrator'), Redirect::to('/') );
 	Entrust::routeNeedsRole( 'user/forgot_password', array('Administrator'), Redirect::to('/') );
-	Entrust::routeNeedsRole( 'user/reset_password/{token}', array('Administrator'), Redirect::to('/') );
+	Entrust::routeNeedsRole( 'user/reset_password/*', array('Administrator'), Redirect::to('/') );
 	Entrust::routeNeedsRole( 'user/confirm/*', array('Administrator'), Redirect::to('/') );
+	Entrust::routeNeedsRole( 'user/delete', array('Administrator'), Redirect::to('/') );
+	Entrust::routeNeedsRole( 'user/activate', array('Administrator'), Redirect::to('/') );
 
+// Filer for Office Module
+Entrust::routeNeedsRole( 'offices', array('Administrator'), Redirect::to('/') );
+Entrust::routeNeedsRole( 'offices/delete/*', array('Administrator'), Redirect::to('/') );
+Entrust::routeNeedsRole( 'offices/create', array('Administrator'), Redirect::to('/') );
+Entrust::routeNeedsRole( 'offices/*', array('Administrator'), Redirect::to('/') );
+Entrust::routeNeedsRole( 'offices/*/edit', array('Administrator'), Redirect::to('/') );
 
+// Filter for Purchase Request
+Entrust::routeNeedsRole( 'purchaseRequest/view', array('Administrator','Procurement Personnel','Requisitioner'), Redirect::to('/'), false );
+Entrust::routeNeedsRole( 'purchaseRequest/create', array('Administrator','Procurement Personnel'), Redirect::to('/'), false );
+Entrust::routeNeedsRole( 'purchaseRequest/edit', array('Administrator','Procurement Personnel'), Redirect::to('/'), false );
+Entrust::routeNeedsRole( 'purchaseRequest/vieweach/*', array('Administrator','Procurement Personnel','Requisitioner'), Redirect::to('/'), false );
+Entrust::routeNeedsRole( 'purchaseRequest/edit/*', array('Administrator','Procurement Personnel'), Redirect::to('/'), false );
 
+// Image Upload 
+/*
+Entrust::routeNeedsRole( 'back', array('Administrator','Procurement Personnel'), Redirect::to('/'), false );
+Entrust::routeNeedsRole( 'pr_imageupload', array('Administrator','Procurement Personnel'), Redirect::to('/'), false );
+Entrust::routeNeedsRole( 'attach/*', array('Administrator','Procurement Personnel'), Redirect::to('/'), false );
+Entrust::routeNeedsRole( 'pr_id', array('Administrator','Procurement Personnel'), Redirect::to('/'), false );
+Entrust::routeNeedsRole( 'resultstest', array('Administrator','Procurement Personnel'), Redirect::to('/'), false );
+ */
+
+// Filter for Workflow Module
+Entrust::routeNeedsRole( 'workflow/below-fifty', array('Administrator','Procurement Personnel','Requisitioner'), Redirect::to('/'), false );
+
+// Filter for JAN Routes
+/*
+Entrust::routeNeedsRole( 'workflow/belowFifty', array('Administrator','Procurement Personnel','Requisitioner'), Redirect::to('/'), false );
+Entrust::routeNeedsRole( 'workflow/aboveFifty', array('Administrator','Procurement Personnel','Requisitioner'), Redirect::to('/'), false );
+Entrust::routeNeedsRole( 'workflow/workflow/aboveFive', array('Administrator','Procurement Personnel','Requisitioner'), Redirect::to('/'), false );
+Entrust::routeNeedsRole( 'workflow', array('Administrator','Procurement Personnel','Requisitioner'), Redirect::to('/'), false );
+*/
 

@@ -244,9 +244,6 @@ DB::table('users')
 
 }
 
-
-
-
     /**
      * Displays the login form
      *
@@ -264,20 +261,6 @@ DB::table('users')
             return View::make('login');
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     /**
      * Attempt to do login
