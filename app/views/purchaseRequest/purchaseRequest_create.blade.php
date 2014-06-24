@@ -5,11 +5,6 @@
 	{{ HTML::style('drop_search/bootstrap-select.css')}}
 	
     {{ HTML::script('js/jquery.chained.min.js') }} 
-
-
-	
-	</script>
-
 @stop
 
 @section('content')
@@ -80,7 +75,7 @@
 
 						<div class="form-group" id="template">
 		                	{{ Form::label('requisitioner', 'Requisitioner *', array('class' => 'create-label')) }}
-			                <select class="form-control" id="requisitioner" name="requisitioner"   >
+			                <select class="form-control" id="requisitioner" name="requisitioner"  data-live-search="true" >
 			                	<option value="">Please select</option>
 			                	@foreach($users as $key2)
 			                		{{{ $fullname = $key2->lastname . ", " . $key2->firstname }}}
@@ -227,9 +222,6 @@ Attach Image
 
 	</script>
 
-	<script type="text/javascript">
-        $("#requisitioner").chainedTo("#office");
-    </script>
 
     <script type="text/javascript">
         $(window).on('load', function () {
@@ -240,5 +232,10 @@ Attach Image
 
             //$('.selectpicker').selectpicker('hide');
         });
+    </script>
+
+
+	<script type="text/javascript">
+        $("#requisitioner").chainedTo("#office");
     </script>
 @stop

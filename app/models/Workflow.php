@@ -18,5 +18,8 @@ class Workflow extends Eloquent{
 	 * @var array
 	 */
 
-	public $fillable = ['id','workFlowName'];
+	public function task()
+	{
+  		return $this->hasMany('Task');
+	}
 }

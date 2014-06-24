@@ -2,8 +2,10 @@
 
 use Illuminate\Auth\UserInterface;
 use Illuminate\Auth\Reminders\RemindableInterface;
-
-class Designation extends Eloquent{
+use Zizaco\Confide\ConfideUser;
+use Zizaco\Entrust\HasRole;
+use LaravelBook\Ardent\Ardent;
+class Designation extends Ardent{
 	protected $table = 'designation';
 
 	public $timestamps=false;
@@ -11,6 +13,14 @@ class Designation extends Eloquent{
 	protected $fillable=['designation'];
 
 	public $errors;
+
+	public static $rules = array(
+		'designation' => 'required|alpha_spaces|max:255|unique:designation,designation',
+	);
+
+	public static $customMessages = array(
+		'alpha_spaces' => 'Designation entry not created.',
+	);
 
 	
 	public function isValid()

@@ -22,7 +22,9 @@
 	    	</div>
 	    	<div class="col-md-6">
 		    	{{ Form::text('designationName', null, array('class' => 'form-control', 'placeholder' => 'Designation Name')) }}
-		    	{{ $errors->first('designationName', '<span class="error-message">Invalid input for designation name.</span>') }}
+		    	@if(Session::get('main_error'))
+						<span class="error-message">Invalid input for designation name.</span>
+				@endif
 		    </div>
 		    <div class="col-md-3">
 		    	{{ Form::submit('Create', array('class' => 'btn btn-success btn-block')) }}
@@ -64,6 +66,7 @@
 							{{HTML::decode (link_to("designation/delete/$designation->id", '<span class="glyphicon glyphicon-trash"></span>', ['class'=>'btn btn-danger table-actions mode1', 'onclick' => "return confirm('Are you sure you want to delete this?');",'title'=>'Delete Designation']))}}
 							{{Form::button('Save', ['class' => 'btn btn-success save-edit mode2'])}}
 							{{Form::button('Cancel', ['class' => 'btn btn-default cancel-edit mode2'])}}
+			    			<a href="{{ URL::to('designation/'. $designation->id . '/members') }}" class="btn btn-primary"><span class="glyphicon glyphicon-user"></span></a>
 			    			</td>
 			    		</tr>
 			    	@endforeach
@@ -108,4 +111,5 @@
 			});
 		});
 	</script>
+	{{ Session::forget('main_error'); }}
 @stop
