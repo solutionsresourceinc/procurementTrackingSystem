@@ -20,6 +20,12 @@ class DatabaseSeeder extends Seeder {
 		$this->call('OfficeSeeder');
 		$this->command->info('The Office table has been seeded!');
 
+		$this->call('TaskSeeder');
+		$this->command->info('The Tasks table has been seeded!');
+		
+		$this->call('WorkflowSeeder');
+		$this->command->info('The Workflow table has been seeded!');
+
 		DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 	}
 

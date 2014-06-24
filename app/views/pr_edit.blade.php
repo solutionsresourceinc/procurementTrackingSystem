@@ -77,9 +77,10 @@
             <div class="form-group">
                 <label for="modeOfProcurement">Mode of Procurement</label>
                 <select class="form-control" name="modeOfProcurement" id="modeOfProcurement">
-                    <option value="Mode 1"> Below 50,000 </option>
-                    <option value="Mode 2"> Between 50,00 and 500,000 </option>
-                    <option value="Mode 3"> Above 500,000 </option>
+                <?php $flows = DB::table('workflow')->get(); ?>
+                    @foreach($flows as $flow)
+                        <option value="{{{ $flow->id }}}">{{{ $flow->workFlowName }}}</option>
+                    @endforeach
                 </select>
                 @if (Session::get('m4'))
                     <font color="red"><i>{{ Session::get('m4') }}</i></font>
