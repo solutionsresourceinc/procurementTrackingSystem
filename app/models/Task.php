@@ -18,4 +18,8 @@ class Task extends Eloquent{
 	 *
 	 * @var array
 	 */
+	public function workflow()
+	{
+  		return $this->belongsTo('Workflow');
+	}
 }

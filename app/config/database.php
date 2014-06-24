@@ -57,7 +57,7 @@ return array(
 			'host'      => 'localhost',
 			'database'  => 'pts',
 			'username'  => 'root',
-			'password'  => 'pogiako1110',
+			'password'  => '',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
