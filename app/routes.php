@@ -136,3 +136,17 @@ Route::get( 'purchaseRequest/vieweach/{id}', 'PurchaseRequestController@vieweach
 Route::get('workflow/below-fifty', function(){
 	return View::make('workflows.below_fifty_workflow');
 });
+
+// <---- JAN ROUTES
+Route::get('workflow/belowFifty', function(){
+	return View::make('workflows.below_fifty');
+});
+Route::get('workflow/aboveFifty', function(){
+	return View::make('workflows.above_fifty');
+});
+Route::get('workflow/aboveFive', function(){
+	return View::make('workflows.above_five');
+});
+Route::get('workflow', function(){
+	return View::make('workflows.workflowdash');
+});

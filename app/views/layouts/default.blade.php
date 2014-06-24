@@ -65,6 +65,7 @@
           				<li class="{{Request::is('purchase_requests') ? 'active':''}}">{{ link_to('/purchaseRequest/view', 'Purchase List') }}</li>
           				<li class="{{Request::is('user') ? 'active':''}}">{{ link_to('/user/view', 'Users') }}</li>
           				<li class="{{Request::is('offices') ? 'active':''}}">{{ link_to('/offices', 'Offices') }}</li>
+          				<li class="{{Request::is('offices') ? 'active':''}}">{{ link_to('/workflow', 'Workflow') }}</li>
           			</ul>
           			<ul class="nav navbar-nav">
           				<li></li>
