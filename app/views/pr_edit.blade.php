@@ -7,7 +7,7 @@
 
     <form method="POST" action="edit"  class = "form-create">
         <fieldset>
-            <input type="hidden" name="id" value="">
+            <input type="hidden" name="purch_id" id="purch_id" value="{{{ $p_id->id }}}">
            
             @if(Session::get('notice'))
                 <div class="alert alert-success"> {{ Session::get('notice') }}</div> 
@@ -65,9 +65,9 @@
                     @foreach ($requi as $requis)
                         @if($requis->office_id != 0)
                             @if($requis->id == $p_id->requisitioner )
-                                <option value="{{{ $requis->firstname }}}" class="{{{ $requis->office_id }}}" selected> {{{ $requis-> firstname }}} </option>
+                                <option value="{{{ $requis->id }}}" class="{{{ $requis->office_id }}}" selected> {{{ $requis-> firstname }}} </option>
                             @else
-                                <option value="{{{ $requis->firstname }}}" class="{{{ $requis->office_id }}}" > {{{ $requis-> firstname }}} </option>
+                                <option value="{{{ $requis->id }}}" class="{{{ $requis->office_id }}}" > {{{ $requis-> firstname }}} </option>
                             @endif
                         @endif
                     @endforeach
@@ -77,9 +77,10 @@
             <div class="form-group">
                 <label for="modeOfProcurement">Mode of Procurement</label>
                 <select class="form-control" name="modeOfProcurement" id="modeOfProcurement">
-                    <option value="Mode 1"> Below 50,000 </option>
-                    <option value="Mode 2"> Between 50,00 and 500,000 </option>
-                    <option value="Mode 3"> Above 500,000 </option>
+                <?php $flows = DB::table('workflow')->get(); ?>
+                    @foreach($flows as $flow)
+                        <option value="{{{ $flow->id }}}">{{{ $flow->workFlowName }}}</option>
+                    @endforeach
                 </select>
                 @if (Session::get('m4'))
                     <font color="red"><i>{{ Session::get('m4') }}</i></font>

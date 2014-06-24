@@ -66,12 +66,7 @@ $attachments->save();
 <p><?php echo $thelist ?></p>
 <p>If a certain file is not within the list, it means that the file type of that file is invalid. The system only accept .png, jpeg, and .gif files.</p>
 
-
-
-<a href="purchaseRequest/create">
-<button>Return</button>
-</a>
-
+<a href="back">Go back</a>
 
 
 

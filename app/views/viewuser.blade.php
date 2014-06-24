@@ -3,7 +3,10 @@
 @section('content')
 
 <h3>Dashboard</h3>
-
+<div>
+        <a href="{{ URL::to('user/create') }}" class="btn btn-success">Create New User Account</a>
+        <br><br><br>
+</div>
 
 <div class="modal fade" id="confirmDelete" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -79,8 +82,8 @@
 					@else
 						<td><strike>Requisitioner</strike></td>
 					@endif
-
 	       		@else
+
 					<td> {{ $user->username; }}</td>
 			        <td> {{ $user->firstname; }}</td>
 			        <td> {{ $user->lastname; }}</td>
@@ -95,7 +98,14 @@
 
 			    @endif
 				
-				<td>OFFICE</td>
+				<?php
+					$offs = Office::where('id',$user->office_id)->get();
+				?>
+				<td>
+					@foreach($offs as $off)
+						{{{ $off->officeName }}}
+					@endforeach
+				</td>
 				
 				<?php if($adm->role_id == 3) {?>
 		        <td>

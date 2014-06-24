@@ -15,7 +15,7 @@ class Office extends Eloquent{
 	
 	public function isValid()
 	{
-		$rules = array('officeName'=>'required|alpha_spaces|max:255');
+		$rules = array('officeName'=>'required|max:255');
 
 		
 		$validation = Validator::make($this->attributes,$rules);

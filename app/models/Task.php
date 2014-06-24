@@ -1,7 +1,6 @@
 <?php
 
-
-class Assigned extends Eloquent{
+class Task extends Eloquent{
 
 
 	/**
@@ -10,14 +9,13 @@ class Assigned extends Eloquent{
 	 * @var string
 	 */
 	
-	public $timestamps = false;
+
 	 
-	protected $table = 'assigned_roles';
+	protected $table = 'tasks';
 
 	/**
 	 * The attributes excluded from the model's JSON form.
 	 *
 	 * @var array
 	 */
-	protected $hidden = array('password', 'remember_token');
 }

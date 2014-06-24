@@ -1,7 +1,6 @@
 <?php
 
-
-class Assigned extends Eloquent{
+class Workflow extends Eloquent{
 
 
 	/**
@@ -10,14 +9,14 @@ class Assigned extends Eloquent{
 	 * @var string
 	 */
 	
-	public $timestamps = false;
-	 
-	protected $table = 'assigned_roles';
+
+	protected $table = 'workflow';
 
 	/**
 	 * The attributes excluded from the model's JSON form.
 	 *
 	 * @var array
 	 */
-	protected $hidden = array('password', 'remember_token');
+
+	public $fillable = ['id','workFlowName'];
 }
