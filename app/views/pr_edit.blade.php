@@ -1,5 +1,7 @@
 @extends('layouts.login')
 
+
+
 @section('content')
     <?php $p_id = Purchase::find($id); ?>
     <div class="modal fade" id="confirmDelete" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
@@ -52,7 +54,9 @@
 
             <div class="form-group">
                 <label for="amount">Amount</label>
-                <input class="form-control"  type="text" name="amount" id="amount" value="{{{ $p_id->amount }}}" required>
+               
+                <input  onchange="formatCurrency(this);"  class="form-control"  type="text" name="amount" id="amount"  required>
+
                 @if (Session::get('m3'))
                     <font color="red"><i>{{ Session::get('m3') }}</i></font>
                 @endif
@@ -186,6 +190,13 @@ $doc = DB::table('document')->where('pr_id', $p_id->id)->get();
 
   <script type="text/javascript">
 
+function formatCurrency(fieldObj)
+{
+    if (isNaN(fieldObj.value)) { return false; }
+    fieldObj.value = '' + parseFloat(fieldObj.value).toFixed(2);
+    return true;
+}
+
   $('#confirmDelete').on('show.bs.modal', function (e) {
 
       $message = $(e.relatedTarget).attr('data-message');
@@ -212,12 +223,13 @@ $doc = DB::table('document')->where('pr_id', $p_id->id)->get();
       window.my_id = pass_id;
      // alert(window.my_id);
   }
-  </script>
-    <script type="text/javascript">
+
         $("#requisitioner").chained("#office");
     </script>
 
 @stop
 
 @section('footer')
+
+ 
 @stop
