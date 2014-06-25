@@ -68,25 +68,17 @@
       			        <td> {{ $request->status; }}</td>
       			        <td> {{ $request->created_at; }}</td>
       			        <td>
-      			        	  <div class='btn-group'>
-      						          <button class='btn dropdown-toggle btn-primary' data-toggle='dropdown'>Action <span class='caret'></span></button>
-      						
-      						          <ul class='dropdown-menu'>
-                            <li><a class='iframe btn' href="{{ URL::to('purchaseRequest/vieweach/'. $request->id) }}">View</a></li>
-                      <?php
-                        $adm = Assigned::where('user_id', Auth::User()->id)->first();
-                        if($adm->role_id == 3) {
-                      ?>
-                        <li><a class='iframe btn' href='edit/{{$request->id}}'>Edit</a></li>
-       									<li>
-       										<form method="POST" action="delete"/ id="myForm_{{ $request->id }}" name="myForm">
-       									     <input type="hidden" name="del_pr" value="{{ $request->id }}">
-       			  					     <center><button class="iframe btn" style="background-color:transparent" type="button" data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $request->id }})"  data-title="Delete User" data-message="Are you sure you want to delete purchase request?">Delete</button></center>
-        									</form>
-        								</li>
-                      <?php } ?>
-      						          </ul>
-      					        </div>
+      			        	  <a class='iframe btn btn-primary' href="{{ URL::to('purchaseRequest/vieweach/'. $request->id) }}" title="View Purchase Request"><span class="glyphicon glyphicon-file"></span></a></li>
+                        <?php
+                          $adm = Assigned::where('user_id', Auth::User()->id)->first();
+                          if($adm->role_id == 3) {
+                        ?>
+                            <a class='iframe btn btn-success' href='edit/{{$request->id}}' title="Edit Purchase Request"><span class="glyphicon glyphicon-edit"></span></a>
+                            <form method="POST" action="delete" id="myForm_{{ $request->id }}" name="myForm" style="display: -webkit-inline-box;">
+                                 <input type="hidden" name="del_pr" value="{{ $request->id }}">
+                                 <center><button class="iframe btn btn-danger" type="button" data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $request->id }})"  data-title="Delete Purchase Request" title="Delete Purchase Request" data-message="Are you sure you want to delete purchase request?"><span class="glyphicon glyphicon-trash"></span></button></center>
+                            </form>
+                        <?php } ?>
       			        </td>
       			    </tr>
             @endforeach	    

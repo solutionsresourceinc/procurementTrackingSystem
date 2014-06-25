@@ -2,7 +2,7 @@
 
 @section('content')
 
-<h3>Dashboard</h3>
+<h1 class="page-header">Dashboard</h1>
 <div>
         <a href="{{ URL::to('user/create') }}" class="btn btn-success">Create New User Account</a>
         <br><br><br>

@@ -1,26 +1,33 @@
-@extends('layouts.login')
+@extends('layouts.default')
 
 @section('content')
     <?php $p_id = Purchase::find($id); ?>
     <div class="modal fade" id="confirmDelete" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title">Delete Attachment</h4>
-      </div>
-      <div class="modal-body">
-        <p>Are you sure about this ?</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-danger" id="confirm">Delete</button>
-      </div>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Delete Attachment</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure about this ?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger" id="confirm">Delete</button>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
 
-    <h1 class="page-header">Edit Purchase Request</h1>  
+    <h2 class="pull-left">Edit Purchase Request</h2>  
+    <div class="btn-group pull-right options">
+        <button type="button" class="btn btn-default" onclick="window.location.href='../../purchaseRequest/view'">
+            <span class="glyphicon glyphicon-step-backward"></span>&nbsp;Back
+        </button>
+    </div>
+
+    <hr class="clear" />
 
     <form method="POST" action="edit"  class = "form-create">
         <fieldset>
@@ -113,65 +120,53 @@
             </div>
           
             <div class="form-actions form-group">
-                <button type="submit" class="btn btn-default" name="submit">Save</button>
+                <button type="submit" class="btn btn-success" name="submit">Save Changes</button>
             </div>
         </fieldset>
     </form>
-<div >
-<br>
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/attach/{{$p_id->id}}">
-<button class="btn btn-primary">
-    Add Attachments
-</button>
-<br>
-<br>
-</a>
-</div>
+    <div style="text-align: center">
+        <br>
+        <br>
+        <a href="/attach/{{$p_id->id}}">
+            <button class="btn btn-primary">
+                Add Attachments
+            </button>
+            <br>
+            <br>
+        </a>
+    </div>
     
     <?php
-function data_uri($image, $mime) 
-{  
-
-  $base64   = base64_encode($image); 
-  return ('data:' . $mime . ';base64,' . $base64);
-
-
-}
+        function data_uri($image, $mime) 
+        {  
+          $base64   = base64_encode($image); 
+          return ('data:' . $mime . ';base64,' . $base64);
+        }
     ?>
 
-<div id="img-section">
-
-<?php
-$doc = DB::table('document')->where('pr_id', $p_id->id)->get();
-?>
-@foreach($doc as $docs)
-<?php
- $attachments = DB::table('attachments')->where('doc_id', $docs->id)->get(); 
-?>
-
-@foreach ($attachments as $attachment) 
-
-
-<div id="img-per" >
+    <div id="img-section">
+        <?php
+            $doc = DB::table('document')->where('pr_id', $p_id->id)->get();
+        ?>
+        @foreach($doc as $docs)
+            <?php
+                $attachments = DB::table('attachments')->where('doc_id', $docs->id)->get(); 
+            ?>
+           @foreach ($attachments as $attachment) 
+                <div id="img-per" >
                     <img data-src="holder.js/200x200" class="img-thumbnail" alt="200x200" src="<?php echo data_uri( $attachment->data, 'image/png'); ?>" style="width: 200px; height: 200px;" >
-<form method="POST" action="delimage"/ id="myForm_{{ $attachment->id }}" name="myForm">
-                                            <input type="hidden" name="hide" value="{{ $attachment->id }}">
-                                            <center>
-                                            <button class="button"  type="button" data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $attachment->id }})"  data-title="Delete Attachment" data-message="Are you sure you want to delete attachment?">Delete</button>
-                                            </center>
-                                        </form>
-</div>
-@endforeach
-@endforeach
-<?php
-
-
-
- ?>
-
-</div>
-
+                    <form method="POST" action="delimage"/ id="myForm_{{ $attachment->id }}" name="myForm">
+                        <input type="hidden" name="hide" value="{{ $attachment->id }}">
+                        <center>
+                        <button class="button"  type="button" data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $attachment->id }})"  data-title="Delete Attachment" data-message="Are you sure you want to delete attachment?">Delete</button>
+                        </center>
+                    </form>
+                </div>
+            @endforeach
+        @endforeach
+        <?php
+         ?>
+    </div>
 
     <?php
 
@@ -183,41 +178,36 @@ $doc = DB::table('document')->where('pr_id', $p_id->id)->get();
         {{ Session::forget('m4'); }}
         {{ Session::forget('m5'); }}
     ?>
-
-  <script type="text/javascript">
-
-  $('#confirmDelete').on('show.bs.modal', function (e) {
-
-      $message = $(e.relatedTarget).attr('data-message');
-  $(this).find('.modal-body p').text($message);
-
-  $title = $(e.relatedTarget).attr('data-title');
-  $(this).find('.modal-title').text($title);
-
-      var form = $(e.relatedTarget).closest('form');
-
-      $(this).find('.modal-footer #confirm').data('form', form);
-
-  });
-
-  $('#confirmDelete').find('.modal-footer #confirm').on('click', function(){
-
-     //$(this).data('form').submit();
-      var name = "myForm_" + window.my_id; 
-      document.getElementById(name).submit();
-     //alert(name);
-  });
-  function hello(pass_id)
-  {
-      window.my_id = pass_id;
-     // alert(window.my_id);
-  }
-  </script>
-    <script type="text/javascript">
-        $("#requisitioner").chained("#office");
-    </script>
-
 @stop
 
 @section('footer')
+    <script type="text/javascript">
+
+        $('#confirmDelete').on('show.bs.modal', function (e) {
+            $message = $(e.relatedTarget).attr('data-message');
+            $(this).find('.modal-body p').text($message);
+
+            $title = $(e.relatedTarget).attr('data-title');
+            $(this).find('.modal-title').text($title);
+            var form = $(e.relatedTarget).closest('form');
+            $(this).find('.modal-footer #confirm').data('form', form);
+        });
+
+        $('#confirmDelete').find('.modal-footer #confirm').on('click', function(){
+           //$(this).data('form').submit();
+            var name = "myForm_" + window.my_id; 
+            document.getElementById(name).submit();
+           //alert(name);
+        });
+
+        function hello(pass_id)
+        {
+            window.my_id = pass_id;
+           // alert(window.my_id);
+        }
+        </script>
+        
+        <script type="text/javascript">
+            $("#requisitioner").chained("#office");
+        </script>
 @stop

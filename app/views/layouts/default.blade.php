@@ -65,7 +65,7 @@
 	        	<div class="navbar-collapse collapse">
           			<ul class="nav navbar-nav">
           				<!--change request path for PRs and Users -->
-          				<li class="{{Request::is('purchase_requests') ? 'active':''}}">{{ link_to('/purchaseRequest/view', 'Purchase List') }}</li>
+          				<li class="{{Request::is('purchase_requests') ? 'active':''}}">{{ link_to('/purchaseRequest/view', 'Purchase Requests') }}</li>
           				@if ( Entrust::hasRole('Administrator') || Entrust::hasRole('Procurement Personnel'))
           				<li class="{{Request::is('user') ? 'active':''}}">{{ link_to('/user/view', 'Users') }}</li>
           				<li class="{{Request::is('offices') ? 'active':''}}">{{ link_to('/offices', 'Offices') }}</li>
@@ -78,6 +78,7 @@
 							  <li>{{ link_to('/workflow/aboveFive', 'Above P500,000') }}</li>
 							</ul>
           				</li>
+          				<li class="{{Request::is('designation') ? 'active':''}}">{{ link_to('/designation', 'Designations') }}</li>
           				@endif
           			</ul>
           			<ul class="nav navbar-nav">

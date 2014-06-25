@@ -22,21 +22,20 @@
 	</ol>
 	
 	<!-- put control number (id) here -->
-
-
-	</span><h2 class="pull-left"> {{ $purchase->ControlNo }} </h2>
+	<h2 class="pull-left"> {{ $purchase->ControlNo }} </h2>
 
 	<!-- change urls when when purchase request functions are final -->
 	<div class="btn-group pull-right options">
-		<button type="button" class="btn btn-success" onclick="window.location.href='purchaseRequest/edit'">
+		<a href="../edit/{{$purchase->id}}" class="btn btn-success">
 			<span class="glyphicon glyphicon-edit"></span>&nbsp;&nbsp;Edit
-		</button>
-		<button type="button" class="btn btn-danger" onclick="window.location.href='purchaseRequest/delete'">
+		</a>
+		<!--button type="button" class="btn btn-danger" onclick="window.location.href='../../purchaseRequest/delete'">
 			<span class="glyphicon glyphicon-trash"></span>&nbsp;&nbsp;Delete
-		</button>
-		<button type="button" class="btn btn-default" onclick="window.location.href='purchaseRequest/view'">
+		</button-->
+		<button type="button" class="btn btn-default" onclick="window.location.href='../../purchaseRequest/view'">
 			<span class="glyphicon glyphicon-step-backward"></span>&nbsp;Back
 		</button>
+		
 	</div>
 
 	<hr class="clear" />
@@ -70,34 +69,28 @@
 			</tr>
 		</table>
 	</div>
- <?php
-function data_uri($image, $mime) 
-{  
-
-  $base64   = base64_encode($image); 
-  return ('data:' . $mime . ';base64,' . $base64);
-
-
-}
-    ?>
+	<?php
+		function data_uri($image, $mime) 
+		{  
+		  $base64   = base64_encode($image); 
+		  return ('data:' . $mime . ';base64,' . $base64);
+		}
+	?>
 
 	<!-- images section -->
-	/
+	
 	<div id="img-section">
-	<?php
-$doc = DB::table('document')->where('pr_id', $purchase->id)->get();
-?>
-@foreach($doc as $docs)
-<?php
- $attachments = DB::table('attachments')->where('doc_id', $docs->id)->get(); 
-?>
+		<?php
+			$doc = DB::table('document')->where('pr_id', $purchase->id)->get();
+		?>
+		@foreach($doc as $docs)
+			<?php
+			 $attachments = DB::table('attachments')->where('doc_id', $docs->id)->get(); 
+			?>
 
-@foreach ($attachments as $attachment) 
-
-                    <img data-src="holder.js/200x200" class="img-thumbnail" alt="200x200" src="<?php echo data_uri( $attachment->data, 'image/png'); ?>" style="width: 200px; height: 200px;" >
-
-
-@endforeach
-@endforeach
-</div>
+			@foreach ($attachments as $attachment) 
+				<img data-src="holder.js/200x200" class="img-thumbnail" alt="200x200" src="<?php echo data_uri( $attachment->data, 'image/png'); ?>" style="width: 200px; height: 200px;" >
+			@endforeach
+		@endforeach
+	</div>
 @stop
