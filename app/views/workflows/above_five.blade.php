@@ -14,73 +14,30 @@
 					<th class="workflow-th" width="45%">DESIGNATION ASSIGNED</th>
 					<th class="workflow-th" width="25%">ACTION</th>
 				</tr>
-				<tr>
-					<td>1. DATE OF PR</td>
-					<td></td>
-					<td>
-						<center>
-							<button class="btn btn-success"><span class="glyphicon glyphicon-edit"></span></button>
-							<button class="btn btn-info"><span class="glyphicon glyphicon-list-alt"></span></button>
-						</center>
-					</td>
-				</tr>
-				<tr>
-					<td>2. RECEIEVED GSD</td>
-					<td></td>
-					<td>
-						<center>
-							<button class="btn btn-success"><span class="glyphicon glyphicon-edit"></span></button>
-							<button class="btn btn-info"><span class="glyphicon glyphicon-list-alt"></span></button>
-						</center>
-					</td>
-				</tr>
-				<tr>
-					<td>3. BUDGET / ACCTNG</td>
-					<td></td>
-					<td>
-						<center>
-							<button class="btn btn-success"><span class="glyphicon glyphicon-edit"></span></button>
-							<button class="btn btn-info"><span class="glyphicon glyphicon-list-alt"></span></button>
-						</center>
-					</td>
-				</tr>
-				<tr>
-					<td>4. PA OFFICE</td>
-					<td></td>
-					<td>
-						<center>
-							<button class="btn btn-success"><span class="glyphicon glyphicon-edit"></span></button>
-							<button class="btn btn-info"><span class="glyphicon glyphicon-list-alt"></span></button>
-						</center>
-					</td>
-				</tr>
-				<tr>
-					<td>5. PGO</td>
-					<td></td>
-					<td>
-						<center>
-							<button class="btn btn-success"><span class="glyphicon glyphicon-edit"></span></button>
-							<button class="btn btn-info"><span class="glyphicon glyphicon-list-alt"></span></button>
-						</center>
-					</td>
-				</tr>
-				<tr>
-					<td>6. GSD RELEASED</td>
-					<td></td>
-					<td>
-						<center>
-							<button class="btn btn-success"><span class="glyphicon glyphicon-edit"></span></button>
-							<button class="btn btn-info"><span class="glyphicon glyphicon-list-alt"></span></button>
-						</center>
-					</td>
-				</tr>
+				<?php 
+					$section1 = DB::table('tasks')->where('wf_id','3')->get();	
+				?>
+				@foreach($section1 as $section)
+					@if($section->section_id == 1)
+						<tr>
+							<td> {{{ $section->taskName }}} </td>
+							<td></td>
+							<td>
+								<center>
+										<button class="btn btn-success"><span class="glyphicon glyphicon-edit"></span></button>
+										<button class="btn btn-info"><span class="glyphicon glyphicon-list-alt"></span></button>
+								</center>
+							</td>
+						</tr>
+					@endif
+				@endforeach
 			</table>
 		</div>
 	</div>
 
 	<div class="panel panel-success">
 		<div class="panel-heading">
-			<h3 class="panel-title">B. REQUIREMENTS</h3>
+			<h3 class="panel-title">B. BAC REQUIREMENTS</h3>
 		</div>
 		<div class="panel-body">
 			<table border="1" class="workflow-table">
@@ -89,96 +46,20 @@
 					<th class="workflow-th" width="45%">DESIGNATION ASSIGNED</th>
 					<th class="workflow-th" width="25%">ACTION</th>
 				</tr>
-				<tr>
-					<td>1. PHILGEPS DATE PUBLISHED</td>
-					<td></td>
-					<td>
-						<center>
-							<button class="btn btn-success"><span class="glyphicon glyphicon-edit"></span></button>
-							<button class="btn btn-info"><span class="glyphicon glyphicon-list-alt"></span></button>
-						</center>
-					</td>
-				</tr>
-				<tr>
-					<td>2. ITB DATE PUBLISHED</td>
-					<td></td>
-					<td>
-						<center>
-							<button class="btn btn-success"><span class="glyphicon glyphicon-edit"></span></button>
-							<button class="btn btn-info"><span class="glyphicon glyphicon-list-alt"></span></button>
-						</center>
-					</td>
-				</tr>
-				<tr>
-					<td>3. ELIGIBILITY DOCUMENTS</td>
-					<td></td>
-					<td>
-						<center>
-							<button class="btn btn-success"><span class="glyphicon glyphicon-edit"></span></button>
-							<button class="btn btn-info"><span class="glyphicon glyphicon-list-alt"></span></button>
-						</center>
-					</td>
-				</tr>
-				<tr>
-					<td>4. TWG EVALUATION DATE</td>
-					<td></td>
-					<td>
-						<center>
-							<button class="btn btn-success"><span class="glyphicon glyphicon-edit"></span></button>
-							<button class="btn btn-info"><span class="glyphicon glyphicon-list-alt"></span></button>
-						</center>
-					</td>
-				</tr>	
-				<tr>
-					<td>4. AOB DATE (AFTER TWG EVALUATION)</td>
-					<td></td>
-					<td>
-						<center>
-							<button class="btn btn-success"><span class="glyphicon glyphicon-edit"></span></button>
-							<button class="btn btn-info"><span class="glyphicon glyphicon-list-alt"></span></button>
-						</center>
-					</td>
-				</tr>
-				<tr>
-					<td>5. BAC RESO DATE (SIGNED BY ALL BAC MEMBERS)</td>
-					<td></td>
-					<td>
-						<center>
-							<button class="btn btn-success"><span class="glyphicon glyphicon-edit"></span></button>
-							<button class="btn btn-info"><span class="glyphicon glyphicon-list-alt"></span></button>
-						</center>
-					</td>
-				</tr>
-				<tr>
-					<td>5. NOTICE OF AWARD DATE</td>
-					<td></td>
-					<td>
-						<center>
-							<button class="btn btn-success"><span class="glyphicon glyphicon-edit"></span></button>
-							<button class="btn btn-info"><span class="glyphicon glyphicon-list-alt"></span></button>
-						</center>
-					</td>
-				</tr>
-				<tr>
-					<td>5. NOTICE TO PROCEED</td>
-					<td></td>
-					<td>
-						<center>
-							<button class="btn btn-success"><span class="glyphicon glyphicon-edit"></span></button>
-							<button class="btn btn-info"><span class="glyphicon glyphicon-list-alt"></span></button>
-						</center>
-					</td>
-				</tr>
-				<tr>
-					<td>5. PHILGEPS AWARD PUBLISHED</td>
-					<td></td>
-					<td>
-						<center>
-							<button class="btn btn-success"><span class="glyphicon glyphicon-edit"></span></button>
-							<button class="btn btn-info"><span class="glyphicon glyphicon-list-alt"></span></button>
-						</center>
-					</td>
-				</tr>
+				@foreach($section1 as $section)
+					@if($section->section_id == 2)
+						<tr>
+							<td> {{{ $section->taskName }}} </td>
+							<td></td>
+							<td>
+								<center>
+										<button class="btn btn-success"><span class="glyphicon glyphicon-edit"></span></button>
+										<button class="btn btn-info"><span class="glyphicon glyphicon-list-alt"></span></button>
+								</center>
+							</td>
+						</tr>
+					@endif
+				@endforeach
 			</table>
 		</div>
 	</div>
@@ -194,46 +75,20 @@
 					<th class="workflow-th" width="45%">DESIGNATION ASSIGNED</th>
 					<th class="workflow-th" width="25%">ACTION</th>
 				</tr>
-				<tr>
-					<td>1. RECEIVED GSD</td>
-					<td></td>
-					<td>
-						<center>
-							<button class="btn btn-success"><span class="glyphicon glyphicon-edit"></span></button>
-							<button class="btn btn-info"><span class="glyphicon glyphicon-list-alt"></span></button>
-						</center>
-					</td>
-				</tr>
-				<tr>
-					<td>2. ACCOUNTING OFFICE</td>
-					<td></td>
-					<td>
-						<center>
-							<button class="btn btn-success"><span class="glyphicon glyphicon-edit"></span></button>
-							<button class="btn btn-info"><span class="glyphicon glyphicon-list-alt"></span></button>
-						</center>
-					</td>
-				</tr>
-				<tr>
-					<td>3. P.A. OFFICE</td>
-					<td></td>
-					<td>
-						<center>
-							<button class="btn btn-success"><span class="glyphicon glyphicon-edit"></span></button>
-							<button class="btn btn-info"><span class="glyphicon glyphicon-list-alt"></span></button>
-						</center>
-					</td>
-				</tr>
-				<tr>
-					<td>4. GOVERNOR'S OFFICE</td>
-					<td></td>
-					<td>
-						<center>
-							<button class="btn btn-success"><span class="glyphicon glyphicon-edit"></span></button>
-							<button class="btn btn-info"><span class="glyphicon glyphicon-list-alt"></span></button>
-						</center>
-					</td>
-				</tr>
+				@foreach($section1 as $section)
+					@if($section->section_id == 3)
+						<tr>
+							<td> {{{ $section->taskName }}} </td>
+							<td></td>
+							<td>
+								<center>
+										<button class="btn btn-success"><span class="glyphicon glyphicon-edit"></span></button>
+										<button class="btn btn-info"><span class="glyphicon glyphicon-list-alt"></span></button>
+								</center>
+							</td>
+						</tr>
+					@endif
+				@endforeach
 			</table>
 		</div>
 	</div>
@@ -249,76 +104,20 @@
 					<th class="workflow-th" width="45%">DESIGNATION ASSIGNED</th>
 					<th class="workflow-th" width="25%">ACTION</th>
 				</tr>
-				<tr>
-					<td>1. BUDGET</td>
-					<td></td>
-					<td>
-						<center>
-							<button class="btn btn-success"><span class="glyphicon glyphicon-edit"></span></button>
-							<button class="btn btn-info"><span class="glyphicon glyphicon-list-alt"></span></button>
-						</center>
-					</td>
-				</tr>
-				<tr>
-					<td>2. ACCOUNTING</td>
-					<td></td>
-					<td>
-						<center>
-							<button class="btn btn-success"><span class="glyphicon glyphicon-edit"></span></button>
-							<button class="btn btn-info"><span class="glyphicon glyphicon-list-alt"></span></button>
-						</center>
-					</td>
-				</tr>
-				<tr>
-					<td>3. TREASURY</td>
-					<td></td>
-					<td>
-						<center>
-							<button class="btn btn-success"><span class="glyphicon glyphicon-edit"></span></button>
-							<button class="btn btn-info"><span class="glyphicon glyphicon-list-alt"></span></button>
-						</center>
-					</td>
-				</tr>
-				<tr>
-					<td>4. P.A. OFFICE</td>
-					<td></td>
-					<td>
-						<center>
-							<button class="btn btn-success"><span class="glyphicon glyphicon-edit"></span></button>
-							<button class="btn btn-info"><span class="glyphicon glyphicon-list-alt"></span></button>
-						</center>
-					</td>
-				</tr>
-				<tr>
-					<td>5. PGO</td>
-					<td></td>
-					<td>
-						<center>
-							<button class="btn btn-success"><span class="glyphicon glyphicon-edit"></span></button>
-							<button class="btn btn-info"><span class="glyphicon glyphicon-list-alt"></span></button>
-						</center>
-					</td>
-				</tr>
-				<tr>
-					<td>6. ACCOUNTING</td>
-					<td></td>
-					<td>
-						<center>
-							<button class="btn btn-success"><span class="glyphicon glyphicon-edit"></span></button>
-							<button class="btn btn-info"><span class="glyphicon glyphicon-list-alt"></span></button>
-						</center>
-					</td>
-				</tr>
-				<tr>
-					<td>7. CHECK RELEASED</td>
-					<td></td>
-					<td>
-						<center>
-							<button class="btn btn-success"><span class="glyphicon glyphicon-edit"></span></button>
-							<button class="btn btn-info"><span class="glyphicon glyphicon-list-alt"></span></button>
-						</center>
-					</td>
-				</tr>	
+				@foreach($section1 as $section)
+					@if($section->section_id == 4)
+						<tr>
+							<td> {{{ $section->taskName }}} </td>
+							<td></td>
+							<td>
+								<center>
+										<button class="btn btn-success"><span class="glyphicon glyphicon-edit"></span></button>
+										<button class="btn btn-info"><span class="glyphicon glyphicon-list-alt"></span></button>
+								</center>
+							</td>
+						</tr>
+					@endif
+				@endforeach
 			</table>
 		</div>
 	</div>
