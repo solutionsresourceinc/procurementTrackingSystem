@@ -118,15 +118,49 @@ class DesignationController extends BaseController {
 
 	public function members($id)
 	{
-		$users = User::all();
-
-
-		 //$a = User::where('designation_id' = $id)->where('user_id');
 		$selected_users = DB::select("select * from users join user_has_designation on users.id = user_has_designation.user_id where user_has_designation.designation_id = $id");
-		return $selected_users;
-		//return View::make('designation_members')
-			//->with('designation',$designation)
-				//->with('users',$users);
+		$notselected_users = DB::select("select * from users where id not in ( select user_id from user_has_designation where designation_id = $id )");
+
+		//return $selected_users;
+		return View::make('designation_members')
+			->with('designation_id',$id)
+			->with('notselected_users',$notselected_users)
+			->with('selected_users',$selected_users);
+
+			
+	}
+
+	public function save_members()
+	{
+		$members_selected = Input::get('members_selected');
+		$members = explode(",", $members_selected);
+
+
+		// Delete all user in user_has_designation table with id = x;
+		$designation_id = Input::get('designation_id');
+		UserHasDesignation::where('designation_id', '=', $designation_id )->delete();
+		
+		//get all the values in select and convert it to array
+		
+
+		// saving to database
+		foreach ($members as $key) 
+		{
+			if($key != 0)
+			{
+				$uhd = new UserHasDesignation;
+				$uhd->user_id = $key;
+				$uhd->designation_id = $designation_id;
+				$uhd->save();
+			}
+			
+		}
+
+		$designation_name = Designation::find($designation_id);
+		$name = $designation_name->designation;
+		$message = "Successfully updated the members in $name.";
+		Session::put('success_members', $message );
+		return Redirect::to('designation');
 
 	}
 }
