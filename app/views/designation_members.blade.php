@@ -9,15 +9,43 @@
 	                $('#select-to').append("<option value='"+$(this).val()+"'>"+$(this).text()+"</option>");
 	            $(this).remove();
 	        });
+
+	        check_empty();
+
 	    });
 	    $('#btn-remove').click(function(){
 	        $('#select-to option:selected').each( function() {
 	            $('#select-from').append("<option value='"+$(this).val()+"'>"+$(this).text()+"</option>");
 	            $(this).remove();
 	        });
+	        check_empty();
+
 	    });
 	 
 	});
+
+	  function check_empty()
+	  {
+	  	if ($('#select-from option').length <= 0) 
+    	{
+    		document.getElementById("btn-add").disabled=true;
+		}
+		else
+		{
+			document.getElementById("btn-add").disabled=false;
+		}
+
+		if ($('#select-to option').length <= 0) 
+    	{
+    		document.getElementById("btn-remove").disabled=true;
+		}
+		else
+		{
+			document.getElementById("btn-remove").disabled=false;
+		}
+	  }
+
+
 	</script>
 
 	{{ HTML::script('drop_search/bootstrap-select.js')}}
@@ -26,33 +54,40 @@
 
 @section('content')
     <h1 class="page-header">Designation Members</h1>
+	 <div class="alert alert-info">  Select an Item to Add/Remove </div>
 
     {{ Form::open(['route'=>'designation_members_save'], 'POST') }}
-    <div class="table-responsive" align="right">
-      	{{Form::button('Cancel', ['class' => 'btn btn-default cancel-edit mode2'])}}
-      	{{ Form::submit('Save',array('class'=>'btn btn-success', 'onclick'=>'change()')) }}
-      	<br><br>
-	</div>
-
 	<div id="designation-create-form" class="well div-form">
 	    	<div class="col-md-4">
-	    		<strong>Available to Add</strong>
+	    		<strong>Available to Add </strong>
 	    		<select name="selectfrom" id="select-from" multiple size="15" class="form-control" data-live-search="true">
+		         	{{ $count = 1 }}
 		         	@foreach($notselected_users as $key)
-			        	{{{ $fullname = $key->lastname . ", " . $key->firstname }}}
-						<option value="{{ $key->id }}" >{{ $fullname }}</option>
+		         		@if($count == 1)
+		         		{
+		         			{{{ $fullname = $key->lastname . ", " . $key->firstname }}}
+							<option selected value="{{ $key->id }}" >{{ $fullname }}</option>
+		         			{{ $count++; }}
+		         		}
+		         		@else
+		         		{
+		         			{{{ $fullname = $key->lastname . ", " . $key->firstname }}}
+							<option value="{{ $key->id }}" >{{ $fullname }}</option>
+		         		}
+		         		@endif
+							
 					@endforeach
 		        </select>
 	    	</div>
 	    	<div class="col-md-4" align="center">
 	    		<br><br>
-				<a href="JavaScript:void(0);" id="btn-add" class="btn btn-success">&nbsp;&nbsp;&nbsp;Add <span class="glyphicon glyphicon-chevron-right"></span></a>
-		        <a href="JavaScript:void(0);" id="btn-remove" class="btn btn-danger"><span class="glyphicon glyphicon-chevron-left"></span> Remove&nbsp;&nbsp;</a>
+	    		<button type="button" class="btn btn-success" id="btn-add" onclick="select()">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Add&nbsp;&nbsp;&nbsp;&nbsp; <span class="glyphicon glyphicon-chevron-right"></span></button><br><br>
+	    		<button type="button" class="btn btn-danger" id="btn-remove"><span class="glyphicon glyphicon-chevron-left"></span> Remove&nbsp;&nbsp;</button>
 		        <br><br>
 		    </div>
 		    <div class="col-md-4">
 		    	<strong>Currently Selected</strong>
-		    	<select name="selectto" id="select-to" multiple size="15" class="form-control" >
+		    	<select name="selectto" onchange"select()" id="select-to" multiple size="15" class="form-control" >
 		          	@foreach($selected_users as $key2)
 			        	{{{ $fullname2 = $key2->lastname . ", " . $key2->firstname }}}
 						<option value="{{ $key2->user_id }}" >{{ $fullname2  }}</option>
@@ -61,10 +96,15 @@
 		        {{ Form::hidden('designation_id', "$designation_id"); }}
 		        {{ Form::hidden('members_selected', "", ['id'=>'members_selected']); }}
 		    </div>
-	    {{ Form::close() }}
 	</div>
 
-	{{ $errors->first('ofcname', '<div class="alert alert-danger error-div"><span>Invalid input for designation name.</span></div>') }}
+	<div class="table-responsive" align="left">
+      	<a href="{{ URL::to('designation') }}" class="btn btn-default">Cancel</a>
+      	{{ Form::submit('Save',array('class'=>'btn btn-success', 'onclick'=>'change()')) }}
+      	<br>
+	</div>
+{{ Form::close() }}
+
 
 	
 @stop
@@ -96,5 +136,27 @@
 			document.getElementById('members_selected').value = values;
 
     	}
+
+		$( document ).ready(function() {
+		 	if ($('#select-from option').length <= 0) 
+	    	{
+	    		document.getElementById("btn-add").disabled=true;
+			}
+			else
+			{
+				document.getElementById("btn-add").disabled=false;
+			}
+
+			if ($('#select-to option').length <= 0) 
+	    	{
+	    		document.getElementById("btn-remove").disabled=true;
+			}
+			else
+			{
+				document.getElementById("btn-remove").disabled=false;
+			}
+		    
+		 
+		});
     </script>
 @stop
