@@ -1,5 +1,7 @@
 @extends('layouts.default')
 
+
+
 @section('content')
     <?php $p_id = Purchase::find($id); ?>
     <div class="modal fade" id="confirmDelete" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
@@ -59,7 +61,9 @@
 
             <div class="form-group">
                 <label for="amount">Amount</label>
-                <input class="form-control"  type="text" name="amount" id="amount" value="{{{ $p_id->amount }}}" required>
+               
+                <input  onchange="formatCurrency(this);"  class="form-control"  type="text" name="amount" id="amount"  required>
+
                 @if (Session::get('m3'))
                     <font color="red"><i>{{ Session::get('m3') }}</i></font>
                 @endif
@@ -178,6 +182,7 @@
         {{ Session::forget('m4'); }}
         {{ Session::forget('m5'); }}
     ?>
+
 @stop
 
 @section('footer')
@@ -205,9 +210,50 @@
             window.my_id = pass_id;
            // alert(window.my_id);
         }
-        </script>
+    </script>
         
-        <script type="text/javascript">
-            $("#requisitioner").chained("#office");
-        </script>
+    <script type="text/javascript">
+        $("#requisitioner").chained("#office");
+    </script>
+
+    <script type="text/javascript">
+
+        function formatCurrency(fieldObj)
+        {
+            if (isNaN(fieldObj.value)) { return false; }
+            fieldObj.value = '' + parseFloat(fieldObj.value).toFixed(2);
+            return true;
+        }
+
+        $('#confirmDelete').on('show.bs.modal', function (e) {
+
+            $message = $(e.relatedTarget).attr('data-message');
+            $(this).find('.modal-body p').text($message);
+
+            $title = $(e.relatedTarget).attr('data-title');
+            $(this).find('.modal-title').text($title);
+
+            var form = $(e.relatedTarget).closest('form');
+
+            $(this).find('.modal-footer #confirm').data('form', form);
+
+        });
+
+        $('#confirmDelete').find('.modal-footer #confirm').on('click', function(){
+
+            //$(this).data('form').submit();
+            var name = "myForm_" + window.my_id; 
+            document.getElementById(name).submit();
+            //alert(name);
+        });
+          
+        function hello(pass_id)
+        {
+            window.my_id = pass_id;
+             // alert(window.my_id);
+        }
+
+        $("#requisitioner").chained("#office");
+    </script>
+
 @stop

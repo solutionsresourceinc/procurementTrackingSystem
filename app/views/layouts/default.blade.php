@@ -35,7 +35,16 @@
 <!--Hover Image Overlay  -->
 
 		@yield('header')
+<script type = "text/javascript">
+	function show(elementId) { 
+  //now we kick out both conditional we do not need them anymore
 
+  //we hide both forms
+
+  //and then we simply show wanted one isn't that nicer and cleaner?
+  document.getElementById(elementId).style.display="block";
+}
+		</script>
 		<script type="text/javascript" language="javascript" class="init">
 			$(document).ready(function() {
 				$('#table_id').DataTable( {

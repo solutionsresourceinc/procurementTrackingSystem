@@ -16,6 +16,7 @@ class CreateDesignationTable extends Migration {
 		{
 			$table->increments('id');
 			$table->string('designation', 255);
+			
 		});
 	}
 

@@ -7,6 +7,10 @@
 		<div class="alert alert-success"> {{ Session::get('success') }}</div> 
 	@endif
 
+	@if(Session::get('success_members'))
+		<div class="alert alert-success"> {{ Session::get('success_members') }}</div> 
+	@endif
+
 	@if(Session::get('invalid'))
 		<div class="alert alert-danger"> {{ Session::get('invalid') }}</div> 
 	@endif
@@ -112,4 +116,5 @@
 		});
 	</script>
 	{{ Session::forget('main_error'); }}
+	{{ Session::forget('success_members'); }}
 @stop

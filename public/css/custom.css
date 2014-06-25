@@ -81,6 +81,13 @@ a:hover, a:focus{
 	background: rgb(240, 240, 240);
 }
 
+.buttoninv{
+
+    background: transparent;
+    border: none !important;​
+
+}
+
 .table-responsive{
 	float: left;
 	width: 100%;
