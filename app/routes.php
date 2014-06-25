@@ -150,6 +150,8 @@ Route::post('designation/{id}/edit',['as' => 'desingation.update', 'uses' => 'De
 Route::get('designation/{id}/members', ['as'=>'designation_members', 'uses' => 'DesignationController@members']);
 Route::post('designation/assign',['as'=>'designation.assign', 'uses' => 'DesignationController@assign']);
 
+Route::post('designation/{id}/members', ['as'=>'designation_members_save', 'uses' => 'DesignationController@save_members']);
+
 // JAN Routes
 Route::get('workflow/belowFifty', function(){
 	return View::make('workflows.below_fifty');

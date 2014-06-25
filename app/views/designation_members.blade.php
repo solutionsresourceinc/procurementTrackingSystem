@@ -27,20 +27,20 @@
 @section('content')
     <h1 class="page-header">Designation Members</h1>
 
+    {{ Form::open(['route'=>'designation_members_save'], 'POST') }}
     <div class="table-responsive" align="right">
       	{{Form::button('Cancel', ['class' => 'btn btn-default cancel-edit mode2'])}}
-      	{{ Form::submit('Save',array('class'=>'btn btn-success')) }}
+      	{{ Form::submit('Save',array('class'=>'btn btn-success', 'onclick'=>'change()')) }}
       	<br><br>
 	</div>
 
 	<div id="designation-create-form" class="well div-form">
-	    {{ Form::open(['route'=>'designation.store'], 'POST', array('role' => 'form')) }}
 	    	<div class="col-md-4">
 	    		<strong>Available to Add</strong>
-	    		<select name="selectfrom" id="select-from" multiple size="5" class="form-control" data-live-search="true">
-		         	@foreach($users as $key2)
-			        	{{{ $fullname = $key2->lastname . ", " . $key2->firstname }}}
-						<option value="{{ $key2->id }}" >{{ $fullname }}</option>
+	    		<select name="selectfrom" id="select-from" multiple size="15" class="form-control" data-live-search="true">
+		         	@foreach($notselected_users as $key)
+			        	{{{ $fullname = $key->lastname . ", " . $key->firstname }}}
+						<option value="{{ $key->id }}" >{{ $fullname }}</option>
 					@endforeach
 		        </select>
 	    	</div>
@@ -52,11 +52,14 @@
 		    </div>
 		    <div class="col-md-4">
 		    	<strong>Currently Selected</strong>
-		    	<select name="selectto" id="select-to" multiple size="5" class="form-control">
-		          <option value="5">Item 5</option>
-		          <option value="6">Item 6</option>
-		          <option value="7">Item 7</option>
+		    	<select name="selectto" id="select-to" multiple size="15" class="form-control" >
+		          	@foreach($selected_users as $key2)
+			        	{{{ $fullname2 = $key2->lastname . ", " . $key2->firstname }}}
+						<option value="{{ $key2->user_id }}" >{{ $fullname2  }}</option>
+					@endforeach
 		        </select>
+		        {{ Form::hidden('designation_id', "$designation_id"); }}
+		        {{ Form::hidden('members_selected', "", ['id'=>'members_selected']); }}
 		    </div>
 	    {{ Form::close() }}
 	</div>
@@ -76,5 +79,22 @@
 
             //$('.selectpicker').selectpicker('hide');
         });
+    </script>
+
+    <script type="text/javascript">
+    	function change()
+    	{
+    		var select1 = document.getElementById('select-to');
+			var values = new Array();
+
+			for(var i=0; i < select1.options.length; i++)
+			{
+			    values.push(select1.options[i].value);
+			}
+
+			//alert(values);
+			document.getElementById('members_selected').value = values;
+
+    	}
     </script>
 @stop
