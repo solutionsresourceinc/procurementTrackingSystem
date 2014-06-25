@@ -148,6 +148,7 @@ Route::get('designation/delete/{id}',['as' => 'designation.delete', 'uses' => 'D
 Route::post('designation/{id}/edit',['as' => 'desingation.update', 'uses' => 'DesignationController@update']);
 
 Route::get('designation/{id}/members', ['as'=>'designation_members', 'uses' => 'DesignationController@members']);
+Route::post('designation/assign',['as'=>'designation.assign', 'uses' => 'DesignationController@assign']);
 
 // JAN Routes
 Route::get('workflow/belowFifty', function(){

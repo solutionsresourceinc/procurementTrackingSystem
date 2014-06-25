@@ -129,4 +129,12 @@ class DesignationController extends BaseController {
 				//->with('users',$users);
 
 	}
+	public function assign()
+	{
+		$id= Input::get('task_id');
+		$assignd = Task::find($id);
+		$assignd->d_id = Input::get('designa');
+		$assignd->save();
+				return Redirect::back()->with('success','Successfully deleted');
+	}
 }
