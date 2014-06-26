@@ -23,17 +23,20 @@ class PurchaseRequestController extends Controller {
 
 		if($purchase->save())
 		{
+			
+
 			$pr_id= Session::get('pr_id');
+			if (Session::get('doc_id')){
+				$doc_id =Session::get('doc_id');
 
-			$doc_id =Session::get('doc_id');
-			$notice = "Purchase request created successfullly! ";  
-
-			DB::table('attachments')
-			            ->where('doc_id', $doc_id)
-			            ->update(array( 'saved' => 1));
-			DB::table('attachments')->where('saved', '=', 0)->delete();
-			DB::table('document')->where('pr_id', '=',$pr_id )->where('id','!=',$doc_id)->delete();
-
+				DB::table('attachments')
+				            ->where('doc_id', $doc_id)
+				            ->update(array( 'saved' => 1));
+				DB::table('attachments')->where('saved', '=', 0)->delete();
+				DB::table('document')->where('pr_id', '=',$pr_id )->where('id','!=',$doc_id)->delete();
+				Session::forget('doc_id');
+			}
+			$notice = "Purchase request created successfullly! ";										  
 
 
 			Session::put('notice', $notice);
@@ -71,7 +74,7 @@ class PurchaseRequestController extends Controller {
 			Session::put('m6', $m6 );
 			Session::put('m7', $m7 );
 
-			return Redirect::back()->withInput(Input::except('password'));
+			return Redirect::back()->withInput();
 		}
 	}
 

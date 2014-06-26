@@ -23,9 +23,9 @@ class UserTableSeeder extends Seeder {
         // Seeding of Administrator account
         $user->id = '1';
         $user->username = 'admin1';
-        $user->firstname = 'admin_fname';
-        $user->lastname = 'admin_lname' ;
-        $user->email = 'admin@gmail.com';
+        $user->firstname = 'John';
+        $user->lastname = 'Cruz' ;
+        $user->email = 'jdcruz@gmail.com';
         $user->password = 'admin1';
         $user->password_confirmation = 'admin1';
         $user->confirmation_code = 'ok';
@@ -37,8 +37,8 @@ class UserTableSeeder extends Seeder {
         $user = new User;
         $user->id = '2';
         $user->username = 'person1';
-        $user->firstname = 'person_fname';
-        $user->lastname = 'person_lname' ;
+        $user->firstname = 'Jane';
+        $user->lastname = 'Doe' ;
         $user->email = 'person@gmail.com';
         $user->password = 'person1';
         $user->password_confirmation = 'person1';
@@ -51,8 +51,8 @@ class UserTableSeeder extends Seeder {
         $user = new User;
         $user->id = '3';
         $user->username = 'requis1';
-        $user->firstname = 'requis_fname';
-        $user->lastname = 'requis_lname' ;
+        $user->firstname = 'Joseph';
+        $user->lastname = 'Elorde' ;
         $user->email = 'requis@gmail.com';
         $user->password = 'requis1';
         $user->password_confirmation = 'requis1';

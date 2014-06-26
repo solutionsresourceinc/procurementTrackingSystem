@@ -226,9 +226,11 @@ table.dataTable td {
   zoom: 1;
 }
 .dataTables_wrapper .dataTables_length {
+  display: none; /*  JANSARMIENTO - REMOVE THIS LINE FOR ENTRIES LIMIT  */
   float: left;
 }
 .dataTables_wrapper .dataTables_filter {
+  display: none; /*  JANSARMIENTO - REMOVE THIS LINE FOR SEARCH BOX  */
   float: right;
   text-align: right;
 }
