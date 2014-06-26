@@ -1,4 +1,4 @@
-@extends('layouts.default')
+@extends('layouts.dashboard')
 
 @section('content')
 	<h1 class="page-header">Large Value Procurement (Above P500,000)</h1>

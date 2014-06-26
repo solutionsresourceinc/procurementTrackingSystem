@@ -1,4 +1,4 @@
-@extends('layouts.default')
+@extends('layouts.dashboard')
 
 @section('header')
 	{{ HTML::script('drop_search/bootstrap-select.js')}}
@@ -118,7 +118,7 @@
 
 			<div><br>
 							{{ Form::submit('Create Purchase Request',array('class'=>'btn btn-success')) }}
-							{{ link_to( '/', 'Cancel Create', array('class'=>'btn btn-default') ) }}
+							{{ link_to( 'purchaseRequest/view', 'Cancel Create', array('class'=>'btn btn-default') ) }}
 						</div>
 					</div>
 				</div>	

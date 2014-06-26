@@ -1,4 +1,4 @@
-@extends('layouts.default')
+@extends('layouts.dashboard')
 
 @section('content')
     <h1 class="page-header">Designations</h1>

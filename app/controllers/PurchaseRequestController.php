@@ -25,14 +25,14 @@ class PurchaseRequestController extends Controller {
 		{
 			$pr_id= Session::get('pr_id');
 
-$doc_id =Session::get('doc_id');
-$notice = "Purchase request created successfullly! ";  
+			$doc_id =Session::get('doc_id');
+			$notice = "Purchase request created successfullly! ";  
 
-DB::table('attachments')
-            ->where('doc_id', $doc_id)
-            ->update(array( 'saved' => 1));
-DB::table('attachments')->where('saved', '=', 0)->delete();
-DB::table('document')->where('pr_id', '=',$pr_id )->where('id','!=',$doc_id)->delete();
+			DB::table('attachments')
+			            ->where('doc_id', $doc_id)
+			            ->update(array( 'saved' => 1));
+			DB::table('attachments')->where('saved', '=', 0)->delete();
+			DB::table('document')->where('pr_id', '=',$pr_id )->where('id','!=',$doc_id)->delete();
 
 
 
