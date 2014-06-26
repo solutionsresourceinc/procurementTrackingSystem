@@ -17,10 +17,10 @@
 
         ?>
     <div class="form-create fc-div">
-        {{ Form::open(['route'=>'purchaseRequest_submit'], 'POST') }}
+        {{ Form::open(['route'=>'purchaseRequest_editsubmit'], 'POST') }}
             <div class="row">
                 <div>   
-
+<input type="hidden" name="id" value="{{$purchase->id}}">
                     @if(Session::get('notice'))
                         <div class="alert alert-success"> {{ Session::get('notice') }}</div> 
                     @endif
@@ -107,23 +107,17 @@
                         <div>
                             {{ Form::label('modeOfProcurement', 'Mode of Procurement *', array('class' => 'create-label')) }}
                             <select  name="modeOfProcurement" id="modeOfProcurement" class="form-control selectpicker" data-live-search="true">
+
                                 <option value="">Please select</option>
-                                    <option value="Workflow 1" <?php
-                                        if($purchase->wf_id=="Workflow 1")
-                                            echo "selected";
-                                    ?> >Workflow 1</option>
-                                    <option value="Workflow 2"
                                     <?php
-                                        if($purchase->wf_id=="Workflow 2")
-                                            echo "selected";
+                                        $workflow= DB::table('workflow')->get();
                                     ?>
-                                    >Workflow 2</option>
-                                    <option value="Workflow 3"
-                                        <?php
-                                        if($purchase->wf_id=="Workflow 3")
+                                    @foreach($workflow as $workflows)
+                                    <option value="{{$workflows->workFlowName}}" <?php
+                                    if($purchase->modeOfProcurement==$workflows->workFlowName)
                                             echo "selected";
-                                    ?>
-                                    >Workflow 3</option>
+                                    ?> >{{$workflows->workFlowName}}</option>
+                               @endforeach 
                             </select>
                             @if (Session::get('m6'))
                                 <font color="red"><i>{{ Session::get('m6') }}</i></font>
@@ -133,7 +127,8 @@
 
                         <div>
                             {{ Form::label('ControlNo', 'Control No. *', array('class' => 'create-label')) }}
-                            <input type="text"  name="ControlNo"  class="form-control" value={{$purchase->ControlNo}}>
+                            <input type="text"  name="dispcn"  class="form-control" value="{{ $purchase->ControlNo }}" disabled>
+                             <input type="hidden"  name="ControlNo"  class="form-control" value="{{ $purchase->ControlNo }}" >
                         </div>
 
                         @if (Session::get('m7'))
@@ -145,7 +140,7 @@
 
 
             <div><br>
-                            {{ Form::submit('Create Purchase Request',array('class'=>'btn btn-success')) }}
+                            {{ Form::submit('Save Purchase Request',array('class'=>'btn btn-success')) }}
                             {{ link_to( '/purchaseRequest/view', 'Cancel Create', array('class'=>'btn btn-default') ) }}
                         </div>
                     </div>
@@ -186,7 +181,7 @@ Attach Image
     {{ Session::forget('m4'); }}
     {{ Session::forget('m5'); }}
     {{ Session::forget('m6'); }}
-    {{ Session::forget('m7'); }}
+
 @stop
 
 <!-- script for the formatting of amount field -->
