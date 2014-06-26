@@ -30,7 +30,7 @@ class UserController extends BaseController {
         $user = new User;
 
         $user->username = Input::get( 'username' );
-$checkusername = User::where('username', $user->username)->first();
+        $checkusername = User::where('username', $user->username)->first();
 
 
 
@@ -48,18 +48,18 @@ $checkusername = User::where('username', $user->username)->first();
 
 
 
-$errorcheck=0;
+        $errorcheck=0;
 
-$checkusername=0;
+        $checkusername=0;
 
-$users= new User; $users = DB::table('users')->get();
+        $users= new User; $users = DB::table('users')->get();
 
-        foreach ($users as $userx){
-if ($userx->username==$user->username)
-   { $checkusername=1; $errorcheck=1; }
-      }
-if ($checkusername!=0){
-   Session::put('username_error', 'Username is already in use.');}
+                foreach ($users as $userx){
+        if ($userx->username==$user->username)
+           { $checkusername=1; $errorcheck=1; }
+              }
+        if ($checkusername!=0){
+           Session::put('username_error', 'Username is already in use.');}
 
     
 
@@ -105,9 +105,9 @@ if ($checkusername!=0){
         if ( $errorcheck==0 )
         {
 
-    $user->save();
-    $username=$user->username;
-    $new_role = new Role;
+            $user->save();
+            $username=$user->username;
+            $new_role = new Role;
 
                 $user->utype = Input::get('role');
 
@@ -147,10 +147,10 @@ public function edit()
    
         $user->email = Input::get( 'email' );
            
-  $password = " ".Input::get( 'password' );
-  $passnotchange=0;
-     if($password==" "){
-$passnotchange=1;
+          $password = " ".Input::get( 'password' );
+          $passnotchange=0;
+             if($password==" "){
+        $passnotchange=1;
 
 
      }

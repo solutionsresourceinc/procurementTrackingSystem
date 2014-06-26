@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('content')
-    <h1 class="page-header">List of All Purchase Requests</h1>
+    <h1 class="page-header">List of Overdue Purchase Requests</h1>
     
     @if ( Entrust::hasRole('Administrator') || Entrust::hasRole('Procurement Personnel'))
       <div>
@@ -50,14 +50,14 @@
         <thead>
         		<tr>
         	    	<th>Project/Purpose</th>
-        	      <th>Status</th>
-        	      <th>Date Created</th>
-        	      <?php
+        	      	<th>Status</th>
+        	      	<th>Date Created</th>
+        	      	<?php
         	        	$adm = Assigned::where('user_id', Auth::User()->id)->first();
         	        	$requests = new Purchase;
-        				    $requests = DB::table('purchase_request')->get();
-        			  ?>
-        			  <th>Action</th>
+        				$requests = DB::table('purchase_request')->get(); //change this to get overdue PRs
+        			?>
+        			<th>Action</th>
         	  </tr>
     	  </thead>
 

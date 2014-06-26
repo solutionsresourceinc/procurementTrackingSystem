@@ -56,38 +56,72 @@
                 </button>
                 <a class="navbar-brand" href="/">{{ HTML::image('img/logo-nav-abbrev.png', 'Tarlac Procurement Tracking System', array('id' => '')) }}</a>
             </div>
-            <!-- Collect the nav links, forms, and other content for toggling -->
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse navbar-ex1-collapse">
           <ul class="nav navbar-nav side-nav">
             <li class="{{Request::is('dashboard') ? 'active':''}}"><a href="/"><!--i class="fa fa-dashboard"></i--> Dashboard</a></li>
-            <li class="{{(Request::is('purchaseRequest/view') || Request::is('purchaseRequest/view/{id}')) ? 'active':''}}">{{ link_to('/purchaseRequest/view', 'Purchase Requests') }}</li>
+            <li class="dropdown">
+                <a href="#" class="dropdown" data-toggle="dropdown">Purchase Requests <b class="caret pull-right"></b></a>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
+                    <!--Purchase Request Views-->
+                    <li class="{{(Request::is('purchaseRequest/view') || Request::is('purchaseRequest/view/{id}')) ? 'active':''}}">
+                        <a href="/purchaseRequest/view">Active Purchase Requests<span class="badge pull-right">1</span></a>
+                    </li>
+                    <li class="{{(Request::is('purchaseRequest/closed') || Request::is('purchaseRequest/view/{id}')) ? 'active':''}}">
+                        <a href="/purchaseRequest/closed">Closed Purchase Requests<span class="badge pull-right">1</span></a>
+                    </li>
+                    <li class="{{(Request::is('purchaseRequest/overdue') || Request::is('purchaseRequest/view/{id}')) ? 'active':''}}">
+                        <a href="/purchaseRequest/overdue">Overdue Purchase Requests<span class="badge pull-right">1</span></a>
+                    </li>
+                </ul>
+            </li>
+
             @if ( Entrust::hasRole('Administrator') || Entrust::hasRole('Procurement Personnel'))
-                <li class="{{Request::is('user/view') ? 'active':''}}">{{ link_to('/user/view', 'Users') }}</li>
-                <li class="{{Request::is('offices') ? 'active':''}}">{{ link_to('/offices', 'Offices') }}</li>
-                <!--li class="{{Request::is('workflow') ? 'active':''}}">{{ link_to('/workflow', 'Workflow') }}</li-->
-                <li class="divider"></li>
-                <li class="{{Request::is('workflow') ? 'active':''}} dropdown">
-                    <a href="#" class="dropdown" data-toggle="dropdown">Workflow <b class="caret"></b></a>
+                <li class="dropdown">
+                    <a href="#" class="dropdown" data-toggle="dropdown">Tasks <b class="caret pull-right"></b></a>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
+                        <!--Purchase Request Views-->
+                        <li class="{{(Request::is('task/active') || Request::is('purchaseRequest/view/{id}')) ? 'active':''}}">
+                            <a href="/task/active">Active Tasks<span class="badge pull-right">10</span></a>
+                        </li>
+                        <li class="{{(Request::is('task/overdue') || Request::is('purchaseRequest/view/{id}')) ? 'active':''}}">
+                            <a href="/task/overdue">Overdue Tasks<span class="badge pull-right">10</span></a>
+                        </li>
+                    </ul>
+                </li>
+            @endif
+
+            @if( Entrust::hasRole('Administrator') )
+                <li class="dropdown">
+                    <a href="#" class="dropdown" data-toggle="dropdown">Workflow <b class="caret pull-right"></b></a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
                       <li>{{ link_to('/workflow/belowFifty', 'Below P50,000') }}</li>
                       <li>{{ link_to('/workflow/aboveFifty', 'Between P50,000 and P500,000') }}</li>
                       <li>{{ link_to('/workflow/aboveFive', 'Above P500,000') }}</li>
                     </ul>
                 </li>
-                <li class="{{Request::is('designation') ? 'active':''}}">{{ link_to('/designation', 'Designations') }}</li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown" data-toggle="dropdown">Administration <b class="caret pull-right"></b></a>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
+                        <li class="{{Request::is('user/view') ? 'active':''}}">{{ link_to('/user/view', 'Users') }}</li>
+                        <li class="{{Request::is('offices') ? 'active':''}}">{{ link_to('/offices', 'Offices') }}</li>
+                        <li class="{{Request::is('designation') ? 'active':''}}">{{ link_to('/designation', 'Designations') }}</li>
+                    </ul>
+                </li>
             @endif
           </ul>
 
           <ul class="nav navbar-nav navbar-right navbar-user">
             <li class="dropdown user-dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> Administrator <b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li><a href="#"><i class="fa fa-user"></i> Edit Profile</a></li>
-                <li class="divider"></li>
-                <li>
-                    <a href="/logout"><i class="fa fa-power-off"></i> Log Out</a>
-                </li>
-              </ul>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> {{Auth::user()->firstname}}  <b class="caret" style="margin-top: 0;"></b></a>
+                <ul class="dropdown-menu">
+                    <li><a href="#"><i class="fa fa-user"></i> Edit Profile</a></li>
+                    <li class="divider"></li>
+                    <li>
+                        <a href="/logout"><i class="fa fa-power-off"></i> Log Out</a>
+                    </li>
+                </ul>
             </li>
           </ul>
         </div><!-- /.navbar-collapse -->

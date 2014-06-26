@@ -100,6 +100,16 @@ class PurchaseRequestController extends Controller {
 		//return $purchase;
 	}
 
+	public function viewClosed()
+	{
+		return View::make('purchaseRequest.purchaseRequest_closed');
+	}
+
+	public function viewOverdue()
+	{
+		return View::make('purchaseRequest.purchaseRequest_overdue');
+	}
+
 	public function edit_submit()
 	{
 		$id = Input::get('id');

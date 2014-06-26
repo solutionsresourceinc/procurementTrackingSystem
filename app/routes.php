@@ -112,6 +112,8 @@ Route::get('purchaseRequest/view','PurchaseRequestController@view');
 Route::get('purchaseRequest/create', 'PurchaseRequestController@create');
 Route::get('purchaseRequest/edit','PurchaseRequestController@edit');
 Route::get( 'purchaseRequest/vieweach/{id}', 'PurchaseRequestController@vieweach');
+Route::get( 'purchaseRequest/closed', 'PurchaseRequestController@viewClosed');
+Route::get( 'purchaseRequest/overdue', 'PurchaseRequestController@viewOverdue');
 
 Route::post('purchaseRequest/edit/{id}',[ 'as' => 'purchaseRequest_editsubmit', 'uses' => 'PurchaseRequestController@edit_submit']);
 Route::post('purchaseRequest/create', ['as' => 'purchaseRequest_submit', 'uses' => 'PurchaseRequestController@create_submit']);
@@ -189,3 +191,5 @@ Route::filter('csrf', function()
 // Roles Create Routes (Disabled)
 	//Route::get('create_roles','UserController@getRole');
 
+Route::get('task/active', 'TaskController@active');
+Route::get('task/overdue', 'TaskController@overdue');
