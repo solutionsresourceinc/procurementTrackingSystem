@@ -215,6 +215,7 @@ table.table td{
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff222222', endColorstr='#ff282828', GradientType=0);
 	-webkit-box-shadow: inset 0 3px 9px rgba(0,0,0,.25);
 	box-shadow: inset 0 3px 9px rgba(0,0,0,.25);
+	border-bottom: solid rgb(53, 53, 53) 1px;
 }
 
 #page-wrapper{
@@ -231,4 +232,8 @@ table.table td{
 
 .side-nav>li.dropdown>ul.dropdown-menu>li>a{
 	font-size: 13px;
+}
+
+.navbar-brand{
+	padding: 10px;
 }

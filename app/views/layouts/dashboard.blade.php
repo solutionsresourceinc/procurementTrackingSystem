@@ -54,7 +54,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">PTS</a>
+                <a class="navbar-brand" href="/">{{ HTML::image('img/logo-nav-abbrev.png', 'Tarlac Procurement Tracking System', array('id' => '')) }}</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse navbar-ex1-collapse">
@@ -65,6 +65,7 @@
                 <li class="{{Request::is('user/view') ? 'active':''}}">{{ link_to('/user/view', 'Users') }}</li>
                 <li class="{{Request::is('offices') ? 'active':''}}">{{ link_to('/offices', 'Offices') }}</li>
                 <!--li class="{{Request::is('workflow') ? 'active':''}}">{{ link_to('/workflow', 'Workflow') }}</li-->
+                <li class="divider"></li>
                 <li class="{{Request::is('workflow') ? 'active':''}} dropdown">
                     <a href="#" class="dropdown" data-toggle="dropdown">Workflow <b class="caret"></b></a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
