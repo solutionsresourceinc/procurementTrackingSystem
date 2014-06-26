@@ -121,22 +121,30 @@ Entrust::routeNeedsRole( 'purchaseRequest/vieweach/*', array('Administrator','Pr
 Entrust::routeNeedsRole( 'purchaseRequest/edit/*', array('Administrator','Procurement Personnel'), Redirect::to('/'), false );
 
 // Image Upload 
-/*
+
 Entrust::routeNeedsRole( 'back', array('Administrator','Procurement Personnel'), Redirect::to('/'), false );
 Entrust::routeNeedsRole( 'pr_imageupload', array('Administrator','Procurement Personnel'), Redirect::to('/'), false );
 Entrust::routeNeedsRole( 'attach/*', array('Administrator','Procurement Personnel'), Redirect::to('/'), false );
 Entrust::routeNeedsRole( 'pr_id', array('Administrator','Procurement Personnel'), Redirect::to('/'), false );
 Entrust::routeNeedsRole( 'resultstest', array('Administrator','Procurement Personnel'), Redirect::to('/'), false );
- */
+ 
 
 // Filter for Workflow Module
 Entrust::routeNeedsRole( 'workflow/below-fifty', array('Administrator','Procurement Personnel','Requisitioner'), Redirect::to('/'), false );
 
 // Filter for JAN Routes
-/*
+
 Entrust::routeNeedsRole( 'workflow/belowFifty', array('Administrator','Procurement Personnel','Requisitioner'), Redirect::to('/'), false );
 Entrust::routeNeedsRole( 'workflow/aboveFifty', array('Administrator','Procurement Personnel','Requisitioner'), Redirect::to('/'), false );
 Entrust::routeNeedsRole( 'workflow/workflow/aboveFive', array('Administrator','Procurement Personnel','Requisitioner'), Redirect::to('/'), false );
 Entrust::routeNeedsRole( 'workflow', array('Administrator','Procurement Personnel','Requisitioner'), Redirect::to('/'), false );
-*/
 
+
+// Filter for Designations
+Entrust::routeNeedsRole( 'designation', array('Administrator'), Redirect::to('/') );
+Entrust::routeNeedsRole( 'designation/delete/*', array('Administrator'), Redirect::to('/') );
+Entrust::routeNeedsRole( 'designation/create', array('Administrator'), Redirect::to('/') );
+Entrust::routeNeedsRole( 'designation/*', array('Administrator'), Redirect::to('/') );
+Entrust::routeNeedsRole( 'designation/*/edit', array('Administrator'), Redirect::to('/') );
+
+Entrust::routeNeedsRole( 'designation/*/members', array('Administrator'), Redirect::to('/') );

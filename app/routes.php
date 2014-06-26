@@ -166,15 +166,6 @@ Route::get('workflow', function(){
 	return View::make('workflows.workflowdash');
 });
 
-// Roles Create Routes (Disabled)
-	//Route::get('create_roles','UserController@getRole');
-
-// Test Route
-Route::get('test', function(){
-	$users = User::all();
-	return View::make('test')->with('users',$users);
-});
-
 Route::post('workflow/replace/{id}', function($id)
 {
 	//$user = User::find($id);
@@ -193,3 +184,8 @@ Route::filter('csrf', function()
 {
 	if (Request::forged()) return Response::error('500');
 });
+
+
+// Roles Create Routes (Disabled)
+	//Route::get('create_roles','UserController@getRole');
+
