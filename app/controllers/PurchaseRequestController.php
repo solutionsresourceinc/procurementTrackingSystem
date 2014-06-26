@@ -37,7 +37,7 @@ DB::table('attachments')
 DB::table('attachments')->where('saved', '=', 0)->delete();
 DB::table('document')->where('pr_id', '=',$pr_id )->where('id','!=',$doc_id)->delete();
 Session::forget('doc_id');
-Session::forget('pr_id');
+
 }
 
 

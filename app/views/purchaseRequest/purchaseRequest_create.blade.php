@@ -118,7 +118,7 @@
 
 			<div><br>
 							{{ Form::submit('Create Purchase Request',array('class'=>'btn btn-success')) }}
-							{{ link_to( '/', 'Cancel Create', array('class'=>'btn btn-default') ) }}
+							{{ link_to( '/purchaseRequest/view', 'Cancel Create', array('class'=>'btn btn-default') ) }}
 						</div>
 					</div>
 				</div>	
@@ -173,55 +173,6 @@ Attach Image
 			document.getElementById("num").value = parts;
 		}
 
-		function check(input) 
-		{
-
-			if(!input.value.match(/^\d+/)) {
-				input.setCustomValidity('Invalid Input.');
-			} 
-			else {
-				// input is valid -- reset the error message
-				 input.setCustomValidity('');
-			}
-		}
-
-		function check2(input) 
-		{
-
-			if(!input.value.match(/^[a-z0-9ñÑ ]+$/i)) {
-				input.setCustomValidity('letters, numbers and spaces only');
-			} 
-			else {
-				 input.setCustomValidity('');
-			}
-		}
-
-		function check3(input) 
-		{
-			var num = input.value;
-			var len = num.length;
-
-			if(!input.value.match(/^\d+$/)) {
-				input.setCustomValidity('Invalid Input');
-			}
-
-			else if(len < 6)
-			{
-				input.setCustomValidity('Control No. should contain 6 digits');
-			}
-
-			else 
-			{
-				 input.setCustomValidity('');
-			}			
-
-	
-		}
-
-	</script>
-
-
-    <script type="text/javascript">
         $(window).on('load', function () {
 
             $('.selectpicker').selectpicker({
@@ -230,10 +181,7 @@ Attach Image
 
             //$('.selectpicker').selectpicker('hide');
         });
-    </script>
 
-
-	<script type="text/javascript">
         $("#requisitioner").chainedTo("#office");
     </script>
 @stop

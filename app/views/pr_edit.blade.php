@@ -1,259 +1,267 @@
 @extends('layouts.default')
 
-
-
-@section('content')
-    <?php $p_id = Purchase::find($id); ?>
-    <div class="modal fade" id="confirmDelete" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Delete Attachment</h4>
-                </div>
-                <div class="modal-body">
-                    <p>Are you sure about this ?</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-danger" id="confirm">Delete</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <h2 class="pull-left">Edit Purchase Request</h2>  
-    <div class="btn-group pull-right options">
-        <button type="button" class="btn btn-default" onclick="window.location.href='../../purchaseRequest/view'">
-            <span class="glyphicon glyphicon-step-backward"></span>&nbsp;Back
-        </button>
-    </div>
-
-    <hr class="clear" />
-
-    <form method="POST" action="edit"  class = "form-create">
-        <fieldset>
-            <input type="hidden" name="purch_id" id="purch_id" value="{{{ $p_id->id }}}">
-           
-            @if(Session::get('notice'))
-                <div class="alert alert-success"> {{ Session::get('notice') }}</div> 
-            @endif
-
-            @if(Session::get('main_error'))
-                <div class="alert alert-danger"> {{ Session::get('main_error') }}</div> 
-            @endif
-
-            <div class="form-group">
-                <label for="projectPurpose">Project/Purpose</label>
-                <input class="form-control"  type="text" name="projectPurpose" id="projectPurpose" value="{{{ $p_id->projectPurpose }}}" required>
-                @if (Session::get('m1'))
-                    <font color="red"><i>{{ Session::get('m1') }}</i></font>
-                @endif
-            </div>
-
-            <div class="form-group">
-                <label for="sourceOfFund">Source of Funds</label>
-                <input class="form-control" type="text" name="sourceOfFund" id="sourceOfFund" value="{{{ $p_id->sourceOfFund }}}" required>
-                @if (Session::get('m2'))
-                    <font color="red"><i>{{ Session::get('m2') }}</i></font>
-                @endif
-            </div>
-
-            <div class="form-group">
-                <label for="amount">Amount</label>
-               
-                <input  onchange="formatCurrency(this);"  class="form-control"  type="text" name="amount" id="amount"  required>
-
-                @if (Session::get('m3'))
-                    <font color="red"><i>{{ Session::get('m3') }}</i></font>
-                @endif
-            </div>
-            
-            <div class="form-group" id="template">
-                <label for="office">Office</label>
-                <select id="office" name="office" class="form-control">
-                <?php 
-                    //$offices = DB::table('offices')->lists('officeName');
-                    $offices = DB::table('offices')->get();
-                ?>
-                @foreach($offices as $office)
-                    @if($p_id->office ==  $office)
-                        <option value="{{{ $office->id }}}" selected>{{$office->officeName;}}</option>
-                    @else
-                        <option value="{{{ $office->id }}}">{{$office->officeName;}}</option>
-                    @endif
-                @endforeach
-            </select>
-            </div>
-
-            <div class="form-group" id="template">
-                <label for="requisitioner">Requisitioner</label>
-                <select id="requisitioner" name="requisitioner" class="form-control">
-                    <?php $requi = DB::table('users')->get(); ?>
-                    @foreach ($requi as $requis)
-                        @if($requis->office_id != 0)
-                            @if($requis->id == $p_id->requisitioner )
-                                <option value="{{{ $requis->id }}}" class="{{{ $requis->office_id }}}" selected> {{{ $requis-> firstname }}} </option>
-                            @else
-                                <option value="{{{ $requis->id }}}" class="{{{ $requis->office_id }}}" > {{{ $requis-> firstname }}} </option>
-                            @endif
-                        @endif
-                    @endforeach
-                </select>
-            </div>
-             
-            <div class="form-group">
-                <label for="modeOfProcurement">Mode of Procurement</label>
-                <select class="form-control" name="modeOfProcurement" id="modeOfProcurement">
-                <?php $flows = DB::table('workflow')->get(); ?>
-                    @foreach($flows as $flow)
-                        <option value="{{{ $flow->id }}}">{{{ $flow->workFlowName }}}</option>
-                    @endforeach
-                </select>
-                @if (Session::get('m4'))
-                    <font color="red"><i>{{ Session::get('m4') }}</i></font>
-                @endif
-            </div>
-
-            <div class="form-group">
-                <label for="ControlNo">Control No.</label>
-                <input class="form-control"  type="text" name="ControlNo" id="ControlNo" value="{{{ $p_id->ControlNo }}}" required>
-                @if (Session::get('m5'))
-                    <font color="red"><i>{{ Session::get('m5') }}</i></font>
-                @endif
-            </div>
-          
-            <div class="form-actions form-group">
-                <button type="submit" class="btn btn-success" name="submit">Save Changes</button>
-            </div>
-        </fieldset>
-    </form>
-    <div style="text-align: center">
-        <br>
-        <br>
-        <a href="/attach/{{$p_id->id}}">
-            <button class="btn btn-primary">
-                Add Attachments
-            </button>
-            <br>
-            <br>
-        </a>
-    </div>
+@section('header')
+    {{ HTML::script('drop_search/bootstrap-select.js')}}
+    {{ HTML::style('drop_search/bootstrap-select.css')}}
     
-    <?php
-        function data_uri($image, $mime) 
-        {  
-          $base64   = base64_encode($image); 
-          return ('data:' . $mime . ';base64,' . $base64);
-        }
-    ?>
-
-    <div id="img-section">
-        <?php
-            $doc = DB::table('document')->where('pr_id', $p_id->id)->get();
-        ?>
-        @foreach($doc as $docs)
-            <?php
-                $attachments = DB::table('attachments')->where('doc_id', $docs->id)->get(); 
-            ?>
-           @foreach ($attachments as $attachment) 
-                <div id="img-per" >
-                    <img data-src="holder.js/200x200" class="img-thumbnail" alt="200x200" src="<?php echo data_uri( $attachment->data, 'image/png'); ?>" style="width: 200px; height: 200px;" >
-                    <form method="POST" action="delimage"/ id="myForm_{{ $attachment->id }}" name="myForm">
-                        <input type="hidden" name="hide" value="{{ $attachment->id }}">
-                        <center>
-                        <button class="button"  type="button" data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $attachment->id }})"  data-title="Delete Attachment" data-message="Are you sure you want to delete attachment?">Delete</button>
-                        </center>
-                    </form>
-                </div>
-            @endforeach
-        @endforeach
-        <?php
-         ?>
-    </div>
-
-    <?php
-
-        {{ Session::forget('notice'); }}
-        {{ Session::forget('main_error'); }}
-        {{ Session::forget('m1'); }}
-        {{ Session::forget('m2'); }}
-        {{ Session::forget('m3'); }}
-        {{ Session::forget('m4'); }}
-        {{ Session::forget('m5'); }}
-    ?>
-
+    {{ HTML::script('js/jquery.chained.min.js') }} 
 @stop
 
+@section('content')
+    <h1 class="page-header">Edit Purchase Request</h1>
+        <?php
+        $office = Office::all();
+        $users = User::all();  
+    $purchase = Purchase::find($id);
+
+
+        ?>
+    <div class="form-create fc-div">
+        {{ Form::open(['route'=>'purchaseRequest_submit'], 'POST') }}
+            <div class="row">
+                <div>   
+
+                    @if(Session::get('notice'))
+                        <div class="alert alert-success"> {{ Session::get('notice') }}</div> 
+                    @endif
+
+                    @if(Session::get('main_error'))
+                        <div class="alert alert-danger"> {{ Session::get('main_error') }}</div> 
+                    @endif
+
+                    <div class="form-group">
+
+                        <div>
+                            {{ Form::label('projectPurpose', 'Project/Purpose *', array('class' => 'create-label')) }}
+                            {{ Form::text('projectPurpose', $purchase->projectPurpose, array('class'=>'form-control')) }}
+                        </div>
+
+                        @if (Session::get('m1'))
+                            <font color="red"><i>{{ Session::get('m1') }}</i></font>
+                        @endif
+                        <br>            
+
+                        <div>
+                            {{ Form::label('sourceOfFund', 'Source of Fund *', array('class' => 'create-label')) }}
+                            {{ Form::text('sourceOfFund', $purchase->sourceOfFund, array('class'=>'form-control')) }}
+                        </div>
+
+                        @if (Session::get('m2'))
+                            <font color="red"><i>{{ Session::get('m2') }}</i></font>
+                        @endif
+                        <br>
+
+                        <div>
+                            {{ Form::label('amount', 'Amount *', array('class' => 'create-label')) }}
+                            {{ Form::text('amount',$purchase->amount,array('class'=>'form-control','onchange'=>'numberWithCommas(this.value)','id'=>'num')) }}
+                        </div>
+
+                        @if (Session::get('m3'))
+                            <font color="red"><i>{{ Session::get('m3') }}</i></font>
+                        @endif
+                        <br>
+
+                        <div class="form-group" id="template">
+                            {{ Form::label('office', 'Office *', array('class' => 'create-label')) }}
+                            <select id="office" name="office" class="form-control selectpicker" data-live-search="true">
+                                <option value="">Please select</option>
+                                @foreach($office as $key)
+                                    <option value="{{ $key->id }}" <?php 
+                                            if($purchase->office==$key->id)
+                                            echo "selected"; 
+                                                ?>
+                                    ?>{{{ $key->officeName }}}</option>
+                                @endforeach
+                            </select>
+                                @if (Session::get('m4'))
+                                    <font color="red"><i>{{ Session::get('m4') }}</i></font>
+                                @endif
+                                <br>
+                        </div>
+
+                        
+
+            
+
+                        <div class="form-group" id="template">
+                            {{ Form::label('requisitioner', 'Requisitioner *', array('class' => 'create-label')) }}
+                            <select class="form-control" id="requisitioner" name="requisitioner"  data-live-search="true" >
+                                <option value="">Please select</option>
+                                @foreach($users as $key2)
+                                    {{{ $fullname = $key2->lastname . ", " . $key2->firstname }}}
+                                    <option value="{{ $key2->id }}" class="{{$key2->office_id}}" 
+                                        <?php 
+                                            if($purchase->requisitioner==$key2->id)
+                                            echo "selected"; 
+                                                ?>
+                                        >{{ $fullname }}</option>
+                                @endforeach
+                                
+                            </select>
+                            @if (Session::get('m5'))
+                                <font color="red"><i>{{ Session::get('m5') }}</i></font>
+                            @endif
+                            <br>
+                        </div>
+
+                        <div>
+                            {{ Form::label('modeOfProcurement', 'Mode of Procurement *', array('class' => 'create-label')) }}
+                            <select  name="modeOfProcurement" id="modeOfProcurement" class="form-control selectpicker" data-live-search="true">
+                                <option value="">Please select</option>
+                                    <option value="Workflow 1" <?php
+                                        if($purchase->wf_id=="Workflow 1")
+                                            echo "selected";
+                                    ?> >Workflow 1</option>
+                                    <option value="Workflow 2"
+                                    <?php
+                                        if($purchase->wf_id=="Workflow 2")
+                                            echo "selected";
+                                    ?>
+                                    >Workflow 2</option>
+                                    <option value="Workflow 3"
+                                        <?php
+                                        if($purchase->wf_id=="Workflow 3")
+                                            echo "selected";
+                                    ?>
+                                    >Workflow 3</option>
+                            </select>
+                            @if (Session::get('m6'))
+                                <font color="red"><i>{{ Session::get('m6') }}</i></font>
+                            @endif
+                            <br>
+                        </div>
+
+                        <div>
+                            {{ Form::label('ControlNo', 'Control No. *', array('class' => 'create-label')) }}
+                            <input type="text"  name="ControlNo"  class="form-control" value={{$purchase->ControlNo}}>
+                        </div>
+
+                        @if (Session::get('m7'))
+                            <font color="red"><i>{{ Session::get('m7') }}</i></font>
+                        @endif
+                        <br>
+
+
+
+
+            <div><br>
+                            {{ Form::submit('Create Purchase Request',array('class'=>'btn btn-success')) }}
+                            {{ link_to( '/purchaseRequest/view', 'Cancel Create', array('class'=>'btn btn-default') ) }}
+                        </div>
+                    </div>
+                </div>  
+            </div>      
+        {{ Form::close() }} 
+
+
+
+<div>
+<?php
+$id = 0;
+    $purchase = Purchase::orderBy('id', 'ASC')->get();
+?>
+@foreach ($purchase as $purchases) 
+<?php   $id = $purchases->id; 
+
+?>
+@endforeach
+
+
+<a href="/attach/{{$id}}">
+<button class="btn btn-default">
+Attach Image
+</button></a>
+</div>
+    
+    </div>
+
+
+
+
+    {{ Session::forget('notice'); }}
+    {{ Session::forget('main_error'); }}
+    {{ Session::forget('m1'); }}
+    {{ Session::forget('m2'); }}
+    {{ Session::forget('m3'); }}
+    {{ Session::forget('m4'); }}
+    {{ Session::forget('m5'); }}
+    {{ Session::forget('m6'); }}
+    {{ Session::forget('m7'); }}
+@stop
+
+<!-- script for the formatting of amount field -->
 @section('footer')
     <script type="text/javascript">
-
-        $('#confirmDelete').on('show.bs.modal', function (e) {
-            $message = $(e.relatedTarget).attr('data-message');
-            $(this).find('.modal-body p').text($message);
-
-            $title = $(e.relatedTarget).attr('data-title');
-            $(this).find('.modal-title').text($title);
-            var form = $(e.relatedTarget).closest('form');
-            $(this).find('.modal-footer #confirm').data('form', form);
-        });
-
-        $('#confirmDelete').find('.modal-footer #confirm').on('click', function(){
-           //$(this).data('form').submit();
-            var name = "myForm_" + window.my_id; 
-            document.getElementById(name).submit();
-           //alert(name);
-        });
-
-        function hello(pass_id)
+        function numberWithCommas(x) 
         {
-            window.my_id = pass_id;
-           // alert(window.my_id);
+            x = parseFloat(x).toFixed(2);
+            var parts = x.toString().split(".");
+            parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            parts =  parts.join(".");
+            document.getElementById("num").value = parts;
         }
+
+        function check(input) 
+        {
+
+            if(!input.value.match(/^\d+/)) {
+                input.setCustomValidity('Invalid Input.');
+            } 
+            else {
+                // input is valid -- reset the error message
+                 input.setCustomValidity('');
+            }
+        }
+
+        function check2(input) 
+        {
+
+            if(!input.value.match(/^[a-z0-9ñÑ ]+$/i)) {
+                input.setCustomValidity('letters, numbers and spaces only');
+            } 
+            else {
+                 input.setCustomValidity('');
+            }
+        }
+
+        function check3(input) 
+        {
+            var num = input.value;
+            var len = num.length;
+
+            if(!input.value.match(/^\d+$/)) {
+                input.setCustomValidity('Invalid Input');
+            }
+
+            else if(len < 6)
+            {
+                input.setCustomValidity('Control No. should contain 6 digits');
+            }
+
+            else 
+            {
+                 input.setCustomValidity('');
+            }           
+
+    
+        }
+
     </script>
-        
+
+
     <script type="text/javascript">
-        $("#requisitioner").chained("#office");
+        $(window).on('load', function () {
+
+            $('.selectpicker').selectpicker({
+                'selectedText': 'cat'
+            });
+
+            //$('.selectpicker').selectpicker('hide');
+        });
     </script>
+
 
     <script type="text/javascript">
-
-        function formatCurrency(fieldObj)
-        {
-            if (isNaN(fieldObj.value)) { return false; }
-            fieldObj.value = '' + parseFloat(fieldObj.value).toFixed(2);
-            return true;
-        }
-
-        $('#confirmDelete').on('show.bs.modal', function (e) {
-
-            $message = $(e.relatedTarget).attr('data-message');
-            $(this).find('.modal-body p').text($message);
-
-            $title = $(e.relatedTarget).attr('data-title');
-            $(this).find('.modal-title').text($title);
-
-            var form = $(e.relatedTarget).closest('form');
-
-            $(this).find('.modal-footer #confirm').data('form', form);
-
-        });
-
-        $('#confirmDelete').find('.modal-footer #confirm').on('click', function(){
-
-            //$(this).data('form').submit();
-            var name = "myForm_" + window.my_id; 
-            document.getElementById(name).submit();
-            //alert(name);
-        });
-          
-        function hello(pass_id)
-        {
-            window.my_id = pass_id;
-             // alert(window.my_id);
-        }
-
-        $("#requisitioner").chained("#office");
+        $("#requisitioner").chainedTo("#office");
     </script>
-
 @stop

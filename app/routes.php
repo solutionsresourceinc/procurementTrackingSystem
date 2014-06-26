@@ -113,7 +113,7 @@ Route::get('purchaseRequest/create', 'PurchaseRequestController@create');
 Route::get('purchaseRequest/edit','PurchaseRequestController@edit');
 Route::get( 'purchaseRequest/vieweach/{id}', 'PurchaseRequestController@vieweach');
 
-Route::post('purchaseRequest/edit/{id}',[ 'uses' => 'PurchaseRequestController@edit_submit']);
+Route::post('purchaseRequest/edit/{id}',[ 'as' => 'purchaseRequest_editsubmit', 'uses' => 'PurchaseRequestController@edit_submit']);
 Route::post('purchaseRequest/create', ['as' => 'purchaseRequest_submit', 'uses' => 'PurchaseRequestController@create_submit']);
 
 Route::get( 'purchaseRequest/edit/{id}', function($id)
