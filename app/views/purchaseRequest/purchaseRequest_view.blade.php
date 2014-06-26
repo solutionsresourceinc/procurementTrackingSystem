@@ -1,26 +1,17 @@
-@extends('layouts.default')
+@extends('layouts.dashboard')
 
 @section('header')
 	<style type="text/css">
 		td{
-    border:0px solid #ccc;
-    padding:5px 10px;
-    vertical-align:top;
-    word-break:break-word;
-}
-
-
+		    border:0px solid #ccc;
+		    padding:5px 10px;
+		    vertical-align:top;
+		    word-break:break-word;
+		}
 	</style>
-	
 @stop
 
-@section('content')	
-	<ol class="breadcrumb">
-		<li>{{ link_to('/', 'Home') }}</li>
-		<li>{{ link_to('purchaseRequest/view', 'Purchase Requests') }}</li>
-		<li class="active">Project Name</li>
-	</ol>
-	
+@section('content')		
 	<!-- put control number (id) here -->
 	<h2 class="pull-left"> {{ $purchase->ControlNo }} </h2>
 

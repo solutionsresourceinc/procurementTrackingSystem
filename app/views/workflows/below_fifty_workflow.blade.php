@@ -1,4 +1,4 @@
-@extends('layouts.default')
+@extends('layouts.dashboard')
 
 @section('content')
 	<h1 class="page-header">Small Value Procurement (Below P50,000)</h1>

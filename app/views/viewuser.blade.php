@@ -1,4 +1,4 @@
-@extends('layouts.default')
+@extends('layouts.dashboard')
 
 @section('content')
 
@@ -47,7 +47,7 @@
 
 
 
-<table id="table_id" class="display">
+<table id="table_id" class="table table-striped display">
     <thead>
 		<tr>
 	    	<th>Username</th>
@@ -108,35 +108,49 @@
 				</td>
 				
 				<?php if($adm->role_id == 3) {?>
-		        <td>
-		        	<div class='btn-group'>
-						<button class='btn dropdown-toggle btn-primary' data-toggle='dropdown'>Action <span class='caret'></span></button>
-						
-						<ul class='dropdown-menu'>
-		              		<?php if($adm->role_id == 3) {?>
-								<li><a class='iframe btn' href='edit/{{$user->id}}'>Edit</a></li>
-							<?php } ?>
-		            			@if($user->confirmed == 1)
-									<li>
-										<form method="POST" action="delete"/ id="myForm_{{ $user->id }}" name="myForm">
-											<input type="hidden" name="hide" value="{{ $user->id }}">
-			  								<center>
-			    							<button class="iframe btn" style="background-color:transparent" type="button" data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $user->id }})"  data-title="Delete User" data-message="Are you sure you want to disable account?">Disable</button>
-											</center>
-										</form>
-									</li>
-								@else
-									<li>
-										<form method="POST" action="activate"/ id="myForm_{{ $user->id }}" name="myForm">
-											<input type="hidden" name="hide" value="{{ $user->id }}">
-			  								<center>
-			    							<button class="iframe btn" style="background-color:transparent" type="button" data-toggle="modal" data-target="#confirmActivate" onclick="hello( {{ $user->id }})"  data-title="Activate User" data-message="Are you sure you want to activate account?">Activate</button>
-											</center>
-										</form>
-									</li>
-							@endif
-						</ul>
-					</div>
+		        <td>						
+					<!--ul class='dropdown-menu'>
+	              		<?php if($adm->role_id == 3) {?>
+							<li><a class='iframe btn' href='edit/{{$user->id}}'>Edit</a></li>
+						<?php } ?>
+	            			@if($user->confirmed == 1)
+								<li>
+									<form method="POST" action="delete"/ id="myForm_{{ $user->id }}" name="myForm">
+										<input type="hidden" name="hide" value="{{ $user->id }}">
+		  								<center>
+		    							<button class="iframe btn" style="background-color:transparent" type="button" data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $user->id }})"  data-title="Delete User" data-message="Are you sure you want to disable account?">Disable</button>
+										</center>
+									</form>
+								</li>
+							@else
+								<li>
+									<form method="POST" action="activate"/ id="myForm_{{ $user->id }}" name="myForm">
+										<input type="hidden" name="hide" value="{{ $user->id }}">
+		  								<center>
+		    							<button class="iframe btn" style="background-color:transparent" type="button" data-toggle="modal" data-target="#confirmActivate" onclick="hello( {{ $user->id }})"  data-title="Activate User" data-message="Are you sure you want to activate account?">Activate</button>
+										</center>
+									</form>
+								</li>
+						@endif
+					</ul-->
+					<?php if($adm->role_id == 3) {?>
+						<a class='iframe btn btn-success' href='edit/{{$user->id}}'><span class="glyphicon glyphicon-edit"></span></a>
+					<?php } ?>
+					@if($user->confirmed == 1)
+						<form method="POST" action="delete"/ id="myForm_{{ $user->id }}" name="myForm" style="display: -webkit-inline-box;">
+							<input type="hidden" name="hide" value="{{ $user->id }}">
+								<center>
+							<button class="iframe btn btn-warning" type="button" data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $user->id }})"  data-title="Disable User" data-message="Are you sure you want to disable account?"><span class="glyphicon glyphicon-remove"></span></button>
+							</center>
+						</form>
+					@else
+						<form method="POST" action="activate"/ id="myForm_{{ $user->id }}" name="myForm" style="display: -webkit-inline-box;">
+							<input type="hidden" name="hide" value="{{ $user->id }}">
+								<center>
+							<button class="iframe btn btn-primary" type="button" data-toggle="modal" data-target="#confirmActivate" onclick="hello( {{ $user->id }})"  data-title="Activate User" data-message="Are you sure you want to activate account?"><span class="glyphicon glyphicon-ok"></span></button>
+							</center>
+						</form>
+					@endif
 	       		</td>
 	       		<?php } ?>
 			</tr>

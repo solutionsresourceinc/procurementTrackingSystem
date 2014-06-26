@@ -1,4 +1,4 @@
-@extends('layouts.default')
+@extends('layouts.dashboard')
 
 @section('content')
     <h1 class="page-header">Offices</h1>
@@ -17,7 +17,7 @@
 
     <div id="office-create-form" class="well div-form">
 	    {{ Form::open(['route'=>'offices.store'], 'POST', array('role' => 'form')) }}
-	    	<div class="col-md-3">
+	    	<div class="col-md-3 create-office">
 	    		{{ Form::label('officename', 'Create New  Requisitioner Office:', array('class' => 'create-label')) }}
 	    	</div>
 	    	<div class="col-md-6">

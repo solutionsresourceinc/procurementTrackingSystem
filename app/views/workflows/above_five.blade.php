@@ -1,6 +1,19 @@
-@extends('layouts.default')
+@extends('layouts.dashboard')
 
 @section('content')
+	<!-- Modal Div -->
+	<div class="modal fade" id="description" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+			    <center>
+			      	<div class="modal-body" id="description_body">
+			      		<!-- Insert Data Here -->
+			      	</div>
+			    </center>
+			</div>
+		</div>
+	</div>
+
 	<h1 class="page-header">Large Value Procurement (Above P500,000)</h1>
 
 	<div class="panel panel-success">
@@ -59,8 +72,7 @@
 							{{HTML::decode (Form::button('<span class="glyphicon glyphicon-edit"></span>', ['class' => 'btn btn-success table-actions allow-edit mode1', 'data-original-title' => 'Edit Office', 'data-placement' => 'bottom', 'data-toggle' => 'tooltip']))}}
 							{{Form::button('Save', ['class' => 'btn btn-success save-edit mode2'])}}
 							{{Form::button('Cancel', ['class' => 'btn btn-default cancel-edit mode2'])}}
-								<button class="btn btn-info"><span class="glyphicon glyphicon-list-alt"></span></button>
-						
+							<a href="replace/{{$section->id}}" data-method="post" data-replace="#description_body"  class="btn ajax btn-info" data-toggle="modal" data-target="#description"  onclick="empty_div()"><span class="glyphicon glyphicon-list-alt"></span></a><br>
 			    			</td>
 			    		</tr>
 		
@@ -126,8 +138,7 @@
 							{{HTML::decode (Form::button('<span class="glyphicon glyphicon-edit"></span>', ['class' => 'btn btn-success table-actions allow-edit mode1', 'data-original-title' => 'Edit Office', 'data-placement' => 'bottom', 'data-toggle' => 'tooltip']))}}
 							{{Form::button('Save', ['class' => 'btn btn-success save-edit mode2'])}}
 							{{Form::button('Cancel', ['class' => 'btn btn-default cancel-edit mode2'])}}
-								<button class="btn btn-info"><span class="glyphicon glyphicon-list-alt"></span></button>
-						
+							<a href="replace/{{$section->id}}" data-method="post" data-replace="#description_body"  class="btn ajax btn-info" data-toggle="modal" data-target="#description"  onclick="empty_div()"><span class="glyphicon glyphicon-list-alt"></span></a><br>
 			    			</td>
 			    		</tr>
 		
@@ -193,8 +204,7 @@
 							{{HTML::decode (Form::button('<span class="glyphicon glyphicon-edit"></span>', ['class' => 'btn btn-success table-actions allow-edit mode1', 'data-original-title' => 'Edit Office', 'data-placement' => 'bottom', 'data-toggle' => 'tooltip']))}}
 							{{Form::button('Save', ['class' => 'btn btn-success save-edit mode2'])}}
 							{{Form::button('Cancel', ['class' => 'btn btn-default cancel-edit mode2'])}}
-								<button class="btn btn-info"><span class="glyphicon glyphicon-list-alt"></span></button>
-						
+							<a href="replace/{{$section->id}}" data-method="post" data-replace="#description_body"  class="btn ajax btn-info" data-toggle="modal" data-target="#description"  onclick="empty_div()"><span class="glyphicon glyphicon-list-alt"></span></a><br>
 			    			</td>
 			    		</tr>
 		
@@ -260,8 +270,7 @@
 							{{HTML::decode (Form::button('<span class="glyphicon glyphicon-edit"></span>', ['class' => 'btn btn-success table-actions allow-edit mode1', 'data-original-title' => 'Edit Office', 'data-placement' => 'bottom', 'data-toggle' => 'tooltip']))}}
 							{{Form::button('Save', ['class' => 'btn btn-success save-edit mode2'])}}
 							{{Form::button('Cancel', ['class' => 'btn btn-default cancel-edit mode2'])}}
-								<button class="btn btn-info"><span class="glyphicon glyphicon-list-alt"></span></button>
-						
+							<a href="replace/{{$section->id}}" data-method="post" data-replace="#description_body"  class="btn ajax btn-info" data-toggle="modal" data-target="#description"  onclick="empty_div()"><span class="glyphicon glyphicon-list-alt"></span></a><br>
 			    			</td>
 			    		</tr>
 		
@@ -272,6 +281,14 @@
 	</div>
 @stop
 @section('footer')
+{{ HTML::script('js/bootstrap-ajax.js');}}
+<script>
+	function empty_div()
+	{
+		document.getElementById("description_body").innerHTML = "";
+	}
+	
+</script>
 <script type = "text/javascript">
 		$(document).ready(function() {
 			$(".mode2").hide();

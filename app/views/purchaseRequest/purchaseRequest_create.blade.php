@@ -1,4 +1,4 @@
-@extends('layouts.default')
+@extends('layouts.dashboard')
 
 @section('header')
 	{{ HTML::script('drop_search/bootstrap-select.js')}}
@@ -144,7 +144,8 @@ $cn = 0;
 
 			<div><br>
 							{{ Form::submit('Create Purchase Request',array('class'=>'btn btn-success')) }}
-							{{ link_to( '/purchaseRequest/view', 'Cancel Create', array('class'=>'btn btn-default') ) }}
+							{{ link_to( 'purchaseRequest/view', 'Cancel Create', array('class'=>'btn btn-default') ) }}
+
 						</div>
 					</div>
 				</div>	
@@ -210,4 +211,6 @@ Attach Image
 
         $("#requisitioner").chainedTo("#office");
     </script>
+
+    
 @stop

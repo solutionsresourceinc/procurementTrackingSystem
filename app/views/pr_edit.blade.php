@@ -1,4 +1,4 @@
-@extends('layouts.default')
+@extends('layouts.dashboard')
 
 @section('header')
     {{ HTML::script('drop_search/bootstrap-select.js')}}
