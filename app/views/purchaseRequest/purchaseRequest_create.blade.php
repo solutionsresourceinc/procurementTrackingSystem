@@ -60,7 +60,10 @@
 		                	<select id="office" name="office" class="form-control selectpicker" data-live-search="true">
 		                		<option value="">Please select</option>
 								@foreach($office as $key)
-									<option value="{{ $key->id }}">{{{ $key->officeName }}}</option>
+									<option value="{{ $key->id }}" 
+											<?php if(Input::old('office')==$key->id)
+												echo "selected" ?>
+											>{{{ $key->officeName }}}</option>
 								@endforeach
 		            		</select>
 			            		@if (Session::get('m4'))
@@ -79,7 +82,10 @@
 			                	<option value="">Please select</option>
 			                	@foreach($users as $key2)
 			                		{{{ $fullname = $key2->lastname . ", " . $key2->firstname }}}
-									<option value="{{ $key2->id }}" class="{{$key2->office_id}}">{{ $fullname }}</option>
+									<option value="{{ $key2->id }}" class="{{$key2->office_id}}"
+						<?php if(Input::old('requisitioner')==$key2->id)
+												echo "selected" ?>
+										>{{ $fullname }}</option>
 								@endforeach
 			                	
 			                </select>
@@ -93,9 +99,16 @@
 						  	{{ Form::label('modeOfProcurement', 'Mode of Procurement *', array('class' => 'create-label')) }}
 						  	<select  name="modeOfProcurement" id="modeOfProcurement" class="form-control selectpicker" data-live-search="true">
 								<option value="">Please select</option>
-									<option value="Workflow 1">Workflow 1</option>
-									<option value="Workflow 2">Workflow 2</option>
-									<option value="Workflow 3">Workflow 3</option>
+                                    <?php
+                                        $workflow= DB::table('workflow')->get();
+                                    ?>
+                                    @foreach($workflow as $workflows)
+                                    <option value="{{$workflows->workFlowName}}" <?php
+                                    if(Input::old('modeOfProcurement')==$workflows->workFlowName)
+                                            echo "selected";
+                                    ?> >{{$workflows->workFlowName}}</option>
+                                    @endforeach
+                                
 							</select>
 							@if (Session::get('m6'))
 								<font color="red"><i>{{ Session::get('m6') }}</i></font>
@@ -104,8 +117,21 @@
 						</div>
 
 						<div>
-						  	{{ Form::label('ControlNo', 'Control No. *', array('class' => 'create-label')) }}
-						  	<input type="text"  name="ControlNo"  class="form-control" value={{Input::old('ControlNo')}}>
+						 
+<?php
+$cn = 0;
+	$purchase = Purchase::orderBy('ControlNo', 'ASC')->get();
+?>
+@foreach ($purchase as $purchases) 
+<?php	$cn = (int)$purchases->ControlNo; 
+?>
+
+@endforeach
+
+
+						  	{{ Form::label('dispCN', 'Control No. *', array('class' => 'create-label')) }}
+						  	<input type="text"  name="dispCN"  class="form-control" value="{{$cn+1}}"disabled>
+						  	<input type="hidden" name="ControlNo" value="<?php echo ($cn+1); ?>">
 						</div>
 
 						@if (Session::get('m7'))
