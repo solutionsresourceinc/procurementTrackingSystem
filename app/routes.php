@@ -168,3 +168,28 @@ Route::get('workflow', function(){
 
 // Roles Create Routes (Disabled)
 	//Route::get('create_roles','UserController@getRole');
+
+// Test Route
+Route::get('test', function(){
+	$users = User::all();
+	return View::make('test')->with('users',$users);
+});
+
+Route::post('workflow/replace/{id}', function($id)
+{
+	//$user = User::find($id);
+	$desc = Task::find($id);
+	//{{ $fullname = $user->lastname . ", " . $user->firstname; }}
+	// If you had a database you could easily fetch the content from the database here...
+
+	$data = array(
+		"html" => "<div id='description_body'>  $desc->taskName </h6> </p></div>"
+	);
+	
+	return Response::json($data);
+});
+
+Route::filter('csrf', function()
+{
+	if (Request::forged()) return Response::error('500');
+});
