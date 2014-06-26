@@ -29,7 +29,6 @@ class PurchaseRequestController extends Controller {
 if (Session::get('doc_id')){
 
 $doc_id =Session::get('doc_id');
-$notice = "Purchase request created successfullly! ";  
 
 DB::table('attachments')
             ->where('doc_id', $doc_id)
@@ -39,6 +38,7 @@ DB::table('document')->where('pr_id', '=',$pr_id )->where('id','!=',$doc_id)->de
 Session::forget('doc_id');
 
 }
+$notice = "Purchase request created successfullly! ";  
 
 
 			Session::put('notice', $notice);
