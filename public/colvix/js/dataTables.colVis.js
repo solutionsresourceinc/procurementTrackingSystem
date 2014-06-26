@@ -882,7 +882,8 @@ ColVis.fnRebuild = function ( oTable )
 	}
 };
 
-
+// JAN SARMIENTO SHOW HIDE COLUMNS
+/*
 ColVis.defaults = {
 	/**
 	 * Mode of activation. Can be 'click' or 'mouseover'
@@ -1000,6 +1001,7 @@ ColVis.defaults = {
 	 */
 	order: 'column'
 };
+*/
 
 
 
