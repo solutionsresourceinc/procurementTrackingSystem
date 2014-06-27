@@ -1,4 +1,4 @@
-@extends('layouts.login')
+@extends('layouts.dashboard')
 
 @section('content')
     <?php $user = User::find($id); ?>
@@ -25,7 +25,7 @@
 if (NULL!=Input::old('firstname'))
 echo Input::old('firstname');
 else
-echo $user->firstname; ?>" >
+echo $user->firstname; ?>" disabled>
                 @if ( Session::get('firstname_error') )
                     <small><font color="red">{{ Session::get('firstname_error'); }} </font></small>
                 @endif
@@ -39,7 +39,7 @@ if (NULL!=Input::old('lastname'))
 echo Input::old('lastname');
 else
 echo $user->lastname; ?>
-                " >
+                " disabled>
                 @if ( Session::get('lastname_error') )
                     <small><font color="red">{{ Session::get('lastname_error'); }} </font> </small>
                 @endif

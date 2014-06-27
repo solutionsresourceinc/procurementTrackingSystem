@@ -1,15 +1,28 @@
 @extends('layouts.dashboard')
 
 @section('content')
+	<style type="text/css">
+		#description {
+	    height: 400px;
+	    top: calc(50% - 200px) !important;
+		}
+	</style>
 	<!-- Modal Div -->
 	<div class="modal fade" id="description" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
-			    <center>
-			      	<div class="modal-body" id="description_body">
+				<div class="modal-header">
+		    		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		    		<h4 class="modal-title">Description</h4>
+		    	</div>
+			    	<center>
+			    <div class="modal-body" id="description_body">
 			      		<!-- Insert Data Here -->
-			      	</div>
-			    </center>
+			    </div>
+			    	</center>
+			    <div class="modal-footer">
+        			<button type="button" class="btn btn-default" data-dismiss="modal">Back</button>
+    			</div>
 			</div>
 		</div>
 	</div>
