@@ -272,6 +272,7 @@ DB::table('users')
      */
     public function do_login()
     {
+        $username = Input::get( 'username' ); 
         $input = array(
             'email'    => Input::get( 'username' ), 
             'username' => Input::get( 'username' ), 
@@ -279,25 +280,30 @@ DB::table('users')
             'remember' => Input::get( 'remember' ),
         );
 
-        $username = Input::get( 'username' ); 
+        // get username from fetched data on DB
+        $fetched_user = User::whereUsername($username)->get();
+
+        foreach ($fetched_user as $key ) 
+        {
+               $fetched_username = $key->username;
+               $status = $key->confirmed;
+        }
 
         // Authenticate User
-        if ( Confide::logAttempt($input,true) ) 
+        if ( Confide::logAttempt($input) ) 
         {
-
-            $fetched_user = User::whereUsername($username)->get();
-
-            // get username from fetched data on DB
-            foreach ($fetched_user as $key ) 
-            {
-               $fetched_username = $key->username;
-            }
 
             // compare input username on fetched username
             $result = strcmp($fetched_username,$username);
-            
+
             if($result == 0)
             {
+                if($status == 0)
+                {
+                    Confide::logout();
+                    $err_msg2 = "Your account has been deactivated. Please contact authorized Personnel";
+                    return Redirect::to('login')->withInput(Input::except('password'))->with( 'deactivated', $err_msg2 );
+                }
                 return Redirect::intended('dashboard'); 
             }
 

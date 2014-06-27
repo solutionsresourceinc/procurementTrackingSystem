@@ -7,12 +7,21 @@
     	{{ HTML::image('img/logo2.png', 'Tarlac Procurement Tracking System', array('id' => 'logo')) }}
 
     	<!-- Error Message -->
+        @if ( Session::get('deactivated') )
+            
+            <div class="alert alert-danger">
+                <p>Your account has been deactivated. Please consult authorized personnel.</p>
+            </div>
+        @endif
+        
 		@if ( Session::get('error') )
 			
             <div class="alert alert-danger">
             	<p>User and password does not match. Please try again.</p>
             </div>
         @endif
+
+        
 
         <!-- Notice Message -->
         @if ( Session::get('notice') )
