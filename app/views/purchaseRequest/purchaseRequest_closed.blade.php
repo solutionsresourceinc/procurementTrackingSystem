@@ -64,10 +64,10 @@
       	<tbody>
       		  @foreach ($requests as $request)
       	        <tr>
-      					<td> {{ $request->projectPurpose; }}</td>
-      			        <td> {{ $request->status; }}</td>
-      			        <td> {{ $request->created_at; }}</td>
-      			        <td>
+      					<td width="55%"> {{ $request->projectPurpose; }}</td>
+      			        <td width="15%"> {{ $request->status; }}</td>
+      			        <td width="15%"> {{ $request->created_at; }}</td>
+      			        <td width="15%">
       			        	  <a data-toggle="tooltip" data-placement="top" class='iframe btn btn-primary' href="{{ URL::to('purchaseRequest/vieweach/'. $request->id) }}" title="View"><span class="glyphicon glyphicon-file"></span></a></li>
                         <?php
                           $adm = Assigned::where('user_id', Auth::User()->id)->first();
