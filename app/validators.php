@@ -4,9 +4,9 @@
 */
 
 
-Validator::extend('alpha_spaces', function($attribute, $value)
+Validator::extend('alpha_spaces', function($attribute, $value) // <-- ALPHABET/NUMBERS/ENYE/DOT/SPACE
 {
-    return preg_match("/^([-a-z0-9_-\sñÑ])+$/i", $value);
+    return preg_match("/^([-a-z0-9_-\sñÑ.])+$/i", $value);
 });
 
 Validator::extend('positive_num', function($attribute, $value)

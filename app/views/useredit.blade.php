@@ -79,10 +79,10 @@ echo $user->email; ?>" >
                     else
                     $role =$assigned->role_id;
                 ?>
-                <select class="form-control" name="role" >
-                    <option value="1" <?php if($role==3) echo "selected"; ?>>Admin</option>
+                <select class="form-control" name="role" id="role" >
+                    <option value="3" <?php if($role==3) echo "selected"; ?>>Admin</option>
                     <option value="2" <?php if($role==2) echo "selected"; ?>>Procurement Personel</option>
-                    <option value="3" <?php if($role==1) echo "selected"; ?>>Requisitioner</option>
+                    <option value="1" <?php if($role==1) echo "selected"; ?>>Requisitioner</option>
                 </select>
             </div>
 

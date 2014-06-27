@@ -91,7 +91,7 @@ class DesignationController extends BaseController {
 	 */
 	public function update($id)
 	{
-		$rules = ['dsgntn-name' => 'required|alpha_spaces|max:100'];
+		$rules = ['dsgntn-name' => 'required|alpha_spaces|max:100|allNum'];
 		$validation = Validator::make(Input::all(), $rules);
 
 		if($validation->fails()){

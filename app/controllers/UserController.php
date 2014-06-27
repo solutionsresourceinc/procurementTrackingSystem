@@ -194,8 +194,6 @@ $errorcheck=0;
             Session::put('email_error', 'Invalid email.');}
 
         if($passnotchange==1){
-
-
         }
         elseif(ctype_alnum($password)&&(strlen($password)>=6))
         {
@@ -219,7 +217,7 @@ Session::put('msg', 'Failed to edit user.');
         {
                   
 $roles=input::get('role');
-if($roles=="1")
+if($roles=="3")
     $role=3;
 elseif($roles=="2")
     $role=2;

@@ -15,7 +15,7 @@ class Designation extends Ardent{
 	public $errors;
 
 	public static $rules = array(
-		'designation' => 'required|alpha_spaces|max:255|unique:designation,designation',
+		'designation' => 'required|allNum|alpha_spaces|max:255|unique:designation,designation',
 	);
 
 	public static $customMessages = array(
@@ -25,7 +25,7 @@ class Designation extends Ardent{
 	
 	public function isValid()
 	{
-		$rules = array('designation'=>'required|alpha_spaces|max:255');
+		$rules = array('designation'=>'required|alpha_spaces|max:255|allNum');
 
 		
 		$validation = Validator::make($this->attributes,$rules);
