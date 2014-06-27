@@ -7,6 +7,7 @@
         <meta name="author" content="">
 
         <title>Tarlac Procurement Tracking System</title>
+        {{ HTML::style('css/bootstrap.css') }}
         {{ HTML::style('css/bootstrap.min.css') }}
         {{ HTML::style('css/bootstrap-theme.min.css') }}
         {{ HTML::style('css/theme.css') }}

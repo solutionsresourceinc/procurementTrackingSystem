@@ -22,7 +22,7 @@
 	<div id="designation-create-form" class="well div-form">
 	    {{ Form::open(['route'=>'designation.store'], 'POST', array('role' => 'form')) }}
 	    	<div class="col-md-3">
-	    		{{ Form::label('designationname', 'Create New Designation:', array('class' => 'create-label')) }}
+	    		{{ Form::label('designationname', 'Designation:', array('class' => 'create-label')) }}
 	    	</div>
 	    	<div class="col-md-6">
 		    	{{ Form::text('designationName', null, array('class' => 'form-control', 'placeholder' => 'Designation Name')) }}
@@ -31,7 +31,7 @@
 				@endif
 		    </div>
 		    <div class="col-md-3">
-		    	{{ Form::submit('Create', array('class' => 'btn btn-success btn-block')) }}
+		    	{{ Form::submit('Add', array('class' => 'btn btn-success btn-block')) }}
 		    </div>
 	    {{ Form::close() }}
 	</div>
@@ -67,7 +67,14 @@
 			    			<td class="col-md-4">
 
 							{{HTML::decode (Form::button('<span class="glyphicon glyphicon-edit"></span>', ['class' => 'btn btn-success table-actions allow-edit mode1', 'data-original-title' => 'Edit Designation', 'data-placement' => 'bottom', 'data-toggle' => 'tooltip']))}}
-							{{HTML::decode (link_to("designation/delete/$designation->id", '<span class="glyphicon glyphicon-trash"></span>', ['class'=>'btn btn-danger table-actions mode1', 'onclick' => "return confirm('Are you sure you want to delete this?');",'title'=>'Delete Designation']))}}
+							<!--{{HTML::decode (link_to("designation/delete/$designation->id", '<span class="glyphicon glyphicon-trash"></span>', ['class'=>'btn btn-danger table-actions mode1', 'onclick' => "return confirm('Are you sure you want to delete this?');",'title'=>'Delete Designation']))}}
+							-->
+							<form method="POST" action="designation/delete/{{{$designation->id}}}" id="myForm_{{ $designation->id }}" name="myForm" style="display: -webkit-inline-box;">
+								<center>
+									<button class="btn btn-danger table-actions mode1" type="button" data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $designation->id }})"  data-title="Disable User" data-message="Are you sure you want to disable account?"><span class="glyphicon glyphicon-trash"></span></button>
+								</center>
+							</form>
+
 							{{Form::button('Save', ['class' => 'btn btn-success save-edit mode2'])}}
 							{{Form::button('Cancel', ['class' => 'btn btn-default cancel-edit mode2'])}}
 			    			<a href="{{ URL::to('designation/'. $designation->id . '/members') }}" class="btn btn-primary"><span class="glyphicon glyphicon-user"></span></a>
@@ -79,6 +86,25 @@
 				@endif
 	    	</tbody>
 	    </table>
+	</div>
+
+	<!-- CODES FOR MODAL -->
+	<div class="modal fade" id="confirmDelete" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	        <h4 class="modal-title">Delete Designation</h4>
+	      </div>
+	      <div class="modal-body">
+	        <p>Are you sure you want to this designation?</p>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+	        <button type="button" class="btn btn-danger" id="confirm">Delete</button>
+	      </div>
+	    </div>
+	  </div>
 	</div>
 @stop
 
@@ -114,6 +140,18 @@
 				$(this).closest("tr").find(".mode1").show();
 			});
 		});
+
+		  $('#confirmDelete').find('.modal-footer #confirm').on('click', function(){
+		     //$(this).data('form').submit();
+		      var name = "myForm_" + window.my_id; 
+		      document.getElementById(name).submit();
+		     //alert(name);
+		  });
+		  function hello(pass_id)
+		  {
+		      window.my_id = pass_id;
+		     // alert(window.my_id);
+		  }
 	</script>
 	{{ Session::forget('main_error'); }}
 	{{ Session::forget('success_members'); }}

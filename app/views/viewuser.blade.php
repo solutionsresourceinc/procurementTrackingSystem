@@ -2,9 +2,9 @@
 
 @section('content')
 
-<h1 class="page-header">Dashboard</h1>
-<div>
-        <a href="{{ URL::to('user/create') }}" class="btn btn-success">Create New User Account</a>
+<h1 class="page-header">User Management</h1>
+<div align="right">
+        <a href="{{ URL::to('user/create') }}" class="btn btn-success">Create New</a>
         <br><br><br>
 </div>
 
@@ -13,10 +13,10 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title">Disable User</h4>
+        <h4 class="modal-title">Disable User Account</h4>
       </div>
       <div class="modal-body">
-        <p>Are you sure about this ?</p>
+        <p>Are you sure you want to this user account?</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
@@ -137,14 +137,14 @@
 						<a class='iframe btn btn-success' href='edit/{{$user->id}}'><span class="glyphicon glyphicon-edit"></span></a>
 					<?php } ?>
 					@if($user->confirmed == 1)
-						<form method="POST" action="delete"/ id="myForm_{{ $user->id }}" name="myForm" style="display: -webkit-inline-box;">
+						<form method="POST" action="delete" id="myForm_{{ $user->id }}" name="myForm" style="display: -webkit-inline-box;">
 							<input type="hidden" name="hide" value="{{ $user->id }}">
 								<center>
 							<button class="iframe btn btn-warning" type="button" data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $user->id }})"  data-title="Disable User" data-message="Are you sure you want to disable account?"><span class="glyphicon glyphicon-remove"></span></button>
 							</center>
 						</form>
 					@else
-						<form method="POST" action="activate"/ id="myForm_{{ $user->id }}" name="myForm" style="display: -webkit-inline-box;">
+						<form method="POST" action="activate" id="myForm_{{ $user->id }}" name="myForm" style="display: -webkit-inline-box;">
 							<input type="hidden" name="hide" value="{{ $user->id }}">
 								<center>
 							<button class="iframe btn btn-primary" type="button" data-toggle="modal" data-target="#confirmActivate" onclick="hello( {{ $user->id }})"  data-title="Activate User" data-message="Are you sure you want to activate account?"><span class="glyphicon glyphicon-ok"></span></button>

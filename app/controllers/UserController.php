@@ -151,8 +151,6 @@ public function edit()
           $passnotchange=0;
              if($password==" "){
         $passnotchange=1;
-
-
      }
 else{
     $password = substr($password, 1);
@@ -176,7 +174,7 @@ else{
 $errorcheck=0;
 
 //Validations     
-        
+        /*
         if(ctype_alpha(str_replace(' ','',$user->firstname)))
         {}
         else{
@@ -188,7 +186,7 @@ $errorcheck=0;
         else{
             $errorcheck=1;
             Session::put('lastname_error', 'Invalid last name.');}
-
+        */
         if(filter_var($user->email, FILTER_VALIDATE_EMAIL))
           {}
         else{
@@ -230,10 +228,18 @@ else
 DB::table('assigned_roles')
             ->where('user_id', $id)
             ->update(array( 'role_id' => $role));
-         
+         /*
 DB::table('users')
             ->where('id', $id)
             ->update(array( 'email' => $user->email, 'password' => $user->password, 'office_id' => $user->office_id, 'firstname' => $user->firstname, 'lastname' => $user->lastname));
+                        $notice = "successfully edited user. ";         
+            // Redirect with success message, You may replace "Lang::get(..." for your custom message.
+                    return Redirect::action('UserController@viewUser')
+                            ->with( 'notice', $notice );
+        */
+                            DB::table('users')
+            ->where('id', $id)
+            ->update(array( 'email' => $user->email, 'password' => $user->password, 'office_id' => $user->office_id,));
                         $notice = "successfully edited user. ";         
             // Redirect with success message, You may replace "Lang::get(..." for your custom message.
                     return Redirect::action('UserController@viewUser')

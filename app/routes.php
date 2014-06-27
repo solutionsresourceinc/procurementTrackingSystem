@@ -66,7 +66,7 @@ Route::get('/dashboard', 'UserController@dashboard');
 //Office routes
 Route::resource('offices', 'OfficeController');
 Route::get('offices', 'OfficeController@index');
-Route::get('offices/delete/{id}',['as' => 'offices.delete', 'uses' => 'OfficeController@deleteOffice']);
+Route::post('offices/delete/{id}',['as' => 'offices.delete', 'uses' => 'OfficeController@deleteOffice']);
 Route::post('offices/{id}/edit',['as' => 'offices.update', 'uses' => 'OfficeController@update']);
 
 
@@ -146,7 +146,7 @@ Route::get('workflow/below-fifty', function(){
 Route::resource('designation', 'DesignationController');
 
 Route::get('designation', 'DesignationController@index');
-Route::get('designation/delete/{id}',['as' => 'designation.delete', 'uses' => 'DesignationController@deleteDesignation']);
+Route::post('designation/delete/{id}',['as' => 'designation.delete', 'uses' => 'DesignationController@deleteDesignation']);
 Route::post('designation/{id}/edit',['as' => 'desingation.update', 'uses' => 'DesignationController@update']);
 
 Route::get('designation/{id}/members', ['as'=>'designation_members', 'uses' => 'DesignationController@members']);
