@@ -93,7 +93,7 @@
 	        <h4 class="modal-title">Delete Office</h4>
 	      </div>
 	      <div class="modal-body">
-	        <p>Are you sure you want to this office?</p>
+	        <p>Are you sure you want to delete this office?</p>
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
