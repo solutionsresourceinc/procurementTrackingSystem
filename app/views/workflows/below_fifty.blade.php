@@ -6,6 +6,7 @@
 		#description {
 	    height: 400px;
 	    top: calc(50% - 200px) !important;
+	    overflow: hidden;
 		}
 	</style>
 	<div class="modal fade" id="description" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
