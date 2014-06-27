@@ -18,4 +18,12 @@ Validator::extend('price', function($attribute, $value)
 {
     return preg_match("/^[0-9,.]+$/", $value);
 });
+Validator::extend('allNum', function($attribute, $value)
+{
+	if(is_numeric($value))
+    	return false;
+    else
+    	return true;
+});
+
 

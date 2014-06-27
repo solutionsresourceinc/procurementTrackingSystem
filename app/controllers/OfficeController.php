@@ -40,12 +40,12 @@ class OfficeController extends BaseController {
 			return Redirect::back()->withInput()->with('duplicate-error', 'Office is already exisiting in the list.');
 		}
 
-		/*$rules = ['officeName' => 'required|alpha_spaces|max:100'];
+		$rules = ['officeName' => 'required|alpha_spaces|max:100|allNum'];
 		$validation = Validator::make(Input::all(), $rules);
 
 		if($validation->fails()){
 			return Redirect::back()->withInput()->withErrors($validation->messages())->with('invalid', 'Office entry not created.');
-		}*/
+		}
 
 		$input=Input::all();
 
@@ -67,7 +67,7 @@ class OfficeController extends BaseController {
 	 */
 	public function update($id)
 	{
-		$rules = ['ofcname' => 'required|alpha_spaces|max:100'];
+		$rules = ['ofcname' => 'required|alpha_spaces|max:100|allNum'];
 		$validation = Validator::make(Input::all(), $rules);
 
 		if($validation->fails()){

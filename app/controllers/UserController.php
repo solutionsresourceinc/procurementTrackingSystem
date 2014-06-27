@@ -347,8 +347,8 @@ DB::table('users')
                             ->with( 'notice', $notice_msg );
         }
         else
-        {
-            $error_msg = Lang::get('confide::confide.alerts.wrong_confirmation');
+        {   
+            $error_msg = "Lang::get('confide::confide.alerts.wrong_confirmation')";
                         return Redirect::action('UserController@login')
                             ->with( 'error', $error_msg );
         }
