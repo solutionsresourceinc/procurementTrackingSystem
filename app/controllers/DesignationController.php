@@ -111,8 +111,12 @@ class DesignationController extends BaseController {
 	 */
 	public function deleteDesignation($id)
 	{
+		$deleteAsignee = UserHasDesignation::where('designation_id', '=', $id);
+		$deleteAsignee->delete();
+
 		$deletedesignation = Designation::find($id);
 		$deletedesignation->delete();
+
 		return Redirect::to('/designation')->with('success','Successfully deleted');
 	}
 
@@ -126,8 +130,6 @@ class DesignationController extends BaseController {
 			->with('designation_id',$id)
 			->with('notselected_users',$notselected_users)
 			->with('selected_users',$selected_users);
-
-			
 	}
 
 	public function save_members()
