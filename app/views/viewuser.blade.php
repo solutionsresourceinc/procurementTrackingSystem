@@ -134,20 +134,20 @@
 						@endif
 					</ul-->
 					<?php if($adm->role_id == 3) {?>
-						<a class='iframe btn btn-success' href='edit/{{$user->id}}'><span class="glyphicon glyphicon-edit"></span></a>
+						<a class='iframe btn btn-success' href='edit/{{$user->id}}' title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
 					<?php } ?>
 					@if($user->confirmed == 1)
 						<form method="POST" action="delete"/ id="myForm_{{ $user->id }}" name="myForm" style="display: -webkit-inline-box;">
 							<input type="hidden" name="hide" value="{{ $user->id }}">
 								<center>
-							<button class="iframe btn btn-warning" type="button" data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $user->id }})"  data-title="Disable User" data-message="Are you sure you want to disable account?"><span class="glyphicon glyphicon-remove"></span></button>
+							<button class="iframe btn btn-warning" type="button" data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $user->id }})"  data-title="Disable" data-message="Are you sure you want to disable account?"><span class="glyphicon glyphicon-remove"></span></button>
 							</center>
 						</form>
 					@else
 						<form method="POST" action="activate"/ id="myForm_{{ $user->id }}" name="myForm" style="display: -webkit-inline-box;">
 							<input type="hidden" name="hide" value="{{ $user->id }}">
 								<center>
-							<button class="iframe btn btn-primary" type="button" data-toggle="modal" data-target="#confirmActivate" onclick="hello( {{ $user->id }})"  data-title="Activate User" data-message="Are you sure you want to activate account?"><span class="glyphicon glyphicon-ok"></span></button>
+							<button class="iframe btn btn-primary" type="button" data-toggle="modal" data-target="#confirmActivate" onclick="hello( {{ $user->id }})"  data-title="Activate" data-message="Are you sure you want to activate account?"><span class="glyphicon glyphicon-ok"></span></button>
 							</center>
 						</form>
 					@endif
