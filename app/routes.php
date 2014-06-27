@@ -182,6 +182,7 @@ Route::post('workflow/replace/{id}', function($id)
 	return Response::json($data);
 });
 
+
 Route::filter('csrf', function()
 {
 	if (Request::forged()) return Response::error('500');
@@ -193,3 +194,57 @@ Route::filter('csrf', function()
 
 Route::get('task/active', 'TaskController@active');
 Route::get('task/overdue', 'TaskController@overdue');
+
+// AJAX Routes
+
+Route::post('workflow/save/{id}', function($id)
+{
+	//$user = User::find($id);
+	//$desc = Task::find($id);
+	//{{ $fullname = $user->lastname . ", " . $user->firstname; }}
+	// If you had a database you could easily fetch the content from the database here...
+	//$id_drop= Input::get('task_id');
+	
+
+	$data = array(
+		"html" => "<div id='insert_$id'>  Pogi ni edu  $id_drop  </div>"
+	);
+	
+	return Response::json($data);
+});
+
+
+Route::post('workflow/submit/{id}', function()
+{
+	// When the form is submitted, we can do some DB queries and let the user know that the form was submitted.
+
+	//$name = e(Input::get('task_id'));
+	$designation = e(Input::get('designa'));
+
+	//$id_drop= Input::get('task_id');
+	if($designation == 0)
+	{
+		$des_name = "";
+	}
+	else
+	{
+		$des = Designation::find($designation);
+		$des_name = e($des->designation);
+	}
+	
+
+
+	$id = Input::get('task_id');
+	$assignd = Task::find($id);
+	$assignd->d_id = Input::get('designa');
+	$assignd->save();
+
+
+	
+
+	$data = array(
+		"html" => "<div id='insert_$id' class='mode1'> $des_name  </div>"
+	);
+
+	return Response::json($data);
+});
