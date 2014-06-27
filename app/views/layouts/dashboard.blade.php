@@ -143,6 +143,17 @@
     </div><!-- /#wrapper -->
 
     <!-- JavaScript -->
+    {{ HTML::script('js/bootstrap.min.js') }}
+    <script type="text/javascript">
+        $(document).ready(function(){ 
+            $('.btn').tooltip(); 
+            $('.navbar .dropdown').hover(function() {
+                $(this).find('.dropdown-menu').first().stop(true, true).delay(250).slideDown();
+            }, function() {
+                $(this).find('.dropdown-menu').first().stop(true, true).delay(100).slideUp()
+            });
+        });
+    </script>
     @yield('footer')
   </body>
 </html>

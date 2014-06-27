@@ -66,18 +66,16 @@
 			    			</td>
 			    			<td class="col-md-4">
 
-							{{HTML::decode (Form::button('<span class="glyphicon glyphicon-edit"></span>', ['class' => 'btn btn-success table-actions allow-edit mode1', 'data-original-title' => 'Edit Designation', 'data-placement' => 'bottom', 'data-toggle' => 'tooltip']))}}
-							<!--{{HTML::decode (link_to("designation/delete/$designation->id", '<span class="glyphicon glyphicon-trash"></span>', ['class'=>'btn btn-danger table-actions mode1', 'onclick' => "return confirm('Are you sure you want to delete this?');",'title'=>'Delete Designation']))}}
-							-->
+							{{HTML::decode (Form::button('<span class="glyphicon glyphicon-edit"></span>', ['class' => 'btn btn-success table-actions allow-edit mode1', 'data-original-title' => 'Edit', 'data-toggle' => 'tooltip']))}}
 							<form method="POST" action="designation/delete/{{{$designation->id}}}" id="myForm_{{ $designation->id }}" name="myForm" style="display: -webkit-inline-box;">
 								<center>
-									<button class="btn btn-danger table-actions mode1" type="button" data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $designation->id }})"  data-title="Disable User" data-message="Are you sure you want to disable account?"><span class="glyphicon glyphicon-trash"></span></button>
+									<button class="btn btn-danger table-actions mode1" type="button" data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $designation->id }})"  data-title="Delete" data-message="Are you sure you want to disable account?"><span class="glyphicon glyphicon-trash"></span></button>
 								</center>
 							</form>
 
 							{{Form::button('Save', ['class' => 'btn btn-success save-edit mode2'])}}
 							{{Form::button('Cancel', ['class' => 'btn btn-default cancel-edit mode2'])}}
-			    			<a href="{{ URL::to('designation/'. $designation->id . '/members') }}" class="btn btn-primary"><span class="glyphicon glyphicon-user"></span></a>
+			    			<a href="{{ URL::to('designation/'. $designation->id . '/members') }}" class="btn btn-primary" title="Manage Members"><span class="glyphicon glyphicon-user"></span></a>
 			    			</td>
 			    		</tr>
 			    	@endforeach

@@ -60,15 +60,13 @@
 			    			</td>
 			    			<td class="col-md-4">
 
-							{{HTML::decode (Form::button('<span class="glyphicon glyphicon-edit"></span>', ['class' => 'btn btn-success table-actions allow-edit mode1', 'data-original-title' => 'Edit Office', 'data-placement' => 'bottom', 'data-toggle' => 'tooltip']))}}
-
+							{{HTML::decode (Form::button('<span class="glyphicon glyphicon-edit"></span>', ['class' => 'btn btn-success table-actions allow-edit mode1', 'data-original-title' => 'Edit', 'data-toggle' => 'tooltip']))}}
 							<form method="POST" action="offices/delete/{{{$office->id}}}" id="myForm_{{ $office->id }}" name="myForm" style="display: -webkit-inline-box;">
 								<input type="hidden" name="hide" value="{{ $office->id }}">
 								<center>
-									<button class="btn btn-danger table-actions mode1" type="button" data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $office->id }})"  data-title="Disable User" data-message="Are you sure you want to disable account?"><span class="glyphicon glyphicon-trash"></span></button>
+									<button class="btn btn-danger table-actions mode1" type="button" data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $office->id }})"  data-title="Delete" data-message="Are you sure you want to disable account?"><span class="glyphicon glyphicon-trash"></span></button>
 								</center>
 							</form>
-
 							{{Form::button('Save', ['class' => 'btn btn-success save-edit mode2'])}}
 							{{Form::button('Cancel', ['class' => 'btn btn-default cancel-edit mode2'])}}
 			    			</td>
