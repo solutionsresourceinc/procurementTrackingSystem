@@ -14,8 +14,8 @@ class CreateUserHasDesignation extends Migration {
 	{
 		Schema::create('user_has_designation', function(Blueprint $table)
 		{
-			$table->integer('users_id')->unsigned();
-			$table->integer('designation_id')->unsigned();
+			$table->integer('users_id')->references('id')->on('users')->onDelete('cascade');
+			$table->integer('designation_id')->references('id')->on('designation')->onDelete('cascade');
 		});
 	}
 

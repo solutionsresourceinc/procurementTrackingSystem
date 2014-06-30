@@ -16,7 +16,7 @@ class CreateSectionTable extends Migration {
 		{
 			$table->increments('id');
 			$table->string('sectionName', 255);
-			$table->integer('workflow_id')->unsigned();
+			$table->integer('workflow_id')->references('id')->on('workflow')->onDelete('cascade');
 			$table->integer('section_order_id')->unsigned();
 
 		});

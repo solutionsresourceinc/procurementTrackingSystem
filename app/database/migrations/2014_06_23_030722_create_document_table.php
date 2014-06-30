@@ -16,8 +16,10 @@ class CreateDocumentTable extends Migration {
         {
             $table->increments('id');
             $table->string('doctitle',255);
-            $table->integer('pr_id')->unsigned();
-            $table->integer('work_id')->unsigned();
+            $table->integer('work_id')->references('id')->on('workflow');
+            $table->integer('pr_id')->references('id')->on('purchase_request');
+            //$table->integer('pr_id')->unisigned();
+            //$table->integer('work_id')->unsigned();
             $table->timestamps();
 		}
 	);

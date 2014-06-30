@@ -20,9 +20,9 @@ class CreatePurchaseRequestTable extends Migration {
 			$table->string('amount', 255);
 			$table->string('controlNo', 255);
 			$table->string('status', 255);
-			$table->integer('requisitioner')->unsigned();
-			$table->integer('office')->unsigned();
-			$table->string('dateRequested',255);
+			$table->integer('requisitioner')->references('id')->on('users')->onDelete('cascade');
+			$table->integer('office')->references('id')->on('offices')->onDelete('cascade');
+			$table->dateTime('dateRequested');
 			$table->timestamps();
 
 		});

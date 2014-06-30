@@ -20,7 +20,7 @@ class CreateAttachtmentsTable extends Migration {
             $table->string('data', 255);
             $table->timestamps();
             $table->integer('saved')->default(0);
-            $table->integer('doc_id')->unsigned();
+            $table->integer('doc_id')->references('id')->on('document')->onDelete('cascade');
 		}
 	);
 }
