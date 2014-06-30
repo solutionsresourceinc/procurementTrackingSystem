@@ -207,4 +207,52 @@ class PurchaseRequestController extends Controller {
 		}
 	}
 
+
+
+
+public function addimage(){
+foreach(Input::file('file') as $file){
+            $rules = array(
+                'file' => 'required|mimes:png,gif,jpeg|max:20000000'
+                );
+            $validator = \Validator::make(array('file'=> $file), $rules);
+            $destine=public_path()."/uploads";
+            if($validator->passes()){
+                $ext = $file->guessClientExtension(); // (Based on mime type)
+                //$ext = $file->getClientOriginalExtension(); // (Based on filename)
+                $filename = $file->getClientOriginalName();
+                $doc_id=input::get('doc_id');
+
+
+$archivo = value(function() use ($file){
+        $filename = str_random(10) . '.' . $file->getClientOriginalExtension();
+        return strtolower($filename);
+    });
+   
+
+                $attach = new Attachments;
+                $attach->doc_id=$doc_id;
+				$attach->data = $archivo;
+				$attach->save();
+
+				$filename= $doc_id."_".$attach->id;
+                $file->move($destine, $archivo);
+  
+                
+             }else{
+
+                //Does not pass validation
+
+                $errors = $validator->errors();
+                return Redirect::back()->with('imgerror','Invalid upload.');
+            }
+
+        }
+          return Redirect::back()->with('imgsuccess','Files uploaded.');
+
+
+
+}
+
+
 }

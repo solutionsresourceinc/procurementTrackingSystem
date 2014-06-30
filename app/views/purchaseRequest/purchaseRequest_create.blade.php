@@ -173,22 +173,73 @@
 
 
 			<div>
-				<?php
-				$id = 0;
-				$purchase = Purchase::orderBy('id', 'ASC')->get();
-				?>
-				@foreach ($purchase as $purchases) 
-				<?php	$id = $purchases->id; 
-
-				?>
-				@endforeach
 
 
-				<a href="/attach/{{$id}}">
-					<button class="btn btn-default">
-						Attach Image
-					</button></a>
-				</div>
+<!--  
+Image Module
+-->
+
+<div class="form-create fc-div">
+<h2>Attachments</h2>
+<br>
+					@if(Session::get('imgsuccess'))
+						<div class="alert alert-success"> {{ Session::get('imgsuccess') }}</div> 
+					@endif
+
+					@if(Session::get('imgerror'))
+						<div class="alert alert-danger"> {{ Session::get('imgerror') }}</div> 
+					@endif
+
+<br>
+<?php
+
+$id = 0;
+$purchase = Purchase::orderBy('id', 'ASC')->get(); ?>
+@foreach ($purchase as $purchases) 
+<?php	$id = $purchases->id; ?>
+@endforeach
+
+<?php
+$doc_id = 0;
+	$document = Document::orderBy('id', 'ASC')->get();
+?>
+@foreach ($document as $docs) 
+<?php	$doc_id = $docs->id; ?>
+@endforeach
+<?php $doc_id=$doc_id+1; ?>
+{{ Form::open(array('url' => 'addimage', 'files' => true)) }}
+
+<input name="file[]" type="file"  multiple/>
+<input name="doc_id" type="hidden" value="{{ $doc_id }}">
+
+<br>
+<br>
+<button type="submit"  class "btn btn-primary">Add</button>
+{{ Form::close() }}
+</div>
+<div id="img-section">
+
+			<?php
+
+			 $attachments = DB::table('attachments')->where('doc_id', $doc_id)->get();	
+			 $srclink="uploads\\";
+			 ?>
+			@foreach ($attachments as $attachment) 
+	<div class="image-container">
+				<img class="img-thumbnail" src="{{asset('uploads/'.$attachment->data)}}" style="width: 200px; height: 200px;" />
+{{ Form::open(array('method' => 'post', 'url' => 'delimage')) }}
+<input type="hidden" name="hide" value="{{$attachment->id}}">
+  <button><img height="10%" width="10%" class="star-button " src="{{asset('img/Delete_Icon.png')}}"></button>
+{{Form::close()}}
+</div>
+
+			@endforeach
+	  
+	</div>
+
+
+	<!-- End Image Module-->
+
 
 			</div>
 
