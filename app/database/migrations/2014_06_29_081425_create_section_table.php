@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUserHasDesignation extends Migration {
+class CreateSectionTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,10 +12,11 @@ class CreateUserHasDesignation extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('user_has_designation', function(Blueprint $table)
+		Schema::create('section', function(Blueprint $table)
 		{
-			$table->integer('users_id')->unsigned();
-			$table->integer('designation_id')->unsigned();
+			$table->increments('id');
+			$table->string('sectionName', 255);
+			$table->integer('workflow_id')->unsigned();
 		});
 	}
 
@@ -26,7 +27,7 @@ class CreateUserHasDesignation extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('user_has_designation');
+		Schema::drop('section');
 	}
 
 }

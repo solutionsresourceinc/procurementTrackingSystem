@@ -17,10 +17,10 @@ class CreateAttachtmentsTable extends Migration {
  Schema::create('attachments', function($table)
         {
             $table->increments('id');
-            $table->binary('data');
-            $table->integer('doc_id');
-              $table->timestamps();
-              $table->integer('saved')->default(0);
+            $table->string('data', 255);
+            $table->timestamps();
+            $table->integer('saved')->default(0);
+            $table->integer('doc_id')->unsigned();
 		}
 	);
 }

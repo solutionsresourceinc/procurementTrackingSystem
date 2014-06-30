@@ -16,7 +16,7 @@ class CreateWorkflowTable extends Migration {
 		{
 			$table->increments('id');
 			$table->string('workFlowName', 255);
-			$table->integer('totalDays');
+			$table->integer('totalDays')->unsigned();
 			$table->timestamps();
 		});
 	}

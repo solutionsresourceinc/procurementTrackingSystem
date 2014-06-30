@@ -15,14 +15,14 @@ class CreateTasksTable extends Migration {
 		Schema::create('tasks', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->integer('wf_id');
-			$table->integer('section_id');
-					$table->integer('d_id');
-
+			$table->integer('wf_id')->unsigned();
 			$table->string('taskName', 255);
 			$table->string('taskType', 255);
-			$table->integer('maxDuration');
+			$table->integer('maxDuration')->unsigned();
 			$table->timestamps();
+			$table->integer('section_id')->unsigned();
+			$table->integer('designation_id')->unsigned();
+			$table->integer('order_id')->unsigned();	
 		});
 	}
 
