@@ -13,6 +13,7 @@ class Document extends Ardent implements UserInterface, RemindableInterface {
 
 	protected $table = 'document';
 
+
 	public function purchase()
 	{
 		return $this->hasOne('Purchase');
@@ -22,6 +23,20 @@ class Document extends Ardent implements UserInterface, RemindableInterface {
 		'work_id' => 'required',
 		//'pr_id' => 'required',
 	);
+
+
+	public function purchase()
+	{
+  		return $this->belongsTo('Purchase');
+	}
+	public function attachments()
+	{
+  		return $this->hasMany('Attachments');
+	}
+	public function workflow()
+	{
+  		return $this->belongsTo('Workflow');
+	}
 
 }
 

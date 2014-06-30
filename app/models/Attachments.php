@@ -24,5 +24,8 @@ class Attachments extends Eloquent{
 	 *
 	 * @var array
 	 */
-
+	public function document()
+	{
+  		return $this->belongsTo('Document');
+	}
 }

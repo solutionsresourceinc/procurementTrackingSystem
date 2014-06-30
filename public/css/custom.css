@@ -265,3 +265,11 @@ table.table td{
 .caret{
 	margin-top: 8px;
 }
+
+.navbar-inverse .navbar-nav>li>a.active{
+	background: #131313;
+}
+
+.navbar-inverse .navbar-nav>li>a:active{
+	border: none !important;
+}

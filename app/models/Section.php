@@ -12,5 +12,19 @@ class Section extends Ardent implements UserInterface, RemindableInterface {
 
 	use UserTrait, RemindableTrait;
 
-	
+class Section extends Eloquent{
+
+
+	public $timestamps = false;
+	protected $table = 'section';
+
+	public function worklflow()
+	{
+  		return $this->belongsToMany('Worklflow','workflow_id');
+	}
+	public function task()
+	{
+  		return $this->hasMany('Task');
+	}
+
 }

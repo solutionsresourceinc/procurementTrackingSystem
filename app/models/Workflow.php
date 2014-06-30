@@ -18,8 +18,12 @@ class Workflow extends Eloquent{
 	 * @var array
 	 */
 
-	public function task()
+	public function section()
 	{
-  		return $this->hasMany('Task');
+  		return $this->hasMany('Section');
+	}
+	public function document()
+	{
+  		return $this->hasMany('Document');
 	}
 }

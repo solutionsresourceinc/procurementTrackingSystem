@@ -36,4 +36,12 @@ class Designation extends Ardent{
 		return false;
 		
 	}
+	public function users()
+	{
+  		return $this->belongsToMany('User', 'users_id','designation_id');
+	}
+	public function tasks()
+	{
+  		return $this->hasOne('Task');
+	}
 }

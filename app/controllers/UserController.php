@@ -39,7 +39,7 @@ class UserController extends BaseController {
         $user->password = Input::get( 'password' );
         $user->firstname = Input::get( 'firstname' );
         $user->lastname = Input::get( 'lastname' );
-         $user->office_id = Input::get( 'office' );
+        $user->office_id = Input::get( 'office' );
         // The password confirmation will be removed from model
         // before saving. This field will be used in Ardent's
         // auto validation.
@@ -54,53 +54,53 @@ class UserController extends BaseController {
 
         $users= new User; $users = DB::table('users')->get();
 
-                foreach ($users as $userx){
-        if ($userx->username==$user->username)
-           { $checkusername=1; $errorcheck=1; }
-              }
-        if ($checkusername!=0){
-           Session::put('username_error', 'Username is already in use.');}
+        foreach ($users as $userx){
+            if ($userx->username==$user->username)
+             { $checkusername=1; $errorcheck=1; }
+     }
+     if ($checkusername!=0){
+         Session::put('username_error', 'Username is already in use.');}
 
-    
+
 
 //Validations     
-        if(ctype_alnum($user->username)&&(strlen($user->username)>=6))
-        {}
-        else{
-            $errorcheck=1;
-            Session::put('username_error', 'Invalid username.');}
+         if(ctype_alnum($user->username)&&(strlen($user->username)>=6))
+         {}
+     else{
+        $errorcheck=1;
+        Session::put('username_error', 'Invalid username.');}
 
         
         if(ctype_alpha(str_replace(array(' ', '-', '.'),'',$user->firstname)))
         {}
-        else{
-            $errorcheck=1;
-            Session::put('firstname_error', 'Invalid first name.');}
+    else{
+        $errorcheck=1;
+        Session::put('firstname_error', 'Invalid first name.');}
 
         if(ctype_alpha(str_replace(array(' ', '-', '.'),'',$user->lastname)))
-          {}
-        else{
-            $errorcheck=1;
-            Session::put('lastname_error', 'Invalid last name.');}
+        {}
+    else{
+        $errorcheck=1;
+        Session::put('lastname_error', 'Invalid last name.');}
 
         if(filter_var($user->email, FILTER_VALIDATE_EMAIL))
-          {}
-        else{
-            $errorcheck=1;
-            Session::put('email_error', 'Invalid email.');}
+        {}
+    else{
+        $errorcheck=1;
+        Session::put('email_error', 'Invalid email.');}
 
         if(ctype_alnum($user->password))
         {
             if ($user->password!=$user->password_confirmation){
                 $errorcheck=1;
-            Session::put('password_error', 'Password did not match with confirm password.');
+                Session::put('password_error', 'Password did not match with confirm password.');
             }
         }
         else{
             $errorcheck=1;
             Session::put('password_error', 'Invalid password.');
         }
-                       
+
 
         if ( $errorcheck==0 )
         {
@@ -109,53 +109,53 @@ class UserController extends BaseController {
             $username=$user->username;
             $new_role = new Role;
 
-                $user->utype = Input::get('role');
+            $user->utype = Input::get('role');
 
-                if($user->utype == 1) 
-                    $new_role = Role::where('name','=','Administrator')->first();
-                elseif ($user->utype == 2) 
-                    $new_role = Role::where('name','=','Procurement Personnel')->first();
-                else
-                    $new_role = Role::where('name','=','Requisitioner')->first();
+            if($user->utype == 1) 
+                $new_role = Role::where('name','=','Administrator')->first();
+            elseif ($user->utype == 2) 
+                $new_role = Role::where('name','=','Procurement Personnel')->first();
+            else
+                $new_role = Role::where('name','=','Requisitioner')->first();
             
             $get_user = new User;
             $get_user = User::where('username','=',$username)->first();   
             $get_user->attachRole( $new_role );
 
-                  
-                        $notice = "User created successfullly! ";         
+
+            $notice = "User created successfullly! ";         
             // Redirect with success message, You may replace "Lang::get(..." for your custom message.
-                        return Redirect::action('UserController@viewUser')
-                            ->with( 'notice', $notice );
+            return Redirect::action('UserController@viewUser')
+            ->with( 'notice', $notice );
         }
         else
         {
-Session::put('msg', 'Failed to create user.');
-      
-     
-                        return Redirect::action('UserController@create')
-                            ->withInput(Input::except('password'));
+            Session::put('msg', 'Failed to create user.');
+
+
+            return Redirect::action('UserController@create')
+            ->withInput(Input::except('password'));
         }
     }
 
 
 
-public function edit()
+    public function edit()
     {
         $id=Input::get( 'id' );
         $user = User::find($id);
-   
+
         $user->email = Input::get( 'email' );
-           
-          $password = " ".Input::get( 'password' );
-          $passnotchange=0;
-             if($password==" "){
-        $passnotchange=1;
-     }
-else{
-    $password = substr($password, 1);
-        $user->password = Hash::make($password);
-}
+
+        $password = " ".Input::get( 'password' );
+        $passnotchange=0;
+        if($password==" "){
+            $passnotchange=1;
+        }
+        else{
+            $password = substr($password, 1);
+            $user->password = Hash::make($password);
+        }
 
         $user->firstname = Input::get( 'firstname' );
         $user->lastname = Input::get( 'lastname' );
@@ -171,7 +171,7 @@ else{
 
 
 
-$errorcheck=0;
+        $errorcheck=0;
 
 //Validations     
         /*
@@ -187,45 +187,45 @@ $errorcheck=0;
             $errorcheck=1;
             Session::put('lastname_error', 'Invalid last name.');}
         */
-        if(filter_var($user->email, FILTER_VALIDATE_EMAIL))
-          {}
+            if(filter_var($user->email, FILTER_VALIDATE_EMAIL))
+            {}
         else{
             $errorcheck=1;
             Session::put('email_error', 'Invalid email.');}
 
-        if($passnotchange==1){
-        }
-        elseif(ctype_alnum($password)&&(strlen($password)>=6))
-        {
-            if ($password!=$user->password_confirmation){
-                $errorcheck=1;
-            Session::put('password_error', 'Password did not match with confirm password.');
+            if($passnotchange==1){
             }
-        }
-        else{
-            $errorcheck=1;
-            Session::put('password_error', 'Invalid password.');
-        }
-                       
+            elseif(ctype_alnum($password)&&(strlen($password)>=6))
+            {
+                if ($password!=$user->password_confirmation){
+                    $errorcheck=1;
+                    Session::put('password_error', 'Password did not match with confirm password.');
+                }
+            }
+            else{
+                $errorcheck=1;
+                Session::put('password_error', 'Invalid password.');
+            }
 
-if($errorcheck==1)
-                      {
-Session::put('msg', 'Failed to edit user.');
-                       return Redirect::back()->withInput();}
-        
-     else
-        {
-                  
-$roles=input::get('role');
-if($roles=="3")
-    $role=3;
-elseif($roles=="2")
-    $role=2;
-else
-    $role=1;
-DB::table('assigned_roles')
-            ->where('user_id', $id)
-            ->update(array( 'role_id' => $role));
+
+            if($errorcheck==1)
+            {
+                Session::put('msg', 'Failed to edit user.');
+                return Redirect::back()->withInput();}
+
+                else
+                {
+
+                    $roles=input::get('role');
+                    if($roles=="3")
+                        $role=3;
+                    elseif($roles=="2")
+                        $role=2;
+                    else
+                        $role=1;
+                    DB::table('assigned_roles')
+                    ->where('user_id', $id)
+                    ->update(array( 'role_id' => $role));
          /*
 DB::table('users')
             ->where('id', $id)
@@ -236,17 +236,17 @@ DB::table('users')
                             ->with( 'notice', $notice );
         */
                             DB::table('users')
-            ->where('id', $id)
-            ->update(array( 'email' => $user->email, 'password' => $user->password, 'office_id' => $user->office_id,));
-                        $notice = "successfully edited user. ";         
+                            ->where('id', $id)
+                            ->update(array( 'email' => $user->email, 'password' => $user->password, 'office_id' => $user->office_id,));
+                            $notice = "successfully edited user. ";         
             // Redirect with success message, You may replace "Lang::get(..." for your custom message.
-                    return Redirect::action('UserController@viewUser')
+                            return Redirect::action('UserController@viewUser')
                             ->with( 'notice', $notice );
-        }
-       
+                        }
 
 
-}
+
+                    }
 
     /**
      * Displays the login form
@@ -278,15 +278,15 @@ DB::table('users')
             'username' => Input::get( 'username' ), 
             'password' => Input::get( 'password' ),
             'remember' => Input::get( 'remember' ),
-        );
+            );
 
         // get username from fetched data on DB
         $fetched_user = User::whereUsername($username)->get();
 
         foreach ($fetched_user as $key ) 
         {
-               $fetched_username = $key->username;
-               $status = $key->confirmed;
+         $fetched_username = $key->username;
+         $status = $key->confirmed;
         }
 
         // Authenticate User
@@ -331,9 +331,9 @@ DB::table('users')
                 $err_msg = Lang::get('confide::confide.alerts.wrong_credentials');
             }
 
-                        return Redirect::action('UserController@login')
-                            ->withInput(Input::except('password'))
-                ->with( 'error', $err_msg );
+            return Redirect::action('UserController@login')
+            ->withInput(Input::except('password'))
+            ->with( 'error', $err_msg );
         } 
     }
 
@@ -347,14 +347,14 @@ DB::table('users')
         if ( Confide::confirm( $code ) )
         {
             $notice_msg = Lang::get('confide::confide.alerts.confirmation');
-                        return Redirect::action('UserController@login')
-                            ->with( 'notice', $notice_msg );
+            return Redirect::action('UserController@login')
+            ->with( 'notice', $notice_msg );
         }
         else
         {   
             $error_msg = "Lang::get('confide::confide.alerts.wrong_confirmation')";
-                        return Redirect::action('UserController@login')
-                            ->with( 'error', $error_msg );
+            return Redirect::action('UserController@login')
+            ->with( 'error', $error_msg );
         }
     }
 
@@ -376,15 +376,15 @@ DB::table('users')
         if( Confide::forgotPassword( Input::get( 'email' ) ) )
         {
             $notice_msg = Lang::get('confide::confide.alerts.password_forgot');
-                        return Redirect::action('UserController@login')
-                            ->with( 'notice', $notice_msg );
+            return Redirect::action('UserController@login')
+            ->with( 'notice', $notice_msg );
         }
         else
         {
             $error_msg = Lang::get('confide::confide.alerts.wrong_password_forgot');
-                        return Redirect::action('UserController@forgot_password')
-                            ->withInput()
-                ->with( 'error', $error_msg );
+            return Redirect::action('UserController@forgot_password')
+            ->withInput()
+            ->with( 'error', $error_msg );
         }
     }
 
@@ -395,7 +395,7 @@ DB::table('users')
     public function reset_password( $token )
     {
         return View::make(Config::get('confide::reset_password_form'))
-                ->with('token', $token);
+        ->with('token', $token);
     }
 
     /**
@@ -408,21 +408,21 @@ DB::table('users')
             'token'=>Input::get( 'token' ),
             'password'=>Input::get( 'password' ),
             'password_confirmation'=>Input::get( 'password_confirmation' ),
-        );
+            );
 
         // By passing an array with the token, password and confirmation
         if( Confide::resetPassword( $input ) )
         {
             $notice_msg = Lang::get('confide::confide.alerts.password_reset');
-                        return Redirect::action('UserController@login')
-                            ->with( 'notice', $notice_msg );
+            return Redirect::action('UserController@login')
+            ->with( 'notice', $notice_msg );
         }
         else
         {
             $error_msg = Lang::get('confide::confide.alerts.wrong_password_reset');
-                        return Redirect::action('UserController@reset_password', array('token'=>$input['token']))
-                            ->withInput()
-                ->with( 'error', $error_msg );
+            return Redirect::action('UserController@reset_password', array('token'=>$input['token']))
+            ->withInput()
+            ->with( 'error', $error_msg );
         }
     }
 
@@ -449,11 +449,11 @@ DB::table('users')
 
     public function getRole()
     {
-        
+
         $admin = new Role();
         $admin->name = 'Requisitioner';
         $admin->save();
-     
+
         $member = new Role();
         $member->name = 'Procurement Personnel';
         $member->save();
