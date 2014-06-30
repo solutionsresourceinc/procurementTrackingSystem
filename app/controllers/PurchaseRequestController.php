@@ -25,7 +25,7 @@ class PurchaseRequestController extends Controller {
 		$purchase->office = Input::get( 'office' );
 		$purchase->requisitioner = Input::get( 'requisitioner' );
 		$purchase->dateRequested = Input::get( 'dateRequested' );
-		$purchase->ControlNo = Input::get('controlNo');
+		$purchase->controlNo = Input::get('controlNo');
 		$purchase->status = 'Pending';
 		
 

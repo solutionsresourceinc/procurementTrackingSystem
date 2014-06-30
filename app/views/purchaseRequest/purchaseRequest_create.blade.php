@@ -41,7 +41,7 @@
 					<?php 
 							$cn = 0;
 							$purchase = Purchase::orderBy('ControlNo', 'DESC')->first();
-							$cn = (int)$purchase->ControlNo + 1;
+							$cn = (int)$purchase->controlNo + 1;
 					?>
 
 					{{ Form::label('dispCN', 'Control No. *', array('class' => 'create-label')) }}
@@ -155,8 +155,6 @@
 							@endif
 							<br>
 						</div>
-
-						{{ Form::label('dateRequested', 'Date Requested *', array('class' => 'create-label')) }}
 
 						<div><br>
 							{{ Form::submit('Create Purchase Request',array('class'=>'btn btn-success')) }}

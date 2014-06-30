@@ -12,9 +12,6 @@ class Section extends Ardent implements UserInterface, RemindableInterface {
 
 	use UserTrait, RemindableTrait;
 
-class Section extends Eloquent{
-
-
 	public $timestamps = false;
 	protected $table = 'section';
 
