@@ -50,7 +50,7 @@
         	      	<?php
         	        	$adm = Assigned::where('user_id', Auth::User()->id)->first();
         	        	$requests = new Purchase;
-        				$requests = DB::table('purchase_request')->where('status', 'Overdue')->get(); //change this to get overdue PRs
+        				$requests = DB::table('purchase_request')->where('status', '=', 'Overdue')->get(); //change this to get overdue PRs
         			?>
         			<th>Action</th>
         	  </tr>

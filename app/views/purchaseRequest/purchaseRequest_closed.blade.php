@@ -50,7 +50,7 @@
         	      	<?php
         	        	$adm = Assigned::where('user_id', Auth::User()->id)->first();
         	        	$requests = new Purchase;
-        				$requests = DB::table('purchase_request')->where('status', 'Closed')->get(); //change this to get closed PRs
+        				$requests = DB::table('purchase_request')->where('status', '=', 'Closed')->get(); //change this to get closed PRs
         			?>
         			<th>Action</th>
         	  </tr>

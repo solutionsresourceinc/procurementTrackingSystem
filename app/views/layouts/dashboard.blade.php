@@ -66,14 +66,32 @@
                 <a href="#" class="dropdown {{(Request::is('purchaseRequest/view') || Request::is('purchaseRequest/closed') || Request::is('purchaseRequest/overdue')) ? 'active' : ''}}" data-toggle="dropdown">Purchase Requests <b class="caret pull-right"></b></a>
                 <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
                     <!--Purchase Request Views-->
+                    <?php
+                        $adm = Assigned::where('user_id', Auth::User()->id)->first();
+                        $requests = new Purchase;
+                    ?>
                     <li class="{{Request::is('purchaseRequest/view') ? 'active':''}}">
-                        <a href="/purchaseRequest/view">Active Purchase Requests<span class="badge pull-right">1</span></a>
+                        <a href="/purchaseRequest/view">
+                            Active Purchase Requests
+                            <span class="badge pull-right">
+                                {{DB::table('purchase_request')->where('status', '=', 'Pending')->orWhere('status', '=', 'In progress')->count()}}
+                            </span>
+                        </a>
                     </li>
                     <li class="{{Request::is('purchaseRequest/closed') ? 'active':''}}">
-                        <a href="/purchaseRequest/closed">Closed Purchase Requests<span class="badge pull-right">1</span></a>
+                        <a href="/purchaseRequest/closed">
+                            Closed Purchase Requests
+                            <span class="badge pull-right">
+                                {{DB::table('purchase_request')->where('status', '=', 'Closed')->count()}}
+                            </span></a>
                     </li>
                     <li class="{{Request::is('purchaseRequest/overdue') ? 'active':''}}">
-                        <a href="/purchaseRequest/overdue">Overdue Purchase Requests<span class="badge pull-right">1</span></a>
+                        <a href="/purchaseRequest/overdue">
+                            Overdue Purchase Requests
+                            <span class="badge pull-right">
+                                {{DB::table('purchase_request')->where('status', '=', 'Overdue')->count()}}
+                            </span>
+                        </a>
                     </li>
                 </ul>
             </li>

@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('content')
-    <h1 class="pull-left">List of All Purchase Requests</h1>
+    <h1 class="pull-left">List of Active Purchase Requests</h1>
     
     @if ( Entrust::hasRole('Administrator') || Entrust::hasRole('Procurement Personnel'))
       <div class="pull-right options">
@@ -58,7 +58,7 @@
             	    <?php
             	      	$adm = Assigned::where('user_id', Auth::User()->id)->first();
             	       	$requests = new Purchase;
-            			$requests = DB::table('purchase_request')->where('status', 'Pending')->get();
+            			$requests = DB::table('purchase_request')->where('status', '=', 'Pending')->orWhere('status', '=', 'In progress')->get();
             		?>
             		<th>Action</th>
         	  </tr>
