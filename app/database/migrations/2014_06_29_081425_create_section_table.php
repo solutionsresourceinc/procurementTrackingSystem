@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateWorkflowTable extends Migration {
+class CreateSectionTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,12 +12,12 @@ class CreateWorkflowTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('workflow', function(Blueprint $table)
+		Schema::create('section', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->string('workFlowName', 255);
-			$table->integer('totalDays')->unsigned();
-			$table->timestamps();
+			$table->string('sectionName', 255);
+			$table->integer('workflow_id')->unsigned();
+			$table->integer('section_order_id')->unsigned();
 		});
 	}
 
@@ -28,7 +28,7 @@ class CreateWorkflowTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('workflow');
+		Schema::drop('section');
 	}
 
 }

@@ -18,12 +18,13 @@ class CreatePurchaseRequestTable extends Migration {
 			$table->string('projectPurpose', 255);
 			$table->string('sourceOfFund', 255);
 			$table->string('amount', 255);
-			$table->string('office', 255);
-			$table->string('requisitioner', 255);
-			$table->string('modeOfProcurement', 255);
-			$table->string('ControlNo', 255);
+			$table->string('controlNo', 255);
 			$table->string('status', 255);
+			$table->integer('requisitioner')->unsigned();
+			$table->integer('office')->unsigned();
+			$table->string('dateRequested',255);
 			$table->timestamps();
+
 		});
 	}
 

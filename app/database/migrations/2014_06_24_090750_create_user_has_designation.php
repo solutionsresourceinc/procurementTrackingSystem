@@ -14,10 +14,8 @@ class CreateUserHasDesignation extends Migration {
 	{
 		Schema::create('user_has_designation', function(Blueprint $table)
 		{
-			$table->increments('id');
-			$table->timestamps();
-			$table->integer('user_id');
-			$table->integer('designation_id');
+			$table->integer('users_id')->unsigned();
+			$table->integer('designation_id')->unsigned();
 		});
 	}
 
