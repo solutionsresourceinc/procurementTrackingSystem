@@ -18,4 +18,12 @@ class Section extends Eloquent{
 	 *
 	 * @var array
 	 */
+	public function worklflow()
+	{
+  		return $this->belongsToMany('Worklflow','workflow_id');
+	}
+	public function task()
+	{
+  		return $this->hasMany('Task');
+	}
 }

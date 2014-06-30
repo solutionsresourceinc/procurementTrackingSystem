@@ -18,8 +18,13 @@ class Task extends Eloquent{
 	 *
 	 * @var array
 	 */
-	public function workflow()
+	public function section() //INVERSE OF RELATIONSHIP
 	{
-  		return $this->belongsTo('Workflow');
+  		return $this->belongsToMany('Section');
+	}
+
+	public function designation() //INVERSE OF RELATIONSHIP
+	{
+  		return $this->belongsTo('Designation');
 	}
 }

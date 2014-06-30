@@ -24,5 +24,17 @@ class Document extends Eloquent{
 	 *
 	 * @var array
 	 */
+	public function purchase()
+	{
+  		return $this->belongsTo('Purchase');
+	}
+	public function attachments()
+	{
+  		return $this->hasMany('Attachments');
+	}
+	public function workflow()
+	{
+  		return $this->belongsTo('Workflow');
+	}
 
 }

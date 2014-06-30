@@ -26,4 +26,13 @@ class User extends ConfideUser implements UserInterface, RemindableInterface {
 	
 	public $fillable = ['username','firstname','lastname','email','password','confirmation_code',
 						'confirmed','created_at','updated_at','office_id'];
+
+	public function designation()
+	{
+  		return $this->belongsToMany('Designation','user_has_designation');
+	}
+	public function purchase()
+	{
+  		return $this->hasMany('Purchase');
+	}
 }
