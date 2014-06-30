@@ -90,7 +90,7 @@
 		    	<select name="selectto" onchange"select()" id="select-to" multiple size="15" class="form-control" >
 		          	@foreach($selected_users as $key2)
 			        	{{{ $fullname2 = $key2->lastname . ", " . $key2->firstname }}}
-						<option value="{{ $key2->user_id }}" >{{ $fullname2  }}</option>
+						<option value="{{ $key2->users_id }}" >{{ $fullname2  }}</option>
 					@endforeach
 		        </select>
 		        {{ Form::hidden('designation_id', "$designation_id"); }}

@@ -113,7 +113,7 @@ class DesignationController extends BaseController {
 	{
 		$deleteAsignee = UserHasDesignation::where('designation_id', '=', $id);
 		$deleteAsignee->delete();
-
+	
 		$deletedesignation = Designation::find($id);
 		$deletedesignation->delete();
 
@@ -122,8 +122,8 @@ class DesignationController extends BaseController {
 
 	public function members($id)
 	{
-		$selected_users = DB::select("select * from users join user_has_designation on users.id = user_has_designation.user_id where user_has_designation.designation_id = $id");
-		$notselected_users = DB::select("select * from users where id not in ( select user_id from user_has_designation where designation_id = $id )");
+		$selected_users = DB::select("select * from users join user_has_designation on users.id = user_has_designation.users_id where user_has_designation.designation_id = $id");
+		$notselected_users = DB::select("select * from users where id not in ( select users_id from user_has_designation where designation_id = $id )");
 
 		//return $selected_users;
 		return View::make('designation_members')
@@ -151,7 +151,7 @@ class DesignationController extends BaseController {
 			if($key != 0)
 			{
 				$uhd = new UserHasDesignation;
-				$uhd->user_id = $key;
+				$uhd->users_id = $key;
 				$uhd->designation_id = $designation_id;
 				$uhd->save();
 			}
