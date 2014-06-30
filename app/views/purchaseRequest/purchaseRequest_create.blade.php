@@ -40,12 +40,16 @@
 				<div>
 					<?php 
 							$cn = 0;
-							$purchase = Purchase::orderBy('ControlNo', 'DESC')->first();
-							$cn = (int)$purchase->controlNo + 1;
+							$purchase = Purchase::orderBy('ControlNo', 'ASC')->get();
+							foreach ($purchase as $pur) {
+								
+							$cn = (int)$pur->controlNo;
+						}
+						$cn =$cn+1;
 					?>
 
 					{{ Form::label('dispCN', 'Control No. *', array('class' => 'create-label')) }}
-					<input type="text"  name="dispCN"  class="form-control" value="{{$cn+1}}"disabled>
+					<input type="text"  name="dispCN"  class="form-control" value="{{$cn}}"disabled>
 					<input type="hidden" name="controlNo" value="<?php echo $cn; ?>">
 				</div>
 				<br>
