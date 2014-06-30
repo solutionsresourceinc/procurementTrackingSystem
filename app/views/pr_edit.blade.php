@@ -255,7 +255,10 @@ $doc_id = 0;
     </div>
 
 
+
     <!-- End Image Module-->
+
+
 
 
             </div>
@@ -271,18 +274,20 @@ $doc_id = 0;
             {{ Session::forget('m7'); }}
             @stop
 
-            <!-- script for the formatting of amount field -->
             @section('footer')
 
+
+
             <script type="text/javascript">
-            function numberWithCommas(x) 
-            {
-                x = parseFloat(x).toFixed(2);
-                var parts = x.toString().split(".");
-                parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                parts =  parts.join(".");
-                document.getElementById("num").value = parts;
-            }
+     function numberWithCommas(x) 
+        {
+            x = x.replace(',','');
+            x = parseFloat(x).toFixed(2);
+            var parts = x.toString().split(".");
+            parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            parts =  parts.join(".");
+            document.getElementById("num").value = parts;
+        }        
 
             $(window).on('load', function () {
 
