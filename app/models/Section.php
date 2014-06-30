@@ -1,23 +1,20 @@
 <?php
 
-class Section extends Eloquent{
+use Illuminate\Auth\UserTrait;
+use Illuminate\Auth\UserInterface;
+use Illuminate\Auth\Reminders\RemindableTrait;
+use Illuminate\Auth\Reminders\RemindableInterface;
+use Zizaco\Confide\ConfideUser;
+use Zizaco\Entrust\HasRole;
+use LaravelBook\Ardent\Ardent;
 
+class Section extends Ardent implements UserInterface, RemindableInterface {
 
-	/**
-	 * The database table used by the model.
-	 *
-	 * @var string
-	 */
-	
+	use UserTrait, RemindableTrait;
 
 	public $timestamps = false;
 	protected $table = 'section';
 
-	/**
-	 * The attributes excluded from the model's JSON form.
-	 *
-	 * @var array
-	 */
 	public function worklflow()
 	{
   		return $this->belongsToMany('Worklflow','workflow_id');
@@ -26,4 +23,5 @@ class Section extends Eloquent{
 	{
   		return $this->hasMany('Task');
 	}
+
 }

@@ -15,9 +15,11 @@ class Purchase extends Ardent implements UserInterface, RemindableInterface {
 		'projectPurpose' => 'required',
 		'sourceOfFund' => 'required',
 		'amount' => 'required | price',
+		'requisitioner' => 'required',
 		'office' => 'required',
 		'requisitioner' => 'required',
-		'modeOfProcurement' => 'required',
+		'dateRequested' => 'required',
+
 	);
 
 	protected $table = 'purchase_request';
