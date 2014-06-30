@@ -2,13 +2,6 @@
 
 @section('content')
     <h1 class="page-header">List of Closed Purchase Requests</h1>
-    
-    @if ( Entrust::hasRole('Administrator') || Entrust::hasRole('Procurement Personnel'))
-      <div align="right">
-          <a href="{{ URL::to('purchaseRequest/create') }}" class="btn btn-success">Create New</a>
-          <br><br><br>
-      </div>
-    @endif
 
     <div class="modal fade" id="confirmDelete" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -49,13 +42,15 @@
     <table id="table_id" class="table table-striped display">
         <thead>
         		<tr>
-        	    	<th>Project/Purpose</th>
+        	    	<th>Control No.</th>
+                    <th>Project/Purpose</th>
+                    <th>Mode</th>
         	      	<th>Status</th>
         	      	<th>Date Created</th>
         	      	<?php
         	        	$adm = Assigned::where('user_id', Auth::User()->id)->first();
         	        	$requests = new Purchase;
-        				$requests = DB::table('purchase_request')->get(); //change this to get closed PRs
+        				$requests = DB::table('purchase_request')->where('status', 'Closed')->get(); //change this to get closed PRs
         			?>
         			<th>Action</th>
         	  </tr>
@@ -64,11 +59,13 @@
       	<tbody>
       		  @foreach ($requests as $request)
       	        <tr>
-      					<td width="55%"> {{ $request->projectPurpose; }}</td>
-      			        <td width="15%"> {{ $request->status; }}</td>
-      			        <td width="15%"> {{ $request->created_at; }}</td>
-      			        <td width="15%">
-      			        	  <a data-toggle="tooltip" data-placement="top" class='iframe btn btn-primary' href="{{ URL::to('purchaseRequest/vieweach/'. $request->id) }}" title="View"><span class="glyphicon glyphicon-file"></span></a></li>
+                    <td width="10%">{{ $request->ControlNo; }}</td>
+                    <td width="30%"><a data-toggle="tooltip" data-placement="top" class="purpose" href="{{ URL::to('purchaseRequest/vieweach/'. $request->id) }}" title="View Project Details">{{ $request->projectPurpose; }}</a></td>
+                    <td width="18%">{{ Workflow::find($request->modeOfProcurement)->workFlowName; }}</td>
+                    <td width="12%"><span class="label label-default">{{ $request->status; }}</span></td>
+                    <td width="20%">{{ $request->created_at; }}</td>
+                    <td width="10%">
+  			        	<!--a data-toggle="tooltip" data-placement="top" class='iframe btn btn-primary' href="{{ URL::to('purchaseRequest/vieweach/'. $request->id) }}" title="View"><span class="glyphicon glyphicon-file"></span></a></li-->
                         <?php
                           $adm = Assigned::where('user_id', Auth::User()->id)->first();
                           if($adm->role_id == 3) {
@@ -79,8 +76,8 @@
                                  <center><button class="iframe btn btn-danger" type="button" data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $request->id }})"  data-title="Delete Purchase Request" title="Delete" data-message="Are you sure you want to delete purchase request?"><span class="glyphicon glyphicon-trash"></span></button></center>
                             </form>
                         <?php } ?>
-      			        </td>
-      			    </tr>
+  			        </td>
+  			    </tr>
             @endforeach	    
       	</tbody>
     </table>  
