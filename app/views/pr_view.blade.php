@@ -67,9 +67,9 @@
       	<tbody>
       		  @foreach ($requests as $request)
       	        <tr>
-                    <td width="10%">{{ $request->ControlNo; }}</td>
+                    <td width="10%">{{ $request->controlNo; }}</td>
   					<td width="30%"><a data-toggle="tooltip" data-placement="top" class="purpose" href="{{ URL::to('purchaseRequest/vieweach/'. $request->id) }}" title="View Project Details">{{ $request->projectPurpose; }}</a></td>
-                    <td width="18%">{{ Workflow::find($request->modeOfProcurement)->workFlowName; }}</td>
+                    <td width="18%">aw</td>
   			        <td width="12%"><span class="label {{($request->status == 'Pending') ? 'label-primary':'label-success'}}">{{ $request->status; }}</span></td>
   			        <td width="20%">{{ $request->created_at; }}</td>
   			        <td width="10%">

@@ -11,11 +11,6 @@ class Purchase extends Ardent implements UserInterface, RemindableInterface {
 
 	use UserTrait, RemindableTrait;
 
-	public function document()
-	{
-		return $this->belongsTo('Document');
-	}
-
 	public static $rules = array(
 		'projectPurpose' => 'required',
 		'sourceOfFund' => 'required',
