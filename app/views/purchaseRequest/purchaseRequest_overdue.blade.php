@@ -41,44 +41,53 @@
 
     <table id="table_id" class="table table-striped display">
         <thead>
-        		<tr>
-        	    	<th>Control No.</th>
-                    <th>Project/Purpose</th>
-                    <th>Mode</th>
-        	      	<th>Status</th>
-        	      	<th>Date Created</th>
-        	      	<?php
-        	        	$adm = Assigned::where('user_id', Auth::User()->id)->first();
-        	        	$requests = new Purchase;
-        				$requests = DB::table('purchase_request')->where('status', '=', 'Overdue')->get(); //change this to get overdue PRs
-        			?>
-        			<th>Action</th>
-        	  </tr>
-    	  </thead>
+    		<th>Control No.</th>
+            <th>Project/Purpose</th>
+            <th>Mode</th>
+            <th>Status</th>
+            <th>Date Created</th>
+            <?php
+                $adm = Assigned::where('user_id', Auth::User()->id)->first();
+                if($adm->role_id == 3) {
+            ?>
+                <th>Action</th>
+            <?php } ?>
+        </thead>
+
+        <?php
+            $requests = new Purchase;
+            $requests = DB::table('purchase_request')->where('status', '=', 'Overdue')->get(); //change this to get overdue PRs
+        ?>
 
       	<tbody>
-      		  @foreach ($requests as $request)
-      	        <tr>
-  					<td width="10%">{{ $request->ControlNo; }}</td>
-                    <td width="30%"><a data-toggle="tooltip" data-placement="top" class="purpose" href="{{ URL::to('purchaseRequest/vieweach/'. $request->id) }}" title="View Project Details">{{ $request->projectPurpose; }}</a></td>
-                    <td width="18%">{{ Workflow::find($request->modeOfProcurement)->workFlowName; }}</td>
-                    <td width="12%"><span class="label label-danger">{{ $request->status; }}</span></td>
-                    <td width="20%">{{ $request->created_at; }}</td>
-                    <td width="10%">
-  			        	  <!--a class='iframe btn btn-primary' href="{{ URL::to('purchaseRequest/vieweach/'. $request->id) }}" title="View"><span class="glyphicon glyphicon-file"></span></a></li-->
-                    <?php
-                      $adm = Assigned::where('user_id', Auth::User()->id)->first();
-                      if($adm->role_id == 3) {
-                    ?>
-                        <a class='iframe btn btn-success' href='edit/{{$request->id}}' title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
-                        <form method="POST" action="delete" id="myForm_{{ $request->id }}" name="myForm" style="display: -webkit-inline-box;">
-                             <input type="hidden" name="del_pr" value="{{ $request->id }}">
-                             <center><button class="iframe btn btn-danger" type="button" data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $request->id }})"  data-title="Delete Purchase Request" title="Delete" data-message="Are you sure you want to delete purchase request?"><span class="glyphicon glyphicon-trash"></span></button></center>
-                        </form>
-                    <?php } ?>
-  			        </td>
-  			    </tr>
-            @endforeach	    
+            @if(count($requests))
+                @foreach ($requests as $request)
+                    <tr>
+                        <td width="10%">{{ $request->ControlNo; }}</td>
+                        <td width="30%"><a data-toggle="tooltip" data-placement="top" class="purpose" href="{{ URL::to('purchaseRequest/vieweach/'. $request->id) }}" title="View Project Details">{{ $request->projectPurpose; }}</a></td>
+                        <td width="18%">{{ Workflow::find($request->modeOfProcurement)->workFlowName; }}</td>
+                        <td width="12%"><span class="label label-danger">{{ $request->status; }}</span></td>
+                        <td width="20%">{{ $request->created_at; }}</td>                   
+                        <?php
+                            if($adm->role_id == 3) {
+                        ?>
+                            <td width="10%">
+                                <a class='iframe btn btn-success' href='edit/{{$request->id}}' title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
+                                <form method="POST" action="delete" id="myForm_{{ $request->id }}" name="myForm" style="display: -webkit-inline-box;">
+                                   <input type="hidden" name="del_pr" value="{{ $request->id }}">
+                                   <center><button class="iframe btn btn-danger" type="button" data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $request->id }})"  data-title="Delete Purchase Request" title="Delete" data-message="Are you sure you want to delete purchase request?"><span class="glyphicon glyphicon-trash"></span></button></center>
+                               </form>
+                            </td>
+                       <?php } ?>
+                   </tr>
+               @endforeach	    
+            @else
+                <tr>
+                    <td colspan="<?php if($adm->role_id == 3) echo "6"; else echo "5";?>">
+                        <span class="error-view">No data available.</span>
+                    </td>
+                </tr>
+            @endif   
       	</tbody>
     </table>  
 @stop
