@@ -38,6 +38,25 @@
 			<div class="form-group">
 
 				<div>
+					<?php 
+							$cn = 0;
+							$purchase = Purchase::orderBy('ControlNo', 'DESC')->first();
+							$cn = (int)$purchase->ControlNo + 1;
+					?>
+
+					{{ Form::label('dispCN', 'Control No. *', array('class' => 'create-label')) }}
+					<input type="text"  name="dispCN"  class="form-control" value="{{$cn+1}}"disabled>
+					<input type="hidden" name="controlNo" value="<?php echo $cn; ?>">
+				</div>
+				<br>
+
+				<div>
+					{{ Form::label('status', 'Status: ', array('class' => 'create-label')) }}
+					<input type="text" value="New" readonly class="form-control">
+				</div>
+				<br>
+
+				<div>
 					{{ Form::label('projectPurpose', 'Project/Purpose *', array('class' => 'create-label')) }}
 					{{ Form::text('projectPurpose','', array('class'=>'form-control')) }}
 				</div>
@@ -136,25 +155,6 @@
 							@endif
 							<br>
 						</div>
-
-						
-
-						<div>
-
-							<?php 
-								$cn = 0;
-								$purchase = Purchase::orderBy('ControlNo', 'ASC')->get();
-							?>
-
-							@foreach ($purchase as $purchases) 
-								<?php $cn = (int)$purchases->ControlNo;  ?>
-							@endforeach
-
-							{{ Form::label('dispCN', 'Control No. *', array('class' => 'create-label')) }}
-							<input type="text"  name="dispCN"  class="form-control" value="{{$cn+1}}"disabled>
-							<input type="hidden" name="controlNo" value="<?php echo ($cn+1); ?>">
-						</div>
-						<br>
 
 						{{ Form::label('dateRequested', 'Date Requested *', array('class' => 'create-label')) }}
 

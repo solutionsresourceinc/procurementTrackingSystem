@@ -13,12 +13,6 @@ class Document extends Ardent implements UserInterface, RemindableInterface {
 
 	protected $table = 'document';
 
-
-	public function purchase()
-	{
-		return $this->hasOne('Purchase');
-	}
-
 	public static $rules = array(
 		'work_id' => 'required',
 		//'pr_id' => 'required',
