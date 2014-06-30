@@ -62,17 +62,17 @@
         <div class="collapse navbar-collapse navbar-ex1-collapse">
           <ul class="nav navbar-nav side-nav">
             <li class="{{Request::is('dashboard') ? 'active':''}}"><a href="/"><!--i class="fa fa-dashboard"></i--> Dashboard</a></li>
-            <li class="dropdown">
-                <a href="#" class="dropdown" data-toggle="dropdown">Purchase Requests <b class="caret pull-right"></b></a>
+            <li class="dropdown active-nav">
+                <a href="#" class="dropdown {{(Request::is('purchaseRequest/view') || Request::is('purchaseRequest/closed') || Request::is('purchaseRequest/overdue')) ? 'active' : ''}}" data-toggle="dropdown">Purchase Requests <b class="caret pull-right"></b></a>
                 <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
                     <!--Purchase Request Views-->
-                    <li class="{{(Request::is('purchaseRequest/view') || Request::is('purchaseRequest/view/{id}')) ? 'active':''}}">
+                    <li class="{{Request::is('purchaseRequest/view') ? 'active':''}}">
                         <a href="/purchaseRequest/view">Active Purchase Requests<span class="badge pull-right">1</span></a>
                     </li>
-                    <li class="{{(Request::is('purchaseRequest/closed') || Request::is('purchaseRequest/view/{id}')) ? 'active':''}}">
+                    <li class="{{Request::is('purchaseRequest/closed') ? 'active':''}}">
                         <a href="/purchaseRequest/closed">Closed Purchase Requests<span class="badge pull-right">1</span></a>
                     </li>
-                    <li class="{{(Request::is('purchaseRequest/overdue') || Request::is('purchaseRequest/view/{id}')) ? 'active':''}}">
+                    <li class="{{Request::is('purchaseRequest/overdue') ? 'active':''}}">
                         <a href="/purchaseRequest/overdue">Overdue Purchase Requests<span class="badge pull-right">1</span></a>
                     </li>
                 </ul>
@@ -80,13 +80,13 @@
 
             @if ( Entrust::hasRole('Administrator') || Entrust::hasRole('Procurement Personnel'))
                 <li class="dropdown">
-                    <a href="#" class="dropdown" data-toggle="dropdown">Tasks <b class="caret pull-right"></b></a>
+                    <a href="#" class="dropdown {{(Request::is('task/overdue') || Request::is('task/active')) ? 'active' : ''}}" data-toggle="dropdown">Tasks <b class="caret pull-right"></b></a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
                         <!--Purchase Request Views-->
-                        <li class="{{(Request::is('task/active') || Request::is('purchaseRequest/view/{id}')) ? 'active':''}}">
+                        <li class="{{Request::is('task/active') ? 'active':''}}">
                             <a href="/task/active">Active Tasks<span class="badge pull-right">10</span></a>
                         </li>
-                        <li class="{{(Request::is('task/overdue') || Request::is('purchaseRequest/view/{id}')) ? 'active':''}}">
+                        <li class="{{Request::is('task/overdue') ? 'active':''}}">
                             <a href="/task/overdue">Overdue Tasks<span class="badge pull-right">10</span></a>
                         </li>
                     </ul>
@@ -95,7 +95,7 @@
 
             @if( Entrust::hasRole('Administrator') )
                 <li class="dropdown">
-                    <a href="#" class="dropdown" data-toggle="dropdown">Workflow <b class="caret pull-right"></b></a>
+                    <a href="#" class="dropdown {{(Request::is('workflow/belowFifty') || Request::is('workflow/belowFifty') || Request::is('workflow/aboveFive')) ? 'active' : ''}}" data-toggle="dropdown">Workflow <b class="caret pull-right"></b></a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
                       <li>{{ link_to('/workflow/belowFifty', 'Below P50,000') }}</li>
                       <li>{{ link_to('/workflow/aboveFifty', 'Between P50,000 and P500,000') }}</li>
@@ -103,7 +103,7 @@
                     </ul>
                 </li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown" data-toggle="dropdown">Administration <b class="caret pull-right"></b></a>
+                    <a href="#" class="dropdown {{(Request::is('user/view') || Request::is('offices') || Request::is('designation')) ? 'active' : ''}}" data-toggle="dropdown">Administration <b class="caret pull-right"></b></a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
                         <li class="{{Request::is('user/view') ? 'active':''}}">{{ link_to('/user/view', 'Users') }}</li>
                         <li class="{{Request::is('offices') ? 'active':''}}">{{ link_to('/offices', 'Offices') }}</li>
@@ -147,10 +147,10 @@
     <script type="text/javascript">
         $(document).ready(function(){ 
             $('.btn').tooltip(); 
-            $('.navbar .dropdown').hover(function() {
+            $('.navbar .dropdown').click(function() {
                 $(this).find('.dropdown-menu').first().stop(true, true).delay(250).slideDown();
             }, function() {
-                $(this).find('.dropdown-menu').first().stop(true, true).delay(100).slideUp()
+                $(this).find('.dropdown-menu').first().stop(true, true).delay(100).slideDown()
             });
         });
     </script>
