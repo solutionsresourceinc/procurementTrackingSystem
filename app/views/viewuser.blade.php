@@ -2,11 +2,12 @@
 
 @section('content')
 
-<h1 class="page-header">User Management</h1>
-<div align="right">
+<h1 class="pull-left">User Management</h1>
+<div class="pull-right options">
 	<a href="{{ URL::to('user/create') }}" class="btn btn-success">Create New</a>
-	<br><br><br>
 </div>
+
+<hr class="clear" />
 
 <div class="modal fade" id="confirmDelete" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
 	<div class="modal-dialog">

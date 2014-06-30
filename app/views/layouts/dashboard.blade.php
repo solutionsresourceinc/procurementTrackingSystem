@@ -147,6 +147,17 @@
     <script type="text/javascript">
         $(document).ready(function(){ 
             $('.btn').tooltip(); 
+            $('.purpose').tooltip(); 
+            $('.navbar .active-nav').click(function() {
+                $(this).find('.dropdown-menu').first().stop(true, true).delay(250).slideDown();
+            }, function() {
+                $(this).find('.dropdown-menu').first().stop(true, true).delay(100).slideDown()
+            });
+            $('.navbar .active-nav').click(function() {
+                $(this).find('.dropdown-menu').first().stop(true, true).delay(250).slideDown();
+            }, function() {
+                $(this).find('.dropdown-menu').first().stop(true, true).delay(100).slideDown()
+            });
             $('.navbar .dropdown').click(function() {
                 $(this).find('.dropdown-menu').first().stop(true, true).delay(250).slideDown();
             }, function() {
