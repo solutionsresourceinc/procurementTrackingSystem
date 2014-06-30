@@ -70,31 +70,8 @@ Route::post('offices/delete/{id}',['as' => 'offices.delete', 'uses' => 'OfficeCo
 Route::post('offices/{id}/edit',['as' => 'offices.update', 'uses' => 'OfficeController@update']);
 
 
-// Image CRUD Routes
-Route::get('back', function()
-{
-	return View::make('back');
-});
 
-Route::get( 'pr_imageupload', function()
-{
-	return View::make('pr_imageupload');
-});
 
-Route::get('attach/{id}', function($id)
-{
-	Session::put('pr_id', $id);
-	return Redirect::to('pr_imageupload');
-
-});
-
-Route::post('purchaseRequest/edit/delimage', function()
-{
-	$id = Input::get('hide');
-	$attach = DB::table('attachments')->where('id', $id)->delete();
-$notice="Attachment successfully deleted.";
-	return Redirect::back()->with('notice', $notice);
-});
 
 
 Route::get( 'resultstest', function()
@@ -248,3 +225,20 @@ Route::post('workflow/submit/{id}', function()
 
 	return Response::json($data);
 });
+
+
+
+
+//Image Module Components
+
+
+Route::post('addimage', ['uses' => 'purchaseRequestController@addimage']);
+Route::post('delimage', function()
+{
+	$id = Input::get('hide');
+	$attach = DB::table('attachments')->where('id', $id)->delete();
+$notice="Attachment successfully deleted.";
+	return Redirect::back()->with('notice', $notice);
+});
+
+// End Image Module Components
