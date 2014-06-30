@@ -135,55 +135,68 @@ class PurchaseRequestController extends Controller {
 
 	public function edit_submit()
 	{
-		$id = Input::get('id');
-		$purchase = Purchase::find($id);
+		
 
-
+		$purchase = Purchase::find(Input::get('id'));
+		$document = Document::where('pr_id', Input::get('id'));
 		$purchase->projectPurpose = Input::get( 'projectPurpose' );
 		$purchase->sourceOfFund = Input::get( 'sourceOfFund' );
 		$purchase->amount = Input::get( 'amount' );
 		$purchase->office = Input::get( 'office' );
 		$purchase->requisitioner = Input::get( 'requisitioner' );
-		$purchase->modeOfProcurement = Input::get( 'modeOfProcurement' );
-		$purchase->ControlNo = Input::get( 'ControlNo' );
-		
+		$purchase->dateRequested = Input::get( 'dateRequested' );
+		$purchase->controlNo = Input::get('controlNo');
 		$purchase->status = 'Pending';
+		
 
+		$purchase_save = $purchase->save();
 
-		if($purchase->save())
+		if($purchase_save)
 		{
-			
+			$document->pr_id = $purchase->id;
+			$document->work_id = Input::get('modeOfProcurement');
+			$document_save = $document->save();
 
-			$pr_id= Session::get('pr_id');
-			if (Session::get('doc_id')){
+			if($document_save)
+			{
+				$pr_id= Session::get('pr_id');
 
-				$doc_id =Session::get('doc_id');
+				if (Session::get('doc_id'))
+				{
+					$doc_id =Session::get('doc_id');
 
-				DB::table('attachments')
-				->where('doc_id', $doc_id)
-				->update(array( 'saved' => 1));
-				DB::table('attachments')->where('saved', '=', 0)->delete();
-				DB::table('document')->where('pr_id', '=',$pr_id )->where('id','!=',$doc_id)->delete();
-				Session::forget('doc_id');
+					DB::table('attachments')
+					->where('doc_id', $doc_id)
+					->update(array( 'saved' => 1));
+					DB::table('attachments')->where('saved', '=', 0)->delete();
+					DB::table('document')->where('pr_id', '=',$pr_id )->where('id','!=',$doc_id)->delete();
+					Session::forget('doc_id');
+				}
+
+				$notice = "Purchase request saved successfullly! ";										  
+
+
+				Session::put('notice', $notice);
+				$office = Office::all();
+				$users = User::all();
+				$workflow = Workflow::all();
+
+				return Redirect::back();
+	
 
 			}
-			$notice = "Purchase request edited successfullly! ";  
-
-
-			Session::put('notice', $notice);
-			$office = Office::all();      
-			$users = User::all();
-			return Redirect::back()->with('office', $office)
-			->with('users',$users);
-
-
+			else
+			{
+		
+				
+			}
 		}
 		else
 		{
 			//return 'Failed to create purchase request! <br>' . $purchase;
 			
 			// Set Main Error
-			$message = "Failed to edit purchase Request";
+			$message = "Failed to save purchase Request";
 			Session::put('main_error', $message );
 
 			// Get Other Error Messages
@@ -192,16 +205,19 @@ class PurchaseRequestController extends Controller {
 			$m3 = $purchase->validationErrors->first('amount');
 			$m4 = $purchase->validationErrors->first('office');
 			$m5 = $purchase->validationErrors->first('requisitioner');
-			$m6 = $purchase->validationErrors->first('modeOfProcurement');
-			
-
+			$m7 = $purchase->validationErrors->first('dateRequested');
 			// Inserting Error Message To a Session
 			Session::put('m1', $m1 );
 			Session::put('m2', $m2 );
 			Session::put('m3', $m3 );
 			Session::put('m4', $m4 );
 			Session::put('m5', $m5 );
-			Session::put('m6', $m6 );
+			Session::put('m7', $m7 );
+
+			if(Input::get('modeOfProcurement') == "")
+			{
+				Session::put('m6', 'required' );
+			}
 
 			return Redirect::back()->withInput();
 		}
