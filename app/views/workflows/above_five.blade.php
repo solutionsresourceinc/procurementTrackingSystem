@@ -49,7 +49,7 @@
 			@foreach($section1 as $section)
 			@if($section->section_id == 1)
 			<?php 
-			$d_id=$section->d_id; 
+			$d_id=$section->designation_id; 
 
 			?>
 			<tr>
@@ -121,7 +121,7 @@
 				@foreach($section1 as $section)
 				@if($section->section_id == 2)
 				<?php 
-				$d_id=$section->d_id; 
+				$d_id=$section->designation_id; 
 
 				?>
 				<tr>
@@ -193,7 +193,7 @@
 					@foreach($section1 as $section)
 					@if($section->section_id == 3)
 					<?php 
-					$d_id=$section->d_id; 
+					$d_id=$section->designation_id; 
 
 					?>
 					<tr>
@@ -265,7 +265,7 @@
 						@foreach($section1 as $section)
 						@if($section->section_id == 4)
 						<?php 
-						$d_id=$section->d_id; 
+						$d_id=$section->designation_id; 
 
 						?>
 						<tr>
