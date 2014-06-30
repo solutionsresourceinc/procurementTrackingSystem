@@ -26,6 +26,9 @@ class DatabaseSeeder extends Seeder {
 		$this->call('WorkflowSeeder');
 		$this->command->info('The Workflow table has been seeded!');
 
+		$this->call('SectionSeeder');
+		$this->command->info('The Section table has been seeded!');
+
 		DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 	}
 

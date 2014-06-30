@@ -15,10 +15,10 @@ class CreateDocumentTable extends Migration {
 		Schema::create('document', function($table)
         {
             $table->increments('id');
-            $table->string('doctitle');
-            $table->integer('pr_id');
-            $table->integer('work_id');
-              $table->timestamps();
+            $table->string('doctitle',255);
+            $table->integer('pr_id')->unsigned();
+            $table->integer('work_id')->unsigned();
+            $table->timestamps();
 		}
 	);
 	}
