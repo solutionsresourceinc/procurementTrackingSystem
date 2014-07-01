@@ -174,7 +174,6 @@ class UserController extends BaseController {
         $errorcheck=0;
 
 //Validations     
-        /*
         if(ctype_alpha(str_replace(' ','',$user->firstname)))
         {}
         else{
@@ -186,7 +185,7 @@ class UserController extends BaseController {
         else{
             $errorcheck=1;
             Session::put('lastname_error', 'Invalid last name.');}
-        */
+    
             if(filter_var($user->email, FILTER_VALIDATE_EMAIL))
             {}
         else{
