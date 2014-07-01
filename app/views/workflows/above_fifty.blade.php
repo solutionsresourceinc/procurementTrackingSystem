@@ -29,8 +29,8 @@
 		</div>
 	</div>
 
-
-<h1 class="page-header">Small Value Procurement (Above P50,000 Below P500,000)</h1>
+<?php $wfName = Workflow::find('2'); ?>
+<h1 class="page-header"> {{{ $wfName->workFlowName }}} </h1>
 
 <div class="panel panel-success">
 	<div class="panel-heading">

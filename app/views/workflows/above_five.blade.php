@@ -28,8 +28,8 @@
 			</div>
 		</div>
 	</div>
-
-<h1 class="page-header">Large Value Procurement (Above P500,000)</h1>
+	<?php $wfName = Workflow::find('3'); ?>
+<h1 class="page-header">{{{ $wfName->workFlowName }}}</h1>
 
 <div class="panel panel-success">
 	<div class="panel-heading">
