@@ -33,7 +33,8 @@
 
 <div class="panel panel-success">
 	<div class="panel-heading">
-		<h3 class="panel-title">A. PURCHASE REQUEST</h3>
+		<?php $sectionName = Section::find('9'); ?>
+		<h3 class="panel-title"> {{{ strtoupper($sectionName->sectionName) }}} </h3>
 	</div>
 	<div class="panel-body">
 		<table border="1" class="workflow-table">
@@ -105,7 +106,8 @@
 
 	<div class="panel panel-success">
 		<div class="panel-heading">
-			<h3 class="panel-title">B. BAC REQUIREMENTS</h3>
+			<?php $sectionName = Section::find('10'); ?>
+			<h3 class="panel-title">{{{ strtoupper($sectionName->sectionName) }}}</h3>
 		</div>
 		<div class="panel-body">
 			<table border="1" class="workflow-table">
@@ -177,7 +179,8 @@
 
 		<div class="panel panel-success">
 			<div class="panel-heading">
-				<h3 class="panel-title">C. PURCHASE ORDER</h3>
+				<?php $sectionName = Section::find('11'); ?>
+				<h3 class="panel-title">{{{ strtoupper($sectionName->sectionName) }}}</h3>
 			</div>
 			<div class="panel-body">
 				<table border="1" class="workflow-table">
@@ -249,7 +252,8 @@
 
 			<div class="panel panel-success">
 				<div class="panel-heading">
-					<h3 class="panel-title">D. VOUCHER</h3>
+					<?php $sectionName = Section::find('12'); ?>
+					<h3 class="panel-title">{{{ strtoupper($sectionName->sectionName) }}}</h3>
 				</div>
 				<div class="panel-body">
 					<table border="1" class="workflow-table">
