@@ -213,7 +213,7 @@ Route::post('workflow/submit/{id}', function()
 
 	$id = Input::get('task_id');
 	$assignd = Task::find($id);
-	$assignd->d_id = Input::get('designa');
+	$assignd->designation_id = Input::get('designa');
 	$assignd->save();
 
 
