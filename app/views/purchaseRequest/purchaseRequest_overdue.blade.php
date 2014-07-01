@@ -45,7 +45,7 @@
             <th>Project/Purpose</th>
             <th>Mode</th>
             <th>Status</th>
-            <th>Date Created</th>
+            <th>Date Requested</th>
             <?php
                 $adm = Assigned::where('user_id', Auth::User()->id)->first();
                 if($adm->role_id == 3) {
@@ -70,7 +70,7 @@
                             @foreach ($doc as $docs) {{ Workflow::find($docs->work_id)->workFlowName; }} @endforeach
                         </td>
                         <td width="12%"><span class="label label-danger">{{ $request->status; }}</span></td>
-                        <td width="20%">{{ $request->created_at; }}</td>                   
+                        <td width="20%">{{ $request->dateRequested; }}</td>                   
                         <?php
                             if($adm->role_id == 3) {
                         ?>
