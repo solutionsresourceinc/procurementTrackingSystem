@@ -106,6 +106,20 @@ Route::post( 'purchaseRequest/delete', function()
 	$id=Input::get('del_pr');
 	Purchase::where('id',$id)->delete();
 	
+//Attachment Deletion 
+	$document=Document::where('pr_id', $id)->first();
+	$attach = Attachments::where('doc_id', $document->id)->get();
+
+	foreach ($attach as $attachs) {
+		$attachs->delete();
+	}
+Document::where('pr_id', $id )->delete();
+$notice="Purchase Request successfully deleted.";
+Redirect::back()->with( 'notice', $notice );
+//End Attachment Deletion 
+
+
+
 	Session::flash('message','Successfully deleted the user.');
 	return Redirect::to('purchaseRequest/view');
 });

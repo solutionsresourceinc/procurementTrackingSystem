@@ -260,7 +260,7 @@ $archivo = value(function() use ($file){
 
         }
 
-          return Redirect::to('')->with('imgsuccess','Files uploaded.');
+          return Redirect::back()->with('imgsuccess','Files uploaded.');
 
 
 

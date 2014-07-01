@@ -243,22 +243,14 @@ Image Module
                     @endif
 
 <br>
-<?php
 
-$id = 0;
-$purchase = Purchase::orderBy('id', 'ASC')->get(); ?>
-@foreach ($purchase as $purchases) 
-<?php   $id = $purchases->id; ?>
-@endforeach
 
 <?php
-$doc_id = 0;
-    $document = Document::orderBy('id', 'ASC')->get();
+
+    $document = Document::where('pr_id', $epurchase->id)->first();
+    $doc_id= $document->id;
 ?>
-@foreach ($document as $docs) 
-<?php   $doc_id = $docs->id; ?>
-@endforeach
-<?php $doc_id=$doc_id+1; ?>
+
 {{ Form::open(array('url' => 'addimage', 'files' => true)) }}
 
 <input name="file[]" type="file"  multiple/>
