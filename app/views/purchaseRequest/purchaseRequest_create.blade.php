@@ -39,13 +39,13 @@
 
 				<div>
 					<?php 
-							$cn = 0;
-							$purchase = Purchase::orderBy('ControlNo', 'ASC')->get();
-							foreach ($purchase as $pur) {
-								
-							$cn = (int)$pur->controlNo;
-						}
-						$cn =$cn+1;
+					$cn = 0;
+					$purchase = Purchase::orderBy('ControlNo', 'ASC')->get();
+					foreach ($purchase as $pur) {
+
+						$cn = (int)$pur->controlNo;
+					}
+					$cn =$cn+1;
 					?>
 
 					{{ Form::label('dispCN', 'Control No. *', array('class' => 'create-label')) }}
@@ -82,7 +82,7 @@
 
 				<div>
 					{{ Form::label('amount', 'Amount *', array('class' => 'create-label')) }}
-					{{ Form::text('amount','',array('class'=>'form-control','onchange'=>'numberWithCommas(this.value)','id'=>'num')) }}
+					{{ Form::text('amount','',array('class'=>'form-control','onchange'=>'numberWithCommas(this.value)', 'onkeypress' => 'return isNumberKey(event)','id'=>'num')) }}
 				</div>
 
 				@if (Session::get('m3'))
@@ -114,13 +114,13 @@
 							@foreach($users as $key2)
 							{{{ $fullname = $key2->lastname . ", " . $key2->firstname }}}
 							@if($key2->confirmed == 0)
-								continue;
+							continue;
 							@else
-								<option value="{{ $key2->id }}" class="{{$key2->office_id}}"
-									<?php if(Input::old('requisitioner')==$key2->id)
-									echo "selected" ?>
-									>{{ $fullname }}
-								</option>
+							<option value="{{ $key2->id }}" class="{{$key2->office_id}}"
+								<?php if(Input::old('requisitioner')==$key2->id)
+								echo "selected" ?>
+								>{{ $fullname }}
+							</option>
 							@endif
 							@endforeach
 
@@ -166,7 +166,7 @@
 
 						<div><br>
 							{{ Form::submit('Create Purchase Request',array('class'=>'btn btn-success')) }}
-							{{ link_to( 'purchaseRequest/view', 'Cancel Create', array('class'=>'btn btn-default') ) }}
+							{{ link_to( 'purchaseRequest/view', 'Cancel', array('class'=>'btn btn-default') ) }}
 
 						</div>
 					</div>
@@ -184,109 +184,144 @@ Image Module
 -->
 
 <div class="form-create fc-div">
-<h2>Attachments</h2>
-<br>
-					@if(Session::get('imgsuccess'))
-						<div class="alert alert-success"> {{ Session::get('imgsuccess') }}</div> 
-					@endif
+	<h2>Attachments</h2>
+	<br>
+	@if(Session::get('imgsuccess'))
+	<div class="alert alert-success"> {{ Session::get('imgsuccess') }}</div> 
+	@endif
 
-					@if(Session::get('imgerror'))
-						<div class="alert alert-danger"> {{ Session::get('imgerror') }}</div> 
-					@endif
+	@if(Session::get('imgerror'))
+	<div class="alert alert-danger"> {{ Session::get('imgerror') }}</div> 
+	@endif
 
-<br>
-<?php
+	<br>
+	<?php
 
-$id = 0;
-$purchase = Purchase::orderBy('id', 'ASC')->get(); ?>
-@foreach ($purchase as $purchases) 
-<?php	$id = $purchases->id; ?>
-@endforeach
+	$id = 0;
+	$purchase = Purchase::orderBy('id', 'ASC')->get(); ?>
+	@foreach ($purchase as $purchases) 
+	<?php	$id = $purchases->id; ?>
+	@endforeach
 
-<?php
-$doc_id = 0;
+	<?php
+	$doc_id = 0;
 	$document = Document::orderBy('id', 'ASC')->get();
-?>
-@foreach ($document as $docs) 
-<?php	$doc_id = $docs->id; ?>
-@endforeach
-<?php $doc_id=$doc_id+1; ?>
-{{ Form::open(array('url' => 'addimage', 'files' => true)) }}
+	?>
+	@foreach ($document as $docs) 
+	<?php	$doc_id = $docs->id; ?>
+	@endforeach
+	<?php $doc_id=$doc_id+1; ?>
+	{{ Form::open(array('url' => 'addimage', 'files' => true)) }}
 
-<input name="file[]" type="file"  multiple/>
-<input name="doc_id" type="hidden" value="{{ $doc_id }}">
+	<input name="file[]" type="file"  multiple/>
+	<input name="doc_id" type="hidden" value="{{ $doc_id }}">
 
-<br>
-<br>
-<button type="submit"  class "btn btn-primary">Add</button>
-{{ Form::close() }}
+	<br>
+	<br>
+	<button type="submit"  class "btn btn-primary">Add</button>
+	{{ Form::close() }}
 </div>
 <div id="img-section">
 
-			<?php
+	<?php
 
-			 $attachments = DB::table('attachments')->where('doc_id', $doc_id)->get();	
-			 $srclink="uploads\\";
-			 ?>
-			@foreach ($attachments as $attachment) 
+	$attachments = DB::table('attachments')->where('doc_id', $doc_id)->get();	
+	$srclink="uploads\\";
+	?>
+	@foreach ($attachments as $attachment) 
 	<div class="image-container">
-				<img class="img-thumbnail" src="{{asset('uploads/'.$attachment->data)}}" style="width: 200px; height: 200px;" />
-{{ Form::open(array('method' => 'post', 'url' => 'delimage')) }}
-<input type="hidden" name="hide" value="{{$attachment->id}}">
-  <button><img height="10%" width="10%" class="star-button " src="{{asset('img/Delete_Icon.png')}}"></button>
-{{Form::close()}}
-</div>
-
-			@endforeach
-	  
+		<img class="img-thumbnail" src="{{asset('uploads/'.$attachment->data)}}" style="width: 200px; height: 200px;" />
+		{{ Form::open(array('method' => 'post', 'url' => 'delimage')) }}
+		<input type="hidden" name="hide" value="{{$attachment->id}}">
+		<button><img height="10%" width="10%" class="star-button " src="{{asset('img/Delete_Icon.png')}}"></button>
+		{{Form::close()}}
 	</div>
 
+	@endforeach
 
-	<!-- End Image Module-->
+</div>
 
 
-			</div>
+<!-- End Image Module-->
 
-			{{ Session::forget('notice'); }}
-			{{ Session::forget('main_error'); }}
-			{{ Session::forget('m1'); }}
-			{{ Session::forget('m2'); }}
-			{{ Session::forget('m3'); }}
-			{{ Session::forget('m4'); }}
-			{{ Session::forget('m5'); }}
-			{{ Session::forget('m6'); }}
-			{{ Session::forget('m7'); }}
-			@stop
 
-			<!-- script for the formatting of amount field -->
-			@section('footer')
+</div>
 
-			<script type="text/javascript">
-			function numberWithCommas(x) 
-			{
-				x = x.replace(',','');
-				x = parseFloat(x).toFixed(2);
-				var parts = x.toString().split(".");
-				parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-				parts =  parts.join(".");
-				document.getElementById("num").value = parts;
-			}
+{{ Session::forget('notice'); }}
+{{ Session::forget('main_error'); }}
+{{ Session::forget('m1'); }}
+{{ Session::forget('m2'); }}
+{{ Session::forget('m3'); }}
+{{ Session::forget('m4'); }}
+{{ Session::forget('m5'); }}
+{{ Session::forget('m6'); }}
+{{ Session::forget('m7'); }}
+@stop
 
-			$(window).on('load', function () {
+<!-- script for the formatting of amount field -->
+@section('footer')
 
-				$('.selectpicker').selectpicker({
-					'selectedText': 'cat'
-				});
+<script type="text/javascript">
+function isNumberKey(evt)
+{
+         var charCode = (evt.which) ? evt.which : event.keyCode
+         if(charCode == 44 || charCode == 46)
+        	return true;
+
+         if (charCode > 31 && (charCode < 48 || charCode > 57))
+            return false;
+        
+
+         return true;
+}
+
+
+function numberWithCommas(amount) 
+{
+	amount = amount.replace(',','');	
+	var its_a_number = amount.match(/^[0-9,.]+$/i);
+	if (its_a_number != null)
+	{
+		decimal_amount = parseFloat(amount).toFixed(2);
+		if(decimal_amount == 0 || decimal_amount == "0.00")
+		{
+			document.getElementById("num").value = "1.00";
+		}
+		else
+		{
+			var parts = decimal_amount.toString().split(".");
+			parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+			parts =  parts.join(".");
+			document.getElementById("num").value = parts;
+			window.old_amount = parts; 
+		}
+	}
+	else if(!window.old_amount)
+	{
+		document.getElementById("num").value = "1.00";
+	}
+	else
+	{
+	 	document.getElementById("num").value = window.old_amount;
+	}
+	
+}
+
+$(window).on('load', function () {
+
+	$('.selectpicker').selectpicker({
+		'selectedText': 'cat'
+	});
 
             //$('.selectpicker').selectpicker('hide');
         });
 
-			$("#requisitioner").chainedTo("#office");
-			</script>
+$("#requisitioner").chainedTo("#office");
+</script>
 
-			<!-- Script for date and time picker -->
-			<script type="text/javascript">
-			$('.form_datetime').datetimepicker({
+<!-- Script for date and time picker -->
+<script type="text/javascript">
+$('.form_datetime').datetimepicker({
 	        //language:  'fr',
 	        weekStart: 1,
 	        todayBtn:  1,
@@ -296,29 +331,29 @@ $doc_id = 0;
 	        forceParse: 0,
 	        showMeridian: 1
 	    });
-			$('.form_date').datetimepicker({
-				language:  'fr',
-				weekStart: 1,
-				todayBtn:  1,
-				autoclose: 1,
-				todayHighlight: 1,
-				startView: 2,
-				minView: 2,
-				forceParse: 0
-			});
-			$('.form_time').datetimepicker({
-				language:  'fr',
-				weekStart: 1,
-				todayBtn:  1,
-				autoclose: 1,
-				todayHighlight: 1,
-				startView: 1,
-				minView: 0,
-				maxView: 1,
-				forceParse: 0
-			});
-			</script>
+$('.form_date').datetimepicker({
+	language:  'fr',
+	weekStart: 1,
+	todayBtn:  1,
+	autoclose: 1,
+	todayHighlight: 1,
+	startView: 2,
+	minView: 2,
+	forceParse: 0
+});
+$('.form_time').datetimepicker({
+	language:  'fr',
+	weekStart: 1,
+	todayBtn:  1,
+	autoclose: 1,
+	todayHighlight: 1,
+	startView: 1,
+	minView: 0,
+	maxView: 1,
+	forceParse: 0
+});
+</script>
 
-			<!-- js for chained dropdown -->
-			
+<!-- js for chained dropdown -->
+
 @stop

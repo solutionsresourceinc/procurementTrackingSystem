@@ -214,7 +214,7 @@ $valamount=$epurchase->amount;
 
                         <div><br>
                             {{ Form::submit('Save',array('class'=>'btn btn-success')) }}
-                            {{ link_to( 'purchaseRequest/view', 'Cancel Create', array('class'=>'btn btn-default') ) }}
+                            {{ link_to( 'purchaseRequest/view', 'Cancel', array('class'=>'btn btn-default') ) }}
 
                         </div>
                     </div>

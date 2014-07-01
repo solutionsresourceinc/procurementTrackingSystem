@@ -77,7 +77,7 @@
 					else 
 					{
 						?>
-						<div class="mode1" id="insert_{{$section->id}}"></div>
+						<div class="mode1" id="insert_{{$section->id}}">None</div>
 						<?php
 					}
 					$desig = DB::table('designation')->get();	
@@ -147,7 +147,7 @@
 						else 
 						{
 							?>
-							<div class="mode1" id="insert_{{$section->id}}"></div>
+							<div class="mode1" id="insert_{{$section->id}}">None</div>
 							<?php
 						}
 						$desig = DB::table('designation')->get();	
@@ -218,7 +218,7 @@
 							else 
 							{
 								?>
-								<div class="mode1" id="insert_{{$section->id}}"></div>
+								<div class="mode1" id="insert_{{$section->id}}">None</div>
 								<?php
 							}
 							$desig = DB::table('designation')->get();	
@@ -293,7 +293,7 @@
 								else 
 								{
 									?>
-									<div class="mode1" id="insert_{{$section->id}}"></div>
+									<div class="mode1" id="insert_{{$section->id}}">None</div>
 									<?php
 								}
 								$desig = DB::table('designation')->get();	
