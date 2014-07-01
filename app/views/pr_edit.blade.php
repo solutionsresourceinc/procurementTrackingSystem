@@ -66,10 +66,24 @@ $epurchase=Purchase::find($id);
                     <input type="text" value="{{$epurchase->status}}" readonly class="form-control">
                 </div>
                 <br>
+<?php 
+//retainer
+if (Input::old('projectPurpose')||Input::old('sourceOfFund')||Input::old('amount')){
+$valprojectPurpose=Input::old('projectPurpose');
+$valsourceOfFund=Input::old('sourceOfFund');
+$valamount=Input::old('amount'); 
+}
+else
+{
+$valprojectPurpose=$epurchase->projectPurpose;
+$valsourceOfFund=$epurchase->sourceOfFund;
+$valamount=$epurchase->amount; 
 
+}
+?>
                 <div>
                     {{ Form::label('projectPurpose', 'Project/Purpose *', array('class' => 'create-label')) }}
-                    {{ Form::text('projectPurpose',$epurchase->projectPurpose, array('class'=>'form-control')) }}
+                    {{ Form::text('projectPurpose',$valprojectPurpose, array('class'=>'form-control')) }}
                 </div>
 
                 @if (Session::get('m1'))
@@ -79,7 +93,7 @@ $epurchase=Purchase::find($id);
 
                 <div>
                     {{ Form::label('sourceOfFund', 'Source of Fund *', array('class' => 'create-label')) }}
-                    {{ Form::text('sourceOfFund',$epurchase->sourceOfFund, array('class'=>'form-control')) }}
+                    {{ Form::text('sourceOfFund',$valsourceOfFund, array('class'=>'form-control')) }}
                 </div>
 
                 @if (Session::get('m2'))
@@ -89,7 +103,7 @@ $epurchase=Purchase::find($id);
 
                 <div>
                     {{ Form::label('amount', 'Amount *', array('class' => 'create-label')) }}
-                    {{ Form::text('amount',$epurchase->amount,array('class'=>'form-control','onchange'=>'numberWithCommas(this.value)','id'=>'num')) }}
+                    {{ Form::text('amount',$valamount,array('class'=>'form-control','onchange'=>'numberWithCommas(this.value)','id'=>'num')) }}
                 </div>
 
                 @if (Session::get('m3'))
@@ -105,7 +119,10 @@ $epurchase=Purchase::find($id);
                         <option value="">Please select</option>
                         @foreach($office as $key)
                         <option value="{{ $key->id }}" 
-                            <?php if($epurchase->office==$key->id)
+                            <?php 
+                             if (Input::old('office')==$key->id)
+                                      echo "selected";
+                            else if($epurchase->office==$key->id)
                             echo "selected" ?>
                             >{{{ $key->officeName }}}</option>
                             @endforeach
@@ -127,7 +144,10 @@ $epurchase=Purchase::find($id);
                             @foreach($users as $key2)
                             {{{ $fullname = $key2->lastname . ", " . $key2->firstname }}}
                             <option value="{{ $key2->id }}" class="{{$key2->office_id}}"
-                                <?php if($epurchase->requisitioner==$key2->id)
+                                <?php 
+                                      if (Input::old('requisitioner')==$key2->id)
+                                      echo "selected";
+                                  else if($epurchase->requisitioner==$key2->id)
                                 echo "selected" ?>
                                 >{{ $fullname }}
                             </option>
@@ -151,8 +171,11 @@ $epurchase=Purchase::find($id);
                             @foreach($workflow as $wf)
                             <option value="{{ $wf->id }}" 
                                 <?php
-                                if($docs->work_id==$wf->id)
+                                if (Input::old('modeOfProcurement'))
+                                      echo "selected";
+                               else if($docs->work_id==$wf->id)
                                     echo "selected";
+                                else echo " "
                                 ?> >{{$wf->workFlowName}}</option>
                                 @endforeach
 
@@ -166,11 +189,19 @@ $epurchase=Purchase::find($id);
                         <div class="form-group">
                             {{ Form::label('dateTime', 'Date Requested *', array('class' => 'create-label')) }}
                             <div class="input-group date form_datetime col-md-12" data-date="{{ date('Y-m-d') }}T{{ date('H:i:s') }}Z" data-date-format="dd MM yyyy - HH:ii p" data-link-field="dtp_input1">
-                                <input class="form-control" size="16" type="text" value="{{{ $epurchase->dateRequested }}}" readonly>
+                                <input class="form-control" size="16" type="text" value="<?php
+                            if (NULL!=Input::old('dateRequested'))
+                                echo Input::old('dateRequested');
+                                else
+                               echo $epurchase->dateRequested; ?>" readonly>
                                 <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
                                 <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
                             </div>
-                            <input type="hidden" id="dtp_input1" name="dateRequested" value="{{{ Input::old('dateRequested') }}}" />
+                            <input type="hidden" id="dtp_input1" name="dateRequested" value="<?php
+                            if (NULL!=Input::old('dateRequested'))
+                                echo Input::old('dateRequested');
+                                else
+                               echo $epurchase->dateRequested; ?>" />
                             @if (Session::get('m7'))
                             <font color="red"><i>{{ Session::get('m7') }}</i></font>
                             @endif

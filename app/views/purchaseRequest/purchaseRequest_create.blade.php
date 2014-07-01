@@ -134,7 +134,7 @@
 							@foreach($workflow as $wf)
 							<option value="{{ $wf->id }}" 
 								<?php
-								if(Input::old('modeOfProcurement')==$wf->workFlowName)
+								if(Input::old('modeOfProcurement')==$wf->id)
 									echo "selected";
 								?> >{{$wf->workFlowName}}</option>
 								@endforeach

@@ -60,12 +60,7 @@ class PurchaseRequestController extends Controller {
 				$office = Office::all();
 				$users = User::all();
 				$workflow = Workflow::all();
-
-				return View::make('purchaseRequest.purchaseRequest_create')
-				->with('office', $office)
-				->with('users',$users)
-				->with('workflow',$workflow);
-
+return Redirect::to('purchaseRequest/view');
 			}
 			else
 			{
@@ -138,7 +133,8 @@ class PurchaseRequestController extends Controller {
 		
 
 		$purchase = Purchase::find(Input::get('id'));
-		$document = Document::where('pr_id', Input::get('id'));
+		$document = Document::where('pr_id', Input::get('id'))->first();
+
 		$purchase->projectPurpose = Input::get( 'projectPurpose' );
 		$purchase->sourceOfFund = Input::get( 'sourceOfFund' );
 		$purchase->amount = Input::get( 'amount' );
@@ -146,7 +142,7 @@ class PurchaseRequestController extends Controller {
 		$purchase->requisitioner = Input::get( 'requisitioner' );
 		$purchase->dateRequested = Input::get( 'dateRequested' );
 		$purchase->controlNo = Input::get('controlNo');
-		$purchase->status = 'Pending';
+		$purchase->status = 'New';
 		
 
 		$purchase_save = $purchase->save();
@@ -181,8 +177,7 @@ class PurchaseRequestController extends Controller {
 				$users = User::all();
 				$workflow = Workflow::all();
 
-				return Redirect::back();
-	
+				return Redirect::to('purchaseRequest/view');
 
 			}
 			else
@@ -264,7 +259,8 @@ $archivo = value(function() use ($file){
             }
 
         }
-          return Redirect::back()->with('imgsuccess','Files uploaded.');
+
+          return Redirect::to('')->with('imgsuccess','Files uploaded.');
 
 
 

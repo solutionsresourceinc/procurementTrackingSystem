@@ -46,7 +46,9 @@
             </div>
         </div>
     </div>
-
+@if(Session::get('notice'))
+            <div class="alert alert-success"> {{ Session::get('notice') }}</div> 
+            @endif
     <table id="table_id" class="table table-striped display ">
         <thead>
     		<tr>
@@ -66,7 +68,7 @@
 
         <?php
             $requests = new Purchase;
-            $requests = DB::table('purchase_request')->where('status', '=', 'Pending')->orWhere('status', '=', 'In progress')->get();
+            $requests = DB::table('purchase_request')->where('status', '=', 'New')->orWhere('status', '=', 'In progress')->get();
         ?>
 
       	<tbody>
@@ -100,6 +102,7 @@
             @endif
       	</tbody>
     </table>  
+                {{ Session::forget('notice'); }}
 @stop
 
 @section('footer')
