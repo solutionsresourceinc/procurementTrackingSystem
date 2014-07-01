@@ -134,10 +134,10 @@ Entrust::routeNeedsRole( 'workflow/below-fifty', array('Administrator','Procurem
 
 // Filter for JAN Routes
 
-Entrust::routeNeedsRole( 'workflow/belowFifty', array('Administrator','Procurement Personnel','Requisitioner'), Redirect::to('/'), false );
-Entrust::routeNeedsRole( 'workflow/aboveFifty', array('Administrator','Procurement Personnel','Requisitioner'), Redirect::to('/'), false );
-Entrust::routeNeedsRole( 'workflow/workflow/aboveFive', array('Administrator','Procurement Personnel','Requisitioner'), Redirect::to('/'), false );
-Entrust::routeNeedsRole( 'workflow', array('Administrator','Procurement Personnel','Requisitioner'), Redirect::to('/'), false );
+Entrust::routeNeedsRole( 'workflow/belowFifty', array('Administrator'), Redirect::to('/'), false );
+Entrust::routeNeedsRole( 'workflow/aboveFifty', array('Administrator'), Redirect::to('/'), false );
+Entrust::routeNeedsRole( 'workflow/workflow/aboveFive', array('Administrator'), Redirect::to('/'), false );
+Entrust::routeNeedsRole( 'workflow', array('Administrator'), Redirect::to('/'), false );
 
 
 // Filter for Designations
@@ -148,3 +148,8 @@ Entrust::routeNeedsRole( 'designation/*', array('Administrator'), Redirect::to('
 Entrust::routeNeedsRole( 'designation/*/edit', array('Administrator'), Redirect::to('/') );
 
 Entrust::routeNeedsRole( 'designation/*/members', array('Administrator'), Redirect::to('/') );
+
+// Filter for Task
+Entrust::routeNeedsRole( 'task/active', array('Administrator','Procurement Personnel'), Redirect::to('/'), false );
+Entrust::routeNeedsRole( 'task/overdue', array('Administrator','Procurement Personnel'), Redirect::to('/'), false );
+
