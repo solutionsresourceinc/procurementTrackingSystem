@@ -134,7 +134,7 @@
 							@foreach($workflow as $wf)
 							<option value="{{ $wf->id }}" 
 								<?php
-								if(Input::old('modeOfProcurement')==$wf->workFlowName)
+								if(Input::old('modeOfProcurement')==$wf->id)
 									echo "selected";
 								?> >{{$wf->workFlowName}}</option>
 								@endforeach
@@ -260,6 +260,7 @@ $doc_id = 0;
 			<script type="text/javascript">
 			function numberWithCommas(x) 
 			{
+				x = x.replace(',','');
 				x = parseFloat(x).toFixed(2);
 				var parts = x.toString().split(".");
 				parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");

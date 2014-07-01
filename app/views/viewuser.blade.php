@@ -46,7 +46,9 @@
 </div>
 
 
-
+@if(Session::get('notice'))
+			<div class="alert alert-success"> {{ Session::get('notice') }}</div> 
+			@endif
 
 <table id="table_id" class="table table-striped display">
 	<thead>

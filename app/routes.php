@@ -213,7 +213,7 @@ Route::post('workflow/submit/{id}', function()
 
 	$id = Input::get('task_id');
 	$assignd = Task::find($id);
-	$assignd->designation_id = Input::get('designa');
+	$assignd->d_id = Input::get('designa');
 	$assignd->save();
 
 
@@ -241,4 +241,4 @@ $notice="Attachment successfully deleted.";
 	return Redirect::back()->with('notice', $notice);
 });
 
-// End Image Module Components
+// End Image Module
