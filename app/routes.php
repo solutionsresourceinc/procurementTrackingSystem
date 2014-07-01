@@ -167,7 +167,7 @@ Route::post('workflow/replace/{id}', function($id)
 	// If you had a database you could easily fetch the content from the database here...
 
 	$data = array(
-		"html" => "<div id='description_body'>  $desc->taskName </h6> </p></div>"
+		"html" => "<div id='description_body'>  $desc->description </h6> </p></div>"
 	);
 	
 	return Response::json($data);
