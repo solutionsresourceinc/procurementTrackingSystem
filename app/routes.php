@@ -245,7 +245,6 @@ Route::post('workflow/submit/{id}', function()
 
 //Image Module Components
 
-
 Route::post('addimage', ['uses' => 'purchaseRequestController@addimage']);
 Route::post('delimage', function()
 {
@@ -256,3 +255,8 @@ $notice="Attachment successfully deleted.";
 });
 
 // End Image Module
+
+//Test Route
+Route::get('test', function(){
+	return View::make('test');
+});

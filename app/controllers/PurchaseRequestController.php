@@ -60,12 +60,37 @@ class PurchaseRequestController extends Controller {
 				$office = Office::all();
 				$users = User::all();
 				$workflow = Workflow::all();
-return Redirect::to('purchaseRequest/view');
+				return Redirect::to('purchaseRequest/view');
 			}
 			else
 			{
 				$purchase->delete();
-				
+				$message = "Failed to create purchase Request";
+			Session::put('main_error', $message );
+
+			// Get Other Error Messages
+			$m1 = $purchase->validationErrors->first('projectPurpose');
+			$m2 = $purchase->validationErrors->first('sourceOfFund');
+			$m3 = $purchase->validationErrors->first('amount');
+			$m4 = $purchase->validationErrors->first('office');
+			$m5 = $purchase->validationErrors->first('requisitioner');
+			$m7 = $purchase->validationErrors->first('dateRequested');
+			// Inserting Error Message To a Session
+			Session::put('m1', $m1 );
+			Session::put('m2', $m2 );
+			Session::put('m3', $m3 );
+			Session::put('m4', $m4 );
+			Session::put('m5', $m5 );
+			Session::put('m7', $m7 );
+
+			if(Input::get('modeOfProcurement') == "")
+			{
+				Session::put('m6', 'required' );
+			}
+
+			return Redirect::back()->withInput();
+
+
 			}
 		}
 		else

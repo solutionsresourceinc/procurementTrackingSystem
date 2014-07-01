@@ -1,33 +1,37 @@
-@extends('layouts.dashboard')
+@extends('layouts.default')
+
+@section('header')
+	{{ HTML::style('ios_overlay/css/iosOverlay.css')}}
+@stop
 
 @section('content')
 
-	<!-- Modal Div -->
-	<style type="text/css">
-		#description {
-	    height: 400px;
-	    top: calc(50% - 200px) !important;
-	    overflow: hidden;
-		}
-	</style>
-	<div class="modal fade" id="description" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-		    		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		    		<h4 class="modal-title">Description</h4>
-		    	</div>
-			    	<center>
-			    <div class="modal-body" id="description_body">
-			      		<!-- Insert Data Here -->
-			    </div>
-			    	</center>
-			    <div class="modal-footer">
-        			<button type="button" class="btn btn-default" data-dismiss="modal">Back</button>
-    			</div>
+<!-- Modal Div -->
+<style type="text/css">
+#description {
+	height: 400px;
+	top: calc(50% - 200px) !important;
+	overflow: hidden;
+}
+</style>
+<div class="modal fade" id="description" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">Description</h4>
+			</div>
+			<center>
+				<div class="modal-body" id="description_body">
+					<!-- Insert Data Here -->
+				</div>
+			</center>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Back</button>
 			</div>
 		</div>
 	</div>
+</div>
 <?php $wfName = Workflow::find('1'); ?>
 <h1 class="page-header"> {{{ $wfName->workFlowName }}} </h1>
 
@@ -93,7 +97,7 @@
 					</td>
 					<td class="col-md-4">
 						{{HTML::decode (Form::button('<span class="glyphicon glyphicon-edit"></span>', ['class' => 'btn btn-success table-actions allow-edit mode1', 'data-original-title' => 'Edit', 'data-placement' => 'top', 'data-toggle' => 'tooltip']))}}
-						{{Form::button('Save', ['class' => 'btn btn-success save-edit mode2'])}}
+						{{Form::button('Save', ['class' => 'btn btn-success save-edit mode2', 'id' => 'temp_alert'])}}
 						{{Form::button('Cancel', ['class' => 'btn btn-default cancel-edit mode2'])}}
 						<a href="replace/{{$section->id}}" title="Description" data-placement="top" data-method="post" data-replace="#description_body"  class="btn ajax btn-info" data-toggle="modal" data-target="#description"  onclick="empty_div()"><span class="glyphicon glyphicon-list-alt"></span></a><br>
 					</td>
@@ -165,7 +169,7 @@
 						<td class="col-md-4">
 
 							{{HTML::decode (Form::button('<span class="glyphicon glyphicon-edit"></span>', ['class' => 'btn btn-success table-actions allow-edit mode1', 'data-original-title' => 'Edit', 'data-placement' => 'top', 'data-toggle' => 'tooltip']))}}
-							{{Form::button('Save', ['class' => 'btn btn-success save-edit mode2'])}}
+							{{Form::button('Save', ['class' => 'btn btn-success save-edit mode2', 'id' => 'temp_alert'])}}
 							{{Form::button('Cancel', ['class' => 'btn btn-default cancel-edit mode2'])}}
 							<a href="replace/{{$section->id}}" title="Description" data-placement="top" data-method="post" data-replace="#description_body"  class="btn ajax btn-info" data-toggle="modal" data-target="#description"  onclick="empty_div()"><span class="glyphicon glyphicon-list-alt"></span></a><br>
 						</td>
@@ -236,7 +240,7 @@
 							<td class="col-md-4">
 
 								{{HTML::decode (Form::button('<span class="glyphicon glyphicon-edit"></span>', ['class' => 'btn btn-success table-actions allow-edit mode1', 'data-original-title' => 'Edit', 'data-placement' => 'top', 'data-toggle' => 'tooltip']))}}
-								{{Form::button('Save', ['class' => 'btn btn-success save-edit mode2'])}}
+								{{Form::button('Save', ['class' => 'btn btn-success save-edit mode2', 'id' => 'temp_alert'])}}
 								{{Form::button('Cancel', ['class' => 'btn btn-default cancel-edit mode2'])}}
 								<a href="replace/{{$section->id}}" title="Description" data-placement="top" data-method="post" data-replace="#description_body"  class="btn ajax btn-info" data-toggle="modal" data-target="#description"  onclick="empty_div()"><span class="glyphicon glyphicon-list-alt"></span></a><br>
 							</td>
@@ -311,7 +315,7 @@
 								<td class="col-md-4">
 
 									{{HTML::decode (Form::button('<span class="glyphicon glyphicon-edit"></span>', ['class' => 'btn btn-success table-actions allow-edit mode1', 'data-original-title' => 'Edit', 'data-placement' => 'top', 'data-toggle' => 'tooltip']))}}
-									{{Form::button('Save', ['class' => 'btn btn-success save-edit mode2'])}}
+									{{Form::button('Save', ['class' => 'btn btn-success save-edit mode2', 'id' => 'temp_alert'])}}
 									{{Form::button('Cancel', ['class' => 'btn btn-default cancel-edit mode2'])}}
 									<a href="replace/{{$section->id}}" title="Description" data-placement="top" data-method="post" data-replace="#description_body"  class="btn ajax btn-info" data-toggle="modal" data-target="#description"  onclick="empty_div()"><span class="glyphicon glyphicon-list-alt"></span></a><br>
 								</td>
@@ -322,12 +326,13 @@
 						</table>
 					</div>
 				</div>
+@stop 
 
+@section('footer')
+				{{ HTML::script('ios_overlay/js/iosOverlay.js') }}
+				{{ HTML::script('ios_overlay/js/prettify.js') }}
+				{{ HTML::script('ios_overlay/js/custom.js') }}
 
-
-				@stop 
-
-				@section('footer')
 				{{ HTML::script('js/bootstrap-ajax.js');}}
 				<script>
 				function empty_div()
@@ -358,10 +363,8 @@
 						current.text(text);
 						current.show();
 						textfield.parent().submit();
-		//document.getElementById("insert_1").innerHTML = "Please Wait. Changing Assigned Designation!";
-		//$(this).closest("tr").find(".mode1").innerHTML = "whatever";
-		$(this).closest("tr").find(".mode1").show();
-		$(this).closest("tr").find(".mode2").hide();
+						$(this).closest("tr").find(".mode1").show();
+						$(this).closest("tr").find(".mode2").hide();
 
 	});
 
