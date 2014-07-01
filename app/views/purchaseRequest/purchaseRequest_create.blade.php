@@ -113,11 +113,15 @@
 							<option value="">Please select</option>
 							@foreach($users as $key2)
 							{{{ $fullname = $key2->lastname . ", " . $key2->firstname }}}
-							<option value="{{ $key2->id }}" class="{{$key2->office_id}}"
-								<?php if(Input::old('requisitioner')==$key2->id)
-								echo "selected" ?>
-								>{{ $fullname }}
-							</option>
+							@if($key2->confirmed == 0)
+								continue;
+							@else
+								<option value="{{ $key2->id }}" class="{{$key2->office_id}}"
+									<?php if(Input::old('requisitioner')==$key2->id)
+									echo "selected" ?>
+									>{{ $fullname }}
+								</option>
+							@endif
 							@endforeach
 
 						</select>
