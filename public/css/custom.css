@@ -291,3 +291,11 @@ table.table td{
 }
 
 /*End Image Module Component*/
+
+.dropdown-menu .divider{
+	margin: 0;
+}
+
+.dropdown-menu>li>a{
+	padding: 9px 20px;
+}

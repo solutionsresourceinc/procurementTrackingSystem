@@ -66,7 +66,7 @@
 
         <?php
             $requests = new Purchase;
-            $requests = DB::table('purchase_request')->where('status', '=', 'Pending')->orWhere('status', '=', 'In progress')->get();
+            $requests = DB::table('purchase_request')->where('status', '=', 'New')->orWhere('status', '=', 'In progress')->get();
         ?>
 
       	<tbody>
@@ -75,8 +75,14 @@
                     <tr>
                         <td width="10%">{{ $request->controlNo; }}</td>
                         <td width="30%"><a data-toggle="tooltip" data-placement="top" class="purpose" href="{{ URL::to('purchaseRequest/vieweach/'. $request->id) }}" title="View Project Details">{{ $request->projectPurpose; }}</a></td>
-                        <td width="18%">{{ Workflow::find($request->modeOfProcurement)->workFlowName; }}</td>
-                        <td width="12%"><span class="label {{($request->status == 'Pending') ? 'label-primary':'label-success'}}">{{ $request->status; }}</span></td>
+                        <?php 
+                            $doc = new Purchase; 
+                            $doc = DB::table('document')->where('pr_id', $request->id)->get(); 
+                        ?>
+                        <td width="18%">
+                            @foreach ($doc as $docs) {{ Workflow::find($docs->work_id)->workFlowName; }} @endforeach
+                        </td>
+                        <td width="12%"><span class="label {{($request->status == 'New') ? 'label-primary':'label-success'}}">{{ $request->status; }}</span></td>
                         <td width="20%">{{ $request->created_at; }}</td>
                         <?php
                             if($adm->role_id == 3) {

@@ -13,7 +13,7 @@
 
 @section('content')		
 	<!-- put control number (id) here -->
-	<h2 class="pull-left"> {{ $purchase->ControlNo }} </h2>
+	<h2 class="pull-left"> {{ $purchase->controlNo }} </h2>
 
 	<!-- change urls when when purchase request functions are final -->
 	<div class="btn-group pull-right options">

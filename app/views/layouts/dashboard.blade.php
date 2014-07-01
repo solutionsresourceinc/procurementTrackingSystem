@@ -62,10 +62,41 @@
         <div class="collapse navbar-collapse navbar-ex1-collapse">
           <ul class="nav navbar-nav side-nav">
             <li class="{{Request::is('dashboard') ? 'active':''}}"><a href="/"><!--i class="fa fa-dashboard"></i--> Dashboard</a></li>
-            <li class="dropdown active-nav">
+            <li class="{{Request::is('purchaseRequest/view') ? 'active':''}}">
+                <a href="/purchaseRequest/view">
+                    Active Purchase Requests
+                    <span class="badge pull-right">
+                        {{DB::table('purchase_request')->where('status', '=', 'New')->orWhere('status', '=', 'In progress')->count()}}
+                    </span>
+                </a>
+            </li>
+            <li class="{{Request::is('purchaseRequest/closed') ? 'active':''}}">
+                <a href="/purchaseRequest/closed">
+                    Closed Purchase Requests
+                    <span class="badge pull-right">
+                        {{DB::table('purchase_request')->where('status', '=', 'Closed')->count()}}
+                    </span></a>
+            </li>
+            <li class="{{Request::is('purchaseRequest/overdue') ? 'active':''}}">
+                <a href="/purchaseRequest/overdue">
+                    Overdue Purchase Requests
+                    <span class="badge pull-right">
+                        {{DB::table('purchase_request')->where('status', '=', 'Overdue')->count()}}
+                    </span>
+                </a>
+            </li>
+            <li class="{{Request::is('task/active') ? 'active':''}}">
+                <a href="/task/active">Active Tasks<span class="badge pull-right">10</span></a>
+            </li>
+            <li class="{{Request::is('task/overdue') ? 'active':''}}">
+                <a href="/task/overdue">Overdue Tasks<span class="badge pull-right">10</span></a>
+            </li>
+            <li>{{ link_to('/workflow/belowFifty', 'Below P50,000') }}</li>
+            <li>{{ link_to('/workflow/aboveFifty', 'Between P50,000 and P500,000') }}</li>
+            <li>{{ link_to('/workflow/aboveFive', 'Above P500,000') }}</li>
+            <!--li class="dropdown active-nav">
                 <a href="#" class="dropdown {{(Request::is('purchaseRequest/view') || Request::is('purchaseRequest/closed') || Request::is('purchaseRequest/overdue')) ? 'active' : ''}}" data-toggle="dropdown">Purchase Requests <b class="caret pull-right"></b></a>
                 <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
-                    <!--Purchase Request Views-->
                     <?php
                         $adm = Assigned::where('user_id', Auth::User()->id)->first();
                         $requests = new Purchase;
@@ -74,7 +105,7 @@
                         <a href="/purchaseRequest/view">
                             Active Purchase Requests
                             <span class="badge pull-right">
-                                {{DB::table('purchase_request')->where('status', '=', 'Pending')->orWhere('status', '=', 'In progress')->count()}}
+                                {{DB::table('purchase_request')->where('status', '=', 'New')->orWhere('status', '=', 'In progress')->count()}}
                             </span>
                         </a>
                     </li>
@@ -100,7 +131,6 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown {{(Request::is('task/overdue') || Request::is('task/active')) ? 'active' : ''}}" data-toggle="dropdown">Tasks <b class="caret pull-right"></b></a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
-                        <!--Purchase Request Views-->
                         <li class="{{Request::is('task/active') ? 'active':''}}">
                             <a href="/task/active">Active Tasks<span class="badge pull-right">10</span></a>
                         </li>
@@ -109,9 +139,10 @@
                         </li>
                     </ul>
                 </li>
-            @endif
+            @endif-->
 
-            @if( Entrust::hasRole('Administrator') )
+            <!-- Administration section -->
+            <!--@if( Entrust::hasRole('Administrator') )
                 <li class="dropdown">
                     <a href="#" class="dropdown {{(Request::is('workflow/belowFifty') || Request::is('workflow/belowFifty') || Request::is('workflow/aboveFive')) ? 'active' : ''}}" data-toggle="dropdown">Workflow <b class="caret pull-right"></b></a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
@@ -128,10 +159,22 @@
                         <li class="{{Request::is('designation') ? 'active':''}}">{{ link_to('/designation', 'Designations') }}</li>
                     </ul>
                 </li>
-            @endif
+            @endif-->
           </ul>
 
           <ul class="nav navbar-nav navbar-right navbar-user">
+            @if( Entrust::hasRole('Administrator') )
+            <li class="dropdown user-dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Administration  <b class="caret" style="margin-top: 0;"></b></a>
+                <ul class="dropdown-menu">
+                    <li>{{ link_to('/user/view', 'Users') }}</li>
+                    <li class="divider"></li>
+                    <li>{{ link_to('/offices', 'Offices') }}</li>
+                    <li class="divider"></li>
+                    <li>{{ link_to('/designation', 'Designations') }}</li>
+                </ul>
+            </li>
+            @endif
             <li class="dropdown user-dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> {{Auth::user()->firstname}}  <b class="caret" style="margin-top: 0;"></b></a>
                 <ul class="dropdown-menu">
@@ -166,7 +209,7 @@
         $(document).ready(function(){ 
             $('.btn').tooltip(); 
             $('.purpose').tooltip(); 
-            $('.navbar .active-nav').click(function() {
+            /*.navbar .active-nav').click(function() {
                 $(this).find('.dropdown-menu').first().stop(true, true).delay(250).slideDown();
             }, function() {
                 $(this).find('.dropdown-menu').first().stop(true, true).delay(100).slideDown()
@@ -180,7 +223,12 @@
                 $(this).find('.dropdown-menu').first().stop(true, true).delay(250).slideDown();
             }, function() {
                 $(this).find('.dropdown-menu').first().stop(true, true).delay(100).slideDown()
-            });
+            });*/
+        $('.navbar .dropdown').hover(function() {
+    $(this).find('.dropdown-menu').first().stop(true, true).slideDown();
+}, function() {
+    $(this).find('.dropdown-menu').first().stop(true, true).slideUp();
+});
         });
     </script>
     @yield('footer')
