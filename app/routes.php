@@ -106,6 +106,20 @@ Route::post( 'purchaseRequest/delete', function()
 	$id=Input::get('del_pr');
 	Purchase::where('id',$id)->delete();
 	
+//Attachment Deletion 
+	$document=Document::where('pr_id', $id)->first();
+	$attach = Attachments::where('doc_id', $document->id)->get();
+
+	foreach ($attach as $attachs) {
+		$attachs->delete();
+	}
+Document::where('pr_id', $id )->delete();
+$notice="Purchase Request successfully deleted.";
+Redirect::back()->with( 'notice', $notice );
+//End Attachment Deletion 
+
+
+
 	Session::flash('message','Successfully deleted the user.');
 	return Redirect::to('purchaseRequest/view');
 });
@@ -153,7 +167,7 @@ Route::post('workflow/replace/{id}', function($id)
 	// If you had a database you could easily fetch the content from the database here...
 
 	$data = array(
-		"html" => "<div id='description_body'>  $desc->taskName </h6> </p></div>"
+		"html" => "<div id='description_body'>  $desc->description </h6> </p></div>"
 	);
 	
 	return Response::json($data);
@@ -231,7 +245,6 @@ Route::post('workflow/submit/{id}', function()
 
 //Image Module Components
 
-
 Route::post('addimage', ['uses' => 'purchaseRequestController@addimage']);
 Route::post('delimage', function()
 {
@@ -242,3 +255,8 @@ $notice="Attachment successfully deleted.";
 });
 
 // End Image Module
+
+//Test Route
+Route::get('test', function(){
+	return View::make('test');
+});

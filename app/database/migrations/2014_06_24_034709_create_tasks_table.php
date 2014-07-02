@@ -24,6 +24,7 @@ class CreateTasksTable extends Migration {
 			$table->integer('section_id')->references('id')->on('section')->onDelete('cascade');
 			$table->integer('designation_id')->references('id')->on('designation')->onDelete('cascade');
 			$table->integer('order_id')->unsigned();
+			$table->string('description', 255);
 		});
 	}
 

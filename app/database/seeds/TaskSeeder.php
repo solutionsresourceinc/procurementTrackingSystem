@@ -14,6 +14,7 @@ class TaskSeeder extends Seeder {
         $task->taskType = '1';
         $task->maxDuration = '3';
         $task->order_id = '1';
+        $task->description = 'This is a task description';
         $task->save();
 
         $task = new Task;
@@ -23,6 +24,7 @@ class TaskSeeder extends Seeder {
         $task->taskType = '0';
         $task->maxDuration = '3';
         $task->order_id = '2';
+        $task->description = 'This is a task description';
         $task->save();
 
         $task = new Task;
@@ -32,6 +34,7 @@ class TaskSeeder extends Seeder {
         $task->taskType = '0';
         $task->maxDuration = '3';
         $task->order_id = '3';
+        $task->description = 'This is a task description';
         $task->save();
 
         $task = new Task;
@@ -41,6 +44,7 @@ class TaskSeeder extends Seeder {
         $task->taskType = '0';
         $task->maxDuration = '3';
         $task->order_id = '4';
+        $task->description = 'This is a task description';
         $task->save();
 
         $task = new Task;
@@ -50,6 +54,7 @@ class TaskSeeder extends Seeder {
         $task->taskType = '0';
         $task->maxDuration = '3';
         $task->order_id = '5';
+        $task->description = 'This is a task description';
         $task->save();
 
         $task = new Task;
@@ -59,6 +64,7 @@ class TaskSeeder extends Seeder {
         $task->taskType = '0';
         $task->maxDuration = '3';
         $task->order_id = '6';
+        $task->description = 'This is a task description';
         $task->save();
 
 
@@ -70,6 +76,7 @@ class TaskSeeder extends Seeder {
         $task->taskType = '0';
         $task->maxDuration = '3';
         $task->order_id = '1';
+        $task->description = 'This is a task description';
         $task->save();
 
         $task = new Task;
@@ -79,6 +86,7 @@ class TaskSeeder extends Seeder {
         $task->taskType = '0';
         $task->maxDuration = '3';
         $task->order_id = '2';
+        $task->description = 'This is a task description';
         $task->save();
 
         // WORKFLOW 1 | SECTION 3
@@ -89,6 +97,7 @@ class TaskSeeder extends Seeder {
         $task->taskType = '0';
         $task->maxDuration = '3';
         $task->order_id = '1';
+        $task->description = 'This is a task description';
         $task->save();
 
         $task = new Task;
@@ -98,6 +107,7 @@ class TaskSeeder extends Seeder {
         $task->taskType = '0';
         $task->maxDuration = '3';
         $task->order_id = '2';
+        $task->description = 'This is a task description';
         $task->save();
 
         $task = new Task;
@@ -107,6 +117,7 @@ class TaskSeeder extends Seeder {
         $task->taskType = '0';
         $task->maxDuration = '3';
         $task->order_id = '3';
+        $task->description = 'This is a task description';
         $task->save();
 
         $task = new Task;
@@ -116,6 +127,7 @@ class TaskSeeder extends Seeder {
         $task->taskType = '0';
         $task->maxDuration = '3';
         $task->order_id = '4';
+        $task->description = 'This is a task description';
         $task->save();
 
         $task = new Task;
@@ -125,6 +137,7 @@ class TaskSeeder extends Seeder {
         $task->taskType = '0';
         $task->maxDuration = '3';
         $task->order_id = '5';
+        $task->description = 'This is a task description';
         $task->save();
 
         // WORKFLOW 1 | SECTION 4
@@ -135,6 +148,7 @@ class TaskSeeder extends Seeder {
         $task->taskType = '0';
         $task->maxDuration = '3';
         $task->order_id = '1';
+        $task->description = 'This is a task description';
         $task->save();
 
         $task = new Task;
@@ -144,6 +158,7 @@ class TaskSeeder extends Seeder {
         $task->taskType = '0';
         $task->maxDuration = '3';
         $task->order_id = '2';
+        $task->description = 'This is a task description';
         $task->save();
 
         $task = new Task;
@@ -153,6 +168,7 @@ class TaskSeeder extends Seeder {
         $task->taskType = '0';
         $task->maxDuration = '3';
         $task->order_id = '3';
+        $task->description = 'This is a task description';
         $task->save();
 
         $task = new Task;
@@ -162,6 +178,7 @@ class TaskSeeder extends Seeder {
         $task->taskType = '0';
         $task->maxDuration = '3';
         $task->order_id = '4';
+        $task->description = 'This is a task description';
         $task->save();
 
         $task = new Task;
@@ -171,6 +188,7 @@ class TaskSeeder extends Seeder {
         $task->taskType = '0';
         $task->maxDuration = '3';
         $task->order_id = '5';
+        $task->description = 'This is a task description';
         $task->save();
 
         //WORKFLOW 2 | SECTION 1 <-- ABOVE 50,000 BELOW 500,000
@@ -182,6 +200,7 @@ class TaskSeeder extends Seeder {
         $task->taskType = '1';
         $task->maxDuration = '3';
         $task->order_id = '1';
+        $task->description = 'This is a task description';
         $task->save();
 
         $task = new Task;
@@ -191,6 +210,7 @@ class TaskSeeder extends Seeder {
         $task->taskType = '0';
         $task->maxDuration = '3';
         $task->order_id = '2';
+        $task->description = 'This is a task description';
         $task->save();
 
         $task = new Task;
@@ -200,6 +220,7 @@ class TaskSeeder extends Seeder {
         $task->taskType = '0';
         $task->maxDuration = '3';
         $task->order_id = '3';
+        $task->description = 'This is a task description';
         $task->save();
 
         $task = new Task;
@@ -209,6 +230,7 @@ class TaskSeeder extends Seeder {
         $task->taskType = '0';
         $task->maxDuration = '3';
         $task->order_id = '4';
+        $task->description = 'This is a task description';
         $task->save();
 
         $task = new Task;
@@ -218,6 +240,7 @@ class TaskSeeder extends Seeder {
         $task->taskType = '0';
         $task->maxDuration = '3';
         $task->order_id = '5';
+        $task->description = 'This is a task description';
         $task->save();
 
         $task = new Task;
@@ -227,6 +250,7 @@ class TaskSeeder extends Seeder {
         $task->taskType = '0';
         $task->maxDuration = '3';
         $task->order_id = '6';
+        $task->description = 'This is a task description';
         $task->save();
 
         //WORKFLOW 2 | SECTION 2 ====================================================================================================================================================
@@ -237,6 +261,7 @@ class TaskSeeder extends Seeder {
         $task->taskType = '0';
         $task->maxDuration = '3';
         $task->order_id = '1';
+        $task->description = 'This is a task description';
         $task->save();
 
         $task = new Task;
@@ -246,6 +271,7 @@ class TaskSeeder extends Seeder {
         $task->taskType = '0';
         $task->maxDuration = '3';
         $task->order_id = '2';
+        $task->description = 'This is a task description';
         $task->save();
 
         $task = new Task;
@@ -255,6 +281,7 @@ class TaskSeeder extends Seeder {
         $task->taskType = '0';
         $task->maxDuration = '3';
         $task->order_id = '3';
+        $task->description = 'This is a task description';
         $task->save();
 
         $task = new Task;
@@ -264,6 +291,7 @@ class TaskSeeder extends Seeder {
         $task->taskType = '0';
         $task->maxDuration = '3';
         $task->order_id = '4';
+        $task->description = 'This is a task description';
         $task->save();
 
         $task = new Task;
@@ -273,6 +301,7 @@ class TaskSeeder extends Seeder {
         $task->taskType = '0';
         $task->maxDuration = '3';
         $task->order_id = '5';
+        $task->description = 'This is a task description';
         $task->save();
 
         //WORKFLOW 2 | SECTION 3
@@ -283,6 +312,7 @@ class TaskSeeder extends Seeder {
         $task->taskType = '0';
         $task->maxDuration = '3';
         $task->order_id = '1';
+        $task->description = 'This is a task description';
         $task->save();
 
         $task = new Task;
@@ -292,6 +322,7 @@ class TaskSeeder extends Seeder {
         $task->taskType = '0';
         $task->maxDuration = '3';
         $task->order_id = '2';
+        $task->description = 'This is a task description';
         $task->save();
 
         $task = new Task;
@@ -301,6 +332,7 @@ class TaskSeeder extends Seeder {
         $task->taskType = '0';
         $task->maxDuration = '3';
         $task->order_id = '3';
+        $task->description = 'This is a task description';
         $task->save();
 
         $task = new Task;
@@ -310,6 +342,7 @@ class TaskSeeder extends Seeder {
         $task->taskType = '0';
         $task->maxDuration = '3';
         $task->order_id = '4';
+        $task->description = 'This is a task description';
         $task->save();
 
         $task = new Task;
@@ -319,6 +352,7 @@ class TaskSeeder extends Seeder {
         $task->taskType = '0';
         $task->maxDuration = '3';
         $task->order_id = '5';
+        $task->description = 'This is a task description';
         $task->save();
 
         //WORKFLOW 2 | SECTION 4
@@ -329,6 +363,7 @@ class TaskSeeder extends Seeder {
         $task->taskType = '0';
         $task->maxDuration = '3';
         $task->order_id = '1';
+        $task->description = 'This is a task description';
         $task->save();
 
         $task = new Task;
@@ -338,6 +373,7 @@ class TaskSeeder extends Seeder {
         $task->taskType = '0';
         $task->maxDuration = '3';
         $task->order_id = '2';
+        $task->description = 'This is a task description';
         $task->save();
 
         $task = new Task;
@@ -347,6 +383,7 @@ class TaskSeeder extends Seeder {
         $task->taskType = '0';
         $task->maxDuration = '3';
         $task->order_id = '3';
+        $task->description = 'This is a task description';
         $task->save();
 
         $task = new Task;
@@ -356,6 +393,7 @@ class TaskSeeder extends Seeder {
         $task->taskType = '0';
         $task->maxDuration = '3';
         $task->order_id = '4';
+        $task->description = 'This is a task description';
         $task->save();
 
         $task = new Task;
@@ -365,6 +403,7 @@ class TaskSeeder extends Seeder {
         $task->taskType = '0';
         $task->maxDuration = '3';
         $task->order_id = '5';
+        $task->description = 'This is a task description';
         $task->save();
 
         //WORKFLOW 3 | SECTION 1 <-- ABOVE 500,000
@@ -375,6 +414,7 @@ class TaskSeeder extends Seeder {
         $task->taskType = '0';
         $task->maxDuration = '3';
         $task->order_id = '1';
+        $task->description = 'This is a task description';
         $task->save();
 
         $task = new Task;
@@ -384,6 +424,7 @@ class TaskSeeder extends Seeder {
         $task->taskType = '0';
         $task->maxDuration = '3';
         $task->order_id = '2';
+        $task->description = 'This is a task description';
         $task->save();
 
         $task = new Task;
@@ -393,6 +434,7 @@ class TaskSeeder extends Seeder {
         $task->taskType = '0';
         $task->maxDuration = '3';
         $task->order_id = '3';
+        $task->description = 'This is a task description';
         $task->save();
 
         $task = new Task;
@@ -402,6 +444,7 @@ class TaskSeeder extends Seeder {
         $task->taskType = '0';
         $task->maxDuration = '3';
         $task->order_id = '4';
+        $task->description = 'This is a task description';
         $task->save();
 
         $task = new Task;
@@ -411,6 +454,7 @@ class TaskSeeder extends Seeder {
         $task->taskType = '0';
         $task->maxDuration = '3';
         $task->order_id = '5';
+        $task->description = 'This is a task description';
         $task->save();
 
         //WORKFLOW 3 | SECTION 2
@@ -421,6 +465,7 @@ class TaskSeeder extends Seeder {
         $task->taskType = '0';
         $task->maxDuration = '3';
         $task->order_id = '1';
+        $task->description = 'This is a task description';
         $task->save();
 
         $task = new Task;
@@ -430,6 +475,7 @@ class TaskSeeder extends Seeder {
         $task->taskType = '0';
         $task->maxDuration = '3';
         $task->order_id = '2';
+        $task->description = 'This is a task description';
         $task->save();
 
         $task = new Task;
@@ -439,6 +485,7 @@ class TaskSeeder extends Seeder {
         $task->taskType = '0';
         $task->maxDuration = '3';
         $task->order_id = '3';
+        $task->description = 'This is a task description';
         $task->save();
 
        	$task = new Task;
@@ -448,6 +495,7 @@ class TaskSeeder extends Seeder {
         $task->taskType = '0';
         $task->maxDuration = '3';
         $task->order_id = '4';
+        $task->description = 'This is a task description';
         $task->save();
 
         $task = new Task;
@@ -457,6 +505,7 @@ class TaskSeeder extends Seeder {
         $task->taskType = '0';
         $task->maxDuration = '3';
         $task->order_id = '5';
+        $task->description = 'This is a task description';
         $task->save();
 
         $task = new Task;
@@ -466,6 +515,7 @@ class TaskSeeder extends Seeder {
         $task->taskType = '0';
         $task->maxDuration = '3';
         $task->order_id = '6';
+        $task->description = 'This is a task description';
         $task->save();
 
         $task = new Task;
@@ -475,6 +525,7 @@ class TaskSeeder extends Seeder {
         $task->taskType = '0';
         $task->maxDuration = '3';
         $task->order_id = '7';
+        $task->description = 'This is a task description';
         $task->save();
 
         $task = new Task;
@@ -484,6 +535,7 @@ class TaskSeeder extends Seeder {
         $task->taskType = '0';
         $task->maxDuration = '3';
         $task->order_id = '8';
+        $task->description = 'This is a task description';
         $task->save();
     	
     	$task = new Task;
@@ -493,6 +545,7 @@ class TaskSeeder extends Seeder {
         $task->taskType = '0';
         $task->maxDuration = '3';
         $task->order_id = '9';
+        $task->description = 'This is a task description';
         $task->save();
 
         //WORKFLOW 3 | SECTION 3
@@ -503,6 +556,7 @@ class TaskSeeder extends Seeder {
         $task->taskType = '0';
         $task->maxDuration = '3';
         $task->order_id = '1';
+        $task->description = 'This is a task description';
         $task->save();
 
         $task = new Task;
@@ -512,6 +566,7 @@ class TaskSeeder extends Seeder {
         $task->taskType = '0';
         $task->maxDuration = '3';
         $task->order_id = '2';
+        $task->description = 'This is a task description';
         $task->save();
 
         $task = new Task;
@@ -521,6 +576,7 @@ class TaskSeeder extends Seeder {
         $task->taskType = '0';
         $task->maxDuration = '3';
         $task->order_id = '3';
+        $task->description = 'This is a task description';
         $task->save();
 
         $task = new Task;
@@ -530,6 +586,7 @@ class TaskSeeder extends Seeder {
         $task->taskType = '0';
         $task->maxDuration = '3';
         $task->order_id = '4';
+        $task->description = 'This is a task description';
         $task->save();
 
         //WORKFLOW 3 | SECTION 4
@@ -540,6 +597,7 @@ class TaskSeeder extends Seeder {
         $task->taskType = '0';
         $task->maxDuration = '3';
         $task->order_id = '1';
+        $task->description = 'This is a task description';
         $task->save();
 
         $task = new Task;
@@ -549,6 +607,7 @@ class TaskSeeder extends Seeder {
         $task->taskType = '0';
         $task->maxDuration = '3';
         $task->order_id = '2';
+        $task->description = 'This is a task description';
         $task->save();
 
         $task = new Task;
@@ -558,6 +617,7 @@ class TaskSeeder extends Seeder {
         $task->taskType = '0';
         $task->maxDuration = '3';
         $task->order_id = '3';
+        $task->description = 'This is a task description';
         $task->save();
 
         $task = new Task;
@@ -567,6 +627,7 @@ class TaskSeeder extends Seeder {
         $task->taskType = '0';
         $task->maxDuration = '3';
         $task->order_id = '4';
+        $task->description = 'This is a task description';
         $task->save();
 
         $task = new Task;
@@ -576,6 +637,7 @@ class TaskSeeder extends Seeder {
         $task->taskType = '0';
         $task->maxDuration = '3';
         $task->order_id = '5';
+        $task->description = 'This is a task description';
         $task->save();
 
         $task = new Task;
@@ -585,6 +647,7 @@ class TaskSeeder extends Seeder {
         $task->taskType = '0';
         $task->maxDuration = '3';
         $task->order_id = '6';
+        $task->description = 'This is a task description';
         $task->save();
 
         $task = new Task;
@@ -594,6 +657,7 @@ class TaskSeeder extends Seeder {
         $task->taskType = '0';
         $task->maxDuration = '3';
         $task->order_id = '7';
+        $task->description = 'This is a task description';
         $task->save();
     }
 }

@@ -142,15 +142,19 @@ $valamount=$epurchase->amount;
                             ?>
                             <option value="">Please select</option>
                             @foreach($users as $key2)
-                            {{{ $fullname = $key2->lastname . ", " . $key2->firstname }}}
-                            <option value="{{ $key2->id }}" class="{{$key2->office_id}}"
-                                <?php 
-                                      if (Input::old('requisitioner')==$key2->id)
-                                      echo "selected";
-                                  else if($epurchase->requisitioner==$key2->id)
-                                echo "selected" ?>
-                                >{{ $fullname }}
-                            </option>
+                                {{{ $fullname = $key2->lastname . ", " . $key2->firstname }}}
+                                @if($key2->confirmed == 0)
+                                    continue;
+                                @else
+                                <option value="{{ $key2->id }}" class="{{$key2->office_id}}"
+                                    <?php 
+                                          if (Input::old('requisitioner')==$key2->id)
+                                          echo "selected";
+                                      else if($epurchase->requisitioner==$key2->id)
+                                    echo "selected" ?>
+                                    >{{ $fullname }}
+                                </option>
+                                @endif
                             @endforeach
 
                         </select>
@@ -210,7 +214,7 @@ $valamount=$epurchase->amount;
 
                         <div><br>
                             {{ Form::submit('Save',array('class'=>'btn btn-success')) }}
-                            {{ link_to( 'purchaseRequest/view', 'Cancel Create', array('class'=>'btn btn-default') ) }}
+                            {{ link_to( 'purchaseRequest/view', 'Cancel', array('class'=>'btn btn-default') ) }}
 
                         </div>
                     </div>
@@ -239,22 +243,14 @@ Image Module
                     @endif
 
 <br>
-<?php
 
-$id = 0;
-$purchase = Purchase::orderBy('id', 'ASC')->get(); ?>
-@foreach ($purchase as $purchases) 
-<?php   $id = $purchases->id; ?>
-@endforeach
 
 <?php
-$doc_id = 0;
-    $document = Document::orderBy('id', 'ASC')->get();
+
+    $document = Document::where('pr_id', $epurchase->id)->first();
+    $doc_id= $document->id;
 ?>
-@foreach ($document as $docs) 
-<?php   $doc_id = $docs->id; ?>
-@endforeach
-<?php $doc_id=$doc_id+1; ?>
+
 {{ Form::open(array('url' => 'addimage', 'files' => true)) }}
 
 <input name="file[]" type="file"  multiple/>
