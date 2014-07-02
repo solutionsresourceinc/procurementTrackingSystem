@@ -198,7 +198,7 @@ $valamount=$epurchase->amount;
                         <div class="form-group">
                             {{ Form::label('dateTime', 'Date Requested *', array('class' => 'create-label')) }}
                             <div class="input-group date form_datetime col-md-12" data-date="{{ date('Y-m-d') }}T{{ date('H:i:s') }}Z" data-date-format="dd MM yyyy - HH:ii p" data-link-field="dtp_input1">
-                                <input class="form-control" size="16" type="text" value="<?php
+                                <input id="disabled_datetime" onchange="fix_format()" class="form-control" size="16" type="text" value="<?php
                             if (NULL!=Input::old('dateRequested'))
                                 echo Input::old('dateRequested');
                                 else
@@ -403,6 +403,13 @@ else
                 maxView: 1,
                 forceParse: 0
             });
+
+function fix_format()
+{
+    document.getElementById('disabled_datetime').value = document.getElementById('dtp_input1').value;
+}
+
+
             </script>
 
             <!-- js for chained dropdown -->
