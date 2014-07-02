@@ -251,7 +251,7 @@ class PurchaseRequestController extends Controller {
 public function addimage(){
 foreach(Input::file('file') as $file){
             $rules = array(
-                'file' => 'required|mimes:png,gif,jpeg|max:20000000'
+                'file' => 'required|mimes:png,gif,jpeg|max:900000000'
                 );
             $validator = \Validator::make(array('file'=> $file), $rules);
             $destine=public_path()."/uploads";

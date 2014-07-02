@@ -276,10 +276,10 @@ Image Module
             @foreach ($attachments as $attachment) 
     <div class="image-container">
                     <a href="{{asset('uploads/'.$attachment->data)}}" data-lightbox="roadtrip">
-                <img class="img-thumbnail" src="{{asset('uploads/'.$attachment->data)}}" style="width: 200px; height: 200px;" /></a>
+                <img class="img-thumbnail" src="{{asset('uploads/'.$attachment->data)}}" style="width: 70px; height: 70px;" /></a>
 {{ Form::open(array('method' => 'post', 'url' => 'delimage')) }}
 <input type="hidden" name="hide" value="{{$attachment->id}}">
-  <button><img height="10%" width="10%" class="star-button " src="{{asset('img/Delete_Icon.png')}}"></button>
+  <button ><img height="10%" width="10%" class="star-button " src="{{asset('img/Delete_Icon.png')}}"></button>
 {{Form::close()}}
 </div>
 
