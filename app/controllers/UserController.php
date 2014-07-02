@@ -138,7 +138,71 @@ class UserController extends BaseController {
         }
     }
 
+    public function editprof()
+    {
+        $id=Auth::user()->id;
+        $user = User::find($id);
 
+        $user->email = Input::get('email');
+        $password = " ".Input::get( 'password' );
+
+        $passnotchange=0;
+        $errorcheck=0;
+
+        if($password==" ")
+            $passnotchange=1;
+        else
+        {
+            $password = substr($password, 1);
+            $user->password = Hash::make($password);
+        }
+
+        if(filter_var($user->email, FILTER_VALIDATE_EMAIL)){}
+        else
+        {
+            $errorcheck=1;
+            Session::put('email_error', 'Invalid email.');
+        }
+
+        if($passnotchange==0){}
+        elseif(ctype_alnum($password)&&(strlen($password)>=6))
+        {
+            if ($password!=$user->password_confirmation)
+            {
+                $errorcheck=1;
+                Session::put('password_error', 'Password did not match with confirm password.');
+            }
+        }
+        else
+        {
+            $errorcheck=1;
+            Session::put('password_error', 'Invalid password.');
+        }
+
+        if($errorcheck==1)
+        {
+            Session::put('msg', 'Failed to edit user.');
+            return Redirect::back()->withInput();
+        }
+        else
+        {
+            $roles=input::get('role');
+            if($roles=="3")
+                $role=1;
+            elseif($roles=="2")
+                $role=2;
+            else
+                $role=3;
+                    
+            DB::table('assigned_roles')->where('user_id', $id)->update(array( 'role_id' => $role));
+
+            DB::table('users')->where('id', $id)->update(array( 'email' => $user->email, 'password' => $user->password, 'office_id' => $user->office_id,));
+            
+            $notice = "Successfully edited profile. ";         
+            // Redirect with success message, You may replace "Lang::get(..." for your custom message.
+            return Redirect::action('UserController@viewUser')->with( 'notice', $notice );
+        }
+    }
 
     public function edit()
     {

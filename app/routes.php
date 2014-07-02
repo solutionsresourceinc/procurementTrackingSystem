@@ -31,12 +31,17 @@ Route::get( 'user/reset_password/{token}', 'UserController@reset_password');
 Route::post('user/forgot_password',        'UserController@do_forgot_password');
 Route::post('user/reset_password',         'UserController@do_reset_password');
 Route::post('user/edit/{id}',[ 'uses' => 'UserController@edit']);
+Route::post('user/editprof/{id}',[ 'uses' => 'UserController@editprof']);
 Route::post('user',                        'UserController@store');
 Route::get( 'user/edit/{id}', function($id)
 {
 	return View::make('useredit')->with('id',$id);
 });
 
+Route::get('user/editprof/{id}', function($id)
+{
+	return View::make('user.editprofile')->with('id',$id);
+});
 Route::post( 'user/delete', function()
 {
 	$errors="Account Deactivated.";

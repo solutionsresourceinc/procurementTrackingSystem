@@ -134,7 +134,7 @@
             <li class="dropdown user-dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> {{Auth::user()->firstname}}  <b class="caret" style="margin-top: 0;"></b></a>
                 <ul class="dropdown-menu">
-                    <li><a href="#"><i class="fa fa-user"></i> Edit Profile</a></li>
+                    <li><a href="/user/editprof/{{{ Auth::user()->id }}}"><i class="fa fa-user"></i> Edit Profile</a></li>
                     <li class="divider"></li>
                     <li>
                         <a href="/logout"><i class="fa fa-power-off"></i> Log Out</a>
