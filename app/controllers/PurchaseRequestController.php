@@ -138,8 +138,10 @@ class PurchaseRequestController extends Controller {
 	public function vieweach($id)
 	{
 		$purchase = Purchase::find($id);
+		$wfName = DB::table('document')->where('pr_id',$id)->first();
+		
 		return View::make('purchaseRequest.purchaseRequest_view')
-		->with('purchase', $purchase);
+		->with('purchase', $purchase)->with('wfName',$wfName);
 		//return $purchase;
 	}
 
