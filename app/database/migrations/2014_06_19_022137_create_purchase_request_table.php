@@ -17,7 +17,7 @@ class CreatePurchaseRequestTable extends Migration {
 			$table->increments('id');
 			$table->string('projectPurpose', 255);
 			$table->string('sourceOfFund', 255);
-			$table->string('amount', 255);
+			$table->string('amount', 45);
 			$table->string('controlNo', 255);
 			$table->string('status', 255);
 			$table->integer('requisitioner')->references('id')->on('users')->onDelete('cascade');

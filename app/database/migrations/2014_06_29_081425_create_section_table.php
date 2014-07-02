@@ -15,7 +15,7 @@ class CreateSectionTable extends Migration {
 		Schema::create('section', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->string('sectionName', 255);
+			$table->string('sectionName', 100);
 			$table->integer('workflow_id')->references('id')->on('workflow')->onDelete('cascade');
 			$table->integer('section_order_id')->unsigned();
 

@@ -27,4 +27,9 @@ class Task extends Eloquent{
 	{
   		return $this->belongsTo('Designation');
 	}
+
+	public function taskDetails() //INVERSE OF RELATIONSHIP
+	{
+  		return $this->belongsTo('taskDetails');
+	}
 }
