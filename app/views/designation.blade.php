@@ -3,17 +3,21 @@
 @section('content')
     <h1 class="page-header">Designations</h1>
 
-	@if(Session::get('success'))
-		<div class="alert alert-success"> {{ Session::get('success') }}</div> 
-	@endif
+	<div id="message">
+		@if(Session::get('success'))
+			<div class="alert alert-success"> {{ Session::get('success') }}</div> 
+		@endif
 
-	@if(Session::get('success_members'))
-		<div class="alert alert-success"> {{ Session::get('success_members') }}</div> 
-	@endif
+		@if(Session::get('success_members'))
+			<div class="alert alert-success"> {{ Session::get('success_members') }}</div> 
+		@endif
 
-	@if(Session::get('invalid'))
-		<div class="alert alert-danger"> {{ Session::get('invalid') }}</div> 
+		@if(Session::get('invalid'))
+			<div class="alert alert-danger"> {{ Session::get('invalid') }}</div> 
 	@endif
+	</div>
+
+	<div id="other_message"></div> 
 
 	@if(Session::get('duplicate-error'))
 		<div class="alert alert-danger"> {{ Session::get('duplicate-error') }}</div> 
@@ -57,11 +61,13 @@
 	    			@foreach($designations as $designation)
 			    		<tr>
 			    			<td class="col-md-8">
-			    				<span class="current-text mode1">
-			    					{{  $designation->designation }}
-			    				</span>
-			    				{{ Form::open(['url' => "designation/$designation->id/edit", 'class' => 'form-inline', 'role' => 'form']) }}
-									<input type = "text" name = "dsgntn-name" class = "edit-text form-control mode2"/>
+			    				<div id="display_{{$designation->id}}">
+				    				<span class="current-text mode1">
+				    					{{  $designation->designation }}
+				    				</span>
+				    			</div>
+			    				<form class="form ajax" action="designation/{{$designation->id}}/edit" method="post" role="form" class="form-inline">
+			    					<input type = "text" name = "dsgntn-name" class = "edit-text form-control mode2"/>
 								{{ Form::close() }}
 			    			</td>
 			    			<td class="col-md-4">
@@ -110,6 +116,7 @@
 @stop
 
 @section('footer')
+	{{ HTML::script('js/bootstrap-ajax.js');}}
 	<script type = "text/javascript">
 		$(document).ready(function() {
 			$(".mode2").hide();
@@ -119,7 +126,7 @@
 				var text = current.text().trim();
 				current.hide();
 				textfield.val(text);
-				textfield.attr({"placeholder": text, "value": text}).show().focus();
+				//textfield.attr({"placeholder": text, "value": text}).show().focus();
 				$(this).closest("tr").find(".mode1").hide();
 				$(this).closest("tr").find(".mode2").show();
 			});

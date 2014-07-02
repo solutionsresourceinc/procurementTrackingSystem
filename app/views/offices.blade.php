@@ -3,13 +3,15 @@
 @section('content')
     <h1 class="page-header">Offices</h1>
 
-	@if(Session::get('success'))
-		<div class="alert alert-success"> {{ Session::get('success') }}</div> 
-	@endif
+    <div id="message">
+		@if(Session::get('success'))
+			<div class="alert alert-success"> {{ Session::get('success') }}</div> 
+		@endif
 
-	@if(Session::get('invalid'))
-		<div class="alert alert-danger"> {{ Session::get('invalid') }}</div> 
-	@endif
+		@if(Session::get('invalid'))
+			<div class="alert alert-danger"> {{ Session::get('invalid') }}</div> 
+		@endif
+	</div>
 
 	<div id="other_message"></div> 
 
@@ -54,16 +56,12 @@
 			    		<tr>
 			    			<td class="col-md-8">
 			    				<div id="display_{{$office->id}}">
-			    				<span  class="current-text mode1" id="insert_{{$office->id}}">
-			    					{{  $office->officeName }}
-			    				</span>
+				    				<span  class="current-text mode1" id="insert_{{$office->id}}">
+				    					{{  $office->officeName }}
+				    				</span>
 			    				</div>
 			    				<form class="form ajax" action="offices/{{$office->id}}/edit" method="post" role="form" class="form-inline">
-			    				
-			    			
 									<input type = "text" name = "ofcname" class = "edit-text form-control mode2"/>
-								
-
 								{{ Form::close() }}
 			    			</td>
 			    			<td class="col-md-4">
