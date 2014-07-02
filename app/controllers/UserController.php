@@ -196,7 +196,7 @@ class UserController extends BaseController {
                     
             DB::table('assigned_roles')->where('user_id', $id)->update(array( 'role_id' => $role));
 
-            DB::table('users')->where('id', $id)->update(array( 'email' => $user->email, 'password' => $user->password, 'office_id' => $user->office_id,));
+            DB::table('users')->where('id', $id)->update(array( 'email' => $user->email, 'password' => $user->password));
             
             $notice = "Successfully edited profile. ";         
             // Redirect with success message, You may replace "Lang::get(..." for your custom message.
