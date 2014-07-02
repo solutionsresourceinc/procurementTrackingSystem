@@ -5,6 +5,16 @@
     <h1 class="page-header">Welcome to dashboard</h1>
 
     <div class="col-lg-3">
+          
+<?php $id=Auth::User()->id;
+      $role= DB::table('assigned_roles')->where('user_id',$id)->first();
+      if ($role->role_id==1)
+      {
+
+      }
+    else
+{
+?>
             <div class="panel panel-warning">
               <div class="panel-heading">
                 <div class="row">
@@ -31,4 +41,7 @@
               </a>
             </div>
           </div>
+<?php
+}
+?>
 @stop

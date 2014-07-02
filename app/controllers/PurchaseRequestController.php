@@ -282,10 +282,16 @@ $archivo = value(function() use ($file){
 
       // THUMBNAIL SIZE
         list($width, $height) = getimagesize($upload_image);
-        $newwidth = "300"; 
-        $newheight = "525";
 
-     
+
+        $newwidth = $width; 
+        $newheight = $height;
+        while ( $newheight> 525) {
+        	$newheight=$newheight*0.8;
+        	$newwidth=$newwidth*0.8;
+}
+
+    
 $thumb = imagecreatetruecolor($newwidth, $newheight);
 if ($ext=="jpg"||$ext=="jpeg")
         $source = imagecreatefromjpeg($upload_image);
