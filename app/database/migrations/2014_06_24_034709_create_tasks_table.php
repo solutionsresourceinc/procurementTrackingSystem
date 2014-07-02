@@ -17,14 +17,15 @@ class CreateTasksTable extends Migration {
 			$table->increments('id');
 			$table->integer('wf_id')->unsigned();
 			$table->string('taskName', 255);
-			$table->string('taskType', 255);
+			$table->string('description', 255);
+			$table->integer('taskType');
 			$table->integer('assignee_id');
 			$table->integer('maxDuration')->unsigned();
 			$table->timestamps();
 			$table->integer('section_id')->references('id')->on('section')->onDelete('cascade');
 			$table->integer('designation_id')->references('id')->on('designation')->onDelete('cascade');
 			$table->integer('order_id')->unsigned();
-			$table->string('description', 255);
+			$table->integer('taskDetails_id')->references('id')->on('taskDetails')->onDelete('cascade');
 		});
 	}
 

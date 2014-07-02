@@ -158,7 +158,7 @@ class PurchaseRequestController extends Controller {
 	public function edit_submit()
 	{
 		
-
+		$id = Input::get('id');
 		$purchase = Purchase::find(Input::get('id'));
 		$document = Document::where('pr_id', Input::get('id'))->first();
 
@@ -204,7 +204,7 @@ class PurchaseRequestController extends Controller {
 				$users = User::all();
 				$workflow = Workflow::all();
 
-				return Redirect::to('purchaseRequest/view');
+				return Redirect::to("purchaseRequest/vieweach/$id");
 
 			}
 			else

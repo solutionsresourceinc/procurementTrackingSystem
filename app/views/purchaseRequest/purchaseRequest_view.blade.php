@@ -17,6 +17,9 @@
 @stop
 
 @section('content')		
+	@if(Session::get('notice'))
+        <div class="alert alert-success"> {{ Session::get('notice') }}</div> 
+    @endif
 	<!-- put control number (id) here -->
 	<h2 class="pull-left"> {{ $purchase->controlNo }} </h2>
 
@@ -101,5 +104,5 @@ $docs= Document::where('pr_id', $purchase->id)->first();
 	@endforeach
 
 </div>
-
+{{ Session::forget('notice'); }}
 @stop
