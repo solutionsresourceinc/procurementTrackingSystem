@@ -28,7 +28,7 @@
 		{{ HTML::style('css/template.css')}}
 
 	</head>
-	<body role="document">
+	<body role="document"  >
 		 <div class="container theme-showcase" role="main">
 			@yield('content')
 		</div>
