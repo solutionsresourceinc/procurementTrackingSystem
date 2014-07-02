@@ -4,12 +4,11 @@
     <h1 class="page-header">Overdue Tasks</h1>
 
     <div class="list-group">
-    	<?php
-    		for ($x=0; $x<=10; $x++){
-    			echo '<a href="#" class="list-group-item">
-		        	<span class="list-group-item-heading"><span class="glyphicon glyphicon-unchecked" style="color: rgb(200, 213, 200);"></span> &nbsp;&nbsp;Lorem Ipsum is simply dummy text of the printing and typesetting industry.</span>
-		        </a>';
-    		}
-        ?>
+    	<a href="#" class="list-group-item tasks"><span class="glyphicon glyphicon-unchecked pull-left" style="color: rgb(200, 213, 200);margin-top: 3px;"></span>
+            <div class="pull-left task-desc" style="margin-left: 10px;">
+                <span class="list-group-item-heading">PPMP CERTIFICATION</span> &nbsp;<small class="overdue-task"><i>Due Date: July 31, 2014</i></small><br/>
+                <span class="list-group-item-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</span>
+            </div>
+        </a>
     </div>
 @stop    

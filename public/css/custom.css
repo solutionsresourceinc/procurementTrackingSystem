@@ -317,3 +317,36 @@ table.table td{
 .side-submenu li.active a{
 	color: #94C35E;
 }
+
+.list-group-item-heading{
+	font-size: 18px;
+}
+
+.tasks{
+	float: left;
+	width: 100%;
+}
+
+.accept-button{
+	margin: 8px 15px;
+	float: right;
+}
+
+.task-desc{
+	width: 80%;
+}
+
+.overdue-task{
+	color: red;
+}
+
+
+@media all and (max-width: 1065px){
+	.accept-button{
+		margin: 8px 25px;
+		float: left;
+	}
+	.task-desc{
+		width: 90%;
+	}
+}
