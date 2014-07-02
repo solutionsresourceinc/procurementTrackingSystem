@@ -58,17 +58,52 @@ class DesignationController extends BaseController {
 	 */
 	public function update($id)
 	{
-		$rules = ['dsgntn-name' => 'required|alpha_spaces|max:100|allNum'];
-		$validation = Validator::make(Input::all(), $rules);
+		$rules = ['dsgntn-name' => 'required|alpha_spaces|max:100|allNum|unique:designation,designation'];
+		$messages = array(
+		    'required' => 'The :attribute field is required.',
+		    'unique' => 'The designation name has already been taken.',
+		    'alpha_spaces' => 'Designation name should contain spaces or alpha characters.',
+		    'max' => 'the maximum lenght for office name is 100',
+		);
+		$validation = Validator::make(Input::all(), $rules,$messages);
 
-		if($validation->fails()){
-			return Redirect::back()->withInput()->withErrors($validation->messages());
+		if($validation->fails())
+		{
+			//return Redirect::back()->withInput()->withErrors($validation->messages());
+			$updateDesignation = Designation::find($id);
+			$message = $validation->messages()->first();
+			$data = array(
+				"fragments" => array(
+					"#other_message" => "<div class='alert alert-danger' id='other_message'>$message</div>",
+					"#message" =>"<div id='message'> </div>"
+				),
+				"inner-fragments" => array(
+					"#display_$id" =>"<span id='insert_$id' class='current-text mode1'> $updateDesignation->designation </span>"
+				),
+
+			);
+
+
+			return Response::json($data);
 		}
-		
-		$updateDesignation = Designation::find($id);
-		$updateDesignation->designation = Input::get('dsgntn-name');
-		$updateDesignation->save();
-		return Redirect::to('/designation')->with('success','Successfully updated office name');
+		else
+		{
+			$updateDesignation = Designation::find($id);
+			$oldDesignation = $updateDesignation->designation;
+			$updateDesignation->designation = Input::get('dsgntn-name');
+			$updateDesignation->save();
+			$data = array(
+				"fragments" => array(
+					"#other_message" => "<div class='alert alert-success' id='other_message'>Changed $oldDesignation to $updateDesignation->designation </div>",
+					"#message" =>"<div id='message'> </div>"
+				),
+				"inner-fragments" => array(
+					"#display" =>"<span class='current-text mode1'> $updateDesignation->designation  </span>"
+				),
+
+			);
+			return Response::json($data);
+		}
 	}
 
 	/**
