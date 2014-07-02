@@ -38,6 +38,8 @@
         {{ HTML::script('colvix/js/shCore.js')}}
         {{ HTML::script('colvix/js/demo.js')}}
 
+        {{ HTML::script('js/jquery.tablesorter.min.js')}}
+
         @yield('header')
         
     </head>
@@ -157,6 +159,12 @@
             }, function() {
                 $(this).find('.dropdown-menu').first().stop(true, true).slideUp();
             });
+        });
+
+        $(document).ready(function(){ // FOR TABLESORTER
+        $(function(){
+        $("#table_id").tablesorter();
+        });
         });
     </script>
     @yield('footer')

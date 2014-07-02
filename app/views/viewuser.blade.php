@@ -50,7 +50,7 @@
 			<div class="alert alert-success"> {{ Session::get('notice') }}</div> 
 			@endif
 
-<table id="table_id" class="table table-striped display">
+<table id="table_id" class="table table-striped display tablesorter">
 	<thead>
 		<tr>
 			<th>Username</th>
@@ -104,7 +104,7 @@
 						@if($user->confirmed == 0)
 							<strike><font color="grey"> {{{ $off->officeName}}} </font></strike>
 						@else
-						{{{ $off->officeName }}}
+							{{{ $off->officeName }}}
 						@endif
 					@endforeach
 				</td>
