@@ -17,4 +17,8 @@ class TaskController extends Controller {
 		return View::make('tasks.overdue_tasks');
 	}
 
+	public function viewTask()
+	{
+		return View::make('tasks.task');
+	}
 }

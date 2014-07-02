@@ -340,6 +340,14 @@ table.table td{
 	color: red;
 }
 
+.task-body{
+	margin: 10px 30px;
+}
+
+.remarks-btn{
+	margin-top: 10px; 
+	margin-bottom: 20px;
+}
 
 @media all and (max-width: 1065px){
 	.accept-button{
