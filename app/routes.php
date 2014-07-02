@@ -187,28 +187,11 @@ Route::filter('csrf', function()
 
 // Roles Create Routes (Disabled)
 	//Route::get('create_roles','UserController@getRole');
-
+Route::get('task/new', 'TaskController@newTask');
 Route::get('task/active', 'TaskController@active');
 Route::get('task/overdue', 'TaskController@overdue');
 
 // AJAX Routes
-
-Route::post('workflow/save/{id}', function($id)
-{
-	//$user = User::find($id);
-	//$desc = Task::find($id);
-	//{{ $fullname = $user->lastname . ", " . $user->firstname; }}
-	// If you had a database you could easily fetch the content from the database here...
-	//$id_drop= Input::get('task_id');
-	
-
-	$data = array(
-		"html" => "<div id='insert_$id'>  Pogi ni edu  $id_drop  </div>"
-	);
-	
-	return Response::json($data);
-});
-
 
 Route::post('workflow/submit/{id}', function()
 {
@@ -227,8 +210,6 @@ Route::post('workflow/submit/{id}', function()
 		$des = Designation::find($designation);
 		$des_name = e($des->designation);
 	}
-	
-
 
 	$id = Input::get('task_id');
 	$assignd = Task::find($id);
@@ -237,10 +218,18 @@ Route::post('workflow/submit/{id}', function()
 
 
 	
-
-	$data = array(
-		"html" => "<div id='insert_$id' class='mode1'> $des_name  </div>"
-	);
+	if($designation == 0)
+	{
+		$data = array(
+			"html" => "<div id='insert_$id' class='mode1'> None  </div>"
+		);
+	}
+	else
+	{
+		$data = array(
+			"html" => "<div id='insert_$id' class='mode1'> $des_name  </div>"
+		);
+	}
 
 	return Response::json($data);
 });

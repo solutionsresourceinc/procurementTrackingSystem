@@ -106,6 +106,9 @@
             
             <li class="{{(Request::is('task/active') || Request::is('task/overdue')) ? 'active' : ''}}"><a href="/task/active">Tasks</a>
                 <ul class="side-submenu">
+                    <li class="{{Request::is('task/new') ? 'active':''}}">
+                        <a href="/task/new">New Tasks<span class="badge pull-right">10</span></a>
+                    </li>
                     <li class="{{Request::is('task/active') ? 'active':''}}">
                         <a href="/task/active">Active Tasks<span class="badge pull-right">10</span></a>
                     </li>

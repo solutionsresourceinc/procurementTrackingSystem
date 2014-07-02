@@ -2,6 +2,11 @@
 
 class TaskController extends Controller {
 
+	public function newTask()
+	{
+		return View::make('tasks.new_tasks');
+	}
+
 	public function active()
 	{
 		return View::make('tasks.active_tasks');
