@@ -138,8 +138,10 @@ class PurchaseRequestController extends Controller {
 	public function vieweach($id)
 	{
 		$purchase = Purchase::find($id);
+		$wfName = DB::table('document')->where('pr_id',$id)->first();
+		
 		return View::make('purchaseRequest.purchaseRequest_view')
-		->with('purchase', $purchase);
+		->with('purchase', $purchase)->with('wfName',$wfName);
 		//return $purchase;
 	}
 
@@ -249,7 +251,7 @@ class PurchaseRequestController extends Controller {
 public function addimage(){
 foreach(Input::file('file') as $file){
             $rules = array(
-                'file' => 'required|mimes:png,gif,jpeg|max:20000000'
+                'file' => 'required|mimes:png,gif,jpeg|max:900000000'
                 );
             $validator = \Validator::make(array('file'=> $file), $rules);
             $destine=public_path()."/uploads";
@@ -282,10 +284,16 @@ $archivo = value(function() use ($file){
 
       // THUMBNAIL SIZE
         list($width, $height) = getimagesize($upload_image);
-        $newwidth = "300"; 
-        $newheight = "525";
 
-     
+
+        $newwidth = $width; 
+        $newheight = $height;
+        while ( $newheight> 525) {
+        	$newheight=$newheight*0.8;
+        	$newwidth=$newwidth*0.8;
+}
+
+    
 $thumb = imagecreatetruecolor($newwidth, $newheight);
 if ($ext=="jpg"||$ext=="jpeg")
         $source = imagecreatefromjpeg($upload_image);

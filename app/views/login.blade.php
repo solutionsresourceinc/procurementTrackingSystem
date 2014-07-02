@@ -1,6 +1,11 @@
 @extends('layouts.login')
 
 @section('content')
+    <style type="text/css">
+        body {
+            background-color: #333333;
+        }
+    </style>
 	<!-- Creates the form -->
     {{ Form::open(array('class' => 'form-signin', 'role' => 'form')) }}
     	<!-- Adds the logo -->

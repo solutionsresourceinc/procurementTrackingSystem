@@ -9,6 +9,11 @@
 		    word-break:break-word;
 		}
 	</style>
+	<!--Image Display-->
+ 
+    {{ HTML::script('js/lightbox.min.js') }} 
+    {{ HTML::style('css/lightbox.css')}}
+<!--End Image Display-->
 @stop
 
 @section('content')		
@@ -36,7 +41,15 @@
 		<table width="100%" class="pr-details-table">
 			<tr>
 				<td width="25%" class="pr-label">Category:</td>
-				<td>{{ $purchase->modeOfProcurement }}</td>
+				<td>
+					@if($wfName->id == 1)
+						Small Value Procurement (Below P50,000)
+					@elseif($wfName->id == 2)
+						Small Value Procurement (Above P50,000 Below P500,000)
+					@else
+						Bidding (Above P500,000)
+					@endif
+				</td>
 			</tr>
 			<tr>
 				<td class="pr-label">Requisitioner</td>
@@ -71,17 +84,22 @@
 	<!-- images section -->
 	
 	<div id="img-section">
-		<?php
-			$doc = DB::table('document')->where('pr_id', $purchase->id)->get();
-		?>
-		@foreach($doc as $docs)
-			<?php
-			 $attachments = DB::table('attachments')->where('doc_id', $docs->id)->get(); 
-			?>
 
-			@foreach ($attachments as $attachment) 
-				<img data-src="holder.js/200x200" class="img-thumbnail" alt="200x200" src="<?php echo data_uri( $attachment->data, 'image/png'); ?>" style="width: 200px; height: 200px;" >
-			@endforeach
-		@endforeach
+	<?php
+$docs= Document::where('pr_id', $purchase->id)->first();
+	$attachments = DB::table('attachments')->where('doc_id', $docs->id)->get();	
+	$srclink="uploads\\";
+	?>
+	@foreach ($attachments as $attachment) 
+	<div class="image-container">
+		<a href="{{asset('uploads/'.$attachment->data)}}" data-lightbox="roadtrip">
+		<img class="img-thumbnail" src="{{asset('uploads/'.$attachment->data)}}" style="width: 70px; height: 70px;" />
+	</a>
+		
 	</div>
+
+	@endforeach
+
+</div>
+
 @stop

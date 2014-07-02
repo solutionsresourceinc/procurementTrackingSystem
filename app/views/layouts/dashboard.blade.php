@@ -42,6 +42,18 @@
 
         @yield('header')
         
+        <style type="text/css">
+        #confirmDelete {
+        height: 400px;
+        top: calc(50% - 200px) !important;
+        overflow: hidden;
+        }
+         #confirmActivate {
+        height: 400px;
+        top: calc(50% - 200px) !important;
+        overflow: hidden;
+        }
+        </style>
     </head>
     <body>
 
