@@ -285,15 +285,15 @@ $archivo = value(function() use ($file){
         $newwidth = "300"; 
         $newheight = "525";
 
-        // VARS FOR CALL BACK
-        $thumb = imagecreatetruecolor($newwidth, $newheight);
+     
+$thumb = imagecreatetruecolor($newwidth, $newheight);
 if ($ext=="jpg"||$ext=="jpeg")
         $source = imagecreatefromjpeg($upload_image);
 elseif ($ext=="png")
  $source = imagecreatefrompng($upload_image);
 else
  $source = imagecreatefromgif($upload_image);
-        // RESIZE WITH PROPORTION LIKE PHOTOSHOP HOLDING SHIFT
+        // RESIZE 
         imagecopyresized($thumb, $source, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
         // MAKE NEW FILES
 if ($ext=="jpg"||$ext=="jpeg")
@@ -314,7 +314,7 @@ unlink($actual);
                 //Does not pass validation
 
                 $errors = $validator->errors();
-                return Redirect::back()->with('imgerror','Invalid upload.');
+                return Redirect::back()->with('imgerror','Invalid file.');
             }
 
         }

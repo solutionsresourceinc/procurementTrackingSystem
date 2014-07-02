@@ -9,9 +9,12 @@
 {{ HTML::script('date_picker/bootstrap-datetimepicker.js') }}
 {{ HTML::script('date_picker/bootstrap-datetimepicker.fr.js') }}
 
-<!--
-{{ HTML::script('js/bootstrap-dropdown.js') }}
--->
+<!--Image Display-->
+    {{ HTML::script('js/jquery-1.11.0.min.js') }} 
+    {{ HTML::script('js/lightbox.min.js') }} 
+    {{ HTML::style('css/lightbox.css')}}
+<!--End Image Display-->
+
 {{ HTML::script('js/jquery.chained.min.js') }} 
 
 
@@ -270,7 +273,8 @@ Image Module
              ?>
             @foreach ($attachments as $attachment) 
     <div class="image-container">
-                <img class="img-thumbnail" src="{{asset('uploads/'.$attachment->data)}}" style="width: 200px; height: 200px;" />
+                    <a href="{{asset('uploads/'.$attachment->data)}}" data-lightbox="roadtrip">
+                <img class="img-thumbnail" src="{{asset('uploads/'.$attachment->data)}}" style="width: 200px; height: 200px;" /></a>
 {{ Form::open(array('method' => 'post', 'url' => 'delimage')) }}
 <input type="hidden" name="hide" value="{{$attachment->id}}">
   <button><img height="10%" width="10%" class="star-button " src="{{asset('img/Delete_Icon.png')}}"></button>
