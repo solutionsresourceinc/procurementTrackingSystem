@@ -36,7 +36,15 @@
 		<table width="100%" class="pr-details-table">
 			<tr>
 				<td width="25%" class="pr-label">Category:</td>
-				<td>{{ $purchase->modeOfProcurement }}</td>
+				<td>
+					@if($wfName->id == 1)
+						Small Value Procurement (Below P50,000)
+					@elseif($wfName->id == 2)
+						Small Value Procurement (Above P50,000 Below P500,000)
+					@else
+						Bidding (Above P500,000)
+					@endif
+				</td>
 			</tr>
 			<tr>
 				<td class="pr-label">Requisitioner</td>
