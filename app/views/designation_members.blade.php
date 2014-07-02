@@ -1,4 +1,4 @@
-@extends('layouts.default')
+@extends('layouts.dashboard')
 
 @section('header')
 	<script type="text/javascript">
@@ -98,7 +98,7 @@
 		    </div>
 	</div>
 
-	<div class="table-responsive" align="left">
+	<div class="table-responsive" align="right">
       	<a href="{{ URL::to('designation') }}" class="btn btn-default">Cancel</a>
       	{{ Form::submit('Save',array('class'=>'btn btn-success', 'onclick'=>'change()')) }}
       	<br>

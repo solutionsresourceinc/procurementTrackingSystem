@@ -27,40 +27,7 @@ class DesignationController extends BaseController {
 	 * @return Response
 	 */
 	public function store()
-	{/*
-		$checkdesignationname=0;
-
-		$designations = new Designation;
-		$designations= DB::table('designation')->get();
-
-		foreach ($designations as $dsgn){
-			if ($dsgn->designation==Input::get( 'designationName' )){ $checkdesignationname=1; }
-		}
-		if ($checkdesignationname != 0){
-			return Redirect::back()->withInput()->with('duplicate-error', 'Designation is already exisiting in the list.');
-		}
-
-		$rules = ['designationName' => 'required|alpha_spaces|max:100'];
-		$validation = Validator::make(Input::all(), $rules);
-		$checker = 0;
-
-		if($validation->fails()){
-			//return Redirect::back()->withInput()->withErrors($validation->messages())->with('invalid', 'Designation entry not created.');
-			$checker = 1;
-			return 'failed';
-		}
-
-		$input=Input::all();
-		
-		if(!$this->designation->fill($input)->isValid()) 
-		{
-			return Redirect::back()->withInput()->withErrors($this->designation->errors)->with('invalid', 'Designation entry not created.');
-		}
-		else
-		{
-			$this->designation->save();
-			return Redirect::to('/designation')->with('success', 'Successfully created a designation');
-		}*/
+	{
 
 		$designation = new Designation;
 		$designation->designation = Input::get( 'designationName' );
@@ -125,11 +92,24 @@ class DesignationController extends BaseController {
 		$selected_users = DB::select("select * from users join user_has_designation on users.id = user_has_designation.users_id where user_has_designation.designation_id = $id");
 		$notselected_users = DB::select("select * from users where id not in ( select users_id from user_has_designation where designation_id = $id )");
 
-		//return $selected_users;
+
+//Block URL access for non existing designation
+
+$existence = Designation::where('id',$id)->get();
+$exist=0;
+foreach ($existence as $designate) {
+	$exist= $exist+1;
+}
+if ($exist==0)
+
+	
+		return Redirect::to('/designation');
+	else
 		return View::make('designation_members')
 			->with('designation_id',$id)
 			->with('notselected_users',$notselected_users)
 			->with('selected_users',$selected_users);
+	
 	}
 
 	public function save_members()
