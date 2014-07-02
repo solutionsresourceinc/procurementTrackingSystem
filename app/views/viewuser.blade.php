@@ -74,39 +74,38 @@
 
 			<tr>
 				@if($user->confirmed == 0)
-				<td><strike> {{ $user->username; }} </strike></td>
-				<td><strike> {{ $user->firstname; }} </strike></td>
-				<td><strike> {{ $user->lastname; }} </strike></td>
-				
-				@if($assigned->role_id == 3)
-				<td><strike>Administrator</strike></td>
-				@elseif ($assigned->role_id == 2)
-				<td><strike>Procurement Personnel</strike></td>
+					<td><strike><font color="grey"> {{ $user->username; }} </font></strike></td>
+					<td><strike><font color="grey"> {{ $user->firstname; }} </font></strike></td>
+					<td><strike><font color="grey"> {{ $user->lastname; }} </font></strike></td>
+						@if($assigned->role_id == 3)
+							<td><strike><font color="grey"> Administrator </font></strike></td>
+						@elseif ($assigned->role_id == 2)
+							<td><strike><font color="grey"> Procurement Personnel </font></strike></td>
+						@else
+							<td><strike><font color="grey"> Requisitioner </font></strike></td>
+						@endif
 				@else
-				<td><strike>Requisitioner</strike></td>
-				@endif
-				@else
+					<td> {{ $user->username; }}</td>
+					<td> {{ $user->firstname; }}</td>
+					<td> {{ $user->lastname; }}</td>
 
-				<td> {{ $user->username; }}</td>
-				<td> {{ $user->firstname; }}</td>
-				<td> {{ $user->lastname; }}</td>
-
-				@if($assigned->role_id == 3)
-				<td>Administrator</strike></td>
-				@elseif ($assigned->role_id == 2)
-				<td>Procurement Personnel</td>
-				@else
-				<td>Requisitioner</td>
-				@endif
-
+					@if($assigned->role_id == 3)
+						<td>Administrator</strike></td>
+					@elseif ($assigned->role_id == 2)
+						<td>Procurement Personnel</td>
+					@else
+						<td>Requisitioner</td>
+					@endif
 				@endif
 				
-				<?php
-				$offs = Office::where('id',$user->office_id)->get();
-				?>
+				<?php $offs = Office::where('id',$user->office_id)->get(); ?>
 				<td>
 					@foreach($offs as $off)
-					{{{ $off->officeName }}}
+						@if($user->confirmed == 0)
+							<strike><font color="grey"> {{{ $off->officeName}}} </font></strike>
+						@else
+						{{{ $off->officeName }}}
+						@endif
 					@endforeach
 				</td>
 				
