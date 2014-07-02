@@ -11,12 +11,14 @@
 		<div class="alert alert-danger"> {{ Session::get('invalid') }}</div> 
 	@endif
 
+	<div id="other_message"></div> 
+
 	@if(Session::get('duplicate-error'))
-		<div class="alert alert-danger"> {{ Session::get('duplicate-error') }}</div> 
+		<div class="alert alert-danger" id="duplicate"> {{ Session::get('duplicate-error') }}</div> 
 	@endif
 
     <div id="office-create-form" class="well div-form">
-	    {{ Form::open(['route'=>'offices.store'], 'POST', array('role' => 'form')) }}
+    	{{ Form::open(['route'=>'offices.store'], 'POST', array('role' => 'form')) }}
 	    	<div class="col-md-3 create-office">
 	    		{{ Form::label('officename', 'Requisitioner Office:', array('class' => 'create-label')) }}
 	    	</div>
@@ -51,11 +53,17 @@
 	    			@foreach($offices as $office)
 			    		<tr>
 			    			<td class="col-md-8">
-			    				<span class="current-text mode1">
+			    				<div id="display_{{$office->id}}">
+			    				<span  class="current-text mode1" id="insert_{{$office->id}}">
 			    					{{  $office->officeName }}
 			    				</span>
-			    				{{ Form::open(['url' => "offices/$office->id/edit", 'class' => 'form-inline', 'role' => 'form']) }}
+			    				</div>
+			    				<form class="form ajax" action="offices/{{$office->id}}/edit" method="post" role="form" class="form-inline">
+			    				
+			    			
 									<input type = "text" name = "ofcname" class = "edit-text form-control mode2"/>
+								
+
 								{{ Form::close() }}
 			    			</td>
 			    			<td class="col-md-4">
@@ -64,7 +72,7 @@
 							<form method="POST" action="offices/delete/{{{$office->id}}}" id="myForm_{{ $office->id }}" name="myForm" style="display: -webkit-inline-box;">
 								<input type="hidden" name="hide" value="{{ $office->id }}">
 								<center>
-									<button class="btn btn-danger table-actions mode1" type="button" data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $office->id }})"  data-title="Delete" data-message="Are you sure you want to disable account?"><span class="glyphicon glyphicon-trash"></span></button>
+									<button class="btn btn-danger table-actions mode1" type="button" data-toggle="modal" data-target="#confirmDelete" data-target='#invalid' onclick="hello( {{ $office->id }})"  data-title="Delete" data-message="Are you sure you want to disable account?"><span class="glyphicon glyphicon-trash"></span></button>
 								</center>
 							</form>
 							{{Form::button('Save', ['class' => 'btn btn-success save-edit mode2'])}}
@@ -103,16 +111,23 @@
 @stop
 
 @section('footer')
+	{{ HTML::script('js/bootstrap-ajax.js');}}
 	<script type = "text/javascript">
 		$(document).ready(function() {
 			$(".mode2").hide();
 			$(".allow-edit").on("click", function() {
+				// get closest span
 				var current = $(this).closest("tr").find(".current-text");
+				// get closest textfield
 				var textfield = $(this).closest("tr").find(".edit-text");
+				// Trim the data in span
 				var text = current.text().trim();
+				// hide the span
 				current.hide();
+				//var txt = document.getElementById('')
+				
 				textfield.val(text);
-				textfield.attr({"placeholder": text, "value": text}).show().focus();
+				//textfield.attr({"placeholder": text, "value": text}).show().focus();
 				$(this).closest("tr").find(".mode1").hide();
 				$(this).closest("tr").find(".mode2").show();
 			});
