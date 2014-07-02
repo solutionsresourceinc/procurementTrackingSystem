@@ -85,6 +85,9 @@
 	    	</tbody>
 	    </table>
 	</div>
+	<div class="center-pagination">
+		{{ $designations->links(); }}
+	</div>
 
 	<!-- CODES FOR MODAL -->
 	<div class="modal fade" id="confirmDelete" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
