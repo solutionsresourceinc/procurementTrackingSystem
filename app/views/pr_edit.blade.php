@@ -10,7 +10,7 @@
 {{ HTML::script('date_picker/bootstrap-datetimepicker.fr.js') }}
 
 <!--Image Display-->
-    {{ HTML::script('js/jquery-1.11.0.min.js') }} 
+ 
     {{ HTML::script('js/lightbox.min.js') }} 
     {{ HTML::style('css/lightbox.css')}}
 <!--End Image Display-->
@@ -63,7 +63,33 @@ $epurchase=Purchase::find($id);
                     $epurchase->controlNo}}">
                 </div>
                 <br>
+<div>
+                        <?php
+                 $docs=DB::table('document')->where('pr_id', '=',$id )->first();
+                    $workflow=DB::table('workflow')->get();
+                        ?>
+                        
+                        {{ Form::label('modeOfProcurement', 'Mode of Procurement *', array('class' => 'create-label')) }}
+                        <select  name="modeOfProcurement" id="modeOfProcurement" class="form-control" data-live-search="true">
+                            <option value="">Please select</option>
+                            @foreach($workflow as $wf)
+                            <option value="{{ $wf->id }}" 
+                                <?php
+                                if (Input::old('modeOfProcurement'))
+                                      echo "selected";
+                               else if($docs->work_id==$wf->id)
+                                    echo "selected";
+                                else echo " "
+                                ?> >{{$wf->workFlowName}}</option>
+                                @endforeach
 
+                            </select>
+                            @if (Session::get('m6'))
+                            <font color="red"><i>The mode of procurement is required field</i></font>
+                            @endif
+                            <br>
+                        </div>
+                        <br>
                 <div>
                     {{ Form::label('status', 'Status: ', array('class' => 'create-label')) }}
                     <input type="text" value="{{$epurchase->status}}" readonly class="form-control">
@@ -167,31 +193,7 @@ $valamount=$epurchase->amount;
                         <br>
                     </div>
 
-                    <div>
-                        <?php
-                 $docs=DB::table('document')->where('pr_id', '=',$id )->first();
-                    $workflow=DB::table('workflow')->get();
-                        ?>
-                        {{ Form::label('modeOfProcurement', 'Mode of Procurement *', array('class' => 'create-label')) }}
-                        <select  name="modeOfProcurement" id="modeOfProcurement" class="form-control" data-live-search="true">
-                            <option value="">Please select</option>
-                            @foreach($workflow as $wf)
-                            <option value="{{ $wf->id }}" 
-                                <?php
-                                if (Input::old('modeOfProcurement'))
-                                      echo "selected";
-                               else if($docs->work_id==$wf->id)
-                                    echo "selected";
-                                else echo " "
-                                ?> >{{$wf->workFlowName}}</option>
-                                @endforeach
-
-                            </select>
-                            @if (Session::get('m6'))
-                            <font color="red"><i>The mode of procurement is required field</i></font>
-                            @endif
-                            <br>
-                        </div><br>
+                    <br>
 
                         <div class="form-group">
                             {{ Form::label('dateTime', 'Date Requested *', array('class' => 'create-label')) }}
@@ -310,16 +312,52 @@ Image Module
 
 
             <script type="text/javascript">
-     function numberWithCommas(x) 
+  function numberWithCommas(amount) 
+{
+    amount = amount.replace(',','');    
+    var its_a_number = amount.match(/^[0-9,.]+$/i);
+    if (its_a_number != null)
+    {
+        decimal_amount = parseFloat(amount).toFixed(2);
+        if(decimal_amount == 0 || decimal_amount == "0.00")
         {
-            x = x.replace(',','');
-            x = parseFloat(x).toFixed(2);
-            var parts = x.toString().split(".");
+            document.getElementById("num").value = "1.00";
+        }
+        else
+        {
+            var parts = decimal_amount.toString().split(".");
             parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             parts =  parts.join(".");
             document.getElementById("num").value = parts;
-        }        
+            window.old_amount = parts; 
+        }
+    }
+    else if(!window.old_amount)
+    {
+        document.getElementById("num").value = "1.00";
+    }
+    else
+    {
+        document.getElementById("num").value = window.old_amount;
+    }
+    
+ 
+ newamount =    amount; 
+if (newamount<50000)
+    document.getElementById("modeOfProcurement").selectedIndex = 1;
+else if (newamount>=50000 )
+ {
+    if (newamount<=500000)
+            document.getElementById("modeOfProcurement").selectedIndex = 2;
 
+    else if (newamount>500000)
+            document.getElementById("modeOfProcurement").selectedIndex = 3;
+
+ }
+else
+    document.getElementById("modeOfProcurement").selectedIndex = 0;
+}
+         
             $(window).on('load', function () {
 
                 $('.selectpicker').selectpicker({

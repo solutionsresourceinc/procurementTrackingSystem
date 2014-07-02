@@ -8,11 +8,11 @@
 {{ HTML::style('date_picker/bootstrap-datetimepicker.min.css')}}
 {{ HTML::script('date_picker/bootstrap-datetimepicker.js') }}
 {{ HTML::script('date_picker/bootstrap-datetimepicker.fr.js') }}
-<!--Image Display-->
-	{{ HTML::script('js/jquery-1.11.0.min.js') }} 
+
+
 	{{ HTML::script('js/lightbox.min.js') }} 
 	{{ HTML::style('css/lightbox.css')}}
-<!--End Image Display-->
+
 
 {{ HTML::script('js/jquery.chained.min.js') }} 
 
@@ -56,6 +56,25 @@
 				</div>
 				<br>
 
+					<div>
+						{{ Form::label('modeOfProcurement', 'Mode of Procurement *', array('class' => 'create-label')) }}
+						<select  name="modeOfProcurement" id="modeOfProcurement" class="form-control" data-live-search="true">
+							<option value="">Please select</option>
+							@foreach($workflow as $wf)
+							<option value="{{ $wf->id }}" 
+								<?php
+								if(Input::old('modeOfProcurement')==$wf->id)
+									echo "selected";
+								?> >{{$wf->workFlowName}}</option>
+								@endforeach
+
+							</select>
+							@if (Session::get('m6'))
+							<font color="red"><i>The mode of procurement is required field</i></font>
+							@endif
+							<br>
+						</div>
+						<br>
 				<div>
 					{{ Form::label('status', 'Status: ', array('class' => 'create-label')) }}
 					<input type="text" value="New" readonly class="form-control">
@@ -132,29 +151,14 @@
 						@endif
 						<br>
 					</div>
-
-					<div>
-						{{ Form::label('modeOfProcurement', 'Mode of Procurement *', array('class' => 'create-label')) }}
-						<select  name="modeOfProcurement" id="modeOfProcurement" class="form-control" data-live-search="true">
-							<option value="">Please select</option>
-							@foreach($workflow as $wf)
-							<option value="{{ $wf->id }}" 
-								<?php
-								if(Input::old('modeOfProcurement')==$wf->id)
-									echo "selected";
-								?> >{{$wf->workFlowName}}</option>
-								@endforeach
-
-							</select>
-							@if (Session::get('m6'))
-							<font color="red"><i>The mode of procurement is required field</i></font>
-							@endif
-							<br>
-						</div><br>
+<br>
 
 						<div class="form-group">
+							
+
 							{{ Form::label('dateTime', 'Date Requested *', array('class' => 'create-label')) }}
 							<div class="input-group date form_datetime col-md-12" data-date="{{ date('Y-m-d') }}T{{ date('H:i:s') }}Z" data-date-format="dd MM yyyy - HH:ii p" data-link-field="dtp_input1">
+
 								<input class="form-control" size="16" type="text" value="{{{ Input::old('dateRequested') }}}" readonly>
 								<span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
 								<span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
@@ -309,6 +313,21 @@ function numberWithCommas(amount)
 	 	document.getElementById("num").value = window.old_amount;
 	}
 	
+ 
+ newamount =	amount; 
+if (newamount<50000)
+	document.getElementById("modeOfProcurement").selectedIndex = 1;
+else if (newamount>=50000 )
+ {
+ 	if (newamount<=500000)
+ 			document.getElementById("modeOfProcurement").selectedIndex = 2;
+
+else if (newamount>500000)
+	document.getElementById("modeOfProcurement").selectedIndex = 3;
+
+ }
+else
+	document.getElementById("modeOfProcurement").selectedIndex = 0;
 }
 
 $(window).on('load', function () {
@@ -356,6 +375,7 @@ $('.form_time').datetimepicker({
 	maxView: 1,
 	forceParse: 0
 });
+
 </script>
 
 <!-- js for chained dropdown -->
