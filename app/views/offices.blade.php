@@ -78,10 +78,8 @@
 	    	</tbody>
 	    </table>
 	</div>
-	<div class="container">
-		<div class="center-pagination">
-			<?php echo $offices->links(); ?>
-		</span>
+	<div class="center-pagination">
+		{{ $offices->links(); }}
 	</div>
 
 	<!-- CODES FOR MODAL -->

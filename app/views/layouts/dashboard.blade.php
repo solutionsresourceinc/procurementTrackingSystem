@@ -62,36 +62,45 @@
         <div class="collapse navbar-collapse navbar-ex1-collapse">
           <ul class="nav navbar-nav side-nav">
             <li class="{{Request::is('dashboard') ? 'active':''}}"><a href="/"><!--i class="fa fa-dashboard"></i--> Dashboard</a></li>
-            <li class="{{Request::is('purchaseRequest/view') ? 'active':''}}">
-                <a href="/purchaseRequest/view">
-                    Active Purchase Requests
-                    <span class="badge pull-right">
-                        {{DB::table('purchase_request')->where('status', '=', 'New')->orWhere('status', '=', 'In progress')->count()}}
-                    </span>
-                </a>
+            <li class="{{(Request::is('purchaseRequest/view') || Request::is('purchaseRequest/closed') || Request::is('purchaseRequest/overdue')) ? 'active' : ''}}"><a href="/purchaseRequest/view">Purchase Requests</a>
+                <ul class="side-submenu">
+                    <li class="{{Request::is('purchaseRequest/view') ? 'active':''}}">
+                        <a href="/purchaseRequest/view">
+                            Active Purchase Requests
+                            <span class="badge pull-right">
+                                {{DB::table('purchase_request')->where('status', '=', 'New')->orWhere('status', '=', 'In progress')->count()}}
+                            </span>
+                        </a>
+                    </li>
+                    <li class="{{Request::is('purchaseRequest/closed') ? 'active':''}}">
+                        <a href="/purchaseRequest/closed">
+                            Closed Purchase Requests
+                            <span class="badge pull-right">
+                                {{DB::table('purchase_request')->where('status', '=', 'Closed')->count()}}
+                            </span></a>
+                    </li>
+                    <li class="{{Request::is('purchaseRequest/overdue') ? 'active':''}}">
+                        <a href="/purchaseRequest/overdue">
+                            Overdue Purchase Requests
+                            <span class="badge pull-right">
+                                {{DB::table('purchase_request')->where('status', '=', 'Overdue')->count()}}
+                            </span>
+                        </a>
+                    </li>
+                </ul>
             </li>
-            <li class="{{Request::is('purchaseRequest/closed') ? 'active':''}}">
-                <a href="/purchaseRequest/closed">
-                    Closed Purchase Requests
-                    <span class="badge pull-right">
-                        {{DB::table('purchase_request')->where('status', '=', 'Closed')->count()}}
-                    </span></a>
+            
+            <li class="{{(Request::is('task/active') || Request::is('task/overdue')) ? 'active' : ''}}"><a href="/task/active">Tasks</a>
+                <ul class="side-submenu">
+                    <li class="{{Request::is('task/active') ? 'active':''}}">
+                        <a href="/task/active">Active Tasks<span class="badge pull-right">10</span></a>
+                    </li>
+                    <li class="{{Request::is('task/overdue') ? 'active':''}}">
+                        <a href="/task/overdue">Overdue Tasks<span class="badge pull-right">10</span></a>
+                    </li>
+                </ul>
             </li>
-            <li class="{{Request::is('purchaseRequest/overdue') ? 'active':''}}">
-                <a href="/purchaseRequest/overdue">
-                    Overdue Purchase Requests
-                    <span class="badge pull-right">
-                        {{DB::table('purchase_request')->where('status', '=', 'Overdue')->count()}}
-                    </span>
-                </a>
-            </li>
-            <li class="{{Request::is('task/active') ? 'active':''}}">
-                <a href="/task/active">Active Tasks<span class="badge pull-right">10</span></a>
-            </li>
-            <li class="{{Request::is('task/overdue') ? 'active':''}}">
-                <a href="/task/overdue">Overdue Tasks<span class="badge pull-right">10</span></a>
-            </li>
-          </ul>
+        </ul>
 
           <ul class="nav navbar-nav navbar-right navbar-user">
             @if( Entrust::hasRole('Administrator') )
