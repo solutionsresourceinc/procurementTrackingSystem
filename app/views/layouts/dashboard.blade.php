@@ -91,75 +91,6 @@
             <li class="{{Request::is('task/overdue') ? 'active':''}}">
                 <a href="/task/overdue">Overdue Tasks<span class="badge pull-right">10</span></a>
             </li>
-            <li>{{ link_to('/workflow/belowFifty', 'Below P50,000') }}</li>
-            <li>{{ link_to('/workflow/aboveFifty', 'Between P50,000 and P500,000') }}</li>
-            <li>{{ link_to('/workflow/aboveFive', 'Above P500,000') }}</li>
-            <!--li class="dropdown active-nav">
-                <a href="#" class="dropdown {{(Request::is('purchaseRequest/view') || Request::is('purchaseRequest/closed') || Request::is('purchaseRequest/overdue')) ? 'active' : ''}}" data-toggle="dropdown">Purchase Requests <b class="caret pull-right"></b></a>
-                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
-                    <?php
-                        $adm = Assigned::where('user_id', Auth::User()->id)->first();
-                        $requests = new Purchase;
-                    ?>
-                    <li class="{{Request::is('purchaseRequest/view') ? 'active':''}}">
-                        <a href="/purchaseRequest/view">
-                            Active Purchase Requests
-                            <span class="badge pull-right">
-                                {{DB::table('purchase_request')->where('status', '=', 'New')->orWhere('status', '=', 'In progress')->count()}}
-                            </span>
-                        </a>
-                    </li>
-                    <li class="{{Request::is('purchaseRequest/closed') ? 'active':''}}">
-                        <a href="/purchaseRequest/closed">
-                            Closed Purchase Requests
-                            <span class="badge pull-right">
-                                {{DB::table('purchase_request')->where('status', '=', 'Closed')->count()}}
-                            </span></a>
-                    </li>
-                    <li class="{{Request::is('purchaseRequest/overdue') ? 'active':''}}">
-                        <a href="/purchaseRequest/overdue">
-                            Overdue Purchase Requests
-                            <span class="badge pull-right">
-                                {{DB::table('purchase_request')->where('status', '=', 'Overdue')->count()}}
-                            </span>
-                        </a>
-                    </li>
-                </ul>
-            </li>
-
-            @if ( Entrust::hasRole('Administrator') || Entrust::hasRole('Procurement Personnel'))
-                <li class="dropdown">
-                    <a href="#" class="dropdown {{(Request::is('task/overdue') || Request::is('task/active')) ? 'active' : ''}}" data-toggle="dropdown">Tasks <b class="caret pull-right"></b></a>
-                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
-                        <li class="{{Request::is('task/active') ? 'active':''}}">
-                            <a href="/task/active">Active Tasks<span class="badge pull-right">10</span></a>
-                        </li>
-                        <li class="{{Request::is('task/overdue') ? 'active':''}}">
-                            <a href="/task/overdue">Overdue Tasks<span class="badge pull-right">10</span></a>
-                        </li>
-                    </ul>
-                </li>
-            @endif-->
-
-            <!-- Administration section -->
-            <!--@if( Entrust::hasRole('Administrator') )
-                <li class="dropdown">
-                    <a href="#" class="dropdown {{(Request::is('workflow/belowFifty') || Request::is('workflow/belowFifty') || Request::is('workflow/aboveFive')) ? 'active' : ''}}" data-toggle="dropdown">Workflow <b class="caret pull-right"></b></a>
-                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
-                      <li>{{ link_to('/workflow/belowFifty', 'Below P50,000') }}</li>
-                      <li>{{ link_to('/workflow/aboveFifty', 'Between P50,000 and P500,000') }}</li>
-                      <li>{{ link_to('/workflow/aboveFive', 'Above P500,000') }}</li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown {{(Request::is('user/view') || Request::is('offices') || Request::is('designation')) ? 'active' : ''}}" data-toggle="dropdown">Administration <b class="caret pull-right"></b></a>
-                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
-                        <li class="{{Request::is('user/view') ? 'active':''}}">{{ link_to('/user/view', 'Users') }}</li>
-                        <li class="{{Request::is('offices') ? 'active':''}}">{{ link_to('/offices', 'Offices') }}</li>
-                        <li class="{{Request::is('designation') ? 'active':''}}">{{ link_to('/designation', 'Designations') }}</li>
-                    </ul>
-                </li>
-            @endif-->
           </ul>
 
           <ul class="nav navbar-nav navbar-right navbar-user">
@@ -172,6 +103,8 @@
                     <li>{{ link_to('/offices', 'Offices') }}</li>
                     <li class="divider"></li>
                     <li>{{ link_to('/designation', 'Designations') }}</li>
+                    <li class="divider"></li>
+                    <li>{{ link_to('/workflow', 'Workflows') }}</li>
                 </ul>
             </li>
             @endif
@@ -209,26 +142,12 @@
         $(document).ready(function(){ 
             $('.btn').tooltip(); 
             $('.purpose').tooltip(); 
-            /*.navbar .active-nav').click(function() {
-                $(this).find('.dropdown-menu').first().stop(true, true).delay(250).slideDown();
+            
+            $('.navbar .dropdown').hover(function() {
+                $(this).find('.dropdown-menu').first().stop(true, true).slideDown();
             }, function() {
-                $(this).find('.dropdown-menu').first().stop(true, true).delay(100).slideDown()
+                $(this).find('.dropdown-menu').first().stop(true, true).slideUp();
             });
-            $('.navbar .active-nav').click(function() {
-                $(this).find('.dropdown-menu').first().stop(true, true).delay(250).slideDown();
-            }, function() {
-                $(this).find('.dropdown-menu').first().stop(true, true).delay(100).slideDown()
-            });
-            $('.navbar .dropdown').click(function() {
-                $(this).find('.dropdown-menu').first().stop(true, true).delay(250).slideDown();
-            }, function() {
-                $(this).find('.dropdown-menu').first().stop(true, true).delay(100).slideDown()
-            });*/
-        $('.navbar .dropdown').hover(function() {
-    $(this).find('.dropdown-menu').first().stop(true, true).slideDown();
-}, function() {
-    $(this).find('.dropdown-menu').first().stop(true, true).slideUp();
-});
         });
     </script>
     @yield('footer')
