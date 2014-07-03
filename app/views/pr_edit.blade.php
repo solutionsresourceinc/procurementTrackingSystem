@@ -267,7 +267,7 @@ $epurchase=Purchase::find($id);
                 <img class="img-thumbnail" src="{{asset('uploads/'.$attachment->data)}}" style="width: 100px; height: 100px;" /></a>
                 {{ Form::open(array('method' => 'post', 'url' => 'delimage')) }}
                 <input type="hidden" name="hide" value="{{$attachment->id}}">
-                <button ><img height="10%" width="10%" class="star-button " src="{{asset('img/Delete_Icon.png')}}"></button>
+                <button class="star-button"><img src="{{asset('img/Delete_Icon.png')}}"></button>
                 {{Form::close()}}
             </div>
         @endforeach

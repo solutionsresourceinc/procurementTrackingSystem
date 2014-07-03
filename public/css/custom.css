@@ -280,9 +280,15 @@ table.table td{
 }
 
 .star-button {
-    position: absolute;    
-    right: 10px;
-    top: 10px;
+    background: transparent;
+	border: none;
+	position: absolute;
+	top: 0px;
+	right: 0px;
+}
+
+.star-button img{
+	width: 20px;
 }
 
 /*End Image Module Component*/
