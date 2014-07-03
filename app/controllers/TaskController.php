@@ -26,4 +26,11 @@ class TaskController extends Controller {
 	{
 		return View::make('tasks.task');
 	}
+
+	public function assignTask($id)
+	{
+		$user_id = Auth::user()->id;
+		$taskDetails = TaskDetails::find($id);
+		$taskDetails->assignee_id = $user_id;
+	}
 }

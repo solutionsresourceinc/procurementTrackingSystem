@@ -188,6 +188,7 @@ Route::filter('csrf', function()
 // Roles Create Routes (Disabled)
 	//Route::get('create_roles','UserController@getRole');
 Route::get('task/new', 'TaskController@newTask');
+Route::get('task/{$id}/get', 'TaskController@assignTask');
 Route::get('task/active', 'TaskController@active');
 Route::get('task/overdue', 'TaskController@overdue');
 Route::get('task/task-id', 'TaskController@viewTask');
