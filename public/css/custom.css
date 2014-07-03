@@ -149,7 +149,9 @@ a:hover, a:focus{
 }
 
 #img-section{
-	text-align: center;
+	border-top: solid 1px rgb(235, 235, 235);
+	margin-top: 40px;
+	padding-top: 20px;
 }
 
 #img-per{
