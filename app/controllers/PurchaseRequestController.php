@@ -53,8 +53,20 @@ class PurchaseRequestController extends Controller {
 					Session::forget('doc_id');
 				}
 
-				$notice = "Purchase request created successfully. ";										  
+				// START MAILER BY JAN SARMIENTO AWESOME
+				$sendee = DB::table('users')->where('id',$purchase->requisitioner)->first();
+				$email = $sendee->email;
+				$fname = $sendee->firstname;
 
+				$data = [ 'id' => $purchase->id ];
+				Mail::send('emails.template', $data, function($message) use($email, $fname)
+				{
+					$message->from('procurementTrackingSystem@tarlac.com', 'PTS Tarlac');
+					$message->to($email, $fname)->subject('Tarlac Procurement Tracking System');
+				}); 
+				// END MAILER BY JAN SARMIENTO AWESOME
+
+				$notice = "Purchase request created successfully. ";										  
 
 				Session::put('notice', $notice);
 				$office = Office::all();
@@ -92,14 +104,6 @@ class PurchaseRequestController extends Controller {
 
 
 			}
-
-			$data = $purchase->id;
-			Mail::send('emails.template', $data, function($message)
-			{
-				$sendee = DB::table('users')->where('id',$purchase->requisitioner)->first();
-
-				$message->to($sendee->email, $sendee->firstname)->subject('Tarlac Procurement Tracking System');
-			});
 		}
 		else
 		{

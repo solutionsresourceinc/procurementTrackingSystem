@@ -8,9 +8,9 @@
 
         <div>
             <?php
-                $prID = DB::table('purchase_request')->where('id',$data)->first();
+                $p_id = DB::table('purchase_request')->where('id',$id)->first();
             ?>
-            Your PR Control No. is {{{ $prID }}} 
+            Your PR Control No. is {{{ $p_id->controlNo }}}
         </div>
     </body>
 </html>
