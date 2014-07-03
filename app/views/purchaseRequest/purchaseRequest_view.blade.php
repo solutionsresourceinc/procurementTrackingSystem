@@ -96,7 +96,7 @@ $docs= Document::where('pr_id', $purchase->id)->first();
 	@foreach ($attachments as $attachment) 
 	<div class="image-container">
 		<a href="{{asset('uploads/'.$attachment->data)}}" data-lightbox="roadtrip">
-		<img class="img-thumbnail" src="{{asset('uploads/'.$attachment->data)}}" style="width: 70px; height: 70px;" />
+		<img class="img-thumbnail" src="{{asset('uploads/'.$attachment->data)}}" style="width: 100px; height: 100px;" />
 	</a>
 		
 	</div>

@@ -1,7 +1,19 @@
 @extends('layouts.dashboard')
 
 @section('content')
-    <h1 class="pull-left">List of Active Purchase Requests</h1>
+
+
+{{ Session::forget('main_error'); }}
+{{ Session::forget('m1'); }}
+{{ Session::forget('m2'); }}
+{{ Session::forget('m3'); }}
+{{ Session::forget('m4'); }}
+{{ Session::forget('m5'); }}
+{{ Session::forget('m6'); }}
+{{ Session::forget('m7'); }}
+{{ Session::forget('imgsuccess'); }}
+{{ Session::forget('imgerror'); }}
+        <h1 class="pull-left">List of Active Purchase Requests</h1>
     
     @if ( Entrust::hasRole('Administrator') || Entrust::hasRole('Procurement Personnel'))
       <div class="pull-right options">

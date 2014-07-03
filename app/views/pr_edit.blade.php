@@ -31,7 +31,7 @@ $epurchase=Purchase::find($id);
 <h1 class="page-header">Edit Purchase Request</h1>
 
 <div class="form-create fc-div">
-    {{ Form::open(['route'=>'purchaseRequest_editsubmit'], 'POST') }}
+    {{ Form::open(array('url' => 'newedit', 'files' => true), 'POST') }}
     <div class="row">
         <div>   
 <input type="hidden" name ="id" value={{$id}}>
@@ -217,25 +217,8 @@ $valamount=$epurchase->amount;
                             <br>
                         </div>
 
-                        <div><br>
-                            {{ Form::submit('Save',array('class'=>'btn btn-success')) }}
-                            {{ link_to( 'purchaseRequest/view', 'Cancel', array('class'=>'btn btn-default') ) }}
-
-                        </div>
+                      
                     </div>
-                </div>  
-            </div>      
-            {{ Form::close() }} 
-
-
-
-            <div>
-
-
-<!--  
-Image Module
--->
-
 <div class="form-create fc-div">
 <h2>Attachments</h2>
 <br>
@@ -256,16 +239,34 @@ Image Module
     $doc_id= $document->id;
 ?>
 
-{{ Form::open(array('url' => 'addimage', 'files' => true)) }}
 
 <input name="file[]" type="file"  multiple/>
 <input name="doc_id" type="hidden" value="{{ $doc_id }}">
 
 <br>
 <br>
-<button type="submit"  class "btn btn-primary">Add</button>
-{{ Form::close() }}
+
 </div>
+
+  <div><br>
+                            {{ Form::submit('Save',array('class'=>'btn btn-success')) }}
+                            {{ link_to( 'purchaseRequest/view', 'Cancel', array('class'=>'btn btn-default') ) }}
+
+                        </div>
+                </div>  
+            </div>      
+            {{ Form::close() }} 
+
+
+
+        
+
+
+<!--  
+Image Module
+-->
+
+
 <div id="img-section">
 
             <?php
@@ -276,7 +277,7 @@ Image Module
             @foreach ($attachments as $attachment) 
     <div class="image-container">
                     <a href="{{asset('uploads/'.$attachment->data)}}" data-lightbox="roadtrip">
-                <img class="img-thumbnail" src="{{asset('uploads/'.$attachment->data)}}" style="width: 70px; height: 70px;" /></a>
+                <img class="img-thumbnail" src="{{asset('uploads/'.$attachment->data)}}" style="width: 100px; height: 100px;" /></a>
 {{ Form::open(array('method' => 'post', 'url' => 'delimage')) }}
 <input type="hidden" name="hide" value="{{$attachment->id}}">
   <button ><img height="10%" width="10%" class="star-button " src="{{asset('img/Delete_Icon.png')}}"></button>
@@ -294,7 +295,6 @@ Image Module
 
 
 
-            </div>
 
             {{ Session::forget('notice'); }}
             {{ Session::forget('main_error'); }}
@@ -305,6 +305,8 @@ Image Module
             {{ Session::forget('m5'); }}
             {{ Session::forget('m6'); }}
             {{ Session::forget('m7'); }}
+                  {{ Session::forget('imgerror'); }}
+            {{ Session::forget('imgsuccess'); }}
             @stop
 
             @section('footer')

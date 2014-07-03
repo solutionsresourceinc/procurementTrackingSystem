@@ -238,7 +238,8 @@ Route::post('workflow/submit/{id}', function()
 
 
 //Image Module Components
-
+Route::post('newcreate', ['uses' => 'purchaseRequestController@create_submit']);
+Route::post('newedit', ['uses' => 'purchaseRequestController@edit_submit']);
 Route::post('addimage', ['uses' => 'purchaseRequestController@addimage']);
 Route::post('delimage', function()
 {
