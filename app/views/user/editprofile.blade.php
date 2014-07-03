@@ -20,7 +20,7 @@
                             </div>
 
             <div class="form-group">
-                <label for="firstname">First Name *</label>
+                <label for="firstname">First Name</label>
                 <input class="form-control"  type="test" name="firstname" id="firstname" value="<?PHP
 if (NULL!=Input::old('firstname'))
 echo Input::old('firstname');
@@ -32,7 +32,7 @@ echo $user->firstname; ?>" disabled>
             </div>
 
             <div class="form-group">
-                <label for="lastname">Last Name *</label>
+                <label for="lastname">Last Name</label>
                 <input class="form-control" type="text" name="lastname" id="lastname" value="
 <?PHP
 if (NULL!=Input::old('lastname'))

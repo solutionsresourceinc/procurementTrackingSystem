@@ -293,7 +293,7 @@ function numberWithCommas(amount)
 		decimal_amount = parseFloat(amount).toFixed(2);
 		if(decimal_amount == 0 || decimal_amount == "0.00")
 		{
-			document.getElementById("num").value = "1.00";
+			document.getElementById("num").value = "0.00";
 		}
 		else
 		{
@@ -306,7 +306,7 @@ function numberWithCommas(amount)
 	}
 	else if(!window.old_amount)
 	{
-		document.getElementById("num").value = "1.00";
+		document.getElementById("num").value = "0.00";
 	}
 	else
 	{
