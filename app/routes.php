@@ -96,7 +96,7 @@ Route::get('purchaseRequest/edit','PurchaseRequestController@edit');
 Route::get( 'purchaseRequest/vieweach/{id}', 'PurchaseRequestController@vieweach');
 Route::get( 'purchaseRequest/closed', 'PurchaseRequestController@viewClosed');
 Route::get( 'purchaseRequest/overdue', 'PurchaseRequestController@viewOverdue');
-
+Route::get( 'purchaseRequest/cancelled', 'PurchaseRequestController@viewCancelled');
 Route::post('purchaseRequest/edit/{id}',[ 'as' => 'purchaseRequest_editsubmit', 'uses' => 'PurchaseRequestController@edit_submit']);
 Route::post('purchaseRequest/create', ['as' => 'purchaseRequest_submit', 'uses' => 'PurchaseRequestController@create_submit']);
 

@@ -102,6 +102,14 @@
                                 </span>
                             </a>
                         </li>
+                        <li class="{{Request::is('purchaseRequest/cancelled') ? 'active':''}}">
+                            <a href="/purchaseRequest/cancelled">
+                                Cancelled Purchase Requests
+                                <span class="badge pull-right">
+                                    {{DB::table('purchase_request')->where('status', '=', 'Cancelled')->count()}}
+                                </span>
+                            </a>
+                        </li>
                     </ul>
                 @endif
             </li>

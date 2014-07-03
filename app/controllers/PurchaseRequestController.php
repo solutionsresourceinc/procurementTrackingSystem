@@ -258,6 +258,10 @@ if (Session::get('imgerror'))
 	{
 		return View::make('purchaseRequest.purchaseRequest_overdue');
 	}
+public function viewCancelled()
+	{
+		return View::make('purchaseRequest.purchaseRequest_cancelled');
+	}
 
 	public function edit_submit()
 	{
