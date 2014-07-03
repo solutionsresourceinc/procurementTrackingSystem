@@ -93,8 +93,8 @@ if(Input::old('office')==$offices->id)
 
             <br/>
             <div class="form-actions form-group">
-                <button type="submit" class="btn btn-success" name="submit">{{{ Lang::get('confide::confide.signup.submit') }}}</button>
-                {{ link_to( '/user/view', 'Cancel Create', array('class'=>'btn btn-default') ) }}
+                <button type="submit" class="btn btn-success" name="submit">Create</button>
+                {{ link_to( '/user/view', 'Cancel', array('class'=>'btn btn-default') ) }}
             </div>
     
       </fieldset>
