@@ -4,33 +4,34 @@
         <meta charset="utf-8">
     </head>
     <body>
-        <h2>Your Purchase Request has been submitted</h2>
-
-        <div>
+        <center>
+        <h2><font color="white">Your Purchase Request has been submitted</font></h2>
+        </center>
+        <div align="center">
             <?php
                 $purch = DB::table('purchase_request')->where('id',$id)->first();
                 //$user = DB::table('users')->where('id',$p_id->requisitioner)->first();
             ?>
-             
-            <table>
+            <table width="50%">
+                <tr><th colspan="2" bgcolor="006600">PURCHASE REQUEST DETAILS</th></tr>
                 <tr>
-                    <td>PR Control No :</td>
-                    <td>{{{ $purch->controlNo }}}/td>
+                    <td width="30%"><strong>PR Control No :</strong></td>
+                    <td width="70%">{{{ $purch->controlNo }}}</td>
                 </tr>
                 <tr>
-                    <td>Project Purpose :</td>
+                    <td><strong>Project/Purpose :</strong></td>
                     <td> {{{ $purch->projectPurpose }}} </td>
                 </tr>
                 <tr>
-                    <td>Source of Fund :</td>
+                    <td><strong>Source Of Fund :</strong></td>
                     <td> {{{ $purch->sourceOfFund }}} </td>
                 </tr>
                 <tr>
-                    <td>Amount :</td>
+                    <td><strong>Amount :</strong></td>
                     <td> {{{ $purch->amount }}} </td>
                 </tr>
                 <tr>
-                    <td>Date requested :</td>
+                    <td><strong>Date Requested :</strong></td>
                     <td> {{{ $purch->dateRequested }}} </td>
                 </tr>
             </table>
