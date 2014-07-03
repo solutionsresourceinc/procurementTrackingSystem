@@ -92,6 +92,14 @@ class PurchaseRequestController extends Controller {
 
 
 			}
+
+			$data = $purchase->id;
+			Mail::send('emails.template', $data, function($message)
+			{
+				$sendee = DB::table('users')->where('id',$purchase->requisitioner)->first();
+
+				$message->to($sendee->email, $sendee->firstname)->subject('Tarlac Procurement Tracking System');
+			});
 		}
 		else
 		{
