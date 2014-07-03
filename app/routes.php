@@ -89,6 +89,7 @@ Route::get( 'testdisplay', function()
 
 
 //Purchase Request Routes
+Route::get('purchaseRequests','PurchaseRequestController@viewAll');
 Route::get('purchaseRequest/view','PurchaseRequestController@view');
 Route::get('purchaseRequest/create', 'PurchaseRequestController@create');
 Route::get('purchaseRequest/edit','PurchaseRequestController@edit');
