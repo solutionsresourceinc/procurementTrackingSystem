@@ -53,7 +53,7 @@ class PurchaseRequestController extends Controller {
 					Session::forget('doc_id');
 				}
 
-				$notice = "Purchase request created successfullly! ";										  
+				$notice = "Purchase request created successfully. ";										  
 
 
 				Session::put('notice', $notice);
@@ -65,7 +65,7 @@ class PurchaseRequestController extends Controller {
 			else
 			{
 				$purchase->delete();
-				$message = "Failed to create purchase Request";
+				$message = "Failed to create purchase request.";
 			Session::put('main_error', $message );
 
 			// Get Other Error Messages
@@ -98,7 +98,7 @@ class PurchaseRequestController extends Controller {
 			//return 'Failed to create purchase request! <br>' . $purchase;
 			
 			// Set Main Error
-			$message = "Failed to create purchase Request";
+			$message = "Failed to create purchase request.";
 			Session::put('main_error', $message );
 
 			// Get Other Error Messages
@@ -196,7 +196,7 @@ class PurchaseRequestController extends Controller {
 					Session::forget('doc_id');
 				}
 
-				$notice = "Purchase request saved successfullly! ";										  
+				$notice = "Purchase request saved successfully. ";										  
 
 
 				Session::put('notice', $notice);
@@ -218,7 +218,7 @@ class PurchaseRequestController extends Controller {
 			//return 'Failed to create purchase request! <br>' . $purchase;
 			
 			// Set Main Error
-			$message = "Failed to save purchase Request";
+			$message = "Failed to save purchase request.";
 			Session::put('main_error', $message );
 
 			// Get Other Error Messages
