@@ -43,13 +43,12 @@
                             <span class="list-group-item-heading">{{ $task->taskName  }}</span> &nbsp;<small><i> </small><br/>
                             <span class="list-group-item-text">{{ $task->description }}</span> &nbsp; Project: <small><font color="blue">{{$projectName}}</font></small>
                         </div> 
+                        <a href="" class="btn btn-primary">Accept Task</a>
                         {{Form::button('Accept Task', ['class' => 'btn btn-sm btn-primary accept-button'])}}     
                     </a>
                     <br><br><br><br> 
 
                 @endforeach
-
-                
             @endforeach 
                 
                 <br><br><br><br><br>
