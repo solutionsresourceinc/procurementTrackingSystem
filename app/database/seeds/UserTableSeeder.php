@@ -60,5 +60,18 @@ class UserTableSeeder extends Seeder {
         $user->confirmed = 1;
         $user->office_id = 2;
         $user->save();
+
+        $user = new User;
+        $user->id = '4';
+        $user->username = 'arben1';
+        $user->firstname = 'Arben';
+        $user->lastname = 'Hombre' ;
+        $user->email = 'arben@gmail.com';
+        $user->password = 'arben1';
+        $user->password_confirmation = 'arben1';
+        $user->confirmation_code = 'ok';
+        $user->confirmed = 1;
+        $user->office_id = 2;
+        $user->save();
     }
 }
