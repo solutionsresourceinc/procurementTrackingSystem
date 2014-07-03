@@ -81,8 +81,9 @@
                             if($adm->role_id == 3) {
                         ?>
                             <td width="10%">
-                                <a data-toggle="tooltip" data-placement="top" class='iframe btn btn-success' href='edit/{{$request->id}}' title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
-                                <form method="POST" action="delete" id="myForm_{{ $request->id }}" name="myForm" style="display: -webkit-inline-box;">
+                                <a data-toggle="tooltip" data-placement="top" class='iframe btn btn-success' href='purchaseRequest/edit/{{$request->id}}' title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
+                                <form method="POST" action="/purchaseRequest/delete" id="myForm_{{ $request->id }}" name="myForm" style="display: -webkit-inline-box;">
+
                                    <input type="hidden" name="del_pr" value="{{ $request->id }}">
                                    <center><button class="iframe btn btn-danger" type="button" data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $request->id }})"  data-title="Delete" title="Delete" data-message="Are you sure you want to delete purchase request?"><span class="glyphicon glyphicon-trash"></span></button></center>
                                </form>
