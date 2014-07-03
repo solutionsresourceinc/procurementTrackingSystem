@@ -102,11 +102,20 @@
                                 </span>
                             </a>
                         </li>
+                        <li class="{{Request::is('purchaseRequest/cancelled') ? 'active':''}}">
+                            <a href="/purchaseRequest/cancelled">
+                                Cancelled Purchase Requests
+                                <span class="badge pull-right">
+                                    {{DB::table('purchase_request')->where('status', '=', 'Cancelled')->count()}}
+                                </span>
+                            </a>
+                        </li>
                     </ul>
                 @endif
             </li>
             
             <!-- Change ID -->
+             @if( Entrust::hasRole('Administrator') || Entrust::hasRole('Procurement Personnel') )
             <li class="{{(Request::is('task/new') || Request::is('task/active') || Request::is('task/overdue') || Request::is('task/task-id')) ? 'active' : ''}}"><a href="/task/active">Tasks</a>
                 @if(Request::is('task/new') || Request::is('task/active') || Request::is('task/overdue') || Request::is('task/task-id'))
                     <ul class="side-submenu">
@@ -122,6 +131,7 @@
                     </ul>
                 @endif
             </li>
+            @endif
         </ul>
 
           <ul class="nav navbar-nav navbar-right navbar-user">

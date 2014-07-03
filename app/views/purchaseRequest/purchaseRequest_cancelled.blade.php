@@ -2,7 +2,7 @@
 
 
 @section('content')
-    <h1 class="page-header">List of All Purchase Requests</h1>
+    <h1 class="page-header">List of Cancelled Purchase Requests</h1>
 
     <div class="modal fade" id="confirmDelete" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -56,11 +56,20 @@
                 <?php } ?>
         	</tr>
         </thead>
-
+@if ( Entrust::hasRole('Administrator') || Entrust::hasRole('Procurement Personnel'))  
         <?php
             $requests = new Purchase;
-            $requests = DB::table('purchase_request')->get(); //change this to get closed PRs
+            $requests = DB::table('purchase_request')->where('status', '=', 'Cancelled')->get(); //change this to get closed PRs
         ?>
+        @endif
+         @if ( Entrust::hasRole('Requisitioner')   )
+        <?php
+
+            $requests = new Purchase;
+            $requests = DB::table('purchase_request')->where('requisitioner', Auth::User()->id )->where('status', '=', 'Cancelled')->get(); //change this to get closed PRs
+        ?>
+        @endif
+      
       	<tbody>
             @if(count($requests))
                 @foreach ($requests as $request)
@@ -71,17 +80,13 @@
                         <td width="18%">
                             @foreach ($doc as $docs) {{ Workflow::find($docs->work_id)->workFlowName; }} @endforeach
                         </td>
-                        <td width="12%">
-                        	<span class="label {{($request->status == 'New') ? 'label-primary' : (($request->status == 'In Progress') ? 'label-success' : (($request->status == 'Overdue') ? 'label-danger' : 'label-default'))}}">
-                        		{{ $request->status; }}
-                        	</span>
-                        </td>
+                        <td width="12%"><span class="label label-default">{{ $request->status; }}</span></td>
                         <td width="20%">{{ $request->dateRequested; }}</td>
                         <?php
                             if($adm->role_id == 3) {
                         ?>
                             <td width="10%">
-                                <a data-toggle="tooltip" data-placement="top" class='iframe btn btn-success' href='purchaseRequest/edit/{{$request->id}}' title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
+                                <a data-toggle="tooltip" data-placement="top" class='iframe btn btn-success' href='edit/{{$request->id}}' title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
                                 <form method="POST" action="delete" id="myForm_{{ $request->id }}" name="myForm" style="display: -webkit-inline-box;">
                                    <input type="hidden" name="del_pr" value="{{ $request->id }}">
                                    <center><button class="iframe btn btn-danger" type="button" data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $request->id }})"  data-title="Delete Purchase Request" title="Delete" data-message="Are you sure you want to delete purchase request?"><span class="glyphicon glyphicon-trash"></span></button></center>
