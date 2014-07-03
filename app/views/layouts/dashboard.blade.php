@@ -83,7 +83,21 @@
                             <a href="/purchaseRequest/view">
                                 Active Purchase Requests
                                 <span class="badge pull-right">
-                                    {{DB::table('purchase_request')->where('status', '=', 'New')->orWhere('status', '=', 'In progress')->count()}}
+                                <?php
+                                            $result=0;
+                                            $cuser= Auth::user()->id;
+                                       $cpurchase= DB::table('purchase_request')->where('status', '=', 'New')->orWhere('status', '=', 'In progress')->get();
+                                    foreach ($cpurchase as $cpurchases ) {
+                                        $count= DB::table('count')->where('pr_id', $cpurchases->id)->where('user_id', $cuser)->count();
+                                        if($count==0){
+
+                                        }
+                                        else
+                                            {$result=$result+1;}
+                                    }
+                                    echo $result;
+
+                                    ?>
                                 </span>
                             </a>
                         </li>
@@ -91,14 +105,42 @@
                             <a href="/purchaseRequest/closed">
                                 Closed Purchase Requests
                                 <span class="badge pull-right">
-                                    {{DB::table('purchase_request')->where('status', '=', 'Closed')->count()}}
+                                   <?php
+                                            $result=0;
+                                            $cuser= Auth::user()->id;
+                                       $cpurchase= DB::table('purchase_request')->where('status', '=', 'Closed')->get();
+                                    foreach ($cpurchase as $cpurchases ) {
+                                        $count= DB::table('count')->where('pr_id', $cpurchases->id)->where('user_id', $cuser)->count();
+                                        if($count==0){
+
+                                        }
+                                        else
+                                            {$result=$result+1;}
+                                    }
+                                    echo $result;
+
+                                    ?>
                                 </span></a>
                         </li>
                         <li class="{{Request::is('purchaseRequest/overdue') ? 'active':''}}">
                             <a href="/purchaseRequest/overdue">
                                 Overdue Purchase Requests
                                 <span class="badge pull-right">
-                                    {{DB::table('purchase_request')->where('status', '=', 'Overdue')->count()}}
+                                          <?php
+                                            $result=0;
+                                            $cuser= Auth::user()->id;
+                                       $cpurchase= DB::table('purchase_request')->where('status', '=', 'Overdue')->orWhere('status', '=', 'In progress')->get();
+                                    foreach ($cpurchase as $cpurchases ) {
+                                        $count= DB::table('count')->where('pr_id', $cpurchases->id)->where('user_id', $cuser)->count();
+                                        if($count==0){
+
+                                        }
+                                        else
+                                            {$result=$result+1;}
+                                    }
+                                    echo $result;
+
+                                    ?>
                                 </span>
                             </a>
                         </li>
@@ -106,7 +148,21 @@
                             <a href="/purchaseRequest/cancelled">
                                 Cancelled Purchase Requests
                                 <span class="badge pull-right">
-                                    {{DB::table('purchase_request')->where('status', '=', 'Cancelled')->count()}}
+                                          <?php
+                                            $result=0;
+                                            $cuser= Auth::user()->id;
+                                       $cpurchase= DB::table('purchase_request')->where('status', '=', 'Cancelled')->orWhere('status', '=', 'In progress')->get();
+                                    foreach ($cpurchase as $cpurchases ) {
+                                        $count= DB::table('count')->where('pr_id', $cpurchases->id)->where('user_id', $cuser)->count();
+                                        if($count==0){
+
+                                        }
+                                        else
+                                            {$result=$result+1;}
+                                    }
+                                    echo $result;
+
+                                    ?>
                                 </span>
                             </a>
                         </li>
