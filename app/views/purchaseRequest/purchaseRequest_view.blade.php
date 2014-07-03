@@ -76,6 +76,46 @@
 			</tr>
 		</table>
 	</div>
+
+	<!-- START CHECKLIST SECTION BY JAN SARMIENTO AWESOME -->
+		<div class="well">
+			<table width="100%" class="pr-details-table">
+				<tr>
+					<td width="25%" class="pr-label">Task :</td>
+					<td>
+						@if($wfName->id == 1)
+							Small Value Procurement (Below P50,000)
+						@elseif($wfName->id == 2)
+							Small Value Procurement (Above P50,000 Below P500,000)
+						@else
+							Bidding (Above P500,000)
+						@endif
+					</td>
+				</tr>
+				<tr>
+					<td class="pr-label">Assignee Name :</td>
+
+					<td>
+						<?php $user = User::find($purchase->requisitioner) ?>
+						{{ $user->lastname . ", " . $user->firstname }}
+					</td>
+				</tr>
+				<tr>
+					<td class="pr-label">Duration :</td>
+					<td>{{ $purchase->projectPurpose }}</td>
+				</tr>
+				<tr>
+					<td class="pr-label">Remarks :</td>
+					<td>{{ $purchase->sourceOfFund }}</td>
+				</tr>
+				<tr>
+					<td class="pr-label">ABC Amount:</td>
+					<td>{{ $purchase->amount }}</td>
+				</tr>
+			</table>
+		</div>
+	<!-- END CHECKLIST SECTION BY JAN SARMIENTO AWESOME -->
+	
 	<?php
 		function data_uri($image, $mime) 
 		{  
