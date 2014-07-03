@@ -358,3 +358,9 @@ table.table td{
 		width: 90%;
 	}
 }
+
+@media all and (max-width: 1065px){
+	.create-btn{
+		margin-top: 10px;
+	}
+}

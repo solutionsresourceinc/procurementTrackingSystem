@@ -1,10 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('header')
-<!-- CSS and JS for Dropdown Search
-	{{ HTML::script('drop_search/bootstrap-select.js')}}
-	{{ HTML::style('drop_search/bootstrap-select.css')}}
--->
+
 {{ HTML::style('date_picker/bootstrap-datetimepicker.min.css')}}
 {{ HTML::script('date_picker/bootstrap-datetimepicker.js') }}
 {{ HTML::script('date_picker/bootstrap-datetimepicker.fr.js') }}
@@ -25,7 +22,7 @@
 <h1 class="page-header">Create New Purchase Request</h1>
 
 <div class="form-create fc-div">
-	{{ Form::open(['route'=>'purchaseRequest_submit'], 'POST') }}
+	{{ Form::open(array('url' => 'newcreate','files' => true), 'POST') }}
 	<div class="row">
 		<div>	
 
@@ -170,21 +167,6 @@
 							<br>
 						</div>
 
-						<div><br>
-							{{ Form::submit('Create Purchase Request',array('class'=>'btn btn-success')) }}
-							{{ link_to( 'purchaseRequest/view', 'Cancel', array('class'=>'btn btn-default') ) }}
-
-						</div>
-					</div>
-				</div>	
-			</div>		
-			{{ Form::close() }}	
-
-
-
-			<div>
-
-
 <!--  
 Image Module
 -->
@@ -224,9 +206,23 @@ Image Module
 
 	<br>
 	<br>
-	<button type="submit"  class "btn btn-primary">Add</button>
+
 	{{ Form::close() }}
 </div>
+
+
+<!-- End Image Module-->
+
+						<div><br>
+							{{ Form::submit('Create Purchase Request',array('class'=>'btn btn-success')) }}
+							{{ link_to( 'purchaseRequest/view', 'Cancel', array('class'=>'btn btn-default') ) }}
+
+						</div>
+					</div>
+				</div>	
+			</div>		
+			{{ Form::close() }}	
+<!--Image Display-->
 <div id="img-section">
 
 	<?php
@@ -237,7 +233,7 @@ Image Module
 	@foreach ($attachments as $attachment) 
 	<div class="image-container">
 		<a href="{{asset('uploads/'.$attachment->data)}}" data-lightbox="roadtrip">
-		<img class="img-thumbnail" src="{{asset('uploads/'.$attachment->data)}}" style="width: 70px; height: 70px;" />
+		<img class="img-thumbnail" src="{{asset('uploads/'.$attachment->data)}}" style="width: 100px; height: 100px;" />
 	</a>
 		{{ Form::open(array('method' => 'post', 'url' => 'delimage')) }}
 		<input type="hidden" name="hide" value="{{$attachment->id}}">
@@ -248,12 +244,9 @@ Image Module
 	@endforeach
 
 </div>
+<!--End Image Display-->
 
 
-<!-- End Image Module-->
-
-
-</div>
 
 {{ Session::forget('notice'); }}
 {{ Session::forget('main_error'); }}
@@ -264,6 +257,8 @@ Image Module
 {{ Session::forget('m5'); }}
 {{ Session::forget('m6'); }}
 {{ Session::forget('m7'); }}
+{{ Session::forget('imgsuccess'); }}
+{{ Session::forget('imgerror'); }}
 @stop
 
 <!-- script for the formatting of amount field -->

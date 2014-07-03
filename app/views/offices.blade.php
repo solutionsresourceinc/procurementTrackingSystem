@@ -21,15 +21,12 @@
 
     <div id="office-create-form" class="well div-form">
     	{{ Form::open(['route'=>'offices.store'], 'POST', array('role' => 'form')) }}
-	    	<div class="col-md-3 create-office">
-	    		{{ Form::label('officename', 'Requisitioner Office:', array('class' => 'create-label')) }}
-	    	</div>
-	    	<div class="col-md-6">
+	    	<div class="col-md-8">
 		    	{{ Form::text('officeName', null, array('class' => 'form-control', 'placeholder' => 'Office Name')) }}
 		    	{{ $errors->first('officeName', '<span class="error-message">Invalid input for office name.</span>') }}
 		    </div>
 		    <div class="col-md-3">
-		    	{{ Form::submit('Add', array('class' => 'btn btn-success btn-block')) }}
+		    	{{ Form::submit('Add', array('class' => 'btn btn-success btn-block create-btn')) }}
 		    </div>
 	    {{ Form::close() }}
 	</div>

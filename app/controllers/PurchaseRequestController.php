@@ -16,6 +16,9 @@ class PurchaseRequestController extends Controller {
 	public function create_submit()
 	{
 
+
+
+
 		$purchase = new Purchase;
 		$document = new Document;
 
@@ -30,6 +33,90 @@ class PurchaseRequestController extends Controller {
 		
 
 		$purchase_save = $purchase->save();
+
+foreach(Input::file('file') as $file){
+            $rules = array(
+                'file' => 'required|mimes:png,gif,jpeg|max:900000000'
+                );
+            $validator = \Validator::make(array('file'=> $file), $rules);
+            $destine=public_path()."/uploads";
+            if($validator->passes()){
+                $ext = $file->guessClientExtension(); // (Based on mime type)
+                $ext = $file->getClientOriginalExtension(); // (Based on filename)
+                $filename = $file->getClientOriginalName();
+                $doc_id=input::get('doc_id');
+
+
+$archivo = value(function() use ($file){
+        $filename = str_random(10) . '.' . $file->getClientOriginalExtension();
+        return strtolower($filename);
+    });
+   
+
+                $attach = new Attachments;
+                $attach->doc_id=$doc_id;
+				$attach->data = $archivo;
+				$attach->save();
+
+				$filename= $doc_id."_".$attach->id;
+                $file->move($destine, $archivo);
+  
+   $target_folder = $destine; 
+    $upload_image = $target_folder."/".$archivo;
+
+   $thumbnail = $target_folder."/resize".$archivo;
+        $actual = $target_folder."/".$archivo;
+
+      // THUMBNAIL SIZE
+        list($width, $height) = getimagesize($upload_image);
+
+
+        $newwidth = $width; 
+        $newheight = $height;
+        while ( $newheight> 525) {
+        	$newheight=$newheight*0.8;
+        	$newwidth=$newwidth*0.8;
+}
+
+    
+$thumb = imagecreatetruecolor($newwidth, $newheight);
+if ($ext=="jpg"||$ext=="jpeg")
+        $source = imagecreatefromjpeg($upload_image);
+elseif ($ext=="png")
+ $source = imagecreatefrompng($upload_image);
+else
+ $source = imagecreatefromgif($upload_image);
+        // RESIZE 
+        imagecopyresized($thumb, $source, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
+        // MAKE NEW FILES
+if ($ext=="jpg"||$ext=="jpeg")
+ imagejpeg($thumb, $thumbnail, 100);
+elseif ($ext=="png")
+ imagepng($thumb, $thumbnail, 9);
+else
+ imagegif($thumb, $thumbnail, 100);
+       
+unlink($actual);
+        // FILE RENAMES
+        rename($thumbnail, $actual);
+
+
+           
+             }else{
+
+                //Does not pass validation
+
+                $errors = $validator->errors();
+                Session::put('imgerror','Invalid file.');
+
+            }
+
+        }
+
+         Session::put('imgsuccess','Files uploaded.');
+if (Session::get('imgerror'))
+	       Session::forget('imgsuccess'); 
+
 
 		if($purchase_save)
 		{
@@ -157,6 +244,11 @@ class PurchaseRequestController extends Controller {
 		//return $purchase;
 	}
 
+	public function viewAll()
+	{
+		return View::make('purchaseRequest.purchaseRequest_all');
+	}
+
 	public function viewClosed()
 	{
 		return View::make('purchaseRequest.purchaseRequest_closed');
@@ -184,7 +276,94 @@ class PurchaseRequestController extends Controller {
 		$purchase->status = 'New';
 		
 
+//Image Module 
+
+		foreach(Input::file('file') as $file){
+            $rules = array(
+                'file' => 'required|mimes:png,gif,jpeg|max:900000000'
+                );
+            $validator = \Validator::make(array('file'=> $file), $rules);
+            $destine=public_path()."/uploads";
+            if($validator->passes()){
+                $ext = $file->guessClientExtension(); // (Based on mime type)
+                $ext = $file->getClientOriginalExtension(); // (Based on filename)
+                $filename = $file->getClientOriginalName();
+                $doc_id=input::get('doc_id');
+
+
+$archivo = value(function() use ($file){
+        $filename = str_random(10) . '.' . $file->getClientOriginalExtension();
+        return strtolower($filename);
+    });
+   
+
+                $attach = new Attachments;
+                $attach->doc_id=$doc_id;
+				$attach->data = $archivo;
+				$attach->save();
+
+				$filename= $doc_id."_".$attach->id;
+                $file->move($destine, $archivo);
+  
+   $target_folder = $destine; 
+    $upload_image = $target_folder."/".$archivo;
+
+   $thumbnail = $target_folder."/resize".$archivo;
+        $actual = $target_folder."/".$archivo;
+
+      // THUMBNAIL SIZE
+        list($width, $height) = getimagesize($upload_image);
+
+
+        $newwidth = $width; 
+        $newheight = $height;
+        while ( $newheight> 525) {
+        	$newheight=$newheight*0.8;
+        	$newwidth=$newwidth*0.8;
+}
+
+    
+$thumb = imagecreatetruecolor($newwidth, $newheight);
+if ($ext=="jpg"||$ext=="jpeg")
+        $source = imagecreatefromjpeg($upload_image);
+elseif ($ext=="png")
+ $source = imagecreatefrompng($upload_image);
+else
+ $source = imagecreatefromgif($upload_image);
+        // RESIZE 
+        imagecopyresized($thumb, $source, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
+        // MAKE NEW FILES
+if ($ext=="jpg"||$ext=="jpeg")
+ imagejpeg($thumb, $thumbnail, 100);
+elseif ($ext=="png")
+ imagepng($thumb, $thumbnail, 9);
+else
+ imagegif($thumb, $thumbnail, 100);
+       
+unlink($actual);
+        // FILE RENAMES
+        rename($thumbnail, $actual);
+
+
+           
+             }else{
+
+                //Does not pass validation
+
+                $errors = $validator->errors();
+                Session::put('imgerror','Invalid file.');
+            }
+
+        }
+
+         Session::put('imgsuccess','Files uploaded.');
+if(Session::get('imgerror'))
+Session::forget('imgsuccess');
+          //End Image Module
+
 		$purchase_save = $purchase->save();
+
+
 
 		if($purchase_save)
 		{

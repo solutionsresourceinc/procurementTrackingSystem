@@ -35,7 +35,7 @@
 
 			<hr class="clear" />
 
-			{{ link_to( '#', 'Done', array('class'=>'btn btn-primary remarks-btn') ) }}
+			{{ link_to( '#', 'Task Done', array('class'=>'btn btn-primary remarks-btn') ) }}
 			<!-- For Review Tasks
 			{{ link_to( '#', 'Approve', array('class'=>'btn btn-primary remarks-btn') ) }}
 			{{ link_to( '#', 'Reject', array('class'=>'btn btn-danger remarks-btn') ) }}
