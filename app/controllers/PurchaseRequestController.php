@@ -148,8 +148,8 @@ if (Session::get('imgerror'))
 				$data = [ 'id' => $purchase->id ];
 				Mail::send('emails.template', $data, function($message) use($email, $fname)
 				{
-					$message->from('procurementTrackingSystem@tarlac.com', 'PTS Tarlac');
-					$message->to($email, $fname)->subject('Tarlac Procurement Tracking System');
+					$message->from('procurementTrackingSystem@tarlac.com', 'Procurement Tracking System Tarlac');
+					$message->to($email, $fname)->subject('Tarlac Procurement Tracking Systems');
 				}); 
 				// END MAILER BY JAN SARMIENTO AWESOME
 
