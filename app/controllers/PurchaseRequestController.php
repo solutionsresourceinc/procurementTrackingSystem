@@ -19,9 +19,10 @@ class PurchaseRequestController extends Controller {
 
 
 
-		$purchase = new count;
 		$purchase = new Purchase;
 		$document = new Document;
+
+
 
 		$purchase->projectPurpose = Input::get( 'projectPurpose' );
 		$purchase->sourceOfFund = Input::get( 'sourceOfFund' );
@@ -124,7 +125,15 @@ if (Session::get('imgerror'))
 			$document->pr_id = $purchase->id;
 			$document->work_id = Input::get('modeOfProcurement');
 			$document_save = $document->save();
+$userx= User::get();
 
+
+foreach ($userx as $userf) {
+$count= new Count;
+$count->user_id= $userf->id;
+$count->pr_id= $purchase->id;
+$count->save();
+}
 			if($document_save)
 			{
 				$pr_id= Session::get('pr_id');

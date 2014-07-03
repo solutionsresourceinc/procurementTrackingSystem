@@ -17,6 +17,13 @@
 @stop
 
 @section('content')		
+
+<?php
+$luser=Auth::user()->id;
+$count= Count::where('pr_id','=', $purchase->id)->where('user_id','=', $luser )->delete();
+
+?>
+
 	@if(Session::get('notice'))
         <div class="alert alert-success"> {{ Session::get('notice') }}</div> 
     @endif
