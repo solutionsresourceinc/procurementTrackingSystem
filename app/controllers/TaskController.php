@@ -4,7 +4,12 @@ class TaskController extends Controller {
 
 	public function newTask()
 	{
-		return View::make('tasks.new_tasks');
+		$user_id = Auth::user()->id;
+		$user_designations = UserHasDesignation::whereUsersId($user_id)->get();
+
+		return View::make('tasks.new_tasks')
+				->with('user_designations',$user_designations);
+		//return $user_designations;
 	}
 
 	public function active()
