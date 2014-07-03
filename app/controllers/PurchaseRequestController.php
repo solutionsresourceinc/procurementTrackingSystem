@@ -19,6 +19,7 @@ class PurchaseRequestController extends Controller {
 
 
 
+		$purchase = new count;
 		$purchase = new Purchase;
 		$document = new Document;
 

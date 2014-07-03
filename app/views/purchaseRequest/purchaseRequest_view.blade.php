@@ -45,9 +45,9 @@
 			<tr>
 				<td width="25%" class="pr-label">Category:</td>
 				<td>
-					@if($wfName->id == 1)
+					@if($wfName->work_id == 1)
 						Small Value Procurement (Below P50,000)
-					@elseif($wfName->id == 2)
+					@elseif($wfName->work_id == 2)
 						Small Value Procurement (Above P50,000 Below P500,000)
 					@else
 						Bidding (Above P500,000)
