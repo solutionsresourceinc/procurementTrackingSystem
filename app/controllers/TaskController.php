@@ -14,6 +14,8 @@ class TaskController extends Controller {
 
 	public function active()
 	{
+
+
 		$user_id = Auth::user()->id;
 		$user_designations = UserHasDesignation::whereUsersId($user_id)->get();
 
