@@ -40,7 +40,7 @@
                         $projectName = $purchase_row->projectPurpose;
                     ?>
 
-                    <a href="/task/task-id" class="list-group-item tasks"><span class="glyphicon glyphicon-unchecked pull-left" style="color: rgb(200, 213, 200);margin-top: 3px;"></span>
+                    <a href="/task/task-id" class="list-group-item tasks">
                         <div class="pull-left task-desc" style="margin-left: 10px;">
                             <span class="list-group-item-heading">{{ $task->taskName  }}</span> &nbsp;<small><i> </small><br/>
                             <span class="list-group-item-text">{{ $task->description }}</span> &nbsp; Project: <small><font color="blue">{{$projectName}}</font></small>
