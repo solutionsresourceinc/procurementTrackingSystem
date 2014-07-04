@@ -177,13 +177,48 @@
             <li class="{{(Request::is('task/new') || Request::is('task/active') || Request::is('task/overdue') || Request::is('task/task-id')) ? 'active' : ''}}"><a href="/task/new">Tasks</a>
                 <ul class="side-submenu">
                     <li class="{{Request::is('task/new') ? 'active':''}}">
-                        <a href="/task/new">New Tasks<span class="badge pull-right">10</span></a>
+                        <a href="/task/new">New Tasks<span class="badge pull-right">
+                        <?php
+                        $taskcount=Taskdetails::where('status', 'New'
+                            )->count();
+                        echo $taskcount;
+                        ?>
+                        </span></a>
                     </li>
                     <li class="{{Request::is('task/active') ? 'active':''}}">
-                        <a href="/task/active">Active Tasks<span class="badge pull-right">10</span></a>
+                        <a href="/task/active">Active Tasks<span class="badge pull-right">
+                        <?php
+                        $taskcount=Taskdetails::where('status', 'Active'
+                            )->count();
+                        echo $taskcount;
+                        ?>
+                        </span></a>
                     </li>
                     <li class="{{Request::is('task/overdue') ? 'active':''}}">
-                        <a href="/task/overdue">Overdue Tasks<span class="badge pull-right">10</span></a>
+                        <a href="/task/overdue">Overdue Tasks<span class="badge pull-right">
+
+                        <?php
+                        $taskcount=0;
+
+                        $taskd=Taskdetails::where('status', 'Active'
+                            )->get();
+                        foreach ($taskd as $taskds) {
+
+                            $task=Task::find($taskds->task_id);
+                             $date = new DateTime($taskds->dateReceived);
+$date->add(new DateInterval('P'.$task->maxDuration.'D'));
+     
+            $today= date('m/d/Y g:i As');
+if ($date > $today )
+ $taskcount=$taskcount+1;
+                        
+                    
+                  
+                }
+
+                        echo $taskcount;
+                        ?>
+                        </span></a>
                     </li>
                 </ul>
             </li>
