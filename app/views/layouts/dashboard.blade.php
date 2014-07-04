@@ -88,7 +88,8 @@
                                             $cuser= Auth::user()->id;
                                        $cpurchase= DB::table('purchase_request')->where('status', '=', 'New')->orWhere('status', '=', 'In progress')->get();
                                     foreach ($cpurchase as $cpurchases ) {
-                                        $count= DB::table('count')->where('pr_id', $cpurchases->id)->where('user_id', $cuser)->count();
+                                        $doc=Document::where('pr_id', $cpurchases->id)->first();
+                                        $count= DB::table('count')->where('doc_id', $doc->id)->where('user_id', $cuser)->count();
                                         if($count==0){
 
                                         }
@@ -110,7 +111,8 @@
                                             $cuser= Auth::user()->id;
                                        $cpurchase= DB::table('purchase_request')->where('status', '=', 'Closed')->get();
                                     foreach ($cpurchase as $cpurchases ) {
-                                        $count= DB::table('count')->where('pr_id', $cpurchases->id)->where('user_id', $cuser)->count();
+                                        $doc=Document::where('pr_id', $cpurchases->id)->first();
+                                        $count= DB::table('count')->where('doc_id', $doc->id)->where('user_id', $cuser)->count();
                                         if($count==0){
 
                                         }
@@ -131,7 +133,8 @@
                                             $cuser= Auth::user()->id;
                                        $cpurchase= DB::table('purchase_request')->where('status', '=', 'Overdue')->orWhere('status', '=', 'In progress')->get();
                                     foreach ($cpurchase as $cpurchases ) {
-                                        $count= DB::table('count')->where('pr_id', $cpurchases->id)->where('user_id', $cuser)->count();
+                                       $doc=Document::where('pr_id', $cpurchases->id)->first();
+                                        $count= DB::table('count')->where('doc_id', $doc->id)->where('user_id', $cuser)->count();
                                         if($count==0){
 
                                         }
@@ -153,7 +156,8 @@
                                             $cuser= Auth::user()->id;
                                        $cpurchase= DB::table('purchase_request')->where('status', '=', 'Cancelled')->orWhere('status', '=', 'In progress')->get();
                                     foreach ($cpurchase as $cpurchases ) {
-                                        $count= DB::table('count')->where('pr_id', $cpurchases->id)->where('user_id', $cuser)->count();
+                                      $doc=Document::where('pr_id', $cpurchases->id)->first();
+                                        $count= DB::table('count')->where('doc_id', $doc->id)->where('user_id', $cuser)->count();
                                         if($count==0){
 
                                         }

@@ -18,11 +18,7 @@
 
 @section('content')		
 
-<?php
-$luser=Auth::user()->id;
-$count= Count::where('pr_id','=', $purchase->id)->where('user_id','=', $luser )->delete();
 
-?>
 
 	@if(Session::get('notice'))
         <div class="alert alert-success"> {{ Session::get('notice') }}</div> 
@@ -137,6 +133,12 @@ $count= Count::where('pr_id','=', $purchase->id)->where('user_id','=', $luser )-
 
 	<?php
 $docs= Document::where('pr_id', $purchase->id)->first();
+	
+
+$luser=Auth::user()->id;
+$count= Count::where('doc_id','=', $docs->id)->where('user_id','=', $luser )->delete();
+
+
 	$attachments = DB::table('attachments')->where('doc_id', $docs->id)->get();	
 	$srclink="uploads\\";
 	?>

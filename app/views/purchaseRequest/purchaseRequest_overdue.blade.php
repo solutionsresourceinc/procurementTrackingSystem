@@ -62,7 +62,18 @@
       	<tbody>
             @if(count($requests))
                 @foreach ($requests as $request)
-                    <tr>
+                    <tr    
+                    <?php 
+                        $doc = new Document; $doc = DB::table('document')->where('pr_id', $request->id)->first();  
+                        $doc_id= $doc->id;
+                    $userx= Auth::User()->id;
+                    $counter=Count::where('user_id', $userx)->where('doc_id', $doc_id)->count();
+                    if ($counter!=0){
+                        echo "class ='success'";
+                    }
+
+                    ?>
+                    >
                         <td width="10%">{{ $request->controlNo; }}</td>
                         <td width="30%"><a data-toggle="tooltip" data-placement="top" class="purpose" href="{{ URL::to('purchaseRequest/vieweach/'. $request->id) }}" title="View Project Details">{{ $request->projectPurpose; }}</a></td>
                         <?php $doc = new Document; $doc = DB::table('document')->where('pr_id', $request->id)->get(); ?>
