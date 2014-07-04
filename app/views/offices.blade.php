@@ -5,18 +5,18 @@
 
     <div id="message">
 		@if(Session::get('success'))
-			<div class="alert alert-success"> {{ Session::get('success') }}</div> 
+			<div class="alert alert-success"> {{ Session::get('success') }}.</div> 
 		@endif
 
 		@if(Session::get('invalid'))
-			<div class="alert alert-danger"> {{ Session::get('invalid') }}</div> 
+			<div class="alert alert-danger"> {{ Session::get('invalid') }}.</div> 
 		@endif
 	</div>
 
 	<div id="other_message"></div> 
 
 	@if(Session::get('duplicate-error'))
-		<div class="alert alert-danger" id="duplicate"> {{ Session::get('duplicate-error') }}</div> 
+		<div class="alert alert-danger" id="duplicate"> {{ Session::get('duplicate-error') }}.</div> 
 	@endif
 
     <div id="office-create-form" class="well div-form">

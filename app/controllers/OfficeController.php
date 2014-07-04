@@ -83,7 +83,7 @@ class OfficeController extends BaseController {
 			$message = $validation->messages()->first();
 			$data = array(
 				"fragments" => array(
-					"#other_message" => "<div class='alert alert-danger' id='other_message'>$message</div>",
+					"#other_message" => "<div class='alert alert-danger' id='other_message'>$message.</div>",
 					"#message" =>"<div id='message'> </div>"
 				),
 				"inner-fragments" => array(
@@ -102,7 +102,7 @@ class OfficeController extends BaseController {
 			$updateOffice->save();
 			$data = array(
 				"fragments" => array(
-					"#other_message" => "<div class='alert alert-success' id='other_message'>Changed $oldOfficeName to $updateOffice->officeName </div>",
+					"#other_message" => "<div class='alert alert-success' id='other_message'>Changed $oldOfficeName to $updateOffice->officeName. </div>",
 					"#message" =>"<div id='message'> </div>"
 				),
 				"inner-fragments" => array(
