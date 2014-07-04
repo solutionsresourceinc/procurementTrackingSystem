@@ -69,7 +69,7 @@ echo date_format($date, 'jS F Y');
 			<span style="font-weight: bold">Max Duration: </span><br/>
 			<p><?php
 
-echo $taskd->daysOfAction." days";
+echo $task->maxDuration." days";
 	}		
 
 	?></p>
