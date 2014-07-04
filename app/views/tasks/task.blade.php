@@ -74,7 +74,7 @@ echo $taskd->daysOfAction." days";
 
 	?></p>
 	
-			
+			<br>
 			<p style="font-weight: bold">Remarks: </p>
 <?php 
 
@@ -95,14 +95,7 @@ echo $taskd->remarks;
 if ($taskd->remarks==NULL)
 {
 ?>
-{{ Form::open(['url'=>'remarks'], 'POST') }}
-  <input type ="hidden" name="taskdetails_id" value="{{$taskd->id}}">
-			    {{ Form::textarea('remarks','', array('class'=>'form-control', 'rows'=>'3', 'maxlength'=>'255')) }}
-			    <div class="pull-right">
-				    {{ link_to( 'task/active', 'Cancel', array('class'=>'btn btn-sm btn-default remarks-btn') ) }}
-				    {{ Form::submit('Submit',array('class'=>'btn btn-sm btn-success remarks-btn')) }}
-				</div>
-			{{ Form::close() }}
+No remark.
 <?php
 }
 ?>
@@ -121,9 +114,14 @@ if ($taskd->remarks==NULL)
 <hr class="clear" />
 <?php 
 if ($task->taskType==0){
+	if ($taskd->status!="New"){
 ?>
-			{{ link_to( '#', 'Task Done', array('class'=>'btn btn-primary remarks-btn') ) }}
+		{{ Form::open(['url'=>'remarks'], 'POST') }}
+		<input type ="hidden" name="taskdetails_id" value="{{$taskd->id}}">
+			{{ link_to( '', 'Task Done', array('class'=>'btn btn-primary remarks-btn') ) }}
+			{{ Form::close() }}
 <?php
+}
 }
 else{
 ?>
