@@ -74,7 +74,7 @@
 					}
 					$desig = DB::table('designation')->get();	
 					?>
-					<form class="form ajax" action="submit/{{$section->id}}" data-replace="#insert_{{$section->id}}" method="post" role="form" class="form-inline">
+					<form class="form ajax" action="/workflow/submit/{{$section->id}}" data-replace="#insert_{{$section->id}}" method="post" role="form" class="form-inline">
 						<select name ="designa" class = "form-control mode2 edit-text" style="width:100%">
 							<option value=0>None                                 </option>
 							@foreach ($desig as $desigs)
@@ -147,7 +147,7 @@
 						}
 						$desig = DB::table('designation')->get();	
 						?>
-						<form class="form ajax" action="submit/{{$section->id}}" data-replace="#insert_{{$section->id}}" method="post" role="form" class="form-inline">
+						<form class="form ajax" action="/workflow/submit/{{$section->id}}" data-replace="#insert_{{$section->id}}" method="post" role="form" class="form-inline">
 							<select name ="designa" class = "form-control mode2 edit-text" style="width:100%">
 								<option value=0>None                                 </option>
 								@foreach ($desig as $desigs)
@@ -220,7 +220,7 @@
 							}
 							$desig = DB::table('designation')->get();	
 							?>
-							<form class="form ajax" action="submit/{{$section->id}}" data-replace="#insert_{{$section->id}}" method="post" role="form" class="form-inline">
+							<form class="form ajax" action="/workflow/submit/{{$section->id}}" data-replace="#insert_{{$section->id}}" method="post" role="form" class="form-inline">
 								<select name ="designa" class = "form-control mode2 edit-text" style="width:100%">
 									<option value=0>None                                 </option>
 									@foreach ($desig as $desigs)
@@ -293,7 +293,7 @@
 								}
 								$desig = DB::table('designation')->get();	
 								?>
-								<form class="form ajax" action="submit/{{$section->id}}" data-replace="#insert_{{$section->id}}" method="post" role="form" class="form-inline">
+								<form class="form ajax" action="/workflow/submit/{{$section->id}}" data-replace="#insert_{{$section->id}}" method="post" role="form" class="form-inline">
 									<select name ="designa" class = "form-control mode2 edit-text" style="width:100%">
 										<option value=0>None                                 </option>
 										@foreach ($desig as $desigs)
