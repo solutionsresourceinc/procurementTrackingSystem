@@ -82,10 +82,10 @@
                     ?>
                     @foreach ($office as $offices)
                         <option value= {{ $offices->id }} 
-<?php
-if(Input::old('office')==$offices->id)
-    echo "selected";
-?>
+                            <?php
+                            if(Input::old('office')==$offices->id)
+                                echo "selected";
+                            ?>
                             > {{ $offices->officeName }}</option>
                     @endforeach
                 </select>

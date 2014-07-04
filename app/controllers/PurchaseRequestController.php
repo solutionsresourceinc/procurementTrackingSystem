@@ -152,6 +152,11 @@ class PurchaseRequestController extends Controller {
 		//return $purchase;
 	}
 
+	public function viewAll()
+	{
+		return View::make('purchaseRequest.purchaseRequest_all');
+	}
+
 	public function viewClosed()
 	{
 		return View::make('purchaseRequest.purchaseRequest_closed');
