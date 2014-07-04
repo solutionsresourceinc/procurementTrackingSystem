@@ -168,7 +168,7 @@ Session::forget('imgerror');
 				$taskDetails = new TaskDetails;
 				$taskDetails->doc_id = $document->id;
 
-				$workflow_row = Task::whereWfId($document->work_id)->first();
+				$workflow_row = Task::whereWfId($document->work_id)->whereSectionId(2)->first();
 				$taskDetails->task_id = $workflow_row->id;
 				$taskDetails->status = "New";
 

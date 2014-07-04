@@ -44,7 +44,7 @@ class TaskController extends Controller {
 
 		// Get date today and the due date;
 		$dateReceived = date('Y-m-d H:i:s');
-		$dueDate = date('Y-m-d H:i:s', strtotime("$addToDateReceived days"));
+		$dueDate = date('Y-m-d H:i:s', strtotime("$addToDateReceived days" ));
 
 		$taskDetails->dateReceived = $dateReceived;
 		$taskDetails->dueDate = $dueDate;
@@ -53,27 +53,4 @@ class TaskController extends Controller {
 
 		return Redirect::to('task/task-id');
 	}
-
-	public function remarks()
-	{
-$id= Input::get('taskdetails_id');
-	$remarks =Input::get('remarks');
-  if(ctype_alpha(str_replace(array(' ', '-', '.'),'',$remarks)))
-        {
-$taskd=TaskDetails::find($id);
-$taskd->remarks=$remarks;
-        $taskd->save();
-        Session::put('successremark', 'Remarks saved.');
-        return Redirect::back();
-        }
-    else{
-
-   Session::put('errorremark', 'Invalid remarks.');
-        return Redirect::back();
-
-    }
-
-	}
-
-
 }

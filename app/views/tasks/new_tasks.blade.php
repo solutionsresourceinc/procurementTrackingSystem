@@ -12,7 +12,7 @@
         
             <?php 
                 // Get User id
-                 $user_id = Auth::user()->id;
+                $user_id = Auth::user()->id;
                 // Fetching a row from designation table
                 $designation_row = Designation::find($designation->designation_id);
                 // Get all task in the assigned to that designation

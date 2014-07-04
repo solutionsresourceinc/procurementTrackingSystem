@@ -30,7 +30,7 @@ class CreateCountTable extends Migration {
 	 */
 	public function down()
 	{
-		//
+		Schema::drop('count');
 	}
 
 }
