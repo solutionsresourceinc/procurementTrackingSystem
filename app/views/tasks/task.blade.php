@@ -103,7 +103,7 @@ No remark.
 </div>
 <div id ="formr">
 {{ Form::open(['url'=>'remarks'], 'POST') }}
-			    {{ Form::textarea('remarks','', array('class'=>'form-control', 'rows'=>'3', 'maxlength'=>'255')) }}
+			    {{ Form::textarea('remarks','', array('class'=>'form-control', 'rows'=>'3', 'maxlength'=>'255', 'style'=>'resize:vertical')) }}
 			    <input type ="hidden" name="taskdetails_id" value="{{$taskd->id}}">
 			    <div class='pull-right'>
 				    {{ link_to( 'task/active', 'Cancel', array('class'=>'btn btn-sm btn-default remarks-btn') ) }}
