@@ -45,7 +45,7 @@
                         </div> 
                         {{ Form::open() }}
                         {{ Form::hidden('hide_taskid',$taskDetail->id) }}
-                        {{Form::submit('Accept Task', ['class' => 'btn btn-sm btn-primary accept-button'])}}     
+                      
 
                         {{ Form::close() }}
                     </a>
@@ -56,5 +56,5 @@
         @endforeach
 
     </div>
-    
+
 @stop    
