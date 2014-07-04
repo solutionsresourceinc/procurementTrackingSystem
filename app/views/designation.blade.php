@@ -25,10 +25,7 @@
 
 	<div id="designation-create-form" class="well div-form">
 	    {{ Form::open(['route'=>'designation.store'], 'POST', array('role' => 'form')) }}
-	    	<div class="col-md-3">
-	    		{{ Form::label('designationname', 'Designation:', array('class' => 'create-label')) }}
-	    	</div>
-	    	<div class="col-md-6">
+	    	<div class="col-md-8">
 		    	{{ Form::text('designationName', null, array('class' => 'form-control', 'placeholder' => 'Designation Name')) }}
 		    	@if(Session::get('main_error'))
 						<span class="error-message">Invalid input for designation name.</span>

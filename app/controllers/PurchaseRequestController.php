@@ -141,10 +141,6 @@ class PurchaseRequestController extends Controller {
 	{
 		return View::make('pr_view');
 	}
-	public function viewAll()
-	{
-		return View::make('purchaseRequest.purchaseRequest_all');
-	}
 
 	public function vieweach($id)
 	{
