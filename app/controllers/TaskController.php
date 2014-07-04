@@ -25,7 +25,11 @@ class TaskController extends Controller {
 
 	public function overdue()
 	{
-		return View::make('tasks.overdue_tasks');
+		$user_id = Auth::user()->id;
+		$user_designations = UserHasDesignation::whereUsersId($user_id)->get();
+
+		return View::make('tasks.overdue_tasks')
+				->with('user_designations',$user_designations);
 	}
 
 	public function viewTask()
