@@ -163,6 +163,9 @@ Route::get('workflow/aboveFive', function(){
 Route::get('workflow', function(){
 	return View::make('workflows.workflowdash');
 });
+Route::get('workflowsample', function(){
+	return View::make('workflows.below_fifty_workflow');
+});
 
 Route::post('workflow/replace/{id}', function($id)
 {
@@ -188,7 +191,7 @@ Route::filter('csrf', function()
 // Roles Create Routes (Disabled)
 	//Route::get('create_roles','UserController@getRole');
 Route::get('task/new', 'TaskController@newTask');
-Route::get('task/{$id}/get', 'TaskController@assignTask');
+Route::post('task/new', ['as' => 'accept_task', 'uses' => 'TaskController@assignTask']);
 Route::get('task/active', 'TaskController@active');
 Route::get('task/overdue', 'TaskController@overdue');
 Route::get('task/{id}', function($id){

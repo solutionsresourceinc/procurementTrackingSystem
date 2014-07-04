@@ -253,6 +253,7 @@ Session::forget('imgerror');
 	{
 		return View::make('pr_view');
 	}
+	
 	public function viewAll()
 	{
 		return View::make('purchaseRequest.purchaseRequest_all');

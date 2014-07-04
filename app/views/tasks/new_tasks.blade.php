@@ -11,8 +11,10 @@
         @foreach($user_designations as $designation)
         
             <?php 
+                // Get User id
+                 $user_id = Auth::user()->id;
                 // Fetching a row from designation table
-                $designation_row = Designation::find($designation->designation_id)
+                $designation_row = Designation::find($designation->designation_id);
                 // Get all task in the assigned to that designation
                 $task_row = Task::whereDesignationId($designation->designation_id)->get();
             ?>
@@ -22,13 +24,13 @@
             @foreach($task_row as $task) 
                 <!-- Get all task details with id = task->id -->
                 <?php 
-                    $taskDetails_row = TaskDetails::whereTaskId($task->id)->get(); 
+                    $taskDetails_row = TaskDetails::whereTaskId($task->id)->whereAssigneeId(0)->get(); 
                     $workflow_id = $task->wf_id;
                     $workflow_row = Workflow::find($workflow_id);
                     $workflowName = $workflow_row->workFlowName;
                 ?>
-                <h4><span class="label label-default" data-toggle="tooltip" data-placement="top"  title="{{ $workflowName }}">{{$task->taskName}}</span></h4>
 
+                <h4><span class="label label-default" data-toggle="tooltip" data-placement="top"  title="{{ $workflowName }}">{{$task->taskName}}</span></h4>
                 @foreach($taskDetails_row as $taskDetail)
                     <?php 
                         $doc_id = $taskDetail->doc_id;
@@ -38,20 +40,21 @@
                         $projectName = $purchase_row->projectPurpose;
                     ?>
 
-                    <a href="/task/task-id" class="list-group-item tasks"><span class="glyphicon glyphicon-unchecked pull-left" style="color: rgb(200, 213, 200);margin-top: 3px;"></span>
+                    <a href="/task/task-id" class="list-group-item tasks">
                         <div class="pull-left task-desc" style="margin-left: 10px;">
                             <span class="list-group-item-heading">{{ $task->taskName  }}</span> &nbsp;<small><i> </small><br/>
                             <span class="list-group-item-text">{{ $task->description }}</span> &nbsp; Project: <small><font color="blue">{{$projectName}}</font></small>
                         </div> 
-                        <a href="" class="btn btn-primary">Accept Task</a>
-                        {{Form::button('Accept Task', ['class' => 'btn btn-sm btn-primary accept-button'])}}     
-                    </a>
-                    <br><br><br><br> 
+                        {{ Form::open() }}
+                        {{ Form::hidden('hide_taskid',$taskDetail->id) }}
+                        {{Form::submit('Accept Task', ['class' => 'btn btn-sm btn-primary accept-button'])}}     
 
+                        {{ Form::close() }}
+                    </a>
+                    <br><br><br><br>
                 @endforeach
             @endforeach 
-                
-                <br><br><br><br><br>
+                 <br><br><br><br><br>
         @endforeach
 
     </div>

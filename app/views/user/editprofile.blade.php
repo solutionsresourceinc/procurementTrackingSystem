@@ -2,7 +2,7 @@
 
 @section('content')
     <?php $user = User::find($id); ?>
-    <h1 class="page-header"><center>Edit Profile</center></h1> 
+    <h1 class="page-header">Edit Profile</h1> 
 
     <form method="POST" action="edit"  class = "form-create">
         <fieldset>

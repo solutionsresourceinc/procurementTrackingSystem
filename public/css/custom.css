@@ -357,6 +357,22 @@ table.table td{
 	margin-bottom: 20px;
 }
 
+.proc-details{
+	width: 100%;
+}
+
+.proc-details td{
+	border: solid 1px rgb(204, 204, 204);
+}
+
+.proc-headers{
+	padding: 5px 20px;
+}
+
+.proc-data{
+	padding: 12px 20px;
+}
+
 @media all and (max-width: 1065px){
 	.accept-button{
 		margin: 8px 25px;
