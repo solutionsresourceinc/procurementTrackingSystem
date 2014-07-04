@@ -19,19 +19,16 @@
                 $task_row = Task::whereDesignationId($designation->designation_id)->get();
             ?>
 
-            <div class="alert alert-success"><center>{{$designation_row->designation}}</center></div>
-            
             @foreach($task_row as $task) 
                 <!-- Get all task details with id = task->id -->
                 <?php 
-                    $taskDetails_row = TaskDetails::whereTaskId($task->id)->whereAssigneeId($user_id)->get(); 
+                    $taskDetails_row = TaskDetails::whereTaskId($task->id)->whereStatus("Active")->whereAssigneeId($user_id)->get(); 
                     $workflow_id = $task->wf_id;
                     $workflow_row = Workflow::find($workflow_id);
                     $workflowName = $workflow_row->workFlowName;
                 ?>
 
-                <h4><span class="label label-default" data-toggle="tooltip" data-placement="top"  title="{{ $workflowName }}">{{$task->taskName}}</span></h4>
-                @foreach($taskDetails_row as $taskDetail)
+				@foreach($taskDetails_row as $taskDetail)
                     <?php 
                         $doc_id = $taskDetail->doc_id;
                         $document_row = Document::find($doc_id);

@@ -18,19 +18,16 @@
                 // Get all task in the assigned to that designation
                 $task_row = Task::whereDesignationId($designation->designation_id)->get();
             ?>
-
-            <div class="alert alert-success"><center>{{$designation_row->designation}}</center></div>
-            
+ 
             @foreach($task_row as $task) 
                 <!-- Get all task details with id = task->id -->
                 <?php 
-                    $taskDetails_row = TaskDetails::whereTaskId($task->id)->whereAssigneeId(0)->get(); 
+                    $taskDetails_row = TaskDetails::whereTaskId($task->id)->whereStatus("New")->whereAssigneeId(0)->get(); 
                     $workflow_id = $task->wf_id;
                     $workflow_row = Workflow::find($workflow_id);
                     $workflowName = $workflow_row->workFlowName;
                 ?>
 
-                <h4><span class="label label-default" data-toggle="tooltip" data-placement="top"  title="{{ $workflowName }}">{{$task->taskName}}</span></h4>
                 @foreach($taskDetails_row as $taskDetail)
                     <?php 
                         $doc_id = $taskDetail->doc_id;

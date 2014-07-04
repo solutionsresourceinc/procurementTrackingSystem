@@ -59,7 +59,6 @@ if ($taskd->status!="New"){
 			<span style="font-weight: bold">Due Date: </span><br/>
 			<p><?php
 
-
 	
 $date = new DateTime($taskd->dateReceived);
 $date->add(new DateInterval('P'.$taskd->daysOfAction.'D'));
@@ -74,10 +73,18 @@ echo $taskd->daysOfAction." days";
 	}		
 
 	?></p>
-			<br/>
-			
-
+	
+			<br>
 			<p style="font-weight: bold">Remarks: </p>
+<?php 
+
+if (Session::get('errorremark'))
+	echo  "<div class='alert alert-danger'>".Session::get('errorremark')."</div>";
+if (Session::get('successremark'))
+		echo  "<div class='alert alert-success'>".Session::get('successremark')."</div>";
+Session::forget('errorremark');
+Session::forget('successremark');
+?>
 
 
 
@@ -88,22 +95,16 @@ echo $taskd->remarks;
 if ($taskd->remarks==NULL)
 {
 ?>
-{{ Form::open(['url'=>'remarks'], 'POST') }}
-			    {{ Form::textarea('remarks','', array('class'=>'form-control', 'rows'=>'3', 'maxlength'=>'255')) }}
-			    <div class="pull-right">
-				    {{ link_to( 'task/active', 'Cancel', array('class'=>'btn btn-sm btn-default remarks-btn') ) }}
-				    {{ Form::submit('Submit',array('class'=>'btn btn-sm btn-success remarks-btn')) }}
-				</div>
-			{{ Form::close() }}
+No remark.
 <?php
 }
 ?>
 </p>
 </div>
-
 <div id ="formr">
 {{ Form::open(['url'=>'remarks'], 'POST') }}
 			    {{ Form::textarea('remarks','', array('class'=>'form-control', 'rows'=>'3', 'maxlength'=>'255')) }}
+			    <input type ="hidden" name="taskdetails_id" value="{{$taskd->id}}">
 			    <div class='pull-right'>
 				    {{ link_to( 'task/active', 'Cancel', array('class'=>'btn btn-sm btn-default remarks-btn') ) }}
 				    {{ Form::submit('Submit',array('class'=>'btn btn-sm btn-success remarks-btn')) }}
@@ -113,9 +114,14 @@ if ($taskd->remarks==NULL)
 <hr class="clear" />
 <?php 
 if ($task->taskType==0){
+	if ($taskd->status!="New"){
 ?>
-			{{ link_to( '#', 'Task Done', array('class'=>'btn btn-primary remarks-btn') ) }}
+		{{ Form::open(['url'=>'remarks'], 'POST') }}
+		<input type ="hidden" name="taskdetails_id" value="{{$taskd->id}}">
+			{{ link_to( '', 'Task Done', array('class'=>'btn btn-primary remarks-btn') ) }}
+			{{ Form::close() }}
 <?php
+}
 }
 else{
 ?>
