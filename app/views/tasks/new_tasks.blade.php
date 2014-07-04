@@ -40,7 +40,7 @@
                     <a href="/task/{{$taskDetail->id}}" class="list-group-item tasks">
                         <div class="pull-left task-desc" style="margin-left: 10px;">
                             <span class="list-group-item-heading">{{ $task->taskName  }}</span> &nbsp;<small><i> </small><br/>
-                            <span class="list-group-item-text">{{ $task->description }}</span> &nbsp; Project: <small><font color="blue">{{$projectName}}</font></i></small>
+                            <span class="list-group-item-text">{{ $task->description }}</span> &nbsp;<br> Project: <small><font color="blue">{{$projectName}}</font></i></small>
                         </div> 
                         {{ Form::open() }}
                         {{ Form::hidden('hide_taskid',$taskDetail->id) }}
