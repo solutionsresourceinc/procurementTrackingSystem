@@ -40,4 +40,27 @@ class TaskController extends Controller {
 		$taskDetails->save();
 		return Redirect::to('task/task-id');
 	}
+
+	public function remarks()
+	{
+$id= Input::get('taskdetails_id');
+	$remarks =Input::get('remarks');
+  if(ctype_alpha(str_replace(array(' ', '-', '.'),'',$remarks)))
+        {
+$taskd=TaskDetails::find($id);
+$taskd->remarks=$remarks;
+        $taskd->save();
+        Session::put('successremark', 'Remarks saved.');
+        return Redirect::back();
+        }
+    else{
+
+   Session::put('errorremark', 'Invalid remarks.');
+        return Redirect::back();
+
+    }
+
+
+
+	}
 }
