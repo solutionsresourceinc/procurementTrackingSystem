@@ -194,7 +194,14 @@ Route::get('task/new', 'TaskController@newTask');
 Route::post('task/new', ['as' => 'accept_task', 'uses' => 'TaskController@assignTask']);
 Route::get('task/active', 'TaskController@active');
 Route::get('task/overdue', 'TaskController@overdue');
-Route::get('task/task-id', 'TaskController@viewTask');
+Route::get('task/{id}', function($id){
+	
+	Session::put('taskdetails_id', $id);
+
+return View::make('tasks.task');
+}
+
+);
 
 // AJAX Routes
 
