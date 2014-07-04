@@ -7,12 +7,12 @@
 @section('content')
 	<!-- Creates the form -->
     <h1 class="page-header">Workflows</h1>
-    <div>
+    <!--div>
         <a href="{{ URL::to('workflow/belowFifty') }}" class="btn btn-success">Below P50,000</a>
         <a href="{{ URL::to('workflow/aboveFifty') }}" class="btn btn-success">Between P50,000 and P500,000</a>
         <a href="{{ URL::to('workflow/aboveFive') }}" class="btn btn-success">Above P500,000</a>
         <br><br><br>
-	</div>
+	</div-->
     <ul class="nav nav-tabs" role="tablist" id="myTab">
       <li class="active"><a href="#home" role="tab" data-toggle="tab">Below P50,000</a></li>
       <li><a href="#profile" role="tab" data-toggle="tab">Between P50,000 and P500,000</a></li>

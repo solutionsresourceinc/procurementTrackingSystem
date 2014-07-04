@@ -170,6 +170,7 @@ Session::forget('imgerror');
 
 				$workflow_row = Task::whereWfId($document->work_id)->first();
 				$taskDetails->task_id = $workflow_row->id;
+				$taskDetails->status = "New";
 
 				$taskDetails->save();
 

@@ -23,6 +23,7 @@ class CreateTaskDetailsTable extends Migration {
 			$table->integer('doc_id')->references('id')->on('purchase_request');
 			$table->dateTime('otherDate');
 			$table->dateTime('dateReceived');
+			$table->dateTime('dueDate');
 			$table->timestamps();
 		});
 	}
