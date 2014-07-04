@@ -9,10 +9,10 @@
     <div class="list-group">
 
         @foreach($user_designations as $designation)
-            <!-- Fetching a row from designation table -->
-            <?php $designation_row = Designation::find($designation->designation_id)?>
-
+        
             <?php 
+                // Fetching a row from designation table
+                $designation_row = Designation::find($designation->designation_id)
                 // Get all task in the assigned to that designation
                 $task_row = Task::whereDesignationId($designation->designation_id)->get();
             ?>

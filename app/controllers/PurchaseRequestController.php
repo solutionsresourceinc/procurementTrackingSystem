@@ -56,7 +56,7 @@ class PurchaseRequestController extends Controller {
 				$taskDetails = new TaskDetails;
 				$taskDetails->doc_id = $document->id;
 
-				$workflow_row = Task::whereWfId($document->work_id)->first();
+				$workflow_row = Task::whereWfId($document->work_id)->whereSectionId(2)->first();
 				$taskDetails->task_id = $workflow_row->id;
 
 				$taskDetails->save();
@@ -154,11 +154,6 @@ class PurchaseRequestController extends Controller {
 		return View::make('purchaseRequest.purchaseRequest_view')
 		->with('purchase', $purchase)->with('wfName',$wfName);
 		//return $purchase;
-	}
-
-	public function viewAll()
-	{
-		return View::make('purchaseRequest.purchaseRequest_all');
 	}
 
 	public function viewClosed()

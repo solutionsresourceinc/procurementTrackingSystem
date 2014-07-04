@@ -60,7 +60,7 @@ class UserTableSeeder extends Seeder {
         $user->confirmed = 1;
         $user->office_id = 2;
         $user->save();
-
+/*
         $user = new User;
         $user->id = '4';
         $user->username = 'arben1';
@@ -73,5 +73,6 @@ class UserTableSeeder extends Seeder {
         $user->confirmed = 1;
         $user->office_id = 2;
         $user->save();
+        */
     }
 }
