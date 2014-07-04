@@ -38,9 +38,9 @@
 				<tr>
 			    	<th>
 			    		@if($offices->count()>1)
-			    			Requisitioning Offices
+			    			Offices
 			    		@else
-			    			Requisitioning Office
+			    			Office
 			    		@endif
 			    	</th>
 			    	<th>Actions</th>
