@@ -47,8 +47,8 @@
 
 
 @if(Session::get('notice'))
-			<div class="alert alert-success"> {{ Session::get('notice') }}</div> 
-			@endif
+	<div class="alert alert-success"> {{ Session::get('notice') }}</div> 
+@endif
 
 <table id="table_id" class="table table-striped display tablesorter">
 	<thead>
@@ -58,19 +58,25 @@
 			<th>Lastname</th>
 			<th>Role</th>
 			<th>Office</th>
-			<?php
-			$adm = Assigned::where('user_id', Auth::User()->id)->first();
-			$users= new User; $users = DB::table('users')->get();
-			if($adm->role_id == 3) {
-				?>
-				<th>Action</th>
-				<?php } ?>
-			</tr>
-		</thead>
 
-		<tbody>
-			@foreach ($users as $user)
+			<?php
+				// get user info in
+				$adm = Assigned::where('user_id', Auth::User()->id)->first();
+
+				// get all users in users table
+				$users = DB::table('users')->get();
+				if($adm->role_id == 3) 
+				{
+			?>
+				<th>Action</th>
+			<?php } ?>
+		</tr>
+	</thead>
+
+	<tbody>
+		@foreach ($users as $user)
 			<?php $assigned = Assigned::where('user_id', $user->id)->first(); ?>
+
 
 			<tr>
 				@if($user->confirmed == 0)
