@@ -27,8 +27,9 @@ $count= Count::where('pr_id','=', $purchase->id)->where('user_id','=', $luser )-
 	@if(Session::get('notice'))
         <div class="alert alert-success"> {{ Session::get('notice') }}</div> 
     @endif
-	<!-- put control number (id) here -->
-	<h2 class="pull-left"> {{ $purchase->controlNo }} </h2>
+
+	<!--h2 class="pull-left"> {{ $purchase->controlNo }} </h2-->
+	<h2 class="pull-left">Purchase Request Details </h2>
 
 	<!-- change urls when when purchase request functions are final -->
 	<div class="btn-group pull-right options">
@@ -46,7 +47,7 @@ $count= Count::where('pr_id','=', $purchase->id)->where('user_id','=', $luser )-
 
 	<hr class="clear" />
 
-	<!-- purchase details section -->
+	<!-- purchase details section 
 	<div class="well">
 		<table width="100%" class="pr-details-table">
 			<tr>
@@ -82,6 +83,44 @@ $count= Count::where('pr_id','=', $purchase->id)->where('user_id','=', $luser )-
 				<td>{{ $purchase->amount }}</td>
 			</tr>
 		</table>
+	</div>-->
+
+	<div class="panel panel-success">
+		<div class="panel-body">
+			<table border="1" class="proc-details">
+				<tr>
+					<td class="proc-headers" colspan="2"><h4>
+						@if($wfName->work_id == 1)
+							SMALL VALUE PROCUREMENT (BELOW P50,000)
+						@elseif($wfName->work_id == 2)
+							SMALL VALUE PROCUREMENT (ABOVE P50,000 BELOW P500,000)
+						@else
+							BIDDING (ABOVE P500,000)
+						@endif
+					</h4></td>
+					<td class="proc-headers" width="32.5%"><h4 align="center">{{ $purchase->controlNo }}</h4></td>
+				</tr>
+				<tr>
+					<td class="proc-headers" width="30%"><h5>REQUISITIONER</h5></td>
+					<td class="proc-data" colspan="2">
+						<?php $user = User::find($purchase->requisitioner) ?>
+						{{ $user->lastname . ", " . $user->firstname }}
+					</td>
+				</tr>
+				<tr>
+					<td class="proc-headers" width="30%"><h5>PROJECT / PURPOSE</h5></td>
+					<td class="proc-data" colspan="2">{{ $purchase->projectPurpose }}</td>
+				</tr>
+				<tr>
+					<td class="proc-headers" width="30%"><h5>SOURCE OF FUNDS</h5></td>
+					<td class="proc-data" colspan="2">{{ $purchase->sourceOfFund }}</td>
+				</tr>
+				<tr>
+					<td class="proc-headers" width="30%"><h5>ABC AMOUNT</h5></td>
+					<td class="proc-data" colspan="2">{{ $purchase->amount }}</td>
+				</tr>
+			</table>
+		</div>
 	</div>
 
 	<!-- START CHECKLIST SECTION BY JAN SARMIENTO AWESOME -->

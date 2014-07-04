@@ -163,6 +163,9 @@ Route::get('workflow/aboveFive', function(){
 Route::get('workflow', function(){
 	return View::make('workflows.workflowdash');
 });
+Route::get('workflowsample', function(){
+	return View::make('workflows.below_fifty_workflow');
+});
 
 Route::post('workflow/replace/{id}', function($id)
 {
