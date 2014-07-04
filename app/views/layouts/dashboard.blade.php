@@ -77,119 +77,115 @@
           <ul class="nav navbar-nav side-nav">
             <li class="{{Request::is('dashboard') ? 'active':''}}"><a href="/"><!--i class="fa fa-dashboard"></i--> Dashboard</a></li>
             <li class="{{(Request::is('purchaseRequests') || Request::is('purchaseRequest/view') || Request::is('purchaseRequest/closed') || Request::is('purchaseRequest/overdue')) ? 'active' : ''}}"><a href="/purchaseRequests">Purchase Requests</a>
-                @if(Request::is('purchaseRequests') || Request::is('purchaseRequest/view') || Request::is('purchaseRequest/closed') || Request::is('purchaseRequest/overdue'))
-                    <ul class="side-submenu">
-                        <li class="{{Request::is('purchaseRequest/view') ? 'active':''}}">
-                            <a href="/purchaseRequest/view">
-                                Active Purchase Requests
-                                <span class="badge pull-right">
-                                <?php
-                                            $result=0;
-                                            $cuser= Auth::user()->id;
-                                       $cpurchase= DB::table('purchase_request')->where('status', '=', 'New')->orWhere('status', '=', 'In progress')->get();
-                                    foreach ($cpurchase as $cpurchases ) {
-                                        $doc=Document::where('pr_id', $cpurchases->id)->first();
-                                        $count= DB::table('count')->where('doc_id', $doc->id)->where('user_id', $cuser)->count();
-                                        if($count==0){
+                <ul class="side-submenu">
+                    <li class="{{Request::is('purchaseRequest/view') ? 'active':''}}">
+                        <a href="/purchaseRequest/view">
+                            Active Purchase Requests
+                            <span class="badge pull-right">
+                            <?php
+                                        $result=0;
+                                        $cuser= Auth::user()->id;
+                                   $cpurchase= DB::table('purchase_request')->where('status', '=', 'New')->orWhere('status', '=', 'In progress')->get();
+                                foreach ($cpurchase as $cpurchases ) {
+                                    $doc=Document::where('pr_id', $cpurchases->id)->first();
+                                    $count= DB::table('count')->where('doc_id', $doc->id)->where('user_id', $cuser)->count();
+                                    if($count==0){
 
-                                        }
-                                        else
-                                            {$result=$result+1;}
                                     }
-                                    echo $result;
+                                    else
+                                        {$result=$result+1;}
+                                }
+                                echo $result;
 
-                                    ?>
-                                </span>
-                            </a>
-                        </li>
-                        <li class="{{Request::is('purchaseRequest/closed') ? 'active':''}}">
-                            <a href="/purchaseRequest/closed">
-                                Closed Purchase Requests
-                                <span class="badge pull-right">
-                                   <?php
-                                            $result=0;
-                                            $cuser= Auth::user()->id;
-                                       $cpurchase= DB::table('purchase_request')->where('status', '=', 'Closed')->get();
-                                    foreach ($cpurchase as $cpurchases ) {
-                                        $doc=Document::where('pr_id', $cpurchases->id)->first();
-                                        $count= DB::table('count')->where('doc_id', $doc->id)->where('user_id', $cuser)->count();
-                                        if($count==0){
+                                ?>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="{{Request::is('purchaseRequest/closed') ? 'active':''}}">
+                        <a href="/purchaseRequest/closed">
+                            Closed Purchase Requests
+                            <span class="badge pull-right">
+                               <?php
+                                        $result=0;
+                                        $cuser= Auth::user()->id;
+                                   $cpurchase= DB::table('purchase_request')->where('status', '=', 'Closed')->get();
+                                foreach ($cpurchase as $cpurchases ) {
+                                    $doc=Document::where('pr_id', $cpurchases->id)->first();
+                                    $count= DB::table('count')->where('doc_id', $doc->id)->where('user_id', $cuser)->count();
+                                    if($count==0){
 
-                                        }
-                                        else
-                                            {$result=$result+1;}
                                     }
-                                    echo $result;
+                                    else
+                                        {$result=$result+1;}
+                                }
+                                echo $result;
 
-                                    ?>
-                                </span></a>
-                        </li>
-                        <li class="{{Request::is('purchaseRequest/overdue') ? 'active':''}}">
-                            <a href="/purchaseRequest/overdue">
-                                Overdue Purchase Requests
-                                <span class="badge pull-right">
-                                          <?php
-                                            $result=0;
-                                            $cuser= Auth::user()->id;
-                                       $cpurchase= DB::table('purchase_request')->where('status', '=', 'Overdue')->orWhere('status', '=', 'In progress')->get();
-                                    foreach ($cpurchase as $cpurchases ) {
-                                       $doc=Document::where('pr_id', $cpurchases->id)->first();
-                                        $count= DB::table('count')->where('doc_id', $doc->id)->where('user_id', $cuser)->count();
-                                        if($count==0){
+                                ?>
+                            </span></a>
+                    </li>
+                    <li class="{{Request::is('purchaseRequest/overdue') ? 'active':''}}">
+                        <a href="/purchaseRequest/overdue">
+                            Overdue Purchase Requests
+                            <span class="badge pull-right">
+                                      <?php
+                                        $result=0;
+                                        $cuser= Auth::user()->id;
+                                   $cpurchase= DB::table('purchase_request')->where('status', '=', 'Overdue')->orWhere('status', '=', 'In progress')->get();
+                                foreach ($cpurchase as $cpurchases ) {
+                                   $doc=Document::where('pr_id', $cpurchases->id)->first();
+                                    $count= DB::table('count')->where('doc_id', $doc->id)->where('user_id', $cuser)->count();
+                                    if($count==0){
 
-                                        }
-                                        else
-                                            {$result=$result+1;}
                                     }
-                                    echo $result;
+                                    else
+                                        {$result=$result+1;}
+                                }
+                                echo $result;
 
-                                    ?>
-                                </span>
-                            </a>
-                        </li>
-                        <li class="{{Request::is('purchaseRequest/cancelled') ? 'active':''}}">
-                            <a href="/purchaseRequest/cancelled">
-                                Cancelled Purchase Requests
-                                <span class="badge pull-right">
-                                          <?php
-                                            $result=0;
-                                            $cuser= Auth::user()->id;
-                                       $cpurchase= DB::table('purchase_request')->where('status', '=', 'Cancelled')->orWhere('status', '=', 'In progress')->get();
-                                    foreach ($cpurchase as $cpurchases ) {
-                                      $doc=Document::where('pr_id', $cpurchases->id)->first();
-                                        $count= DB::table('count')->where('doc_id', $doc->id)->where('user_id', $cuser)->count();
-                                        if($count==0){
+                                ?>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="{{Request::is('purchaseRequest/cancelled') ? 'active':''}}">
+                        <a href="/purchaseRequest/cancelled">
+                            Cancelled Purchase Requests
+                            <span class="badge pull-right">
+                                      <?php
+                                        $result=0;
+                                        $cuser= Auth::user()->id;
+                                   $cpurchase= DB::table('purchase_request')->where('status', '=', 'Cancelled')->orWhere('status', '=', 'In progress')->get();
+                                foreach ($cpurchase as $cpurchases ) {
+                                  $doc=Document::where('pr_id', $cpurchases->id)->first();
+                                    $count= DB::table('count')->where('doc_id', $doc->id)->where('user_id', $cuser)->count();
+                                    if($count==0){
 
-                                        }
-                                        else
-                                            {$result=$result+1;}
                                     }
-                                    echo $result;
+                                    else
+                                        {$result=$result+1;}
+                                }
+                                echo $result;
 
-                                    ?>
-                                </span>
-                            </a>
-                        </li>
-                    </ul>
-                @endif
+                                ?>
+                            </span>
+                        </a>
+                    </li>
+                </ul>
             </li>
             
             <!-- Change ID -->
              @if( Entrust::hasRole('Administrator') || Entrust::hasRole('Procurement Personnel') )
-            <li class="{{(Request::is('task/new') || Request::is('task/active') || Request::is('task/overdue') || Request::is('task/task-id')) ? 'active' : ''}}"><a href="/task/active">Tasks</a>
-                @if(Request::is('task/new') || Request::is('task/active') || Request::is('task/overdue') || Request::is('task/task-id'))
-                    <ul class="side-submenu">
-                        <li class="{{Request::is('task/new') ? 'active':''}}">
-                            <a href="/task/new">New Tasks<span class="badge pull-right">10</span></a>
-                        </li>
-                        <li class="{{Request::is('task/active') ? 'active':''}}">
-                            <a href="/task/active">Active Tasks<span class="badge pull-right">10</span></a>
-                        </li>
-                        <li class="{{Request::is('task/overdue') ? 'active':''}}">
-                            <a href="/task/overdue">Overdue Tasks<span class="badge pull-right">10</span></a>
-                        </li>
-                    </ul>
-                @endif
+            <li class="{{(Request::is('task/new') || Request::is('task/active') || Request::is('task/overdue') || Request::is('task/task-id')) ? 'active' : ''}}"><a href="/task/new">Tasks</a>
+                <ul class="side-submenu">
+                    <li class="{{Request::is('task/new') ? 'active':''}}">
+                        <a href="/task/new">New Tasks<span class="badge pull-right">10</span></a>
+                    </li>
+                    <li class="{{Request::is('task/active') ? 'active':''}}">
+                        <a href="/task/active">Active Tasks<span class="badge pull-right">10</span></a>
+                    </li>
+                    <li class="{{Request::is('task/overdue') ? 'active':''}}">
+                        <a href="/task/overdue">Overdue Tasks<span class="badge pull-right">10</span></a>
+                    </li>
+                </ul>
             </li>
             @endif
         </ul>
