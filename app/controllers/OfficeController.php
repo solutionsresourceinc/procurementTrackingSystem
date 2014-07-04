@@ -44,19 +44,19 @@ class OfficeController extends BaseController {
 		$validation = Validator::make(Input::all(), $rules);
 
 		if($validation->fails()){
-			return Redirect::back()->withInput()->withErrors($validation->messages())->with('invalid', 'Office entry not created.');
+			return Redirect::back()->withInput()->withErrors($validation->messages())->with('invalid', 'Invalid input for office name.');
 		}
 
 		$input=Input::all();
 
 		if(!$this->office->fill($input)->isValid()) 
 		{
-			return Redirect::back()->withInput()->withErrors($this->office->errors)->with('invalid', 'Office entry not created.');
+			return Redirect::back()->withInput()->withErrors($this->office->errors)->with('invalid', 'Invalid input for office name.');
 		}
 		else
 		{
 			$this->office->save();
-			return Redirect::to('/offices')->with('success', 'Successfully created an office');
+			return Redirect::to('/offices')->with('success', 'Successfully created an office.');
 		}
 	}
 
@@ -83,7 +83,7 @@ class OfficeController extends BaseController {
 			$message = $validation->messages()->first();
 			$data = array(
 				"fragments" => array(
-					"#other_message" => "<div class='alert alert-danger' id='other_message'>$message.</div>",
+					"#other_message" => "<div class='alert alert-danger' id='other_message'>$message</div>",
 					"#message" =>"<div id='message'> </div>"
 				),
 				"inner-fragments" => array(

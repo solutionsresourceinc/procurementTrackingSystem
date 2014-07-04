@@ -5,25 +5,24 @@
 
     <div id="message">
 		@if(Session::get('success'))
-			<div class="alert alert-success"> {{ Session::get('success') }}.</div> 
+			<div class="alert alert-success"> {{ Session::get('success') }}</div> 
 		@endif
 
 		@if(Session::get('invalid'))
-			<div class="alert alert-danger"> {{ Session::get('invalid') }}.</div> 
+			<div class="alert alert-danger"> {{ Session::get('invalid') }}</div> 
 		@endif
 	</div>
 
 	<div id="other_message"></div> 
 
 	@if(Session::get('duplicate-error'))
-		<div class="alert alert-danger" id="duplicate"> {{ Session::get('duplicate-error') }}.</div> 
+		<div class="alert alert-danger" id="duplicate"> {{ Session::get('duplicate-error') }}</div> 
 	@endif
 
     <div id="office-create-form" class="well div-form">
     	{{ Form::open(['route'=>'offices.store'], 'POST', array('role' => 'form')) }}
 	    	<div class="col-md-8">
 		    	{{ Form::text('officeName', null, array('class' => 'form-control', 'placeholder' => 'Office Name')) }}
-		    	{{ $errors->first('officeName', '<span class="error-message">Invalid input for office name.</span>') }}
 		    </div>
 		    <div class="col-md-3">
 		    	{{ Form::submit('Add', array('class' => 'btn btn-success btn-block create-btn')) }}
