@@ -188,9 +188,10 @@
                     <li class="{{Request::is('task/active') ? 'active':''}}">
                         <a href="/task/active">Active Tasks<span class="badge pull-right">
                         <?php
-                        $taskcount=Taskdetails::where('status', 'Active'
-                            )->count();
-                        echo $taskcount;
+                            $user_id = Auth::user()->id;
+                            $date_today =date('Y-m-d H:i:s');
+                            $taskcount=Taskdetails::where('status', 'Active')->where("dueDate",">",$date_today)->whereAssigneeId($user_id)->count();
+                            echo $taskcount;
                         ?>
                         </span></a>
                     </li>
@@ -198,26 +199,12 @@
                         <a href="/task/overdue">Overdue Tasks<span class="badge pull-right">
 
                         <?php
-                        $taskcount=0;
-
-                        $taskd=Taskdetails::where('status', 'Active'
-                            )->get();
-                        foreach ($taskd as $taskds) {
-
-                            $task=Task::find($taskds->task_id);
-                             $date = new DateTime($taskds->dateReceived);
-$date->add(new DateInterval('P'.$task->maxDuration.'D'));
-     
-            $today= date('m/d/Y g:i As');
-if ($date > $today )
- $taskcount=$taskcount+1;
-                        
-                    
-                  
-                }
-
-                        echo $taskcount;
+                            $taskcount=0;
+                            $date_today =date('Y-m-d H:i:s');
+                            $taskd=Taskdetails::where('status', 'Active')->where("dueDate","<",$date_today)->whereAssigneeId($user_id)->count();
+                            echo $taskd;
                         ?>
+
                         </span></a>
                     </li>
                 </ul>
