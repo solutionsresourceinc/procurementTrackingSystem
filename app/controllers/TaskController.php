@@ -40,7 +40,7 @@ $pr_id=Input::get('pr_id');
 $taskd= TaskDetails::find($taskdetails_id);
 $taskd->status="Done";
   
-    $birth = new DateTime($taskd->dateReceived); 
+$birth = new DateTime($taskd->dateReceived); 
 $today = new DateTime(); 
 $diff = $birth->diff($today); 
 $aDays= $diff->format('%d');
