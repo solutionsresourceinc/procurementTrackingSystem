@@ -18,9 +18,6 @@ class PurchaseRequestController extends Controller {
 
 		$purchase = new Purchase;
 		$document = new Document;
-
-
-
 		$purchase->projectPurpose = Input::get( 'projectPurpose' );
 		$purchase->sourceOfFund = Input::get( 'sourceOfFund' );
 		$purchase->amount = Input::get( 'amount' );
@@ -29,8 +26,6 @@ class PurchaseRequestController extends Controller {
 		$purchase->dateRequested = Input::get( 'dateRequested' );
 		$purchase->controlNo = Input::get('controlNo');
 		$purchase->status = 'New';
-		
-
 		$purchase_save = $purchase->save();
 
 		if($purchase_save)
@@ -46,9 +41,33 @@ class PurchaseRequestController extends Controller {
 
 $doc_id= $document->id;
 
+$workflow=Workflow::find($document->work_id);
+
+$section=Section::where('workflow_id',$workflow->id)->orderBy('section_order_id', 'ASC')->get();
+$firstnew=0;
+
+
+foreach ($section as $sections) {
+	$task=Task::where('wf_id', $document->work_id)->where('section_id', $sections->id)->orderBy('section_id', 'ASC')->get();
+	foreach ($task as $tasks) {
+ $taskd= New TaskDetails;
+ $taskd->task_id=$tasks->id;
+
+	if($firstnew==0)
+	 	$taskd->status="New";
+ 	else
+ 		$taskd->status="Pending";
+	$firstnew=1;
+	$taskd->doc_id= $document->id;
+	$taskd->save();
+	}
+}
+
+
+
+
 $userx= User::get();
 foreach($userx as $userv){
-
 $count= new Count;
 $count->user_id= $userv->id;
 $count->doc_id= $doc_id;
@@ -164,15 +183,6 @@ Session::forget('imgerror');
 					DB::table('document')->where('pr_id', '=',$pr_id )->where('id','!=',$doc_id)->delete();
 					Session::forget('doc_id');
 				}
-
-				$taskDetails = new TaskDetails;
-				$taskDetails->doc_id = $document->id;
-
-				$workflow_row = Task::whereWfId($document->work_id)->whereSectionId(2)->first();
-				$taskDetails->task_id = $workflow_row->id;
-				$taskDetails->status = "New";
-
-				$taskDetails->save();
 
 				$notice = "Purchase request created successfully. ";										  
 				Session::put('notice', $notice);

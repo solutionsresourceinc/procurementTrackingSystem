@@ -113,24 +113,19 @@ No remark.
 </div>
 <hr class="clear" />
 <?php 
-if ($task->taskType==0){
-	if ($taskd->status!="New"){
-?>
-		{{ Form::open(['url'=>'remarks'], 'POST') }}
-		<input type ="hidden" name="taskdetails_id" value="{{$taskd->id}}">
-			{{ link_to( '', 'Task Done', array('class'=>'btn btn-primary remarks-btn') ) }}
-			{{ Form::close() }}
-<?php
-}
-}
-else{
-?>
-			{{ link_to( '#', 'Approve', array('class'=>'btn btn-primary remarks-btn') ) }}
-			{{ link_to( '#', 'Reject', array('class'=>'btn btn-danger remarks-btn') ) }}
-			
 
+	if ($taskd->status=="Active"){
+?>
+		{{ Form::open(['url'=>'done'], 'POST') }}
+		<input type ="hidden" name="taskdetails_id" value="{{$taskd->id}}">
+		<input type ="hidden" name="task_id" value="{{$task->id}}">
+		<input type ="hidden" name="doc_id" value="{{$doc->id}}">
+		<input type ="hidden" name="pr_id" value="{{$purchase->id}}">
+		{{ Form::submit('Done',array('class'=>'btn btn-sm btn-success')) }}
+		{{ Form::close() }}
 <?php
 }
+	
 
 ?>	
 		</div>

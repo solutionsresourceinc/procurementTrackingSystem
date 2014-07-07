@@ -19,7 +19,6 @@
 
 @section('content')
 <h1 class="page-header">Create New Purchase Request</h1>
-
 <div class="form-create fc-div">
 	{{ Form::open(array('url' => 'newcreate','files' => true), 'POST') }}
 	<div class="row">

@@ -194,7 +194,7 @@ Route::get('task/new', 'TaskController@newTask');
 
 Route::post('task/new', ['as' => 'accept_task', 'uses' => 'TaskController@assignTask']);
 Route::post('remarks', 'TaskController@remarks');
-
+Route::post('done', 'TaskController@done');
 Route::get('task/active', 'TaskController@active');
 Route::get('task/overdue', 'TaskController@overdue');
 Route::get('task/{id}', function($id){
@@ -268,3 +268,4 @@ $notice="Attachment successfully deleted.";
 Route::get('test', function(){
 	return View::make('test');
 });
+
