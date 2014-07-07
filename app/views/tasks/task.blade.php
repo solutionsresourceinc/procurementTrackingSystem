@@ -39,7 +39,16 @@ $purchase = Purchase::find($doc->pr_id);
 		    <div class="pull-right" style="margin-top: 10px;">
 		<?php
 if($taskd->status=="New"){
-		?>		{{Form::button('Accept Task', ['class' => 'btn btn-primary', 'style' => 'margin-bottom: 10px'])}}
+
+		?>	
+
+
+   {{ Form::open(['route'=>'accept_task']) }}
+                        {{ Form::hidden('hide_taskid',$taskdetails_id) }}
+                        {{Form::submit('Accept Task', ['class' => 'btn btn-sm btn-primary accept-button', 'style' => 'margin-bottom: 10px'])}}     
+
+                        {{ Form::close() }}
+
 			<?php
 }
 			?>
