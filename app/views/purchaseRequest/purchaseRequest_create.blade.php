@@ -12,6 +12,7 @@
 
 
 	{{ HTML::script('js/jquery.chained.min.js') }} 
+	{{ HTML::script('js/bootstrap.file-input.js') }}  
 
 @stop
 
@@ -196,7 +197,7 @@
 						<?php $doc_id=$doc_id+1; ?>
 						{{ Form::open(array('url' => 'addimage', 'files' => true)) }}
 
-						<input name="file[]" type="file"  multiple/>
+						<input name="file[]" type="file"  multiple title="Select images to upload" data-filename-placement="inside"/>
 						<input name="doc_id" type="hidden" value="{{ $doc_id }}">
 
 						<br>
@@ -260,6 +261,8 @@
 @section('footer')
 
 	<script type="text/javascript">
+	$('input[type=file]').bootstrapFileInput();
+    $('.file-inputs').bootstrapFileInput();
 	function isNumberKey(evt)
 	{
 		var charCode = (evt.which) ? evt.which : event.keyCode

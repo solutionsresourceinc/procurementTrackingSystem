@@ -16,6 +16,7 @@
 <!--End Image Display-->
 
 {{ HTML::script('js/jquery.chained.min.js') }} 
+{{ HTML::script('js/bootstrap.file-input.js') }} 
 
 
 @stop
@@ -217,10 +218,13 @@ $epurchase=Purchase::find($id);
                     <br>
                 </div>
             </div>
+
+            <label class="create-label">Related files:</label>
             <div class="panel panel-default fc-div">
                 <div class="panel-body" style="padding: 5px 20px;">
-                    <h2>Attachments</h2>
-                    <br>
+                    <!--h2>Attachments</h2>
+                    <br-->
+
                     @if(Session::get('imgsuccess'))
                         <div class="alert alert-success"> {{ Session::get('imgsuccess') }}</div> 
                     @endif
@@ -235,7 +239,7 @@ $epurchase=Purchase::find($id);
                         $document = Document::where('pr_id', $epurchase->id)->first();
                         $doc_id= $document->id;
                     ?>
-                    <input name="file[]" type="file"  multiple/>
+                    <input name="file[]" type="file"  multiple title="Select image to attach" data-filename-placement="inside"/>
                     <input name="doc_id" type="hidden" value="{{ $doc_id }}">
                     <br>
                     <br>
@@ -292,6 +296,8 @@ $epurchase=Purchase::find($id);
 
 @section('footer')
     <script type="text/javascript">
+    $('input[type=file]').bootstrapFileInput();
+    $('.file-inputs').bootstrapFileInput();
     function numberWithCommas(amount) 
     {
         amount = amount.replace(',','');    
