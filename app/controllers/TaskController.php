@@ -57,6 +57,6 @@ class TaskController extends Controller {
 
 		$taskDetails->save();
 
-		return Redirect::to('task/task-id');
+		return Redirect::to("task/$id");
 	}
 }
