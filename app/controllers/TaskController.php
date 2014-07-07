@@ -55,7 +55,7 @@ $tasknext->save();
 else
 {
 $purchase= Purchase::find($pr_id);
-$purchase->status="Completed";
+$purchase->status="Closed";
 $purchase->save();
 }
 
