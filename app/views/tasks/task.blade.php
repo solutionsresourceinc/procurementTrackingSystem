@@ -68,10 +68,7 @@ if ($taskd->status!="New"){
 			<span style="font-weight: bold">Due Date: </span><br/>
 			<p><?php
 
-	
-$date = new DateTime($taskd->dateReceived);
-$date->add(new DateInterval('P'.$taskd->daysOfAction.'D'));
-echo date_format($date, 'jS F Y');
+	echo $taskd->dueDate;
 	}
 	else{
 		?>
