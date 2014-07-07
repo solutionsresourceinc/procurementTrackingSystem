@@ -4,7 +4,7 @@
     <?php $user = User::find($id); ?>
     <h1 class="page-header">Edit Profile</h1> 
 
-    <form method="POST" action="edit"  class = "form-create">
+    <form method="POST" url="editprof"  class = "form-create">
         <fieldset>
             @if ( Session::get('msg') )
                 <div class="alert alert-error alert-danger">
