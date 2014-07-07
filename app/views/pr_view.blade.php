@@ -3,17 +3,7 @@
 @section('content')
 
 
-{{ Session::forget('main_error'); }}
-{{ Session::forget('m1'); }}
-{{ Session::forget('m2'); }}
-{{ Session::forget('m3'); }}
-{{ Session::forget('m4'); }}
-{{ Session::forget('m5'); }}
-{{ Session::forget('m6'); }}
-{{ Session::forget('m7'); }}
-{{ Session::forget('imgsuccess'); }}
-{{ Session::forget('imgerror'); }}
-        <h1 class="pull-left">List of Active Purchase Requests</h1>
+<h1 class="pull-left">List of Active Purchase Requests</h1>
     
     @if ( Entrust::hasRole('Administrator') || Entrust::hasRole('Procurement Personnel'))
       <div class="pull-right options">
@@ -22,24 +12,32 @@
     @endif
 
     <hr class="clear" />
+<div id="pr_form">
+    <form action="submitForm/" id="new_form" method="post" id="confirm">
+</div>
 
     <div class="modal fade" id="confirmDelete" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
+                
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Delete Purchase Request</h4>
+                    <h4 class="modal-title">Cancel Purchase Request</h4>
                 </div>
                 <div class="modal-body">
-                    <p>Are you sure you want to delete purchase request?</p>
+                    <p>Reason for cancelling purchase request:</p>
+                    <textarea id="reason" class="form-control" rows="3" maxlength="255", style="resize:vertical"></textarea>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-danger" id="confirm">Delete</button>
+                    <button type="button" class="btn btn-default" onClick="submitForm()">Cancel Purchase Request</button>
+                    
                 </div>
+            
             </div>
         </div>
     </div>
+</form>
 
     <div class="modal fade" id="confirmActivate" role="dialog" aria-labelledby="confirmActivateLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -117,8 +115,11 @@
                                 <a data-toggle="tooltip" data-placement="top" class='iframe btn btn-success' href='edit/{{$request->id}}' title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
                                 <form method="POST" action="delete" id="myForm_{{ $request->id }}" name="myForm" style="display: -webkit-inline-box;">
                                    <input type="hidden" name="del_pr" value="{{ $request->id }}">
-                                   <center><button class="iframe btn btn-danger" type="button" data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $request->id }})"  data-title="Delete" title="Delete" data-message="Are you sure you want to delete purchase request?"><span class="glyphicon glyphicon-trash"></span></button></center>
+                                   <center> <a href="changeForm/{{ $request->id }}" class="btn ajax btn-danger" data-method="post" data-replace="#pr_form" data-toggle="modal" data-target="#confirmDelete"><span class="glyphicon glyphicon-remove"></span></a></center>
                                </form>
+                               
+                               
+                           
                             </td>
                         <?php } ?>
                    </tr>
@@ -136,6 +137,7 @@
 @stop
 
 @section('footer')
+    {{ HTML::script('js/bootstrap-ajax.js');}}
     <script type="text/javascript">
         $('#confirmDelete').on('show.bs.modal', function (e) {
             $message = $(e.relatedTarget).attr('data-message');
@@ -160,6 +162,26 @@
             window.my_id = pass_id;
            // alert(window.my_id);
         }
+
+        function submitForm()
+        {
+            var reason = document.getElementById('reason').value;
+            document.getElementById('hide_reason').value = reason;
+            //alert(reason);
+            document.getElementById("form").submit();
+        }
         
     </script>
+
+{{ Session::forget('main_error'); }}
+{{ Session::forget('m1'); }}
+{{ Session::forget('m2'); }}
+{{ Session::forget('m3'); }}
+{{ Session::forget('m4'); }}
+{{ Session::forget('m5'); }}
+{{ Session::forget('m6'); }}
+{{ Session::forget('m7'); }}
+{{ Session::forget('imgsuccess'); }}
+{{ Session::forget('imgerror'); }}
+
 @stop

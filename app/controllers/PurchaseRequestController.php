@@ -582,5 +582,19 @@ unlink($actual);
 
 }
 
+public function changeForm($id)
+{
+	//return "good $id";
+	$reason = Input::get('hide_reason');
+
+	$purchase = Purchase::find($id);
+	$purchase->status = "Cancelled";
+	$purchase->reason = $reason;
+	$purchase->save();
+	Session::put('notice', 'Purchase request has been cancelled.' );
+	return Redirect::to("purchaseRequest/view");
+
+}
+
 
 }

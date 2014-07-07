@@ -180,6 +180,7 @@
                     <li class="{{Request::is('task/new') ? 'active':''}}">
                         <a href="/task/new">New Tasks<span class="badge pull-right">
                         <?php
+
                          $user_id = Auth::user()->id;
                  $desig=DB::table('user_has_designation')->where('users_id',$user_id)->first();
                  $counting=0;
@@ -192,6 +193,10 @@ foreach ($taskcount as $taskcounter) {
 
 }
                         echo $counting;
+
+                            $taskcount=Taskdetails::where('status', 'New')->count();
+                            echo $taskcount;
+
                         ?>
                         </span></a>
                     </li>
