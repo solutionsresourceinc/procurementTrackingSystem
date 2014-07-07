@@ -80,6 +80,7 @@
                 <ul class="side-submenu">
                     <li class="{{Request::is('purchaseRequest/view') ? 'active':''}}">
                         <a href="/purchaseRequest/view">
+  
                             Active Purchase Requests
                             <span class="badge pull-right">
                             <?php

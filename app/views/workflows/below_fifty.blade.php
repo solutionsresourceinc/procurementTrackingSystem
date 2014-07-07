@@ -40,7 +40,11 @@
 <div class="panel panel-success">
 	<div class="panel-heading">
 		<?php $sectionName = Section::find('1'); ?>
-		<h3 class="panel-title"> {{{ strtoupper($sectionName->sectionName) }}} </h3>
+		<h3 class="panel-title"> {{{ 
+
+
+
+			strtoupper($sectionName->sectionName) }}} </h3>
 	</div>
 
 	<div class="panel-body">
@@ -58,7 +62,7 @@
 			<?php $d_id=$section->designation_id; ?>
 
 			<tr>
-				<td> {{{ $section->taskName }}} </td>
+				<td> {{{ $section->taskName }}}</div> </td>
 
 				<td> 
 					<?php 
@@ -83,6 +87,26 @@
 					}
 					$desig = DB::table('designation')->get();	
 					?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 					<form class="form ajax" action="submit/{{$section->id}}" data-replace="#insert_{{$section->id}}" method="post" role="form" class="form-inline">
 

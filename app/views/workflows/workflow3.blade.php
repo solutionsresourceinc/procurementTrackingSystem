@@ -31,7 +31,11 @@
 <div class="panel panel-success">
 	<div class="panel-heading">
 		<?php $sectionName = Section::find('9'); ?>
-		<h3 class="panel-title"> {{{ strtoupper($sectionName->sectionName) }}} </h3>
+		<h3 class="panel-title"> <?php $secname=strtoupper($sectionName->sectionName);
+			$pos=90;
+			$str = substr($secname, 0, $pos) . "<br>" . substr($secname, $pos);
+			echo $str;
+	?>  </h3>
 	</div>
 	<div class="panel-body">
 		<table border="1" class="workflow-table">
