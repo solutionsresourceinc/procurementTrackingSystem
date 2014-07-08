@@ -88,17 +88,23 @@
 		<div class="panel-body">
 			<table border="1" class="proc-details">
 				<tr>
-					<td class="proc-headers"><h4>
+					<td class="proc-headers" colspan="3"><h4 style="line-height: 25px;">
 						@if($wfName->work_id == 1)
-							SMALL VALUE PROCUREMENT (BELOW P50,000)
+							SMALL VALUE PROCUREMENT (BELOW P50,000) &nbsp;&nbsp;
 						@elseif($wfName->work_id == 2)
-							SMALL VALUE PROCUREMENT (ABOVE P50,000 BELOW P500,000)
+							SMALL VALUE PROCUREMENT (ABOVE P50,000 BELOW P500,000) &nbsp;&nbsp;
 						@else
-							BIDDING (ABOVE P500,000)
+							BIDDING (ABOVE P500,000) &nbsp;&nbsp;
 						@endif
+
+						<span class="label {{($purchase->status == 'New') ? 'label-primary' : (($purchase->status == 'In Progress') ? 'label-success' : (($purchase->status == 'Overdue') ? 'label-danger' : 'label-default'))}}">
+                    		{{ $purchase->status; }}
+                    	</span>
 					</h4></td>
-					<td class="proc-headers"><h4 align="center">{{ $purchase->controlNo }}</h4></td>
-					<td class="proc-headers"><h4 align="center">Status : {{{ $purchase->status }}}</h4></td>
+					<td colspan="1" width="30%">
+						<span class="bac-ctrl-no">BAC CTRL. NO.:</span><br/>
+						<h4 align="center" class="ctrl-no">{{ $purchase->controlNo }}</h4>
+					</td>
 				</tr>
 				<tr>
 					<td class="proc-headers" width="30%"><h5>REQUISITIONER</h5></td>
