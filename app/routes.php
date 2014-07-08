@@ -200,9 +200,37 @@ Route::get('task/active', 'TaskController@active');
 Route::get('task/overdue', 'TaskController@overdue');
 Route::get('task/{id}', function($id){
 	
+	
+
+$user_id = Auth::User()->id;
+$taskd = TaskDetails::find($id);
+
+$task= Task::find($taskd->task_id);
+$desig= UserHasDesignation::where('users_id', $user_id)->where('designation_id', $task->designation_id)->count();
+
+if ($taskd->status=="New"){
+
+
+if($desig==0)
+{
+	return Redirect::to('/');
+} 
+else{
 	Session::put('taskdetails_id', $id);
 
 return View::make('tasks.task');
+}}
+
+else{
+if ($taskd->assignee_id==$userid){
+	Session::put('taskdetails_id', $id);
+
+return View::make('tasks.task');
+}
+else
+return Redirect::to('/');
+}
+
 }
 
 );
