@@ -48,10 +48,10 @@
 
                         {{ Form::close() }}
                     </a>
-                    <br><br><br><br>
+               
                 @endforeach
             @endforeach 
-                 <br><br><br><br><br>
+              
         @endforeach
 
     </div>
