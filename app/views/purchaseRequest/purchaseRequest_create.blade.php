@@ -99,7 +99,7 @@
 
 				<div>
 					{{ Form::label('amount', 'Amount *', array('class' => 'create-label')) }}
-					{{ Form::text('amount','',array('class'=>'form-control','onchange'=>'numberWithCommas(this.value)', 'onkeypress' => 'return isNumberKey(event)','id'=>'num')) }}
+					{{ Form::text('amount','',array('class'=>'form-control','onchange'=>'numberWithCommas(this.value)', 'onkeypress' => 'return isNumberKey(event)','id'=>'num','maxlength'=>'12')) }}
 				</div>
 
 				@if (Session::get('m3'))
@@ -286,19 +286,30 @@
 			if(decimal_amount == 0 || decimal_amount == "0.00")
 			{
 				document.getElementById("num").value = "0.00";
+				window.old_amount = 0.00; 
 			}
 			else
 			{
 				var parts = decimal_amount.toString().split(".");
 				parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 				parts =  parts.join(".");
-				document.getElementById("num").value = parts;
-				window.old_amount = parts; 
+				if(parts == "NaN")
+				{
+					document.getElementById("num").value = "0.00";
+					window.old_amount = 0.00; 
+				}
+				else
+				{
+					document.getElementById("num").value = parts;
+					window.old_amount = parts;
+				}
+				 
 			}
 		}
 		else if(!window.old_amount)
 		{
 			document.getElementById("num").value = "0.00";
+			window.old_amount = 0.00; 
 		}
 		else
 		{
@@ -319,7 +330,7 @@
 
 		}
 		else
-			document.getElementById("modeOfProcurement").selectedIndex = 0;
+			document.getElementById("modeOfProcurement").selectedIndex = 0; 
 	}
 
 	$(window).on('load', function () {
