@@ -150,7 +150,7 @@
 			
 
 				<div class="form-group">
-					{{ Form::label('dateTime', 'Date Requested *', array('class' => 'create-label')) }}
+					{{ Form::label('dateTime', 'Date Requested ', array('class' => 'create-label')) }}
 					<div class="input-group date form_datetime col-md-12" data-date="{{ date('Y-m-d') }}T{{ date('H:i:s') }}Z" data-date-format="dd MM yyyy - HH:ii p" data-link-field="dtp_input1">
 						<input id="disabled_datetime" onchange="fix_format()" class="form-control" size="16" type="text" value="{{{ Input::old('dateRequested') }}}" readonly>
 						<span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
