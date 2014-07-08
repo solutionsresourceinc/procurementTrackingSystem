@@ -51,7 +51,15 @@
 					<input type="hidden" name="controlNo" value="<?php echo $cn; ?>">
 				</div>
 				<br>
+<div>
+					{{ Form::label('amount', 'Amount *', array('class' => 'create-label')) }}
+					{{ Form::text('amount','',array('class'=>'form-control','onchange'=>'numberWithCommas(this.value)', 'onkeypress' => 'return isNumberKey(event)','id'=>'num','maxlength'=>'12')) }}
+				</div>
 
+				@if (Session::get('m3'))
+					<font color="red"><i>{{ Session::get('m3') }}</i></font>
+				@endif
+				<br>
 				<div>
 					{{ Form::label('modeOfProcurement', 'Mode of Procurement *', array('class' => 'create-label')) }}
 					<select  name="modeOfProcurement" id="modeOfProcurement" class="form-control" data-live-search="true">
@@ -68,7 +76,7 @@
 						@if (Session::get('m6'))
 						<font color="red"><i>The mode of procurement is required field</i></font>
 						@endif
-						<br>
+				
 				</div>
 				<br>
 				<div>
@@ -97,15 +105,7 @@
 				@endif
 				<br>
 
-				<div>
-					{{ Form::label('amount', 'Amount *', array('class' => 'create-label')) }}
-					{{ Form::text('amount','',array('class'=>'form-control','onchange'=>'numberWithCommas(this.value)', 'onkeypress' => 'return isNumberKey(event)','id'=>'num','maxlength'=>'12')) }}
-				</div>
-
-				@if (Session::get('m3'))
-					<font color="red"><i>{{ Session::get('m3') }}</i></font>
-				@endif
-				<br>
+				
 
 				<div class="form-group" id="template">
 					{{ Form::label('office', 'Office *', array('class' => 'create-label')) }}
@@ -122,7 +122,7 @@
 					@if (Session::get('m4'))
 						<font color="red"><i>{{ Session::get('m4') }}</i></font>
 					@endif
-					<br>
+				
 				</div>
 
 				<div class="form-group" id="template">
@@ -145,9 +145,9 @@
 					@if (Session::get('m5'))
 						<font color="red"><i>{{ Session::get('m5') }}</i></font>
 					@endif
-					<br>
+				
 				</div>
-				<br>
+			
 
 				<div class="form-group">
 					{{ Form::label('dateTime', 'Date Requested *', array('class' => 'create-label')) }}
