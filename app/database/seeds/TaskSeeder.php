@@ -659,5 +659,181 @@ class TaskSeeder extends Seeder {
         $task->order_id = '7';
         $task->description = 'This is a task description';
         $task->save();
+
+        // WORKFLOW 4 | SECTION 1
+
+        $task = new Task;
+        $task->wf_id = '4';
+        $task->section_id = '1';
+        $task->taskName = 'DATE OF P.R.';
+        $task->taskType = '0';
+        $task->maxDuration = '3';
+        $task->order_id = '1';
+        $task->description = 'This is a task description';
+        $task->save();
+
+        $task = new Task;
+        $task->wf_id = '4';
+        $task->section_id = '1';
+        $task->taskName = 'RECEIVED GSD';
+        $task->taskType = '0';
+        $task->maxDuration = '3';
+        $task->order_id = '2';
+        $task->description = 'This is a task description';
+        $task->save();
+        
+        $task = new Task;
+        $task->wf_id = '4';
+        $task->section_id = '1';
+        $task->taskName = 'BUDGET/ACCTNG';
+        $task->taskType = '0';
+        $task->maxDuration = '3';
+        $task->order_id = '3';
+        $task->description = 'This is a task description';
+        $task->save();
+
+        $task = new Task;
+        $task->wf_id = '4';
+        $task->section_id = '1';
+        $task->taskName = 'P.A. OFFICE';
+        $task->taskType = '0';
+        $task->maxDuration = '3';
+        $task->order_id = '4';
+        $task->description = 'This is a task description';
+        $task->save();
+    
+        $task = new Task;
+        $task->wf_id = '4';
+        $task->section_id = '1';
+        $task->taskName = 'PGO';
+        $task->taskType = '0';
+        $task->maxDuration = '3';
+        $task->order_id = '5';
+        $task->description = 'This is a task description';
+        $task->save();
+
+        // WORKFLOW 4 | SECTION 2
+
+        $task = new Task;
+        $task->wf_id = '4';
+        $task->section_id = '2';
+        $task->taskName = 'LABOR PROPOSAL DATE';
+        $task->taskType = '0';
+        $task->maxDuration = '3';
+        $task->order_id = '1';
+        $task->description = 'This is a task description';
+        $task->save();
+
+        $task = new Task;
+        $task->wf_id = '4';
+        $task->section_id = '2';
+        $task->taskName = 'NOTICE OF AWARD DATE';
+        $task->taskType = '0';
+        $task->maxDuration = '3';
+        $task->order_id = '2';
+        $task->description = 'This is a task description';
+        $task->save();
+
+        $task = new Task;
+        $task->wf_id = '4';
+        $task->section_id = '2';
+        $task->taskName = 'NOTICE TO PROCEED DATE';
+        $task->taskType = '0';
+        $task->maxDuration = '3';
+        $task->order_id = '3';
+        $task->description = 'This is a task description';
+        $task->save();
+
+        $task = new Task;
+        $task->wf_id = '4';
+        $task->section_id = '2';
+        $task->taskName = 'PAKYAW CONTRACT DATE';
+        $task->taskType = '0';
+        $task->maxDuration = '3';
+        $task->order_id = '4';
+        $task->description = 'This is a task description';
+        $task->save();
+
+        $task = new Task;
+        $task->wf_id = '4';
+        $task->section_id = '2';
+        $task->taskName = 'ACCOMPLISHMENT REPORT DATE';
+        $task->taskType = '0';
+        $task->maxDuration = '3';
+        $task->order_id = '5';
+        $task->description = 'This is a task description';
+        $task->save();
+
+        // WORKFLOW 4 | SECTION 2
+
+        $task = new Task;
+        $task->wf_id = '4';
+        $task->section_id = '3';
+        $task->taskName = 'BUDGET';
+        $task->taskType = '0';
+        $task->maxDuration = '3';
+        $task->order_id = '1';
+        $task->description = 'This is a task description';
+        $task->save();
+
+        $task = new Task;
+        $task->wf_id = '4';
+        $task->section_id = '3';
+        $task->taskName = 'ACCOUNTING';
+        $task->taskType = '0';
+        $task->maxDuration = '3';
+        $task->order_id = '2';
+        $task->description = 'This is a task description';
+        $task->save();
+
+        $task = new Task;
+        $task->wf_id = '4';
+        $task->section_id = '3';
+        $task->taskName = 'TREASURY';
+        $task->taskType = '0';
+        $task->maxDuration = '3';
+        $task->order_id = '3';
+        $task->description = 'This is a task description';
+        $task->save();
+
+        $task = new Task;
+        $task->wf_id = '4';
+        $task->section_id = '3';
+        $task->taskName = 'P.A. OFFICE';
+        $task->taskType = '0';
+        $task->maxDuration = '3';
+        $task->order_id = '4';
+        $task->description = 'This is a task description';
+        $task->save();
+
+        $task = new Task;
+        $task->wf_id = '4';
+        $task->section_id = '3';
+        $task->taskName = 'PGO';
+        $task->taskType = '0';
+        $task->maxDuration = '3';
+        $task->order_id = '5';
+        $task->description = 'This is a task description';
+        $task->save();
+
+        $task = new Task;
+        $task->wf_id = '4';
+        $task->section_id = '3';
+        $task->taskName = 'ACCOUNTING';
+        $task->taskType = '0';
+        $task->maxDuration = '3';
+        $task->order_id = '6';
+        $task->description = 'This is a task description';
+        $task->save();
+
+        $task = new Task;
+        $task->wf_id = '4';
+        $task->section_id = '3';
+        $task->taskName = 'CHECK RELEASED';
+        $task->taskType = '0';
+        $task->maxDuration = '3';
+        $task->order_id = '7';
+        $task->description = 'This is a task description';
+        $task->save();
     }
 }

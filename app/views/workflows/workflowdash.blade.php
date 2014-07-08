@@ -17,12 +17,14 @@
       <li class="active"><a href="#home" role="tab" data-toggle="tab">Below P50,000</a></li>
       <li><a href="#profile" role="tab" data-toggle="tab">Between P50,000 and P500,000</a></li>
       <li><a href="#messages" role="tab" data-toggle="tab">Above P500,000</a></li>
+      <li><a href="#pakyaw" role="tab" data-toggle="tab">Pakyaw</a></li> <!-- FOR PAKYAW WORKFLOW -->
     </ul>
 
     <div class="tab-content">
       <div class="tab-pane fade in active" id="home">@include('workflows.workflow1')</div>
       <div class="tab-pane fade" id="profile">@include('workflows.workflow2')</div>
       <div class="tab-pane fade" id="messages">@include('workflows.workflow3')</div>
+      <div class="tab-pane fade" id="pakyaw">@include('workflows.workflow4')</div> <!-- FOR PAKYAW WORKFLOW -->
     </div>
 
     
