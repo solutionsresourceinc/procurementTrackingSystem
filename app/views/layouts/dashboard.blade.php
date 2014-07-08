@@ -194,8 +194,6 @@ foreach ($taskcount as $taskcounter) {
 }
                         echo $counting;
 
-                            $taskcount=Taskdetails::where('status', 'New')->count();
-                            echo $taskcount;
 
                         ?>
                         </span></a>
