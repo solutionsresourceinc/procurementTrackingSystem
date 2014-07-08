@@ -85,6 +85,7 @@
                             <?php
                                         $result=0;
                                         $cuser= Auth::user()->id;
+
                                    $cpurchase= DB::table('purchase_request')->where('status', '=', 'New')->orWhere('status', '=', 'In progress')->get();
                                 foreach ($cpurchase as $cpurchases ) {
                                     $doc=Document::where('pr_id', $cpurchases->id)->first();
@@ -93,7 +94,18 @@
 
                                     }
                                     else
-                                        {$result=$result+1;}
+                                        {
+                                        if ( Entrust::hasRole('Administrator')) {
+                                            $result=$result+1; }
+                                            else if (Entrust::hasRole('Procurement Personnel'))
+                                            {
+                                                if($cpurchases->createdBy==$cuser)   $result=$result+1;
+                                            }
+                                            else if(Entrust::hasRole('Requisitioner'))
+                                            {
+                                                if($cpurchases->requisitioner==$cuser) $result=$result+1;
+                                            }
+                                        }
                                 }
                                 echo $result;
 
@@ -116,7 +128,16 @@
 
                                     }
                                     else
-                                        {$result=$result+1;}
+                                        {if ( Entrust::hasRole('Administrator')) {
+                                            $result=$result+1; }
+                                            else if (Entrust::hasRole('Procurement Personnel'))
+                                            {
+                                                if($cpurchases->createdBy==$cuser)   $result=$result+1;
+                                            }
+                                            else if(Entrust::hasRole('Requisitioner'))
+                                            {
+                                                if($cpurchases->requisitioner==$cuser) $result=$result+1;
+                                            }}
                                 }
                                 echo $result;
 
@@ -138,7 +159,16 @@
 
                                     }
                                     else
-                                        {$result=$result+1;}
+                                        {if ( Entrust::hasRole('Administrator')) {
+                                            $result=$result+1; }
+                                            else if (Entrust::hasRole('Procurement Personnel'))
+                                            {
+                                                if($cpurchases->createdBy==$cuser)   $result=$result+1;
+                                            }
+                                            else if(Entrust::hasRole('Requisitioner'))
+                                            {
+                                                if($cpurchases->requisitioner==$cuser) $result=$result+1;
+                                            }}
                                 }
                                 echo $result;
 
@@ -161,7 +191,16 @@
 
                                     }
                                     else
-                                        {$result=$result+1;}
+                                        {if ( Entrust::hasRole('Administrator')) {
+                                            $result=$result+1; }
+                                            else if (Entrust::hasRole('Procurement Personnel'))
+                                            {
+                                                if($cpurchases->createdBy==$cuser)   $result=$result+1;
+                                            }
+                                            else if(Entrust::hasRole('Requisitioner'))
+                                            {
+                                                if($cpurchases->requisitioner==$cuser) $result=$result+1;
+                                            }}
                                 }
                                 echo $result;
 

@@ -661,6 +661,18 @@ if(ctype_digit($daysOfAction))
          }
 
 if ($check==3){
+	$taskd= TaskDetails::find($taskdetails_id);
+$docs=Document::find($taskd->doc_id);
+
+$delcount= Count::where('doc_id', $docs->id)->delete();
+  
+$userx= User::get();
+foreach($userx as $userv){
+$count= new Count;
+$count->user_id= $userv->id;
+$count->doc_id= $docs->id;
+$count->save();
+}
 
 Session::put('successchecklist','Saved.');
 
