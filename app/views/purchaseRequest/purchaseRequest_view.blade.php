@@ -29,11 +29,23 @@
 
 	<!-- change urls when when purchase request functions are final -->
 	<div class="btn-group pull-right options">
-		<?php  if($purchase->status!="Cancelled"){
+		<?php 
+		$cuser=Auth::User()->id;
+		if (Entrust::hasRole('Administrator')){
 			?><a href="../edit/{{$purchase->id}}" class="btn btn-success">
 			<span class="glyphicon glyphicon-edit"></span>&nbsp;&nbsp;Edit
 		</a>
-		<?php }
+		<?php
+		}
+ else if (Entrust::hasRole('Procurement Personnel'))
+                                            {
+                                 if($purchase->created_by==$cuser){
+		 if($purchase->status!="Cancelled"){
+			?><a href="../edit/{{$purchase->id}}" class="btn btn-success">
+			<span class="glyphicon glyphicon-edit"></span>&nbsp;&nbsp;Edit
+		</a>
+		<?php } }}
+		
 		?>
 		<!--button type="button" class="btn btn-danger" onclick="window.location.href='../../purchaseRequest/delete'">
 			<span class="glyphicon glyphicon-trash"></span>&nbsp;&nbsp;Delete

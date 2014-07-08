@@ -99,7 +99,7 @@
                                             $result=$result+1; }
                                             else if (Entrust::hasRole('Procurement Personnel'))
                                             {
-                                                if($cpurchases->createdBy==$cuser)   $result=$result+1;
+                                                if($cpurchases->created_by==$cuser)   $result=$result+1;
                                             }
                                             else if(Entrust::hasRole('Requisitioner'))
                                             {
@@ -132,7 +132,7 @@
                                             $result=$result+1; }
                                             else if (Entrust::hasRole('Procurement Personnel'))
                                             {
-                                                if($cpurchases->createdBy==$cuser)   $result=$result+1;
+                                                if($cpurchases->created_by==$cuser)   $result=$result+1;
                                             }
                                             else if(Entrust::hasRole('Requisitioner'))
                                             {
@@ -163,7 +163,7 @@
                                             $result=$result+1; }
                                             else if (Entrust::hasRole('Procurement Personnel'))
                                             {
-                                                if($cpurchases->createdBy==$cuser)   $result=$result+1;
+                                                if($cpurchases->created_by==$cuser)   $result=$result+1;
                                             }
                                             else if(Entrust::hasRole('Requisitioner'))
                                             {
@@ -195,7 +195,7 @@
                                             $result=$result+1; }
                                             else if (Entrust::hasRole('Procurement Personnel'))
                                             {
-                                                if($cpurchases->createdBy==$cuser)   $result=$result+1;
+                                                if($cpurchases->created_by==$cuser)   $result=$result+1;
                                             }
                                             else if(Entrust::hasRole('Requisitioner'))
                                             {

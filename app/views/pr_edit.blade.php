@@ -29,7 +29,11 @@
 
 
 <?php
+$pass=0;
 $epurchase=Purchase::find($id);
+$cuser=Auth::User()->id;
+
+
 ?>
 
 
@@ -75,6 +79,23 @@ $epurchase=Purchase::find($id);
             {{Session::forget('errorchecklist')}}
             {{Session::forget('successchecklist')}}
 
+<?php
+if ( Entrust::hasRole('Administrator')) {
+                                            $pass=1; }
+ else if (Entrust::hasRole('Procurement Personnel'))
+                                            {
+                                 if($epurchase->created_by==$cuser)  $pass=1;
+                                            }
+
+if ($pass==0)
+
+    Redirect::back();
+
+
+
+
+
+?>
             <div class="form-group">
                 <div>
                     <?php 
