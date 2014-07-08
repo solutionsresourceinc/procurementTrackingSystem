@@ -150,11 +150,15 @@ class UserController extends BaseController {
         $errorcheck=0;
 
         if($password==" ")
-            $passnotchange=1;
+        {
+            $passnotchange=1;           
+        }
         else
         {
             $password = substr($password, 1);
             $user->password = Hash::make($password);
+            $user->password_confirmation = Input::get( 'password_confirmation' );
+
         }
 
         if(filter_var($user->email, FILTER_VALIDATE_EMAIL)){}
@@ -164,13 +168,20 @@ class UserController extends BaseController {
             Session::put('email_error', 'Invalid email.');
         }
 
-        if($passnotchange==0){}
+        if($passnotchange==1)
+        {
+
+        }
         elseif(ctype_alnum($password)&&(strlen($password)>=6))
         {
-            if ($password!=$user->password_confirmation)
+            if ($password != $user->password_confirmation)
             {
                 $errorcheck=1;
                 Session::put('password_error', 'Password did not match with confirm password.');
+            }
+            else
+            {
+
             }
         }
         else
