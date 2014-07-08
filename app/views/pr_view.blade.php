@@ -30,7 +30,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-default" onClick="submitForm()">Cancel Purchase Request</button>
+                    <button type="button" class="btn btn-success" onClick="submitForm()">Cancel Purchase Request</button>
                     
                 </div>
             

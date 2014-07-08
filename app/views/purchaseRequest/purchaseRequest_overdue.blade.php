@@ -3,23 +3,32 @@
 @section('content')
     <h1 class="page-header">List of Overdue Purchase Requests</h1>
 
+<div id="pr_form">
+    <form action="submitForm/" id="new_form" method="post" id="confirm">
+</div>
+
     <div class="modal fade" id="confirmDelete" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
+                
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Delete Purchase Request</h4>
+                    <h4 class="modal-title">Cancel Purchase Request</h4>
                 </div>
                 <div class="modal-body">
-                    <p>Are you sure you want to delete purchase request?</p>
+                    <p>Reason for cancelling purchase request:</p>
+                    <textarea id="reason" class="form-control" rows="3" maxlength="255", style="resize:vertical"></textarea>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-danger" id="confirm">Delete</button>
+                    <button type="button" class="btn btn-success" onClick="submitForm()">Cancel Purchase Request</button>
+                    
                 </div>
+            
             </div>
         </div>
     </div>
+</form>
 
     <div class="modal fade" id="confirmActivate" role="dialog" aria-labelledby="confirmActivateLabel" aria-hidden="true">
         <div class="modal-dialog">
