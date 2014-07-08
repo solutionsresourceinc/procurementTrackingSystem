@@ -373,6 +373,11 @@ table.table td{
 	padding: 12px 20px;
 }
 
+.unlink{
+	pointer-events: none;
+    cursor: default;
+}
+
 @media all and (max-width: 1065px){
 	.accept-button{
 		margin: 8px 25px;
