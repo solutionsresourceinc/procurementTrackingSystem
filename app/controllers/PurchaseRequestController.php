@@ -37,22 +37,14 @@ class PurchaseRequestController extends Controller {
 			if($document_save)
 			{
 
-
-
 $doc_id= $document->id;
-
 $workflow=Workflow::find($document->work_id);
-
-$section=Section::where('workflow_id',$workflow->id)->orderBy('section_order_id', 'ASC')->get();
+$section=Section::where('workflow_id',$document->work_id)->orderBy('section_order_id', 'ASC')->get();
 $firstnew=0;
-$sec1=0;
 
-foreach ($section as $sections) {
-	$task=Task::where('wf_id', $document->work_id)->where('section_id', $sections->id)->orderBy('section_id', 'ASC')->get();
-if ($sec1==0)
-	{$sec1=1;
-		continue;
-	}
+
+	$task=Task::where('wf_id', $document->work_id)->orderBy('section_id', 'ASC')->orderBy('order_id', 'ASC')->get();
+
 	foreach ($task as $tasks) {
 
 
@@ -64,11 +56,11 @@ if ($sec1==0)
 	 	$taskd->status="New";
  	else
  		$taskd->status="Pending";
-	$firstnew=1;
-	$taskd->doc_id= $document->id;
-	$taskd->save();
+		$firstnew=1;
+		$taskd->doc_id= $document->id;
+		$taskd->save();
 	}
-}
+
 
 
 
@@ -339,7 +331,7 @@ Session::forget('imgerror');
 
 		$purchase->projectPurpose = Input::get( 'projectPurpose' );
 		$purchase->sourceOfFund = Input::get( 'sourceOfFund' );
-		$purchase->amount = Input::get( 'amount' );
+		//$purchase->amount = Input::get( 'amount' );
 		$purchase->office = Input::get( 'office' );
 		$purchase->requisitioner = Input::get( 'requisitioner' );
 		$purchase->dateRequested = Input::get( 'dateRequested' );
@@ -352,7 +344,7 @@ Session::forget('imgerror');
 		if($purchase_save)
 		{
 			$document->pr_id = $purchase->id;
-			$document->work_id = Input::get('modeOfProcurement');
+			//$document->work_id = Input::get('modeOfProcurement');
 			$document_save = $document->save();
 
 			if($document_save)
@@ -621,6 +613,15 @@ public function changeForm($id)
 	$purchase->save();
 	Session::put('notice', 'Purchase request has been cancelled.' );
 	return Redirect::to("purchaseRequest/view");
+
+}
+
+
+public function checklistedit(){
+
+
+$taskdetails_id= Input::get('taskdetails_id');
+$assignee=Input::get('assignee');
 
 }
 

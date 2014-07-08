@@ -59,7 +59,7 @@
 
 			?>
 			<tr>
-				<td> <span style="font-size:16px;">{{{ $section->taskName }}} </span></td>
+				<td> {{{ $section->taskName }}} </td>
 				<td>
 					<?php
 					$desig = DB::table('designation')->where('id', $d_id)->get();	
