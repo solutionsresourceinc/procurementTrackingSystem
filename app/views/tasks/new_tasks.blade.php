@@ -16,7 +16,7 @@
                 // Fetching a row from designation table
                 $designation_row = Designation::find($designation->designation_id);
                 // Get all task in the assigned to that designation
-                $task_row = Task::whereDesignationId($designation->designation_id)->where('section_id','!=', '1')->get();
+                $task_row = Task::whereDesignationId($designation->designation_id)->where('designation_id','!=', '0')->get();
             ?>
  
             @foreach($task_row as $task) 

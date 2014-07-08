@@ -181,16 +181,24 @@
                         <?php
 
                          $user_id = Auth::user()->id;
-                 $desig=DB::table('user_has_designation')->where('users_id',$user_id)->first();
+                 $desig=DB::table('user_has_designation')->where('users_id',$user_id)->get();
                  $counting=0;
                         $taskcount=Taskdetails::where('status', 'New'
                             )->get();
 foreach ($taskcount as $taskcounter) {
     $task=Task::find($taskcounter->task_id);
-    if ($task->designation_id==$desig->designation_id)
+
+
+foreach ($desig as $desigs) {
+
+
+    if ($task->designation_id==$desigs->designation_id)
         {
-            if($task->section_id!=1)
-        $counting=$counting+1;
+    if($task->designation_id!=0)
+        {
+            $counting=$counting+1;
+        }
+        }
 }
 }
                         echo $counting;
