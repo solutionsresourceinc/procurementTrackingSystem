@@ -146,7 +146,9 @@
 
 	<?php
 $docs= Document::where('pr_id', $purchase->id)->first();
-	
+	  $attachmentc = DB::table('attachments')->where('doc_id', $docs->id)->count();
+         if ($attachmentc!=0)
+            echo "<h3>"."Attachments"."</h3>";
 
 $luser=Auth::user()->id;
 $count= Count::where('doc_id','=', $docs->id)->where('user_id','=', $luser )->delete();

@@ -222,7 +222,9 @@
 	<div id="img-section">
 
 		<?php
-
+  $attachmentc = DB::table('attachments')->where('doc_id', $doc_id)->count();
+         if ($attachmentc!=0)
+            echo "<h3>"."Attachments"."</h3>";
 		$attachments = DB::table('attachments')->where('doc_id', $doc_id)->get();	
 		$srclink="uploads\\";
 		?>
