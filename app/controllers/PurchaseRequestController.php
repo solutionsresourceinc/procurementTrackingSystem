@@ -183,6 +183,19 @@ Session::forget('imgerror');
 					Session::forget('doc_id');
 				}
 
+				// START MAILER BY JAN SARMIENTO AWESOME
+				$sendee = DB::table('users')->where('id',$purchase->requisitioner)->first();
+				$email = $sendee->email;
+				$fname = $sendee->firstname;
+
+				$data = [ 'id' => $purchase->id ];
+				Mail::send('emails.template', $data, function($message) use($email, $fname)
+				{
+					$message->from('procurementTrackingSystem@tarlac.com', 'Procurement Tracking System Tarlac');
+					$message->to($email, $fname)->subject('Tarlac Procurement Tracking Systems');
+				}); 
+				// END MAILER BY JAN SARMIENTO AWESOME
+				
 				$notice = "Purchase request created successfully. ";										  
 				Session::put('notice', $notice);
 				$office = Office::all();
@@ -303,7 +316,7 @@ Session::forget('imgerror');
 
 		$purchase->projectPurpose = Input::get( 'projectPurpose' );
 		$purchase->sourceOfFund = Input::get( 'sourceOfFund' );
-		$purchase->amount = Input::get( 'amount' );
+		//$purchase->amount = Input::get( 'amount' );
 		$purchase->office = Input::get( 'office' );
 		$purchase->requisitioner = Input::get( 'requisitioner' );
 		$purchase->dateRequested = Input::get( 'dateRequested' );
@@ -316,7 +329,7 @@ Session::forget('imgerror');
 		if($purchase_save)
 		{
 			$document->pr_id = $purchase->id;
-			$document->work_id = Input::get('modeOfProcurement');
+			//$document->work_id = Input::get('modeOfProcurement');
 			$document_save = $document->save();
 
 			if($document_save)
@@ -571,6 +584,20 @@ unlink($actual);
           return Redirect::back()->with('imgsuccess','Files uploaded.');
 
 
+
+}
+
+public function changeForm($id)
+{
+	//return "good $id";
+	$reason = Input::get('hide_reason');
+
+	$purchase = Purchase::find($id);
+	$purchase->status = "Cancelled";
+	$purchase->reason = $reason;
+	$purchase->save();
+	Session::put('notice', 'Purchase request has been cancelled.' );
+	return Redirect::to("purchaseRequest/view");
 
 }
 

@@ -22,6 +22,7 @@ class CreatePurchaseRequestTable extends Migration {
 			$table->string('status', 255);
 			$table->integer('requisitioner')->references('id')->on('users')->onDelete('cascade');
 			$table->integer('office')->references('id')->on('offices')->onDelete('cascade');
+			$table->string('reason', 255);
 			$table->dateTime('dateRequested');
 			$table->timestamps();
 
