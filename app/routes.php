@@ -222,7 +222,7 @@ return View::make('tasks.task');
 }}
 
 else{
-if ($taskd->assignee_id==$userid){
+if ($taskd->assignee_id==$user_id){
 	Session::put('taskdetails_id', $id);
 
 return View::make('tasks.task');

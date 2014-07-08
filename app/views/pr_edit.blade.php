@@ -28,6 +28,21 @@
 <?php
 $epurchase=Purchase::find($id);
 ?>
+  <?php 
+                    //retainer
+                    if (Input::old('projectPurpose')||Input::old('sourceOfFund')||Input::old('amount')){
+                        $valprojectPurpose=Input::old('projectPurpose');
+                        $valsourceOfFund=Input::old('sourceOfFund');
+                        $valamount=Input::old('amount'); 
+                    }
+                    else
+                    {
+                        $valprojectPurpose=$epurchase->projectPurpose;
+                        $valsourceOfFund=$epurchase->sourceOfFund;
+                        $valamount=$epurchase->amount; 
+
+                    }
+                ?>
 
 <h1 class="page-header">Edit Purchase Request</h1>
 
@@ -74,12 +89,21 @@ $epurchase=Purchase::find($id);
                     $epurchase->controlNo}}">
                 </div>
                 <br>
-                <div>
-                    <?php
+                <?php
                         $docs=DB::table('document')->where('pr_id', '=',$id )->first();
                         $workflow=DB::table('workflow')->get();
                     ?>
 
+                <div>
+                    {{ Form::label('amount', 'Amount *', array('class' => 'create-label')) }}
+                    {{ Form::text('amount',$valamount,array('class'=>'form-control','onchange'=>'numberWithCommas(this.value)','id'=>'num','disabled')) }}
+                </div>
+                @if (Session::get('m3'))
+                    <font color="red"><i>{{ Session::get('m3') }}</i></font>
+                @endif
+                <br>
+                <div>
+                    
                     {{ Form::label('modeOfProcurement', 'Mode of Procurement *', array('class' => 'create-label')) }}
                     <select  name="modeOfProcurement" id="modeOfProcurement" class="form-control" data-live-search="true" disabled="disabled">
                         <option value="">Please select</option>
@@ -98,7 +122,7 @@ $epurchase=Purchase::find($id);
                     @if (Session::get('m6'))
                         <font color="red"><i>The mode of procurement is required field</i></font>
                     @endif
-                    <br>
+                  
                 </div>
                 <br>
                 <div>
@@ -106,21 +130,7 @@ $epurchase=Purchase::find($id);
                     <input type="text" value="{{$epurchase->status}}" readonly class="form-control">
                 </div>
                 <br>
-                <?php 
-                    //retainer
-                    if (Input::old('projectPurpose')||Input::old('sourceOfFund')||Input::old('amount')){
-                        $valprojectPurpose=Input::old('projectPurpose');
-                        $valsourceOfFund=Input::old('sourceOfFund');
-                        $valamount=Input::old('amount'); 
-                    }
-                    else
-                    {
-                        $valprojectPurpose=$epurchase->projectPurpose;
-                        $valsourceOfFund=$epurchase->sourceOfFund;
-                        $valamount=$epurchase->amount; 
-
-                    }
-                ?>
+              
                 <div>
                     {{ Form::label('projectPurpose', 'Project/Purpose *', array('class' => 'create-label')) }}
                     {{ Form::text('projectPurpose',$valprojectPurpose, array('class'=>'form-control')) }}
@@ -138,16 +148,6 @@ $epurchase=Purchase::find($id);
 
                 @if (Session::get('m2'))
                     <font color="red"><i>{{ Session::get('m2') }}</i></font>
-                @endif
-                <br>
-
-                <div>
-                    {{ Form::label('amount', 'Amount *', array('class' => 'create-label')) }}
-                    {{ Form::text('amount',$valamount,array('class'=>'form-control','onchange'=>'numberWithCommas(this.value)','id'=>'num','disabled')) }}
-                </div>
-
-                @if (Session::get('m3'))
-                    <font color="red"><i>{{ Session::get('m3') }}</i></font>
                 @endif
                 <br>
                 <?php 
@@ -172,7 +172,7 @@ $epurchase=Purchase::find($id);
                     @if (Session::get('m4'))
                         <font color="red"><i>{{ Session::get('m4') }}</i></font>
                     @endif
-                    <br>
+                
                 </div>
 
                 <div class="form-group" id="template">
@@ -202,10 +202,10 @@ $epurchase=Purchase::find($id);
                     @if (Session::get('m5'))
                         <font color="red"><i>{{ Session::get('m5') }}</i></font>
                     @endif
-                    <br>
+              
                 </div>
 
-                <br>
+         
 
                 <div class="form-group">
                     {{ Form::label('dateTime', 'Date Requested *', array('class' => 'create-label')) }}

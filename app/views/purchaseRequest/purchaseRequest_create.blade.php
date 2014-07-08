@@ -166,10 +166,10 @@
 				<!--  
 				Image Module
 				-->
-
+ <label class="create-label">Related files:</label>
 				<div class="panel panel-default fc-div">
 					<div class="panel-body" style="padding: 5px 20px;">
-						<h3>Attachments</h3>
+						
 						<br>
 						@if(Session::get('imgsuccess'))
 							<div class="alert alert-success"> {{ Session::get('imgsuccess') }}</div> 
