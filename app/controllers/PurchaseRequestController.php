@@ -53,6 +53,7 @@ $firstnew=0;
 
 	$task=Task::where('wf_id', $document->work_id)->orderBy('section_id', 'ASC')->orderBy('order_id', 'ASC')->get();
 
+
 	foreach ($task as $tasks) {
 
 
@@ -634,14 +635,17 @@ $taskdetails_id= Input::get('taskdetails_id');
 $assignee=Input::get('assignee');
 $dateFinished=Input::get('dateFinished');
 $daysOfAction=Input::get('daysOfAction');
-$remarks=Input::get('remarks');
+$remarks=Input::get('remarks')." ";
+$remarkchange=0;
 $check=0;
+if($remarks==" ")
+	$remarkchange=1;
 
 if(ctype_alpha(str_replace(array(' ', '-', '.'),'',$remarks)))
          {
          	$check=$check+1;
          }
-if(ctype_alpha(str_replace(array(' ', '-', '.'),'',$assignee)))
+if(($remarkchange==1)||ctype_alpha(str_replace(array(' ', '-', '.'),'',$assignee)))
          {
          	$check=$check+1;
          }
@@ -659,6 +663,7 @@ $taskd->status="Done";
 $taskd->daysOfAction=$daysOfAction;
 $taskd->dateFinished=$dateFinished;
 $taskd->assignee=$assignee;
+if($remarkchange==0)
 $taskd->remarks=$remarks;
 $taskd->save();
 $tasknext=TaskDetails::find($taskdetails_id+1);

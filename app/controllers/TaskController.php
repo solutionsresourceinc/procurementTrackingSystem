@@ -36,10 +36,21 @@ class TaskController extends Controller {
 
 public function done(){
 $taskdetails_id=Input::get('taskdetails_id');
-$pr_id=Input::get('pr_id');
+
 $taskd= TaskDetails::find($taskdetails_id);
 $taskd->status="Done";
+$docs=Document::find($taskd->doc_id);
+
+$delcount= Count::where('doc_id', $docs->id)->delete();
   
+$userx= User::get();
+foreach($userx as $userv){
+$count= new Count;
+$count->user_id= $userv->id;
+$count->doc_id= $docs->id;
+$count->save();
+}
+
 $birth = new DateTime($taskd->dateReceived); 
 $today = new DateTime(); 
 $diff = $birth->diff($today); 
@@ -55,12 +66,12 @@ $tasknext->save();
 }
 else
 {
-$purchase= Purchase::find($pr_id);
+$purchase= Purchase::find($docs->pr_id);
 $purchase->status="Closed";
 $purchase->save();
 }
 
-return Redirect::back();
+return Redirect::to('task/active');
 }
 
 

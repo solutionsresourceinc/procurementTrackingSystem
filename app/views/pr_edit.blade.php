@@ -25,9 +25,14 @@
 
 @section('content')
 
+
+
+
 <?php
 $epurchase=Purchase::find($id);
 ?>
+
+
   <?php 
                     //retainer
                     if (Input::old('projectPurpose')||Input::old('sourceOfFund')||Input::old('amount')){
@@ -349,7 +354,7 @@ if ($taskc->task_id==$tasks->id && $tasks->designation_id==0){
 </td>
 <td>
     
-<input type="text" name="remarks">
+<input type="text" name="remarks" >
 
 </td>
 
@@ -370,8 +375,8 @@ else if($taskp->assignee_id!=0){
 echo $assign_user->lastname.", ".$assign_user->firstname;
 }
 ?></td>
-<td><?php if($taskp->daysOfAction!=0) echo $taskp->updated_at; ?></td>
-<td><?php if($taskp->daysOfAction!=0) echo $taskp->daysOfAction; ?></td>
+<td><?php if($taskp->dateFinished!="0000-00-00 00:00:00") echo $taskp->dateFinished; ?></td>
+<td><?php if($taskp->dateFinished!="0000-00-00 00:00:00") echo $taskp->daysOfAction; ?></td>
 <td><?php echo $taskp->remarks; ?></td>
 <?php
 }
