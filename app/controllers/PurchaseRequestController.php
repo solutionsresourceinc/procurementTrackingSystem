@@ -324,7 +324,7 @@ Session::forget('imgerror');
 
 		$purchase->projectPurpose = Input::get( 'projectPurpose' );
 		$purchase->sourceOfFund = Input::get( 'sourceOfFund' );
-		$purchase->amount = Input::get( 'amount' );
+		//$purchase->amount = Input::get( 'amount' );
 		$purchase->office = Input::get( 'office' );
 		$purchase->requisitioner = Input::get( 'requisitioner' );
 		$purchase->dateRequested = Input::get( 'dateRequested' );
@@ -337,7 +337,7 @@ Session::forget('imgerror');
 		if($purchase_save)
 		{
 			$document->pr_id = $purchase->id;
-			$document->work_id = Input::get('modeOfProcurement');
+			//$document->work_id = Input::get('modeOfProcurement');
 			$document_save = $document->save();
 
 			if($document_save)

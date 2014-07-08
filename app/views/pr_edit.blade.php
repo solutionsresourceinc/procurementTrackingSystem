@@ -70,7 +70,7 @@ $epurchase=Purchase::find($id);
                     ?>
 
                     {{ Form::label('modeOfProcurement', 'Mode of Procurement *', array('class' => 'create-label')) }}
-                    <select  name="modeOfProcurement" id="modeOfProcurement" class="form-control" data-live-search="true">
+                    <select  name="modeOfProcurement" id="modeOfProcurement" class="form-control" data-live-search="true" disabled="disabled">
                         <option value="">Please select</option>
                         @foreach($workflow as $wf)
                             <option value="{{ $wf->id }}" 
@@ -132,7 +132,7 @@ $epurchase=Purchase::find($id);
 
                 <div>
                     {{ Form::label('amount', 'Amount *', array('class' => 'create-label')) }}
-                    {{ Form::text('amount',$valamount,array('class'=>'form-control','onchange'=>'numberWithCommas(this.value)','id'=>'num')) }}
+                    {{ Form::text('amount',$valamount,array('class'=>'form-control','onchange'=>'numberWithCommas(this.value)','id'=>'num','disabled')) }}
                 </div>
 
                 @if (Session::get('m3'))
