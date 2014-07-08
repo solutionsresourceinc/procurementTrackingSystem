@@ -26,6 +26,14 @@ class PurchaseRequestController extends Controller {
 		$purchase->dateRequested = Input::get( 'dateRequested' );
 		$purchase->controlNo = Input::get('controlNo');
 		$purchase->status = 'New';
+		
+
+		// Set creator id
+		$user_id = Auth::user()->id;
+		$purchase->created_by = $user_id;
+
+
+
 		$purchase_save = $purchase->save();
 
 		if($purchase_save)
