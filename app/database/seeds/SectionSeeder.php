@@ -89,5 +89,28 @@ class SectionSeeder extends Seeder {
         $sec->sectionName = 'Voucher';
         $sec->workflow_id = '3';
         $sec->save();
+
+        // WORKFLOW 4
+
+        $sec = new Section;
+        $sec->id = '13';
+        $sec->section_order_id = '1';
+        $sec->sectionName = 'Purchase Request';
+        $sec->workflow_id = '4';
+        $sec->save();
+
+        $sec = new Section;
+        $sec->id = '14';
+        $sec->section_order_id = '2';
+        $sec->sectionName = 'Requirements';
+        $sec->workflow_id = '4';
+        $sec->save();
+
+        $sec = new Section;
+        $sec->id = '15';
+        $sec->section_order_id = '3';
+        $sec->sectionName = 'Voucher';
+        $sec->workflow_id = '4';
+        $sec->save();
     }
 }

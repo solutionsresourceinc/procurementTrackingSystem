@@ -290,9 +290,24 @@ Session::forget('imgerror');
 	{
 		$purchase = Purchase::find($id);
 		$wfName = DB::table('document')->where('pr_id',$id)->first();
+
+		// JAN SARMIENTO AWESOME CHECKLIST VARIABLES
+		$secName1 = DB::table('section')->where('workflow_id',$wfName->work_id)->where('section_order_id','1')->first();
+		$secName2 = DB::table('section')->where('workflow_id',$wfName->work_id)->where('section_order_id','2')->first();
+		$secName3 = DB::table('section')->where('workflow_id',$wfName->work_id)->where('section_order_id','3')->first();
 		
-		return View::make('purchaseRequest.purchaseRequest_view')
-		->with('purchase', $purchase)->with('wfName',$wfName);
+		if($wfName->work_id!=4)
+		{
+			$secName4 = DB::table('section')->where('workflow_id',$wfName->work_id)->where('section_order_id','4')->first();
+
+			return View::make('purchaseRequest.purchaseRequest_view')
+			->with('purchase', $purchase)->with('wfName',$wfName)->with('secName1',$secName1)->with('secName2',$secName2)->with('secName3',$secName3)->with('secName4',$secName4);
+		}
+		else
+		{
+			return View::make('purchaseRequest.purchaseRequest_view')
+			->with('purchase', $purchase)->with('wfName',$wfName)->with('secName1',$secName1)->with('secName2',$secName2)->with('secName3',$secName3);
+		}
 		//return $purchase;
 	}
 

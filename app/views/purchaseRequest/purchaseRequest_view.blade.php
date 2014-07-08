@@ -80,12 +80,12 @@
 			</tr>
 		</table>
 	</div>-->
-
+	
 	<div class="panel panel-success">
 		<div class="panel-body">
 			<table border="1" class="proc-details">
 				<tr>
-					<td class="proc-headers" colspan="2"><h4>
+					<td class="proc-headers"><h4>
 						@if($wfName->work_id == 1)
 							SMALL VALUE PROCUREMENT (BELOW P50,000)
 						@elseif($wfName->work_id == 2)
@@ -94,68 +94,42 @@
 							BIDDING (ABOVE P500,000)
 						@endif
 					</h4></td>
-					<td class="proc-headers" width="32.5%"><h4 align="center">{{ $purchase->controlNo }}</h4></td>
+					<td class="proc-headers"><h4 align="center">{{ $purchase->controlNo }}</h4></td>
+					<td class="proc-headers"><h4 align="center">Status : {{{ $purchase->status }}}</h4></td>
 				</tr>
 				<tr>
 					<td class="proc-headers" width="30%"><h5>REQUISITIONER</h5></td>
-					<td class="proc-data" colspan="2">
+					<td class="proc-data" colspan="3">
 						<?php $user = User::find($purchase->requisitioner) ?>
 						{{ $user->lastname . ", " . $user->firstname }}
 					</td>
 				</tr>
 				<tr>
 					<td class="proc-headers" width="30%"><h5>PROJECT / PURPOSE</h5></td>
-					<td class="proc-data" colspan="2">{{ $purchase->projectPurpose }}</td>
+					<td class="proc-data" colspan="3">{{ $purchase->projectPurpose }}</td>
 				</tr>
 				<tr>
 					<td class="proc-headers" width="30%"><h5>SOURCE OF FUNDS</h5></td>
-					<td class="proc-data" colspan="2">{{ $purchase->sourceOfFund }}</td>
+					<td class="proc-data" colspan="3">{{ $purchase->sourceOfFund }}</td>
 				</tr>
 				<tr>
 					<td class="proc-headers" width="30%"><h5>ABC AMOUNT</h5></td>
-					<td class="proc-data" colspan="2">{{ $purchase->amount }}</td>
+					<td class="proc-data" colspan="3">{{ $purchase->amount }}</td>
 				</tr>
 			</table>
 		</div>
 	</div>
 
 	<!-- START CHECKLIST SECTION BY JAN SARMIENTO AWESOME -->
-		<div class="well">
-			<table width="100%" class="pr-details-table">
-				<tr>
-					<td width="25%" class="pr-label">Task :</td>
-					<td>
-						@if($wfName->id == 1)
-							Small Value Procurement (Below P50,000)
-						@elseif($wfName->id == 2)
-							Small Value Procurement (Above P50,000 Below P500,000)
-						@else
-							Bidding (Above P500,000)
-						@endif
-					</td>
-				</tr>
-				<tr>
-					<td class="pr-label">Assignee Name :</td>
-
-					<td>
-						<?php $user = User::find($purchase->requisitioner) ?>
-						{{ $user->lastname . ", " . $user->firstname }}
-					</td>
-				</tr>
-				<tr>
-					<td class="pr-label">Duration :</td>
-					<td>{{ $purchase->projectPurpose }}</td>
-				</tr>
-				<tr>
-					<td class="pr-label">Remarks :</td>
-					<td>{{ $purchase->sourceOfFund }}</td>
-				</tr>
-				<tr>
-					<td class="pr-label">ABC Amount:</td>
-					<td>{{ $purchase->amount }}</td>
-				</tr>
-			</table>
-		</div>
+	@if($wfName->work_id==1)
+		@include('purchaseRequest.purchaseRequest_wf1')
+	@elseif($wfName->work_id==2)
+		@include('purchaseRequest.purchaseRequest_wf2')
+	@elseif($wfName->work_id==3)
+		@include('purchaseRequest.purchaseRequest_wf3')
+	@elseif($wfName->work_id==4)
+		@include('purchaseRequest.purchaseRequest_wf4')
+	@endif
 	<!-- END CHECKLIST SECTION BY JAN SARMIENTO AWESOME -->
 	
 	<?php
