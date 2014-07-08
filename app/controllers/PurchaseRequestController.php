@@ -191,6 +191,19 @@ Session::forget('imgerror');
 					Session::forget('doc_id');
 				}
 
+				// START MAILER BY JAN SARMIENTO AWESOME
+				$sendee = DB::table('users')->where('id',$purchase->requisitioner)->first();
+				$email = $sendee->email;
+				$fname = $sendee->firstname;
+
+				$data = [ 'id' => $purchase->id ];
+				Mail::send('emails.template', $data, function($message) use($email, $fname)
+				{
+					$message->from('procurementTrackingSystem@tarlac.com', 'Procurement Tracking System Tarlac');
+					$message->to($email, $fname)->subject('Tarlac Procurement Tracking Systems');
+				}); 
+				// END MAILER BY JAN SARMIENTO AWESOME
+				
 				$notice = "Purchase request created successfully. ";										  
 				Session::put('notice', $notice);
 				$office = Office::all();
