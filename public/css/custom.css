@@ -378,6 +378,14 @@ table.table td{
     cursor: default;
 }
 
+.bac-ctrl-no{
+	font-size: 10px;
+}
+
+.ctrl-no{
+	margin-top: -3px;
+}
+
 @media all and (max-width: 1065px){
 	.accept-button{
 		margin: 8px 25px;
@@ -385,6 +393,9 @@ table.table td{
 	}
 	.task-desc{
 		width: 90%;
+	}
+	.ctrl-no{
+		margin: 0;
 	}
 }
 

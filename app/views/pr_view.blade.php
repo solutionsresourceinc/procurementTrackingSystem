@@ -77,8 +77,9 @@
     	</thead>
 
         <?php
+            $date_today =date('Y-m-d H:i:s');
             $requests = new Purchase;
-            $requests = DB::table('purchase_request')->where('status', '=', 'New')->orWhere('status', '=', 'In progress')->get();
+            $requests = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('status', '=', 'New')->orWhere('status', '=', 'In progress')->get();
         ?>
 
       	<tbody>

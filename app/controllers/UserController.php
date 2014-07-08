@@ -519,6 +519,18 @@ DB::table('users')
 
     public function dashboard()
     {
+        // Check PR is now Overdue
+        $purchases = Purchase::all();
+        $date_today =date('Y-m-d H:i:s');
+
+       /*foreach ($purchases as $purchase) 
+        {
+            $dateRequested = $purchase->dateRequested;
+
+            $dueDate = date('Y-m-d H:i:s', strtotime("$addToDateReceived days" ));
+        }*/
+
+
         return View::make('dashboard');
     }
     

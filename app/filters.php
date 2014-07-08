@@ -150,6 +150,12 @@ Entrust::routeNeedsRole( 'designation/*/edit', array('Administrator'), Redirect:
 Entrust::routeNeedsRole( 'designation/*/members', array('Administrator'), Redirect::to('/') );
 
 // Filter for Task
+
 Entrust::routeNeedsRole( 'task/active', array('Administrator','Procurement Personnel'), Redirect::to('/'), false );
 Entrust::routeNeedsRole( 'task/overdue', array('Administrator','Procurement Personnel'), Redirect::to('/'), false );
+
+
+Entrust::routeNeedsRole( 'task/new', array('Administrator','Procurement Personnel'), Redirect::to('/'), false );
+Entrust::routeNeedsRole( 'task/*', array('Administrator','Procurement Personnel'), Redirect::to('/'), false );
+
 
