@@ -81,6 +81,7 @@ echo $task->maxDuration." days";
 	?></p>
 	
 			<br>
+	@if($taskd->status!="New")
 			<p style="font-weight: bold">Remarks: </p>
 <?php 
 
@@ -117,6 +118,8 @@ No remark.
 				</div>
 			{{ Form::close() }}
 </div>
+
+@endif
 <hr class="clear" />
 <?php 
 
