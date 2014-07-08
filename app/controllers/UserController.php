@@ -145,21 +145,27 @@ class UserController extends BaseController {
 
         $user->email = Input::get('email');
         $password = " ".Input::get( 'password' );
+        $cpassword = " ".Input::get( 'password_confirmation' );
 
         $passnotchange=0;
         $errorcheck=0;
-
-        if($password==" ")
+        if($password == $cpassword)
         {
-            $passnotchange=1;           
-        }
-        else
-        {
-            $password = substr($password, 1);
-            $user->password = Hash::make($password);
-            $user->password_confirmation = Input::get( 'password_confirmation' );
+            if($password==" " && $cpassword == " ")
+            {
+                $passnotchange=1;           
+            }
+            else
+            {
+                $password = substr($password, 1);
+                $user->password = Hash::make($password);
+                $user->password_confirmation = Input::get( 'password_confirmation' );
 
+            }
         }
+
+
+        
 
         if(filter_var($user->email, FILTER_VALIDATE_EMAIL)){}
         else
