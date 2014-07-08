@@ -18,7 +18,7 @@ class Purchase extends Ardent implements UserInterface, RemindableInterface {
 		'requisitioner' => 'required',
 		'office' => 'required',
 		'requisitioner' => 'required',
-		'dateRequested' => 'required',
+		//'dateRequested' => 'required',
 
 	);
 
