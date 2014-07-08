@@ -166,11 +166,12 @@
 				<!--  
 				Image Module
 				-->
- <label class="create-label">Related files:</label>
+
+				<label class="create-label">Related files:</label>
 				<div class="panel panel-default fc-div">
 					<div class="panel-body" style="padding: 5px 20px;">
-						
-						<br>
+						<!--h3>Attachments</h3>
+						<br-->
 						@if(Session::get('imgsuccess'))
 							<div class="alert alert-success"> {{ Session::get('imgsuccess') }}</div> 
 						@endif
@@ -179,24 +180,28 @@
 							<div class="alert alert-danger"> {{ Session::get('imgerror') }}</div> 
 						@endif
 
+						<br/>
+
 						<?php
-						$id = 0;
-						$purchase = Purchase::orderBy('id', 'ASC')->get(); ?>
+							$id = 0;
+							$purchase = Purchase::orderBy('id', 'ASC')->get(); 
+						?>
 						@foreach ($purchase as $purchases) 
 							<?php	$id = $purchases->id; ?>
 						@endforeach
 
 						<?php
-						$doc_id = 0;
-						$document = Document::orderBy('id', 'ASC')->get();
+							$doc_id = 0;
+							$document = Document::orderBy('id', 'ASC')->get();
 						?>
 						@foreach ($document as $docs) 
 							<?php	$doc_id = $docs->id; ?>
 						@endforeach
 						<?php $doc_id=$doc_id+1; ?>
+
 						{{ Form::open(array('url' => 'addimage', 'files' => true)) }}
 
-						<input name="file[]" type="file"  multiple title="Select images to upload" data-filename-placement="inside"/>
+						<input name="file[]" type="file"  multiple title="Select images to attach" data-filename-placement="inside"/>
 						<input name="doc_id" type="hidden" value="{{ $doc_id }}">
 
 						<br>
@@ -218,31 +223,30 @@
 		</div>	
 	</div>		
 	{{ Form::close() }}	
-	<!--Image Display-->
+	<!--Image Display
 	<div id="img-section">
 
 		<?php
-  $attachmentc = DB::table('attachments')->where('doc_id', $doc_id)->count();
-         if ($attachmentc!=0)
+  			$attachmentc = DB::table('attachments')->where('doc_id', $doc_id)->count();
+         	if ($attachmentc!=0)
             echo "<h3>"."Attachments"."</h3>";
-		$attachments = DB::table('attachments')->where('doc_id', $doc_id)->get();	
-		$srclink="uploads\\";
+			$attachments = DB::table('attachments')->where('doc_id', $doc_id)->get();	
+			$srclink="uploads\\";
 		?>
 		@foreach ($attachments as $attachment) 
-		<div class="image-container">
-			<a href="{{asset('uploads/'.$attachment->data)}}" data-lightbox="roadtrip">
-				<img class="img-thumbnail" src="{{asset('uploads/'.$attachment->data)}}" style="width: 100px; height: 100px;" />
-			</a>
-			{{ Form::open(array('method' => 'post', 'url' => 'delimage')) }}
-			<input type="hidden" name="hide" value="{{$attachment->id}}">
-			<button class="star-button"><img src="{{asset('img/Delete_Icon.png')}}"></button>
-			{{Form::close()}}
-		</div>
-
+			<div class="image-container">
+				<a href="{{asset('uploads/'.$attachment->data)}}" data-lightbox="roadtrip">
+					<img class="img-thumbnail" src="{{asset('uploads/'.$attachment->data)}}" style="width: 100px; height: 100px;" />
+				</a>
+				{{ Form::open(array('method' => 'post', 'url' => 'delimage')) }}
+				<input type="hidden" name="hide" value="{{$attachment->id}}">
+				<button class="star-button"><img src="{{asset('img/Delete_Icon.png')}}"></button>
+				{{Form::close()}}
+			</div>
 		@endforeach
 
 	</div>
-	<!--End Image Display-->
+	End Image Display-->
 
 	{{ Session::forget('notice'); }}
 	{{ Session::forget('main_error'); }}

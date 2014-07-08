@@ -243,7 +243,7 @@ $epurchase=Purchase::find($id);
                         <div class="alert alert-danger"> {{ Session::get('imgerror') }}</div> 
                     @endif
 
-                    <br>
+                    <br/>
 
                     <?php
                         $document = Document::where('pr_id', $epurchase->id)->first();
