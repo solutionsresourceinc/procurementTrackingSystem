@@ -225,13 +225,10 @@ class UserController extends BaseController {
         $user->lastname = Input::get( 'lastname' );
 
         $user->office_id= Input::get('office');
-        // The password confirmation will be removed from model
-        // before saving. This field will be used in Ardent's
-        // auto validation.
+ 
 
 
-        $user->password_confirmation = Input::get( 'password_confirmation' );
-        // Save if valid. Password field will be hashed before save
+     $user->password_confirmation = Input::get( 'password_confirmation' );
 
 
 

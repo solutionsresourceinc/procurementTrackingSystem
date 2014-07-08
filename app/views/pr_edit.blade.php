@@ -292,7 +292,92 @@ $epurchase=Purchase::find($id);
     {{ Session::forget('m7'); }}
     {{ Session::forget('imgerror'); }}
     {{ Session::forget('imgsuccess'); }}
+ 
+<div class="form-create fc-div">
+<!-- Section 1  -->
+<?php 
+//Cursor Component
+$taskc= TaskDetails::where('doc_id', $docs->id)->where('status', 'New')->first(); 
+$workflow= Workflow::find($docs->work_id);
+$section= Section::where('workflow_id', $workflow->id)->orderBy('section_order_id','ASC')->get();
+
+$taskd= TaskDetails::where('doc_id', $docs->id)->orderBy('id', 'ASC')->get();
+$sectioncheck=0;
+echo "<table border='1'>";
+foreach ($section as $sections) {   
+$task= Task::where('section_id', $sections->section_order_id)->where('wf_id', $workflow->id)->orderBy('order_id', 'ASC')->get();
+echo "<tr><th colspan='5' ><h3>".$sections->section_order_id.". ".$sections->sectionName."</h3></th></tr>";
+echo " <tr><th></th><th>By:</th><th>Date:</th><th>Days of Action</th><th>Remarks</th></tr>";
+foreach ($task as $tasks) {
+//Cursor Open form 
+    //Displayer 
+    $taskp =TaskDetails::where('doc_id', $docs->id)->where('task_id', $tasks->id)->first();
+
+    echo "<tr><td>".$tasks->order_id.". ".$tasks->taskName."</td>";
+
+if ($taskc->task_id==$tasks->id && $tasks->designation_id==0){
+    ?>
+{{Form::open(['url'=>'checklistedit'], 'POST')}}
+<input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
+<td><input type ="text" name="assignee"></td>
+<td><div class="input-group date form_datetime col-md-12" data-date="{{ date('Y-m-d') }}T{{ date('H:i:s') }}Z" data-date-format="dd MM yyyy - HH:ii p" data-link-field="dtp_input1">
+                        <input id="disabled_datetime" onchange="fix_format()" class="form-control" size="16" type="text" value="<?php
+                        if (NULL!=Input::old('dateRequested'))
+                            echo Input::old('dateRequested');
+                        else
+                         echo $epurchase->dateRequested; ?>" readonly>
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                    </div>
+                    <input type="hidden" id="dtp_input1" name="dateRequested" >
+                </td>
+                <td>
+<input type="number" name="daysOfAction">
+</td>
+<td>
+    
+<input type="text" name="remarks">
+
+</td>
+{{Form::close()}}
+</tr><tr>
+<td colspan="5"> <br><center> <input type="submit" class="btn btn-success"> <center><br></td>
+<?php }
+//END Cursor Open Form
+else{
+?>
+<td>{{$taskp->assignee}}</td>
+<td><?php if($taskp->daysOfAction!=0) echo $taskp->updated_at; ?></td>
+<td><?php if($taskp->daysOfAction!=0) echo $taskp->daysOfAction; ?></td>
+<td><?php echo $taskp->remarks; ?></td>
+<?php
+}
+echo "</tr>";
+}
+
+
+}
+echo "</table>";
+?>
+
+<!-- Section 1  -->
+
+</div>
+
+
+
+
+
+
+
+
 @stop
+
+
+
+
+
+
 
 @section('footer')
     <script type="text/javascript">

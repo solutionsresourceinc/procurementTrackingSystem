@@ -37,22 +37,14 @@ class PurchaseRequestController extends Controller {
 			if($document_save)
 			{
 
-
-
 $doc_id= $document->id;
-
 $workflow=Workflow::find($document->work_id);
-
-$section=Section::where('workflow_id',$workflow->id)->orderBy('section_order_id', 'ASC')->get();
+$section=Section::where('workflow_id',$document->work_id)->orderBy('section_order_id', 'ASC')->get();
 $firstnew=0;
-$sec1=0;
 
-foreach ($section as $sections) {
-	$task=Task::where('wf_id', $document->work_id)->where('section_id', $sections->id)->orderBy('section_id', 'ASC')->get();
-if ($sec1==0)
-	{$sec1=1;
-		continue;
-	}
+
+	$task=Task::where('wf_id', $document->work_id)->orderBy('section_id', 'ASC')->orderBy('order_id', 'ASC')->get();
+
 	foreach ($task as $tasks) {
 
 
@@ -64,11 +56,11 @@ if ($sec1==0)
 	 	$taskd->status="New";
  	else
  		$taskd->status="Pending";
-	$firstnew=1;
-	$taskd->doc_id= $document->id;
-	$taskd->save();
+		$firstnew=1;
+		$taskd->doc_id= $document->id;
+		$taskd->save();
 	}
-}
+
 
 
 
@@ -579,6 +571,15 @@ unlink($actual);
           return Redirect::back()->with('imgsuccess','Files uploaded.');
 
 
+
+}
+
+
+public function checklistedit(){
+
+
+$taskdetails_id= Input::get('taskdetails_id');
+$assignee=Input::get('assignee');
 
 }
 

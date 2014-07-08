@@ -19,9 +19,11 @@ class CreateTaskDetailsTable extends Migration {
 			$table->string('status', 45);
 			$table->string('remarks', 255);
 			$table->integer('assignee_id');
+			$table->string('assignee', 255);
 			$table->integer('daysOfAction');
 			$table->integer('doc_id')->references('id')->on('purchase_request');
 			$table->dateTime('otherDate');
+			$table->dateTime('dateFinished');
 			$table->dateTime('dateReceived');
 			$table->dateTime('dueDate');
 			$table->timestamps();

@@ -100,6 +100,7 @@ Route::get( 'purchaseRequest/cancelled', 'PurchaseRequestController@viewCancelle
 Route::post('purchaseRequest/edit/{id}',[ 'as' => 'purchaseRequest_editsubmit', 'uses' => 'PurchaseRequestController@edit_submit']);
 Route::post('purchaseRequest/create', ['as' => 'purchaseRequest_submit', 'uses' => 'PurchaseRequestController@create_submit']);
 
+Route::post('checklistedit', ['uses' => 'PurchaseRequestController@checklistedit']);
 Route::get( 'purchaseRequest/edit/{id}', function($id)
 {
 	return View::make('pr_edit')->with('id',$id);
