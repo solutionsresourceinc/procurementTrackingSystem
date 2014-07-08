@@ -27,7 +27,7 @@ $taskdetails_id=Session::get('taskdetails_id');
 Session::forget('taskdetails_id');
 $taskd =TaskDetails::find($taskdetails_id);
 $task= Task::find($taskd->task_id);
-$doc= Document::find($taskd->doc_id)->first();
+$doc= Document::find($taskd->doc_id);
 $purchase = Purchase::find($doc->pr_id);
 
 ?>
