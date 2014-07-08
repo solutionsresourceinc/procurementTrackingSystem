@@ -619,8 +619,10 @@ public function changeForm($id)
 	$purchase->status = "Cancelled";
 	$purchase->reason = $reason;
 	$purchase->save();
+	TaskDetails::where('doc_id', '=', $id)->delete();
 	Session::put('notice', 'Purchase request has been cancelled.' );
 	return Redirect::to("purchaseRequest/view");
+
 
 }
 
