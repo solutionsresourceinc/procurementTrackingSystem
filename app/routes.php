@@ -277,7 +277,6 @@ Route::post('purchaseRequest/changeForm/{id}', function($id)
 		$data = array(
 		"html" => 
 			"<div id='pr_form'>
-				changeForm/$id
 				<form action='submitForm/$id' id='form' method='post'>
 					<input type='hidden' id='hide_reason' name='hide_reason'>
 				</form>
