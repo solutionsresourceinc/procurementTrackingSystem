@@ -233,8 +233,7 @@ $epurchase=Purchase::find($id);
             <label class="create-label">Related files:</label>
             <div class="panel panel-default fc-div">
                 <div class="panel-body" style="padding: 5px 20px;">
-                    <!--h2>Attachments</h2>
-                    <br-->
+                
 
                     @if(Session::get('imgsuccess'))
                         <div class="alert alert-success"> {{ Session::get('imgsuccess') }}</div> 
@@ -273,6 +272,9 @@ $epurchase=Purchase::find($id);
     <div id="img-section">
 
         <?php
+         $attachmentc = DB::table('attachments')->where('doc_id', $doc_id)->count();
+         if ($attachmentc!=0)
+            echo "<h3>"."Attachments"."</h3>";
             $attachments = DB::table('attachments')->where('doc_id', $doc_id)->get();  
             $srclink="uploads\\";
         ?>
