@@ -45,6 +45,7 @@ $today = new DateTime();
 $diff = $birth->diff($today); 
 $aDays= $diff->format('%d');
 $taskd->daysOfAction=$aDays;
+$taskd->dateFinished=$today;
 $taskd->save();
 $tasknext=TaskDetails::find($taskdetails_id+1);
 if ($tasknext->doc_id==$taskd->doc_id)

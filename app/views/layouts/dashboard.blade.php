@@ -189,8 +189,10 @@
 foreach ($taskcount as $taskcounter) {
     $task=Task::find($taskcounter->task_id);
     if ($task->designation_id==$desig->designation_id)
+        {
+            if($task->section_id!=1)
         $counting=$counting+1;
-
+}
 }
                         echo $counting;
 

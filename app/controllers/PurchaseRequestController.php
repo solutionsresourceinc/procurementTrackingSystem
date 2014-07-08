@@ -607,6 +607,50 @@ public function checklistedit(){
 
 $taskdetails_id= Input::get('taskdetails_id');
 $assignee=Input::get('assignee');
+$dateFinished=Input::get('dateFinished');
+$daysOfAction=Input::get('daysOfAction');
+$remarks=Input::get('remarks');
+$check=0;
+if(ctype_alpha(str_replace(array(' ', '-', '.'),'',$remarks)))
+         {
+         	$check=$check+1;
+         }
+if(ctype_alpha(str_replace(array(' ', '-', '.'),'',$assignee)))
+         {
+         	$check=$check+1;
+         }
+if(ctype_digit($daysOfAction))
+		{
+		  	$check=$check+1;
+         }
+
+if ($check==3){
+
+Session::put('successchecklist','Saved.');
+
+$taskd= TaskDetails::find($taskdetails_id);
+$taskd->status="Done";
+$taskd->daysOfAction=$daysOfAction;
+$taskd->dateFinished=$dateFinished;
+$taskd->save();
+$tasknext=TaskDetails::find($taskdetails_id+1);
+if ($tasknext->doc_id==$taskd->doc_id)
+{
+$tasknext->status="New";
+$tasknext->save();
+}
+else
+{
+$purchase= Purchase::find($pr_id);
+$purchase->status="Closed";
+$purchase->save();
+}
+
+
+}
+else
+Session::put('errorchecklist','Invalid input.');
+return Redirect::back();
 
 }
 
