@@ -329,7 +329,7 @@ if ($taskc->task_id==$tasks->id && $tasks->designation_id==0){
                         <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
                         <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
                     </div>
-                    <input type="hidden" id="dtp_input1" name="dateRequested" >
+                    <input type="hidden" id="dtp_input1" name="dateFinished" >
                 </td>
                 <td>
 <input type="number" name="daysOfAction">
@@ -339,13 +339,16 @@ if ($taskc->task_id==$tasks->id && $tasks->designation_id==0){
 <input type="text" name="remarks">
 
 </td>
-{{Form::close()}}
+
 </tr><tr>
 <td colspan="5"> <br><center> <input type="submit" class="btn btn-success"> <center><br></td>
+{{Form::close()}}
 <?php }
 //END Cursor Open Form
+
 else{
 ?>
+
 <td>{{$taskp->assignee}}</td>
 <td><?php if($taskp->daysOfAction!=0) echo $taskp->updated_at; ?></td>
 <td><?php if($taskp->daysOfAction!=0) echo $taskp->daysOfAction; ?></td>

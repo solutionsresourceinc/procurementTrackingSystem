@@ -122,7 +122,10 @@ class UserController extends BaseController {
             $get_user = User::where('username','=',$username)->first();   
             $get_user->attachRole( $new_role );
 
-
+$desig = new UserHasDesignation;
+$desig->users_id= $user->id;
+$desig->designation_id=0;
+$desig->save();
             $notice = "User created successfullly! ";         
             // Redirect with success message, You may replace "Lang::get(..." for your custom message.
             return Redirect::action('UserController@viewUser')
