@@ -626,6 +626,7 @@ $dateFinished=Input::get('dateFinished');
 $daysOfAction=Input::get('daysOfAction');
 $remarks=Input::get('remarks');
 $check=0;
+
 if(ctype_alpha(str_replace(array(' ', '-', '.'),'',$remarks)))
          {
          	$check=$check+1;
@@ -647,6 +648,8 @@ $taskd= TaskDetails::find($taskdetails_id);
 $taskd->status="Done";
 $taskd->daysOfAction=$daysOfAction;
 $taskd->dateFinished=$dateFinished;
+$taskd->assignee=$assignee;
+$taskd->remarks=$remarks;
 $taskd->save();
 $tasknext=TaskDetails::find($taskdetails_id+1);
 if ($tasknext->doc_id==$taskd->doc_id)

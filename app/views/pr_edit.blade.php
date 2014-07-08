@@ -44,6 +44,17 @@ $epurchase=Purchase::find($id);
                 <div class="alert alert-danger"> {{ Session::get('main_error') }}</div> 
             @endif
 
+
+             @if(Session::get('successchecklist'))
+                <div class="alert alert-success"> {{ Session::get('successchecklist') }}{{Session::forget('successchecklist')}}</div> 
+            @endif
+
+            @if(Session::get('errorchecklist'))
+                <div class="alert alert-danger"> {{ Session::get('errorchecklist') }}</div> 
+            @endif
+            {{Session::forget('errorchecklist')}}
+            {{Session::forget('successchecklist')}}
+
             <div class="form-group">
                 <div>
                     <?php 
@@ -349,7 +360,14 @@ if ($taskc->task_id==$tasks->id && $tasks->designation_id==0){
 else{
 ?>
 
-<td>{{$taskp->assignee}}</td>
+<td><?php
+if($taskp->assignee!=NULL)
+   echo $taskp->assignee; 
+else if($taskp->assignee_id!=0){
+    $assign_user=User::find($taskp->assignee_id);
+echo $assign_user->lastname.", ".$assign_user->firstname;
+}
+?></td>
 <td><?php if($taskp->daysOfAction!=0) echo $taskp->updated_at; ?></td>
 <td><?php if($taskp->daysOfAction!=0) echo $taskp->daysOfAction; ?></td>
 <td><?php echo $taskp->remarks; ?></td>
