@@ -310,7 +310,7 @@ $epurchase=Purchase::find($id);
 <!-- Section 1  -->
 <?php 
 //Cursor Component
-$taskc= TaskDetails::where('doc_id', $docs->id)->where('status', 'New')->first(); 
+$taskc= TaskDetails::where('doc_id', $docs->id)->where('status', 'New')->orWhere('status', 'Active')->first(); 
 $workflow= Workflow::find($docs->work_id);
 $section= Section::where('workflow_id', $workflow->id)->orderBy('section_order_id','ASC')->get();
 
