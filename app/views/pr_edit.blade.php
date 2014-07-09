@@ -333,84 +333,87 @@ if ($pass==0)
         </div>  
        
         <br>
-        <div class="form-create ">
+        <div style="width: 85%;margin: auto;">
             <!-- Section 1  -->
             <?php 
             //Cursor Component
-            $taskc= TaskDetails::where('doc_id', $docs->id)->where('status', 'New')->orWhere('status', 'Active')->first(); 
-            $workflow= Workflow::find($docs->work_id);
-            $section= Section::where('workflow_id', $workflow->id)->orderBy('section_order_id','ASC')->get();
+                $taskc= TaskDetails::where('doc_id', $docs->id)->where('status', 'New')->orWhere('status', 'Active')->first(); 
+                $workflow= Workflow::find($docs->work_id);
+                $section= Section::where('workflow_id', $workflow->id)->orderBy('section_order_id','ASC')->get();
 
-            $taskd= TaskDetails::where('doc_id', $docs->id)->orderBy('id', 'ASC')->get();
-            $sectioncheck=0;
+                $taskd= TaskDetails::where('doc_id', $docs->id)->orderBy('id', 'ASC')->get();
+                $sectioncheck=0;
 
+                //echo "<table border='1' class='workflow-table'>";
+                foreach ($section as $sections) {   
+                $task= Task::where('section_id', $sections->section_order_id)->where('wf_id', $workflow->id)->orderBy('order_id', 'ASC')->get();
+                echo "<div class='panel panel-success'><div class='panel-heading'>
+                    <h3 class='panel-title'>".$sections->section_order_id.". ".$sections->sectionName."</h3>
+                    </div>";
+                //echo "<tr><th colspan='5' >".$sections->section_order_id.". ".$sections->sectionName."</th></tr>";
+                echo "<div class='panel-body'>";
+                echo "<table border='1' class='workflow-table'>";
+                echo " <tr><th width='30%'></th>";
+                echo "<th class='workflow-th' width='18%'>By:</th>";
+                echo "<th class='workflow-th' width='18%'>Date:</th>";
+                echo "<th class='workflow-th' width='12.5%'>Days of Action</th>";
+                echo "<th class='workflow-th'>Remarks</th></tr>";
+                foreach ($task as $tasks) {
+                //Cursor Open form 
+                    //Displayer 
+                    $taskp =TaskDetails::where('doc_id', $docs->id)->where('task_id', $tasks->id)->first();
 
-            echo "<table border='1' width='100%' >";
-            foreach ($section as $sections) {   
-            $task= Task::where('section_id', $sections->section_order_id)->where('wf_id', $workflow->id)->orderBy('order_id', 'ASC')->get();
-            echo "<tr><th colspan='5' >".$sections->section_order_id.". ".$sections->sectionName."</th></tr>";
-            echo " <tr><th></th><th>By:</th><th>Date:</th><th>Days of Action</th><th>Remarks</th></tr>";
-            foreach ($task as $tasks) {
-            //Cursor Open form 
-                //Displayer 
-                $taskp =TaskDetails::where('doc_id', $docs->id)->where('task_id', $tasks->id)->first();
+                    echo "<tr><td>".$tasks->order_id.". ".$tasks->taskName."</td>";
 
-                echo "<tr><td>".$tasks->order_id.". ".$tasks->taskName."</td>";
+                    if ($taskc->task_id==$tasks->id && $tasks->designation_id==0){
+             ?>
+                    {{Form::open(['url'=>'checklistedit'], 'POST')}}
+                        <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
+                        <td class="edit-pr-input"><input type ="text" name="assignee" class="form-control" width="100%"></td>
+                        <td class="edit-pr-input"> <input class="datepicker" size="16" type="text" name="dateFinished" class="form-control" value="12/02/2012" width="100%">
+                          <span class="add-on"><i class="icon-th"></i></span>
+                        </td>
+                        <td class="edit-pr-input">
+                        <input type="number" name="daysOfAction" class="form-control"  min="0" width="100%">
+                        </td>
+                        <td class="edit-pr-input">
+                        <input type="text" name="remarks"  class="form-control" maxlength="255" width="100%">
+                        </td>
 
-            if ($taskc->task_id==$tasks->id && $tasks->designation_id==0){
-                ?>
-            {{Form::open(['url'=>'checklistedit'], 'POST')}}
-            <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
-            <td ><input type ="text" name="assignee"></td>
-            <td> <input class="datepicker" size="16" type="text" name="dateFinished" value="12/02/2012">
-              <span class="add-on"><i class="icon-th"></i></span>
-
-                            </td>
-                            <td >
-            <input type="number" name="daysOfAction" min="0">
-            </td>
-            <td >
-                
-            <input type="text" name="remarks" maxlength="255">
-
-            </td>
-
-            </tr><tr>
-            <td colspan="5" > <br><center> <input type="submit" class="btn btn-success"> <center><br></td>
-            {{Form::close()}}
+                        </tr><tr>
+                        <td colspan="5" > <br><center> <input type="submit" class="btn btn-success"> <center><br></td>
+                    {{Form::close()}}
             <?php }
             //END Cursor Open Form
 
-            else{
+                    else{
             ?>
 
-            <td ><?php
-            if($taskp->assignee!=NULL)
-              { $dassignee=chunk_split($taskp->assignee, 20, "<br>");
-                echo $dassignee; }
-            else if($taskp->assignee_id!=0){
-                $assign_user=User::find($taskp->assignee_id);
-            echo $assign_user->lastname.", ".$assign_user->firstname;
-            }
-            $date = new DateTime($taskp->dateFinished);
-            $datef = $date->format('m/d/y');
+                <td ><?php
+                    if($taskp->assignee!=NULL)
+                      { $dassignee=chunk_split($taskp->assignee, 20, "<br>");
+                        echo $dassignee; }
+                    else if($taskp->assignee_id!=0){
+                        $assign_user=User::find($taskp->assignee_id);
+                    echo $assign_user->lastname.", ".$assign_user->firstname;
+                    }
+                    $date = new DateTime($taskp->dateFinished);
+                    $datef = $date->format('m/d/y');
+                ?></td>
 
-            ?></td>
-
-            <td ><?php if($taskp->dateFinished!="0000-00-00 00:00:00") echo $datef ?></td>
-            <td ><?php if($taskp->dateFinished!="0000-00-00 00:00:00") echo $taskp->daysOfAction; ?></td>
-            <td ><?php 
-            $dremarks=chunk_split($taskp->remarks, 20, "<br>");
-                
-            echo $dremarks; ?></td>
-            <?php
-            }
-            echo "</tr>";
-            }
-
-
-            }
-            echo "</table>";
+                <td ><?php if($taskp->dateFinished!="0000-00-00 00:00:00") echo $datef ?></td>
+                <td ><?php if($taskp->dateFinished!="0000-00-00 00:00:00") echo $taskp->daysOfAction; ?></td>
+                <td ><?php 
+                    $dremarks=chunk_split($taskp->remarks, 20, "<br>");
+                        
+                    echo $dremarks; ?>
+                </td>
+                <?php
+                    }
+                    echo "</tr>";
+                    }
+                echo "</table></div></div>";
+                }
             ?>
 
             <!-- Section 1  -->
