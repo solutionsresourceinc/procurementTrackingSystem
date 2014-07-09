@@ -641,7 +641,9 @@ public function checklistedit(){
 
 $taskdetails_id= Input::get('taskdetails_id');
 $assignee=Input::get('assignee');
-$dateFinished=Input::get('dateFinished');
+$mydate=Input::get('dateFinished');
+$timestamp = strtotime($mydate);
+$dateFinished= date("Y-m-d H:i:s", $timestamp);
 $daysOfAction=Input::get('daysOfAction');
 $remarks=Input::get('remarks')." ";
 $remarkchange=0;
