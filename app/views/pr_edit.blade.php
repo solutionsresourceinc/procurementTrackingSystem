@@ -149,16 +149,6 @@ if ($pass==0)
                     </div>
                 </div>
                 <br>
-                
-
-                <div>
-                    {{ Form::label('amount', 'Amount *', array('class' => 'create-label')) }}
-                    {{ Form::text('amount',$valamount,array('class'=>'form-control','onchange'=>'numberWithCommas(this.value)','id'=>'num','disabled')) }}
-                </div>
-                @if (Session::get('m3'))
-                    <font color="red"><i>{{ Session::get('m3') }}</i></font>
-                @endif
-                <br>
               
                 <div>
                     {{ Form::label('projectPurpose', 'Project/Purpose *', array('class' => 'create-label')) }}
@@ -170,68 +160,81 @@ if ($pass==0)
                 @endif
                 <br>            
 
-                <div>
-                    {{ Form::label('sourceOfFund', 'Source of Fund *', array('class' => 'create-label')) }}
-                    {{ Form::text('sourceOfFund',$valsourceOfFund, array('class'=>'form-control')) }}
-                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        {{ Form::label('sourceOfFund', 'Source of Fund *', array('class' => 'create-label')) }}
+                        {{ Form::text('sourceOfFund',$valsourceOfFund, array('class'=>'form-control')) }}
+                    </div>
 
-                @if (Session::get('m2'))
-                    <font color="red"><i>{{ Session::get('m2') }}</i></font>
-                @endif
+                    @if (Session::get('m2'))
+                        <font color="red"><i>{{ Session::get('m2') }}</i></font>
+                    @endif
+
+                    <div class="col-md-6">
+                        {{ Form::label('amount', 'Amount *', array('class' => 'create-label')) }}
+                        {{ Form::text('amount',$valamount,array('class'=>'form-control','onchange'=>'numberWithCommas(this.value)','id'=>'num','disabled')) }}
+                    </div>
+                    @if (Session::get('m3'))
+                        <font color="red"><i>{{ Session::get('m3') }}</i></font>
+                    @endif
+                </div>
                 <br>
+
                 <?php 
                     $office= DB::table('offices')->get();
                 ?>
-                <div class="form-group" id="template">
-                    {{ Form::label('office', 'Office *', array('class' => 'create-label')) }}
-                    <select id="office" name="office" class="form-control" data-live-search="true">
-                        <option value="">Please select</option>
-                        @foreach($office as $key)
-                            <option value="{{ $key->id }}" 
-                                <?php 
-                                    if (Input::old('office')==$key->id)
-                                      echo "selected";
-                                    else if($epurchase->office==$key->id)
-                                    echo "selected" 
-                                ?>
-                                >{{{ $key->officeName }}}
-                            </option>
-                        @endforeach
-                    </select>
-                    @if (Session::get('m4'))
-                        <font color="red"><i>{{ Session::get('m4') }}</i></font>
-                    @endif
-                
-                </div>
-
-                <div class="form-group" id="template">
-                    {{ Form::label('requisitioner', 'Requisitioner *', array('class' => 'create-label')) }}
-                    <select class="form-control" id="requisitioner" name="requisitioner"  data-live-search="true" >
-                        <?php
-                        $users= DB::table('users')->get();
-                        ?>
-                        <option value="">Please select</option>
-                        @foreach($users as $key2)
-                            {{{ $fullname = $key2->lastname . ", " . $key2->firstname }}}
-                            @if($key2->confirmed == 0)
-                                continue;
-                            @else
-                                <option value="{{ $key2->id }}" class="{{$key2->office_id}}"
+                <div class="row">
+                    <div class="form-group col-md-6" id="template">
+                        {{ Form::label('office', 'Office *', array('class' => 'create-label')) }}
+                        <select id="office" name="office" class="form-control" data-live-search="true">
+                            <option value="">Please select</option>
+                            @foreach($office as $key)
+                                <option value="{{ $key->id }}" 
                                     <?php 
-                                    if (Input::old('requisitioner')==$key2->id)
-                                      echo "selected";
-                                    else if($epurchase->requisitioner==$key2->id)
+                                        if (Input::old('office')==$key->id)
+                                          echo "selected";
+                                        else if($epurchase->office==$key->id)
                                         echo "selected" 
                                     ?>
-                                    >{{ $fullname }}
+                                    >{{{ $key->officeName }}}
                                 </option>
-                            @endif
-                        @endforeach
-                    </select>
-                    @if (Session::get('m5'))
-                        <font color="red"><i>{{ Session::get('m5') }}</i></font>
-                    @endif
-              
+                            @endforeach
+                        </select>
+                        @if (Session::get('m4'))
+                            <font color="red"><i>{{ Session::get('m4') }}</i></font>
+                        @endif
+                    
+                    </div>
+
+                    <div class="form-group col-md-6" id="template">
+                        {{ Form::label('requisitioner', 'Requisitioner *', array('class' => 'create-label')) }}
+                        <select class="form-control" id="requisitioner" name="requisitioner"  data-live-search="true" >
+                            <?php
+                            $users= DB::table('users')->get();
+                            ?>
+                            <option value="">Please select</option>
+                            @foreach($users as $key2)
+                                {{{ $fullname = $key2->lastname . ", " . $key2->firstname }}}
+                                @if($key2->confirmed == 0)
+                                    continue;
+                                @else
+                                    <option value="{{ $key2->id }}" class="{{$key2->office_id}}"
+                                        <?php 
+                                        if (Input::old('requisitioner')==$key2->id)
+                                          echo "selected";
+                                        else if($epurchase->requisitioner==$key2->id)
+                                            echo "selected" 
+                                        ?>
+                                        >{{ $fullname }}
+                                    </option>
+                                @endif
+                            @endforeach
+                        </select>
+                        @if (Session::get('m5'))
+                            <font color="red"><i>{{ Session::get('m5') }}</i></font>
+                        @endif
+                  
+                    </div>
                 </div>
 
          

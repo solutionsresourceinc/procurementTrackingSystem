@@ -26,6 +26,28 @@
 
 
 @section('content')
+
+<!-- Modal Div -->
+	<div class="modal fade" id="description" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+		    		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		    		<h4 class="modal-title">Description</h4>
+		    	</div>
+			    	<center>
+			    <div class="modal-body" id="description_body">
+			      		<!-- Insert Data Here -->
+			    </div>
+			    	</center>
+			    <div class="modal-footer">
+        			<button type="button" class="btn btn-default" data-dismiss="modal">Back</button>
+    			</div>
+			</div>
+		</div>
+	</div>
+
+
 <h1 class="page-header">Create New Purchase Request</h1>
 <div class="form-create fc-div">
 	{{ Form::open(array('url' => 'newcreate','files' => true), 'POST') }}
@@ -73,6 +95,9 @@
 						<p> </p>
 					</div>
 
+					</select>
+					<input type="hidden" name="Procurement" id="hide_modeOfProcurement">
+
 					<div class="col-md-2">
 						{{ Form::label('status', 'Status: ', array('class' => 'create-label')) }}
 						<input type="text" value="New" readonly class="form-control">
@@ -102,66 +127,69 @@
 				@if (Session::get('m1'))
 					<font color="red"><i>{{ Session::get('m1') }}</i></font>
 				@endif
-				<br>	
+				<br/>	
 
-				<div>
-					{{ Form::label('sourceOfFund', 'Source of Fund *', array('class' => 'create-label')) }}
-					{{ Form::text('sourceOfFund','', array('class'=>'form-control')) }}
-				</div>
+				<div class="row">
+					<div class="col-md-6">
+						{{ Form::label('sourceOfFund', 'Source of Fund *', array('class' => 'create-label')) }}
+						{{ Form::text('sourceOfFund','', array('class'=>'form-control')) }}
+					</div>
 
-				@if (Session::get('m2'))
-					<font color="red"><i>{{ Session::get('m2') }}</i></font>
-				@endif
-				<br>
-
-				<div>
-					{{ Form::label('amount', 'Amount *', array('class' => 'create-label')) }}
-					{{ Form::text('amount','',array('class'=>'form-control','onchange'=>'numberWithCommas(this.value)', 'onkeypress' => 'return isNumberKey(event)','id'=>'num','maxlength'=>'12')) }}
-				</div>
-				@if (Session::get('m3'))
-					<font color="red"><i>{{ Session::get('m3') }}</i></font>
-				@endif
-				<br>		
-
-				<div class="form-group" id="template">
-					{{ Form::label('office', 'Office *', array('class' => 'create-label')) }}
-					<select id="office" name="office" class="form-control" data-live-search="true">
-						<option value="">Please select</option>
-						@foreach($office as $key)
-							<option value="{{ $key->id }}" 
-								<?php if(Input::old('office')==$key->id)
-								echo "selected" ?>
-								>{{{ $key->officeName }}}
-							</option>
-						@endforeach
-					</select>
-					@if (Session::get('m4'))
-						<font color="red"><i>{{ Session::get('m4') }}</i></font>
+					@if (Session::get('m2'))
+						<font color="red"><i>{{ Session::get('m2') }}</i></font>
 					@endif
-				
-				</div>
 
-				<div class="form-group" id="template">
-					{{ Form::label('requisitioner', 'Requisitioner *', array('class' => 'create-label')) }}
-					<select class="form-control" id="requisitioner" name="requisitioner"  data-live-search="true" >
-						<option value="">Please select</option>
-						@foreach($users as $key2)
-							{{{ $fullname = $key2->lastname . ", " . $key2->firstname }}}
-							@if($key2->confirmed == 0)
-								continue;
-							@else
-							<option value="{{ $key2->id }}" class="{{$key2->office_id}}"
-								<?php if(Input::old('requisitioner')==$key2->id)
-								echo "selected" ?>
-								>{{ $fullname }}
-							</option>
-							@endif
-						@endforeach
-					</select>
-					@if (Session::get('m5'))
-						<font color="red"><i>{{ Session::get('m5') }}</i></font>
+					<div class="col-md-6">
+						{{ Form::label('amount', 'Amount *', array('class' => 'create-label')) }}
+						{{ Form::text('amount','',array('class'=>'form-control','onchange'=>'numberWithCommas(this.value)', 'onkeypress' => 'return isNumberKey(event)','id'=>'num','maxlength'=>'12')) }}
+					</div>
+					@if (Session::get('m3'))
+						<font color="red"><i>{{ Session::get('m3') }}</i></font>
 					@endif
-				
+				</div>
+				<br/>
+
+				<div class="row">
+					<div class="form-group col-md-6" id="template">
+						{{ Form::label('office', 'Office *', array('class' => 'create-label')) }}
+						<select id="office" name="office" class="form-control" data-live-search="true">
+							<option value="">Please select</option>
+							@foreach($office as $key)
+								<option value="{{ $key->id }}" 
+									<?php if(Input::old('office')==$key->id)
+									echo "selected" ?>
+									>{{{ $key->officeName }}}
+								</option>
+							@endforeach
+						</select>
+						@if (Session::get('m4'))
+							<font color="red"><i>{{ Session::get('m4') }}</i></font>
+						@endif
+					
+					</div>
+
+					<div class="form-group col-md-6" id="template">
+						{{ Form::label('requisitioner', 'Requisitioner *', array('class' => 'create-label')) }}
+						<select class="form-control" id="requisitioner" name="requisitioner"  data-live-search="true" >
+							<option value="">Please select</option>
+							@foreach($users as $key2)
+								{{{ $fullname = $key2->lastname . ", " . $key2->firstname }}}
+								@if($key2->confirmed == 0)
+									continue;
+								@else
+								<option value="{{ $key2->id }}" class="{{$key2->office_id}}"
+									<?php if(Input::old('requisitioner')==$key2->id)
+									echo "selected" ?>
+									>{{ $fullname }}
+								</option>
+								@endif
+							@endforeach
+						</select>
+						@if (Session::get('m5'))
+							<font color="red"><i>{{ Session::get('m5') }}</i></font>
+						@endif
+					
+					</div>
 				</div>
 			
 
@@ -509,5 +537,6 @@
 	</script>
 
 	<!-- js for chained dropdown -->
+	
 
 @stop
