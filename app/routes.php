@@ -77,7 +77,17 @@ Route::post('offices/{id}/edit',['as' => 'offices.update', 'uses' => 'OfficeCont
 
 
 
+Route::get( 'prtest', function()
+{
 
+	$office = Office::all();
+	$users = User::all();
+	$workflow = Workflow::all();
+	return View::make('prtest')
+	->with('office',$office)
+	->with('users',$users)
+	->with('workflow',$workflow);
+});
 Route::get( 'resultstest', function()
 {
 	return View::make('resultstest');
