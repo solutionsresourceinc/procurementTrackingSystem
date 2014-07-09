@@ -41,70 +41,59 @@
 			@endif
 
 			<div class="form-group">
+				<div class="row">
+					<div class="col-md-6">
+						{{ Form::label('modeOfProcurement', 'Mode of Procurement *', array('class' => 'create-label')) }}
+						<select  disabled name="modeOfProcurement" id="modeOfProcurement" class="form-control" data-live-search="true">
+							<option value="">None</option>
+							@foreach($workflow as $wf)
+							<option value="{{ $wf->id }}" 
+								<?php
+								if(Input::old('modeOfProcurement')==$wf->id)
+									echo "selected";
+								?> >{{$wf->workFlowName}}</option>
+								@endforeach
 
-				<div >
-					<?php 
-					$cn = 0;
-					$purchase = Purchase::orderBy('ControlNo', 'ASC')->get();
-					foreach ($purchase as $pur) {
+						</select>
+						<input type="hidden" name="hide_modeOfProcurement" id="hide_modeOfProcurement">
 
-						$cn = (int)$pur->controlNo;
-					}
-					$cn =$cn+1;
-					?>
+						@if (Session::get('m6'))
+							<font color="red"><i>The mode of procurement is required field</i></font>
+						@endif
+					</div>
 
-					{{ Form::label('dispCN', 'Control No. *', array('class' => 'create-label')) }}
-					<input type="text"  name="dispCN"  class="form-control" value="{{$cn}}"disabled>
-					<input type="hidden" name="controlNo" value="<?php echo $cn; ?>">
+					<div class="col-md-2">
+						{{ Form::label('otherType', 'Other Type', array('class' => 'create-label')) }}
+						<select name="otherType" class="form-control" onchange="change_OtherType(this.value)">
+							<option value="">None</option>
+							<option value="shopping">Shopping</option>
+							<option value="fuel">Fuel</option>
+							<option value="pakyaw">Pakyaw</option>
+						</select>
+						<p> </p>
+					</div>
+
+					<div class="col-md-2">
+						{{ Form::label('status', 'Status: ', array('class' => 'create-label')) }}
+						<input type="text" value="New" readonly class="form-control">
+					</div>
+
+					<div class="col-md-2">
+						<?php 
+						$cn = 0;
+						$purchase = Purchase::orderBy('ControlNo', 'ASC')->get();
+						foreach ($purchase as $pur) {
+
+							$cn = (int)$pur->controlNo;
+						}
+						$cn =$cn+1;
+						?>
+
+						{{ Form::label('dispCN', 'Control No. *', array('class' => 'create-label')) }}
+						<input type="text"  name="dispCN"  class="form-control" value="{{$cn}}"disabled>
+						<input type="hidden" name="controlNo" value="<?php echo $cn; ?>">
+					</div>
 				</div>
-				<br>
-
-				<div>
-					{{ Form::label('amount', 'Amount *', array('class' => 'create-label')) }}
-					{{ Form::text('amount','',array('class'=>'form-control','onchange'=>'numberWithCommas(this.value)', 'onkeypress' => 'return isNumberKey(event)','id'=>'num','maxlength'=>'12')) }}
-				</div>
-				@if (Session::get('m3'))
-					<font color="red"><i>{{ Session::get('m3') }}</i></font>
-				@endif
-				<br>
-	
-				<div class="col-md-7 nopadding">
-					{{ Form::label('modeOfProcurement', 'Mode of Procurement *', array('class' => 'create-label')) }}
-					<select  disabled name="modeOfProcurement" id="modeOfProcurement" class="form-control" data-live-search="true">
-						<option value="">None</option>
-						@foreach($workflow as $wf)
-						<option value="{{ $wf->id }}" 
-							<?php
-							if(Input::old('modeOfProcurement')==$wf->id)
-								echo "selected";
-							?> >{{$wf->workFlowName}}</option>
-							@endforeach
-
-					</select>
-					<input type="hidden" name="hide_modeOfProcurement" id="hide_modeOfProcurement">
-
-					@if (Session::get('m6'))
-						<font color="red"><i>The mode of procurement is required field</i></font>
-					@endif
-
-				</div>
-				<div class="col-md-5">
-					{{ Form::label('otherType', 'Other Type', array('class' => 'create-label')) }}
-					<select name="otherType" class="form-control" onchange="change_OtherType(this.value)">
-						<option value="">None</option>
-						<option value="shopping">Shopping</option>
-						<option value="fuel">Fuel</option>
-						<option value="pakyaw">Pakyaw</option>
-					</select>
-					<p> </p>
-				</div>
-				<br>
-
-				<div>
-					{{ Form::label('status', 'Status: ', array('class' => 'create-label')) }}
-					<input type="text" value="New" readonly class="form-control">
-				</div>
-				<br>
 
 				<div>
 					{{ Form::label('projectPurpose', 'Project/Purpose *', array('class' => 'create-label')) }}
@@ -113,7 +102,7 @@
 				@if (Session::get('m1'))
 					<font color="red"><i>{{ Session::get('m1') }}</i></font>
 				@endif
-				<br>			
+				<br>	
 
 				<div>
 					{{ Form::label('sourceOfFund', 'Source of Fund *', array('class' => 'create-label')) }}
@@ -125,7 +114,14 @@
 				@endif
 				<br>
 
-				
+				<div>
+					{{ Form::label('amount', 'Amount *', array('class' => 'create-label')) }}
+					{{ Form::text('amount','',array('class'=>'form-control','onchange'=>'numberWithCommas(this.value)', 'onkeypress' => 'return isNumberKey(event)','id'=>'num','maxlength'=>'12')) }}
+				</div>
+				@if (Session::get('m3'))
+					<font color="red"><i>{{ Session::get('m3') }}</i></font>
+				@endif
+				<br>		
 
 				<div class="form-group" id="template">
 					{{ Form::label('office', 'Office *', array('class' => 'create-label')) }}

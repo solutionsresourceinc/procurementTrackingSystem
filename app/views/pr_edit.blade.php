@@ -262,7 +262,7 @@ if ($pass==0)
             <label class="create-label">Related files:</label>
             <div class="panel panel-default fc-div">
                 <div class="panel-body" style="padding: 5px 20px;">
-                
+                    <br/>
 
                     @if(Session::get('imgsuccess'))
                         <div class="alert alert-success"> {{ Session::get('imgsuccess') }}</div> 
@@ -271,8 +271,6 @@ if ($pass==0)
                     @if(Session::get('imgerror'))
                         <div class="alert alert-danger"> {{ Session::get('imgerror') }}</div> 
                     @endif
-
-                    <br/>
 
                     <?php
                         $document = Document::where('pr_id', $epurchase->id)->first();
