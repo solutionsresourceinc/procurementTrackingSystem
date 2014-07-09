@@ -34,45 +34,45 @@ class TaskController extends Controller {
 
 
 
-public function done(){
-$taskdetails_id=Input::get('taskdetails_id');
+	public function done(){
+		$taskdetails_id=Input::get('taskdetails_id');
 
-$taskd= TaskDetails::find($taskdetails_id);
-$taskd->status="Done";
-$docs=Document::find($taskd->doc_id);
+		$taskd= TaskDetails::find($taskdetails_id);
+		$taskd->status="Done";
+		$docs=Document::find($taskd->doc_id);
 
-$delcount= Count::where('doc_id', $docs->id)->delete();
-  
-$userx= User::get();
-foreach($userx as $userv){
-$count= new Count;
-$count->user_id= $userv->id;
-$count->doc_id= $docs->id;
-$count->save();
-}
+		$delcount= Count::where('doc_id', $docs->id)->delete();
+		  
+		$userx= User::get();
+		foreach($userx as $userv){
+			$count= new Count;
+			$count->user_id= $userv->id;
+			$count->doc_id= $docs->id;
+			$count->save();
+		}
 
-$birth = new DateTime($taskd->dateReceived); 
-$today = new DateTime(); 
-$diff = $birth->diff($today); 
-$aDays= $diff->format('%d');
-$taskd->daysOfAction=$aDays;
-$taskd->dateFinished=$today;
-$taskd->save();
-$tasknext=TaskDetails::find($taskdetails_id+1);
-if ($tasknext->doc_id==$taskd->doc_id)
-{
-$tasknext->status="New";
-$tasknext->save();
-}
-else
-{
-$purchase= Purchase::find($docs->pr_id);
-$purchase->status="Closed";
-$purchase->save();
-}
+		$birth = new DateTime($taskd->dateReceived); 
+		$today = new DateTime(); 
+		$diff = $birth->diff($today); 
+		$aDays= $diff->format('%d');
+		$taskd->daysOfAction=$aDays;
+		$taskd->dateFinished=$today;
+		$taskd->save();
+		$tasknext=TaskDetails::find($taskdetails_id+1);
+		if ($tasknext->doc_id==$taskd->doc_id)
+		{
+			$tasknext->status="New";
+			$tasknext->save();
+		}
+		else
+		{
+			$purchase= Purchase::find($docs->pr_id);
+			$purchase->status="Closed";
+			$purchase->save();
+		}
 
-return Redirect::to('task/active');
-}
+		return Redirect::to('task/active');
+	}
 
 
 	public function viewTask()
@@ -103,26 +103,23 @@ return Redirect::to('task/active');
 
 		return Redirect::to("task/$id");
 	}
-public function remarks()
+
+	public function remarks()
  	{
- $id= Input::get('taskdetails_id');
- 	$remarks =Input::get('remarks');
-   if(ctype_alpha(str_replace(array(' ', '-', '.'),'',$remarks)))
-         {
- $taskd=TaskDetails::find($id);
- $taskd->remarks=$remarks;
-         $taskd->save();
-         Session::put('successremark', 'Remarks saved.');
-         return Redirect::back();
-         }
-     else{
- 
-    Session::put('errorremark', 'Invalid remarks.');
-         return Redirect::back();
- 
-     }
- 
- 
+ 		$id= Input::get('taskdetails_id');
+ 		$remarks =Input::get('remarks');
+   		if(ctype_alpha(str_replace(array(' ', '-', '.'),'',$remarks)))
+        {
+			$taskd=TaskDetails::find($id);
+			$taskd->remarks=$remarks;
+	        $taskd->save();
+	        Session::put('successremark', 'Remarks saved.');
+	        return Redirect::back();
+        }
+     	else{
+    		Session::put('errorremark', 'Invalid remarks.');
+        	return Redirect::back();
+		}
  
  	}
 }

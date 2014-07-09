@@ -56,7 +56,7 @@ class PurchaseRequestController extends Controller {
 				date_default_timezone_set("Asia/Manila");
 				$dueDate = date('Y-m-d H:i:s', strtotime("+$addToDate days" ));
 				$new_purchase->dueDate = $dueDate;
-				$new_purchase_>save();
+				$new_purchase->save();
 
 				$task=Task::where('wf_id', $document->work_id)->orderBy('section_id', 'ASC')->orderBy('order_id', 'ASC')->get();
 
