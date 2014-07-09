@@ -63,6 +63,10 @@
 	    		<select name="selectfrom" id="select-from" multiple size="15" class="form-control" data-live-search="true">
 		         	{{ $count = 1 }}
 		         	@foreach($notselected_users as $key)
+		         		
+		         		<?php $roles=Assigned::where('user_id', $key->id)->first();
+			        	if($roles->role_id!=1)
+			        {  ?>
 		         		@if($count == 1)
 		         		{
 		         			{{{ $fullname = $key->lastname . ", " . $key->firstname }}}
@@ -75,7 +79,9 @@
 							<option value="{{ $key->id }}" >{{ $fullname }}</option>
 		         		}
 		         		@endif
-							
+							<?php
+}
+							?>
 					@endforeach
 		        </select>
 	    	</div>
@@ -89,8 +95,16 @@
 		    	<strong>Currently Selected</strong>
 		    	<select name="selectto" onchange"select()" id="select-to" multiple size="15" class="form-control" >
 		          	@foreach($selected_users as $key2)
-			        	{{{ $fullname2 = $key2->lastname . ", " . $key2->firstname }}}
+
+			        	<?php
+			        	 $roles=Assigned::where('user_id', $key2->id)->first();
+			        	if($roles->role_id!=1)
+			        {
+			        	echo $fullname2 = $key2->lastname . ", " . $key2->firstname; ?>
 						<option value="{{ $key2->users_id }}" >{{ $fullname2  }}</option>
+						<?php
+					}		
+						?>
 					@endforeach
 		        </select>
 		        {{ Form::hidden('designation_id', "$designation_id"); }}
