@@ -636,7 +636,7 @@ $timestamp = strtotime($mydate);
 $dateFinished= date("Y-m-d H:i:s", $timestamp);
 $daysOfAction=Input::get('daysOfAction');
 
-$remarks="0".Input::get('remarks');
+$remarks=" ".Input::get('remarks');
 $check=0;
 
 if(ctype_alpha(str_replace(array(' ', '-', '.'),'',$remarks)))
@@ -650,10 +650,11 @@ if(ctype_alpha(str_replace(array(' ', '-', '.'),'',$assignee)))
          }
 if(ctype_digit($daysOfAction))
 		{
+			if($daysOfAction>=0)
 		  	$check=$check+1;
          }
 
-if ($check==3||$remarks=="0"){
+if ($check==3||$remarks==" "){
 	$taskd= TaskDetails::find($taskdetails_id);
 $docs=Document::find($taskd->doc_id);
 
