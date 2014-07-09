@@ -8,7 +8,8 @@
 {{ HTML::style('date_picker/bootstrap-datetimepicker.min.css')}}
 {{ HTML::script('date_picker/bootstrap-datetimepicker.js') }}
 {{ HTML::script('date_picker/bootstrap-datetimepicker.fr.js') }}
-
+{{ HTML::style('css/datepicker.css')}}
+{{ HTML::script('js/bootstrap-datepicker.js') }}
 <!--Image Display-->
 
 {{ HTML::script('js/lightbox.min.js') }} 
@@ -57,8 +58,7 @@ $cuser=Auth::User()->id;
 
 <div class="form-create fc-div">
     {{ Form::open(array('url' => 'newedit', 'files' => true), 'POST') }}
-    <div class="row">
-        <div>   
+     
             <input type="hidden" name ="id" value={{$id}}>
             @if(Session::get('notice'))
                 <div class="alert alert-success"> {{ Session::get('notice') }}</div> 
@@ -288,7 +288,7 @@ if ($pass==0)
 
             </div>
         </div>  
-    </div>      
+       
     {{ Form::close() }} 
 
     <!--  
@@ -314,10 +314,6 @@ if ($pass==0)
                 {{Form::close()}}
             </div>
         @endforeach
-
-    </div>
-</div>
-
     <!-- End Image Module-->
 
     {{ Session::forget('notice'); }}
@@ -331,8 +327,8 @@ if ($pass==0)
     {{ Session::forget('m7'); }}
     {{ Session::forget('imgerror'); }}
     {{ Session::forget('imgsuccess'); }}
- 
-<div class="form-create fc-div">
+</div>
+  <div class="form-create fc-div">
 <!-- Section 1  -->
 <?php 
 //Cursor Component
@@ -342,10 +338,10 @@ $section= Section::where('workflow_id', $workflow->id)->orderBy('section_order_i
 
 $taskd= TaskDetails::where('doc_id', $docs->id)->orderBy('id', 'ASC')->get();
 $sectioncheck=0;
-echo "<table border='1'>";
+echo "<table border='1' >";
 foreach ($section as $sections) {   
 $task= Task::where('section_id', $sections->section_order_id)->where('wf_id', $workflow->id)->orderBy('order_id', 'ASC')->get();
-echo "<tr><th colspan='5' ><h3>".$sections->section_order_id.". ".$sections->sectionName."</h3></th></tr>";
+echo "<tr><th colspan='5' >".$sections->section_order_id.". ".$sections->sectionName."</th></tr>";
 echo " <tr><th></th><th>By:</th><th>Date:</th><th>Days of Action</th><th>Remarks</th></tr>";
 foreach ($task as $tasks) {
 //Cursor Open form 
@@ -358,29 +354,22 @@ if ($taskc->task_id==$tasks->id && $tasks->designation_id==0){
     ?>
 {{Form::open(['url'=>'checklistedit'], 'POST')}}
 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
-<td><input type ="text" name="assignee"></td>
-<td><div class="input-group date form_datetime col-md-12" data-date="{{ date('Y-m-d') }}T{{ date('H:i:s') }}Z" data-date-format="dd MM yyyy - HH:ii p" data-link-field="dtp_input1">
-                        <input id="disabled_datetime" onchange="fix_format()" class="form-control" size="16" type="text" value="<?php
-                        if (NULL!=Input::old('dateRequested'))
-                            echo Input::old('dateRequested');
-                        else
-                         echo $epurchase->dateRequested; ?>" readonly>
-                        <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
-                        <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
-                    </div>
-                    <input type="hidden" id="dtp_input1" name="dateFinished" >
+<td ><input type ="text" name="assignee"></td>
+<td> <input class="datepicker" size="16" type="text" name="dateFinished" value="12/02/2012">
+  <span class="add-on"><i class="icon-th"></i></span>
+
                 </td>
-                <td>
+                <td >
 <input type="number" name="daysOfAction">
 </td>
-<td>
+<td >
     
-<input type="text" name="remarks" >
+<input type="text" name="remarks" maxlength="255">
 
 </td>
 
 </tr><tr>
-<td colspan="5"> <br><center> <input type="submit" class="btn btn-success"> <center><br></td>
+<td colspan="5" > <br><center> <input type="submit" class="btn btn-success"> <center><br></td>
 {{Form::close()}}
 <?php }
 //END Cursor Open Form
@@ -388,17 +377,25 @@ if ($taskc->task_id==$tasks->id && $tasks->designation_id==0){
 else{
 ?>
 
-<td><?php
+<td ><?php
 if($taskp->assignee!=NULL)
-   echo $taskp->assignee; 
+  { $dassignee=chunk_split($taskp->assignee, 20, "<br>");
+    echo $dassignee; }
 else if($taskp->assignee_id!=0){
     $assign_user=User::find($taskp->assignee_id);
 echo $assign_user->lastname.", ".$assign_user->firstname;
 }
+$date = new DateTime($taskp->dateFinished);
+$datef = $date->format('m/d/y');
+
 ?></td>
-<td><?php if($taskp->dateFinished!="0000-00-00 00:00:00") echo $taskp->dateFinished; ?></td>
-<td><?php if($taskp->dateFinished!="0000-00-00 00:00:00") echo $taskp->daysOfAction; ?></td>
-<td><?php echo $taskp->remarks; ?></td>
+
+<td ><?php if($taskp->dateFinished!="0000-00-00 00:00:00") echo $datef ?></td>
+<td ><?php if($taskp->dateFinished!="0000-00-00 00:00:00") echo $taskp->daysOfAction; ?></td>
+<td ><?php 
+$dremarks=chunk_split($taskp->remarks, 20, "<br>");
+    
+echo $dremarks; ?></td>
 <?php
 }
 echo "</tr>";
@@ -411,12 +408,12 @@ echo "</table>";
 
 <!-- Section 1  -->
 
+
+
+
+
 </div>
-
-
-
-
-
+</div>
 
 
 
@@ -527,10 +524,33 @@ echo "</table>";
     function fix_format()
     {
         document.getElementById('disabled_datetime').value = document.getElementById('dtp_input1').value;
+         
+    }
+function fix_format2()
+{
+    var counter = 0;
+    while(counter != 100)
+    {
+        counter++;
+        var name = "disabled_datetime2" + counter;
+        var name2 = "dtp_input2" + counter;
+        document.getElementById(name).value =
+        document.getElementById(name2).value;
     }
 
 
+}
+
+$('.datepicker').datepicker();
+
     </script>
 
+
+
     <!-- js for chained dropdown -->
+
+
+
+
+
 @stop
