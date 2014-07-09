@@ -108,7 +108,8 @@ foreach(Input::file('file') as $file){
 
 
 $archivo = value(function() use ($file){
-        $filename = str_random(10) . '.' . $file->getClientOriginalExtension();
+ $date = date('m-d-Y-h-i-s', time());
+        $filename = $date."-". $file->getClientOriginalName();
         return strtolower($filename);
     });
    
@@ -389,8 +390,9 @@ foreach(Input::file('file') as $file){
 
 
 $archivo = value(function() use ($file){
-        $filename = str_random(10) . '.' . $file->getClientOriginalExtension();
-        return strtolower($filename);
+      $date = date('m-d-Y-h-i-s', time());
+        $filename = $date."-". $file->getClientOriginalName();
+          return strtolower($filename);
     });
    
 
