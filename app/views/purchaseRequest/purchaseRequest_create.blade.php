@@ -26,6 +26,28 @@
 
 
 @section('content')
+
+<!-- Modal Div -->
+	<div class="modal fade" id="description" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+		    		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		    		<h4 class="modal-title">Description</h4>
+		    	</div>
+			    	<center>
+			    <div class="modal-body" id="description_body">
+			      		<!-- Insert Data Here -->
+			    </div>
+			    	</center>
+			    <div class="modal-footer">
+        			<button type="button" class="btn btn-default" data-dismiss="modal">Back</button>
+    			</div>
+			</div>
+		</div>
+	</div>
+
+
 <h1 class="page-header">Create New Purchase Request</h1>
 <div class="form-create fc-div">
 	{{ Form::open(array('url' => 'newcreate','files' => true), 'POST') }}
@@ -81,7 +103,7 @@
 							@endforeach
 
 					</select>
-					<input type="hidden" name="hide_modeOfProcurement" id="hide_modeOfProcurement">
+					<input type="hidden" name="Procurement" id="hide_modeOfProcurement">
 
 					@if (Session::get('m6'))
 						<font color="red"><i>The mode of procurement is required field</i></font>

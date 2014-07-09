@@ -20,6 +20,25 @@
       <li><a href="#pakyaw" role="tab" data-toggle="tab">Pakyaw</a></li> <!-- FOR PAKYAW WORKFLOW -->
     </ul>
 
+    <div class="modal fade" id="description" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Description</h4>
+                </div>
+                <center>
+                    <div class="modal-body" id="description_body">
+                        <!-- Insert Data Here -->
+                    </div>
+                </center>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Back</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="tab-content">
       <div class="tab-pane fade in active" id="home">@include('workflows.workflow1')</div>
       <div class="tab-pane fade" id="profile">@include('workflows.workflow2')</div>
