@@ -366,7 +366,7 @@ if ($taskc->task_id==$tasks->id && $tasks->designation_id==0){
 
                 </td>
                 <td >
-<input type="number" name="daysOfAction">
+<input type="number" name="daysOfAction" min="0">
 </td>
 <td >
     
