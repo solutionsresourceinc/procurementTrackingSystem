@@ -80,11 +80,13 @@
 							?> >{{$wf->workFlowName}}</option>
 							@endforeach
 
-						</select>
-						@if (Session::get('m6'))
+					</select>
+					<input type="hidden" name="hide_modeOfProcurement" id="hide_modeOfProcurement">
+
+					@if (Session::get('m6'))
 						<font color="red"><i>The mode of procurement is required field</i></font>
-						@endif
-				
+					@endif
+
 				</div>
 				<div class="col-md-5">
 					{{ Form::label('otherType', 'Other Type', array('class' => 'create-label')) }}
@@ -367,6 +369,8 @@
 			document.getElementById("modeOfProcurement").selectedIndex = 3;
 		else
 			document.getElementById("modeOfProcurement").selectedIndex = 0;
+
+		document.getElementById('hide_modeOfProcurement').value = document.getElementById('modeOfProcurement').value;
 	}
 
 	$(window).on('load', function () {
@@ -432,6 +436,7 @@
 				document.getElementById('modeOfProcurement').selectedIndex = 4;
 				document.getElementById('modeOfProcurement').onchange = 4;
 				document.getElementById("num").onchange = new Function("numberWithCommas2(this.value)");
+				document.getElementById('hide_modeOfProcurement').value = document.getElementById('modeOfProcurement').value;
 				
 			}
 			else
@@ -443,6 +448,8 @@
 				//alert(result);
 				//document.getElementById('modeOfProcurement').selectedIndex = window.last_selected;
 
+				document.getElementById("num").onchange = new Function("numberWithCommas(this.value)");
+
 
 				if (amount >= 0 && amount < 50000)
 					document.getElementById("modeOfProcurement").selectedIndex = 1;
@@ -452,6 +459,7 @@
 					document.getElementById("modeOfProcurement").selectedIndex = 3;
 				else
 					document.getElementById("modeOfProcurement").selectedIndex = 0;
+					document.getElementById('hide_modeOfProcurement').value = document.getElementById('modeOfProcurement').value;
 
 			}
 
@@ -499,6 +507,7 @@
 			{
 				document.getElementById("num").value = window.old_amount;
 			}
+			document.getElementById('hide_modeOfProcurement').value = document.getElementById('modeOfProcurement').value;
 			
 		}
 	</script>
