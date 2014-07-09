@@ -12,7 +12,14 @@
 
 
 	{{ HTML::script('js/jquery.chained.min.js') }} 
-	{{ HTML::script('js/bootstrap.file-input.js') }}  
+	{{ HTML::script('js/bootstrap.file-input.js') }} 
+
+	<style>
+		.nopadding {
+		   padding: 0 !important;
+		   margin: 0 !important;
+		}
+	</style> 
 
 @stop
 
@@ -35,7 +42,7 @@
 
 			<div class="form-group">
 
-				<div>
+				<div >
 					<?php 
 					$cn = 0;
 					$purchase = Purchase::orderBy('ControlNo', 'ASC')->get();
@@ -51,16 +58,17 @@
 					<input type="hidden" name="controlNo" value="<?php echo $cn; ?>">
 				</div>
 				<br>
-<div>
+
+				<div>
 					{{ Form::label('amount', 'Amount *', array('class' => 'create-label')) }}
 					{{ Form::text('amount','',array('class'=>'form-control','onchange'=>'numberWithCommas(this.value)', 'onkeypress' => 'return isNumberKey(event)','id'=>'num','maxlength'=>'12')) }}
 				</div>
-
 				@if (Session::get('m3'))
 					<font color="red"><i>{{ Session::get('m3') }}</i></font>
 				@endif
 				<br>
-				<div>
+	
+				<div class="col-md-7 nopadding">
 					{{ Form::label('modeOfProcurement', 'Mode of Procurement *', array('class' => 'create-label')) }}
 					<select  name="modeOfProcurement" id="modeOfProcurement" class="form-control" data-live-search="true">
 						<option value="">Please select</option>
@@ -78,7 +86,17 @@
 						@endif
 				
 				</div>
+				<div class="col-md-5">
+					{{ Form::label('otherType', 'Other Type', array('class' => 'create-label')) }}
+					<select name="otherType" class="form-control">
+						<option value="">None</option>
+						<option value="shopping">Shopping</option>
+						<option value="fuel">Fuel</option>
+					</select>
+					<p> </p>
+				</div>
 				<br>
+
 				<div>
 					{{ Form::label('status', 'Status: ', array('class' => 'create-label')) }}
 					<input type="text" value="New" readonly class="form-control">
@@ -89,7 +107,6 @@
 					{{ Form::label('projectPurpose', 'Project/Purpose *', array('class' => 'create-label')) }}
 					{{ Form::text('projectPurpose','', array('class'=>'form-control')) }}
 				</div>
-
 				@if (Session::get('m1'))
 					<font color="red"><i>{{ Session::get('m1') }}</i></font>
 				@endif

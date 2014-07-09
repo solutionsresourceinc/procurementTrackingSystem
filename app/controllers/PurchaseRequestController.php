@@ -26,17 +26,7 @@ class PurchaseRequestController extends Controller {
 		$purchase->dateRequested = Input::get( 'dateRequested' );
 		$purchase->controlNo = Input::get('controlNo');
 		$purchase->status = 'New';
-
-		// Set due date;
-		$workflow_id = Input::get('modeOfProcurement');
-		$workflow = Workflow::find($workflow_id);
-		$addToDate = $workflow->totalDays;
-
-		date_default_timezone_set("Asia/Manila");
-
-		$dueDate = date('Y-m-d H:i:s', strtotime("+$addToDate days" ));
-		$purchase->dueDate = $dueDate;
-
+		$purchase->otherType = Input::get('otherType');
 
 		// Set creator id
 		$user_id = Auth::user()->id;
@@ -52,67 +42,75 @@ class PurchaseRequestController extends Controller {
 
 			if($document_save)
 			{
+				$doc_id= $document->id;
+				$workflow=Workflow::find($document->work_id);
+				$section=Section::where('workflow_id',$document->work_id)->orderBy('section_order_id', 'ASC')->get();
+				$firstnew=0;
 
-$doc_id= $document->id;
-$workflow=Workflow::find($document->work_id);
-$section=Section::where('workflow_id',$document->work_id)->orderBy('section_order_id', 'ASC')->get();
-$firstnew=0;
+				// Set due date;
+				$new_purchase = Purchase::find($purchase->id);
 
+				$workflow_id = Input::get('modeOfProcurement');
+				$workflow = Workflow::find($workflow_id);
+				$addToDate = $workflow->totalDays;
+				date_default_timezone_set("Asia/Manila");
+				$dueDate = date('Y-m-d H:i:s', strtotime("+$addToDate days" ));
+				$new_purchase->dueDate = $dueDate;
+				$new_purchase_>save();
 
-	$task=Task::where('wf_id', $document->work_id)->orderBy('section_id', 'ASC')->orderBy('order_id', 'ASC')->get();
-
-
-	foreach ($task as $tasks) {
-
-
- $taskd= New TaskDetails;
- $taskd->task_id=$tasks->id;
-
-
-	if($firstnew==0)
-	 	$taskd->status="New";
- 	else
- 		$taskd->status="Pending";
-		$firstnew=1;
-		$taskd->doc_id= $document->id;
-		$taskd->save();
-	}
+				$task=Task::where('wf_id', $document->work_id)->orderBy('section_id', 'ASC')->orderBy('order_id', 'ASC')->get();
 
 
+				foreach ($task as $tasks) 
+				{
+					$taskd= New TaskDetails;
+					$taskd->task_id=$tasks->id;
+
+					if($firstnew==0)
+					 	$taskd->status="New";
+				 	else
+				 		$taskd->status="Pending";
+						$firstnew=1;
+						$taskd->doc_id= $document->id;
+						$taskd->save();
+				}
+
+				$userx= User::get();
+				foreach($userx as $userv)
+				{
+					$count= new Count;
+					$count->user_id= $userv->id;
+					$count->doc_id= $doc_id;
+					$count->save();
+				}
 
 
+				//Image Upload
 
-$userx= User::get();
-foreach($userx as $userv){
-$count= new Count;
-$count->user_id= $userv->id;
-$count->doc_id= $doc_id;
-$count->save();
-}
-
-
-//Image Upload
-
-
-foreach(Input::file('file') as $file){
-            $rules = array(
-                'file' => 'required|mimes:png,gif,jpeg|max:900000000'
+				foreach(Input::file('file') as $file)
+				{
+            		$rules = array(
+                		'file' => 'required|mimes:png,gif,jpeg|max:900000000'
                 );
-            $validator = \Validator::make(array('file'=> $file), $rules);
-            $destine=public_path()."/uploads";
-            if($validator->passes()){
-                $ext = $file->guessClientExtension(); // (Based on mime type)
-                $ext = $file->getClientOriginalExtension(); // (Based on filename)
-                $filename = $file->getClientOriginalName();
+            	$validator = \Validator::make(array('file'=> $file), $rules);
+            	$destine=public_path()."/uploads";
+           		if($validator->passes())
+           		{
+	                $ext = $file->guessClientExtension(); // (Based on mime type)
+	                $ext = $file->getClientOriginalExtension(); // (Based on filename)
+	                $filename = $file->getClientOriginalName();
              
+					$archivo = value(function() use ($file){
+        			$filename = str_random(10) . '.' . $file->getClientOriginalExtension();
+        			return strtolower($filename);
+   				});
 
+				$archivo = value(function() use ($file){
+				 $date = date('m-d-Y-h-i-s', time());
+				        $filename = $date."-". $file->getClientOriginalName();
+				        return strtolower($filename);
+				    });
 
-$archivo = value(function() use ($file){
- $date = date('m-d-Y-h-i-s', time());
-        $filename = $date."-". $file->getClientOriginalName();
-        return strtolower($filename);
-    });
-   
 
                 $attach = new Attachments;
                 $attach->doc_id=$doc_id;
@@ -122,168 +120,162 @@ $archivo = value(function() use ($file){
 				$filename= $doc_id."_".$attach->id;
                 $file->move($destine, $archivo);
   
-   $target_folder = $destine; 
-    $upload_image = $target_folder."/".$archivo;
+   				$target_folder = $destine; 
+   				$upload_image = $target_folder."/".$archivo;
 
-   $thumbnail = $target_folder."/resize".$archivo;
-        $actual = $target_folder."/".$archivo;
+   				$thumbnail = $target_folder."/resize".$archivo;
+        		$actual = $target_folder."/".$archivo;
 
-      // THUMBNAIL SIZE
-        list($width, $height) = getimagesize($upload_image);
+		      	// THUMBNAIL SIZE
+		        list($width, $height) = getimagesize($upload_image);
 
 
-        $newwidth = $width; 
-        $newheight = $height;
-        while ( $newheight> 525) {
-        	$newheight=$newheight*0.8;
-        	$newwidth=$newwidth*0.8;
-}
+		        $newwidth = $width; 
+		        $newheight = $height;
+		        while ( $newheight> 525) 
+		        {
+		        	$newheight=$newheight*0.8;
+		        	$newwidth=$newwidth*0.8;
+				}
 
     
-$thumb = imagecreatetruecolor($newwidth, $newheight);
-if ($ext=="jpg"||$ext=="jpeg")
-        $source = imagecreatefromjpeg($upload_image);
-elseif ($ext=="png")
- $source = imagecreatefrompng($upload_image);
-else
- $source = imagecreatefromgif($upload_image);
-        // RESIZE 
-        imagecopyresized($thumb, $source, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
-        // MAKE NEW FILES
-if ($ext=="jpg"||$ext=="jpeg")
- imagejpeg($thumb, $thumbnail, 100);
-elseif ($ext=="png")
- imagepng($thumb, $thumbnail, 9);
-else
- imagegif($thumb, $thumbnail, 100);
-       
-unlink($actual);
-        // FILE RENAMES
-        rename($thumbnail, $actual);
+				$thumb = imagecreatetruecolor($newwidth, $newheight);
+				if ($ext=="jpg"||$ext=="jpeg")
+				    $source = imagecreatefromjpeg($upload_image);
+				elseif ($ext=="png")
+				 	$source = imagecreatefrompng($upload_image);
+				else
+				 	$source = imagecreatefromgif($upload_image);
+				        // RESIZE 
+				    imagecopyresized($thumb, $source, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
+				        // MAKE NEW FILES
+				if ($ext=="jpg"||$ext=="jpeg")
+				 	imagejpeg($thumb, $thumbnail, 100);
+				elseif ($ext=="png")
+				 	imagepng($thumb, $thumbnail, 9);
+				else
+				 	imagegif($thumb, $thumbnail, 100);
+				       
+				unlink($actual);
+		        // FILE RENAMES
+		        rename($thumbnail, $actual);
 
 
            
-             }else{
-
-                //Does not pass validation
-
+            }
+            else
+            {
                 $errors = $validator->errors();
                 Session::put('imgerror','Invalid file.');
             }
 
         }
 
-          Session::put('imgsuccess','Files uploaded.');
-if (Session::get('imgerror')){
-Session::forget('imgerror');
+        Session::put('imgsuccess','Files uploaded.');
+		if (Session::get('imgerror'))
+		{
+			Session::forget('imgerror');
 
-}
-
-
-
-
+		}
 
 		//Image Upload
 
+		$pr_id= Session::get('pr_id');
 
-
-				$pr_id= Session::get('pr_id');
-
-				if (Session::get('doc_id'))
-				{
-					$doc_id =Session::get('doc_id');
-
-					DB::table('attachments')
-					->where('doc_id', $doc_id)
-					->update(array( 'saved' => 1));
-					DB::table('attachments')->where('saved', '=', 0)->delete();
-					DB::table('document')->where('pr_id', '=',$pr_id )->where('id','!=',$doc_id)->delete();
-					Session::forget('doc_id');
-				}
-
-				// START MAILER BY JAN SARMIENTO AWESOME
-				$sendee = DB::table('users')->where('id',$purchase->requisitioner)->first();
-				$email = $sendee->email;
-				$fname = $sendee->firstname;
-
-				$data = [ 'id' => $purchase->id ];
-				Mail::send('emails.template', $data, function($message) use($email, $fname)
-				{
-					$message->from('procurementTrackingSystem@tarlac.com', 'Procurement Tracking System Tarlac');
-					$message->to($email, $fname)->subject('Tarlac Procurement Tracking Systems');
-				}); 
-				// END MAILER BY JAN SARMIENTO AWESOME
-				
-				$notice = "Purchase request created successfully. ";										  
-				Session::put('notice', $notice);
-				$office = Office::all();
-				$users = User::all();
-				$workflow = Workflow::all();
-
-				return Redirect::to('purchaseRequest/view');
-			}
-			else
-			{
-				$purchase->delete();
-				$message = "Failed to create purchase request.";
-			Session::put('main_error', $message );
-
-			// Get Other Error Messages
-			$m1 = $purchase->validationErrors->first('projectPurpose');
-			$m2 = $purchase->validationErrors->first('sourceOfFund');
-			$m3 = $purchase->validationErrors->first('amount');
-			$m4 = $purchase->validationErrors->first('office');
-			$m5 = $purchase->validationErrors->first('requisitioner');
-			$m7 = $purchase->validationErrors->first('dateRequested');
-			// Inserting Error Message To a Session
-			Session::put('m1', $m1 );
-			Session::put('m2', $m2 );
-			Session::put('m3', $m3 );
-			Session::put('m4', $m4 );
-			Session::put('m5', $m5 );
-			Session::put('m7', $m7 );
-
-			if(Input::get('modeOfProcurement') == "")
-			{
-				Session::put('m6', 'required' );
-			}
-
-			return Redirect::back()->withInput();
-
-
-			}
-		}
-		else
+		if (Session::get('doc_id'))
 		{
-			//return 'Failed to create purchase request! <br>' . $purchase;
-			
-			// Set Main Error
-			$message = "Failed to create purchase request.";
+			$doc_id =Session::get('doc_id');
+			DB::table('attachments')
+				->where('doc_id', $doc_id)
+				->update(array( 'saved' => 1));
+
+			DB::table('attachments')->where('saved', '=', 0)->delete();
+			DB::table('document')->where('pr_id', '=',$pr_id )->where('id','!=',$doc_id)->delete();
+			Session::forget('doc_id');
+		}
+
+		// START MAILER BY JAN SARMIENTO AWESOME
+		$sendee = DB::table('users')->where('id',$purchase->requisitioner)->first();
+		$email = $sendee->email;
+		$fname = $sendee->firstname;
+
+		$data = [ 'id' => $purchase->id ];
+		Mail::send('emails.template', $data, function($message) use($email, $fname)
+		{
+			$message->from('procurementTrackingSystem@tarlac.com', 'Procurement Tracking System Tarlac');
+			$message->to($email, $fname)->subject('Tarlac Procurement Tracking Systems');
+		}); 
+		// END MAILER BY JAN SARMIENTO AWESOME
+				
+		$notice = "Purchase request created successfully. ";										  
+		Session::put('notice', $notice);
+		$office = Office::all();
+		$users = User::all();
+		$workflow = Workflow::all();
+
+		return Redirect::to('purchaseRequest/view');
+	}
+	else
+	{
+		$purchase->delete();
+		$message = "Failed to create purchase request.";
 			Session::put('main_error', $message );
 
-			// Get Other Error Messages
-			$m1 = $purchase->validationErrors->first('projectPurpose');
-			$m2 = $purchase->validationErrors->first('sourceOfFund');
-			$m3 = $purchase->validationErrors->first('amount');
-			$m4 = $purchase->validationErrors->first('office');
-			$m5 = $purchase->validationErrors->first('requisitioner');
-			$m7 = $purchase->validationErrors->first('dateRequested');
-			// Inserting Error Message To a Session
-			Session::put('m1', $m1 );
-			Session::put('m2', $m2 );
-			Session::put('m3', $m3 );
-			Session::put('m4', $m4 );
-			Session::put('m5', $m5 );
-			Session::put('m7', $m7 );
+		// Get Other Error Messages
+		$m1 = $purchase->validationErrors->first('projectPurpose');
+		$m2 = $purchase->validationErrors->first('sourceOfFund');
+		$m3 = $purchase->validationErrors->first('amount');
+		$m4 = $purchase->validationErrors->first('office');
+		$m5 = $purchase->validationErrors->first('requisitioner');
+		$m7 = $purchase->validationErrors->first('dateRequested');
 
-			if(Input::get('modeOfProcurement') == "")
-			{
-				Session::put('m6', 'required' );
-			}
+		// Inserting Error Message To a Session
+		Session::put('m1', $m1 );
+		Session::put('m2', $m2 );
+		Session::put('m3', $m3 );
+		Session::put('m4', $m4 );
+		Session::put('m5', $m5 );
+		Session::put('m7', $m7 );
 
-			return Redirect::back()->withInput();
+		if(Input::get('modeOfProcurement') == "")
+		{
+			Session::put('m6', 'required' );
 		}
+
+		return Redirect::back()->withInput();
+
+
+	}}
+	else
+	{
+		// Set Main Error
+		$message = "Failed to create purchase request.";
+		Session::put('main_error', $message );
+
+		// Get Other Error Messages
+		$m1 = $purchase->validationErrors->first('projectPurpose');
+		$m2 = $purchase->validationErrors->first('sourceOfFund');
+		$m3 = $purchase->validationErrors->first('amount');
+		$m4 = $purchase->validationErrors->first('office');
+		$m5 = $purchase->validationErrors->first('requisitioner');
+		$m7 = $purchase->validationErrors->first('dateRequested');
+
+		// Inserting Error Message To a Session
+		Session::put('m1', $m1 );
+		Session::put('m2', $m2 );
+		Session::put('m3', $m3 );
+		Session::put('m4', $m4 );
+		Session::put('m5', $m5 );
+		Session::put('m7', $m7 );
+
+		if(Input::get('modeOfProcurement') == "")
+		{
+			Session::put('m6', 'required' );
+		}
+
+		return Redirect::back()->withInput();
 	}
+}
 
 	public function edit()
 	{
@@ -370,8 +362,6 @@ Session::forget('imgerror');
 
 
 //Image Upload
-
-
 
 
 $doc_id= $document->id;
