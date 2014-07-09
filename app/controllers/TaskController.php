@@ -122,4 +122,30 @@ class TaskController extends Controller {
 		}
  
  	}
+
+
+
+public function addtask()
+	{
+		$section_id= Input::get('section_id');
+
+		$label= Input::get('label');
+	if(ctype_alpha(str_replace(' ','',$label)))
+        {
+        	$newtask= new OtherDetails;
+        	$newtask->section_id=$section_id;
+        	$newtask->label= $label;
+        	$newtask->save();
+        	Session::put('successlabel', 'Successfully added new task.');
+        	return Redirect::back();
+        }
+    else {
+    	$Session::put('errorlabel','Invalid label.');
+return Redirect::back();
+
+    }
+
+	}
+
+
 }

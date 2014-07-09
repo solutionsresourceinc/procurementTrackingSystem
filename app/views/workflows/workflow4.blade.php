@@ -22,8 +22,53 @@ $pos=90;
 	</div>
 
 	<div class="panel-body">
+	
+<!--Add Task-->
+<div id="office-create-form" class="well div-form">
+    	{{ Form::open(['url'=>'addtask'], 'POST', array('role' => 'form')) }}
+	    	<div class="col-md-8">
+		    	{{ Form::text('label', null, array('class' => 'form-control', 'placeholder' => 'Task Name')) }}
+		    		    <input type ="hidden" name="section_id" value="{{$sectionName->id}}">
+		    </div>
+	
+		    <div class="col-md-3">
+		    	{{ Form::submit('Add', array('class' => 'btn btn-success btn-block create-btn')) }}
+		    </div>
+	    {{ Form::close() }}
+</div>
+
+<!--End Add Task-->
+
 		<table border="1" class="workflow-table">
-			<tr>
+
+<!--Additional Task-->
+<?php
+$ctask= OtherDetails::where('section_id', $sectionName->id )->count();
+if($ctask!=0){
+?>
+<tr>
+<th class="workflow-th" width="25%" colspan="2">LABEL</th>
+						<th class="workflow-th" width="70%">ACTION</th>
+			
+</tr>
+<?php 
+$addontask= OtherDetails::where('section_id', $sectionName->id )->get();
+?>
+@foreach ($addontask as $addontasks)
+<tr>
+	<td colspan="2" align="center">{{$addontasks->label}}</td>
+	<td align="center">
+		{{Form::open(['url'=>'deladdtask'])}}
+		<input type="hidden" name="id" value="<?php echo $addontasks->id ?>">
+	<button class="btn btn-error">Delete</button>
+		{{Form::close()}}
+	</td>
+</tr> 
+@endforeach
+<?php 
+}
+?>
+<!--End Additional Task-->	<tr>
 				<th class="workflow-th" width="25%">TASK</th>
 				<th class="workflow-th" width="45%">DESIGNATION ASSIGNED</th>
 				<th class="workflow-th" width="25%">ACTION</th>
@@ -98,8 +143,53 @@ $pos=90;
 		</div>
 
 		<div class="panel-body">
-			<table border="1" class="workflow-table">
-				<tr>
+		
+<!--Add Task-->
+<div id="office-create-form" class="well div-form">
+    	{{ Form::open(['url'=>'addtask'], 'POST', array('role' => 'form')) }}
+	    	<div class="col-md-8">
+		    	{{ Form::text('label', null, array('class' => 'form-control', 'placeholder' => 'Task Name')) }}
+		    		    <input type ="hidden" name="section_id" value="{{$sectionName->id}}">
+		    </div>
+	
+		    <div class="col-md-3">
+		    	{{ Form::submit('Add', array('class' => 'btn btn-success btn-block create-btn')) }}
+		    </div>
+	    {{ Form::close() }}
+</div>
+
+<!--End Add Task-->
+
+		<table border="1" class="workflow-table">
+
+<!--Additional Task-->
+<?php
+$ctask= OtherDetails::where('section_id', $sectionName->id )->count();
+if($ctask!=0){
+?>
+<tr>
+<th class="workflow-th" width="25%" colspan="2">LABEL</th>
+						<th class="workflow-th" width="70%">ACTION</th>
+			
+</tr>
+<?php 
+$addontask= OtherDetails::where('section_id', $sectionName->id )->get();
+?>
+@foreach ($addontask as $addontasks)
+<tr>
+	<td colspan="2" align="center">{{$addontasks->label}}</td>
+	<td align="center">
+		{{Form::open(['url'=>'deladdtask'])}}
+		<input type="hidden" name="id" value="<?php echo $addontasks->id ?>">
+	<button class="btn btn-error">Delete</button>
+		{{Form::close()}}
+	</td>
+</tr> 
+@endforeach
+<?php 
+}
+?>
+<!--End Additional Task-->		<tr>
 					<th class="workflow-th" width="25%">TASK</th>
 					<th class="workflow-th" width="45%">DESIGNATION ASSIGNED</th>
 					<th class="workflow-th" width="25%">ACTION</th>
@@ -169,8 +259,52 @@ $pos=90;
 			</div>
 
 			<div class="panel-body">
-				<table border="1" class="workflow-table">
-					<tr>
+<!--Add Task-->
+<div id="office-create-form" class="well div-form">
+    	{{ Form::open(['url'=>'addtask'], 'POST', array('role' => 'form')) }}
+	    	<div class="col-md-8">
+		    	{{ Form::text('label', null, array('class' => 'form-control', 'placeholder' => 'Task Name')) }}
+		    		    <input type ="hidden" name="section_id" value="{{$sectionName->id}}">
+		    </div>
+	
+		    <div class="col-md-3">
+		    	{{ Form::submit('Add', array('class' => 'btn btn-success btn-block create-btn')) }}
+		    </div>
+	    {{ Form::close() }}
+</div>
+
+<!--End Add Task-->
+
+		<table border="1" class="workflow-table">
+
+<!--Additional Task-->
+<?php
+$ctask= OtherDetails::where('section_id', $sectionName->id )->count();
+if($ctask!=0){
+?>
+<tr>
+<th class="workflow-th" width="25%" colspan="2">LABEL</th>
+						<th class="workflow-th" width="70%">ACTION</th>
+			
+</tr>
+<?php 
+$addontask= OtherDetails::where('section_id', $sectionName->id )->get();
+?>
+@foreach ($addontask as $addontasks)
+<tr>
+	<td colspan="2" align="center">{{$addontasks->label}}</td>
+	<td align="center">
+		{{Form::open(['url'=>'deladdtask'])}}
+		<input type="hidden" name="id" value="<?php echo $addontasks->id ?>">
+	<button class="btn btn-error">Delete</button>
+		{{Form::close()}}
+	</td>
+</tr> 
+@endforeach
+<?php 
+}
+?>
+<!--End Additional Task-->	<tr>
 						<th class="workflow-th" width="25%">TASK</th>
 						<th class="workflow-th" width="45%">DESIGNATION ASSIGNED</th>
 						<th class="workflow-th" width="25%">ACTION</th>

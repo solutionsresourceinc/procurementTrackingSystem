@@ -3,6 +3,7 @@
 class Values extends Eloquent{
 
 
+	public $timestamps=false;
 	/**
 	 * The database table used by the model.
 	 *
@@ -17,5 +18,6 @@ class Values extends Eloquent{
 	 *
 	 * @var array
 	 */
+	
 
 }
