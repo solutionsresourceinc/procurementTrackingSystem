@@ -108,60 +108,58 @@
 	</div>
 
 	<!-- START CHECKLIST SECTION -->
-<div class="panel panel-success">
-	<div class="panel-body">
-<!-- Section 1  -->
-<?php 
-$docs= Document::where('pr_id', $purchase->id)->first();
-//Cursor Component
-$taskc= TaskDetails::where('doc_id', $docs->id)->where('status', 'New')->orWhere('status', 'Active')->first(); 
-$workflow= Workflow::find($docs->work_id);
-$section= Section::where('workflow_id', $workflow->id)->orderBy('section_order_id','ASC')->get();
+	<div class="panel panel-success">
+		<div class="panel-body">
+		<!-- Section 1  -->
+		<?php 
+			$docs= Document::where('pr_id', $purchase->id)->first();
+			//Cursor Component
+			$taskc= TaskDetails::where('doc_id', $docs->id)->where('status', 'New')->orWhere('status', 'Active')->first(); 
+			$workflow= Workflow::find($docs->work_id);
+			$section= Section::where('workflow_id', $workflow->id)->orderBy('section_order_id','ASC')->get();
 
-$taskd= TaskDetails::where('doc_id', $docs->id)->orderBy('id', 'ASC')->get();
-$sectioncheck=0;
-echo "<table border='1'>";
-foreach ($section as $sections) {   
-$task= Task::where('section_id', $sections->section_order_id)->where('wf_id', $workflow->id)->orderBy('order_id', 'ASC')->get();
-echo "<tr><th colspan='5' ><h3>".$sections->section_order_id.". ".$sections->sectionName."</h3></th></tr>";
-echo " <tr><th ></th><th >By:</th><th >Date:</th><th>Days of Action</th><th >Remarks</th></tr>";
-foreach ($task as $tasks) {
-
-
-    //Displayer 
-    $taskp =TaskDetails::where('doc_id', $docs->id)->where('task_id', $tasks->id)->first();
-
-    echo "<tr><td >".$tasks->order_id.". ".$tasks->taskName."</td>";
-
-?>
-
-<td  ><?php
-if($taskp->assignee!=NULL){
-	$dassignee=chunk_split($taskp->assignee, 20, "<br>");
-   echo $dassignee; }
-else if($taskp->assignee_id!=0){
-    $assign_user=User::find($taskp->assignee_id);
-echo $assign_user->lastname.", ".$assign_user->firstname;
-}
-$date = new DateTime($taskp->dateFinished);
-$datef = $date->format('m/d/y');
-?></td>
-<td  ><?php if($taskp->dateFinished!="0000-00-00 00:00:00") echo $datef; ?></td>
-<td ><?php if($taskp->dateFinished!="0000-00-00 00:00:00") echo $taskp->daysOfAction; ?></td>
-<td ><?php 
-$dremarks=chunk_split($taskp->remarks, 20, "<br>");
-echo $dremarks. "</td></tr>";
-}
+			$taskd= TaskDetails::where('doc_id', $docs->id)->orderBy('id', 'ASC')->get();
+			$sectioncheck=0;
+			echo "<table border='1'>";
+			foreach ($section as $sections) {   
+			$task= Task::where('section_id', $sections->section_order_id)->where('wf_id', $workflow->id)->orderBy('order_id', 'ASC')->get();
+			echo "<tr><th colspan='5' ><h3>".$sections->section_order_id.". ".$sections->sectionName."</h3></th></tr>";
+			echo " <tr><th ></th><th >By:</th><th >Date:</th><th>Days of Action</th><th >Remarks</th></tr>";
+			foreach ($task as $tasks) {
 
 
-}
-echo "</table>";
-?>
+		    //Displayer 
+		    $taskp =TaskDetails::where('doc_id', $docs->id)->where('task_id', $tasks->id)->first();
 
-<!-- Section 1  -->
+		    echo "<tr><td >".$tasks->order_id.". ".$tasks->taskName."</td>";
 
-</div>
-</div>
+		?>
+
+		<td  ><?php
+			if($taskp->assignee!=NULL){
+				$dassignee=chunk_split($taskp->assignee, 20, "<br>");
+			   echo $dassignee; }
+			else if($taskp->assignee_id!=0){
+			    $assign_user=User::find($taskp->assignee_id);
+				echo $assign_user->lastname.", ".$assign_user->firstname;
+			}
+			$date = new DateTime($taskp->dateFinished);
+			$datef = $date->format('m/d/y');
+			?></td>
+			<td  ><?php if($taskp->dateFinished!="0000-00-00 00:00:00") echo $datef; ?></td>
+			<td ><?php if($taskp->dateFinished!="0000-00-00 00:00:00") echo $taskp->daysOfAction; ?></td>
+			<td ><?php 
+			$dremarks=chunk_split($taskp->remarks, 20, "<br>");
+			echo $dremarks. "</td></tr>";
+			}
+		}
+		echo "</table>";
+		?>
+
+		<!-- Section 1  -->
+
+		</div>
+	</div>
 	<!-- END CHECKLIST SECTION -->
 	
 	<?php
@@ -177,28 +175,26 @@ echo "</table>";
 	<div id="img-section">
 
 	<?php
-$docs= Document::where('pr_id', $purchase->id)->first();
-	  $attachmentc = DB::table('attachments')->where('doc_id', $docs->id)->count();
-         if ($attachmentc!=0)
+		$docs= Document::where('pr_id', $purchase->id)->first();
+	  	$attachmentc = DB::table('attachments')->where('doc_id', $docs->id)->count();
+        if ($attachmentc!=0)
             echo "<h3>"."Attachments"."</h3>";
 
-$luser=Auth::user()->id;
-$count= Count::where('doc_id','=', $docs->id)->where('user_id','=', $luser )->delete();
+		$luser=Auth::user()->id;
+		$count= Count::where('doc_id','=', $docs->id)->where('user_id','=', $luser )->delete();
 
 
-	$attachments = DB::table('attachments')->where('doc_id', $docs->id)->get();	
-	$srclink="uploads\\";
-	?>
-	@foreach ($attachments as $attachment) 
-	<div class="image-container">
-		<a href="{{asset('uploads/'.$attachment->data)}}" data-lightbox="roadtrip">
-		<img class="img-thumbnail" src="{{asset('uploads/'.$attachment->data)}}" style="width: 100px; height: 100px;" />
-	</a>
-		
+		$attachments = DB::table('attachments')->where('doc_id', $docs->id)->get();	
+		$srclink="uploads\\";
+		?>
+		@foreach ($attachments as $attachment) 
+			<div class="image-container">
+				<a href="{{asset('uploads/'.$attachment->data)}}" data-lightbox="roadtrip">
+				<img class="img-thumbnail" src="{{asset('uploads/'.$attachment->data)}}" style="width: 100px; height: 100px;" />
+			</a>
+				
+			</div>
+		@endforeach
 	</div>
-
-	@endforeach
-
-</div>
-{{ Session::forget('notice'); }}
+	{{ Session::forget('notice'); }}
 @stop
