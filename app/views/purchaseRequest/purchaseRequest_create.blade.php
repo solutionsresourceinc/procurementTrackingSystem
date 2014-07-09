@@ -70,8 +70,8 @@
 	
 				<div class="col-md-7 nopadding">
 					{{ Form::label('modeOfProcurement', 'Mode of Procurement *', array('class' => 'create-label')) }}
-					<select  name="modeOfProcurement" id="modeOfProcurement" class="form-control" data-live-search="true">
-						<option value="">Please select</option>
+					<select  disabled name="modeOfProcurement" id="modeOfProcurement" class="form-control" data-live-search="true">
+						<option value="">None</option>
 						@foreach($workflow as $wf)
 						<option value="{{ $wf->id }}" 
 							<?php
@@ -80,18 +80,21 @@
 							?> >{{$wf->workFlowName}}</option>
 							@endforeach
 
-						</select>
-						@if (Session::get('m6'))
+					</select>
+					<input type="hidden" name="hide_modeOfProcurement" id="hide_modeOfProcurement">
+
+					@if (Session::get('m6'))
 						<font color="red"><i>The mode of procurement is required field</i></font>
-						@endif
-				
+					@endif
+
 				</div>
 				<div class="col-md-5">
 					{{ Form::label('otherType', 'Other Type', array('class' => 'create-label')) }}
-					<select name="otherType" class="form-control">
+					<select name="otherType" class="form-control" onchange="change_OtherType(this.value)">
 						<option value="">None</option>
 						<option value="shopping">Shopping</option>
 						<option value="fuel">Fuel</option>
+						<option value="pakyaw">Pakyaw</option>
 					</select>
 					<p> </p>
 				</div>
@@ -341,6 +344,8 @@
 		
 
 		newamount =	amount; 
+
+		/* 
 		if (newamount<50000)
 			document.getElementById("modeOfProcurement").selectedIndex = 1;
 		else if (newamount>=50000 )
@@ -354,6 +359,18 @@
 		}
 		else
 			document.getElementById("modeOfProcurement").selectedIndex = 0; 
+		*/
+
+		if (newamount >= 0 && newamount < 50000)
+			document.getElementById("modeOfProcurement").selectedIndex = 1;
+		else if(newamount >= 50000 && newamount < 500000)
+			document.getElementById("modeOfProcurement").selectedIndex = 2;
+		else if(newamount >= 500000 )
+			document.getElementById("modeOfProcurement").selectedIndex = 3;
+		else
+			document.getElementById("modeOfProcurement").selectedIndex = 0;
+
+		document.getElementById('hide_modeOfProcurement').value = document.getElementById('modeOfProcurement').value;
 	}
 
 	$(window).on('load', function () {
@@ -407,6 +424,92 @@
 		document.getElementById('disabled_datetime').value = document.getElementById('dtp_input1').value;
 	}
 
+	</script>
+
+	<script>
+		function change_OtherType(value)
+		{
+			//alert(value);
+			if(value == "pakyaw")
+			{
+				window.last_selected = document.getElementById('modeOfProcurement').selectedIndex 
+				document.getElementById('modeOfProcurement').selectedIndex = 4;
+				document.getElementById('modeOfProcurement').onchange = 4;
+				document.getElementById("num").onchange = new Function("numberWithCommas2(this.value)");
+				document.getElementById('hide_modeOfProcurement').value = document.getElementById('modeOfProcurement').value;
+				
+			}
+			else
+			{
+				var amount = document.getElementById('num').value;
+				amount = amount.split(',').join('');
+				//amount = amount.split('.').join('');
+				//String result = amount.split(".")[0];
+				//alert(result);
+				//document.getElementById('modeOfProcurement').selectedIndex = window.last_selected;
+
+				document.getElementById("num").onchange = new Function("numberWithCommas(this.value)");
+
+
+				if (amount >= 0 && amount < 50000)
+					document.getElementById("modeOfProcurement").selectedIndex = 1;
+				else if(amount >= 50000 && amount < 500000)
+					document.getElementById("modeOfProcurement").selectedIndex = 2;
+				else if(amount >= 500000 )
+					document.getElementById("modeOfProcurement").selectedIndex = 3;
+				else
+					document.getElementById("modeOfProcurement").selectedIndex = 0;
+					document.getElementById('hide_modeOfProcurement').value = document.getElementById('modeOfProcurement').value;
+
+			}
+
+
+		}
+	</script>
+
+	<script>
+		function numberWithCommas2(amount) 
+		{
+			amount = amount.replace(',','');	
+			var its_a_number = amount.match(/^[0-9,.]+$/i);
+			if (its_a_number != null)
+			{
+				decimal_amount = parseFloat(amount).toFixed(2);
+				if(decimal_amount == 0 || decimal_amount == "0.00")
+				{
+					document.getElementById("num").value = "0.00";
+					window.old_amount = 0.00; 
+				}
+				else
+				{
+					var parts = decimal_amount.toString().split(".");
+					parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+					parts =  parts.join(".");
+					if(parts == "NaN")
+					{
+						document.getElementById("num").value = "0.00";
+						window.old_amount = 0.00; 
+					}
+					else
+					{
+						document.getElementById("num").value = parts;
+						window.old_amount = parts;
+					}
+					 
+				}
+			}
+			else if(!window.old_amount)
+			{
+				document.getElementById("num").value = "0.00";
+				window.old_amount = 0.00; 
+			}
+			else
+			{
+				document.getElementById("num").value = window.old_amount;
+			}
+			document.getElementById('hide_modeOfProcurement').value = document.getElementById('modeOfProcurement').value;
+			
+		}
 	</script>
 
 	<!-- js for chained dropdown -->
