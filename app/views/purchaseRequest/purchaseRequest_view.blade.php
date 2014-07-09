@@ -19,10 +19,10 @@
 @section('content')		
 
 
-
 	@if(Session::get('notice'))
         <div class="alert alert-success"> {{ Session::get('notice') }}</div> 
     @endif
+
 
 	<!--h2 class="pull-left"> {{ $purchase->controlNo }} </h2-->
 	<h2 class="pull-left">Purchase Request Details </h2>
@@ -58,43 +58,9 @@
 
 	<hr class="clear" />
 
-	<!-- purchase details section 
-	<div class="well">
-		<table width="100%" class="pr-details-table">
-			<tr>
-				<td width="25%" class="pr-label">Category:</td>
-				<td>
-					@if($wfName->work_id == 1)
-						Small Value Procurement (Below P50,000)
-					@elseif($wfName->work_id == 2)
-						Small Value Procurement (Above P50,000 Below P500,000)
-					@else
-						Bidding (Above P500,000)
-					@endif
-				</td>
-			</tr>
-			<tr>
-				<td class="pr-label">Requisitioner</td>
-
-				<td>
-					<?php $user = User::find($purchase->requisitioner) ?>
-					{{ $user->lastname . ", " . $user->firstname }}
-				</td>
-			</tr>
-			<tr>
-				<td class="pr-label">Project/Purpose:</td>
-				<td>{{ $purchase->projectPurpose }}</td>
-			</tr>
-			<tr>
-				<td class="pr-label">Source of Funds:</td>
-				<td>{{ $purchase->sourceOfFund }}</td>
-			</tr>
-			<tr>
-				<td class="pr-label">ABC Amount:</td>
-				<td>{{ $purchase->amount }}</td>
-			</tr>
-		</table>
-	</div>-->
+	@if($purchase->status == "Cancelled")
+		<div class="alert alert-danger"> Reason: {{ $purchase->reason }}</div> 
+	@endif
 	
 	<div class="panel panel-success">
 		<div class="panel-body">

@@ -104,9 +104,7 @@ $addontask= OtherDetails::where('section_id', $sectionName->id )->get();
 			<?php $d_id=$section->designation_id; ?>
 
 			<tr>
-				<td>{{{ 
-
-					$section->taskName }}}</td>
+				<td>{{{ $section->taskName }}}</td>
 
 				<td> 
 					<?php 

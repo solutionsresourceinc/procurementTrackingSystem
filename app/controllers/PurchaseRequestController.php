@@ -37,7 +37,7 @@ class PurchaseRequestController extends Controller {
 		if($purchase_save)
 		{
 			$document->pr_id = $purchase->id;
-			$document->work_id = Input::get('modeOfProcurement');
+			$document->work_id = Input::get('hide_modeOfProcurement');
 			$document_save = $document->save();
 
 			if($document_save)
@@ -50,13 +50,13 @@ class PurchaseRequestController extends Controller {
 				// Set due date;
 				$new_purchase = Purchase::find($purchase->id);
 
-				$workflow_id = Input::get('modeOfProcurement');
+				$workflow_id = Input::get('hide_modeOfProcurement');
 				$workflow = Workflow::find($workflow_id);
 				$addToDate = $workflow->totalDays;
 				date_default_timezone_set("Asia/Manila");
 				$dueDate = date('Y-m-d H:i:s', strtotime("+$addToDate days" ));
 				$new_purchase->dueDate = $dueDate;
-				$new_purchase_>save();
+				$new_purchase->save();
 
 				$task=Task::where('wf_id', $document->work_id)->orderBy('section_id', 'ASC')->orderBy('order_id', 'ASC')->get();
 
@@ -237,7 +237,7 @@ class PurchaseRequestController extends Controller {
 		Session::put('m5', $m5 );
 		Session::put('m7', $m7 );
 
-		if(Input::get('modeOfProcurement') == "")
+		if(Input::get('hide_modeOfProcurement') == "")
 		{
 			Session::put('m6', 'required' );
 		}
