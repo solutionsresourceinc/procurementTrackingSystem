@@ -170,8 +170,9 @@ foreach ($task as $tasks) {
 ?>
 
 <td  ><?php
-if($taskp->assignee!=NULL)
-   echo $taskp->assignee; 
+if($taskp->assignee!=NULL){
+	$dassignee=chunk_split($taskp->assignee, 20, "<br>");
+   echo $dassignee; }
 else if($taskp->assignee_id!=0){
     $assign_user=User::find($taskp->assignee_id);
 echo $assign_user->lastname.", ".$assign_user->firstname;
@@ -181,7 +182,9 @@ $datef = $date->format('m/d/y');
 ?></td>
 <td  ><?php if($taskp->dateFinished!="0000-00-00 00:00:00") echo $datef; ?></td>
 <td ><?php if($taskp->dateFinished!="0000-00-00 00:00:00") echo $taskp->daysOfAction; ?></td>
-<td ><?php echo $taskp->remarks. "</td></tr>";
+<td ><?php 
+$dremarks=chunk_split($taskp->remarks, 20, "<br>");
+echo $dremarks. "</td></tr>";
 }
 
 
