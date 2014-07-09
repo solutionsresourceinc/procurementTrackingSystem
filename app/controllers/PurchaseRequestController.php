@@ -100,13 +100,17 @@ class PurchaseRequestController extends Controller {
 	                $ext = $file->getClientOriginalExtension(); // (Based on filename)
 	                $filename = $file->getClientOriginalName();
              
-
-
 					$archivo = value(function() use ($file){
         			$filename = str_random(10) . '.' . $file->getClientOriginalExtension();
         			return strtolower($filename);
    				});
-   
+
+				$archivo = value(function() use ($file){
+				 $date = date('m-d-Y-h-i-s', time());
+				        $filename = $date."-". $file->getClientOriginalName();
+				        return strtolower($filename);
+				    });
+
 
                 $attach = new Attachments;
                 $attach->doc_id=$doc_id;
@@ -360,8 +364,6 @@ class PurchaseRequestController extends Controller {
 //Image Upload
 
 
-
-
 $doc_id= $document->id;
 
 foreach(Input::file('file') as $file){
@@ -378,8 +380,9 @@ foreach(Input::file('file') as $file){
 
 
 $archivo = value(function() use ($file){
-        $filename = str_random(10) . '.' . $file->getClientOriginalExtension();
-        return strtolower($filename);
+      $date = date('m-d-Y-h-i-s', time());
+        $filename = $date."-". $file->getClientOriginalName();
+          return strtolower($filename);
     });
    
 
@@ -628,7 +631,9 @@ public function checklistedit(){
 
 $taskdetails_id= Input::get('taskdetails_id');
 $assignee=Input::get('assignee');
-$dateFinished=Input::get('dateFinished');
+$mydate=Input::get('dateFinished');
+$timestamp = strtotime($mydate);
+$dateFinished= date("Y-m-d H:i:s", $timestamp);
 $daysOfAction=Input::get('daysOfAction');
 $remarks=Input::get('remarks')." ";
 $remarkchange=0;

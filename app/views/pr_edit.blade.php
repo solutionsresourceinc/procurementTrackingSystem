@@ -8,7 +8,8 @@
 {{ HTML::style('date_picker/bootstrap-datetimepicker.min.css')}}
 {{ HTML::script('date_picker/bootstrap-datetimepicker.js') }}
 {{ HTML::script('date_picker/bootstrap-datetimepicker.fr.js') }}
-
+{{ HTML::style('css/datepicker.css')}}
+{{ HTML::script('js/bootstrap-datepicker.js') }}
 <!--Image Display-->
 
 {{ HTML::script('js/lightbox.min.js') }} 
@@ -359,16 +360,9 @@ if ($taskc->task_id==$tasks->id && $tasks->designation_id==0){
 {{Form::open(['url'=>'checklistedit'], 'POST')}}
 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
 <td><input type ="text" name="assignee"></td>
-<td><div class="input-group date form_datetime col-md-12" data-date="{{ date('Y-m-d') }}T{{ date('H:i:s') }}Z" data-date-format="dd MM yyyy - HH:ii p" data-link-field="dtp_input1">
-                        <input id="disabled_datetime" onchange="fix_format()" class="form-control" size="16" type="text" value="<?php
-                        if (NULL!=Input::old('dateRequested'))
-                            echo Input::old('dateRequested');
-                        else
-                         echo $epurchase->dateRequested; ?>" readonly>
-                        <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
-                        <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
-                    </div>
-                    <input type="hidden" id="dtp_input1" name="dateFinished" >
+<td>  <input class="datepicker" size="16" type="text" name="dateFinished" value="12/02/2012">
+  <span class="add-on"><i class="icon-th"></i></span>
+
                 </td>
                 <td>
 <input type="number" name="daysOfAction">
@@ -395,8 +389,12 @@ else if($taskp->assignee_id!=0){
     $assign_user=User::find($taskp->assignee_id);
 echo $assign_user->lastname.", ".$assign_user->firstname;
 }
+$date = new DateTime($taskp->dateFinished);
+$datef = $date->format('m/d/y');
+
 ?></td>
-<td><?php if($taskp->dateFinished!="0000-00-00 00:00:00") echo $taskp->dateFinished; ?></td>
+
+<td><?php if($taskp->dateFinished!="0000-00-00 00:00:00") echo $datef ?></td>
 <td><?php if($taskp->dateFinished!="0000-00-00 00:00:00") echo $taskp->daysOfAction; ?></td>
 <td><?php echo $taskp->remarks; ?></td>
 <?php
@@ -527,10 +525,33 @@ echo "</table>";
     function fix_format()
     {
         document.getElementById('disabled_datetime').value = document.getElementById('dtp_input1').value;
+         
+    }
+function fix_format2()
+{
+    var counter = 0;
+    while(counter != 100)
+    {
+        counter++;
+        var name = "disabled_datetime2" + counter;
+        var name2 = "dtp_input2" + counter;
+        document.getElementById(name).value =
+        document.getElementById(name2).value;
     }
 
 
+}
+
+$('.datepicker').datepicker();
+
     </script>
 
+
+
     <!-- js for chained dropdown -->
+
+
+
+
+
 @stop
