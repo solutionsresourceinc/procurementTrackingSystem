@@ -287,14 +287,15 @@ if ($pass==0)
                 {{ link_to( 'purchaseRequest/view', 'Cancel', array('class'=>'btn btn-default') ) }}
 
             </div>
+                {{ Form::close() }} 
         </div>  
        
-    {{ Form::close() }} 
+
 
     <!--  
     Image Module
     -->
-
+  <div class="form-create ">
     <div id="img-section">
 
         <?php
@@ -328,7 +329,9 @@ if ($pass==0)
     {{ Session::forget('imgerror'); }}
     {{ Session::forget('imgsuccess'); }}
 </div>
-  <div class="form-create fc-div">
+</div>
+<br>
+  <div class="form-create ">
 <!-- Section 1  -->
 <?php 
 //Cursor Component
@@ -338,7 +341,9 @@ $section= Section::where('workflow_id', $workflow->id)->orderBy('section_order_i
 
 $taskd= TaskDetails::where('doc_id', $docs->id)->orderBy('id', 'ASC')->get();
 $sectioncheck=0;
-echo "<table border='1' >";
+
+
+echo "<table border='1' width='100%' >";
 foreach ($section as $sections) {   
 $task= Task::where('section_id', $sections->section_order_id)->where('wf_id', $workflow->id)->orderBy('order_id', 'ASC')->get();
 echo "<tr><th colspan='5' >".$sections->section_order_id.". ".$sections->sectionName."</th></tr>";
@@ -414,7 +419,6 @@ echo "</table>";
 
 </div>
 </div>
-
 
 
 @stop
