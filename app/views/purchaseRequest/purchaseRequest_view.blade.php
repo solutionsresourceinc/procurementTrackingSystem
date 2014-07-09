@@ -154,24 +154,25 @@ $section= Section::where('workflow_id', $workflow->id)->orderBy('section_order_i
 
 $taskd= TaskDetails::where('doc_id', $docs->id)->orderBy('id', 'ASC')->get();
 $sectioncheck=0;
-echo "<table border='1'  class='proc-details'>";
+echo "<table border='1'>";
 foreach ($section as $sections) {   
 $task= Task::where('section_id', $sections->section_order_id)->where('wf_id', $workflow->id)->orderBy('order_id', 'ASC')->get();
-echo "<tr><th colspan='5' class='proc-headers' ><h3>".$sections->section_order_id.". ".$sections->sectionName."</h3></th></tr>";
-echo " <tr><th></th><th>By:</th><th>Date:</th><th>Days of Action</th><th>Remarks</th></tr>";
+echo "<tr><th colspan='5' ><h3>".$sections->section_order_id.". ".$sections->sectionName."</h3></th></tr>";
+echo " <tr><th ></th><th >By:</th><th >Date:</th><th>Days of Action</th><th >Remarks</th></tr>";
 foreach ($task as $tasks) {
 
 
     //Displayer 
     $taskp =TaskDetails::where('doc_id', $docs->id)->where('task_id', $tasks->id)->first();
 
-    echo "<tr><td class='proc-headers'>".$tasks->order_id.". ".$tasks->taskName."</td>";
+    echo "<tr><td >".$tasks->order_id.". ".$tasks->taskName."</td>";
 
 ?>
 
-<td  class="proc-data"><?php
-if($taskp->assignee!=NULL)
-   echo $taskp->assignee; 
+<td  ><?php
+if($taskp->assignee!=NULL){
+	$dassignee=chunk_split($taskp->assignee, 20, "<br>");
+   echo $dassignee; }
 else if($taskp->assignee_id!=0){
     $assign_user=User::find($taskp->assignee_id);
 echo $assign_user->lastname.", ".$assign_user->firstname;
@@ -179,9 +180,11 @@ echo $assign_user->lastname.", ".$assign_user->firstname;
 $date = new DateTime($taskp->dateFinished);
 $datef = $date->format('m/d/y');
 ?></td>
-<td  class="proc-data"><?php if($taskp->dateFinished!="0000-00-00 00:00:00") echo $datef; ?></td>
-<td class="proc-data"><?php if($taskp->dateFinished!="0000-00-00 00:00:00") echo $taskp->daysOfAction; ?></td>
-<td class="proc-data"><?php echo $taskp->remarkdatefcho "</tr>";
+<td  ><?php if($taskp->dateFinished!="0000-00-00 00:00:00") echo $datef; ?></td>
+<td ><?php if($taskp->dateFinished!="0000-00-00 00:00:00") echo $taskp->daysOfAction; ?></td>
+<td ><?php 
+$dremarks=chunk_split($taskp->remarks, 20, "<br>");
+echo $dremarks. "</td></tr>";
 }
 
 
