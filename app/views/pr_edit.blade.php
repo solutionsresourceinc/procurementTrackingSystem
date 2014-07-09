@@ -291,140 +291,131 @@ if ($pass==0)
                 {{ link_to( 'purchaseRequest/view', 'Cancel', array('class'=>'btn btn-default') ) }}
 
             </div>
-                {{ Form::close() }} 
+            
+            {{ Form::close() }} 
+
+            <!--  
+            Image Module
+            -->
+            <div id="img-section">
+
+                <?php
+                 $attachmentc = DB::table('attachments')->where('doc_id', $doc_id)->count();
+                 if ($attachmentc!=0)
+                    echo "<h3>"."Attachments"."</h3>";
+                    $attachments = DB::table('attachments')->where('doc_id', $doc_id)->get();  
+                    $srclink="uploads\\";
+                ?>
+                @foreach ($attachments as $attachment) 
+                    <div class="image-container">
+                        <a href="{{asset('uploads/'.$attachment->data)}}" data-lightbox="roadtrip">
+                        <img class="img-thumbnail" src="{{asset('uploads/'.$attachment->data)}}" style="width: 100px; height: 100px;" /></a>
+                        {{ Form::open(array('method' => 'post', 'url' => 'delimage')) }}
+                        <input type="hidden" name="hide" value="{{$attachment->id}}">
+                        <button class="star-button"><img src="{{asset('img/Delete_Icon.png')}}"></button>
+                        {{Form::close()}}
+                    </div>
+                @endforeach
+            <!-- End Image Module-->
+
+                {{ Session::forget('notice'); }}
+                {{ Session::forget('main_error'); }}
+                {{ Session::forget('m1'); }}
+                {{ Session::forget('m2'); }}
+                {{ Session::forget('m3'); }}
+                {{ Session::forget('m4'); }}
+                {{ Session::forget('m5'); }}
+                {{ Session::forget('m6'); }}
+                {{ Session::forget('m7'); }}
+                {{ Session::forget('imgerror'); }}
+                {{ Session::forget('imgsuccess'); }}
+            </div>
         </div>  
        
+        <br>
+        <div class="form-create ">
+            <!-- Section 1  -->
+            <?php 
+            //Cursor Component
+            $taskc= TaskDetails::where('doc_id', $docs->id)->where('status', 'New')->orWhere('status', 'Active')->first(); 
+            $workflow= Workflow::find($docs->work_id);
+            $section= Section::where('workflow_id', $workflow->id)->orderBy('section_order_id','ASC')->get();
+
+            $taskd= TaskDetails::where('doc_id', $docs->id)->orderBy('id', 'ASC')->get();
+            $sectioncheck=0;
 
 
-    <!--  
-    Image Module
-    -->
-  <div class="form-create ">
-    <div id="img-section">
+            echo "<table border='1' width='100%' >";
+            foreach ($section as $sections) {   
+            $task= Task::where('section_id', $sections->section_order_id)->where('wf_id', $workflow->id)->orderBy('order_id', 'ASC')->get();
+            echo "<tr><th colspan='5' >".$sections->section_order_id.". ".$sections->sectionName."</th></tr>";
+            echo " <tr><th></th><th>By:</th><th>Date:</th><th>Days of Action</th><th>Remarks</th></tr>";
+            foreach ($task as $tasks) {
+            //Cursor Open form 
+                //Displayer 
+                $taskp =TaskDetails::where('doc_id', $docs->id)->where('task_id', $tasks->id)->first();
 
-        <?php
-         $attachmentc = DB::table('attachments')->where('doc_id', $doc_id)->count();
-         if ($attachmentc!=0)
-            echo "<h3>"."Attachments"."</h3>";
-            $attachments = DB::table('attachments')->where('doc_id', $doc_id)->get();  
-            $srclink="uploads\\";
-        ?>
-        @foreach ($attachments as $attachment) 
-            <div class="image-container">
-                <a href="{{asset('uploads/'.$attachment->data)}}" data-lightbox="roadtrip">
-                <img class="img-thumbnail" src="{{asset('uploads/'.$attachment->data)}}" style="width: 100px; height: 100px;" /></a>
-                {{ Form::open(array('method' => 'post', 'url' => 'delimage')) }}
-                <input type="hidden" name="hide" value="{{$attachment->id}}">
-                <button class="star-button"><img src="{{asset('img/Delete_Icon.png')}}"></button>
-                {{Form::close()}}
-            </div>
-        @endforeach
-    <!-- End Image Module-->
+                echo "<tr><td>".$tasks->order_id.". ".$tasks->taskName."</td>";
 
-    {{ Session::forget('notice'); }}
-    {{ Session::forget('main_error'); }}
-    {{ Session::forget('m1'); }}
-    {{ Session::forget('m2'); }}
-    {{ Session::forget('m3'); }}
-    {{ Session::forget('m4'); }}
-    {{ Session::forget('m5'); }}
-    {{ Session::forget('m6'); }}
-    {{ Session::forget('m7'); }}
-    {{ Session::forget('imgerror'); }}
-    {{ Session::forget('imgsuccess'); }}
-</div>
-</div>
-<br>
-  <div class="form-create ">
-<!-- Section 1  -->
-<?php 
-//Cursor Component
-$taskc= TaskDetails::where('doc_id', $docs->id)->where('status', 'New')->orWhere('status', 'Active')->first(); 
-$workflow= Workflow::find($docs->work_id);
-$section= Section::where('workflow_id', $workflow->id)->orderBy('section_order_id','ASC')->get();
+            if ($taskc->task_id==$tasks->id && $tasks->designation_id==0){
+                ?>
+            {{Form::open(['url'=>'checklistedit'], 'POST')}}
+            <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
+            <td ><input type ="text" name="assignee"></td>
+            <td> <input class="datepicker" size="16" type="text" name="dateFinished" value="12/02/2012">
+              <span class="add-on"><i class="icon-th"></i></span>
 
-$taskd= TaskDetails::where('doc_id', $docs->id)->orderBy('id', 'ASC')->get();
-$sectioncheck=0;
+                            </td>
+                            <td >
+            <input type="number" name="daysOfAction" min="0">
+            </td>
+            <td >
+                
+            <input type="text" name="remarks" maxlength="255">
 
+            </td>
 
-echo "<table border='1' width='100%' >";
-foreach ($section as $sections) {   
-$task= Task::where('section_id', $sections->section_order_id)->where('wf_id', $workflow->id)->orderBy('order_id', 'ASC')->get();
-echo "<tr><th colspan='5' >".$sections->section_order_id.". ".$sections->sectionName."</th></tr>";
-echo " <tr><th></th><th>By:</th><th>Date:</th><th>Days of Action</th><th>Remarks</th></tr>";
-foreach ($task as $tasks) {
-//Cursor Open form 
-    //Displayer 
-    $taskp =TaskDetails::where('doc_id', $docs->id)->where('task_id', $tasks->id)->first();
+            </tr><tr>
+            <td colspan="5" > <br><center> <input type="submit" class="btn btn-success"> <center><br></td>
+            {{Form::close()}}
+            <?php }
+            //END Cursor Open Form
 
-    echo "<tr><td>".$tasks->order_id.". ".$tasks->taskName."</td>";
+            else{
+            ?>
 
-if ($taskc->task_id==$tasks->id && $tasks->designation_id==0){
-    ?>
-{{Form::open(['url'=>'checklistedit'], 'POST')}}
-<input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
-<td ><input type ="text" name="assignee"></td>
-<td> <input class="datepicker" size="16" type="text" name="dateFinished" value="12/02/2012">
-  <span class="add-on"><i class="icon-th"></i></span>
+            <td ><?php
+            if($taskp->assignee!=NULL)
+              { $dassignee=chunk_split($taskp->assignee, 20, "<br>");
+                echo $dassignee; }
+            else if($taskp->assignee_id!=0){
+                $assign_user=User::find($taskp->assignee_id);
+            echo $assign_user->lastname.", ".$assign_user->firstname;
+            }
+            $date = new DateTime($taskp->dateFinished);
+            $datef = $date->format('m/d/y');
 
-                </td>
-                <td >
-<input type="number" name="daysOfAction" min="0">
-</td>
-<td >
-    
-<input type="text" name="remarks" maxlength="255">
+            ?></td>
 
-</td>
-
-</tr><tr>
-<td colspan="5" > <br><center> <input type="submit" class="btn btn-success"> <center><br></td>
-{{Form::close()}}
-<?php }
-//END Cursor Open Form
-
-else{
-?>
-
-<td ><?php
-if($taskp->assignee!=NULL)
-  { $dassignee=chunk_split($taskp->assignee, 20, "<br>");
-    echo $dassignee; }
-else if($taskp->assignee_id!=0){
-    $assign_user=User::find($taskp->assignee_id);
-echo $assign_user->lastname.", ".$assign_user->firstname;
-}
-$date = new DateTime($taskp->dateFinished);
-$datef = $date->format('m/d/y');
-
-?></td>
-
-<td ><?php if($taskp->dateFinished!="0000-00-00 00:00:00") echo $datef ?></td>
-<td ><?php if($taskp->dateFinished!="0000-00-00 00:00:00") echo $taskp->daysOfAction; ?></td>
-<td ><?php 
-$dremarks=chunk_split($taskp->remarks, 20, "<br>");
-    
-echo $dremarks; ?></td>
-<?php
-}
-echo "</tr>";
-}
+            <td ><?php if($taskp->dateFinished!="0000-00-00 00:00:00") echo $datef ?></td>
+            <td ><?php if($taskp->dateFinished!="0000-00-00 00:00:00") echo $taskp->daysOfAction; ?></td>
+            <td ><?php 
+            $dremarks=chunk_split($taskp->remarks, 20, "<br>");
+                
+            echo $dremarks; ?></td>
+            <?php
+            }
+            echo "</tr>";
+            }
 
 
-}
-echo "</table>";
-?>
+            }
+            echo "</table>";
+            ?>
 
-<!-- Section 1  -->
-
-
-
-
-
-</div>
-</div>
-
-
+            <!-- Section 1  -->
+        </div>
+    </div>
 @stop
 
 
