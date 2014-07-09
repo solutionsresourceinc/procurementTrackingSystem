@@ -97,28 +97,59 @@ if ($pass==0)
 
 ?>
             <div class="form-group">
-                <div>
-                    <?php 
-                        $cn = 0;
-                        $purchase = Purchase::orderBy('controlNo', 'ASC')->get();
-                        foreach ($purchase as $pur) {
-
-                            $cn = (int)$pur->controlNo;
-                        }
-                        $cn =$cn+1;
-                    ?>
-
-                    {{ Form::label('dispCN', 'Control No. *', array('class' => 'create-label')) }}
-                    <input type="text"  name="dispCN"  class="form-control" value="{{
-                    $epurchase->controlNo}}"disabled>
-                    <input type="hidden" name="controlNo" value="{{
-                    $epurchase->controlNo}}">
-                </div>
-                <br>
                 <?php
                         $docs=DB::table('document')->where('pr_id', '=',$id )->first();
                         $workflow=DB::table('workflow')->get();
                     ?>
+                <div class="row">
+                    <div class="col-md-6">
+                        
+                        {{ Form::label('modeOfProcurement', 'Mode of Procurement *', array('class' => 'create-label')) }}
+                        <select  name="modeOfProcurement" id="modeOfProcurement" class="form-control" data-live-search="true" disabled="disabled">
+                            <option value="">Please select</option>
+                            @foreach($workflow as $wf)
+                                <option value="{{ $wf->id }}" 
+                                    <?php
+                                        if (Input::old('modeOfProcurement'))
+                                            echo "selected";
+                                        else if($docs->work_id==$wf->id)
+                                            echo "selected";
+                                        else echo " "
+                                    ?> >{{$wf->workFlowName}}
+                                </option>
+                            @endforeach
+                        </select>
+                        @if (Session::get('m6'))
+                            <font color="red"><i>The mode of procurement is required field</i></font>
+                        @endif
+                      
+                    </div>
+
+                    <div class="col-md-3">
+                        {{ Form::label('status', 'Status: ', array('class' => 'create-label')) }}
+                        <input type="text" value="{{$epurchase->status}}" readonly class="form-control">
+                    </div>
+
+                    <div class="col-md-3">
+                        <?php 
+                            $cn = 0;
+                            $purchase = Purchase::orderBy('controlNo', 'ASC')->get();
+                            foreach ($purchase as $pur) {
+
+                                $cn = (int)$pur->controlNo;
+                            }
+                            $cn =$cn+1;
+                        ?>
+
+                        {{ Form::label('dispCN', 'Control No. *', array('class' => 'create-label')) }}
+                        <input type="text"  name="dispCN"  class="form-control" value="{{
+                        $epurchase->controlNo}}"disabled>
+                        <input type="hidden" name="controlNo" value="{{
+                        $epurchase->controlNo}}">
+                    </div>
+                </div>
+                <br>
+                
 
                 <div>
                     {{ Form::label('amount', 'Amount *', array('class' => 'create-label')) }}
@@ -127,34 +158,6 @@ if ($pass==0)
                 @if (Session::get('m3'))
                     <font color="red"><i>{{ Session::get('m3') }}</i></font>
                 @endif
-                <br>
-                <div>
-                    
-                    {{ Form::label('modeOfProcurement', 'Mode of Procurement *', array('class' => 'create-label')) }}
-                    <select  name="modeOfProcurement" id="modeOfProcurement" class="form-control" data-live-search="true" disabled="disabled">
-                        <option value="">Please select</option>
-                        @foreach($workflow as $wf)
-                            <option value="{{ $wf->id }}" 
-                                <?php
-                                    if (Input::old('modeOfProcurement'))
-                                        echo "selected";
-                                    else if($docs->work_id==$wf->id)
-                                        echo "selected";
-                                    else echo " "
-                                ?> >{{$wf->workFlowName}}
-                            </option>
-                        @endforeach
-                    </select>
-                    @if (Session::get('m6'))
-                        <font color="red"><i>The mode of procurement is required field</i></font>
-                    @endif
-                  
-                </div>
-                <br>
-                <div>
-                    {{ Form::label('status', 'Status: ', array('class' => 'create-label')) }}
-                    <input type="text" value="{{$epurchase->status}}" readonly class="form-control">
-                </div>
                 <br>
               
                 <div>

@@ -56,9 +56,7 @@
 			<?php $d_id=$section->designation_id; ?>
 
 			<tr>
-				<td>{{{ 
-
-					$section->taskName }}}</td>
+				<td>{{{ $section->taskName }}}</td>
 
 				<td> 
 					<?php 
