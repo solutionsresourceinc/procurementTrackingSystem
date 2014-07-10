@@ -203,7 +203,7 @@ class PurchaseRequestController extends Controller {
 		Mail::send('emails.template', $data, function($message) use($email, $fname)
 		{
 			$message->from('procurementTrackingSystem@tarlac.com', 'Procurement Tracking System Tarlac');
-			$message->to($email, $fname)->subject('Tarlac Procurement Tracking Systems');
+			$message->to($email, $fname)->subject('Tarlac Procurement Tracking System: New Purchase Request Created');
 		}); 
 		// END MAILER BY JAN SARMIENTO AWESOME
 				
@@ -346,7 +346,7 @@ class PurchaseRequestController extends Controller {
 		$purchase->requisitioner = Input::get( 'requisitioner' );
 		$purchase->dateRequested = Input::get( 'dateRequested' );
 		$purchase->controlNo = Input::get('controlNo');
-		$purchase->status = 'New';
+		//$purchase->status = 'New';
 		
 
 		$purchase_save = $purchase->save();
@@ -502,22 +502,17 @@ Session::forget('imgerror');
 			// Get Other Error Messages
 			$m1 = $purchase->validationErrors->first('projectPurpose');
 			$m2 = $purchase->validationErrors->first('sourceOfFund');
-			$m3 = $purchase->validationErrors->first('amount');
+			//$m3 = $purchase->validationErrors->first('amount');
 			$m4 = $purchase->validationErrors->first('office');
 			$m5 = $purchase->validationErrors->first('requisitioner');
 			$m7 = $purchase->validationErrors->first('dateRequested');
 			// Inserting Error Message To a Session
 			Session::put('m1', $m1 );
 			Session::put('m2', $m2 );
-			Session::put('m3', $m3 );
+			//Session::put('m3', $m3 );
 			Session::put('m4', $m4 );
 			Session::put('m5', $m5 );
 			Session::put('m7', $m7 );
-
-			if(Input::get('modeOfProcurement') == "")
-			{
-				Session::put('m6', 'required' );
-			}
 
 			return Redirect::back()->withInput();
 		}

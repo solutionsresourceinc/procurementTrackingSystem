@@ -5,7 +5,7 @@
     </head>
     <body>
         <center>
-        <h2><font color="white">Your Purchase Request has been submitted</font></h2>
+        <h2>Your purchase request has been processed.</h2>
         </center>
         <div align="center">
             <?php
@@ -15,8 +15,8 @@
             <table width="50%">
                 <tr><th colspan="2" bgcolor="006600">PURCHASE REQUEST DETAILS</th></tr>
                 <tr>
-                    <td width="30%"><strong>PR Control No :</strong></td>
-                    <td width="70%">{{{ $purch->controlNo }}}</td>
+                    <td width="40%"><strong>PR Control No :</strong></td>
+                    <td width="60%">{{{ $purch->controlNo }}}</td>
                 </tr>
                 <tr>
                     <td><strong>Project/Purpose :</strong></td>
