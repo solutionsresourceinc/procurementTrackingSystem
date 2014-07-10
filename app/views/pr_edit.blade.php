@@ -351,6 +351,41 @@ $sectioncheck=0;
 
 echo "<table border='1' width='100%' >";
 foreach ($section as $sections) {   
+
+
+//Addon Display
+    $otherc=OtherDetails::where('section_id', $sections->id)->count();
+if($otherc!=0){
+echo "<tr><th>Label</th><th>Input</th><th>Action</th></tr>";
+
+$otherd= OtherDetails::where('section_id', $sections->id)->get();
+foreach ($otherd as $otherdetails) {
+    echo "<tr><td>{{$otherdetails->label}}</td>";
+    $valuesc=Values::where('otherDetails_id', $otherdetails->id)->where('purchase_request_id', $epurchase->id)->count();
+$values=Values::where('otherDetails_id', $otherdetails->id)->where('purchase_request_id', $epurchase->id)->first();    
+if ($valuesc==0) {
+    Form::open(['url'=>'insertaddon'], 'POST');
+?>
+
+<td><input name ="value" type="text"></td>
+<td><button class ="btn btn-success">Save</button></td>
+<?php
+    Form::close();
+}
+else {
+echo "<td>".$values->value."</td>"
+Form::open(['url'= 'editaddon']);
+echo "<td>"."<button class ='btn btn-success'>Edit</button>"."</td>"
+Form::close();
+}
+echo "</tr>";
+}
+
+
+}
+
+//End Addon Display 
+
 $task= Task::where('section_id', $sections->section_order_id)->where('wf_id', $workflow->id)->orderBy('order_id', 'ASC')->get();
 echo "<tr><th colspan='5' >".$sections->section_order_id.". ".$sections->sectionName."</th></tr>";
 echo " <tr><th></th><th>By:</th><th>Date:</th><th>Days of Action</th><th>Remarks</th></tr>";
