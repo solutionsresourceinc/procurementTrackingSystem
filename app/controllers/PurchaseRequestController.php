@@ -679,14 +679,17 @@ $remarks= ltrim ($remarks,'0');
 $taskd->remarks=$remarks;
 $taskd->save();
 $tasknext=TaskDetails::find($taskdetails_id+1);
-if ($tasknext->doc_id==$taskd->doc_id)
+
+$tasknextc=TaskDetails::where('id', $taskdetails_id+1)->count();
+
+if ($tasknextc!=0)
 {
 $tasknext->status="New";
 $tasknext->save();
 }
 else
 {
-$purchase= Purchase::find($pr_id);
+$purchase= Purchase::find($docs->pr_id);
 $purchase->status="Closed";
 $purchase->save();
 }

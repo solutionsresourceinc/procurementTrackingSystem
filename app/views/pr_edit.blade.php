@@ -337,6 +337,8 @@ if ($pass==0)
             <!-- Section 1  -->
             <?php 
             //Cursor Component
+                $taskch= TaskDetails::where('doc_id', $docs->id)->where('status', 'New')->orWhere('status', 'Active')->count(); 
+
                 $taskc= TaskDetails::where('doc_id', $docs->id)->where('status', 'New')->orWhere('status', 'Active')->first(); 
                 $workflow= Workflow::find($docs->work_id);
                 $section= Section::where('workflow_id', $workflow->id)->orderBy('section_order_id','ASC')->get();
@@ -365,7 +367,8 @@ if ($pass==0)
 
                     echo "<tr><td>".$tasks->order_id.". ".$tasks->taskName."</td>";
 
-                    if ($taskc->task_id==$tasks->id && $tasks->designation_id==0){
+                    //if ($taskc->task_id==$tasks->id && $tasks->designation_id==0){
+                    if ($taskch!=0 && $taskc->task_id==$tasks->id && $tasks->designation_id==0){
              ?>
                     {{Form::open(['url'=>'checklistedit'], 'POST')}}
                         <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
