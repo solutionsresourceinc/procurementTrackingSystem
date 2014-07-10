@@ -77,7 +77,7 @@
 							BIDDING (ABOVE P500,000) &nbsp;&nbsp;
 						@endif
 
-						<span class="label {{($purchase->status == 'New') ? 'label-primary' : (($purchase->status == 'In Progress') ? 'label-success' : (($purchase->status == 'Overdue') ? 'label-danger' : 'label-default'))}}">
+						<span class="label {{($purchase->status == 'New') ? 'label-primary' : (($purchase->status == 'Active') ? 'label-success' : (($purchase->status == 'Overdue') ? 'label-danger' : 'label-default'))}}">
                     		{{ $purchase->status; }}
                     	</span>
 					</h4></td>
