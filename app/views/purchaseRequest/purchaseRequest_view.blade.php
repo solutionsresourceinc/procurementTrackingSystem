@@ -125,7 +125,42 @@
 				</div>";
 			echo "<div class='panel-body'>";
 			echo "<table border='1' class='workflow-table'>";
-			//echo "<tr><th colspan='5' ><h3>".$sections->section_order_id.". ".$sections->sectionName."</h3></th></tr>";
+		
+           //Addon Display
+    $otherc=OtherDetails::where('section_id', $sections->id)->count();
+if($otherc!=0){
+echo "<tr><th  class='workflow-th'>Label</th><th colspan='4'  class='workflow-th'>Input</th></tr>";
+
+$otherd= OtherDetails::where('section_id', $sections->id)->get();
+foreach ($otherd as $otherdetails) {
+    echo "<tr><td>".$otherdetails->label."</td>";
+    $valuesc=Values::where('otherDetails_id', $otherdetails->id)->where('purchase_request_id', $purchase->id)->count();
+$values=Values::where('otherDetails_id', $otherdetails->id)->where('purchase_request_id', $purchase->id)->first();    
+if ($valuesc==0) {
+
+?>
+    
+<td colspan="4"></td>
+
+
+<?php
+
+}
+else {
+echo "<td colspan='4'>".$values->value."</td>";
+?>
+
+<?php
+}
+echo "</tr>";
+}
+
+
+}
+
+//End Addon Display 
+
+
 			echo " <tr><th width='30%'></th>";
 			echo "<th class='workflow-th' width='12.5%'>By:</th>";
 			echo "<th class='workflow-th' width='12.5%'>Date:</th>";
