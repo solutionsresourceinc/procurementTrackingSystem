@@ -232,13 +232,21 @@ $desig->save();
         $user->email = Input::get( 'email' );
 
         $password = " ".Input::get( 'password' );
+        $cpassword = " ".Input::get( 'password_confirmation' );
+
         $passnotchange=0;
-        if($password==" "){
-            $passnotchange=1;
-        }
-        else{
-            $password = substr($password, 1);
-            $user->password = Hash::make($password);
+        if($password == $cpassword)
+        {
+            if($password==" " && $cpassword == " ")
+            {
+                $passnotchange=1;           
+            }
+            else
+            {
+                $password = substr($password, 1);
+                $user->password = Hash::make($password);
+                $user->password_confirmation = Input::get( 'password_confirmation' );
+            }
         }
 
         $user->firstname = Input::get( 'firstname' );
