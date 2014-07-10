@@ -17,8 +17,8 @@ class PurchaseRequestController extends Controller {
 	public function create_submit()
 	{
 		$cno=Input::get('controlNo');
-Purchase::where('controlNo', $cno )->count();
-if ($cno!=0)
+$cnp= Purchase::where('controlNo', $cno )->count();
+if ($cnp!=0)
 return Redirect::back();
 		$purchase = new Purchase;
 		$document = new Document;
