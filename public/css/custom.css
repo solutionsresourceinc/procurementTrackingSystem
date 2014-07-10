@@ -391,7 +391,7 @@ table.table td{
 }
 
 .current-task{
-	background: rgb(236, 236, 236);
+	background: rgb(248, 255, 200);
 }
 
 @media all and (max-width: 1065px){
