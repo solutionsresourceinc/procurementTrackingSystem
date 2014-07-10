@@ -386,6 +386,10 @@ table.table td{
 	margin-top: -3px;
 }
 
+.edit-pr-input td{
+	padding: 8px 7px !important;
+}
+
 @media all and (max-width: 1065px){
 	.accept-button{
 		margin: 8px 25px;

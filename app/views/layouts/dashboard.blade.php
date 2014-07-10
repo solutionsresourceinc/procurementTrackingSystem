@@ -321,13 +321,7 @@ foreach ($desig as $desigs) {
     <script type="text/javascript">
         $(document).ready(function(){ 
             $('.btn').tooltip(); 
-            $('.purpose').tooltip(); 
-            
-            $('.navbar .dropdown').hover(function() {
-                $(this).find('.dropdown-menu').first().stop(true, true).slideDown();
-            }, function() {
-                $(this).find('.dropdown-menu').first().stop(true, true).slideUp();
-            });
+
         });
 
         $(document).ready(function(){ // FOR TABLESORTER
@@ -336,6 +330,13 @@ foreach ($desig as $desigs) {
         });
         });
     </script>
-    @yield('footer')
+
+    <script type="text/javascript">  
+        $(document).ready(function () {  
+            $('.dropdown-toggle').dropdown();  
+        });  
+   </script>  
+   
+   @yield('footer')
   </body>
 </html>

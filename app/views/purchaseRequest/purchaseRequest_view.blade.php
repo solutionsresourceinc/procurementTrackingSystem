@@ -3,7 +3,7 @@
 @section('header')
 	<style type="text/css">
 		td{
-		    border:0px solid #ccc;
+		    
 		    padding:5px 10px;
 		    vertical-align:top;
 		    word-break:break-word;
@@ -108,58 +108,62 @@
 	</div>
 
 	<!-- START CHECKLIST SECTION -->
-	<div class="panel panel-success">
-		<div class="panel-body">
-		<!-- Section 1  -->
-		<?php 
-			$docs= Document::where('pr_id', $purchase->id)->first();
-			//Cursor Component
-			$taskc= TaskDetails::where('doc_id', $docs->id)->where('status', 'New')->orWhere('status', 'Active')->first(); 
-			$workflow= Workflow::find($docs->work_id);
-			$section= Section::where('workflow_id', $workflow->id)->orderBy('section_order_id','ASC')->get();
+	<?php 
+		$docs= Document::where('pr_id', $purchase->id)->first();
+		//Cursor Component
+		$taskc= TaskDetails::where('doc_id', $docs->id)->where('status', 'New')->orWhere('status', 'Active')->first(); 
+		$workflow= Workflow::find($docs->work_id);
+		$section= Section::where('workflow_id', $workflow->id)->orderBy('section_order_id','ASC')->get();
 
-			$taskd= TaskDetails::where('doc_id', $docs->id)->orderBy('id', 'ASC')->get();
-			$sectioncheck=0;
-			echo "<table border='1'>";
-			foreach ($section as $sections) {   
+		$taskd= TaskDetails::where('doc_id', $docs->id)->orderBy('id', 'ASC')->get();
+		$sectioncheck=0;
+		
+		foreach ($section as $sections) {   
 			$task= Task::where('section_id', $sections->section_order_id)->where('wf_id', $workflow->id)->orderBy('order_id', 'ASC')->get();
-			echo "<tr><th colspan='5' ><h3>".$sections->section_order_id.". ".$sections->sectionName."</h3></th></tr>";
-			echo " <tr><th ></th><th >By:</th><th >Date:</th><th>Days of Action</th><th >Remarks</th></tr>";
+			echo "<div class='panel panel-success'><div class='panel-heading'>
+				<h3 class='panel-title'>".$sections->section_order_id.". ".$sections->sectionName."</h3>
+				</div>";
+			echo "<div class='panel-body'>";
+			echo "<table border='1' class='workflow-table'>";
+			//echo "<tr><th colspan='5' ><h3>".$sections->section_order_id.". ".$sections->sectionName."</h3></th></tr>";
+			echo " <tr><th width='30%'></th>";
+			echo "<th class='workflow-th' width='12.5%'>By:</th>";
+			echo "<th class='workflow-th' width='12.5%'>Date:</th>";
+			echo "<th class='workflow-th' width='12.5%'>Days of Action</th>";
+			echo "<th class='workflow-th'>Remarks</th></tr>";
 			foreach ($task as $tasks) {
 
 
-		    //Displayer 
-		    $taskp =TaskDetails::where('doc_id', $docs->id)->where('task_id', $tasks->id)->first();
+			    //Displayer 
+			    $taskp =TaskDetails::where('doc_id', $docs->id)->where('task_id', $tasks->id)->first();
 
-		    echo "<tr><td >".$tasks->order_id.". ".$tasks->taskName."</td>";
+			    echo "<tr><td >".$tasks->order_id.". ".$tasks->taskName."</td>";
 
-		?>
+			?>
 
-		<td  ><?php
-			if($taskp->assignee!=NULL){
-				$dassignee=chunk_split($taskp->assignee, 20, "<br>");
-			   echo $dassignee; }
-			else if($taskp->assignee_id!=0){
-			    $assign_user=User::find($taskp->assignee_id);
-				echo $assign_user->lastname.", ".$assign_user->firstname;
+				<td ><?php
+					if($taskp->assignee!=NULL){
+						$dassignee=chunk_split($taskp->assignee, 20, "<br>");
+					   echo $dassignee; }
+					else if($taskp->assignee_id!=0){
+					    $assign_user=User::find($taskp->assignee_id);
+						echo $assign_user->lastname.", ".$assign_user->firstname;
+					}
+					$date = new DateTime($taskp->dateFinished);
+					$datef = $date->format('m/d/y');
+					?>
+				</td>
+				<td  ><?php if($taskp->dateFinished!="0000-00-00 00:00:00") echo $datef; ?></td>
+				<td ><?php if($taskp->dateFinished!="0000-00-00 00:00:00") echo $taskp->daysOfAction; ?></td>
+				<td ><?php 
+				$dremarks=chunk_split($taskp->remarks, 20, "<br>");
+				echo $dremarks. "</td></tr>";
 			}
-			$date = new DateTime($taskp->dateFinished);
-			$datef = $date->format('m/d/y');
-			?></td>
-			<td  ><?php if($taskp->dateFinished!="0000-00-00 00:00:00") echo $datef; ?></td>
-			<td ><?php if($taskp->dateFinished!="0000-00-00 00:00:00") echo $taskp->daysOfAction; ?></td>
-			<td ><?php 
-			$dremarks=chunk_split($taskp->remarks, 20, "<br>");
-			echo $dremarks. "</td></tr>";
-			}
+
+			echo "</table></div></div>";
 		}
-		echo "</table>";
-		?>
-
-		<!-- Section 1  -->
-
-		</div>
-	</div>
+	?>
+	<!--/div-->
 	<!-- END CHECKLIST SECTION -->
 	
 	<?php
