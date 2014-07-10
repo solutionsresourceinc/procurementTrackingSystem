@@ -469,11 +469,6 @@ if ($pass==0)
 @stop
 
 
-
-
-
-
-
 @section('footer')
     <script type="text/javascript">
     $('input[type=file]').bootstrapFileInput();
@@ -593,13 +588,5 @@ function fix_format2()
 $('.datepicker').datepicker();
 
     </script>
-
-
-
-    <!-- js for chained dropdown -->
-
-
-
-
 
 @stop
