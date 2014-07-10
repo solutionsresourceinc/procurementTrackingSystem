@@ -77,7 +77,7 @@
 							BIDDING (ABOVE P500,000) &nbsp;&nbsp;
 						@endif
 
-						<span class="label {{($purchase->status == 'New') ? 'label-primary' : (($purchase->status == 'In Progress') ? 'label-success' : (($purchase->status == 'Overdue') ? 'label-danger' : 'label-default'))}}">
+						<span class="label {{($purchase->status == 'New') ? 'label-primary' : (($purchase->status == 'Active') ? 'label-success' : (($purchase->status == 'Overdue') ? 'label-danger' : 'label-default'))}}">
                     		{{ $purchase->status; }}
                     	</span>
 					</h4></td>
@@ -119,8 +119,10 @@
 
 		$taskd= TaskDetails::where('doc_id', $docs->id)->orderBy('id', 'ASC')->get();
 		$sectioncheck=0;
-		
+$prdays=0;
 		foreach ($section as $sections) { 
+$sectiondays=0;
+
 
 			$task= Task::where('section_id', $sections->section_order_id)->where('wf_id', $workflow->id)->orderBy('order_id', 'ASC')->get();
 			echo "<div class='panel panel-success'><div class='panel-heading'>
@@ -199,10 +201,15 @@ if ($taskpc==0)
 				<td ><?php 
 				$dremarks=chunk_split($taskp->remarks, 20, "<br>");
 				echo $dremarks. "</td></tr>";
+				
+				$sectiondays=$sectiondays+$taskp->daysOfAction;
+				
 			}
-
+			echo "<tr><td>Today No. of Days</td><td>".$sectiondays."</td></tr>";
+			$prdays=$prdays+$sectiondays;
 			echo "</table></div></div>";
 		}
+        echo "<div class='form-create fc-div'><h4>Total No. of Days: ".$prdays." </h4></div>";   
 	?>
 	<!--/div-->
 	<!-- END CHECKLIST SECTION -->

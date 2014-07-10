@@ -1,3 +1,4 @@
+
 <?php
 
 class PurchaseRequestController extends Controller {
@@ -15,7 +16,10 @@ class PurchaseRequestController extends Controller {
 
 	public function create_submit()
 	{
-
+		$cno=Input::get('controlNo');
+Purchase::where('controlNo', $cno )->count();
+if ($cno!=0)
+return Redirect::back();
 		$purchase = new Purchase;
 		$document = new Document;
 		$purchase->projectPurpose = Input::get( 'projectPurpose' );
@@ -203,7 +207,7 @@ class PurchaseRequestController extends Controller {
 		Mail::send('emails.template', $data, function($message) use($email, $fname)
 		{
 			$message->from('procurementTrackingSystem@tarlac.com', 'Procurement Tracking System Tarlac');
-			$message->to($email, $fname)->subject('Tarlac Procurement Tracking Systems');
+			$message->to($email, $fname)->subject('Tarlac Procurement Tracking System: New Purchase Request Created');
 		}); 
 		// END MAILER BY JAN SARMIENTO AWESOME
 				

@@ -109,7 +109,7 @@
 						$purchase = Purchase::orderBy('ControlNo', 'ASC')->get();
 						foreach ($purchase as $pur) {
 
-							$cn = (int)$pur->controlNo;
+							$cn = $pur->controlNo;
 						}
 						$cn =$cn+1;
 						?>
@@ -133,19 +133,21 @@
 					<div class="col-md-6">
 						{{ Form::label('sourceOfFund', 'Source of Fund *', array('class' => 'create-label')) }}
 						{{ Form::text('sourceOfFund','', array('class'=>'form-control')) }}
-					</div>
 
 					@if (Session::get('m2'))
 						<font color="red"><i>{{ Session::get('m2') }}</i></font>
 					@endif
+					</div>
+
 
 					<div class="col-md-6">
 						{{ Form::label('amount', 'Amount *', array('class' => 'create-label')) }}
 						{{ Form::text('amount','',array('class'=>'form-control','onchange'=>'numberWithCommas(this.value)', 'onkeypress' => 'return isNumberKey(event)','id'=>'num','maxlength'=>'12')) }}
-					</div>
 					@if (Session::get('m3'))
 						<font color="red"><i>{{ Session::get('m3') }}</i></font>
 					@endif
+					</div>
+					
 				</div>
 				<br/>
 
