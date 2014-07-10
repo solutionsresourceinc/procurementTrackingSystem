@@ -348,10 +348,11 @@ if ($pass==0)
 
                 $taskd= TaskDetails::where('doc_id', $docs->id)->orderBy('id', 'ASC')->get();
                 $sectioncheck=0;
-
+                $prdays=0;
       
-                foreach ($section as $sections) {   
-
+                foreach($section as $sections)
+                {
+                $sectiondays=0;
                     $task= Task::where('section_id', $sections->section_order_id)->where('wf_id', $workflow->id)->orderBy('order_id', 'ASC')->get();
                     echo "<div class='panel panel-success'><div class='panel-heading'>
                         <h3 class='panel-title'>".$sections->section_order_id.". ".$sections->sectionName."</h3>
@@ -454,15 +455,17 @@ if ($pass==0)
                                     
                                 echo $dremarks; ?>
                             </td>
-            <?php
+            <?php $sectiondays=$sectiondays+$taskp->daysOfAction;
+            $prdays=$prdays+$taskp->daysOfAction;
                         }   
                         echo "</tr>";
                     }
+                    echo "<tr><td>Total No. of Days</td><td>".$sectiondays."</td></tr>";
                     echo "</table></div></div>";
-                }
-            ?>
-
-
+            
+            }
+              echo "<div class='form-create fc-div'><h4>Total No. of Days: ".$prdays." </h4></div>";   
+?>
             <!-- Section 1  -->
         </div>
     </div>
