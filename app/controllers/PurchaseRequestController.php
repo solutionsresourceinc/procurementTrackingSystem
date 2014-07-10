@@ -703,4 +703,47 @@ return Redirect::back();
 }
 
 
+
+
+public function insertaddon()
+	{
+		$otherDetails_id= Input::get('otherDetails_id');
+				$purchase_request_id= Input::get('purchase_request_id');
+	$value= Input::get('value');
+	if(ctype_alnum(str_replace(' ','',$value)))
+        {
+        	$insertvalue= new Values;
+        	$insertvalue->otherDetails_id=$otherDetails_id;
+        	$insertvalue->purchase_request_id=$purchase_request_id;
+    	$insertvalue->value=$value;
+        	$insertvalue->save();
+        	Session::put('successlabel', 'Successfully saved.');
+        	return Redirect::back();
+        }
+    else {
+    	Session::put('errorlabel','Invalid input.');
+return Redirect::back();
+
+    }
+
+	}
+
+
+public function editaddon()
+	{
+		$values_id= Input::get('values_id');
+			
+        	$insertvalue= Values::find($values_id);
+  
+
+   
+        	$insertvalue->delete();
+       
+        	return Redirect::back();
+        }
+  
+
+	
+
+
 }
