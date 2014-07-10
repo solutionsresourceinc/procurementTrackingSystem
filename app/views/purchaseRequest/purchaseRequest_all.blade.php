@@ -66,28 +66,22 @@
         </thead>
 
         <?php
-            $user_id = Auth::user()->id;
-            $user_role = Assigned::find($user_id);
-            if($user_role->role_id == 3) // Admin
-            {
-                $date_today =date('Y-m-d H:i:s');
-                $requests = new Purchase;
-                $requests = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('status', '=', 'Active')->get();
-        
+         //Restrictions
+  
+            $requests = new Purchase;
+            $reqrestrict=0;
+            $userx=Auth::user()->id;
+           if  (Entrust::hasRole('Administrator'))
+            $requests = DB::table('purchase_request')->where('status', '=', 'Cancelled')->get(); //change this to get overdue PRs
+          else if  (Entrust::hasRole('Procurement Personel'))
+            $requests = DB::table('purchase_request')->where('status', '=', 'Cancelled')->where('created_by', $userx)->get();
+            else 
+            { 
+
+                $requests = DB::table('purchase_request')->where('status', '=', 'Cancelled')->get();
+                $reqrestrict=1;
             }
-            else if($user_role->role_id == 2)
-            {
-                $date_today =date('Y-m-d H:i:s');
-                $requests = new Purchase;
-                $requests = DB::table('purchase_request')->orwhere('created_by', '=', $user_id)->orwhere('requisitioner','=',$user_id)->where('dueDate','>',$date_today)->where('status', '=', 'Active')->get();
-            }
-            else
-            {
-                $date_today =date('Y-m-d H:i:s');
-                $requests = new Purchase;
-                $requests = DB::table('purchase_request')->whereRequisitioner($user_id)->where('dueDate','>',$date_today)->where('status', '=', 'Active')->get();
-            
-            }
+            //End Restrictions
         ?>
         
       	<tbody>
@@ -95,6 +89,15 @@
                 @foreach ($requests as $request)
                     <tr
                     <?php 
+                    //Office restriction for requis
+                    if($reqrestrict==1)
+                        {
+                            $useroffice=Auth::user()->office_id;
+                            $maker= User::find( $request->requisitioner);
+                            if ($useroffice!=$maker->office_id)
+                                continue;
+                        }
+//End office restriction for requis
                         $doc = new Document; $doc = DB::table('document')->where('pr_id', $request->id)->first();  
                         $doc_id= $doc->id;
                     $userx= Auth::User()->id;
