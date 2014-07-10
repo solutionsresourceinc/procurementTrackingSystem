@@ -336,6 +336,7 @@ foreach ($desig as $desigs) {
             $('.dropdown-toggle').dropdown();  
         });  
    </script>  
+   
    @yield('footer')
   </body>
 </html>
