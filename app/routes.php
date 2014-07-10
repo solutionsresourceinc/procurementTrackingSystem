@@ -100,6 +100,8 @@ Route::post('purchaseRequest/edit/{id}',[ 'as' => 'purchaseRequest_editsubmit', 
 Route::post('purchaseRequest/create', ['as' => 'purchaseRequest_submit', 'uses' => 'PurchaseRequestController@create_submit']);
 
 Route::post('checklistedit', ['uses' => 'PurchaseRequestController@checklistedit']);
+Route::post('insertaddon', ['uses' => 'PurchaseRequestController@insertaddon']);
+Route::post('editaddon', ['uses' => 'PurchaseRequestController@editaddon']);
 Route::get( 'purchaseRequest/edit/{id}', function($id)
 {
 	return View::make('pr_edit')->with('id',$id);

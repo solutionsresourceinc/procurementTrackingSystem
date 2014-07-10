@@ -337,6 +337,15 @@ if ($pass==0)
 <br>
   <div class="form-create ">
 <!-- Section 1  -->
+   @if(Session::get('successlabel'))
+                <div class="alert alert-success"> {{ Session::get('successlabel') }}</div> 
+            @endif
+
+            @if(Session::get('errorlabel'))
+                <div class="alert alert-danger"> {{ Session::get('errorlabel') }}</div> 
+            @endif
+            {{Session::forget('errorlabel')}}
+            {{Session::forget('successlabel')}}
 <?php 
 //Cursor Component
 $taskch= TaskDetails::where('doc_id', $docs->id)->where('status', 'New')->orWhere('status', 'Active')->count(); 
@@ -353,10 +362,17 @@ echo "<table border='1' width='100%' >";
 foreach ($section as $sections) {   
 
 
+
+$task= Task::where('section_id', $sections->section_order_id)->where('wf_id', $workflow->id)->orderBy('order_id', 'ASC')->get();
+echo "<tr><th colspan='5' >".$sections->section_order_id.". ".$sections->sectionName."</th></tr>";
+
+
+
+
 //Addon Display
     $otherc=OtherDetails::where('section_id', $sections->id)->count();
 if($otherc!=0){
-echo "<tr><th>Label</th><th>Input</th><th>Action</th></tr>";
+echo "<tr><th>Label</th><th colspan='2'>Input</th><th colspan='2'>Action</th></tr>";
 
 $otherd= OtherDetails::where('section_id', $sections->id)->get();
 foreach ($otherd as $otherdetails) {
@@ -364,22 +380,27 @@ foreach ($otherd as $otherdetails) {
     $valuesc=Values::where('otherDetails_id', $otherdetails->id)->where('purchase_request_id', $epurchase->id)->count();
 $values=Values::where('otherDetails_id', $otherdetails->id)->where('purchase_request_id', $epurchase->id)->first();    
 if ($valuesc==0) {
-    Form::open(['url'=>'insertaddon'], 'POST');
+
 ?>
+    {{Form::open(['url'=>'insertaddon'], 'POST')}}
 <input type="hidden" name="otherDetails_id" value="{{$otherdetails->id}}">
 <input type="hidden" name="purchase_request_id" value="{{$epurchase->id}}">
-<td><input name ="value" type="text"></td>
-<td><button class ="btn btn-success">Save</button></td>
+<td colspan="2"><input name ="value" type="text"></td>
+<td colspan="2"><input type="submit" class ="btn btn-success"></td>
+   {{Form::close()}}
 <?php
-    Form::close();
+
 }
 else {
-echo "<td>".$values->value."</td>";
-Form::open(['url'=>'editaddon']);
-echo"<input type='hidden' name='otherDetails_id' value='".$otherdetails->id."'>
-<input type='hidden' name='purchase_request_id' value='".$epurchase->id."'>";
-echo "<td>"."<button class ='btn btn-success'>Edit</button>"."</td>";
-Form::close();
+echo "<td colspan='2'>".$values->value."</td>";
+?>
+{{Form::open(['url'=>'editaddon', 'POST'])}}
+<?php
+echo"<input type='hidden' name='values_id' value='".$values->id."'>";
+echo "<td colspan='2'>"."<button class ='btn btn-success'>Edit</button>"."</td>";
+?>
+{{Form::close()}}
+<?php
 }
 echo "</tr>";
 }
@@ -389,8 +410,8 @@ echo "</tr>";
 
 //End Addon Display 
 
-$task= Task::where('section_id', $sections->section_order_id)->where('wf_id', $workflow->id)->orderBy('order_id', 'ASC')->get();
-echo "<tr><th colspan='5' >".$sections->section_order_id.". ".$sections->sectionName."</th></tr>";
+
+
 echo " <tr><th></th><th>By:</th><th>Date:</th><th>Days of Action</th><th>Remarks</th></tr>";
 foreach ($task as $tasks) {
 //Cursor Open form 
