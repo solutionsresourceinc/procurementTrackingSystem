@@ -613,7 +613,17 @@ public function changeForm($id)
 	$purchase->status = "Cancelled";
 	$purchase->reason = $reason;
 	$purchase->save();
-	TaskDetails::where('doc_id', '=', $id)->where('status','!=','Done')->delete();
+	$doc= Document::where('pr_id',$id)->first();
+	TaskDetails::where('doc_id', '=', $doc->id)->where('status','!=','Done')->delete();
+	DB::table('count')->where('doc_id',$doc->id)->delete();
+$users= User::get();
+foreach ($users as $user) {
+	$count =new Count;
+	$count->user_id=$user->id;
+	$count->doc_id=$doc->id;
+$count->save();
+}
+
 	Session::put('notice', 'Purchase request has been cancelled.' );
 	return Redirect::to("purchaseRequest/view");
 
