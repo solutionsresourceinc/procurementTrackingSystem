@@ -38,7 +38,13 @@
             </div>
         </div>
     </div>
+            @if(Session::get('successlabel'))
+                <div class="alert alert-success"> {{ Session::get('successlabel') }}</div> 
+            @endif
 
+            @if(Session::get('errorlabel'))
+                <div class="alert alert-danger"> {{ Session::get('errorlabel') }}</div> 
+            @endif
     <div class="tab-content">
       <div class="tab-pane fade in active" id="home">@include('workflows.workflow1')</div>
       <div class="tab-pane fade" id="profile">@include('workflows.workflow2')</div>

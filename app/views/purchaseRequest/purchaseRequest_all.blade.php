@@ -66,10 +66,30 @@
         </thead>
 
         <?php
-            $requests = new Purchase;
-            $requests = DB::table('purchase_request')->get(); //change this to get closed PRs
+            $user_id = Auth::user()->id;
+            $user_role = Assigned::find($user_id);
+            if($user_role->role_id == 3) // Admin
+            {
+                $date_today =date('Y-m-d H:i:s');
+                $requests = new Purchase;
+                $requests = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('status', '=', 'New')->orWhere('status', '=', 'In progress')->get();
         
+            }
+            else if($user_role->role_id == 2)
+            {
+                $date_today =date('Y-m-d H:i:s');
+                $requests = new Purchase;
+                $requests = DB::table('purchase_request')->orwhere('created_by', '=', $user_id)->orwhere('requisitioner','=',$user_id)->where('dueDate','>',$date_today)->where('status', '=', 'New')->orWhere('status', '=', 'In progress')->get();
+            }
+            else
+            {
+                $date_today =date('Y-m-d H:i:s');
+                $requests = new Purchase;
+                $requests = DB::table('purchase_request')->whereRequisitioner($user_id)->where('dueDate','>',$date_today)->where('status', '=', 'New')->orWhere('status', '=', 'In progress')->get();
+            
+            }
         ?>
+        
       	<tbody>
             @if(count($requests))
                 @foreach ($requests as $request)
