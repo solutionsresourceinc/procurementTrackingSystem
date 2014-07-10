@@ -46,14 +46,14 @@
     	    	<th>Control No.</th>
                 <th>Project/Purpose</th>
                 <th>Mode</th>
-    	      	<th>Status</th>
+    	      	<th style="text-align: center">Status</th>
     	      	<th>Date Requested</th>
                 <?php
                     $adm = Assigned::where('user_id', Auth::User()->id)->first();
-                    if($adm->role_id == 3) {
+                    //if($adm->role_id == 3) {
                 ?>
 
-                <?php } ?>
+                <?php //} ?>
         	</tr>
         </thead>
  <?php  //Restrictions
@@ -104,7 +104,7 @@
                         <td width="18%">
                             @foreach ($doc as $docs) {{ Workflow::find($docs->work_id)->workFlowName; }} @endforeach
                         </td>
-                        <td width="12%"><span class="label label-default">{{ $request->status; }}</span></td>
+                        <td width="12%" style="text-align: center"><span class="label label-default">{{ $request->status; }}</span></td>
                         <td width="20%">{{ $request->dateRequested; }}</td>
                         <?php
                             if($adm->role_id == 3) {
