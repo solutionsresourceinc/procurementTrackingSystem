@@ -56,25 +56,37 @@
                 <?php } ?>
         	</tr>
         </thead>
-@if ( Entrust::hasRole('Administrator') || Entrust::hasRole('Procurement Personnel'))  
-        <?php
+ <?php  //Restrictions
+  
             $requests = new Purchase;
-            $requests = DB::table('purchase_request')->where('status', '=', 'Cancelled')->get(); //change this to get closed PRs
-        ?>
-        @endif
-         @if ( Entrust::hasRole('Requisitioner')   )
-        <?php
+            $reqrestrict=0;
+            $userx=Auth::user()->id;
+           if  (Entrust::hasRole('Administrator'))
+            $requests = DB::table('purchase_request')->where('status', '=', 'Cancelled')->get(); //change this to get overdue PRs
+          else if  (Entrust::hasRole('Procurement Personel'))
+            $requests = DB::table('purchase_request')->where('status', '=', 'Cancelled')->where('created_by', $userx)->get();
+            else 
+            { 
 
-            $requests = new Purchase;
-            $requests = DB::table('purchase_request')->where('requisitioner', Auth::User()->id )->where('status', '=', 'Cancelled')->get(); //change this to get closed PRs
-        ?>
-        @endif
-      
+                $requests = DB::table('purchase_request')->where('status', '=', 'Cancelled')->get();
+                $reqrestrict=1;
+            }
+            //End Restrictions
+      ?>
       	<tbody>
             @if(count($requests))
                 @foreach ($requests as $request)
                     <tr
  <?php 
+ //Office restriction for requis
+                    if($reqrestrict==1)
+                        {
+                            $useroffice=Auth::user()->office_id;
+                            $maker= User::find( $request->requisitioner);
+                            if ($useroffice!=$maker->office_id)
+                                continue;
+                        }
+//End office restriction for requis
                         $doc = new Document; $doc = DB::table('document')->where('pr_id', $request->id)->first();  
                         $doc_id= $doc->id;
                     $userx= Auth::User()->id;

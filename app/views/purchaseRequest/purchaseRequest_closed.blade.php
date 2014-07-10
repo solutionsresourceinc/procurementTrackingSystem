@@ -58,8 +58,20 @@
         </thead>
 
         <?php
+        
             $requests = new Purchase;
-            $requests = DB::table('purchase_request')->where('status', '=', 'Closed')->get(); //change this to get closed PRs
+            $reqrestrict=0;
+            $userx=Auth::user()->id;
+           if  (Entrust::hasRole('Administrator'))
+            $requests = DB::table('purchase_request')->where('status', '=', 'Closed')->get(); //change this to get overdue PRs
+          else if  (Entrust::hasRole('Procurement Personel'))
+            $requests = DB::table('purchase_request')->where('status', '=', 'Closed')->where('created_by', $userx)->get();
+            else 
+            { 
+
+                $requests = DB::table('purchase_request')->where('dueDate','<=',$date_today)->where('status', '=', 'Active')->get();
+                $reqrestrict=1;
+            }
         ?>
       	<tbody>
             @if(count($requests))

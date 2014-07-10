@@ -102,8 +102,9 @@
                                                 if($cpurchases->created_by==$cuser)   $result=$result+1;
                                             }
                                             else if(Entrust::hasRole('Requisitioner'))
-                                            {
-                                                if($cpurchases->requisitioner==$cuser) $result=$result+1;
+                                            {   $useroffice=Auth::user()->office_id;
+                                                $req= User::find($cpurchases->requisitioner);
+                                                if($useroffice==$req->office_id) $result=$result+1;
                                             }
                                         }
                                 }
@@ -135,8 +136,9 @@
                                                 if($cpurchases->created_by==$cuser)   $result=$result+1;
                                             }
                                             else if(Entrust::hasRole('Requisitioner'))
-                                            {
-                                                if($cpurchases->requisitioner==$cuser) $result=$result+1;
+                                            { $useroffice=Auth::user()->office_id;
+                                                $req= User::find($cpurchases->requisitioner);
+                                                if($useroffice==$req->office_id) $result=$result+1;
                                             }}
                                 }
                                 echo $result;
@@ -167,8 +169,9 @@
                                                 if($cpurchases->created_by==$cuser)   $result=$result+1;
                                             }
                                             else if(Entrust::hasRole('Requisitioner'))
-                                            {
-                                                if($cpurchases->requisitioner==$cuser) $result=$result+1;
+                                            { $useroffice=Auth::user()->office_id;
+                                                $req= User::find($cpurchases->requisitioner);
+                                                if($useroffice==$req->office_id) $result=$result+1;
                                             }}
                                 }
                                 echo $result;
@@ -199,8 +202,9 @@
                                                 if($cpurchases->created_by==$cuser)   $result=$result+1;
                                             }
                                             else if(Entrust::hasRole('Requisitioner'))
-                                            {
-                                                if($cpurchases->requisitioner==$cuser) $result=$result+1;
+                                            { $useroffice=Auth::user()->office_id;
+                                                $req= User::find($cpurchases->requisitioner);
+                                                if($useroffice==$req->office_id) $result=$result+1;
                                             }}
                                 }
                                 echo $result;

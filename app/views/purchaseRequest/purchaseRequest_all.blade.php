@@ -79,13 +79,13 @@
             {
                 $date_today =date('Y-m-d H:i:s');
                 $requests = new Purchase;
-                $requests = DB::table('purchase_request')->orwhere('created_by', '=', $user_id)->orwhere('requisitioner','=',$user_id)->where('dueDate','>',$date_today)->where('status', '=', 'New')->orWhere('status', '=', 'In progress')->get();
+                $requests = DB::table('purchase_request')->orwhere('created_by', '=', $user_id)->orwhere('requisitioner','=',$user_id)->where('dueDate','>',$date_today)->where('status', '=', 'Active')->get();
             }
             else
             {
                 $date_today =date('Y-m-d H:i:s');
                 $requests = new Purchase;
-                $requests = DB::table('purchase_request')->whereRequisitioner($user_id)->where('dueDate','>',$date_today)->where('status', '=', 'New')->orWhere('status', '=', 'In progress')->get();
+                $requests = DB::table('purchase_request')->whereRequisitioner($user_id)->where('dueDate','>',$date_today)->where('status', '=', 'Active')->get();
             
             }
         ?>
