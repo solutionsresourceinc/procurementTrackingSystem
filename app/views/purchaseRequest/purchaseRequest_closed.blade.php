@@ -69,7 +69,7 @@
             else 
             { 
 
-                $requests = DB::table('purchase_request')->where('dueDate','<=',$date_today)->where('status', '=', 'Active')->get();
+                $requests = DB::table('purchase_request')->where('status', '=', 'Closed')->get();
                 $reqrestrict=1;
             }
         ?>
