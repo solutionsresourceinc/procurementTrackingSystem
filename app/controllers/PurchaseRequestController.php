@@ -25,7 +25,7 @@ class PurchaseRequestController extends Controller {
 		$purchase->requisitioner = Input::get( 'requisitioner' );
 		$purchase->dateRequested = Input::get( 'dateRequested' );
 		$purchase->controlNo = Input::get('controlNo');
-		$purchase->status = 'New';
+		$purchase->status = 'Active';
 		$purchase->otherType = Input::get('otherType');
 
 		// Set creator id

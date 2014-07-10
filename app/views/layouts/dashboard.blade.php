@@ -85,8 +85,8 @@
                             <?php
                                         $result=0;
                                         $cuser= Auth::user()->id;
-
-                                   $cpurchase= DB::table('purchase_request')->where('status', '=', 'New')->orWhere('status', '=', 'In progress')->get();
+                $date_today =date('Y-m-d H:i:s');
+                                   $cpurchase= DB::table('purchase_request')->where('dueDate','>',$date_today)->where('status', '=', 'Active')->get();
                                 foreach ($cpurchase as $cpurchases ) {
                                     $doc=Document::where('pr_id', $cpurchases->id)->first();
                                     $count= DB::table('count')->where('doc_id', $doc->id)->where('user_id', $cuser)->count();
@@ -151,7 +151,8 @@
                                       <?php
                                         $result=0;
                                         $cuser= Auth::user()->id;
-                                   $cpurchase= DB::table('purchase_request')->where('status', '=', 'Overdue')->orWhere('status', '=', 'In progress')->get();
+                             $date_today =date('Y-m-d H:i:s');
+                                   $cpurchase= DB::table('purchase_request')->where('dueDate','<=',$date_today)->where('status', '=', 'Active')->get();
                                 foreach ($cpurchase as $cpurchases ) {
                                    $doc=Document::where('pr_id', $cpurchases->id)->first();
                                     $count= DB::table('count')->where('doc_id', $doc->id)->where('user_id', $cuser)->count();

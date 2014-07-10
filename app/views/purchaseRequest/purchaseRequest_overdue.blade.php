@@ -66,7 +66,7 @@
         <?php
             $date_today =date('Y-m-d H:i:s');
             $requests = new Purchase;
-            $requests = DB::table('purchase_request')->where('dueDate','<=',$date_today)->where('status', '=', 'New')->get(); //change this to get overdue PRs
+            $requests = DB::table('purchase_request')->where('dueDate','<=',$date_today)->where('status', '=', 'Active')->get(); //change this to get overdue PRs
         ?>
 
       	<tbody>
