@@ -140,7 +140,7 @@ public function addtask()
         	return Redirect::back();
         }
     else {
-    	$Session::put('errorlabel','Invalid label.');
+    	Session::put('errorlabel','Invalid label.');
 return Redirect::back();
 
     }
