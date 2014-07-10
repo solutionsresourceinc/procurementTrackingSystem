@@ -330,6 +330,7 @@ if ($pass==0)
                 {{ Session::forget('imgerror'); }}
                 {{ Session::forget('imgsuccess'); }}
             </div>
+
         </div>  
        
         <br>
@@ -346,7 +347,7 @@ if ($pass==0)
                 $taskd= TaskDetails::where('doc_id', $docs->id)->orderBy('id', 'ASC')->get();
                 $sectioncheck=0;
 
-                //echo "<table border='1' class='workflow-table'>";
+      
                 foreach ($section as $sections) {   
 
                     $task= Task::where('section_id', $sections->section_order_id)->where('wf_id', $workflow->id)->orderBy('order_id', 'ASC')->get();
@@ -368,22 +369,28 @@ if ($pass==0)
                             $valuesc=Values::where('otherDetails_id', $otherdetails->id)->where('purchase_request_id', $epurchase->id)->count();
                             $values=Values::where('otherDetails_id', $otherdetails->id)->where('purchase_request_id', $epurchase->id)->first();    
                             if ($valuesc==0) {
-                                Form::open(['url'=>'insertaddon'], 'POST');
                     ?>
-                    <input type="hidden" name="otherDetails_id" value="{{$otherdetails->id}}">
-                    <input type="hidden" name="purchase_request_id" value="{{$epurchase->id}}">
-                    <td><input name ="value" type="text"></td>
-                    <td><button class ="btn btn-success">Save</button></td>
+                                {{Form::open(['url'=>'insertaddon'], 'POST')}}
+                                    <input type="hidden" name="otherDetails_id" value="{{$otherdetails->id}}">
+                                    <input type="hidden" name="purchase_request_id" value="{{$epurchase->id}}">
+                                    <td><input name ="value" type="text"></td>
+                                    <td><button class ="btn btn-success">Save</button></td>
+                                {{Form::close()}}
                     <?php
-                                Form::close();
                             }
                             else {
                                 echo "<td width='48.5%' colspan='3'>".$values->value."</td>";
-                                Form::open(['url'=>'editaddon']);
-                                echo"<input type='hidden' name='otherDetails_id' value='".$otherdetails->id."'>
+                    ?>
+                                {{Form::open(['url'=>'editaddon', 'POST'])}}
+                    <?php
+                                /*echo"<input type='hidden' name='otherDetails_id' value='".$otherdetails->id."'>
                                 <input type='hidden' name='purchase_request_id' value='".$epurchase->id."'>";
-                                echo "<td>"."<button class ='btn btn-success'>Edit</button>"."</td>";
-                                Form::close();
+                                echo "<td>"."<button class ='btn btn-success'>Edit</button>"."</td>";*/
+                                echo"<input type='hidden' name='values_id' value='".$values->id."'>";
+                                echo "<td colspan='2'>"."<button class ='btn btn-success'>Edit</button>"."</td>";
+                    ?>
+                                {{Form::close()}}
+                    <?php
                             }
                             echo "</tr>";
                         }   
@@ -452,6 +459,7 @@ if ($pass==0)
                     echo "</table></div></div>";
                 }
             ?>
+
 
             <!-- Section 1  -->
         </div>
