@@ -410,10 +410,11 @@ if ($pass==0)
                         //Displayer 
                         $taskp =TaskDetails::where('doc_id', $docs->id)->where('task_id', $tasks->id)->first();
 
-                        echo "<tr><td>".$tasks->order_id.". ".$tasks->taskName."</td>";
+                        //echo "<tr><td>".$tasks->order_id.". ".$tasks->taskName."</td>";
 
                         //if ($taskc->task_id==$tasks->id && $tasks->designation_id==0){
                         if ($taskch!=0 && $taskc->task_id==$tasks->id && $tasks->designation_id==0){
+                            echo "<tr class='current-task'><td>".$tasks->order_id.". ".$tasks->taskName."</td>";
              ?>
                             {{Form::open(['url'=>'checklistedit'], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
@@ -428,12 +429,13 @@ if ($pass==0)
                                 <input type="text" name="remarks"  class="form-control" maxlength="255" width="100%">
                                 </td>
 
-                                </tr><tr>
-                                <td colspan="5" > <br><center> <input type="submit" class="btn btn-success"> <center><br></td>
+                                </tr><tr class="current-task">
+                                <td colspan="5" style="text-align: right;"><input type="submit" class="btn btn-success"> </td>
                             {{Form::close()}}
             <?php       }
             //END Cursor Open Form
                         else{
+                            echo "<tr><td>".$tasks->order_id.". ".$tasks->taskName."</td>";
             ?>
 
                             <td ><?php
@@ -455,17 +457,24 @@ if ($pass==0)
                                     
                                 echo $dremarks; ?>
                             </td>
-            <?php $sectiondays=$sectiondays+$taskp->daysOfAction;
-            $prdays=$prdays+$taskp->daysOfAction;
+            <?php 
+                        $sectiondays=$sectiondays+$taskp->daysOfAction;
+                        $prdays=$prdays+$taskp->daysOfAction;
                         }   
                         echo "</tr>";
                     }
-                    echo "<tr><td>Total No. of Days</td><td>".$sectiondays."</td></tr>";
+                    echo "<tr><td>TOTAL NO. OF DAYS</td><td></td><td></td><td>".$sectiondays."</td><td></td></tr>";
                     echo "</table></div></div>";
             
-            }
-              echo "<div class='form-create fc-div'><h4>Total No. of Days: ".$prdays." </h4></div>";   
-?>
+                }
+                echo "<div class='panel panel-success'><div class='panel-body'>
+                        <table border='1' class='proc-details'>
+                            <tr><td width='66%'><h4 style='margin-left: 10px'>TOTAL NO. OF DAYS FROM PR TO PAYMENT: </h4></td>
+                                <td><h4 style='margin-left: 50px;'>".$prdays."</h4></td>
+                            </tr>
+                        </table>
+                    </div></div>"; 
+            ?>
             <!-- Section 1  -->
         </div>
     </div>
