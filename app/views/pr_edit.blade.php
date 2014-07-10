@@ -350,55 +350,52 @@ if ($pass==0)
       
                 foreach ($section as $sections) {   
 
-                    
-
-
                     $task= Task::where('section_id', $sections->section_order_id)->where('wf_id', $workflow->id)->orderBy('order_id', 'ASC')->get();
                     echo "<div class='panel panel-success'><div class='panel-heading'>
                         <h3 class='panel-title'>".$sections->section_order_id.". ".$sections->sectionName."</h3>
                         </div>";
-                  echo "<div class='panel-body'>";
+                    //echo "<tr><th colspan='5' >".$sections->section_order_id.". ".$sections->sectionName."</th></tr>";
+                    echo "<div class='panel-body'>";
                     echo "<table border='1' class='workflow-table'>";
+
                     //Addon Display
-    $otherc=OtherDetails::where('section_id', $sections->id)->count();
-if($otherc!=0){
-echo "<tr><th  class='workflow-th'>Label</th><th colspan='2'  class='workflow-th'>Input</th><th colspan='2'  class='workflow-th'>Action</th></tr>";
+                    $otherc=OtherDetails::where('section_id', $sections->id)->count();
+                    if($otherc!=0){
+                        echo "<tr><th class='workflow-th'>Label</th><th class='workflow-th' colspan='3'>Input</th><th class='workflow-th'>Action</th></tr>";
 
-$otherd= OtherDetails::where('section_id', $sections->id)->get();
-foreach ($otherd as $otherdetails) {
-    echo "<tr><td>".$otherdetails->label."</td>";
-    $valuesc=Values::where('otherDetails_id', $otherdetails->id)->where('purchase_request_id', $epurchase->id)->count();
-$values=Values::where('otherDetails_id', $otherdetails->id)->where('purchase_request_id', $epurchase->id)->first();    
-if ($valuesc==0) {
-
-?>
-    {{Form::open(['url'=>'insertaddon'], 'POST')}}
-<input type="hidden" name="otherDetails_id" value="{{$otherdetails->id}}">
-<input type="hidden" name="purchase_request_id" value="{{$epurchase->id}}">
-<td colspan="2"><input name ="value" type="text"></td>
-<td colspan="2"><input type="submit" class ="btn btn-success"></td>
-   {{Form::close()}}
-<?php
-
-}
-else {
-echo "<td colspan='2'>".$values->value."</td>";
-?>
-{{Form::open(['url'=>'editaddon', 'POST'])}}
-<?php
-echo"<input type='hidden' name='values_id' value='".$values->id."'>";
-echo "<td colspan='2'>"."<button class ='btn btn-success'>Edit</button>"."</td>";
-?>
-{{Form::close()}}
-<?php
-}
-echo "</tr>";
-}
-
-
-}
-
-//End Addon Display 
+                        $otherd= OtherDetails::where('section_id', $sections->id)->get();
+                        foreach ($otherd as $otherdetails) {
+                            echo "<tr><td width='30%'>".$otherdetails->label."</td>";
+                            $valuesc=Values::where('otherDetails_id', $otherdetails->id)->where('purchase_request_id', $epurchase->id)->count();
+                            $values=Values::where('otherDetails_id', $otherdetails->id)->where('purchase_request_id', $epurchase->id)->first();    
+                            if ($valuesc==0) {
+                    ?>
+                                {{Form::open(['url'=>'insertaddon'], 'POST')}}
+                                    <input type="hidden" name="otherDetails_id" value="{{$otherdetails->id}}">
+                                    <input type="hidden" name="purchase_request_id" value="{{$epurchase->id}}">
+                                    <td><input name ="value" type="text"></td>
+                                    <td><button class ="btn btn-success">Save</button></td>
+                                {{Form::close()}}
+                    <?php
+                            }
+                            else {
+                                echo "<td width='48.5%' colspan='3'>".$values->value."</td>";
+                    ?>
+                                {{Form::open(['url'=>'editaddon', 'POST'])}}
+                    <?php
+                                /*echo"<input type='hidden' name='otherDetails_id' value='".$otherdetails->id."'>
+                                <input type='hidden' name='purchase_request_id' value='".$epurchase->id."'>";
+                                echo "<td>"."<button class ='btn btn-success'>Edit</button>"."</td>";*/
+                                echo"<input type='hidden' name='values_id' value='".$values->id."'>";
+                                echo "<td colspan='2'>"."<button class ='btn btn-success'>Edit</button>"."</td>";
+                    ?>
+                                {{Form::close()}}
+                    <?php
+                            }
+                            echo "</tr>";
+                        }   
+                    }
+                    //End of Addon Display
 
                     echo " <tr><th width='30%'></th>";
                     echo "<th class='workflow-th' width='18%'>By:</th>";
