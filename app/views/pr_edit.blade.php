@@ -360,22 +360,25 @@ echo "<tr><th>Label</th><th>Input</th><th>Action</th></tr>";
 
 $otherd= OtherDetails::where('section_id', $sections->id)->get();
 foreach ($otherd as $otherdetails) {
-    echo "<tr><td>{{$otherdetails->label}}</td>";
+    echo "<tr><td>".$otherdetails->label."</td>";
     $valuesc=Values::where('otherDetails_id', $otherdetails->id)->where('purchase_request_id', $epurchase->id)->count();
 $values=Values::where('otherDetails_id', $otherdetails->id)->where('purchase_request_id', $epurchase->id)->first();    
 if ($valuesc==0) {
     Form::open(['url'=>'insertaddon'], 'POST');
 ?>
-
+<input type="hidden" name="otherDetails_id" value="{{$otherdetails->id}}">
+<input type="hidden" name="purchase_request_id" value="{{$epurchase->id}}">
 <td><input name ="value" type="text"></td>
 <td><button class ="btn btn-success">Save</button></td>
 <?php
     Form::close();
 }
 else {
-echo "<td>".$values->value."</td>"
-Form::open(['url'= 'editaddon']);
-echo "<td>"."<button class ='btn btn-success'>Edit</button>"."</td>"
+echo "<td>".$values->value."</td>";
+Form::open(['url'=>'editaddon']);
+echo"<input type='hidden' name='otherDetails_id' value='".$otherdetails->id."'>
+<input type='hidden' name='purchase_request_id' value='".$epurchase->id."'>";
+echo "<td>"."<button class ='btn btn-success'>Edit</button>"."</td>";
 Form::close();
 }
 echo "</tr>";
