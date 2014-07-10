@@ -109,7 +109,7 @@
 						$purchase = Purchase::orderBy('ControlNo', 'ASC')->get();
 						foreach ($purchase as $pur) {
 
-							$cn = (int)$pur->controlNo;
+							$cn = $pur->controlNo;
 						}
 						$cn =$cn+1;
 						?>

@@ -1,3 +1,4 @@
+
 <?php
 
 class PurchaseRequestController extends Controller {
@@ -15,7 +16,10 @@ class PurchaseRequestController extends Controller {
 
 	public function create_submit()
 	{
-
+		$cno=Input::get('controlNo');
+$cnp= Purchase::where('controlNo', $cno )->count();
+if ($cnp!=0)
+return Redirect::back();
 		$purchase = new Purchase;
 		$document = new Document;
 		$purchase->projectPurpose = Input::get( 'projectPurpose' );

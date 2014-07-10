@@ -107,21 +107,11 @@ class UserController extends BaseController {
 
             $user->save();
             $username=$user->username;
-            $new_role = new Role;
-
-            $user->utype = Input::get('role');
-
-            if($user->utype == 1) 
-                $new_role = Role::where('name','=','Administrator')->first();
-            elseif ($user->utype == 2) 
-                $new_role = Role::where('name','=','Procurement Personnel')->first();
-            else
-                $new_role = Role::where('name','=','Requisitioner')->first();
-            
-            $get_user = new User;
-            $get_user = User::where('username','=',$username)->first();   
-            $get_user->attachRole( $new_role );
-
+     
+    $assign= new Assigned;
+    $assign->role_id=Input::get('role');
+    $assign->user_id=$user->id;
+    $assign->save();
 $desig = new UserHasDesignation;
 $desig->users_id= $user->id;
 $desig->designation_id=0;
