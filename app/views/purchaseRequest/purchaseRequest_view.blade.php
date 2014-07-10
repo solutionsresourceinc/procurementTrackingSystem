@@ -32,10 +32,12 @@
 		<?php 
 		$cuser=Auth::User()->id;
 		if (Entrust::hasRole('Administrator')){
+			 if($purchase->status!="Cancelled"){
 			?><a href="../edit/{{$purchase->id}}" class="btn btn-success">
 			<span class="glyphicon glyphicon-edit"></span>&nbsp;&nbsp;Edit
 		</a>
 		<?php
+	}
 		}
  else if (Entrust::hasRole('Procurement Personnel'))
                                             {
