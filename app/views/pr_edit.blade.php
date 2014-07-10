@@ -164,19 +164,21 @@ if ($pass==0)
                     <div class="col-md-6">
                         {{ Form::label('sourceOfFund', 'Source of Fund *', array('class' => 'create-label')) }}
                         {{ Form::text('sourceOfFund',$valsourceOfFund, array('class'=>'form-control')) }}
+                        @if (Session::get('m2'))
+                            <font color="red"><i>{{ Session::get('m2') }}</i></font>
+                        @endif
                     </div>
 
-                    @if (Session::get('m2'))
-                        <font color="red"><i>{{ Session::get('m2') }}</i></font>
-                    @endif
-
+                    
                     <div class="col-md-6">
                         {{ Form::label('amount', 'Amount *', array('class' => 'create-label')) }}
-                        {{ Form::text('amount',$valamount,array('class'=>'form-control','onchange'=>'numberWithCommas(this.value)','id'=>'num','disabled')) }}
+                        {{ Form::text('amount', $epurchase->amount ,array('class'=>'form-control','onchange'=>'numberWithCommas(this.value)','id'=>'num','disabled')) }}
                     </div>
                     @if (Session::get('m3'))
                         <font color="red"><i>{{ Session::get('m3') }}</i></font>
                     @endif
+
+
                 </div>
                 <br>
 
