@@ -594,12 +594,4 @@ $('.datepicker').datepicker();
 
     </script>
 
-
-
-    <!-- js for chained dropdown -->
-
-
-
-
-
 @stop
