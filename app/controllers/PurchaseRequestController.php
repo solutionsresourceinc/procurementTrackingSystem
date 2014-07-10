@@ -203,7 +203,7 @@ class PurchaseRequestController extends Controller {
 		Mail::send('emails.template', $data, function($message) use($email, $fname)
 		{
 			$message->from('procurementTrackingSystem@tarlac.com', 'Procurement Tracking System Tarlac');
-			$message->to($email, $fname)->subject('Tarlac Procurement Tracking Systems');
+			$message->to($email, $fname)->subject('Tarlac Procurement Tracking System: New Purchase Request Created');
 		}); 
 		// END MAILER BY JAN SARMIENTO AWESOME
 				
