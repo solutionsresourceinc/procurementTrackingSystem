@@ -119,97 +119,92 @@
 
 		$taskd= TaskDetails::where('doc_id', $docs->id)->orderBy('id', 'ASC')->get();
 		$sectioncheck=0;
-$prdays=0;
-		foreach ($section as $sections) { 
-$sectiondays=0;
+		$prdays=0;
+			foreach ($section as $sections) { 
+				$sectiondays=0;
 
-
-			$task= Task::where('section_id', $sections->section_order_id)->where('wf_id', $workflow->id)->orderBy('order_id', 'ASC')->get();
-			echo "<div class='panel panel-success'><div class='panel-heading'>
-				<h3 class='panel-title'>".$sections->section_order_id.". ".$sections->sectionName."</h3>
-				</div>";
-			echo "<div class='panel-body'>";
-			echo "<table border='1' class='workflow-table'>";
+				$task= Task::where('section_id', $sections->section_order_id)->where('wf_id', $workflow->id)->orderBy('order_id', 'ASC')->get();
+				echo "<div class='panel panel-success'><div class='panel-heading'>
+					<h3 class='panel-title'>".$sections->section_order_id.". ".$sections->sectionName."</h3>
+					</div>";
+				echo "<div class='panel-body'>";
+				echo "<table border='1' class='workflow-table'>";
 		
-           //Addon Display
-    $otherc=OtherDetails::where('section_id', $sections->id)->count();
-if($otherc!=0){
-echo "<tr><th  class='workflow-th'>Label</th><th colspan='4'  class='workflow-th'>Input</th></tr>";
+	           //Addon Display
+			    $otherc=OtherDetails::where('section_id', $sections->id)->count();
+				if($otherc!=0){
+					echo "<tr><th  class='workflow-th'>Label</th><th colspan='4'  class='workflow-th'>Input</th></tr>";
 
-$otherd= OtherDetails::where('section_id', $sections->id)->get();
-foreach ($otherd as $otherdetails) {
-    echo "<tr><td>".$otherdetails->label."</td>";
-    $valuesc=Values::where('otherDetails_id', $otherdetails->id)->where('purchase_request_id', $purchase->id)->count();
-$values=Values::where('otherDetails_id', $otherdetails->id)->where('purchase_request_id', $purchase->id)->first();    
-if ($valuesc==0) {
+					$otherd= OtherDetails::where('section_id', $sections->id)->get();
+					foreach ($otherd as $otherdetails) {
+					    echo "<tr><td>".$otherdetails->label."</td>";
+					    $valuesc=Values::where('otherDetails_id', $otherdetails->id)->where('purchase_request_id', $purchase->id)->count();
+						$values=Values::where('otherDetails_id', $otherdetails->id)->where('purchase_request_id', $purchase->id)->first();    
+						if ($valuesc==0) {
+	?>
+							<td colspan="4"></td>
+	<?php
+						}
+						else {
+							echo "<td colspan='4'>".$values->value."</td>";
+	?>
 
-?>
-    
-<td colspan="4"></td>
-
-
-<?php
-
-}
-else {
-echo "<td colspan='4'>".$values->value."</td>";
-?>
-
-<?php
-}
-echo "</tr>";
-}
-
-
-}
+	<?php
+						}
+						echo "</tr>";
+					}
+				}
 
 //End Addon Display 
 
 
-			echo " <tr><th width='30%'></th>";
-			echo "<th class='workflow-th' width='12.5%'>By:</th>";
-			echo "<th class='workflow-th' width='12.5%'>Date:</th>";
-			echo "<th class='workflow-th' width='12.5%'>Days of Action</th>";
-			echo "<th class='workflow-th'>Remarks</th></tr>";
-			foreach ($task as $tasks) {
+				echo " <tr><th width='30%'></th>";
+				echo "<th class='workflow-th' width='12.5%'>By:</th>";
+				echo "<th class='workflow-th' width='12.5%'>Date:</th>";
+				echo "<th class='workflow-th' width='12.5%'>Days of Action</th>";
+				echo "<th class='workflow-th'>Remarks</th></tr>";
+				foreach ($task as $tasks) {
+				    //Displayer 
+				      $taskpc =TaskDetails::where('doc_id', $docs->id)->where('task_id', $tasks->id)->count();
+					if ($taskpc==0)
+						continue;
+				    $taskp =TaskDetails::where('doc_id', $docs->id)->where('task_id', $tasks->id)->first();
 
+				    echo "<tr><td >".$tasks->order_id.". ".$tasks->taskName."</td>";
 
-			    //Displayer 
-			      $taskpc =TaskDetails::where('doc_id', $docs->id)->where('task_id', $tasks->id)->count();
-if ($taskpc==0)
-	continue;
-			    $taskp =TaskDetails::where('doc_id', $docs->id)->where('task_id', $tasks->id)->first();
+		?>
 
-			    echo "<tr><td >".$tasks->order_id.". ".$tasks->taskName."</td>";
-
-			?>
-
-				<td ><?php
-					if($taskp->assignee!=NULL){
-						$dassignee=chunk_split($taskp->assignee, 20, "<br>");
-					   echo $dassignee; }
-					else if($taskp->assignee_id!=0){
-					    $assign_user=User::find($taskp->assignee_id);
-						echo $assign_user->lastname.", ".$assign_user->firstname;
-					}
-					$date = new DateTime($taskp->dateFinished);
-					$datef = $date->format('m/d/y');
+					<td ><?php
+						if($taskp->assignee!=NULL){
+							$dassignee=chunk_split($taskp->assignee, 20, "<br>");
+						   echo $dassignee; }
+						else if($taskp->assignee_id!=0){
+						    $assign_user=User::find($taskp->assignee_id);
+							echo $assign_user->lastname.", ".$assign_user->firstname;
+						}
+						$date = new DateTime($taskp->dateFinished);
+						$datef = $date->format('m/d/y');
 					?>
-				</td>
-				<td  ><?php if($taskp->dateFinished!="0000-00-00 00:00:00") echo $datef; ?></td>
-				<td ><?php if($taskp->dateFinished!="0000-00-00 00:00:00") echo $taskp->daysOfAction; ?></td>
-				<td ><?php 
-				$dremarks=chunk_split($taskp->remarks, 20, "<br>");
-				echo $dremarks. "</td></tr>";
-				
-				$sectiondays=$sectiondays+$taskp->daysOfAction;
-				
+					</td>
+					<td  ><?php if($taskp->dateFinished!="0000-00-00 00:00:00") echo $datef; ?></td>
+					<td ><?php if($taskp->dateFinished!="0000-00-00 00:00:00") echo $taskp->daysOfAction; ?></td>
+					<td ><?php 
+						$dremarks=chunk_split($taskp->remarks, 20, "<br>");
+						echo $dremarks. "</td></tr>";
+						
+						$sectiondays=$sectiondays+$taskp->daysOfAction;
+				}
+				echo "<tr><td>TOTAL NO. OF DAYS</td><td></td><td></td><td>".$sectiondays."</td><td></td></tr>";
+				$prdays=$prdays+$sectiondays;
+				echo "</table></div></div>";
 			}
-			echo "<tr><td>Today No. of Days</td><td>".$sectiondays."</td></tr>";
-			$prdays=$prdays+$sectiondays;
-			echo "</table></div></div>";
-		}
-        echo "<div class='form-create fc-div'><h4>Total No. of Days: ".$prdays." </h4></div>";   
+        	echo "<div class='panel panel-success'><div class='panel-body'>
+	        		<table border='1' class='proc-details'>
+	        			<tr><td width='55%'><h4>TOTAL NO. OF DAYS FROM PR TO PAYMENT: </h4></td>
+	        				<td><h4 style='margin-left: 50px;'>".$prdays."</h4></td>
+	        			</tr>
+	        		</table>
+        		</div></div>";   
 	?>
 	<!--/div-->
 	<!-- END CHECKLIST SECTION -->
@@ -238,7 +233,7 @@ if ($taskpc==0)
 
 		$attachments = DB::table('attachments')->where('doc_id', $docs->id)->get();	
 		$srclink="uploads\\";
-		?>
+	?>
 		@foreach ($attachments as $attachment) 
 			<div class="image-container">
 				<a href="{{asset('uploads/'.$attachment->data)}}" data-lightbox="roadtrip">

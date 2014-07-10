@@ -390,6 +390,10 @@ table.table td{
 	padding: 8px 7px !important;
 }
 
+.current-task{
+	background: rgb(248, 255, 200);
+}
+
 @media all and (max-width: 1065px){
 	.accept-button{
 		margin: 8px 25px;
