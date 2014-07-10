@@ -159,7 +159,7 @@ return Redirect::back();
 				 	imagepng($thumb, $thumbnail, 9);
 				else
 				 	imagegif($thumb, $thumbnail, 100);
-				       
+
 				unlink($actual);
 		        // FILE RENAMES
 		        rename($thumbnail, $actual);
@@ -210,7 +210,7 @@ return Redirect::back();
 			$message->to($email, $fname)->subject('Tarlac Procurement Tracking System: New Purchase Request Created');
 		}); 
 		// END MAILER BY JAN SARMIENTO AWESOME
-				
+
 		$notice = "Purchase request created successfully. ";										  
 		Session::put('notice', $notice);
 		$office = Office::all();
@@ -285,12 +285,12 @@ return Redirect::back();
 	{
 		return View::make('pr_edit');
 	}
-	
+
 	public function view()
 	{
 		return View::make('pr_view');
 	}
-	
+
 	public function viewAll()
 	{
 		return View::make('purchaseRequest.purchaseRequest_all');
@@ -309,7 +309,7 @@ return Redirect::back();
 		$secName1 = DB::table('section')->where('workflow_id',$wfName->work_id)->where('section_order_id','1')->first();
 		$secName2 = DB::table('section')->where('workflow_id',$wfName->work_id)->where('section_order_id','2')->first();
 		$secName3 = DB::table('section')->where('workflow_id',$wfName->work_id)->where('section_order_id','3')->first();
-		
+
 		if($wfName->work_id!=4)
 		{
 			$secName4 = DB::table('section')->where('workflow_id',$wfName->work_id)->where('section_order_id','4')->first();
@@ -325,7 +325,7 @@ return Redirect::back();
 		//return $purchase;
 	}
 
-	
+
 	public function viewClosed()
 	{
 		return View::make('purchaseRequest.purchaseRequest_closed');
@@ -338,7 +338,7 @@ return Redirect::back();
 
 	public function edit_submit()
 	{
-		
+
 		$id = Input::get('id');
 		$purchase = Purchase::find(Input::get('id'));
 		$document = Document::where('pr_id', Input::get('id'))->first();
@@ -351,7 +351,7 @@ return Redirect::back();
 		$purchase->dateRequested = Input::get( 'dateRequested' );
 		$purchase->controlNo = Input::get('controlNo');
 		//$purchase->status = 'New';
-		
+
 
 		$purchase_save = $purchase->save();
 
@@ -491,14 +491,14 @@ Session::forget('imgerror');
 			}
 			else
 			{
-		
-				
+
+
 			}
 		}
 		else
 		{
 			//return 'Failed to create purchase request! <br>' . $purchase;
-			
+
 			// Set Main Error
 			$message = "Failed to save purchase request.";
 			Session::put('main_error', $message );
@@ -741,7 +741,7 @@ return Redirect::back();
 public function editaddon()
 	{
 		$values_id= Input::get('values_id');
-			
+
         	$insertvalue= Values::find($values_id);
   
 
@@ -752,7 +752,7 @@ public function editaddon()
         }
   
 
-	
+
 
 
 }
