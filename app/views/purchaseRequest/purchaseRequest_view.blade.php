@@ -118,7 +118,8 @@
 		$taskd= TaskDetails::where('doc_id', $docs->id)->orderBy('id', 'ASC')->get();
 		$sectioncheck=0;
 		
-		foreach ($section as $sections) {   
+		foreach ($section as $sections) { 
+
 			$task= Task::where('section_id', $sections->section_order_id)->where('wf_id', $workflow->id)->orderBy('order_id', 'ASC')->get();
 			echo "<div class='panel panel-success'><div class='panel-heading'>
 				<h3 class='panel-title'>".$sections->section_order_id.". ".$sections->sectionName."</h3>
@@ -170,6 +171,9 @@ echo "</tr>";
 
 
 			    //Displayer 
+			      $taskpc =TaskDetails::where('doc_id', $docs->id)->where('task_id', $tasks->id)->count();
+if ($taskpc==0)
+	continue;
 			    $taskp =TaskDetails::where('doc_id', $docs->id)->where('task_id', $tasks->id)->first();
 
 			    echo "<tr><td >".$tasks->order_id.". ".$tasks->taskName."</td>";
