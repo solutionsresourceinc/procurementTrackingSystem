@@ -82,7 +82,7 @@
                         $doc_id= $doc->id;
                     $userx= Auth::User()->id;
                     $counter=Count::where('user_id', $userx)->where('doc_id', $doc_id)->count();
-                    if (counter!=0){
+                    if ($counter!=0){
                         echo "class ='success'";
                     }
 
