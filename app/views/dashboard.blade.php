@@ -6,42 +6,43 @@
 
     <div class="col-lg-3">
           
-<?php $id=Auth::User()->id;
-      $role= DB::table('assigned_roles')->where('user_id',$id)->first();
-      if ($role->role_id==1)
-      {
+        <?php 
+            $id=Auth::User()->id;
+            $role= DB::table('assigned_roles')->where('user_id',$id)->first();
+            if ($role->role_id==1)
+            {
 
-      }
-    else
-{
-?>
+            }
+            else
+            {
+        ?>
             <div class="panel panel-warning">
-              <div class="panel-heading">
-                <div class="row">
-                  <div class="col-xs-6">
-                    <i class="fa fa-check fa-5x"></i>
-                  </div>
-                  <div class="col-xs-6 text-right">
-                    <p class="announcement-heading">12</p>
-                    <p class="announcement-text">To-Do Items</p>
-                  </div>
-                </div>
-              </div>
-              <a href="#">
-                <div class="panel-footer announcement-bottom">
-                  <div class="row">
-                    <div class="col-xs-6">
-                      Complete Tasks
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <i class="fa fa-check fa-5x"></i>
+                        </div>
+                        <div class="col-xs-6 text-right">
+                            <p class="announcement-heading">12</p>
+                            <p class="announcement-text">To-Do Items</p>
+                        </div>
                     </div>
-                    <div class="col-xs-6 text-right">
-                      <i class="fa fa-arrow-circle-right"></i>
-                    </div>
-                  </div>
                 </div>
-              </a>
+                <a href="#">
+                    <div class="panel-footer announcement-bottom">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                Complete Tasks
+                            </div>
+                            <div class="col-xs-6 text-right">
+                                <i class="fa fa-arrow-circle-right"></i>
+                            </div>
+                        </div>
+                    </div>
+                </a>
             </div>
-          </div>
-<?php
-}
-?>
+        <?php
+            }
+        ?>
+    </div>
 @stop
