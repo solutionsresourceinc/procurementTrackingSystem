@@ -84,8 +84,8 @@
             $userx=Auth::user()->id;
            if  (Entrust::hasRole('Administrator'))
             $requests = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('status', '=', 'Active')->get(); //change this to get overdue PRs
-          else if  (Entrust::hasRole('Procurement Personel'))
-            $requests = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('status', '=', 'Active')->where('created_by', $userx)->get();
+          else if  (Entrust::hasRole('Procurement Personnel'))
+            $requests = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('status', '=', 'Active')->where('created_by', $userx)->orwhere('requisitioner', $userx)->get();
             else 
             { 
 
@@ -133,20 +133,62 @@
                         <td width="12%" style="text-align: center"><span class="label {{($request->status == 'New') ? 'label-primary' : (($request->status == 'Active') ? 'label-success' : (($request->status == 'Overdue') ? 'label-danger' : 'label-default'))}}">{{ $request->status; }}</span></td>
                         <td width="20%">{{ $request->dateRequested; }}</td>
 
-                        @if($adm->role_id == 3 || $adm->role_id == 2)
+                        @if(Entrust::hasRole('Administrator') )
+                        
                             <td width="10%">
                                 <a data-toggle="tooltip" data-placement="top" class='iframe btn btn-success' href='edit/{{$request->id}}' title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
                                 <form method="POST" action="delete" id="myForm_{{ $request->id }}" name="myForm" style="display: -webkit-inline-box;">
                                    <input type="hidden" name="del_pr" value="{{ $request->id }}">
                                    <center> <a href="changeForm/{{ $request->id }}" class="btn ajax btn-danger" data-method="post" data-replace="#pr_form" data-toggle="modal" data-target="#confirmDelete" data-toggle="tooltip" title="Cancel"><span class="glyphicon glyphicon-remove"></span></a></center>
                                </form>
+                      
                             </td>
-                        @else
+                        @endif
+                        @if(Entrust::hasRole('Procurement Personnel'))
+                        <?php 
+                         $maker= User::find( $request->requisitioner);
+                        ?>
+              
                             <td width="10%">
+                         @if($userx==$request->created_by)
+                                <a data-toggle="tooltip" data-placement="top" class='iframe btn btn-success' href='edit/{{$request->id}}' title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
+                        @endif
+                             <?php
+                            $showcancel=0;
+                         
+                            if($userx==$request->requisitioner){
+                            if($userx!=$maker->id)
+                                $showcancel=1;}
+                        
+
+                            if($showcancel==0)
+                            {?>
                                 <form method="POST" action="delete" id="myForm_{{ $request->id }}" name="myForm" style="display: -webkit-inline-box;">
                                    <input type="hidden" name="del_pr" value="{{ $request->id }}">
                                    <center> <a href="changeForm/{{ $request->id }}" class="btn ajax btn-danger" data-method="post" data-replace="#pr_form" data-toggle="modal" data-target="#confirmDelete" data-toggle="tooltip" title="Cancel"><span class="glyphicon glyphicon-remove"></span></a></center>
-                               </form>  
+                               </form>
+                      <?php } 
+                      ?>
+                            </td>
+                        @endif
+                        @if(Entrust::hasRole('Requisitioner'))
+                            <td width="10%">
+                            <?php
+                            $showcancel=0;
+                                if($reqrestrict==1)
+                        {
+
+                            if($userx!=$maker->id)
+                                $showcancel=1;
+                        }
+
+                            if($showcancel==0)
+                            {?>
+                                <form method="POST" action="delete" id="myForm_{{ $request->id }}" name="myForm" style="display: -webkit-inline-box;">
+                                   <input type="hidden" name="del_pr" value="{{ $request->id }}">
+                                   <center> <a href="changeForm/{{ $request->id }}" class="btn ajax btn-danger" data-method="post" data-replace="#pr_form" data-toggle="modal" data-target="#confirmDelete" data-toggle="tooltip" title="Cancel"><span class="glyphicon glyphicon-remove"></span></a></center>
+                               </form>
+                             <?php } ?>
                             </td> 
                         @endif
                    </tr>
