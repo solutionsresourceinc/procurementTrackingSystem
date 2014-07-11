@@ -61,6 +61,17 @@ class UserController extends BaseController {
      if ($checkusername!=0){
          Session::put('username_error', 'Username is already in use.');}
 
+  $checkemail=0;
+
+        $users= new User; $users = DB::table('users')->get();
+
+        foreach ($users as $userx){
+            if (strtoupper($userx->email)==strtoupper($user->email))
+             { $checkemail=1; $errorcheck=1; }
+     }
+     if ($checkemail!=0){
+         Session::put('email_error', 'Email is already in use.');}
+
 
 
 //Validations     
