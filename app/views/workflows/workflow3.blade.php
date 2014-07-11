@@ -7,7 +7,6 @@
 </style>
 
 <?php $wfName = Workflow::find('3'); ?>
-<!--h1 class="page-header">{{{ $wfName->workFlowName }}}</h1-->
 <br/>
 
 <div class="panel panel-success">
@@ -479,7 +478,6 @@
 							<a href="/workflow/replace/{{$section->id}}" title="Description" data-placement="top" data-method="post" data-replace="#description_body"  class="btn ajax btn-info" data-toggle="modal" data-target="#description"  onclick="empty_div()"><span class="glyphicon glyphicon-list-alt"></span></a><br>
 						</td>
 					</tr>
-
 				@endif
 			@endforeach
 		</table>

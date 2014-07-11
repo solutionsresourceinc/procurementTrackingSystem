@@ -7,8 +7,6 @@
 </style>
 
 <?php $wfName = Workflow::find('2'); ?>
-
-<!--h1 class="page-header"> {{{ $wfName->workFlowName }}} </h1-->
 <br/>
 
 <div class="panel panel-success">

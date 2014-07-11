@@ -7,8 +7,6 @@
 </style>
 
 <?php $wfName = Workflow::find('1'); ?>
-
-<!--h1 class="page-header"> {{{ $wfName->workFlowName }}}  </h1-->
 <br/>
 
 <?php $sectionName = Section::find('5'); ?>
