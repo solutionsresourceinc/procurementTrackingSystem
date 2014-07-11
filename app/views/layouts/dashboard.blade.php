@@ -83,10 +83,10 @@
                             Active Purchase Requests
                             <span class="badge pull-right">
                             <?php
-                                        $result=0;
-                                        $cuser= Auth::user()->id;
-                $date_today =date('Y-m-d H:i:s');
-                                   $cpurchase= DB::table('purchase_request')->where('dueDate','>',$date_today)->where('status', '=', 'Active')->get();
+                            $result=0;
+                            $cuser= Auth::user()->id;
+                            $date_today =date('Y-m-d H:i:s');
+                            $cpurchase= DB::table('purchase_request')->where('dueDate','>',$date_today)->where('status', '=', 'Active')->get();
                                 foreach ($cpurchase as $cpurchases ) {
                                     $doc=Document::where('pr_id', $cpurchases->id)->first();
                                     $count= DB::table('count')->where('doc_id', $doc->id)->where('user_id', $cuser)->count();
@@ -99,6 +99,8 @@
                                             $result=$result+1; }
                                             else if (Entrust::hasRole('Procurement Personnel'))
                                             {
+
+                                                
                                                 if($cpurchases->created_by==$cuser)   $result=$result+1;
                                             }
                                             else if(Entrust::hasRole('Requisitioner'))
@@ -132,8 +134,22 @@
                                         {if ( Entrust::hasRole('Administrator')) {
                                             $result=$result+1; }
                                             else if (Entrust::hasRole('Procurement Personnel'))
-                                            {
-                                                if($cpurchases->created_by==$cuser)   $result=$result+1;
+                                            {    
+                                                $useroffice=Auth::user()->office_id;
+                                                $req= User::find($cpurchases->requisitioner);
+
+                        $docget=Document::where('pr_id', $cpurchases->id)->first();
+                        $taskcon = TaskDetails::where('doc_id',$docget->id)->where('assignee_id',$cuser)->count();
+                      
+                            if($taskcon!=0){
+
+                                  $result=$result+1;
+                            }
+                       
+                                                 else if($useroffice==$req->office_id) 
+                                                    $result=$result+1;
+                                                else if($cpurchases->created_by==$cuser)   
+                                                    $result=$result+1;
                                             }
                                             else if(Entrust::hasRole('Requisitioner'))
                                             { $useroffice=Auth::user()->office_id;

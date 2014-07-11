@@ -181,12 +181,12 @@
                             <td width="10%">
                             <?php
                             $showcancel=0;
-                                if($reqrestrict==1)
-                        {
+                           
+                        
 
                             if($userx!=$maker->id)
                                 $showcancel=1;
-                        }
+                        
 
                             if($showcancel==0)
                             {?>
