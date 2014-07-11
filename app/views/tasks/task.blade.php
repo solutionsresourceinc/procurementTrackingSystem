@@ -83,17 +83,26 @@
 					</td>
 				<tr>
 
-				<?php 
+				<?php
 					if ($taskd->status!="New")
 					{
+						$date_today =date('Y-m-d H:i:s');
 				?>
-						<tr>
-							<td>
-								<span style="font-weight: bold">Due Date: </span><br/>
-								<p>{{ $taskd->dueDate; }}</p>
-
-							</td>
-						</tr>
+						@if( $date_today > $taskd->dueDate )
+							<tr>
+								<td>
+									<span style="font-weight: bold">Due Date: </span><br/>
+									<p><font color="red">{{ $taskd->dueDate; }}</font></p>
+								</td>
+							</tr>
+						@else
+							<tr>
+								<td>
+									<span style="font-weight: bold">Due Date: </span><br/>
+									<p>{{ $taskd->dueDate; }}</p>
+								</td>
+							</tr>
+						@endif
 				<?php } else { ?>
 
 					<tr>
