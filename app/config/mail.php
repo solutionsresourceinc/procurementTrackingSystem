@@ -54,7 +54,7 @@ return array(
 	|
 	*/
 
-	'from' => array('address' => 'fakemail@awesome.com', 'name' => 'TheName'),
+	'from' => array('address' => 'bac.tarlac@gmail.com', 'name' => 'Procurement Tracking System'),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -80,7 +80,8 @@ return array(
 	|
 	*/
 
-	'username' => 'laraveldummy@gmail.com',
+	//'username' => 'laraveldummy@gmail.com',
+	'username' => 'bac.tarlac@gmail.com',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -93,7 +94,8 @@ return array(
 	|
 	*/
 
-	'password' => 'laravel123',
+	//'password' => 'laravel123',
+	'password' => 'tarlac00',
 
 	/*
 	|--------------------------------------------------------------------------
