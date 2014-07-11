@@ -69,7 +69,6 @@ return Redirect::back();
 				{
 					$taskd= New TaskDetails;
 					$taskd->task_id=$tasks->id;
-
 					if($firstnew==0)
 					 	$taskd->status="New";
 				 	else
@@ -658,7 +657,7 @@ if(ctype_digit($daysOfAction))
 		$check=$check+1;
     }
 
-if ($check==3||$remarks==" ")
+if (($check==3||$remarks==" ")&&$assignee!=NULL)
 	{
 	$taskd= TaskDetails::find($taskdetails_id);
 	$docs=Document::find($taskd->doc_id);
@@ -735,12 +734,8 @@ else
 public function editaddon()
 	{
 		$values_id= Input::get('values_id');
-
-        	$insertvalue= Values::find($values_id);
-  
-
-   
-        	$insertvalue->delete();
+        $insertvalue= Values::find($values_id);
+        $insertvalue->delete();
        
         	return Redirect::back();
         }
