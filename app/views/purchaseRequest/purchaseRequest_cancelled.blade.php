@@ -78,7 +78,7 @@
             $requests = new Purchase;
            
             $userx=Auth::user()->id;
-              $requests = DB::table('purchase_request')->where('status', '=', 'Cancelled')->get(); 
+              $requests = DB::table('purchase_request')->where('status', '=', 'Cancelled')->paginate(10); 
             //End Query Restrictions
         ?>
 
@@ -146,6 +146,10 @@
             @endif
         </tbody>
     </table>  
+     <div>
+           <center> {{ $requests->links(); }} </center>
+        </div>
+
                 {{ Session::forget('notice'); }}
 @stop
 
