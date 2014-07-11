@@ -81,18 +81,41 @@ class OfficeController extends BaseController {
 			//return Redirect::back()->withInput()->withErrors($validation->messages());
 			$updateOffice = Office::find($id);
 			$message = $validation->messages()->first();
-			$data = array(
-				"fragments" => array(
-					"#other_message" => "<div class='alert alert-danger' id='other_message'>$message</div>",
-					"#message" =>"<div id='message'> </div>"
-				),
-				"inner-fragments" => array(
-					"#display_$id" =>"<span id='insert_$id' class='current-text mode1'> $updateOffice->officeName  </span>"
-				),
-			);
 
+
+			if($updateOffice->officeName  == Input::get('ofcname'))
+			{
+				$updateOffice = Office::find($id);
+				$oldOfficeName = $updateOffice->officeName;
+				$updateOffice->officeName = Input::get('ofcname');
+				$updateOffice->save();
+
+				$data = array(
+					"inner-fragments" => array(
+						"#display" =>"<span class='current-text mode1'> $updateOffice->officeName  </span>"
+					),
+
+				);
 
 			return Response::json($data);
+
+			}
+			else
+			{
+				$data = array(
+					"fragments" => array(
+						"#other_message" => "<div class='alert alert-danger' id='other_message'>$message</div>",
+						"#message" =>"<div id='message'> </div>"
+					),
+					"inner-fragments" => array(
+						"#display_$id" =>"<span id='insert_$id' class='current-text mode1'> $updateOffice->officeName  </span>"
+					),
+				);
+				return Response::json($data);
+
+			}
+
+			
 		}
 		else
 		{

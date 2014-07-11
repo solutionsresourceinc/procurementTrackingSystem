@@ -1,8 +1,17 @@
 @extends('layouts.dashboard')
 
 @section('content')
-    <h1 class="page-header">List of Overdue Purchase Requests</h1>
 
+
+<h1 class="pull-left">List of Active Purchase Requests</h1>
+    
+    @if ( Entrust::hasRole('Administrator') || Entrust::hasRole('Procurement Personnel'))
+      <div class="pull-right options">
+          <a href="{{ URL::to('purchaseRequest/create') }}" class="btn btn-success">Create New</a>
+      </div>
+    @endif
+
+    <hr class="clear" />
 <div id="pr_form">
     <form action="submitForm/" id="new_form" method="post" id="confirm">
 </div>
@@ -47,106 +56,171 @@
             </div>
         </div>
     </div>
-
-    <table id="table_id" class="table table-striped display">
+@if(Session::get('notice'))
+            <div class="alert alert-success"> {{ Session::get('notice') }}</div> 
+            @endif
+    <table id="table_id" class="table table-striped display ">
         <thead>
-    		<th>Control No.</th>
-            <th>Project/Purpose</th>
-            <th>Mode</th>
-            <th style="text-align: center">Status</th>
-            <th>Date Requested</th>
-            <?php
-                $adm = Assigned::where('user_id', Auth::User()->id)->first();
-                //if($adm->role_id == 3) {
-            ?>
-                <th>Action</th>
-            <?php //} ?>
+            <tr>
+                <th>Control No.</th>
+                <th>Project/Purpose</th>
+                <th>Mode</th>
+                <th style="text-align: center">Status</th>
+                <th>Date Requested</th>
+               
+                  <th>Action</th>
+     
+              </tr>
         </thead>
 
         <?php
-        //Restrictions
+           //Query Restrictions
             $date_today =date('Y-m-d H:i:s');
             $requests = new Purchase;
-            $reqrestrict=0;
+           
             $userx=Auth::user()->id;
-           if  (Entrust::hasRole('Administrator'))
-            $requests = DB::table('purchase_request')->where('dueDate','<=',$date_today)->where('status', '=', 'Active')->get(); //change this to get overdue PRs
-          else if  (Entrust::hasRole('Procurement Personel'))
-            $requests = DB::table('purchase_request')->where('dueDate','<=',$date_today)->where('status', '=', 'Active')->where('created_by', $userx)->get();
-            else 
-            { 
-
-                $requests = DB::table('purchase_request')->where('dueDate','<=',$date_today)->where('status', '=', 'Active')->get();
-                $reqrestrict=1;
-            }
-            //End Restrictions
+              $requests = DB::table('purchase_request')->where('dueDate','<=',$date_today)->where('status', '=', 'Active')->get(); 
+            //End Query Restrictions
         ?>
 
-      	<tbody>
+        <tbody>
             @if(count($requests))
                 @foreach ($requests as $request)
-                    <tr    
 
-
-                    <?php
-//Office restriction for requis
-                    if($reqrestrict==1)
+                    <tr
+                      <?php 
+                      //Office restriction
+                    if (Entrust::hasRole('Administrator'))
+                      {}
+                    else if(Entrust::hasRole('Procurement Personnel')){
+                            
+                            $useroffice=Auth::user()->office_id;
+                            $maker= User::find( $request->requisitioner);
+                             $docget=Document::where('pr_id', $request->id)->first();
+                        $taskd = TaskDetails::where('doc_id',$docget->id)->where('assignee_id',$userx)->count();
+                            if($taskd!=0){}
+                            else if ($userx==$request->created_by)
+                            {}
+                            else if ($useroffice!=$maker->office_id)
+                                continue;
+                    }
+                    else
                         {
                             $useroffice=Auth::user()->office_id;
                             $maker= User::find( $request->requisitioner);
                             if ($useroffice!=$maker->office_id)
                                 continue;
                         }
-//End office restriction for requis
-
+                //End Office restriction
                         $doc = new Document; $doc = DB::table('document')->where('pr_id', $request->id)->first();  
                         $doc_id= $doc->id;
                     $userx= Auth::User()->id;
+                    $counter=0;
                     $counter=Count::where('user_id', $userx)->where('doc_id', $doc_id)->count();
                     if ($counter!=0){
                         echo "class ='success'";
                     }
 
                     ?>
-                    >
+                        >
                         <td width="10%">{{ $request->controlNo; }}</td>
                         <td width="30%"><a data-toggle="tooltip" data-placement="top" class="purpose" href="{{ URL::to('purchaseRequest/vieweach/'. $request->id) }}" title="View Project Details">{{ $request->projectPurpose; }}</a></td>
-                        <?php $doc = new Document; $doc = DB::table('document')->where('pr_id', $request->id)->get(); ?>
+                        <?php 
+                            $doc = new Purchase; 
+                            $doc = DB::table('document')->where('pr_id', $request->id)->get(); 
+                        ?>
                         <td width="18%">
                             @foreach ($doc as $docs) {{ Workflow::find($docs->work_id)->workFlowName; }} @endforeach
                         </td>
-                        <td width="12%" style="text-align: center"><span class="label label-danger">{{ $request->status; }}</span></td>
-                        <td width="20%">{{ $request->dateRequested; }}</td>                   
-                        @if($adm->role_id == 3 || $adm->role_id == 2)
+                        <td width="12%" style="text-align: center"><span class="label {{($request->status == 'New') ? 'label-primary' : (($request->status == 'Active') ? 'label-success' : (($request->status == 'Overdue') ? 'label-danger' : 'label-default'))}}">{{ $request->status; }}</span></td>
+                        <td width="20%">{{ $request->dateRequested; }}</td>
+
+                        @if(Entrust::hasRole('Administrator') )
+                        
                             <td width="10%">
                                 <a data-toggle="tooltip" data-placement="top" class='iframe btn btn-success' href='edit/{{$request->id}}' title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
                                 <form method="POST" action="delete" id="myForm_{{ $request->id }}" name="myForm" style="display: -webkit-inline-box;">
                                    <input type="hidden" name="del_pr" value="{{ $request->id }}">
                                    <center> <a href="changeForm/{{ $request->id }}" class="btn ajax btn-danger" data-method="post" data-replace="#pr_form" data-toggle="modal" data-target="#confirmDelete" data-toggle="tooltip" title="Cancel"><span class="glyphicon glyphicon-remove"></span></a></center>
                                </form>
+                      
                             </td>
-                        @else
+                        @endif
+                        @if(Entrust::hasRole('Procurement Personnel'))
+                     
                             <td width="10%">
+                            <?php
+          $docget=Document::where('pr_id', $request->id)->first();
+                        $taskd = TaskDetails::where('doc_id',$docget->id)->where('assignee_id',$userx)->count();
+                            $showcancel=0;
+                         
+                            if($taskd!=0){
+                                ?><a data-toggle="tooltip" data-placement="top" class='iframe btn btn-success' href='edit/{{$request->id}}' title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
+                               
+
+                            
+                             <?php
+                              $showcancel=1;
+                         }
+                         else if($userx==$request->created_by){
+                                ?><a data-toggle="tooltip" data-placement="top" class='iframe btn btn-success' href='edit/{{$request->id}}' title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
+                               
+
+                            
+                             <?php
+                              $showcancel=1;
+                         }
+                            else if($userx==$request->requisitioner){
+                            
+                                $showcancel=1;
+                            }
+              
+                            if($showcancel==1)
+                            {?>
                                 <form method="POST" action="delete" id="myForm_{{ $request->id }}" name="myForm" style="display: -webkit-inline-box;">
                                    <input type="hidden" name="del_pr" value="{{ $request->id }}">
                                    <center> <a href="changeForm/{{ $request->id }}" class="btn ajax btn-danger" data-method="post" data-replace="#pr_form" data-toggle="modal" data-target="#confirmDelete" data-toggle="tooltip" title="Cancel"><span class="glyphicon glyphicon-remove"></span></a></center>
-                               </form>  
+                               </form>
+                      <?php } 
+                      ?>
+                            </td>
+                        @endif
+                        @if(Entrust::hasRole('Requisitioner'))
+                            <td width="10%">
+                            <?php
+                            $showcancel=0;
+                                if($reqrestrict==1)
+                        {
+
+                            if($userx!=$maker->id)
+                                $showcancel=1;
+                        }
+
+                            if($showcancel==0)
+                            {?>
+                                <form method="POST" action="delete" id="myForm_{{ $request->id }}" name="myForm" style="display: -webkit-inline-box;">
+                                   <input type="hidden" name="del_pr" value="{{ $request->id }}">
+                                   <center> <a href="changeForm/{{ $request->id }}" class="btn ajax btn-danger" data-method="post" data-replace="#pr_form" data-toggle="modal" data-target="#confirmDelete" data-toggle="tooltip" title="Cancel"><span class="glyphicon glyphicon-remove"></span></a></center>
+                               </form>
+                             <?php } ?>
                             </td> 
                         @endif
                    </tr>
-               @endforeach	    
+                @endforeach
             @else
                 <tr>
-                    <td colspan="<?php if($adm->role_id == 3) echo "6"; else echo "5";?>">
+                    <td colspan="<?php if(Entrust::hasRole('Administrator')) echo "6"; else echo "5";?>">
                         <span class="error-view">No data available.</span>
                     </td>
                 </tr>
-            @endif   
-      	</tbody>
+            @endif
+        </tbody>
     </table>  
+                {{ Session::forget('notice'); }}
 @stop
 
 @section('footer')
+    {{ HTML::script('js/bootstrap-ajax.js');}}
     <script type="text/javascript">
         $('#confirmDelete').on('show.bs.modal', function (e) {
             $message = $(e.relatedTarget).attr('data-message');
@@ -171,5 +245,26 @@
             window.my_id = pass_id;
            // alert(window.my_id);
         }
+
+        function submitForm()
+        {
+            var reason = document.getElementById('reason').value;
+            document.getElementById('hide_reason').value = reason;
+            //alert(reason);
+            document.getElementById("form").submit();
+        }
+        
     </script>
+
+{{ Session::forget('main_error'); }}
+{{ Session::forget('m1'); }}
+{{ Session::forget('m2'); }}
+{{ Session::forget('m3'); }}
+{{ Session::forget('m4'); }}
+{{ Session::forget('m5'); }}
+{{ Session::forget('m6'); }}
+{{ Session::forget('m7'); }}
+{{ Session::forget('imgsuccess'); }}
+{{ Session::forget('imgerror'); }}
+
 @stop

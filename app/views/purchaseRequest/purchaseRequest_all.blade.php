@@ -50,19 +50,19 @@
 
     <table id="table_id" class="table table-striped display">
         <thead>
-    		<tr>
-    	    	<th>Control No.</th>
+            <tr>
+                <th>Control No.</th>
                 <th>Project/Purpose</th>
                 <th>Mode</th>
-    	      	<th>Status</th>
-    	      	<th>Date Requested</th>
+                <th>Status</th>
+                <th>Date Requested</th>
                 <?php
                     $adm = Assigned::where('user_id', Auth::User()->id)->first();
                     if($adm->role_id == 3) {
                 ?>
-    			    <th>Action</th>
+                    <th>Action</th>
                 <?php } ?>
-        	</tr>
+            </tr>
         </thead>
 
         <?php
@@ -84,7 +84,7 @@
             //End Restrictions
         ?>
         
-      	<tbody>
+        <tbody>
             @if(count($requests))
                 @foreach ($requests as $request)
                     <tr
@@ -115,9 +115,9 @@
                             @foreach ($doc as $docs) {{ Workflow::find($docs->work_id)->workFlowName; }} @endforeach
                         </td>
                         <td width="12%">
-                        	<span class="label {{($request->status == 'New') ? 'label-primary' : (($request->status == 'In Progress') ? 'label-success' : (($request->status == 'Overdue') ? 'label-danger' : 'label-default'))}}">
-                        		{{ $request->status; }}
-                        	</span>
+                            <span class="label {{($request->status == 'New') ? 'label-primary' : (($request->status == 'In Progress') ? 'label-success' : (($request->status == 'Overdue') ? 'label-danger' : 'label-default'))}}">
+                                {{ $request->status; }}
+                            </span>
                         </td>
                         <td width="20%">{{ $request->dateRequested; }}</td>
                         <?php
@@ -133,7 +133,7 @@
                             </td>
                        <?php } ?>
                    </tr>
-               @endforeach	 
+               @endforeach   
             @else
                 <tr>
                     <td colspan="<?php if($adm->role_id == 3) echo "6"; else echo "5";?>">
@@ -141,7 +141,7 @@
                     </td>
                 </tr>
             @endif   
-      	</tbody>
+        </tbody>
     </table>  
 @stop
 

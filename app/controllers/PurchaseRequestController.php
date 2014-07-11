@@ -94,7 +94,7 @@ return Redirect::back();
 				foreach(Input::file('file') as $file)
 				{
             		$rules = array(
-                		'file' => 'required|mimes:png,gif,jpeg|max:900000000'
+                		'file' => 'required|mimes:png,gif,jpeg,jpg|max:900000000'
                 );
             	$validator = \Validator::make(array('file'=> $file), $rules);
             	$destine=public_path()."/uploads";
@@ -157,8 +157,10 @@ return Redirect::back();
 				 	imagejpeg($thumb, $thumbnail, 100);
 				elseif ($ext=="png")
 				 	imagepng($thumb, $thumbnail, 9);
-				else
+				elseif($ext=="gif")
 				 	imagegif($thumb, $thumbnail, 100);
+				 else
+				 	echo "An invalid image";
 
 				unlink($actual);
 		        // FILE RENAMES
@@ -198,7 +200,16 @@ return Redirect::back();
 			Session::forget('doc_id');
 		}
 
+	
+
+    $connected = @fsockopen("www.google.com", 80); 
+                                        //website, port  (try 80 or 443)
+ 
+   if ($connected){
+     
+    
 		// START MAILER BY JAN SARMIENTO AWESOME
+
 		$sendee = DB::table('users')->where('id',$purchase->requisitioner)->first();
 		$email = $sendee->email;
 		$fname = $sendee->firstname;
@@ -210,8 +221,13 @@ return Redirect::back();
 			$message->to($email, $fname)->subject('Tarlac Procurement Tracking System: New Purchase Request Created');
 		}); 
 		// END MAILER BY JAN SARMIENTO AWESOME
+	$notice = "Purchase request created successfully. ";	
+	}
+else{
+        	$notice = "Purchase request created successfully. Email notice was not sent. ";
+    }
 
-		$notice = "Purchase request created successfully. ";										  
+											  
 		Session::put('notice', $notice);
 		$office = Office::all();
 		$users = User::all();
@@ -372,7 +388,7 @@ $doc_id= $document->id;
 
 foreach(Input::file('file') as $file){
             $rules = array(
-                'file' => 'required|mimes:png,gif,jpeg|max:900000000'
+                'file' => 'required|mimes:png,gif,jpeg,jpg|max:900000000'
                 );
             $validator = \Validator::make(array('file'=> $file), $rules);
             $destine=public_path()."/uploads";
@@ -421,7 +437,7 @@ if ($ext=="jpg"||$ext=="jpeg")
         $source = imagecreatefromjpeg($upload_image);
 elseif ($ext=="png")
  $source = imagecreatefrompng($upload_image);
-else
+elseif ($ext=="")
  $source = imagecreatefromgif($upload_image);
         // RESIZE 
         imagecopyresized($thumb, $source, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
@@ -430,9 +446,10 @@ if ($ext=="jpg"||$ext=="jpeg")
  imagejpeg($thumb, $thumbnail, 100);
 elseif ($ext=="png")
  imagepng($thumb, $thumbnail, 9);
-else
+elseif($ext="gif")
  imagegif($thumb, $thumbnail, 100);
-       
+       else 
+       	echo "Invalid image";
 unlink($actual);
         // FILE RENAMES
         rename($thumbnail, $actual);
@@ -689,17 +706,19 @@ $taskd->remarks=$remarks;
 $taskd->save();
 $tasknext=TaskDetails::find($taskdetails_id+1);
 
-$tasknextc=TaskDetails::where('id', $taskdetails_id+1)->count();
+$tasknextc=TaskDetails::where('id', $taskdetails_id+1)->where('doc_id', $docs->pr_id)->count();
 
 if ($tasknextc!=0)
 {
 $tasknext->status="New";
 $tasknext->save();
+
 }
 else
 {
 $purchase= Purchase::find($docs->pr_id);
 $purchase->status="Closed";
+
 $purchase->save();
 }
 
