@@ -16,13 +16,13 @@ Route::get('/', function()
 	return Redirect::to('login');
 });
 
-// Login Routes
+//---------- Login Routes
 Route::get( 'login',                  'UserController@login');
 Route::get( 'logout',                 'UserController@logout');
 Route::post('login',                  'UserController@do_login');
 
 
-// User CRUD Routes
+//---------- User CRUD Routes
 Route::get('user/view',                    'UserController@viewUser');
 Route::get( 'user/create',                 'UserController@create');
 Route::get( 'user/confirm/{code}',         'UserController@confirm');
@@ -63,31 +63,17 @@ Route::post( 'user/activate', function()
 	return Redirect::to('user/view');
 });
 
-// Dashboard Routes
+//---------- Dashboard Routes
 Route::get('/dashboard', 'UserController@dashboard');
 
 
-//Office routes
+//---------- Office routes
 Route::resource('offices', 'OfficeController');
 Route::get('offices', 'OfficeController@index');
 Route::post('offices/delete/{id}',['as' => 'offices.delete', 'uses' => 'OfficeController@deleteOffice']);
 Route::post('offices/{id}/edit',['as' => 'offices.update', 'uses' => 'OfficeController@update']);
 
-
-
-
-
-Route::get( 'resultstest', function()
-{
-	return View::make('resultstest');
-});
-Route::get( 'testdisplay', function()
-{
-	return View::make('testdisplay');
-});
-
-
-//Purchase Request Routes
+//---------- Purchase Request Routes
 Route::get('purchaseRequests','PurchaseRequestController@viewAll');
 Route::get('purchaseRequest/view','PurchaseRequestController@view');
 Route::get('purchaseRequest/create', 'PurchaseRequestController@create');
@@ -113,34 +99,23 @@ Route::post( 'purchaseRequest/delete', function()
 	$id=Input::get('del_pr');
 	Purchase::where('id',$id)->delete();
 	
-//Attachment Deletion 
+	//Attachment Deletion 
 	$document=Document::where('pr_id', $id)->first();
 	$attach = Attachments::where('doc_id', $document->id)->get();
 
 	foreach ($attach as $attachs) {
 		$attachs->delete();
 	}
-Document::where('pr_id', $id )->delete();
-$notice="Purchase Request successfully deleted.";
-Redirect::back()->with( 'notice', $notice );
-//End Attachment Deletion 
-
-
+	Document::where('pr_id', $id )->delete();
+	$notice="Purchase Request successfully deleted.";
+	Redirect::back()->with( 'notice', $notice );
+	//End Attachment Deletion 
 
 	Session::flash('message','Successfully deleted the user.');
 	return Redirect::to('purchaseRequest/view');
 });
 
-
-
-//Workflow Routes
-Route::get('workflow/below-fifty', function(){
-	return View::make('workflows.below_fifty_workflow');
-});
-
-
-
-//Designation Routes
+//---------- Designation Routes
 Route::resource('designation', 'DesignationController');
 
 Route::get('designation', 'DesignationController@index');
@@ -152,7 +127,11 @@ Route::post('designation/assign',['as'=>'designation.assign', 'uses' => 'Designa
 
 Route::post('designation/{id}/members', ['as'=>'designation_members_save', 'uses' => 'DesignationController@save_members']);
 
-// JAN Routes
+
+//---------- Workflow Routes
+Route::get('workflow/below-fifty', function(){
+	return View::make('workflows.below_fifty_workflow');
+});
 Route::get('workflow/belowFifty', function(){
 	return View::make('workflows.below_fifty');
 });
@@ -190,7 +169,7 @@ Route::filter('csrf', function()
 });
 
 
-// Roles Create Routes (Disabled)
+//---------- Roles Create Routes (Disabled)
 	//Route::get('create_roles','UserController@getRole');
 Route::get('task/new', 'TaskController@newTask');
 Route::post('addtask', [ 'uses' => 'TaskController@addtask']);
@@ -199,47 +178,35 @@ Route::post('remarks', 'TaskController@remarks');
 Route::post('done', 'TaskController@done');
 Route::get('task/active', 'TaskController@active');
 Route::get('task/overdue', 'TaskController@overdue');
-	Route::post('deladdtask', [ 'uses' => 'TaskController@deladdtask']);
-
 Route::get('task/{id}', function($id){
-	
-	
+	$user_id = Auth::User()->id;
+	$taskd = TaskDetails::find($id);
 
-$user_id = Auth::User()->id;
-$taskd = TaskDetails::find($id);
+	$task= Task::find($taskd->task_id);
+	$desig= UserHasDesignation::where('users_id', $user_id)->where('designation_id', $task->designation_id)->count();
 
-$task= Task::find($taskd->task_id);
-$desig= UserHasDesignation::where('users_id', $user_id)->where('designation_id', $task->designation_id)->count();
+	if ($taskd->status=="New"){
+		if($desig==0)
+		{
+			return Redirect::to('/');
+		} 
+		else{
+			Session::put('taskdetails_id', $id);
 
-if ($taskd->status=="New"){
+		return View::make('tasks.task');
+		}
+	}
+	else{
+		if ($taskd->assignee_id==$user_id){
+			Session::put('taskdetails_id', $id);
+			return View::make('tasks.task');
+		}
+		else
+			return Redirect::to('/');
+	}
+});
 
-
-if($desig==0)
-{
-	return Redirect::to('/');
-} 
-else{
-	Session::put('taskdetails_id', $id);
-
-return View::make('tasks.task');
-}}
-
-else{
-if ($taskd->assignee_id==$user_id){
-	Session::put('taskdetails_id', $id);
-
-return View::make('tasks.task');
-}
-else
-return Redirect::to('/');
-}
-
-}
-
-);
-
-// AJAX Routes
-
+//---------- AJAX Routes
 Route::post('workflow/submit/{id}', function()
 {
 	// When the form is submitted, we can do some DB queries and let the user know that the form was submitted.
@@ -282,7 +249,7 @@ Route::post('workflow/submit/{id}', function()
 });
 
 
-//Image Module Components
+//---------- Image Module Components
 Route::post('newcreate', ['uses' => 'purchaseRequestController@create_submit']);
 Route::post('newedit', ['uses' => 'purchaseRequestController@edit_submit']);
 Route::post('addimage', ['uses' => 'purchaseRequestController@addimage']);
@@ -298,13 +265,10 @@ Route::post('delimage', function()
 	return Redirect::back()->with('notice', $notice);
 });
 
-// End Image Module
-
-//Test Route
+//---------- Test Route
 Route::get('test', function(){
 	return View::make('test');
 });
-
 
 Route::post('purchaseRequest/changeForm/{id}', function($id)
 {

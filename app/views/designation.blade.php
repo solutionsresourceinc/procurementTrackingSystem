@@ -27,9 +27,6 @@
 	    {{ Form::open(['route'=>'designation.store'], 'POST', array('role' => 'form')) }}
 	    	<div class="col-md-8">
 		    	{{ Form::text('designationName', null, array('class' => 'form-control', 'placeholder' => 'Designation Name')) }}
-		    	@if(Session::get('main_error'))
-						<span class="error-message">Invalid input for designation name.</span>
-				@endif
 		    </div>
 		    <div class="col-md-3">
 		    	{{ Form::submit('Add', array('class' => 'btn btn-success btn-block')) }}
