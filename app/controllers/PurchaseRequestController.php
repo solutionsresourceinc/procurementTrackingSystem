@@ -93,7 +93,7 @@ return Redirect::back();
 				foreach(Input::file('file') as $file)
 				{
             		$rules = array(
-                		'file' => 'required|mimes:png,gif,jpeg,jpg|max:900000000'
+                		'file' => 'required|mimes:png,gif,jpeg,jpg|max:900000000000000000000'
                 );
             	$validator = \Validator::make(array('file'=> $file), $rules);
             	$destine=public_path()."/uploads";
@@ -378,11 +378,19 @@ $doc_id= $document->id;
 
 foreach(Input::file('file') as $file){
             $rules = array(
-                'file' => 'required|mimes:png,gif,jpeg,jpg|max:900000000'
+                'file' => 'required|mimes:png,gif,jpeg,jpg|max:900000000000000000000'
                 );
-            $validator = \Validator::make(array('file'=> $file), $rules);
+            $validator = Validator::make(array('file'=> $file), $rules);
             $destine=public_path()."/uploads";
+ 
+ //$size = $file->getSize();
+//return (string)$size;
+           
+
             if($validator->passes()){
+        
+        
+
                 $ext = $file->guessClientExtension(); // (Based on mime type)
                 $ext = $file->getClientOriginalExtension(); // (Based on filename)
                 $filename = $file->getClientOriginalName();
@@ -427,7 +435,7 @@ if ($ext=="jpg"||$ext=="jpeg")
         $source = imagecreatefromjpeg($upload_image);
 elseif ($ext=="png")
  $source = imagecreatefrompng($upload_image);
-elseif ($ext=="")
+elseif ($ext=="gif")
  $source = imagecreatefromgif($upload_image);
         // RESIZE 
         imagecopyresized($thumb, $source, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
@@ -446,12 +454,14 @@ unlink($actual);
 
 
            
-             }else{
+             }
+            else{
 
                 //Does not pass validation
 
                 $errors = $validator->errors();
                 Session::put('imgerror','Invalid file.');
+                break;
             }
 
         }
@@ -616,12 +626,14 @@ public function changeForm($id)
 	$doc= Document::where('pr_id',$id)->first();
 	TaskDetails::where('doc_id', '=', $doc->id)->where('status','!=','Done')->delete();
 	DB::table('count')->where('doc_id',$doc->id)->delete();
-$users= User::get();
-foreach ($users as $user) {
+	$users= User::get();
+
+foreach ($users as $user) 
+{
 	$count =new Count;
 	$count->user_id=$user->id;
 	$count->doc_id=$doc->id;
-$count->save();
+	$count->save();
 }
 
 	Session::put('notice', 'Purchase request has been cancelled.' );
