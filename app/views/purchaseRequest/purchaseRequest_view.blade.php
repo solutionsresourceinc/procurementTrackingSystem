@@ -61,7 +61,7 @@
 	<hr class="clear" />
 
 	@if($purchase->status == "Cancelled")
-		<div class="alert alert-danger"> Reason: {{ $purchase->reason }}</div> 
+		<div class="alert alert-danger"> Reason: {{ strip_tags($purchase->reason) }}</div> 
 	@endif
 	
 	<div class="panel panel-success">
