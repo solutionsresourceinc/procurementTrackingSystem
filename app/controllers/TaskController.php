@@ -108,7 +108,7 @@ class TaskController extends Controller {
  	{
  		$id= Input::get('taskdetails_id');
  		$remarks =Input::get('remarks');
-   		if(ctype_alpha(str_replace(array(' ', '-', '.'),'',$remarks)))
+   		if(ctype_alnum(str_replace(str_split(' \\/:*?".,|'),'',$remarks)))
         {
 			$taskd=TaskDetails::find($id);
 			$taskd->remarks=$remarks;
@@ -130,7 +130,7 @@ public function addtask()
 		$section_id= Input::get('section_id');
 
 		$label= Input::get('label');
-	if(ctype_alpha(str_replace(' ','',$label)))
+	if(ctype_alpha(str_replace(str_split(' \\/:*?".,|'),'',$label)))
         {
         	$newtask= new OtherDetails;
         	$newtask->section_id=$section_id;
@@ -146,6 +146,15 @@ return Redirect::back();
     }
 
 	}
+public function deladdtask()
+	{
+		$otherdetails_id= Input::get('id');
+
+        	$delOD=OtherDetails::find($otherdetails_id);
+   $delOD->delete();
+  Values::where('otherDetails_id', $otherdetails_id)->delete();
+   return Redirect::back();
+      }
 
 
 }
