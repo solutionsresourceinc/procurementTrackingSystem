@@ -51,21 +51,21 @@
 $ctask= OtherDetails::where('section_id', $sectionName->id )->count();
 if($ctask!=0){
 ?>
-<tr>
+<!--tr>
 <th class="workflow-th" width="25%" colspan="2">LABEL</th>
 						<th class="workflow-th" width="70%">ACTION</th>
 			
-</tr>
+</tr-->
 <?php 
 $addontask= OtherDetails::where('section_id', $sectionName->id )->get();
 ?>
 @foreach ($addontask as $addontasks)
 <tr>
 	<td colspan="2" align="center">{{$addontasks->label}}</td>
-	<td align="center">
+	<td>
 		{{Form::open(['url'=>'deladdtask'])}}
 		<input type="hidden" name="id" value="<?php echo $addontasks->id ?>">
-	<button class="btn btn-error">Delete</button>
+	<button class="btn btn-danger" data-title="Delete"><span class="glyphicon glyphicon-trash"></span></button>
 		{{Form::close()}}
 	</td>
 </tr> 
@@ -170,21 +170,21 @@ $addontask= OtherDetails::where('section_id', $sectionName->id )->get();
 $ctask= OtherDetails::where('section_id', $sectionName->id )->count();
 if($ctask!=0){
 ?>
-<tr>
+<!--tr>
 <th class="workflow-th" width="25%" colspan="2">LABEL</th>
 						<th class="workflow-th" width="70%">ACTION</th>
 			
-</tr>
+</tr-->
 <?php 
 $addontask= OtherDetails::where('section_id', $sectionName->id )->get();
 ?>
 @foreach ($addontask as $addontasks)
 <tr>
-	<td colspan="2" align="center">{{$addontasks->label}}</td>
-	<td align="center">
+	<td colspan="2">{{$addontasks->label}}</td>
+	<td>
 		{{Form::open(['url'=>'deladdtask'])}}
 		<input type="hidden" name="id" value="<?php echo $addontasks->id ?>">
-	<button class="btn btn-error">Delete</button>
+	<button class="btn btn-danger" data-title="Delete"><span class="glyphicon glyphicon-trash"></span></button>
 		{{Form::close()}}
 	</td>
 </tr> 
@@ -287,21 +287,21 @@ $addontask= OtherDetails::where('section_id', $sectionName->id )->get();
 $ctask= OtherDetails::where('section_id', $sectionName->id )->count();
 if($ctask!=0){
 ?>
-<tr>
+<!--tr>
 <th class="workflow-th" width="25%" colspan="2">LABEL</th>
 						<th class="workflow-th" width="70%">ACTION</th>
 			
-</tr>
+</tr-->
 <?php 
 $addontask= OtherDetails::where('section_id', $sectionName->id )->get();
 ?>
 @foreach ($addontask as $addontasks)
 <tr>
-	<td colspan="2" align="center">{{$addontasks->label}}</td>
-	<td align="center">
+	<td colspan="2">{{$addontasks->label}}</td>
+	<td>
 		{{Form::open(['url'=>'deladdtask'])}}
 		<input type="hidden" name="id" value="<?php echo $addontasks->id ?>">
-	<button class="btn btn-error">Delete</button>
+	<button class="btn btn-danger" data-title="Delete"><span class="glyphicon glyphicon-trash"></span></button>
 		{{Form::close()}}
 	</td>
 </tr> 
@@ -404,21 +404,21 @@ $addontask= OtherDetails::where('section_id', $sectionName->id )->get();
 $ctask= OtherDetails::where('section_id', $sectionName->id )->count();
 if($ctask!=0){
 ?>
-<tr>
+<!--tr>
 <th class="workflow-th" width="25%" colspan="2">LABEL</th>
 						<th class="workflow-th" width="70%">ACTION</th>
 			
-</tr>
+</tr-->
 <?php 
 $addontask= OtherDetails::where('section_id', $sectionName->id )->get();
 ?>
 @foreach ($addontask as $addontasks)
 <tr>
-	<td colspan="2" align="center">{{$addontasks->label}}</td>
-	<td align="center">
+	<td colspan="2">{{$addontasks->label}}</td>
+	<td>
 		{{Form::open(['url'=>'deladdtask'])}}
 		<input type="hidden" name="id" value="<?php echo $addontasks->id ?>">
-	<button class="btn btn-error">Delete</button>
+	<button class="btn btn-danger" data-title="Delete"><span class="glyphicon glyphicon-trash"></span></button>
 		{{Form::close()}}
 	</td>
 </tr> 
