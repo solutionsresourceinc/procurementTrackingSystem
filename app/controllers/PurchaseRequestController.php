@@ -298,6 +298,31 @@ else{
 
 	public function edit()
 	{
+		//Office restriction
+                    if (Entrust::hasRole('Administrator'))
+                      {}
+                    else if(Entrust::hasRole('Procurement Personnel')){
+                            
+                            $useroffice=Auth::user()->office_id;
+                            $maker= User::find( $purchase->requisitioner);
+                             $docget=Document::where('pr_id', $request->id)->first();
+                        $taskd = TaskDetails::where('doc_id',$docget->id)->where('assignee_id',$userx)->count();
+                            if($taskd!=0){}
+                            else if ($userx==$purchase->created_by)
+                            {}
+                            else if ($useroffice!=$maker->office_id)
+                            
+                             return Redirect::to('dashboard');
+                    }
+                    else
+                        {
+                            $useroffice=Auth::user()->office_id;
+                            $maker= User::find( $purchase->requisitioner);
+                            if ($useroffice!=$maker->office_id){
+                          return Redirect::to('/dashboard');
+}
+                        }
+                //End Office restriction
 		return View::make('pr_edit');
 	}
 
@@ -317,8 +342,38 @@ else{
 
 	public function vieweach($id)
 	{
+
+
+
 		$purchase = Purchase::find($id);
 		$wfName = DB::table('document')->where('pr_id',$id)->first();
+
+ //Office restriction
+                    if (Entrust::hasRole('Administrator'))
+                      {}
+                    else if(Entrust::hasRole('Procurement Personnel')){
+                            
+                            $useroffice=Auth::user()->office_id;
+                            $maker= User::find( $purchase->requisitioner);
+                             $docget=Document::where('pr_id', $request->id)->first();
+                        $taskd = TaskDetails::where('doc_id',$docget->id)->where('assignee_id',$userx)->count();
+                            if($taskd!=0){}
+                            else if ($userx==$purchase->created_by)
+                            {}
+                            else if ($useroffice!=$maker->office_id)
+                            
+                             return Redirect::to('dashboard');
+                    }
+                    else
+                        {
+                            $useroffice=Auth::user()->office_id;
+                            $maker= User::find( $purchase->requisitioner);
+                            if ($useroffice!=$maker->office_id){
+                          return Redirect::to('/dashboard');
+}
+                        }
+                //End Office restriction
+
 
 		// JAN SARMIENTO AWESOME CHECKLIST VARIABLES
 		$secName1 = DB::table('section')->where('workflow_id',$wfName->work_id)->where('section_order_id','1')->first();
@@ -383,8 +438,8 @@ foreach(Input::file('file') as $file){
             $validator = Validator::make(array('file'=> $file), $rules);
             $destine=public_path()."/uploads";
  
- //$size = $file->getSize();
-//return (string)$size;
+ $size = $file->getSize();
+return (string)$size;
            
 
             if($validator->passes()){
