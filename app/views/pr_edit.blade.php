@@ -360,7 +360,7 @@
                                     <input type="hidden" name="otherDetails_id" value="{{$otherdetails->id}}">
                                     <input type="hidden" name="purchase_request_id" value="{{$epurchase->id}}">
                                     <td colspan="3"><input name ="value" type="text" class="form-control"></td>
-                                    <td><button class ="btn btn-success">Save</button></td>
+                                    <td align="center"><button class ="btn btn-primary">Save</button></td>
                                 {{Form::close()}}
                     <?php
                             }
@@ -373,7 +373,7 @@
                                 <input type='hidden' name='purchase_request_id' value='".$epurchase->id."'>";
                                 echo "<td>"."<button class ='btn btn-success'>Edit</button>"."</td>";*/
                                 echo"<input type='hidden' name='values_id' value='".$values->id."'>";
-                                echo "<td colspan='2'>"."<button class ='btn btn-primary'>Edit</button>"."</td>";
+                                echo "<td colspan='2' align='center'>"."<button class ='btn btn-default'>Edit</button>"."</td>";
                     ?>
                                 {{Form::close()}}
                     <?php
@@ -413,7 +413,8 @@
                                 </td>
 
                                 </tr><tr class="current-task">
-                                <td colspan="5" style="text-align: right;"><input type="submit" class="btn btn-success"> </td>
+                                <td colspan="4" style="border-right: none"></td>
+                                <td style="border-left: none; text-align: center;"><input type="submit" class="btn btn-success"> </td>
                             {{Form::close()}}
             <?php       }
             //END Cursor Open Form
