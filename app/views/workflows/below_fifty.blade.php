@@ -6,119 +6,91 @@
 
 @section('content')
 
-<!-- Modal Div -->
-<style type="text/css">
-#description {
-	height: 400px;
-	top: calc(50% - 200px) !important;
-	overflow: hidden;
-}
-</style>
-<div class="modal fade" id="description" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title">Description</h4>
-			</div>
-			<center>
-				<div class="modal-body" id="description_body">
-					<!-- Insert Data Here -->
+	<!-- Modal Div -->
+	<style type="text/css">
+		#description {
+			height: 400px;
+			top: calc(50% - 200px) !important;
+			overflow: hidden;
+		}
+	</style>
+	<div class="modal fade" id="description" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title">Description</h4>
 				</div>
-			</center>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Back</button>
+				<center>
+					<div class="modal-body" id="description_body">
+						<!-- Insert Data Here -->
+					</div>
+				</center>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Back</button>
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
-<?php $wfName = Workflow::find('1'); ?>
 
-<h1 class="page-header"> {{{ $wfName->workFlowName }}}  </h1>
+	<?php $wfName = Workflow::find('1'); ?>
+	<h1 class="page-header"> {{{ $wfName->workFlowName }}}  </h1>
 
-<?php $sectionName = Section::find('5'); ?>
-<div class="panel panel-success">
-	<div class="panel-heading">
-		<?php $sectionName = Section::find('1'); ?>
-		<h3 class="panel-title"> {{{ 
+	<?php $sectionName = Section::find('5'); ?>
+	<div class="panel panel-success">
+		<div class="panel-heading">
+			<?php $sectionName = Section::find('1'); ?>
+			<h3 class="panel-title"> {{{ strtoupper($sectionName->sectionName) }}} </h3>
+		</div>
 
-
-
-			strtoupper($sectionName->sectionName) }}} </h3>
-	</div>
-
-	<div class="panel-body">
-		<table border="1" class="workflow-table">
-			<tr>
-				<th class="workflow-th" width="25%">TASK</th>
-				<th class="workflow-th" width="45%">DESIGNATION ASSIGNED</th>
-				<th class="workflow-th" width="25%">ACTION</th>
-			</tr>
-
-			<?php $section1 = DB::table('tasks')->where('wf_id','1')->get(); ?>
+		<div class="panel-body">
+			<table border="1" class="workflow-table">
+				<tr>
+					<th class="workflow-th" width="25%">TASK</th>
+					<th class="workflow-th" width="45%">DESIGNATION ASSIGNED</th>
+					<th class="workflow-th" width="25%">ACTION</th>
+				</tr>
+				<?php $section1 = DB::table('tasks')->where('wf_id','1')->get(); ?>
 
 			@foreach($section1 as $section)
-			@if($section->section_id == 1)
-			<?php $d_id=$section->designation_id; ?>
+				@if($section->section_id == 1)
+					<?php $d_id=$section->designation_id; ?>
 
-			<tr>
-				<td> {{{ $section->taskName }}}</div> </td>
+				<tr>
+					<td> {{{ $section->taskName }}}</div> </td>
 
-				<td> 
-					<?php 
-					$desig = DB::table('designation')->where('id', $d_id)->get();	
-					if($d_id!=0)
-					{
+					<td> 
+						<?php 
+							$desig = DB::table('designation')->where('id', $d_id)->get();	
+							if($d_id!=0)
+							{
 						?>
 
-						@foreach ($desig as $desigs)
-						<div class="mode1" id="insert_{{$section->id}}">
-							{{ $desigs->designation }}
-						</div>
-						@endforeach
+							@foreach ($desig as $desigs)
+							<div class="mode1" id="insert_{{$section->id}}">
+								{{ $desigs->designation }}
+							</div>
+							@endforeach
 
 						<?php	 
-					}
-					else 
-					{
+							}
+							else 
+							{
 						?>
-						<div class="mode1" id="insert_{{$section->id}}">None</div>
+							<div class="mode1" id="insert_{{$section->id}}">None</div>
 						<?php
-					}
-					$desig = DB::table('designation')->get();	
-					?>
+							}
+							$desig = DB::table('designation')->get();	
+						?>
+						<form class="form ajax" action="submit/{{$section->id}}" data-replace="#insert_{{$section->id}}" method="post" role="form" class="form-inline">
+							<select name ="designa" class = "form-control mode2 edit-text" style="width:100%">
+								<option value="0" selected>None</option>
+								@foreach ($desig as $desigs)
+								<option value="{{$desigs->id}}" >{{$desigs->designation}}</option>
+								@endforeach
+							</select>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-					<form class="form ajax" action="submit/{{$section->id}}" data-replace="#insert_{{$section->id}}" method="post" role="form" class="form-inline">
-
-						<select name ="designa" class = "form-control mode2 edit-text" style="width:100%">
-							<option value="0" selected>None</option>
-							@foreach ($desig as $desigs)
-							<option value="{{$desigs->id}}" >{{$desigs->designation}}</option>
-							@endforeach
-						</select>
-
-						<input type="hidden" value="{{$section->id}}" name ="task_id">
-
+							<input type="hidden" value="{{$section->id}}" name ="task_id">
 						{{ Form::close() }}
 					</td>
 					<td class="col-md-4">
@@ -128,9 +100,8 @@
 						<a href="replace/{{$section->id}}" title="Description" data-placement="top" data-method="post" data-replace="#description_body"  class="btn ajax btn-info" data-toggle="modal" data-target="#description"  onclick="empty_div()"><span class="glyphicon glyphicon-list-alt"></span></a><br>
 					</td>
 				</tr>
-
-				@endif
-				@endforeach
+			@endif
+		@endforeach
 			</table>
 		</div>
 	</div>
@@ -150,17 +121,17 @@
 				</tr>
 				<?php $section1 = DB::table('tasks')->where('wf_id','1')->get(); ?>
 
-				@foreach($section1 as $section)
-				@if($section->section_id == 2)
+		@foreach($section1 as $section)
+			@if($section->section_id == 2)
 				<?php $d_id=$section->designation_id; ?>
 				<tr> 
 					<td> {{{ $section->taskName }}} </td>
 					<td> 
 						<?php
-						$desig = DB::table('designation')->where('id', $d_id)->get();	
-						if($d_id!=0)
-						{
-							?>
+							$desig = DB::table('designation')->where('id', $d_id)->get();	
+							if($d_id!=0)
+							{
+						?>
 
 							@foreach ($desig as $desigs)
 							<div class="mode1" id="insert_{{$section->id}}">
@@ -168,15 +139,15 @@
 							</div>
 							@endforeach
 
-							<?php	 
-						}
-						else 
-						{
-							?>
+						<?php	 
+							}
+							else 
+							{
+						?>
 							<div class="mode1" id="insert_{{$section->id}}">None</div>
-							<?php
-						}
-						$desig = DB::table('designation')->get();	
+						<?php
+							}
+							$desig = DB::table('designation')->get();	
 						?>
 
 						<form class="form ajax" action="submit/{{$section->id}}" data-replace="#insert_{{$section->id}}" method="post" role="form" class="form-inline">
@@ -189,217 +160,207 @@
 
 							<input type="hidden" value="{{$section->id}}" name ="task_id">
 
-							{{ Form::close() }}
-						</td>
+						{{ Form::close() }}
+					</td>
 
-						<td class="col-md-4">
+					<td class="col-md-4">
 
-							{{HTML::decode (Form::button('<span class="glyphicon glyphicon-edit"></span>', ['class' => 'btn btn-success table-actions allow-edit mode1', 'data-original-title' => 'Edit', 'data-placement' => 'top', 'data-toggle' => 'tooltip']))}}
-							{{Form::button('Save', ['class' => 'btn btn-success save-edit mode2', 'id' => 'temp_alert'])}}
-							{{Form::button('Cancel', ['class' => 'btn btn-default cancel-edit mode2'])}}
-							<a href="replace/{{$section->id}}" title="Description" data-placement="top" data-method="post" data-replace="#description_body"  class="btn ajax btn-info" data-toggle="modal" data-target="#description"  onclick="empty_div()"><span class="glyphicon glyphicon-list-alt"></span></a><br>
-						</td>
-					</tr>
-					@endif
-					@endforeach
-				</table>
-			</div>
+						{{HTML::decode (Form::button('<span class="glyphicon glyphicon-edit"></span>', ['class' => 'btn btn-success table-actions allow-edit mode1', 'data-original-title' => 'Edit', 'data-placement' => 'top', 'data-toggle' => 'tooltip']))}}
+						{{Form::button('Save', ['class' => 'btn btn-success save-edit mode2', 'id' => 'temp_alert'])}}
+						{{Form::button('Cancel', ['class' => 'btn btn-default cancel-edit mode2'])}}
+						<a href="replace/{{$section->id}}" title="Description" data-placement="top" data-method="post" data-replace="#description_body"  class="btn ajax btn-info" data-toggle="modal" data-target="#description"  onclick="empty_div()"><span class="glyphicon glyphicon-list-alt"></span></a><br>
+					</td>
+				</tr>
+			@endif
+		@endforeach
+			</table>
+		</div>
+	</div>
+
+	<div class="panel panel-success">
+		<div class="panel-heading">
+			<?php $sectionName = Section::find('3'); ?>
+			<h3 class="panel-title"> {{{ strtoupper($sectionName->sectionName) }}} </h3>
 		</div>
 
-		<div class="panel panel-success">
-			<div class="panel-heading">
-				<?php $sectionName = Section::find('3'); ?>
-				<h3 class="panel-title"> {{{ strtoupper($sectionName->sectionName) }}} </h3>
-			</div>
+		<div class="panel-body">
+			<table border="1" class="workflow-table">
+				<tr>
+					<th class="workflow-th" width="25%">TASK</th>
+					<th class="workflow-th" width="45%">DESIGNATION ASSIGNED</th>
+					<th class="workflow-th" width="25%">ACTION</th>
+				</tr>
+				<?php $section1 = DB::table('tasks')->where('wf_id','1')->get(); ?>
 
-			<div class="panel-body">
-				<table border="1" class="workflow-table">
-					<tr>
-						<th class="workflow-th" width="25%">TASK</th>
-						<th class="workflow-th" width="45%">DESIGNATION ASSIGNED</th>
-						<th class="workflow-th" width="25%">ACTION</th>
-					</tr>
-					<?php $section1 = DB::table('tasks')->where('wf_id','1')->get(); ?>
-
-					@foreach($section1 as $section)
-					@if($section->section_id == 3)
-					<?php  $d_id=$section->designation_id; ?>
-					<tr>
-						<td> {{{ $section->taskName }}} </td>
-						<td>
-
-							<?php
+		@foreach($section1 as $section)
+			@if($section->section_id == 3)
+				<?php  $d_id=$section->designation_id; ?>
+				<tr>
+					<td> {{{ $section->taskName }}} </td>
+					<td>
+						<?php
 							$desig = DB::table('designation')->where('id', $d_id)->get();	
 							if($d_id!=0)
 							{
-								?>
+						?>
 
-								@foreach ($desig as $desigs)
-								<div class="mode1" id="insert_{{$section->id}}">
-									{{$desigs->designation }}
-								</div>
-								@endforeach
+							@foreach ($desig as $desigs)
+							<div class="mode1" id="insert_{{$section->id}}">
+								{{$desigs->designation }}
+							</div>
+							@endforeach
 
-								<?php	 
+						<?php	 
 							}
 							else 
 							{
-								?>
-								<div class="mode1" id="insert_{{$section->id}}">None</div>
-								<?php
+						?>
+							<div class="mode1" id="insert_{{$section->id}}">None</div>
+						<?php
 							}
 							$desig = DB::table('designation')->get();	
-							?>
-
-							<form class="form ajax" action="submit/{{$section->id}}" data-replace="#insert_{{$section->id}}" method="post" role="form" class="form-inline">
-								<select name ="designa" class = "form-control mode2 edit-text" style="width:100%">
-									<option value=0>None                                 </option>
-									@foreach ($desig as $desigs)
-									<option value="{{$desigs->id}}">{{$desigs->designation}}</option>
-									@endforeach
-
-								</select>
-								<input type="hidden" value="{{$section->id}}" name ="task_id">
-
-								{{ Form::close() }}
-							</td>
-							<td class="col-md-4">
-
-								{{HTML::decode (Form::button('<span class="glyphicon glyphicon-edit"></span>', ['class' => 'btn btn-success table-actions allow-edit mode1', 'data-original-title' => 'Edit', 'data-placement' => 'top', 'data-toggle' => 'tooltip']))}}
-								{{Form::button('Save', ['class' => 'btn btn-success save-edit mode2', 'id' => 'temp_alert'])}}
-								{{Form::button('Cancel', ['class' => 'btn btn-default cancel-edit mode2'])}}
-								<a href="replace/{{$section->id}}" title="Description" data-placement="top" data-method="post" data-replace="#description_body"  class="btn ajax btn-info" data-toggle="modal" data-target="#description"  onclick="empty_div()"><span class="glyphicon glyphicon-list-alt"></span></a><br>
-							</td>
-						</tr>
-
-						@endif
-						@endforeach
-					</table>
-				</div>
-			</div>
-
-			<div class="panel panel-success">
-				<div class="panel-heading">
-					<?php $sectionName = Section::find('4'); ?>
-					<h3 class="panel-title"> {{{ strtoupper($sectionName->sectionName) }}} </h3>
-				</div>
-				<div class="panel-body">
-					<table border="1" class="workflow-table">
-						<tr>
-							<th class="workflow-th" width="25%">TASK</th>
-							<th class="workflow-th" width="45%">DESIGNATION ASSIGNED</th>
-							<th class="workflow-th" width="25%">ACTION</th>
-						</tr>
-						<?php 
-						$section1 = DB::table('tasks')->where('wf_id','1')->get();	
-
 						?>
 
-						@foreach($section1 as $section)
-						@if($section->section_id == 4)
-						<?php 
-						$d_id=$section->designation_id; 
+						<form class="form ajax" action="submit/{{$section->id}}" data-replace="#insert_{{$section->id}}" method="post" role="form" class="form-inline">
+							<select name ="designa" class = "form-control mode2 edit-text" style="width:100%">
+								<option value=0>None                                 </option>
+								@foreach ($desig as $desigs)
+								<option value="{{$desigs->id}}">{{$desigs->designation}}</option>
+								@endforeach
 
+							</select>
+							<input type="hidden" value="{{$section->id}}" name ="task_id">
+
+						{{ Form::close() }}
+					</td>
+					<td class="col-md-4">
+
+						{{HTML::decode (Form::button('<span class="glyphicon glyphicon-edit"></span>', ['class' => 'btn btn-success table-actions allow-edit mode1', 'data-original-title' => 'Edit', 'data-placement' => 'top', 'data-toggle' => 'tooltip']))}}
+						{{Form::button('Save', ['class' => 'btn btn-success save-edit mode2', 'id' => 'temp_alert'])}}
+						{{Form::button('Cancel', ['class' => 'btn btn-default cancel-edit mode2'])}}
+						<a href="replace/{{$section->id}}" title="Description" data-placement="top" data-method="post" data-replace="#description_body"  class="btn ajax btn-info" data-toggle="modal" data-target="#description"  onclick="empty_div()"><span class="glyphicon glyphicon-list-alt"></span></a><br>
+					</td>
+				</tr>
+			@endif
+		@endforeach
+			</table>
+		</div>
+	</div>
+
+	<div class="panel panel-success">
+		<div class="panel-heading">
+			<?php $sectionName = Section::find('4'); ?>
+			<h3 class="panel-title"> {{{ strtoupper($sectionName->sectionName) }}} </h3>
+		</div>
+		<div class="panel-body">
+			<table border="1" class="workflow-table">
+				<tr>
+					<th class="workflow-th" width="25%">TASK</th>
+					<th class="workflow-th" width="45%">DESIGNATION ASSIGNED</th>
+					<th class="workflow-th" width="25%">ACTION</th>
+				</tr>
+				<?php 
+					$section1 = DB::table('tasks')->where('wf_id','1')->get();	
+				?>
+
+		@foreach($section1 as $section)
+			@if($section->section_id == 4)
+				<?php 
+					$d_id=$section->designation_id; 
+				?>
+				<tr>
+					<td> {{{ $section->taskName }}} </td>
+					<td>
+						<?php
+							$desig = DB::table('designation')->where('id', $d_id)->get();	
+							if($d_id!=0){
 						?>
-						<tr>
-							<td> {{{ $section->taskName }}} </td>
-							<td>
-								<?php
 
-								$desig = DB::table('designation')->where('id', $d_id)->get();	
-								if($d_id!=0){
-									?>
-
-									@foreach ($desig as $desigs)
-									<div class="mode1" id="insert_{{$section->id}}">
-										{{$desigs->designation }}
-									</div>
-									@endforeach
-
-									<?php	 
-								}
-								else 
-								{
-									?>
-									<div class="mode1" id="insert_{{$section->id}}">None</div>
-									<?php
-								}
-								$desig = DB::table('designation')->get();	
-								?>
-								<form class="form ajax" action="submit/{{$section->id}}" data-replace="#insert_{{$section->id}}" method="post" role="form" class="form-inline">
-									<select name ="designa" class = "form-control mode2 edit-text" style="width:100%">
-										<option value=0>None                                 </option>
-										@foreach ($desig as $desigs)
-										<option value="{{$desigs->id}}">{{$desigs->designation}}</option>
-										@endforeach
-
-									</select>
-									<input type="hidden" value="{{$section->id}}" name ="task_id">
-
-									{{ Form::close() }}
-								</td>
-								<td class="col-md-4">
-
-									{{HTML::decode (Form::button('<span class="glyphicon glyphicon-edit"></span>', ['class' => 'btn btn-success table-actions allow-edit mode1', 'data-original-title' => 'Edit', 'data-placement' => 'top', 'data-toggle' => 'tooltip']))}}
-									{{Form::button('Save', ['class' => 'btn btn-success save-edit mode2', 'id' => 'temp_alert'])}}
-									{{Form::button('Cancel', ['class' => 'btn btn-default cancel-edit mode2'])}}
-									<a href="replace/{{$section->id}}" title="Description" data-placement="top" data-method="post" data-replace="#description_body"  class="btn ajax btn-info" data-toggle="modal" data-target="#description"  onclick="empty_div()"><span class="glyphicon glyphicon-list-alt"></span></a><br>
-								</td>
-							</tr>
-
-							@endif
+							@foreach ($desig as $desigs)
+							<div class="mode1" id="insert_{{$section->id}}">
+								{{$desigs->designation }}
+							</div>
 							@endforeach
-						</table>
-					</div>
-				</div>
+
+						<?php	 
+							}
+							else 
+							{
+						?>
+							<div class="mode1" id="insert_{{$section->id}}">None</div>
+						<?php
+							}
+							$desig = DB::table('designation')->get();	
+						?>
+						<form class="form ajax" action="submit/{{$section->id}}" data-replace="#insert_{{$section->id}}" method="post" role="form" class="form-inline">
+							<select name ="designa" class = "form-control mode2 edit-text" style="width:100%">
+								<option value=0>None                                 </option>
+								@foreach ($desig as $desigs)
+								<option value="{{$desigs->id}}">{{$desigs->designation}}</option>
+								@endforeach
+
+							</select>
+							<input type="hidden" value="{{$section->id}}" name ="task_id">
+
+						{{ Form::close() }}
+					</td>
+					<td class="col-md-4">
+
+						{{HTML::decode (Form::button('<span class="glyphicon glyphicon-edit"></span>', ['class' => 'btn btn-success table-actions allow-edit mode1', 'data-original-title' => 'Edit', 'data-placement' => 'top', 'data-toggle' => 'tooltip']))}}
+						{{Form::button('Save', ['class' => 'btn btn-success save-edit mode2', 'id' => 'temp_alert'])}}
+						{{Form::button('Cancel', ['class' => 'btn btn-default cancel-edit mode2'])}}
+						<a href="replace/{{$section->id}}" title="Description" data-placement="top" data-method="post" data-replace="#description_body"  class="btn ajax btn-info" data-toggle="modal" data-target="#description"  onclick="empty_div()"><span class="glyphicon glyphicon-list-alt"></span></a><br>
+					</td>
+				</tr>
+			@endif
+		@endforeach
+			</table>
+		</div>
+	</div>
 @stop 
 
 @section('footer')
-				{{ HTML::script('ios_overlay/js/iosOverlay.js') }}
-				{{ HTML::script('ios_overlay/js/prettify.js') }}
-				{{ HTML::script('ios_overlay/js/custom.js') }}
+	{{ HTML::script('ios_overlay/js/iosOverlay.js') }}
+	{{ HTML::script('ios_overlay/js/prettify.js') }}
+	{{ HTML::script('ios_overlay/js/custom.js') }}
 
-				{{ HTML::script('js/bootstrap-ajax.js');}}
-				<script>
-				function empty_div()
-				{
-					document.getElementById("description_body").innerHTML = "";
-				}
+	{{ HTML::script('js/bootstrap-ajax.js');}}
+	<script>
+		function empty_div()
+		{
+			document.getElementById("description_body").innerHTML = "";
+		}
+	</script>
+	<script type = "text/javascript">
+		$(document).ready(function() {
+			$(".mode2").hide();
+			$(".allow-edit").on("click", function() {
+				var current = $(this).closest("tr").find(".current-text");
+				var textfield = $(this).closest("tr").find(".edit-text");
+				var text = current.text().trim();
+				current.hide();
+				textfield.val(text);
+				textfield.attr({"placeholder": text, "value": text}).show().focus();
+				$(this).closest("tr").find(".mode1").hide();
+				$(this).closest("tr").find(".mode2").show();
+			});
 
-				</script>
-				<script type = "text/javascript">
-				$(document).ready(function() {
-					$(".mode2").hide();
-					$(".allow-edit").on("click", function() {
-						var current = $(this).closest("tr").find(".current-text");
-						var textfield = $(this).closest("tr").find(".edit-text");
-						var text = current.text().trim();
-						current.hide();
-						textfield.val(text);
-						textfield.attr({"placeholder": text, "value": text}).show().focus();
-						$(this).closest("tr").find(".mode1").hide();
-						$(this).closest("tr").find(".mode2").show();
-					});
+			$(".save-edit").on("click", function(event) {
+				var current = $(this).closest("tr").find(".current-text");
+				var textfield = $(this).closest("tr").find(".edit-text");
+				var text = textfield.val();
+				textfield.hide();
+				current.text(text);
+				current.show();
+				textfield.parent().submit();
+				$(this).closest("tr").find(".mode1").show();
+				$(this).closest("tr").find(".mode2").hide();
+			});
 
-					$(".save-edit").on("click", function(event) {
-						var current = $(this).closest("tr").find(".current-text");
-						var textfield = $(this).closest("tr").find(".edit-text");
-						var text = textfield.val();
-						textfield.hide();
-						current.text(text);
-						current.show();
-						textfield.parent().submit();
-						$(this).closest("tr").find(".mode1").show();
-						$(this).closest("tr").find(".mode2").hide();
-
-	});
-
-					$(".cancel-edit").on("click", function() {
-						$(this).closest("tr").find(".mode2").hide();
-						$(this).closest("tr").find(".mode1").show();
-					});
-				});
-
-
-</script>
+			$(".cancel-edit").on("click", function() {
+				$(this).closest("tr").find(".mode2").hide();
+				$(this).closest("tr").find(".mode1").show();
+			});
+		});
+	</script>
 @stop
