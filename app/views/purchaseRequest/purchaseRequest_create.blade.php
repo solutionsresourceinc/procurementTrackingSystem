@@ -269,31 +269,7 @@
 		</div>	
 	</div>		
 	{{ Form::close() }}	
-	<!--Image Display
-	<div id="img-section">
-
-		<?php
-  			$attachmentc = DB::table('attachments')->where('doc_id', $doc_id)->count();
-         	if ($attachmentc!=0)
-            echo "<h3>"."Attachments"."</h3>";
-			$attachments = DB::table('attachments')->where('doc_id', $doc_id)->get();	
-			$srclink="uploads\\";
-		?>
-		@foreach ($attachments as $attachment) 
-			<div class="image-container">
-				<a href="{{asset('uploads/'.$attachment->data)}}" data-lightbox="roadtrip">
-					<img class="img-thumbnail" src="{{asset('uploads/'.$attachment->data)}}" style="width: 100px; height: 100px;" />
-				</a>
-				{{ Form::open(array('method' => 'post', 'url' => 'delimage')) }}
-				<input type="hidden" name="hide" value="{{$attachment->id}}">
-				<button class="star-button"><img src="{{asset('img/Delete_Icon.png')}}"></button>
-				{{Form::close()}}
-			</div>
-		@endforeach
-
-	</div>
-	End Image Display-->
-
+	
 	{{ Session::forget('notice'); }}
 	{{ Session::forget('main_error'); }}
 	{{ Session::forget('m1'); }}

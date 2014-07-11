@@ -61,7 +61,7 @@
             $date_today =date('Y-m-d H:i:s');
             $requests = new Purchase;
             $userx=Auth::user()->id;
-            $requests = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('status', '=', 'Active')->get(); 
+            $requests = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('status', '=', 'Active')->paginate(10); 
             //End Query Restrictions
         ?>
 
@@ -191,6 +191,11 @@
             @endif
       	</tbody>
     </table>  
+ 
+ <div>
+           <center> {{ $requests->links(); }} </center>
+        </div>
+
                 {{ Session::forget('notice'); }}
 @stop
 

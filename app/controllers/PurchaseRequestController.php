@@ -22,8 +22,8 @@ if ($cnp!=0)
 return Redirect::back();
 		$purchase = new Purchase;
 		$document = new Document;
-		$purchase->projectPurpose = Input::get( 'projectPurpose' );
-		$purchase->sourceOfFund = Input::get( 'sourceOfFund' );
+		$purchase->projectPurpose = strip_tags(Input::get( 'projectPurpose' ));
+		$purchase->sourceOfFund = strip_tags(Input::get( 'sourceOfFund' ));
 		$purchase->amount = Input::get( 'amount' );
 		$purchase->office = Input::get( 'office' );
 		$purchase->requisitioner = Input::get( 'requisitioner' );
@@ -356,8 +356,8 @@ public function edit_submit()
 $id = Input::get('id');
 $purchase = Purchase::find(Input::get('id'));
 $document = Document::where('pr_id', Input::get('id'))->first();
-$purchase->projectPurpose = Input::get( 'projectPurpose' );
-$purchase->sourceOfFund = Input::get( 'sourceOfFund' );
+$purchase->projectPurpose = strip_tags(Input::get( 'projectPurpose' ));
+$purchase->sourceOfFund = strip_tags(Input::get( 'sourceOfFund' ));
 $purchase->office = Input::get( 'office' );
 $purchase->requisitioner = Input::get( 'requisitioner' );
 $purchase->dateRequested = Input::get( 'dateRequested' );
@@ -647,12 +647,12 @@ public function checklistedit(){
 
 //Initializations	
 $taskdetails_id= Input::get('taskdetails_id');
-$assignee=Input::get('assignee');
+$assignee=strip_tags(Input::get('assignee'));
 $mydate=Input::get('dateFinished');
 $timestamp = strtotime($mydate);
 $dateFinished= date("Y-m-d H:i:s", $timestamp);
 $daysOfAction=Input::get('daysOfAction');
-$remarks=" ".Input::get('remarks');
+$remarks=" ".strip_tags(Input::get('remarks'));
 $check=0;
 
 //Validation Process
@@ -722,7 +722,7 @@ public function insertaddon(){
 //Initialization
 $otherDetails_id= Input::get('otherDetails_id');
 $purchase_request_id= Input::get('purchase_request_id');
-$value= Input::get('value');
+$value= strip_tags(Input::get('value'));
 
 if(ctype_alnum(str_replace(str_split(' !\\/:*?".,|'),'',$value)))
     {
@@ -747,10 +747,9 @@ public function editaddon()
 	{
 		$values_id= Input::get('values_id');
         $insertvalue= Values::find($values_id);
-        $insertvalue->delete();
-       
+        $insertvalue->delete();   
         	return Redirect::back();
-        }
+    }
   
 
 
