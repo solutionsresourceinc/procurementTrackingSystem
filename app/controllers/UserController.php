@@ -55,7 +55,7 @@ class UserController extends BaseController {
         $users= new User; $users = DB::table('users')->get();
 
         foreach ($users as $userx){
-            if ($userx->username==$user->username)
+            if (strtoupper($userx->username)==strtoupper($user->username))
              { $checkusername=1; $errorcheck=1; }
      }
      if ($checkusername!=0){

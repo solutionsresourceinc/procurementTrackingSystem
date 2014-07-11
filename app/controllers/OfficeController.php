@@ -149,6 +149,14 @@ class OfficeController extends BaseController {
 	{
 		$deleteoffice = Office::find($id);
 		$deleteoffice->delete();
+
+	
+		$users = User::where('office_id',$id)->get();
+
+	foreach ($users as $user) {
+			$user->office_id = 0;
+			$user->save();
+	}
 		return Redirect::to('/offices')->with('success','Successfully deleted');
 	}
 }
