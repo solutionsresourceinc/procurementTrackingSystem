@@ -23,7 +23,7 @@
                 <!-- Get all task details with id = task->id -->
                 <?php 
                 	$date_today =date('Y-m-d H:i:s');
-                    $taskDetails_row = TaskDetails::whereTaskId($task->id)->whereStatus("Active")->where("dueDate",">",$date_today)->whereAssigneeId($user_id)->get(); 
+                    $taskDetails_row = TaskDetails::whereTaskId($task->id)->whereStatus("Active")->where("dueDate",">",$date_today)->whereAssigneeId($user_id)->paginate(10); 
                     $workflow_id = $task->wf_id;
                     $workflow_row = Workflow::find($workflow_id);
                     $workflowName = $workflow_row->workFlowName;
@@ -54,6 +54,10 @@
             @endforeach 
 
         @endforeach
+
+        <div>
+           <center> {{ $taskDetails_row->links(); }} </center>
+        </div>
 
     </div>
 @stop    
