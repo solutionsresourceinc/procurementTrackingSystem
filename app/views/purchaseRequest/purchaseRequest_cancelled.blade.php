@@ -139,7 +139,7 @@
                 @endforeach
             @else
                 <tr>
-                    <td colspan="<?php if($adm->role_id == 3) echo "6"; else echo "5";?>">
+                    <td colspan="<?php if(Entrust::hasRole('Administrator') ) echo "6"; else echo "5";?>">
                         <span class="error-view">No data available.</span>
                     </td>
                 </tr>

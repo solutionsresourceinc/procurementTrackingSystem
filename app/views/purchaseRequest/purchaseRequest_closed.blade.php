@@ -88,13 +88,17 @@
 
                     <tr
                       <?php 
-                      //Office restriction
+                 //Office restriction
                     if (Entrust::hasRole('Administrator'))
                       {}
                     else if(Entrust::hasRole('Procurement Personnel')){
+                            
                             $useroffice=Auth::user()->office_id;
                             $maker= User::find( $request->requisitioner);
-                            if ($userx==$request->created_by)
+                             $docget=Document::where('pr_id', $request->id)->first();
+                        $taskd = TaskDetails::where('doc_id',$docget->id)->where('assignee_id',$userx)->count();
+                            if($taskd!=0){}
+                            else if ($userx==$request->created_by)
                             {}
                             else if ($useroffice!=$maker->office_id)
                                 continue;
@@ -135,7 +139,7 @@
                 @endforeach
             @else
                 <tr>
-                    <td colspan="<?php if($adm->role_id == 3) echo "6"; else echo "5";?>">
+                    <td colspan="<?php if(Entrust::hasRole('Administrator') ) echo "6"; else echo "5";?>">
                         <span class="error-view">No data available.</span>
                     </td>
                 </tr>
