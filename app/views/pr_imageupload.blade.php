@@ -12,9 +12,6 @@
 		<div id="demo"  >
 			<h1>Upload Attachments</h1>
 
-
-			
-
 			<form id="multipleDemo" enctype="multipart/form-data">
 				<label for="title"> Document Title</label><br />
 				<input id="title" type="input" name="title" />

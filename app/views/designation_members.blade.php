@@ -54,33 +54,32 @@
 
 @section('content')
     <h1 class="page-header">Designation Members</h1>
-	 <div class="alert alert-info">  Select an Item to Add/Remove </div>
-
-    {{ Form::open(['route'=>'designation_members_save'], 'POST') }}
-	<div id="designation-create-form" class="well div-form">
-	    	<div class="col-md-4">
-	    		<strong>Available to Add </strong>
-	    		<select name="selectfrom" id="select-from" multiple size="15" class="form-control" data-live-search="true">
-		         	{{ $count = 1 }}
-		         	@foreach($notselected_users as $key)
-		         		
-		         		<?php $roles=Assigned::where('user_id', $key->id)->first();
-			        	if($roles->role_id!=1)
-			        {  ?>
-		         		@if($count == 1)
-		         		{
-		         			{{{ $fullname = $key->lastname . ", " . $key->firstname }}}
-							<option selected value="{{ $key->id }}" >{{ $fullname }}</option>
-		         			{{ $count++; }}
-		         		}
-		         		@else
-		         		{
-		         			{{{ $fullname = $key->lastname . ", " . $key->firstname }}}
-							<option value="{{ $key->id }}" >{{ $fullname }}</option>
-		         		}
-		         		@endif
+	<div class="alert alert-info">  Select an Item to Add/Remove </div>
+	    {{ Form::open(['route'=>'designation_members_save'], 'POST') }}
+			<div id="designation-create-form" class="well div-form">
+		    	<div class="col-md-4">
+		    		<strong>Available to Add </strong>
+		    		<select name="selectfrom" id="select-from" multiple size="15" class="form-control" data-live-search="true">
+			         	{{ $count = 1 }}
+			         	@foreach($notselected_users as $key)	
+			         		<?php 
+				         		$roles=Assigned::where('user_id', $key->id)->first();
+					        	if($roles->role_id!=1){  
+				        	?>
+				         		@if($count == 1)
+				         		{
+				         			{{{ $fullname = $key->lastname . ", " . $key->firstname }}}
+									<option selected value="{{ $key->id }}" >{{ $fullname }}</option>
+				         			{{ $count++; }}
+				         		}
+				         		@else
+				         		{
+				         			{{{ $fullname = $key->lastname . ", " . $key->firstname }}}
+									<option value="{{ $key->id }}" >{{ $fullname }}</option>
+				         		}
+				         		@endif
 							<?php
-}
+								}
 							?>
 					@endforeach
 		        </select>
@@ -99,11 +98,11 @@
 			        	<?php
 			        	 $roles=Assigned::where('user_id', $key2->id)->first();
 			        	if($roles->role_id!=1)
-			        {
-			        	echo $fullname2 = $key2->lastname . ", " . $key2->firstname; ?>
-						<option value="{{ $key2->users_id }}" >{{ $fullname2  }}</option>
+			        	{
+			        		echo $fullname2 = $key2->lastname . ", " . $key2->firstname; ?>
+							<option value="{{ $key2->users_id }}" >{{ $fullname2  }}</option>
 						<?php
-					}		
+						}		
 						?>
 					@endforeach
 		        </select>
@@ -145,8 +144,6 @@
 			{
 			    values.push(select1.options[i].value);
 			}
-
-			//alert(values);
 			document.getElementById('members_selected').value = values;
 
     	}
@@ -169,8 +166,6 @@
 			{
 				document.getElementById("btn-remove").disabled=false;
 			}
-		    
-		 
 		});
     </script>
 @stop
