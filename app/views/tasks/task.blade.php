@@ -2,24 +2,21 @@
 
 @section('header')
 	<script type="text/javascript">
+		function codeAddress() 
+		{
+			if(document.layers) document.layers['remarkd'].visibility="show";
+			if(document.getElementById) document.getElementById("remarkd").style.visibility="visible";
+			if(document.all) document.all.remarkd.style.visibility="visible";
 
-
-	function codeAddress() 
-	{
-		if(document.layers) document.layers['remarkd'].visibility="show";
-		if(document.getElementById) document.getElementById("remarkd").style.visibility="visible";
-		if(document.all) document.all.remarkd.style.visibility="visible";
-
-		if(document.layers) document.layers['formr'].visibility="hide";
-		if(document.getElementById) document.getElementById("formr").style.visibility="hidden";
-		if(document.all) document.all.formr.style.visibility="hidden";
-	}
-	window.onload = codeAddress;
+			if(document.layers) document.layers['formr'].visibility="hide";
+			if(document.getElementById) document.getElementById("formr").style.visibility="hidden";
+			if(document.all) document.all.formr.style.visibility="hidden";
+		}
+		window.onload = codeAddress;
 	</script>
 
 	<style type="text/css">
 		td{
-		    
 		    padding:5px 10px;
 		    vertical-align:top;
 		    word-break:break-word;
@@ -28,7 +25,7 @@
 @stop
 
 @section('content')
-	<h1 class="pull-left">Task Details</h1>
+	<h2 class="pull-left">Task Details</h2>
 
 	<div class="pull-right options">
 		<a href="{{ URL::previous() }}" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left"></span> Back</a>
@@ -116,9 +113,10 @@
 					}
 				?>
 
-				@if($taskd->status!="New")
+				
 					<tr>
 						<td>
+							@if($taskd->status!="New")
 							<p style="font-weight: bold">Remarks: </p>
 							<?php 
 
@@ -130,18 +128,16 @@
 								Session::forget('successremark');
 								?>
 
-
-
 								<div id="remarkd" onclick="show()">
 									<p>
 										<?php
-										echo $taskd->remarks;
-										if ($taskd->remarks==NULL)
-										{
+											echo $taskd->remarks;
+											if ($taskd->remarks==NULL)
+											{
 											?>
-											No remark.
+												No remark.
 											<?php
-										}
+											}
 										?>
 									</p>
 								</div>
@@ -156,7 +152,7 @@
 									{{ Form::close() }}
 								</div>
 
-								@endif
+							@endif
 								<hr class="clear" />
 								<?php 
 
@@ -177,25 +173,12 @@
 					</tr>
 						
 			</table>
-
-
-
-
-
-			
-			
-				<br/>
-				<br/>
-				
-			</p>
-
-			<br>
-			
-				
-			
-			</div>
+			<br/>
+			<br/>
+			<br/>
 		</div>
-	@stop
+	</div>
+@stop
 
 	@section('footer')
 
