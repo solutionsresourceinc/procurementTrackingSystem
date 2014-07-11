@@ -289,8 +289,12 @@ Route::post('addimage', ['uses' => 'purchaseRequestController@addimage']);
 Route::post('delimage', function()
 {
 	$id = Input::get('hide');
+	$attachn=DB::table('attachments')->where('id', $id)->first();
+		$destine= public_path()."/uploads/";
+	unlink($destine.$attachn->data);
 	$attach = DB::table('attachments')->where('id', $id)->delete();
-$notice="Attachment successfully deleted.";
+
+	$notice="Attachment successfully deleted.";
 	return Redirect::back()->with('notice', $notice);
 });
 

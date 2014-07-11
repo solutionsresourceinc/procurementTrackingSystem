@@ -89,8 +89,8 @@
                     }
                     else
                         {
-                            $useroffice=Auth::user()->office_id;
-                            $maker= User::find( $request->requisitioner);
+                        $useroffice=Auth::user()->office_id;
+                        $maker= User::find( $request->requisitioner);
                             if ($useroffice!=$maker->office_id)
                                 continue;
                         }
