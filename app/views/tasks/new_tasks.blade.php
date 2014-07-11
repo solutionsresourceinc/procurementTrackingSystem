@@ -23,6 +23,8 @@
                 <!-- Get all task details with id = task->id -->
                 <?php 
                     $taskDetails_row = TaskDetails::whereTaskId($task->id)->whereStatus("New")->whereAssigneeId(0)->paginate(10); 
+                    $show_pagination = 1;
+
                     $workflow_id = $task->wf_id;
                     $workflow_row = Workflow::find($workflow_id);
                     $workflowName = $workflow_row->workFlowName;
@@ -55,7 +57,10 @@
         @endforeach
 
         <div>
-           <center> {{ $taskDetails_row->links(); }} </center>
+            @if($designation_row)
+                <center> {{ $taskDetails_row->links(); }} </center>
+             @endif
+
         </div>
     </div>
 @stop    
