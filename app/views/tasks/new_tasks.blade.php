@@ -22,7 +22,7 @@
             @foreach($task_row as $task) 
                 <!-- Get all task details with id = task->id -->
                 <?php 
-                    $taskDetails_row = TaskDetails::whereTaskId($task->id)->whereStatus("New")->whereAssigneeId(0)->get(); 
+                    $taskDetails_row = TaskDetails::whereTaskId($task->id)->whereStatus("New")->whereAssigneeId(0)->paginate(10); 
                     $workflow_id = $task->wf_id;
                     $workflow_row = Workflow::find($workflow_id);
                     $workflowName = $workflow_row->workFlowName;
@@ -54,5 +54,8 @@
               
         @endforeach
 
+        <div>
+           <center> {{ $taskDetails_row->links(); }} </center>
+        </div>
     </div>
 @stop    
