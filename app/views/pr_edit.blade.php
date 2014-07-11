@@ -1,64 +1,56 @@
 @extends('layouts.dashboard')
 
 @section('header')
-<!-- CSS and JS for Dropdown Search
-    {{ HTML::script('drop_search/bootstrap-select.js')}}
-    {{ HTML::style('drop_search/bootstrap-select.css')}}
--->
-{{ HTML::style('date_picker/bootstrap-datetimepicker.min.css')}}
-{{ HTML::script('date_picker/bootstrap-datetimepicker.js') }}
-{{ HTML::script('date_picker/bootstrap-datetimepicker.fr.js') }}
-{{ HTML::style('css/datepicker.css')}}
-{{ HTML::script('js/bootstrap-datepicker.js') }}
-<!--Image Display-->
+    <!-- CSS and JS for Dropdown Search
+        {{ HTML::script('drop_search/bootstrap-select.js')}}
+        {{ HTML::style('drop_search/bootstrap-select.css')}}
+    -->
+    {{ HTML::style('date_picker/bootstrap-datetimepicker.min.css')}}
+    {{ HTML::script('date_picker/bootstrap-datetimepicker.js') }}
+    {{ HTML::script('date_picker/bootstrap-datetimepicker.fr.js') }}
+    {{ HTML::style('css/datepicker.css')}}
+    {{ HTML::script('js/bootstrap-datepicker.js') }}
+    <!--Image Display-->
 
-{{ HTML::script('js/lightbox.min.js') }} 
-{{ HTML::style('css/lightbox.css')}}
-<!--End Image Display-->
+    {{ HTML::script('js/lightbox.min.js') }} 
+    {{ HTML::style('css/lightbox.css')}}
+    <!--End Image Display-->
 
-{{ HTML::script('js/jquery.chained.min.js') }} 
-{{ HTML::script('js/bootstrap.file-input.js') }} 
-
-
+    {{ HTML::script('js/jquery.chained.min.js') }} 
+    {{ HTML::script('js/bootstrap.file-input.js') }} 
 @stop
 
 
 
 @section('content')
 
+    <?php
+        $pass=0;
+        $epurchase=Purchase::find($id);
+        $cuser=Auth::User()->id;
+    ?>
 
+    <?php 
+        //retainer
+        if (Input::old('projectPurpose')||Input::old('sourceOfFund')||Input::old('amount')){
+            $valprojectPurpose=Input::old('projectPurpose');
+            $valsourceOfFund=Input::old('sourceOfFund');
+            $valamount=Input::old('amount'); 
+        }
+        else
+        {
+            $valprojectPurpose=$epurchase->projectPurpose;
+            $valsourceOfFund=$epurchase->sourceOfFund;
+            $valamount=$epurchase->amount; 
 
+        }
+    ?>
 
-<?php
-$pass=0;
-$epurchase=Purchase::find($id);
-$cuser=Auth::User()->id;
+    <h1 class="page-header">Edit Purchase Request</h1>
 
-
-?>
-
-
-  <?php 
-                    //retainer
-                    if (Input::old('projectPurpose')||Input::old('sourceOfFund')||Input::old('amount')){
-                        $valprojectPurpose=Input::old('projectPurpose');
-                        $valsourceOfFund=Input::old('sourceOfFund');
-                        $valamount=Input::old('amount'); 
-                    }
-                    else
-                    {
-                        $valprojectPurpose=$epurchase->projectPurpose;
-                        $valsourceOfFund=$epurchase->sourceOfFund;
-                        $valamount=$epurchase->amount; 
-
-                    }
-                ?>
-
-<h1 class="page-header">Edit Purchase Request</h1>
-
-<div class="form-create fc-div">
-    {{ Form::open(array('url' => 'newedit', 'files' => true), 'POST') }}
-     
+    <div class="form-create fc-div">
+        {{ Form::open(array('url' => 'newedit', 'files' => true), 'POST') }}
+         
             <input type="hidden" name ="id" value={{$id}}>
             @if(Session::get('notice'))
                 <div class="alert alert-success"> {{ Session::get('notice') }}</div> 
@@ -69,7 +61,7 @@ $cuser=Auth::User()->id;
             @endif
 
 
-             @if(Session::get('successchecklist'))
+            @if(Session::get('successchecklist'))
                 <div class="alert alert-success"> {{ Session::get('successchecklist') }}{{Session::forget('successchecklist')}}</div> 
             @endif
 
@@ -79,23 +71,15 @@ $cuser=Auth::User()->id;
             {{Session::forget('errorchecklist')}}
             {{Session::forget('successchecklist')}}
 
-<?php
-if ( Entrust::hasRole('Administrator')) {
-                                            $pass=1; }
- else if (Entrust::hasRole('Procurement Personnel'))
-                                            {
-                                 if($epurchase->created_by==$cuser)  $pass=1;
-                                            }
-
-if ($pass==0)
-
-    Redirect::back();
-
-
-
-
-
-?>
+    <?php
+        if ( Entrust::hasRole('Administrator')) { $pass=1; }
+        else if (Entrust::hasRole('Procurement Personnel'))
+        {
+            if($epurchase->created_by==$cuser)  $pass=1;
+        }
+        if ($pass==0)
+            Redirect::back();
+    ?>
             <div class="form-group">
                 <?php
                         $docs=DB::table('document')->where('pr_id', '=',$id )->first();
@@ -148,7 +132,7 @@ if ($pass==0)
                         $epurchase->controlNo}}">
                     </div>
                 </div>
-                <br>
+                <br/>
               
                 <div>
                     {{ Form::label('projectPurpose', 'Project/Purpose *', array('class' => 'create-label')) }}
@@ -158,7 +142,7 @@ if ($pass==0)
                 @if (Session::get('m1'))
                     <font color="red"><i>{{ Session::get('m1') }}</i></font>
                 @endif
-                <br>            
+                <br/>            
 
                 <div class="row">
                     <div class="col-md-6">
@@ -180,7 +164,7 @@ if ($pass==0)
 
 
                 </div>
-                <br>
+                <br/>
 
                 <?php 
                     $office= DB::table('offices')->get();
@@ -288,10 +272,9 @@ if ($pass==0)
                 </div>
             </div>
 
-            <div><br>
+            <div><br/>
                 {{ Form::submit('Save',array('class'=>'btn btn-success')) }}
                 {{ link_to( 'purchaseRequest/view', 'Cancel', array('class'=>'btn btn-default') ) }}
-
             </div>
             
             {{ Form::close() }} 
@@ -364,7 +347,7 @@ if ($pass==0)
                     //Addon Display
                     $otherc=OtherDetails::where('section_id', $sections->id)->count();
                     if($otherc!=0){
-                        echo "<tr><th class='workflow-th'>Label</th><th class='workflow-th' colspan='3'>Input</th><th class='workflow-th'>Action</th></tr>";
+                        //echo "<tr><th class='workflow-th'>Label</th><th class='workflow-th' colspan='3'>Input</th><th class='workflow-th'>Action</th></tr>";
 
                         $otherd= OtherDetails::where('section_id', $sections->id)->get();
                         foreach ($otherd as $otherdetails) {
@@ -376,8 +359,8 @@ if ($pass==0)
                                 {{Form::open(['url'=>'insertaddon'], 'POST')}}
                                     <input type="hidden" name="otherDetails_id" value="{{$otherdetails->id}}">
                                     <input type="hidden" name="purchase_request_id" value="{{$epurchase->id}}">
-                                    <td><input name ="value" type="text"></td>
-                                    <td><button class ="btn btn-success">Save</button></td>
+                                    <td colspan="3"><input name ="value" type="text" class="form-control"></td>
+                                    <td align="center"><button class ="btn btn-primary">Save</button></td>
                                 {{Form::close()}}
                     <?php
                             }
@@ -390,7 +373,7 @@ if ($pass==0)
                                 <input type='hidden' name='purchase_request_id' value='".$epurchase->id."'>";
                                 echo "<td>"."<button class ='btn btn-success'>Edit</button>"."</td>";*/
                                 echo"<input type='hidden' name='values_id' value='".$values->id."'>";
-                                echo "<td colspan='2'>"."<button class ='btn btn-success'>Edit</button>"."</td>";
+                                echo "<td colspan='2' align='center'>"."<button class ='btn btn-default'>Edit</button>"."</td>";
                     ?>
                                 {{Form::close()}}
                     <?php
@@ -430,7 +413,8 @@ if ($pass==0)
                                 </td>
 
                                 </tr><tr class="current-task">
-                                <td colspan="5" style="text-align: right;"><input type="submit" class="btn btn-success"> </td>
+                                <td colspan="4" style="border-right: none"></td>
+                                <td style="border-left: none; text-align: center;"><input type="submit" class="btn btn-success"> </td>
                             {{Form::close()}}
             <?php       }
             //END Cursor Open Form

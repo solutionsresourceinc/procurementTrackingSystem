@@ -199,6 +199,8 @@ Route::post('remarks', 'TaskController@remarks');
 Route::post('done', 'TaskController@done');
 Route::get('task/active', 'TaskController@active');
 Route::get('task/overdue', 'TaskController@overdue');
+	Route::post('deladdtask', [ 'uses' => 'TaskController@deladdtask']);
+
 Route::get('task/{id}', function($id){
 	
 	

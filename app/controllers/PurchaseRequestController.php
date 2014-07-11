@@ -738,7 +738,7 @@ public function insertaddon()
 		$otherDetails_id= Input::get('otherDetails_id');
 				$purchase_request_id= Input::get('purchase_request_id');
 	$value= Input::get('value');
-	if(ctype_alnum(str_replace(' ','',$value)))
+	if(ctype_alnum(str_replace(str_split(' \\/:*?".,|'),'',$value)))
         {
         	$insertvalue= new Values;
         	$insertvalue->otherDetails_id=$otherDetails_id;
