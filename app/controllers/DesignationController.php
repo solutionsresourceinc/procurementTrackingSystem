@@ -46,7 +46,7 @@ class DesignationController extends BaseController {
 
 			
 			
-			return Redirect::back()->withInput()->withErrors($this->designation->errors)->with('invalid', $m1);
+			return Redirect::back()->withInput()->withErrors($this->designation->errors)->with('invalid', $message);
 		}
 
 	}
