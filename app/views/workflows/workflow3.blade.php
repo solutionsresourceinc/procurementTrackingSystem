@@ -54,7 +54,7 @@
 				<tr>
 					<td colspan="2">{{$addontasks->label}}</td>
 					<td>
-						{{Form::open(['url'=>'deladdtask'])}}
+						{{Form::open(['url'=>'deladdtask'], 'POST')}}
 						<input type="hidden" name="id" value="<?php echo $addontasks->id ?>">
 						<button class="btn btn-danger" data-title="Delete"><span class="glyphicon glyphicon-trash"></span></button>
 						{{Form::close()}}

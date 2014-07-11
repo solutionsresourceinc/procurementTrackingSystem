@@ -146,6 +146,15 @@ return Redirect::back();
     }
 
 	}
+public function deladdtask()
+	{
+		$otherdetails_id= Input::get('id');
+
+        	$delOD=OtherDetails::find($otherdetails_id);
+   $delOD->delete();
+  Values::where('otherDetails_id', $otherdetails_id)->delete();
+   return Redirect::back();
+      }
 
 
 }
