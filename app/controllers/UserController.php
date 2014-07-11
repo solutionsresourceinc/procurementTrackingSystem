@@ -29,16 +29,17 @@ class UserController extends BaseController {
     {
         $user = new User;
 
-        $user->username = Input::get( 'username' );
+
+        $user->username = trim(Input::get( 'username' ));
         $checkusername = User::where('username', $user->username)->first();
 
 
 
-        $user->email = Input::get( 'email' );
+        $user->email = trim(Input::get( 'email' ));
 
-        $user->password = Input::get( 'password' );
-        $user->firstname = Input::get( 'firstname' );
-        $user->lastname = Input::get( 'lastname' );
+        $user->password = trim(Input::get( 'password' ));
+        $user->firstname = trim(Input::get( 'firstname' ));
+        $user->lastname = trim(Input::get( 'lastname' ));
         $user->office_id = Input::get( 'office' );
         // The password confirmation will be removed from model
         // before saving. This field will be used in Ardent's
@@ -230,7 +231,7 @@ $desig->save();
         $id=Input::get( 'id' );
         $user = User::find($id);
 
-        $user->email = Input::get( 'email' );
+        $user->email = trim(Input::get( 'email' ));
 
         $password = " ".Input::get( 'password' );
         $cpassword = " ".Input::get( 'password_confirmation' );
@@ -250,8 +251,8 @@ $desig->save();
             }
         }
 
-        $user->firstname = Input::get( 'firstname' );
-        $user->lastname = Input::get( 'lastname' );
+        $user->firstname = trim(Input::get( 'firstname' ));
+        $user->lastname = trim(Input::get( 'lastname' ));
 
         $user->office_id= Input::get('office');
  
