@@ -73,8 +73,10 @@
 							SMALL VALUE PROCUREMENT (BELOW P50,000) &nbsp;&nbsp;
 						@elseif($wfName->work_id == 2)
 							SMALL VALUE PROCUREMENT (ABOVE P50,000 BELOW P500,000) &nbsp;&nbsp;
-						@else
+						@elseif($wfName->work_id == 3)
 							BIDDING (ABOVE P500,000) &nbsp;&nbsp;
+						@elseif($wfName->work_id == 4)
+							PAKYAW &nbsp;&nbsp;
 						@endif
 
 						<span class="label {{($purchase->status == 'New') ? 'label-primary' : (($purchase->status == 'Active') ? 'label-success' : (($purchase->status == 'Overdue') ? 'label-danger' : 'label-default'))}}">
