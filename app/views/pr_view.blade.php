@@ -16,7 +16,7 @@
     <form action="submitForm/" id="new_form" method="post" id="confirm">
 </div>
 
-    <div class="modal fade" id="confirmDelete" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+<div class="modal fade" id="confirmDelete" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 
@@ -39,26 +39,11 @@
     </div>
 </form>
 
-    <div class="modal fade" id="confirmActivate" role="dialog" aria-labelledby="confirmActivateLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Activate User</h4>
-                </div>
-                <div class="modal-body">
-                    <p>Are you sure about this ?</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-danger" id="confirm">Activate</button>
-                </div>
-            </div>
-        </div>
-    </div>
+ 
 @if(Session::get('notice'))
-            <div class="alert alert-success"> {{ Session::get('notice') }}</div> 
-            @endif
+    <div class="alert alert-success"> {{ Session::get('notice') }}</div> 
+@endif
+    
     <table id="table_id" class="table table-striped display ">
         <thead>
     		<tr>
@@ -67,19 +52,16 @@
                 <th>Mode</th>
         	    <th style="text-align: center">Status</th>
         	    <th>Date Requested</th>
-               
-        		  <th>Action</th>
-     
-        	  </tr>
+        		<th>Action</th>
+        	</tr>
     	</thead>
 
         <?php
            //Query Restrictions
             $date_today =date('Y-m-d H:i:s');
             $requests = new Purchase;
-           
             $userx=Auth::user()->id;
-              $requests = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('status', '=', 'Active')->get(); 
+            $requests = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('status', '=', 'Active')->get(); 
             //End Query Restrictions
         ?>
 
@@ -96,11 +78,12 @@
                             
                             $useroffice=Auth::user()->office_id;
                             $maker= User::find( $request->requisitioner);
-                             $docget=Document::where('pr_id', $request->id)->first();
-                        $taskd = TaskDetails::where('doc_id',$docget->id)->where('assignee_id',$userx)->count();
-                            if($taskd!=0){}
+                            $docget=Document::where('pr_id', $request->id)->first();
+                            $taskd = TaskDetails::where('doc_id',$docget->id)->where('assignee_id',$userx)->count();
+                            if($taskd!=0)
+                                {}
                             else if ($userx==$request->created_by)
-                            {}
+                                {}
                             else if ($useroffice!=$maker->office_id)
                                 continue;
                     }

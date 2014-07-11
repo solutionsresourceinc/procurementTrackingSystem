@@ -70,6 +70,16 @@
             @endif
             {{Session::forget('errorchecklist')}}
             {{Session::forget('successchecklist')}}
+            
+            @if(Session::get('successlabel'))
+                <div class="alert alert-success"> {{ Session::get('successlabel') }}{{Session::forget('successlabel')}}</div> 
+            @endif
+
+            @if(Session::get('errorlabel'))
+                <div class="alert alert-danger"> {{ Session::get('errorlabel') }}</div> 
+            @endif
+            {{Session::forget('errorlabel')}}
+            {{Session::forget('successlabel')}}
 
     <?php
         if ( Entrust::hasRole('Administrator')) { $pass=1; }

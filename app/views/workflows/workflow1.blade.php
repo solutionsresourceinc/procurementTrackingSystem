@@ -153,6 +153,7 @@
 		
 			    <div class="col-md-3">
 			    	{{ Form::submit('Add', array('class' => 'btn btn-success btn-block create-btn')) }}
+			    	
 			    </div>
 		    {{ Form::close() }}
 		</div>
@@ -178,7 +179,7 @@
 					<td>
 						{{Form::open(['url'=>'deladdtask'], 'POST')}}
 						<input type="hidden" name="id" value="<?php echo $addontasks->id ?>">
-					<button class="btn btn-danger" data-title="Delete"><span class="glyphicon glyphicon-trash"></span></button>
+					<button class="btn btn-danger" data-title="Delete" ><span class="glyphicon glyphicon-trash"></span></button>
 						{{Form::close()}}
 					</td>
 				</tr> 

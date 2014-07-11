@@ -352,33 +352,24 @@ else{
 		return View::make('purchaseRequest.purchaseRequest_overdue');
 	}
 
-	public function edit_submit()
+public function edit_submit()
+{
+$id = Input::get('id');
+$purchase = Purchase::find(Input::get('id'));
+$document = Document::where('pr_id', Input::get('id'))->first();
+$purchase->projectPurpose = Input::get( 'projectPurpose' );
+$purchase->sourceOfFund = Input::get( 'sourceOfFund' );
+$purchase->office = Input::get( 'office' );
+$purchase->requisitioner = Input::get( 'requisitioner' );
+$purchase->dateRequested = Input::get( 'dateRequested' );
+$purchase->controlNo = Input::get('controlNo');
+$purchase_save = $purchase->save();
+if($purchase_save)
 	{
-
-		$id = Input::get('id');
-		$purchase = Purchase::find(Input::get('id'));
-		$document = Document::where('pr_id', Input::get('id'))->first();
-
-		$purchase->projectPurpose = Input::get( 'projectPurpose' );
-		$purchase->sourceOfFund = Input::get( 'sourceOfFund' );
-		//$purchase->amount = Input::get( 'amount' );
-		$purchase->office = Input::get( 'office' );
-		$purchase->requisitioner = Input::get( 'requisitioner' );
-		$purchase->dateRequested = Input::get( 'dateRequested' );
-		$purchase->controlNo = Input::get('controlNo');
-		//$purchase->status = 'New';
-
-
-		$purchase_save = $purchase->save();
-
-		if($purchase_save)
+	$document->pr_id = $purchase->id;
+	$document_save = $document->save();
+	if($document_save)
 		{
-			$document->pr_id = $purchase->id;
-			//$document->work_id = Input::get('modeOfProcurement');
-			$document_save = $document->save();
-
-			if($document_save)
-			{
 
 
 //Image Upload
@@ -478,7 +469,7 @@ Session::forget('imgerror');
 
 		//Image Upload
 
-				$pr_id= Session::get('pr_id');
+		$pr_id= Session::get('pr_id');
 
 				if (Session::get('doc_id'))
 				{
@@ -543,93 +534,82 @@ Session::forget('imgerror');
 
 
 public function addimage(){
-foreach(Input::file('file') as $file){
-            $rules = array(
-                'file' => 'required|mimes:png,gif,jpeg|max:900000000'
-                );
-            $validator = \Validator::make(array('file'=> $file), $rules);
-            $destine=public_path()."/uploads";
-            if($validator->passes()){
-                $ext = $file->guessClientExtension(); // (Based on mime type)
-                $ext = $file->getClientOriginalExtension(); // (Based on filename)
-                $filename = $file->getClientOriginalName();
-                $doc_id=input::get('doc_id');
 
-
-$archivo = value(function() use ($file){
-        $filename = str_random(10) . '.' . $file->getClientOriginalExtension();
-        return strtolower($filename);
-    });
-   
-
-                $attach = new Attachments;
-                $attach->doc_id=$doc_id;
-				$attach->data = $archivo;
-				$attach->save();
-
-				$filename= $doc_id."_".$attach->id;
-                $file->move($destine, $archivo);
-  
-   $target_folder = $destine; 
-    $upload_image = $target_folder."/".$archivo;
-
-   $thumbnail = $target_folder."/resize".$archivo;
-        $actual = $target_folder."/".$archivo;
-
-      // THUMBNAIL SIZE
-        list($width, $height) = getimagesize($upload_image);
-
-
-        $newwidth = $width; 
-        $newheight = $height;
-        while ( $newheight> 525) {
-        	$newheight=$newheight*0.8;
-        	$newwidth=$newwidth*0.8;
-}
-
+foreach(Input::file('file') as $file)
+{
+    $rules = array('file' => 'required|mimes:png,gif,jpeg,jpg|max:900000000');
+    $validator = \Validator::make(array('files'=> $file), $rules);
+    $destine=public_path()."/uploads";
     
-$thumb = imagecreatetruecolor($newwidth, $newheight);
-if ($ext=="jpg"||$ext=="jpeg")
+    if($validator->passes())
+    {
+    $ext = $file->guessClientExtension(); // (Based on mime type)
+    $ext = $file->getClientOriginalExtension(); // (Based on filename)
+    $filename = $file->getClientOriginalName();
+    $doc_id=input::get('doc_id');
+	
+	$archivo = value(function() use ($file){
+    	$filename = str_random(10) . '.' . $file->getClientOriginalExtension();
+    	return strtolower($filename);
+    });
+
+    $attach = new Attachments;
+    $attach->doc_id=$doc_id;
+	$attach->data = $archivo;
+	$attach->save();
+	$filename= $doc_id."_".$attach->id;
+    $file->move($destine, $archivo);
+    $target_folder = $destine; 
+    $upload_image = $target_folder."/".$archivo;
+    $thumbnail = $target_folder."/resize".$archivo;
+    $actual = $target_folder."/".$archivo;
+      
+    // THUMBNAIL SIZE
+    list($width, $height) = getimagesize($upload_image);
+    $newwidth = $width; 
+    $newheight = $height;
+    while ( $newheight> 525) 
+    {
+    $newheight=$newheight*0.8;
+    $newwidth=$newwidth*0.8;
+	}
+    
+	$thumb = imagecreatetruecolor($newwidth, $newheight);
+	if ($ext=="jpg"||$ext=="jpeg")
         $source = imagecreatefromjpeg($upload_image);
-elseif ($ext=="png")
- $source = imagecreatefrompng($upload_image);
-else
- $source = imagecreatefromgif($upload_image);
-        // RESIZE 
-        imagecopyresized($thumb, $source, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
-        // MAKE NEW FILES
-if ($ext=="jpg"||$ext=="jpeg")
- imagejpeg($thumb, $thumbnail, 100);
-elseif ($ext=="png")
- imagepng($thumb, $thumbnail, 9);
-else
- imagegif($thumb, $thumbnail, 100);
-       
-unlink($actual);
-        // FILE RENAMES
-        rename($thumbnail, $actual);
+	elseif ($ext=="png")
+ 		$source = imagecreatefrompng($upload_image);
+	elseif($ext=="gif")
+		 $source = imagecreatefromgif($upload_image);
 
+    // RESIZE 
+    imagecopyresized($thumb, $source, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
+    
+    // MAKE NEW FILES
+	if ($ext=="jpg"||$ext=="jpeg")
+ 		imagejpeg($thumb, $thumbnail, 100);
+	elseif ($ext=="png")
+ 		imagepng($thumb, $thumbnail, 9);
+	else
+ 		imagegif($thumb, $thumbnail, 100);       
 
-           
-             }else{
-
-                //Does not pass validation
-
-                $errors = $validator->errors();
-                return Redirect::back()->with('imgerror','Invalid file.');
-            }
-
-        }
-
-          return Redirect::back()->with('imgsuccess','Files uploaded.');
-
+	unlink($actual);
+    // FILE RENAMES
+    rename($thumbnail, $actual);   
+	}
+    else
+    {
+    //Does not pass validation
+        $errors = $validator->errors();
+        return Redirect::back()->with('imgerror','Invalid file.');
+    }
+}
+    return Redirect::back()->with('imgsuccess','Files uploaded.');
 }
 
 public function changeForm($id)
 {
-	//return "good $id";
 	$reason = Input::get('hide_reason');
-
 	$purchase = Purchase::find($id);
 	$purchase->status = "Cancelled";
 	$purchase->reason = $reason;
@@ -654,107 +634,102 @@ $count->save();
 
 public function checklistedit(){
 
-
+//Initializations	
 $taskdetails_id= Input::get('taskdetails_id');
 $assignee=Input::get('assignee');
 $mydate=Input::get('dateFinished');
 $timestamp = strtotime($mydate);
 $dateFinished= date("Y-m-d H:i:s", $timestamp);
 $daysOfAction=Input::get('daysOfAction');
-
 $remarks=" ".Input::get('remarks');
 $check=0;
 
+//Validation Process
+
 if(ctype_alpha(str_replace(array(' ', '-', '.'),'',$remarks)))
-         {
-         	$check=$check+1;
-         }
-      
+        $check=$check+1;
+         
 if(ctype_alpha(str_replace(array(' ', '-', '.'),'',$assignee)))
-         {
-         	$check=$check+1;
-         }
+        $check=$check+1;
+         
 if(ctype_digit($daysOfAction))
-		{
-			if($daysOfAction>=0)
-		  	$check=$check+1;
-         }
-
-if ($check==3||$remarks==" "){
-	$taskd= TaskDetails::find($taskdetails_id);
-$docs=Document::find($taskd->doc_id);
-
-$delcount= Count::where('doc_id', $docs->id)->delete();
-  
-$userx= User::get();
-foreach($userx as $userv){
-$count= new Count;
-$count->user_id= $userv->id;
-$count->doc_id= $docs->id;
-$count->save();
-}
-
-Session::put('successchecklist','Saved.');
-
-$taskd= TaskDetails::find($taskdetails_id);
-$taskd->status="Done";
-$taskd->daysOfAction=$daysOfAction;
-$taskd->dateFinished=$dateFinished;
-$taskd->assignee=$assignee;
-$remarks= ltrim ($remarks,'0');
-$taskd->remarks=$remarks;
-$taskd->save();
-$tasknext=TaskDetails::find($taskdetails_id+1);
-
-$tasknextc=TaskDetails::where('id', $taskdetails_id+1)->where('doc_id', $docs->pr_id)->count();
-
-if ($tasknextc!=0)
-{
-$tasknext->status="New";
-$tasknext->save();
-
-}
-else
-{
-$purchase= Purchase::find($docs->pr_id);
-$purchase->status="Closed";
-
-$purchase->save();
-}
-
-
-}
-else
-Session::put('errorchecklist','Invalid input.');
-return Redirect::back();
-
-}
-
-
-
-
-public function insertaddon()
 	{
-		$otherDetails_id= Input::get('otherDetails_id');
-				$purchase_request_id= Input::get('purchase_request_id');
-	$value= Input::get('value');
-	if(ctype_alnum(str_replace(str_split(' \\/:*?".,|'),'',$value)))
-        {
-        	$insertvalue= new Values;
-        	$insertvalue->otherDetails_id=$otherDetails_id;
-        	$insertvalue->purchase_request_id=$purchase_request_id;
-    	$insertvalue->value=$value;
-        	$insertvalue->save();
-        	Session::put('successlabel', 'Successfully saved.');
-        	return Redirect::back();
-        }
-    else {
-    	Session::put('errorlabel','Invalid input.');
-return Redirect::back();
-
+	if($daysOfAction>=0)
+		$check=$check+1;
     }
 
+if ($check==3||$remarks==" ")
+	{
+	$taskd= TaskDetails::find($taskdetails_id);
+	$docs=Document::find($taskd->doc_id);
+	$delcount= Count::where('doc_id', $docs->id)->delete();
+	$userx= User::get();
+	foreach($userx as $userv)
+		{
+		$count= new Count;
+		$count->user_id= $userv->id;
+		$count->doc_id= $docs->id;
+		$count->save();
+		}
+
+	Session::put('successchecklist','Saved.');
+
+	$taskd= TaskDetails::find($taskdetails_id);
+	$taskd->status="Done";
+	$taskd->daysOfAction=$daysOfAction;
+	$taskd->dateFinished=$dateFinished;
+	$taskd->assignee=$assignee;
+	$remarks= ltrim ($remarks,'0');
+	$taskd->remarks=$remarks;
+	$taskd->save();
+	$tasknext=TaskDetails::find($taskdetails_id+1);
+	$tasknextc=TaskDetails::where('id', $taskdetails_id+1)->where('doc_id', $docs->pr_id)->count();
+
+	if ($tasknextc!=0)
+		{
+		$tasknext->status="New";
+		$tasknext->save();
+		}
+	else
+		{
+		$purchase= Purchase::find($docs->pr_id);
+		$purchase->status="Closed";
+		$purchase->save();
+		}
 	}
+	else
+		Session::put('errorchecklist','Invalid input.');
+	
+	return Redirect::back();
+
+}
+
+
+
+
+public function insertaddon(){
+//Initialization
+$otherDetails_id= Input::get('otherDetails_id');
+$purchase_request_id= Input::get('purchase_request_id');
+$value= Input::get('value');
+
+if(ctype_alnum(str_replace(str_split(' !\\/:*?".,|'),'',$value)))
+    {
+    $insertvalue= new Values;
+    $insertvalue->otherDetails_id=$otherDetails_id;
+    $insertvalue->purchase_request_id=$purchase_request_id;
+    $insertvalue->value=$value;
+    $insertvalue->save();
+    Session::put('successlabel', 'Successfully saved.');
+    return Redirect::back();
+    }
+else 
+	{
+    Session::put('errorlabel','Invalid input.');
+	return Redirect::back();
+    }
+
+}
 
 
 public function editaddon()
