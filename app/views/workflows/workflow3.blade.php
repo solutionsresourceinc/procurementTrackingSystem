@@ -5,11 +5,13 @@
 <div class="panel panel-success">
 	<div class="panel-heading">
 		<?php $sectionName = Section::find('9'); ?>
-		<h3 class="panel-title"> <?php $secname=strtoupper($sectionName->sectionName);
-			$pos=90;
-			$str = substr($secname, 0, $pos) . "<br>" . substr($secname, $pos);
+		<div class="panel-title"> 
+			<?php $section_name = strtoupper($sectionName->sectionName);
+			$position =90;
+			$str = substr($section_name, 0, $position) . "<br>" . substr($section_name, $position);
 			echo $str;
-	?>  </h3>
+			?> 
+		</div>
 	</div>
 	<div class="panel-body">
 		
