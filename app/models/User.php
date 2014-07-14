@@ -10,23 +10,13 @@ class User extends ConfideUser implements UserInterface, RemindableInterface {
 
 	use UserTrait, RemindableTrait;
 	use HasRole;
-	/**
-	 * The database table used by the model.
-	 *
-	 * @var string
-	 */
+
 	protected $table = 'users';
 
-	/**
-	 * The attributes excluded from the model's JSON form.
-	 *
-	 * @var array
-	 */
-	//protected $hidden = array('password', 'remember_token');
-	
 	public $fillable = ['username','firstname','lastname','email','password','confirmation_code',
 						'confirmed','created_at','updated_at','office_id'];
 
+	// RELATIONSHIPS
 	public function designation()
 	{
   		return $this->belongsToMany('Designation','user_has_designation');
