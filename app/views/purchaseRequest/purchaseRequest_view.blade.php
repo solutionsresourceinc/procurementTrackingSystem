@@ -70,15 +70,10 @@
 			<table border="1" class="proc-details">
 				<tr>
 					<td class="proc-headers" colspan="3"><h4 style="line-height: 25px;">
-						@if($wfName->work_id == 1)
-							SMALL VALUE PROCUREMENT (BELOW P50,000) &nbsp;&nbsp;
-						@elseif($wfName->work_id == 2)
-							SMALL VALUE PROCUREMENT (ABOVE P50,000 BELOW P500,000) &nbsp;&nbsp;
-						@elseif($wfName->work_id == 3)
-							BIDDING (ABOVE P500,000) &nbsp;&nbsp;
-						@elseif($wfName->work_id == 4)
-							PAKYAW &nbsp;&nbsp;
-						@endif
+						
+						<!-- DISPLAY WORKFLOW NAME BY JAN AWESOME -->
+						<?php $workName = DB::table('workflow')->where('id',$wfName->work_id)->first(); ?>
+						{{{ strtoupper($workName->workFlowName) }}}
 
 						<span class="label {{($purchase->status == 'New') ? 'label-primary' : (($purchase->status == 'Active') ? 'label-success' : (($purchase->status == 'Overdue') ? 'label-danger' : 'label-default'))}}">
                     		{{ $purchase->status; }}
