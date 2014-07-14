@@ -1,5 +1,4 @@
 <!--CODE REVIEW:
-    - remove comments
     - variables must be descriptive
 -->
 
@@ -7,13 +6,15 @@
 <br/>
 
 <?php $sectionName = Section::find('5'); ?>
+
+<!-- PURCHASE REQUEST SECTION -->
 <div class="panel panel-success">
 	<div class="panel-heading">
 		<?php $sectionName = Section::find('1'); ?>
 		<div class="panel-title"> 
-			<?php $secname=strtoupper($sectionName->sectionName);
-			$pos=90;
-			$str = substr($secname, 0, $pos) . "<br>" . substr($secname, $pos);
+			<?php $section_name = strtoupper($sectionName->sectionName);
+			$position =90;
+			$str = substr($section_name, 0, $position) . "<br>" . substr($section_name, $position);
 			echo $str;
 			?> 
 		</div>
@@ -44,14 +45,14 @@
 			?>
 			
 			<?php 
-					$addontask= OtherDetails::where('section_id', $sectionName->id )->get();
+					$addedtasks = OtherDetails::where('section_id', $sectionName->id )->get();
 			?>
-			@foreach ($addontask as $addontasks)
+			@foreach ($addedtasks as $addedtask)
 				<tr>
-					<td colspan="2">{{$addontasks->label}}</td>
+					<td colspan="2">{{$addedtask->label}}</td>
 					<td>
 						{{Form::open(['url'=>'deladdtask'], 'POST')}}
-						<input type="hidden" name="id" value="<?php echo $addontasks->id ?>">
+						<input type="hidden" name="id" value="<?php echo $addedtask->id ?>">
 						<button class="btn btn-danger" data-title="Delete"><span class="glyphicon glyphicon-trash"></span></button>
 						{{Form::close()}}
 					</td>
@@ -68,27 +69,24 @@
 				<th class="workflow-th" width="25%">ACTION</th>
 			</tr>
 
-			<?php $section1 = DB::table('tasks')->where('wf_id','1')->get(); ?>
+			<?php $sections = DB::table('tasks')->where('wf_id','1')->get(); ?>
 
-			@foreach($section1 as $section)
+			@foreach($sections as $section)
 				@if($section->section_id == 1)
-				<?php $d_id=$section->designation_id; ?>
+				<?php $designation_id=$section->designation_id; ?>
 
 				<tr>
 					<td>{{{ $section->taskName }}}</td>
 					<td> 
 						<?php 
-						$desig = DB::table('designation')->where('id', $d_id)->get();	
-						if($d_id!=0)
+						$designations = DB::table('designation')->where('id', $designation_id)->get();	
+						if($designation_id!=0)
 						{
 							?>
 
-							<!--CODE REVIEW:
-						        - follow convention
-						    -->
-							@foreach ($desig as $desigs)
+							@foreach ($designations as $designation)
 							<div class="mode1" id="insert_{{$section->id}}">
-								{{ $desigs->designation }}
+								{{ $designation->designation }}
 							</div>
 							@endforeach
 
@@ -100,15 +98,15 @@
 							<div class="mode1" id="insert_{{$section->id}}">None</div>
 							<?php
 						}
-						$desig = DB::table('designation')->get();	
+						$designations = DB::table('designation')->get();	
 						?>
 
 						<form class="form ajax" action="/workflow/submit/{{$section->id}}" data-replace="#insert_{{$section->id}}" method="post" role="form" class="form-inline">
 
 							<select name ="designa" class = "form-control mode2 edit-text" style="width:100%">
 								<option value="0" selected>None</option>
-								@foreach ($desig as $desigs)
-								<option value="{{$desigs->id}}" >{{$desigs->designation}}</option>
+								@foreach ($designations as $designation)
+								<option value="{{$designation->id}}" >{{$designation->designation}}</option>
 								@endforeach
 							</select>
 
@@ -129,6 +127,7 @@
 	</div>
 </div>
 
+<!-- BAC REQUIREMENTS SECTION -->
 <div class="panel panel-success">
 	<div class="panel-heading">
 		<?php $sectionName = Section::find('2'); ?>
@@ -161,14 +160,14 @@
 			?>
 			
 			<?php 
-					$addontask= OtherDetails::where('section_id', $sectionName->id )->get();
+					$addedtasks = OtherDetails::where('section_id', $sectionName->id )->get();
 			?>
-			@foreach ($addontask as $addontasks)
+			@foreach ($addedtasks as $addedtask)
 				<tr>
-					<td colspan="2">{{$addontasks->label}}</td>
+					<td colspan="2">{{$addedtask->label}}</td>
 					<td>
 						{{Form::open(['url'=>'deladdtask'], 'POST')}}
-						<input type="hidden" name="id" value="<?php echo $addontasks->id ?>">
+						<input type="hidden" name="id" value="<?php echo $addedtask->id ?>">
 					<button class="btn btn-danger" data-title="Delete" ><span class="glyphicon glyphicon-trash"></span></button>
 						{{Form::close()}}
 					</td>
@@ -184,23 +183,23 @@
 				<th class="workflow-th" width="45%">DESIGNATION ASSIGNED</th>
 				<th class="workflow-th" width="25%">ACTION</th>
 			</tr>
-			<?php $section1 = DB::table('tasks')->where('wf_id','1')->get(); ?>
+			<?php $sections = DB::table('tasks')->where('wf_id','1')->get(); ?>
 
-			@foreach($section1 as $section)
+			@foreach($sections as $section)
 				@if($section->section_id == 2)
-					<?php $d_id=$section->designation_id; ?>
+					<?php $designation_id=$section->designation_id; ?>
 					<tr> 
 						<td> {{{ $section->taskName }}} </td>
 						<td> 
 							<?php
-								$desig = DB::table('designation')->where('id', $d_id)->get();	
-								if($d_id!=0)
+								$designations = DB::table('designation')->where('id', $designation_id)->get();	
+								if($designation_id!=0)
 								{	
 							?>
 
-								@foreach ($desig as $desigs)
+								@foreach ($designations as $designation)
 									<div class="mode1" id="insert_{{$section->id}}">
-										{{$desigs->designation }}
+										{{$designation->designation }}
 									</div>
 								@endforeach
 
@@ -213,14 +212,14 @@
 							<div class="mode1" id="insert_{{$section->id}}">None</div>
 							<?php
 								}
-								$desig = DB::table('designation')->get();	
+								$designations = DB::table('designation')->get();	
 							?>
 
 							<form class="form ajax" action="/workflow/submit/{{$section->id}}" data-replace="#insert_{{$section->id}}" method="post" role="form" class="form-inline">
 								<select name ="designa" class = "form-control mode2 edit-text" style="width:100%">
 									<option value="0">None</option>
-									@foreach ($desig as $desigs)
-									<option value="{{$desigs->id}}">{{$desigs->designation}}</option>
+									@foreach ($designations as $designation)
+									<option value="{{$designation->id}}">{{$designation->designation}}</option>
 									@endforeach
 								</select>
 
@@ -243,6 +242,7 @@
 	</div>
 </div>
 
+<!-- PURCHASE ORDER SECTION -->
 <div class="panel panel-success">
 	<div class="panel-heading">
 		<?php $sectionName = Section::find('3'); ?>
@@ -274,14 +274,14 @@
 			?>
 			
 			<?php 
-				$addontask= OtherDetails::where('section_id', $sectionName->id )->get();
+				$addedtasks = OtherDetails::where('section_id', $sectionName->id )->get();
 			?>
-			@foreach ($addontask as $addontasks)
+			@foreach ($addedtasks as $addedtask)
 			<tr>
-				<td colspan="2">{{$addontasks->label}}</td>
+				<td colspan="2">{{$addedtask->label}}</td>
 				<td>
 					{{Form::open(['url'=>'deladdtask'])}}
-					<input type="hidden" name="id" value="<?php echo $addontasks->id ?>">
+					<input type="hidden" name="id" value="<?php echo $addedtask->id ?>">
 				<button class="btn btn-danger" data-title="Delete"><span class="glyphicon glyphicon-trash"></span></button>
 					{{Form::close()}}
 				</td>
@@ -300,19 +300,19 @@
 
 			@foreach($section1 as $section)
 				@if($section->section_id == 3)
-				<?php  $d_id=$section->designation_id; ?>
+				<?php  $designation_id=$section->designation_id; ?>
 				<tr>
 					<td> {{{ $section->taskName }}} </td>
 					<td>
 						<?php
-						$desig = DB::table('designation')->where('id', $d_id)->get();	
-						if($d_id!=0)
+						$designations = DB::table('designation')->where('id', $designation_id)->get();	
+						if($designation_id!=0)
 						{
 							?>
 
-							@foreach ($desig as $desigs)
+							@foreach ($designations as $designation)
 							<div class="mode1" id="insert_{{$section->id}}">
-								{{$desigs->designation }}
+								{{$designation->designation }}
 							</div>
 							@endforeach
 
@@ -324,14 +324,14 @@
 							<div class="mode1" id="insert_{{$section->id}}">None</div>
 							<?php
 						}
-						$desig = DB::table('designation')->get();	
+						$designations = DB::table('designation')->get();	
 						?>
 
 						<form class="form ajax" action="/workflow/submit/{{$section->id}}" data-replace="#insert_{{$section->id}}" method="post" role="form" class="form-inline">
 							<select name ="designa" class = "form-control mode2 edit-text" style="width:100%">
 								<option value=0>None                                 </option>
-								@foreach ($desig as $desigs)
-								<option value="{{$desigs->id}}">{{$desigs->designation}}</option>
+								@foreach ($designations as $designation)
+								<option value="{{$designation->id}}">{{$designation->designation}}</option>
 								@endforeach
 
 							</select>
@@ -353,6 +353,7 @@
 	</div>
 </div>
 
+<!-- VOUCHER SECTION -->
 <div class="panel panel-success">
 	<div class="panel-heading">
 		<?php $sectionName = Section::find('4'); ?>
@@ -384,14 +385,14 @@
 			?>
 			
 			<?php 
-				$addontask= OtherDetails::where('section_id', $sectionName->id )->get();
+				$addedtasks = OtherDetails::where('section_id', $sectionName->id )->get();
 			?>
-			@foreach ($addontask as $addontasks)
+			@foreach ($addedtasks as $addedtask)
 			<tr>
-				<td colspan="2">{{$addontasks->label}}</td>
+				<td colspan="2">{{$addedtask->label}}</td>
 				<td>
 					{{Form::open(['url'=>'deladdtask'])}}
-					<input type="hidden" name="id" value="<?php echo $addontasks->id ?>">
+					<input type="hidden" name="id" value="<?php echo $addedtask->id ?>">
 				<button class="btn btn-danger" data-title="Delete"><span class="glyphicon glyphicon-trash"></span></button>
 					{{Form::close()}}
 				</td>
@@ -412,20 +413,20 @@
 			@foreach($section1 as $section)
 				@if($section->section_id == 4)
 					<?php 
-						$d_id=$section->designation_id; 
+						$designation_id=$section->designation_id; 
 					?>
 					<tr>
 						<td> {{{ $section->taskName }}} </td>
 						<td>
 							<?php
 
-							$desig = DB::table('designation')->where('id', $d_id)->get();	
-							if($d_id!=0){
+							$designations = DB::table('designation')->where('id', $designation_id)->get();	
+							if($designation_id!=0){
 								?>
 
-								@foreach ($desig as $desigs)
+								@foreach ($designations as $designation)
 								<div class="mode1" id="insert_{{$section->id}}">
-									{{$desigs->designation }}
+									{{$designation->designation }}
 								</div>
 								@endforeach
 
@@ -437,13 +438,13 @@
 								<div class="mode1" id="insert_{{$section->id}}">None</div>
 								<?php
 							}
-							$desig = DB::table('designation')->get();	
+							$designations = DB::table('designation')->get();	
 							?>
 							<form class="form ajax" action="/workflow/submit/{{$section->id}}" data-replace="#insert_{{$section->id}}" method="post" role="form" class="form-inline">
 								<select name ="designa" class = "form-control mode2 edit-text" style="width:100%">
 									<option value=0>None                                 </option>
-									@foreach ($desig as $desigs)
-									<option value="{{$desigs->id}}">{{$desigs->designation}}</option>
+									@foreach ($designations as $designation)
+									<option value="{{$designation->id}}">{{$designation->designation}}</option>
 									@endforeach
 
 								</select>

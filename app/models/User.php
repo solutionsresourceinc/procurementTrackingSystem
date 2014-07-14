@@ -44,4 +44,3 @@ class User extends ConfideUser implements UserInterface, RemindableInterface {
   		return $this->hasMany('TaskDetails');
 	}
 }
-}
