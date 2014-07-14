@@ -1,4 +1,4 @@
-<!doctype html>
+e html>
 
 <!-- CODE REVIEW: remove this file -->
 
