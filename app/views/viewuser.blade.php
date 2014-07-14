@@ -2,6 +2,11 @@
 
 @section('content')
 
+<!--CODE REVIEW:
+    - remove comments
+    - variables must be descriptive
+-->
+
 <h1 class="pull-left">User Management</h1>
 <div class="pull-right options">
 	<a href="{{ URL::to('user/create') }}" class="btn btn-success">Create New</a>

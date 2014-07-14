@@ -2,6 +2,10 @@
 
 @section('content')
 
+    <!--CODE REVIEW:
+        - variable names must be descriptive
+        - remove unnecessary codes
+    -->
 
 <h1 class="pull-left">List of Active Purchase Requests</h1>
     
@@ -12,53 +16,36 @@
     @endif
 
     <hr class="clear" />
-<div id="pr_form">
-    <form action="submitForm/" id="new_form" method="post" id="confirm">
-</div>
+    <div id="pr_form">
+        <form action="submitForm/" id="new_form" method="post" id="confirm">
+    </div>
 
-    <div class="modal fade" id="confirmDelete" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
+        <div class="modal fade" id="confirmDelete" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Cancel Purchase Request</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Reason for cancelling purchase request:</p>
+                        <textarea id="reason" class="form-control" rows="3" maxlength="255", style="resize:vertical"></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-success" onClick="submitForm()">Submit</button>
+                        
+                    </div>
                 
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Cancel Purchase Request</h4>
                 </div>
-                <div class="modal-body">
-                    <p>Reason for cancelling purchase request:</p>
-                    <textarea id="reason" class="form-control" rows="3" maxlength="255", style="resize:vertical"></textarea>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-success" onClick="submitForm()">Submit</button>
-                    
-                </div>
-            
             </div>
         </div>
-    </div>
-</form>
+    </form>
 
-    <div class="modal fade" id="confirmActivate" role="dialog" aria-labelledby="confirmActivateLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Activate User</h4>
-                </div>
-                <div class="modal-body">
-                    <p>Are you sure about this ?</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-danger" id="confirm">Activate</button>
-                </div>
-            </div>
-        </div>
-    </div>
-@if(Session::get('notice'))
-            <div class="alert alert-success"> {{ Session::get('notice') }}</div> 
-            @endif
+    @if(Session::get('notice'))
+        <div class="alert alert-success"> {{ Session::get('notice') }}</div> 
+    @endif
+
     <table id="table_id" class="table table-striped display ">
         <thead>
             <tr>
@@ -67,8 +54,6 @@
                 <th>Mode</th>
                 <th style="text-align: center">Status</th>
                 <th>Date Requested</th>
-               
-                
               </tr>
         </thead>
 
@@ -85,40 +70,36 @@
         <tbody>
             @if(count($requests))
                 @foreach ($requests as $request)
-
                     <tr
-                      <?php 
-                 //Office restriction
-                    if (Entrust::hasRole('Administrator'))
-                      {}
-                    else if(Entrust::hasRole('Procurement Personnel')){
-                            
+                    <?php 
+                        //Office restriction
+                        if (Entrust::hasRole('Administrator')){}
+                        else if(Entrust::hasRole('Procurement Personnel')){
                             $useroffice=Auth::user()->office_id;
                             $maker= User::find( $request->requisitioner);
-                             $docget=Document::where('pr_id', $request->id)->first();
-                        $taskd = TaskDetails::where('doc_id',$docget->id)->where('assignee_id',$userx)->count();
+                            $docget=Document::where('pr_id', $request->id)->first();
+                            $taskd = TaskDetails::where('doc_id',$docget->id)->where('assignee_id',$userx)->count();
                             if($taskd!=0){}
-                            else if ($userx==$request->created_by)
-                            {}
+                            else if ($userx==$request->created_by){}
                             else if ($useroffice!=$maker->office_id)
                                 continue;
-                    }
-                    else
-                        {
-                            $useroffice=Auth::user()->office_id;
-                            $maker= User::find( $request->requisitioner);
-                            if ($useroffice!=$maker->office_id)
-                                continue;
                         }
-                //End Office restriction
+                        else
+                            {
+                                $useroffice=Auth::user()->office_id;
+                                $maker= User::find( $request->requisitioner);
+                                if ($useroffice!=$maker->office_id)
+                                    continue;
+                            }
+                        //End Office restriction
                         $doc = new Document; $doc = DB::table('document')->where('pr_id', $request->id)->first();  
                         $doc_id= $doc->id;
-                    $userx= Auth::User()->id;
-                    $counter=0;
-                    $counter=Count::where('user_id', $userx)->where('doc_id', $doc_id)->count();
-                    if ($counter!=0){
-                        echo "class ='success'";
-                    }
+                        $userx= Auth::User()->id;
+                        $counter=0;
+                        $counter=Count::where('user_id', $userx)->where('doc_id', $doc_id)->count();
+                        if ($counter!=0){
+                            echo "class ='success'";
+                        }
 
                     ?>
                         >
@@ -133,8 +114,6 @@
                         </td>
                         <td width="12%" style="text-align: center"><span class="label {{($request->status == 'New') ? 'label-primary' : (($request->status == 'Active') ? 'label-success' : (($request->status == 'Overdue') ? 'label-danger' : 'label-default'))}}">{{ $request->status; }}</span></td>
                         <td width="20%">{{ $request->dateRequested; }}</td>
-
-                       
                    </tr>
                 @endforeach
             @else
@@ -146,11 +125,11 @@
             @endif
         </tbody>
     </table>  
-         <div>
-           <center> {{ $requests->links(); }} </center>
-        </div>
+    <div>
+       <center> {{ $requests->links(); }} </center>
+    </div>
 
-                {{ Session::forget('notice'); }}
+    {{ Session::forget('notice'); }}
 @stop
 
 @section('footer')
@@ -187,18 +166,17 @@
             //alert(reason);
             document.getElementById("form").submit();
         }
-        
     </script>
-
-{{ Session::forget('main_error'); }}
-{{ Session::forget('m1'); }}
-{{ Session::forget('m2'); }}
-{{ Session::forget('m3'); }}
-{{ Session::forget('m4'); }}
-{{ Session::forget('m5'); }}
-{{ Session::forget('m6'); }}
-{{ Session::forget('m7'); }}
-{{ Session::forget('imgsuccess'); }}
-{{ Session::forget('imgerror'); }}
-
+    
+    <!--CODE REVIEW: remove unnecessary codes-->
+    {{ Session::forget('main_error'); }}
+    {{ Session::forget('m1'); }}
+    {{ Session::forget('m2'); }}
+    {{ Session::forget('m3'); }}
+    {{ Session::forget('m4'); }}
+    {{ Session::forget('m5'); }}
+    {{ Session::forget('m6'); }}
+    {{ Session::forget('m7'); }}
+    {{ Session::forget('imgsuccess'); }}
+    {{ Session::forget('imgerror'); }}
 @stop

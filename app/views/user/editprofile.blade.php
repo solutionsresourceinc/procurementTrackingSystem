@@ -1,6 +1,11 @@
 @extends('layouts.dashboard')
 
 @section('content')
+    
+    <!--CODE REVIEW:
+        - fix code indention
+    -->
+
     <?php $user = User::find($id); ?>
     <h1 class="page-header">Edit Profile</h1> 
 

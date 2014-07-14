@@ -1,5 +1,10 @@
 <?php
 
+/*
+	CODE REVIEW:
+		- remove unnecessary comments
+*/
+
 class OfficeController extends BaseController {
 
 	protected $office;

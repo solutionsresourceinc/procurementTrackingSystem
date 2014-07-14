@@ -1,6 +1,11 @@
 @extends('layouts.dashboard')
 
 @section('content')
+
+    <!--CODE REVIEW:
+        - use laravel for conditions
+    -->
+
 	<!-- Creates the form -->
     <h1 class="page-header">Welcome to dashboard</h1>
 

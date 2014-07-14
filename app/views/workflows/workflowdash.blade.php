@@ -5,6 +5,10 @@
 @stop
 
 @section('content')
+    <!--CODE REVIEW:
+        - remove comments
+    -->
+
 	<!-- Creates the form -->
     <h1 class="page-header">Workflows</h1>
     <!--div>

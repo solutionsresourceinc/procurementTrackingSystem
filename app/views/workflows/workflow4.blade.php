@@ -1,3 +1,8 @@
+<!--CODE REVIEW:
+    - remove comments
+    - variables must be descriptive
+-->
+
 <style type="text/css">
 	#description {
 		height: 400px;

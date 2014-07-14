@@ -11,6 +11,15 @@
 | and give it the Closure to execute when that URI is requested.
 |
 */
+
+/*
+	CODE REVIEW:
+		- put functions to controller
+		- use 'as' when necessary
+		- try removing unnecessary routes made by confide
+		- remove spaces
+		- remove unused routes
+*/
 Route::get('/', function()
 {
 	return Redirect::to('login');
@@ -22,6 +31,7 @@ Route::get( 'logout',                 'UserController@logout');
 Route::post('login',                  'UserController@do_login');
 
 
+//CODE REVIEW: try removing unnecessary routes made by confide
 //---------- User CRUD Routes
 Route::get('user/view',                    'UserController@viewUser');
 Route::get( 'user/create',                 'UserController@create');
@@ -84,6 +94,23 @@ Route::get( 'purchaseRequest/overdue', 'PurchaseRequestController@viewOverdue');
 Route::get( 'purchaseRequest/cancelled', 'PurchaseRequestController@viewCancelled');
 Route::post('purchaseRequest/edit/{id}',[ 'as' => 'purchaseRequest_editsubmit', 'uses' => 'PurchaseRequestController@edit_submit']);
 Route::post('purchaseRequest/create', ['as' => 'purchaseRequest_submit', 'uses' => 'PurchaseRequestController@create_submit']);
+Route::post('purchaseRequest/changeForm/{id}', function($id)
+{
+
+		$data = array(
+		"html" => 
+			"<div id='pr_form'>
+				<form action='submitForm/$id' id='form' method='post'>
+					<input type='hidden' id='hide_reason' name='hide_reason'>
+				</form>
+			</div>"
+		);
+
+	return Response::json($data);
+});
+
+Route::post('purchaseRequest/submitForm/{id}', ['as' => 'submitForm', 'uses' => 'PurchaseRequestController@changeForm']);
+
 
 Route::post('checklistedit', ['uses' => 'PurchaseRequestController@checklistedit']);
 Route::post('insertaddon', ['uses' => 'PurchaseRequestController@insertaddon']);
@@ -127,7 +154,7 @@ Route::post('designation/assign',['as'=>'designation.assign', 'uses' => 'Designa
 
 Route::post('designation/{id}/members', ['as'=>'designation_members_save', 'uses' => 'DesignationController@save_members']);
 
-
+//CODE REVIEW: remove unused routes
 //---------- Workflow Routes
 Route::get('workflow/below-fifty', function(){
 	return View::make('workflows.below_fifty_workflow');
@@ -266,24 +293,4 @@ Route::post('delimage', function()
 	return Redirect::back()->with('notice', $notice);
 });
 
-//---------- Test Route
-Route::get('test', function(){
-	return View::make('test');
-});
 
-Route::post('purchaseRequest/changeForm/{id}', function($id)
-{
-
-		$data = array(
-		"html" => 
-			"<div id='pr_form'>
-				<form action='submitForm/$id' id='form' method='post'>
-					<input type='hidden' id='hide_reason' name='hide_reason'>
-				</form>
-			</div>"
-		);
-
-	return Response::json($data);
-});
-
-Route::post('purchaseRequest/submitForm/{id}', ['as' => 'submitForm', 'uses' => 'PurchaseRequestController@changeForm']);

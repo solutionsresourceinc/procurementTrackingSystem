@@ -1,4 +1,7 @@
 <!doctype html>
+
+<!-- CODE REVIEW: remove this file -->
+
 <html>
 	<head>
 		<meta charset="utf-8">

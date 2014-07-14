@@ -25,6 +25,11 @@
 @stop
 
 @section('content')
+
+	<!--CODE REVIEW:
+        - fix code indention
+    -->
+
 	<h2 class="pull-left">Task Details</h2>
 
 	<div class="pull-right options">

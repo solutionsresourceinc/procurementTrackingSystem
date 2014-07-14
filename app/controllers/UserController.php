@@ -10,6 +10,12 @@
 |
 */
 
+/*
+    CODE REVIEW:
+        - remove comments
+        - fix indentions
+*/
+
 class UserController extends BaseController {
 
     /**

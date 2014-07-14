@@ -1,5 +1,11 @@
 <?php
 
+/*
+	CODE REVIEW:
+		- remove comments
+		- fix indention
+*/
+
 class TaskController extends Controller {
 
 	public function newTask()

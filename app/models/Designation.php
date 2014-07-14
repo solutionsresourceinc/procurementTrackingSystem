@@ -1,10 +1,16 @@
 <?php
 
+/*
+	CODE REVIEW:
+		- conform with the specified data description
+*/
+
 use Illuminate\Auth\UserInterface;
 use Illuminate\Auth\Reminders\RemindableInterface;
 use Zizaco\Confide\ConfideUser;
 use Zizaco\Entrust\HasRole;
 use LaravelBook\Ardent\Ardent;
+
 class Designation extends Ardent{
 	protected $table = 'designation';
 
