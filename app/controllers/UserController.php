@@ -1,14 +1,9 @@
 <?php
 
-/*
-    CODE REVIEW:
-        - remove comments
-        - fix indentions
-*/
 
 class UserController extends BaseController {
 
-    public function disable()
+    public function disable() // FOR DISABLING USER ACCOUNTS
     {
         $errors="Account Deactivated.";
         $id=Input::get('hide');
@@ -18,7 +13,7 @@ class UserController extends BaseController {
         return Redirect::to('user/view');
     }
 
-    public function activate()
+    public function activate() // FOR ACTIVATION OF DISABLED USER ACCOUNTS
     {
         $errors="Account Activated.";
         $id=Input::get('hide');
@@ -28,12 +23,12 @@ class UserController extends BaseController {
         return Redirect::to('user/view');
     }
 
-    public function create()
+    public function create() // MAKE CREATE USER VIEW
     {
         return View::make("user_create");
     }
 
-    public function store()
+    public function store() // SAVING FOR USER ACCOUNT CREATION
     {
         $user = new User;
 
@@ -150,7 +145,12 @@ class UserController extends BaseController {
         }
     }
 
-    public function editprof()
+    public function editprof_view($id) // MAKE EDIT PROFILE VIEW
+    {
+        return View::make('user.editprofile')->with('id',$id);
+    }
+
+    public function editprof() // SAVING FOR OWN ACCOUNT EDITING
     {
         $id=Auth::user()->id;
         $user = User::find($id);
@@ -225,12 +225,12 @@ class UserController extends BaseController {
         }
     }
 
-    public function editprof_view($id)
+    public function edit_view($id) // MAKE EDIT USER VIEW
     {
-        return View::make('user.editprofile')->with('id',$id);
+        return View::make('useredit')->with('id',$id);
     }
 
-    public function edit()
+    public function edit() // SAVING FOR USER ACCOUNT EDITING
     {
         $id=Input::get( 'id' );
         $user = User::find($id);
@@ -324,11 +324,6 @@ class UserController extends BaseController {
         }
     }
 
-    public function edit_view($id)
-    {
-        return View::make('useredit')->with('id',$id);
-    }
-
     public function login() // DISPLAYS LOGIN FORM
     {
         if( Confide::user() )
@@ -343,7 +338,7 @@ class UserController extends BaseController {
         }
     }
 
-    public function do_login()
+    public function do_login() // LOGIN FUNCTION
     {
         $username = Input::get( 'username' ); 
         $input = array(
@@ -408,74 +403,6 @@ class UserController extends BaseController {
             ->withInput(Input::except('password'))
             ->with( 'error', $err_msg );
         } 
-    }
-
-    public function confirm( $code )
-    {
-        if ( Confide::confirm( $code ) )
-        {
-            $notice_msg = Lang::get('confide::confide.alerts.confirmation');
-            return Redirect::action('UserController@login')
-            ->with( 'notice', $notice_msg );
-        }
-        else
-        {   
-            $error_msg = "Lang::get('confide::confide.alerts.wrong_confirmation')";
-            return Redirect::action('UserController@login')
-            ->with( 'error', $error_msg );
-        }
-    }
-
-    public function forgot_password()
-    {
-        return View::make(Config::get('confide::forgot_password_form'));
-    }
-
-    public function do_forgot_password()
-    {
-        if( Confide::forgotPassword( Input::get( 'email' ) ) )
-        {
-            $notice_msg = Lang::get('confide::confide.alerts.password_forgot');
-            return Redirect::action('UserController@login')
-            ->with( 'notice', $notice_msg );
-        }
-        else
-        {
-            $error_msg = Lang::get('confide::confide.alerts.wrong_password_forgot');
-            return Redirect::action('UserController@forgot_password')
-            ->withInput()
-            ->with( 'error', $error_msg );
-        }
-    }
-
-    public function reset_password( $token )
-    {
-        return View::make(Config::get('confide::reset_password_form'))
-        ->with('token', $token);
-    }
-
-    public function do_reset_password()
-    {
-        $input = array(
-            'token'=>Input::get( 'token' ),
-            'password'=>Input::get( 'password' ),
-            'password_confirmation'=>Input::get( 'password_confirmation' ),
-            );
-
-        // By passing an array with the token, password and confirmation
-        if( Confide::resetPassword( $input ) )
-        {
-            $notice_msg = Lang::get('confide::confide.alerts.password_reset');
-            return Redirect::action('UserController@login')
-            ->with( 'notice', $notice_msg );
-        }
-        else
-        {
-            $error_msg = Lang::get('confide::confide.alerts.wrong_password_reset');
-            return Redirect::action('UserController@reset_password', array('token'=>$input['token']))
-            ->withInput()
-            ->with( 'error', $error_msg );
-        }
     }
 
     public function logout()
