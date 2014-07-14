@@ -1,7 +1,3 @@
-<!--CODE REVIEW:
-    - variables must be descriptive
--->
-
 <?php $wfName = Workflow::find('1'); ?>
 <br/>
 
