@@ -115,32 +115,8 @@ Route::post('purchaseRequest/submitForm/{id}', ['as' => 'submitForm', 'uses' => 
 Route::post('checklistedit', ['uses' => 'PurchaseRequestController@checklistedit']);
 Route::post('insertaddon', ['uses' => 'PurchaseRequestController@insertaddon']);
 Route::post('editaddon', ['uses' => 'PurchaseRequestController@editaddon']);
-Route::get( 'purchaseRequest/edit/{id}', function($id)
-{
-	return View::make('pr_edit')->with('id',$id);
-});
+Route::get( 'purchaseRequest/edit/{id}', ['uses'=>'PurchaseRequestController@editpagecall']);
 
-Route::post( 'purchaseRequest/delete', function()
-{
-	$errors="Account Deactivated.";
-	$id=Input::get('del_pr');
-	Purchase::where('id',$id)->delete();
-	
-	//Attachment Deletion 
-	$document=Document::where('pr_id', $id)->first();
-	$attach = Attachments::where('doc_id', $document->id)->get();
-
-	foreach ($attach as $attachs) {
-		$attachs->delete();
-	}
-	Document::where('pr_id', $id )->delete();
-	$notice="Purchase Request successfully deleted.";
-	Redirect::back()->with( 'notice', $notice );
-	//End Attachment Deletion 
-
-	Session::flash('message','Successfully deleted the user.');
-	return Redirect::to('purchaseRequest/view');
-});
 
 //---------- Designation Routes
 Route::resource('designation', 'DesignationController');
@@ -206,33 +182,8 @@ Route::post('remarks', 'TaskController@remarks');
 Route::post('done', 'TaskController@done');
 Route::get('task/active', 'TaskController@active');
 Route::get('task/overdue', 'TaskController@overdue');
-Route::get('task/{id}', function($id){
-	$user_id = Auth::User()->id;
-	$taskd = TaskDetails::find($id);
-
-	$task= Task::find($taskd->task_id);
-	$desig= UserHasDesignation::where('users_id', $user_id)->where('designation_id', $task->designation_id)->count();
-
-	if ($taskd->status=="New"){
-		if($desig==0)
-		{
-			return Redirect::to('/');
-		} 
-		else{
-			Session::put('taskdetails_id', $id);
-
-		return View::make('tasks.task');
-		}
-	}
-	else{
-		if ($taskd->assignee_id==$user_id){
-			Session::put('taskdetails_id', $id);
-			return View::make('tasks.task');
-		}
-		else
-			return Redirect::to('/');
-	}
-});
+Route::get('task/{id}', [ 'uses' => 'TaskController@taskpagecall']);
+	
 
 //---------- AJAX Routes
 Route::post('workflow/submit/{id}', function()
@@ -281,16 +232,6 @@ Route::post('workflow/submit/{id}', function()
 Route::post('newcreate', ['uses' => 'purchaseRequestController@create_submit']);
 Route::post('newedit', ['uses' => 'purchaseRequestController@edit_submit']);
 Route::post('addimage', ['uses' => 'purchaseRequestController@addimage']);
-Route::post('delimage', function()
-{
-	$id = Input::get('hide');
-	$attachn=DB::table('attachments')->where('id', $id)->first();
-		$destine= public_path()."/uploads/";
-	unlink($destine.$attachn->data);
-	$attach = DB::table('attachments')->where('id', $id)->delete();
-
-	$notice="Attachment successfully deleted.";
-	return Redirect::back()->with('notice', $notice);
-});
+Route::post('delimage', ['uses'=> 'purchaseRequestController@delimage']);
 
 
