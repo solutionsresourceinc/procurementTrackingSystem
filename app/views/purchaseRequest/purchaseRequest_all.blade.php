@@ -67,7 +67,6 @@
 
         <?php
          //Restrictions
-  
             $requests = new Purchase;
             $reqrestrict=0;
             $userx=Auth::user()->id;
@@ -89,22 +88,22 @@
                 @foreach ($requests as $request)
                     <tr
                     <?php 
-                    //Office restriction for requis
-                    if($reqrestrict==1)
-                        {
-                            $useroffice=Auth::user()->office_id;
-                            $maker= User::find( $request->requisitioner);
-                            if ($useroffice!=$maker->office_id)
-                                continue;
-                        }
-//End office restriction for requis
+                        //Office restriction for requis
+                        if($reqrestrict==1)
+                            {
+                                $useroffice=Auth::user()->office_id;
+                                $maker= User::find( $request->requisitioner);
+                                if ($useroffice!=$maker->office_id)
+                                    continue;
+                            }
+                        //End office restriction for requis
                         $doc = new Document; $doc = DB::table('document')->where('pr_id', $request->id)->first();  
                         $doc_id= $doc->id;
-                    $userx= Auth::User()->id;
-                    $counter=Count::where('user_id', $userx)->where('doc_id', $doc_id)->count();
-                    if ($counter!=0){
-                        echo "class ='success'";
-                    }
+                        $userx= Auth::User()->id;
+                        $counter=Count::where('user_id', $userx)->where('doc_id', $doc_id)->count();
+                        if ($counter!=0){
+                            echo "class ='success'";
+                        }
 
                     ?>
                     >
