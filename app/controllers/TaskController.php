@@ -8,6 +8,16 @@
 
 class TaskController extends Controller {
 
+	public function hehe()
+	{
+
+		$desc = Task::find($id);
+		$data = array(
+			"html" => "<div id='description_body'>  $desc->description </h6> </p></div>"
+		);
+		return Response::json($data);
+	}
+
 	public function newTask()
 	{
 		$user_id = Auth::user()->id;
