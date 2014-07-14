@@ -2,11 +2,6 @@
 
 @section('content')
     
-    <!--CODE REVIEW:
-        - variable names must be descriptive
-        - remove unnecessary codes
-    -->
-
     <h1 class="pull-left">List of Cancelled Purchase Requests</h1>
     
     @if ( Entrust::hasRole('Administrator') || Entrust::hasRole('Procurement Personnel'))
