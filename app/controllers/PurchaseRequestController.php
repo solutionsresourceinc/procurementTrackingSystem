@@ -177,13 +177,46 @@ return Redirect::back();
         }
 
         Session::put('imgsuccess','Files uploaded.');
-		if (Session::get('imgerror'))
+		if (Session::get('imgerror')&&Input::hasfile('file'))
 		{
-			Session::forget('imgerror');
+			
+
+Session::forget('imgsuccess');
+//Image Error Return
+
+			// Set Main Error
+			$message = "Failed to save purchase request.";
+			Session::put('main_error', $message );
+
+			// Get Other Error Messages
+			$m1 = $purchase->validationErrors->first('projectPurpose');
+			$m2 = $purchase->validationErrors->first('sourceOfFund');
+			//$m3 = $purchase->validationErrors->first('amount');
+			$m4 = $purchase->validationErrors->first('office');
+			$m5 = $purchase->validationErrors->first('requisitioner');
+			$m7 = $purchase->validationErrors->first('dateRequested');
+			// Inserting Error Message To a Session
+			Session::put('m1', $m1 );
+			Session::put('m2', $m2 );
+			//Session::put('m3', $m3 );
+			Session::put('m4', $m4 );
+			Session::put('m5', $m5 );
+			Session::put('m7', $m7 );
+
+			return Redirect::back()->withInput();
+
+
 
 		}
 
-		//Image Upload
+		
+
+
+		//End Image Upload
+
+		
+
+
 
 		$pr_id= Session::get('pr_id');
 
@@ -433,14 +466,11 @@ $doc_id= $document->id;
 
 foreach(Input::file('file') as $file){
             $rules = array(
-                'file' => 'required|mimes:png,gif,jpeg,jpg|max:900000000000000000000'
+                'file' => 'required|mimes:png,gif,jpeg,jpg|max:90000000000000000000000'
                 );
             $validator = Validator::make(array('file'=> $file), $rules);
             $destine=public_path()."/uploads";
- 
- $size = $file->getSize();
-return (string)$size;
-           
+
 
             if($validator->passes()){
         
@@ -521,7 +551,42 @@ unlink($actual);
 
         }
 
-          Session::put('imgsuccess','Files uploaded.');
+
+
+if (Session::get('imgerror')&&Input::hasfile('file'))
+{
+
+
+//Image Error Return
+
+			// Set Main Error
+			$message = "Failed to save purchase request.";
+			Session::put('main_error', $message );
+
+			// Get Other Error Messages
+			$m1 = $purchase->validationErrors->first('projectPurpose');
+			$m2 = $purchase->validationErrors->first('sourceOfFund');
+			//$m3 = $purchase->validationErrors->first('amount');
+			$m4 = $purchase->validationErrors->first('office');
+			$m5 = $purchase->validationErrors->first('requisitioner');
+			$m7 = $purchase->validationErrors->first('dateRequested');
+			// Inserting Error Message To a Session
+			Session::put('m1', $m1 );
+			Session::put('m2', $m2 );
+			//Session::put('m3', $m3 );
+			Session::put('m4', $m4 );
+			Session::put('m5', $m5 );
+			Session::put('m7', $m7 );
+
+			return Redirect::back()->withInput();
+
+
+}
+
+
+
+
+Session::put('imgsuccess','Files uploaded.');
 if (Session::get('imgerror')){
 Session::forget('imgerror');
 
@@ -538,8 +603,6 @@ Session::forget('imgerror');
 				if (Session::get('doc_id'))
 				{
 					$doc_id =Session::get('doc_id');
-
-
 
 
 					DB::table('attachments')
