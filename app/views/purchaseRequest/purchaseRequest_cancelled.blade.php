@@ -2,12 +2,7 @@
 
 @section('content')
     
-    <!--CODE REVIEW:
-        - variable names must be descriptive
-        - remove unnecessary codes
-    -->
-
-    <h1 class="pull-left">List of Active Purchase Requests</h1>
+    <h1 class="pull-left">List of Cancelled Purchase Requests</h1>
     
     @if ( Entrust::hasRole('Administrator') || Entrust::hasRole('Procurement Personnel'))
       <div class="pull-right options">
@@ -60,7 +55,7 @@
             $date_today =date('Y-m-d H:i:s');
             $requests = new Purchase;
            
-            $userx=Auth::user()->id;
+            $user_selected=Auth::user()->id;
               $requests = DB::table('purchase_request')->where('status', '=', 'Cancelled')->paginate(10); 
             //End Query Restrictions
         ?>
@@ -76,9 +71,9 @@
                                 $useroffice=Auth::user()->office_id;
                                 $maker= User::find( $request->requisitioner);
                                 $docget=Document::where('pr_id', $request->id)->first();
-                                $taskd = TaskDetails::where('doc_id',$docget->id)->where('assignee_id',$userx)->count();
+                                $taskd = TaskDetails::where('doc_id',$docget->id)->where('assignee_id',$user_selected)->count();
                                 if($taskd!=0){}
-                                else if ($userx==$request->created_by){}
+                                else if ($user_selected==$request->created_by){}
                                 else if ($useroffice!=$maker->office_id)
                                     continue;
                         }
@@ -93,9 +88,9 @@
 
                         $doc = new Document; $doc = DB::table('document')->where('pr_id', $request->id)->first();  
                         $doc_id= $doc->id;
-                        $userx= Auth::User()->id;
+                        $user_selected= Auth::User()->id;
                         $counter=0;
-                        $counter=Count::where('user_id', $userx)->where('doc_id', $doc_id)->count();
+                        $counter=Count::where('user_id', $user_selected)->where('doc_id', $doc_id)->count();
                         if ($counter!=0){
                             echo "class ='success'";
                         }
@@ -104,11 +99,11 @@
                         <td width="10%">{{ $request->controlNo; }}</td>
                         <td width="30%"><a data-toggle="tooltip" data-placement="top" class="purpose" href="{{ URL::to('purchaseRequest/vieweach/'. $request->id) }}" title="View Project Details">{{ $request->projectPurpose; }}</a></td>
                         <?php 
-                            $doc = new Purchase; 
-                            $doc = DB::table('document')->where('pr_id', $request->id)->get(); 
+                            $docs = new Purchase; 
+                            $docs = DB::table('document')->where('pr_id', $request->id)->get(); 
                         ?>
                         <td width="18%">
-                            @foreach ($doc as $docs) {{ Workflow::find($docs->work_id)->workFlowName; }} @endforeach
+                            @foreach ($docs as $doc) {{ Workflow::find($doc->work_id)->workFlowName; }} @endforeach
                         </td>
                         <td width="12%" style="text-align: center"><span class="label {{($request->status == 'New') ? 'label-primary' : (($request->status == 'Active') ? 'label-success' : (($request->status == 'Overdue') ? 'label-danger' : 'label-default'))}}">{{ $request->status; }}</span></td>
                         <td width="20%">{{ $request->dateRequested; }}</td>
@@ -149,35 +144,23 @@
         });
 
         $('#confirmDelete').find('.modal-footer #confirm').on('click', function(){
-            //$(this).data('form').submit();
             var name = "myForm_" + window.my_id; 
             document.getElementById(name).submit();
-            //alert(name);
         });
         function hello(pass_id)
         {
             window.my_id = pass_id;
-           // alert(window.my_id);
         }
 
         function submitForm()
         {
             var reason = document.getElementById('reason').value;
             document.getElementById('hide_reason').value = reason;
-            //alert(reason);
             document.getElementById("form").submit();
         }
     </script>
 
-    <!--CODE REVIEW: remove unnecessary codes-->
     {{ Session::forget('main_error'); }}
-    {{ Session::forget('m1'); }}
-    {{ Session::forget('m2'); }}
-    {{ Session::forget('m3'); }}
-    {{ Session::forget('m4'); }}
-    {{ Session::forget('m5'); }}
-    {{ Session::forget('m6'); }}
-    {{ Session::forget('m7'); }}
     {{ Session::forget('imgsuccess'); }}
     {{ Session::forget('imgerror'); }}
 @stop

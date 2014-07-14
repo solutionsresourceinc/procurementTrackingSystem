@@ -1,10 +1,5 @@
 <?php
 
-/*
-	CODE REVIEW:
-		- conform with the specified data description
-*/
-
 use Illuminate\Auth\UserInterface;
 use Illuminate\Auth\Reminders\RemindableInterface;
 use Zizaco\Confide\ConfideUser;
@@ -28,7 +23,6 @@ class Designation extends Ardent{
 		'alpha_spaces' => 'Designation entry not created.',
 	);
 
-	
 	public function isValid()
 	{
 		$rules = array('designation'=>'required|alpha_spaces|max:255|allNum');
@@ -42,6 +36,8 @@ class Designation extends Ardent{
 		return false;
 		
 	}
+
+	// RELATIONSHIPS
 	public function users()
 	{
   		return $this->belongsToMany('User', 'users_id','designation_id');

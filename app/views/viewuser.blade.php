@@ -2,11 +2,6 @@
 
 @section('content')
 
-<!--CODE REVIEW:
-    - remove comments
-    - variables must be descriptive
--->
-
 <h1 class="pull-left">User Management</h1>
 <div class="pull-right options">
 	<a href="{{ URL::to('user/create') }}" class="btn btn-success">Create New</a>
@@ -63,26 +58,19 @@
 			<th>Lastname</th>
 			<th>Role</th>
 			<th>Office</th>
-
 			<?php
-				// get user info in
-				$adm = Assigned::where('user_id', Auth::User()->id)->first();
-
-				// get all users in users table
+				$admin = Assigned::where('user_id', Auth::User()->id)->first();
 				$users = DB::table('users')->get();
-				if($adm->role_id == 3) 
-				{
 			?>
+			@if($admin->role_id == 3)
 				<th>Action</th>
-			<?php } ?>
+			@endif
 		</tr>
 	</thead>
 
 	<tbody>
 		@foreach ($users as $user)
 			<?php $assigned = Assigned::where('user_id', $user->id)->first(); ?>
-
-
 			<tr>
 				@if($user->confirmed == 0)
 					<td><strike><font color="grey"> {{ $user->username; }} </font></strike></td>
@@ -102,80 +90,55 @@
 
 					@if($assigned->role_id == 3)
 						<td>Administrator</strike></td>
-					@elseif ($assigned->role_id == 2)
+					@elseif($assigned->role_id == 2)
 						<td>Procurement Personnel</td>
 					@else
 						<td>Requisitioner</td>
 					@endif
 				@endif
 				
-				<?php $offs = Office::where('id',$user->office_id)->get(); ?>
+				<?php $offices = Office::where('id',$user->office_id)->get(); ?>
 				<td>
-					@foreach($offs as $off)
+					@foreach($offices as $office)
 						@if($user->confirmed == 0)
-							<strike><font color="grey"> {{{ $off->officeName}}} </font></strike>
+							<strike><font color="grey"> {{{ $office->officeName}}} </font></strike>
 						@else
-							{{{ $off->officeName }}}
+							{{{ $office->officeName }}}
 						@endif
 					@endforeach
 				</td>
 				
-				<?php if($adm->role_id == 3) {?>
-				<td>						
-					<!--ul class='dropdown-menu'>
-	              		<?php if($adm->role_id == 3) {?>
-							<li><a class='iframe btn' href='edit/{{$user->id}}'>Edit</a></li>
-						<?php } ?>
-	            			@if($user->confirmed == 1)
-								<li>
-									<form method="POST" action="delete"/ id="myForm_{{ $user->id }}" name="myForm">
-										<input type="hidden" name="hide" value="{{ $user->id }}">
-		  								<center>
-		    							<button class="iframe btn" style="background-color:transparent" type="button" data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $user->id }})"  data-title="Delete User" data-message="Are you sure you want to disable account?">Disable</button>
-										</center>
-									</form>
-								</li>
-							@else
-								<li>
-									<form method="POST" action="activate"/ id="myForm_{{ $user->id }}" name="myForm">
-										<input type="hidden" name="hide" value="{{ $user->id }}">
-		  								<center>
-		    							<button class="iframe btn" style="background-color:transparent" type="button" data-toggle="modal" data-target="#confirmActivate" onclick="hello( {{ $user->id }})"  data-title="Activate User" data-message="Are you sure you want to activate account?">Activate</button>
-										</center>
-									</form>
-								</li>
+				@if($admin->role_id == 3)
+					<td>						
+						@if($admin->role_id == 3)
+							<a class='iframe btn btn-success' href='edit/{{$user->id}}' title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
 						@endif
-					</ul-->
-					<?php if($adm->role_id == 3) {?>
-					<a class='iframe btn btn-success' href='edit/{{$user->id}}' title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
-					<?php } ?>
-					@if($user->confirmed == 1)
-					<form method="POST" action="delete" id="myForm_{{ $user->id }}" name="myForm" style="display: -webkit-inline-box;">
-						<input type="hidden" name="hide" value="{{ $user->id }}">
-						<center>
-							<button class="iframe btn btn-warning" type="button" data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $user->id }})"  data-title="Disable" data-message="Are you sure you want to disable account?"><span class="glyphicon glyphicon-ban-circle"></span></button>
-						</center>
-					</form>
-					@else
-					<form method="POST" action="activate" id="myForm_{{ $user->id }}" name="myForm" style="display: -webkit-inline-box;">
-						<input type="hidden" name="hide" value="{{ $user->id }}">
-						<center>
-							<button class="iframe btn btn-primary" type="button" data-toggle="modal" data-target="#confirmActivate" onclick="hello( {{ $user->id }})"  data-title="Activate" data-message="Are you sure you want to activate account?"><span class="glyphicon glyphicon-ok"></span></button>
-						</center>
-					</form>
-					@endif
-				</td>
-				<?php } ?>
+
+						@if($user->confirmed == 1)
+							<form method="POST" action="delete" id="myForm_{{ $user->id }}" name="myForm" style="display: -webkit-inline-box;">
+								<input type="hidden" name="hide" value="{{ $user->id }}">
+								<center>
+									<button class="iframe btn btn-warning" type="button" data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $user->id }})"  data-title="Disable" data-message="Are you sure you want to disable account?"><span class="glyphicon glyphicon-ban-circle"></span></button>
+								</center>
+							</form>
+						@else
+							<form method="POST" action="activate" id="myForm_{{ $user->id }}" name="myForm" style="display: -webkit-inline-box;">
+								<input type="hidden" name="hide" value="{{ $user->id }}">
+								<center>
+									<button class="iframe btn btn-primary" type="button" data-toggle="modal" data-target="#confirmActivate" onclick="hello( {{ $user->id }})"  data-title="Activate" data-message="Are you sure you want to activate account?"><span class="glyphicon glyphicon-ok"></span></button>
+								</center>
+							</form>
+						@endif
+					</td>
+				@endif
 			</tr>
-			@endforeach	    
-		</tbody>
-	</table>
+		@endforeach	    
+	</tbody>
+</table>
 
-
-	<script type="text/javascript">
+<script type="text/javascript">
 
 	$('#confirmDelete').on('show.bs.modal', function (e) {
-
 		$message = $(e.relatedTarget).attr('data-message');
 		$(this).find('.modal-body p').text($message);
 
@@ -185,52 +148,37 @@
 		var form = $(e.relatedTarget).closest('form');
 
 		$(this).find('.modal-footer #confirm').data('form', form);
-
 	});
 
 	$('#confirmDelete').find('.modal-footer #confirm').on('click', function(){
+	    var name = "myForm_" + window.my_id; 
+	    document.getElementById(name).submit();
+ 	});
 
-     //$(this).data('form').submit();
-     var name = "myForm_" + window.my_id; 
-     document.getElementById(name).submit();
-     //alert(name);
- });
 	function hello(pass_id)
 	{
 		window.my_id = pass_id;
-     // alert(window.my_id);
- }
- </script>
+ 	}
 
+	$('#confirmActivate').on('show.bs.modal', function (e) {
+	 	$message = $(e.relatedTarget).attr('data-message');
+	 	$(this).find('.modal-body p').text($message);
 
- <script type="text/javascript">
+	 	$title = $(e.relatedTarget).attr('data-title');
+	 	$(this).find('.modal-title').text($title);
 
- $('#confirmActivate').on('show.bs.modal', function (e) {
+	 	var form = $(e.relatedTarget).closest('form');
 
- 	$message = $(e.relatedTarget).attr('data-message');
- 	$(this).find('.modal-body p').text($message);
+	 	$(this).find('.modal-footer #confirm').data('form', form);
+	});
 
- 	$title = $(e.relatedTarget).attr('data-title');
- 	$(this).find('.modal-title').text($title);
-
- 	var form = $(e.relatedTarget).closest('form');
-
- 	$(this).find('.modal-footer #confirm').data('form', form);
-
- });
-
- $('#confirmActivate').find('.modal-footer #confirm').on('click', function(){
-
-     //$(this).data('form').submit();
-     var name = "myForm_" + window.my_id; 
-     document.getElementById(name).submit();
-     //alert(name);
- });
- function hello(pass_id)
- {
- 	window.my_id = pass_id;
-     // alert(window.my_id);
- }
- </script>
-
- @stop
+	$('#confirmActivate').find('.modal-footer #confirm').on('click', function(){
+	     var name = "myForm_" + window.my_id; 
+	     document.getElementById(name).submit();
+	});
+	function hello(pass_id)
+	{
+		window.my_id = pass_id;
+	}
+</script>
+@stop

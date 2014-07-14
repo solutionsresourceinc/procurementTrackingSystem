@@ -10,8 +10,8 @@
     {{ HTML::script('date_picker/bootstrap-datetimepicker.fr.js') }}
     {{ HTML::style('css/datepicker.css')}}
     {{ HTML::script('js/bootstrap-datepicker.js') }}
+    
     <!--Image Display-->
-
     {{ HTML::script('js/lightbox.min.js') }} 
     {{ HTML::style('css/lightbox.css')}}
     <!--End Image Display-->
@@ -24,20 +24,16 @@
 
 @section('content')
 
-    <!--CODE REVIEW:
-        - comments must be in sentence form
-        - remove unnecessary comments
-        - variables must be descriptive
-    -->
 
     <?php
-        $pass=0;
-        $epurchase=Purchase::find($id);
-        $cuser=Auth::User()->id;
-    ?>
+        
+    //Initialization for page query
+        $pass=0; //Use in role restriction.
+        $purchaseToEdit=Purchase::find($id);
+        $user_id=Auth::User()->id;
+    
+    //Retain Inputte Values
 
-    <?php 
-        //retainer
         if (Input::old('projectPurpose')||Input::old('sourceOfFund')||Input::old('amount')){
             $valprojectPurpose=Input::old('projectPurpose');
             $valsourceOfFund=Input::old('sourceOfFund');
@@ -45,9 +41,9 @@
         }
         else
         {
-            $valprojectPurpose=$epurchase->projectPurpose;
-            $valsourceOfFund=$epurchase->sourceOfFund;
-            $valamount=$epurchase->amount; 
+            $valprojectPurpose=$purchaseToEdit->projectPurpose;
+            $valsourceOfFund=$purchaseToEdit->sourceOfFund;
+            $valamount=$purchaseToEdit->amount; 
 
         }
     ?>
@@ -55,9 +51,11 @@
     <h1 class="page-header">Edit Purchase Request</h1>
 
     <div class="form-create fc-div">
+
         {{ Form::open(array('url' => 'newedit', 'files' => true), 'POST') }}
-         
+
             <input type="hidden" name ="id" value={{$id}}>
+
             @if(Session::get('notice'))
                 <div class="alert alert-success"> {{ Session::get('notice') }}</div> 
             @endif
@@ -68,34 +66,28 @@
 
 
             @if(Session::get('successchecklist'))
-                <div class="alert alert-success"> {{ Session::get('successchecklist') }}{{Session::forget('successchecklist')}}</div> 
+                <div class="alert alert-success"> {{ Session::get('successchecklist') }}</div> 
             @endif
 
             @if(Session::get('errorchecklist'))
                 <div class="alert alert-danger"> {{ Session::get('errorchecklist') }}</div> 
             @endif
+
             {{Session::forget('errorchecklist')}}
             {{Session::forget('successchecklist')}}
             
             @if(Session::get('successlabel'))
-                <div class="alert alert-success"> {{ Session::get('successlabel') }}{{Session::forget('successlabel')}}</div> 
+                <div class="alert alert-success"> {{ Session::get('successlabel') }}</div> 
             @endif
 
             @if(Session::get('errorlabel'))
                 <div class="alert alert-danger"> {{ Session::get('errorlabel') }}</div> 
             @endif
+
             {{Session::forget('errorlabel')}}
             {{Session::forget('successlabel')}}
 
-    <?php
-        if ( Entrust::hasRole('Administrator')) { $pass=1; }
-        else if (Entrust::hasRole('Procurement Personnel'))
-        {
-            if($epurchase->created_by==$cuser)  $pass=1;
-        }
-        if ($pass==0)
-            Redirect::back();
-    ?>
+
             <div class="form-group">
                 <?php
                         $docs=DB::table('document')->where('pr_id', '=',$id )->first();
@@ -105,8 +97,9 @@
                     <div class="col-md-6">
                         
                         {{ Form::label('modeOfProcurement', 'Mode of Procurement *', array('class' => 'create-label')) }}
+
                         <select  name="modeOfProcurement" id="modeOfProcurement" class="form-control" data-live-search="true" disabled="disabled">
-                            <option value="">Please select</option>
+                                <option value="">Please select</option>
                             @foreach($workflow as $wf)
                                 <option value="{{ $wf->id }}" 
                                     <?php
@@ -127,7 +120,7 @@
 
                     <div class="col-md-3">
                         {{ Form::label('status', 'Status: ', array('class' => 'create-label')) }}
-                        <input type="text" value="{{$epurchase->status}}" readonly class="form-control">
+                        <input type="text" value="{{$purchaseToEdit->status}}" readonly class="form-control">
                     </div>
 
                     <div class="col-md-3">
@@ -143,9 +136,9 @@
 
                         {{ Form::label('dispCN', 'Control No. *', array('class' => 'create-label')) }}
                         <input type="text"  name="dispCN"  class="form-control" value="{{
-                        $epurchase->controlNo}}"disabled>
+                        $purchaseToEdit->controlNo}}"disabled>
                         <input type="hidden" name="controlNo" value="{{
-                        $epurchase->controlNo}}">
+                        $purchaseToEdit->controlNo}}">
                     </div>
                 </div>
                 <br/>
@@ -155,8 +148,8 @@
                     {{ Form::text('projectPurpose',$valprojectPurpose, array('class'=>'form-control')) }}
                 </div>
 
-                @if (Session::get('m1'))
-                    <font color="red"><i>{{ Session::get('m1') }}</i></font>
+                @if (Session::get('error_projectPurpose'))
+                    <font color="red"><i>{{ Session::get('error_projectPurpose') }}</i></font>
                 @endif
                 <br/>            
 
@@ -164,57 +157,57 @@
                     <div class="col-md-6">
                         {{ Form::label('sourceOfFund', 'Source of Fund *', array('class' => 'create-label')) }}
                         {{ Form::text('sourceOfFund',$valsourceOfFund, array('class'=>'form-control')) }}
-                        @if (Session::get('m2'))
-                            <font color="red"><i>{{ Session::get('m2') }}</i></font>
+                        @if (Session::get('error_sourceOfFund'))
+                            <font color="red"><i>{{ Session::get('error_sourceOfFund') }}</i></font>
                         @endif
                     </div>
 
                     
                     <div class="col-md-6">
                         {{ Form::label('amount', 'Amount *', array('class' => 'create-label')) }}
-                        {{ Form::text('amount', $epurchase->amount ,array('class'=>'form-control','onchange'=>'numberWithCommas(this.value)','id'=>'num','disabled')) }}
+                        {{ Form::text('amount', $purchaseToEdit->amount ,array('class'=>'form-control','onchange'=>'numberWithCommas(this.value)','id'=>'num','disabled')) }}
                     </div>
-                    @if (Session::get('m3'))
-                        <font color="red"><i>{{ Session::get('m3') }}</i></font>
-                    @endif
-
-
+           
                 </div>
                 <br/>
 
                 <?php 
                     $office= DB::table('offices')->get();
                 ?>
+
                 <div class="row">
                     <div class="form-group col-md-6" id="template">
                         {{ Form::label('office', 'Office *', array('class' => 'create-label')) }}
+
                         <select id="office" name="office" class="form-control" data-live-search="true">
-                            <option value="">Please select</option>
+                                <option value="">Please select</option>
                             @foreach($office as $key)
                                 <option value="{{ $key->id }}" 
                                     <?php 
                                         if (Input::old('office')==$key->id)
                                           echo "selected";
-                                        else if($epurchase->office==$key->id)
+                                        else if($purchaseToEdit->office==$key->id)
                                         echo "selected" 
                                     ?>
                                     >{{{ $key->officeName }}}
                                 </option>
                             @endforeach
                         </select>
-                        @if (Session::get('m4'))
-                            <font color="red"><i>{{ Session::get('m4') }}</i></font>
+
+                        @if (Session::get('error_office'))
+                            <font color="red"><i>{{ Session::get('error_office') }}</i></font>
                         @endif
                     
                     </div>
 
                     <div class="form-group col-md-6" id="template">
                         {{ Form::label('requisitioner', 'Requisitioner *', array('class' => 'create-label')) }}
+                        
                         <select class="form-control" id="requisitioner" name="requisitioner"  data-live-search="true" >
                             <?php
                             $users= DB::table('users')->get();
                             ?>
-                            <option value="">Please select</option>
+                                    <option value="">Please select</option>
                             @foreach($users as $key2)
                                 {{{ $fullname = $key2->lastname . ", " . $key2->firstname }}}
                                 @if($key2->confirmed == 0)
@@ -224,7 +217,7 @@
                                         <?php 
                                         if (Input::old('requisitioner')==$key2->id)
                                           echo "selected";
-                                        else if($epurchase->requisitioner==$key2->id)
+                                        else if($purchaseToEdit->requisitioner==$key2->id)
                                             echo "selected" 
                                         ?>
                                         >{{ $fullname }}
@@ -232,8 +225,9 @@
                                 @endif
                             @endforeach
                         </select>
-                        @if (Session::get('m5'))
-                            <font color="red"><i>{{ Session::get('m5') }}</i></font>
+
+                        @if (Session::get('error_requisitioner'))
+                            <font color="red"><i>{{ Session::get('error_requisitioner') }}</i></font>
                         @endif
                   
                     </div>
@@ -242,24 +236,35 @@
          
 
                 <div class="form-group">
+                    
                     {{ Form::label('dateTime', 'Date Requested *', array('class' => 'create-label')) }}
+
                     <div class="input-group date form_datetime col-md-12" data-date="{{ date('Y-m-d') }}T{{ date('H:i:s') }}Z" data-date-format="dd MM yyyy - HH:ii p" data-link-field="dtp_input1">
+                        
                         <input id="disabled_datetime" onchange="fix_format()" class="form-control" size="16" type="text" value="<?php
+                        
                         if (NULL!=Input::old('dateRequested'))
                             echo Input::old('dateRequested');
                         else
-                         echo $epurchase->dateRequested; ?>" readonly>
+                            echo $purchaseToEdit->dateRequested; ?>" readonly>
+                        
                         <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                        
                         <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                    
                     </div>
+                    
                     <input type="hidden" id="dtp_input1" name="dateRequested" value="<?php
+                        
                         if (NULL!=Input::old('dateRequested'))
                             echo Input::old('dateRequested');
                         else
-                            echo $epurchase->dateRequested; ?>" />
-                    @if (Session::get('m7'))
-                        <font color="red"><i>{{ Session::get('m7') }}</i></font>
+                            echo $purchaseToEdit->dateRequested; ?>" />
+                    
+                    @if (Session::get('error_dateRequested'))
+                        <font color="red"><i>{{ Session::get('error_dateRequested') }}</i></font>
                     @endif
+
                     <br>
                 </div>
             </div>
@@ -278,7 +283,7 @@
                     @endif
 
                     <?php
-                        $document = Document::where('pr_id', $epurchase->id)->first();
+                        $document = Document::where('pr_id', $purchaseToEdit->id)->first();
                         $doc_id= $document->id;
                     ?>
                     <input name="file[]" type="file"  multiple title="Select image to attach" data-filename-placement="inside"/>
@@ -319,19 +324,17 @@
                 @endforeach
             <!-- End Image Module-->
 
-                {{ Session::forget('notice'); }}
-                {{ Session::forget('main_error'); }}
-                {{ Session::forget('m1'); }}
-                {{ Session::forget('m2'); }}
-                {{ Session::forget('m3'); }}
-                {{ Session::forget('m4'); }}
-                {{ Session::forget('m5'); }}
-                {{ Session::forget('m6'); }}
-                {{ Session::forget('m7'); }}
-                {{ Session::forget('imgerror'); }}
-                {{ Session::forget('imgsuccess'); }}
+                {{Session::forget('notice'); }}
+                {{Session::forget('main_error'); }}
+                {{Session::forget('error_projectPurpose');}}
+                {{Session::forget('error_sourceOfFund');}}
+                {{Session::forget('error_office');}}
+                {{Session::forget('error_requisitioner');}}
+                {{Session::forget('error_dateRequested');}}
+                {{Session::forget('error_modeOfProcurement');}}
+                {{Session::forget('imgerror'); }}
+    
             </div>
-
         </div>  
        
         <br>
@@ -339,42 +342,44 @@
             <!-- Section 1  -->
             <?php 
             //Cursor Component
+                //Count Cursor
                 $taskch= TaskDetails::where('doc_id', $docs->id)->where('status', 'New')->orWhere('status', 'Active')->count(); 
-
+                //Get Cursor Value
                 $taskc= TaskDetails::where('doc_id', $docs->id)->where('status', 'New')->orWhere('status', 'Active')->first(); 
+                
+                //Queries
                 $workflow= Workflow::find($docs->work_id);
                 $section= Section::where('workflow_id', $workflow->id)->orderBy('section_order_id','ASC')->get();
-
                 $taskd= TaskDetails::where('doc_id', $docs->id)->orderBy('id', 'ASC')->get();
+                
                 $sectioncheck=0;
                 $prdays=0;
       
                 foreach($section as $sections)
                 {
-                $sectiondays=0;
+                    $sectiondays=0;
                     $task= Task::where('section_id', $sections->section_order_id)->where('wf_id', $workflow->id)->orderBy('order_id', 'ASC')->get();
                     echo "<div class='panel panel-success'><div class='panel-heading'>
                         <h3 class='panel-title'>".$sections->section_order_id.". ".$sections->sectionName."</h3>
                         </div>";
-                    //echo "<tr><th colspan='5' >".$sections->section_order_id.". ".$sections->sectionName."</th></tr>";
+                 
                     echo "<div class='panel-body'>";
                     echo "<table border='1' class='workflow-table'>";
 
                     //Addon Display
                     $otherc=OtherDetails::where('section_id', $sections->id)->count();
-                    if($otherc!=0){
-                        //echo "<tr><th class='workflow-th'>Label</th><th class='workflow-th' colspan='3'>Input</th><th class='workflow-th'>Action</th></tr>";
 
+                    if($otherc!=0){
                         $otherd= OtherDetails::where('section_id', $sections->id)->get();
                         foreach ($otherd as $otherdetails) {
                             echo "<tr><td width='30%'>".$otherdetails->label."</td>";
-                            $valuesc=Values::where('otherDetails_id', $otherdetails->id)->where('purchase_request_id', $epurchase->id)->count();
-                            $values=Values::where('otherDetails_id', $otherdetails->id)->where('purchase_request_id', $epurchase->id)->first();    
+                            $valuesc=Values::where('otherDetails_id', $otherdetails->id)->where('purchase_request_id', $purchaseToEdit->id)->count();
+                            $values=Values::where('otherDetails_id', $otherdetails->id)->where('purchase_request_id', $purchaseToEdit->id)->first();    
                             if ($valuesc==0) {
                     ?>
                                 {{Form::open(['url'=>'insertaddon'], 'POST')}}
                                     <input type="hidden" name="otherDetails_id" value="{{$otherdetails->id}}">
-                                    <input type="hidden" name="purchase_request_id" value="{{$epurchase->id}}">
+                                    <input type="hidden" name="purchase_request_id" value="{{$purchaseToEdit->id}}">
                                     <td colspan="3"><input name ="value" type="text" class="form-control"></td>
                                     <td align="center"><button class ="btn btn-primary">Save</button></td>
                                 {{Form::close()}}
@@ -384,13 +389,12 @@
                                 echo "<td width='48.5%' colspan='3'>".$values->value."</td>";
                     ?>
                                 {{Form::open(['url'=>'editaddon', 'POST'])}}
-                    <?php
-                                /*echo"<input type='hidden' name='otherDetails_id' value='".$otherdetails->id."'>
-                                <input type='hidden' name='purchase_request_id' value='".$epurchase->id."'>";
-                                echo "<td>"."<button class ='btn btn-success'>Edit</button>"."</td>";*/
-                                echo"<input type='hidden' name='values_id' value='".$values->id."'>";
-                                echo "<td colspan='2' align='center'>"."<button class ='btn btn-default'>Edit</button>"."</td>";
-                    ?>
+                                    
+                                    <input type='hidden' name='values_id' value="{{$values->id}}">
+                                    <td colspan='2' align='center'>
+                                        <button class ='btn btn-default'>Edit</button>
+                                    </td>
+                
                                 {{Form::close()}}
                     <?php
                             }
@@ -399,22 +403,21 @@
                     }
                     //End of Addon Display
 
-                    echo " <tr><th width='30%'></th>";
+                    echo "<tr><th width='30%'></th>";
                     echo "<th class='workflow-th' width='18%'>By:</th>";
                     echo "<th class='workflow-th' width='18%'>Date:</th>";
                     echo "<th class='workflow-th' width='12.5%'>Days of Action</th>";
                     echo "<th class='workflow-th'>Remarks</th></tr>";
+
                     foreach ($task as $tasks) {
+                   
                     //Cursor Open form 
                         //Displayer 
                         $taskp =TaskDetails::where('doc_id', $docs->id)->where('task_id', $tasks->id)->first();
 
-                        //echo "<tr><td>".$tasks->order_id.". ".$tasks->taskName."</td>";
-
-                        //if ($taskc->task_id==$tasks->id && $tasks->designation_id==0){
-                        if ($taskch!=0 && $taskc->task_id==$tasks->id && $tasks->designation_id==0){
+                           if ($taskch!=0 && $taskc->task_id==$tasks->id && $tasks->designation_id==0){
                             echo "<tr class='current-task'><td>".$tasks->order_id.". ".$tasks->taskName."</td>";
-             ?>
+                    ?>
                             {{Form::open(['url'=>'checklistedit'], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
                                 <td class="edit-pr-input"><input type ="text" name="assignee" class="form-control" width="100%"></td>

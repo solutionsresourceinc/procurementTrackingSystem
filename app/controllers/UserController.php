@@ -1,45 +1,39 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Confide Controller Template
-|--------------------------------------------------------------------------
-|
-| This is the default Confide controller template for controlling user
-| authentication. Feel free to change to your needs.
-|
-*/
-
-/*
-    CODE REVIEW:
-        - remove comments
-        - fix indentions
-*/
 
 class UserController extends BaseController {
 
-    /**
-     * Displays the form for account creation
-     *
-     */
-    public function create()
+    public function disable() // FOR DISABLING USER ACCOUNTS
+    {
+        $errors="Account Deactivated.";
+        $id=Input::get('hide');
+
+        DB::table('users')->where('id', $id)->update(array('confirmed' => 0));
+        
+        return Redirect::to('user/view');
+    }
+
+    public function activate() // FOR ACTIVATION OF DISABLED USER ACCOUNTS
+    {
+        $errors="Account Activated.";
+        $id=Input::get('hide');
+
+        DB::table('users')->where('id', $id)->update(array('confirmed' => 1));
+        
+        return Redirect::to('user/view');
+    }
+
+    public function create() // MAKE CREATE USER VIEW
     {
         return View::make("user_create");
     }
 
-    /**
-     * Stores new account
-     *
-     */
-    public function store()
+    public function store() // SAVING FOR USER ACCOUNT CREATION
     {
         $user = new User;
 
-
         $user->username = trim(Input::get( 'username' ));
         $checkusername = User::where('username', $user->username)->first();
-
-
 
         $user->email = trim(Input::get( 'email' ));
 
@@ -53,103 +47,110 @@ class UserController extends BaseController {
         $user->password_confirmation = Input::get( 'password_confirmation' );
         // Save if valid. Password field will be hashed before save
 
-
-
         $errorcheck=0;
-
         $checkusername=0;
-
         $users= new User; $users = DB::table('users')->get();
 
-        foreach ($users as $userx){
+        foreach ($users as $userx)
+        {
             if (strtoupper($userx->username)==strtoupper($user->username))
-             { $checkusername=1; $errorcheck=1; }
-     }
-     if ($checkusername!=0){
-         Session::put('username_error', 'Username is already in use.');}
-
-  $checkemail=0;
+            { $checkusername=1; $errorcheck=1; }
+        }
+        
+        if ($checkusername!=0)
+        {
+            Session::put('username_error', 'Username is already in use.');
+        }
+        
+        $checkemail=0;
 
         $users= new User; $users = DB::table('users')->get();
 
-        foreach ($users as $userx){
+        foreach ($users as $userx)
+        {
             if (strtoupper($userx->email)==strtoupper($user->email))
-             { $checkemail=1; $errorcheck=1; }
-     }
-     if ($checkemail!=0){
-         Session::put('email_error', 'Email is already in use.');}
-
-
-
-//Validations     
-         if(ctype_alnum($user->username)&&(strlen($user->username)>=6))
-         {}
-     else{
-        $errorcheck=1;
-        Session::put('username_error', 'Invalid username.');}
-
+            { $checkemail=1; $errorcheck=1; }
+        }
         
-        if(ctype_alpha(str_replace(array(' ', '-', '.'),'',$user->firstname)))
-        {}
-    else{
-        $errorcheck=1;
-        Session::put('firstname_error', 'Invalid first name.');}
+        if ($checkemail!=0)
+        {
+            Session::put('email_error', 'Email is already in use.');
+        }
 
-        if(ctype_alpha(str_replace(array(' ', '-', '.'),'',$user->lastname)))
-        {}
-    else{
-        $errorcheck=1;
-        Session::put('lastname_error', 'Invalid last name.');}
+        //Validations     
+        if(ctype_alnum($user->username)&&(strlen($user->username)>=6)){}
+        else
+        {
+            $errorcheck=1;
+            Session::put('username_error', 'Invalid username.');
+        }
 
-        if(filter_var($user->email, FILTER_VALIDATE_EMAIL))
-        {}
-    else{
-        $errorcheck=1;
-        Session::put('email_error', 'Invalid email.');}
+        if(ctype_alpha(str_replace(array(' ', '-', '.'),'',$user->firstname))){}
+        else
+        {
+            $errorcheck=1;
+            Session::put('firstname_error', 'Invalid first name.');
+        }
+
+        if(ctype_alpha(str_replace(array(' ', '-', '.'),'',$user->lastname))){}
+        else
+        {
+            $errorcheck=1;
+            Session::put('lastname_error', 'Invalid last name.');
+        }
+
+        if(filter_var($user->email, FILTER_VALIDATE_EMAIL)){}
+        else
+        {
+            $errorcheck=1;
+            Session::put('email_error', 'Invalid email.');
+        }
 
         if(ctype_alnum($user->password))
         {
-            if ($user->password!=$user->password_confirmation){
+            if ($user->password!=$user->password_confirmation)
+            {
                 $errorcheck=1;
                 Session::put('password_error', 'Password did not match with confirm password.');
             }
         }
-        else{
+        else
+        {
             $errorcheck=1;
             Session::put('password_error', 'Invalid password.');
         }
 
-
         if ( $errorcheck==0 )
         {
-
             $user->save();
             $username=$user->username;
      
-    $assign= new Assigned;
-    $assign->role_id=Input::get('role');
-    $assign->user_id=$user->id;
-    $assign->save();
-$desig = new UserHasDesignation;
-$desig->users_id= $user->id;
-$desig->designation_id=0;
-$desig->save();
-            $notice = "User created successfullly! ";         
+            $assign= new Assigned;
+            $assign->role_id=Input::get('role');
+            $assign->user_id=$user->id;
+            $assign->save();
+            $desig = new UserHasDesignation;
+            $desig->users_id= $user->id;
+            $desig->designation_id=0;
+            $desig->save();
+            $notice = "User created successfullly! "; 
             // Redirect with success message, You may replace "Lang::get(..." for your custom message.
-            return Redirect::action('UserController@viewUser')
-            ->with( 'notice', $notice );
+            return Redirect::action('UserController@viewUser')->with( 'notice', $notice );
         }
         else
         {
             Session::put('msg', 'Failed to create user.');
 
-
-            return Redirect::action('UserController@create')
-            ->withInput(Input::except('password'));
+            return Redirect::action('UserController@create')->withInput(Input::except('password'));
         }
     }
 
-    public function editprof()
+    public function editprof_view($id) // MAKE EDIT PROFILE VIEW
+    {
+        return View::make('user.editprofile')->with('id',$id);
+    }
+
+    public function editprof() // SAVING FOR OWN ACCOUNT EDITING
     {
         $id=Auth::user()->id;
         $user = User::find($id);
@@ -171,13 +172,9 @@ $desig->save();
                 $password = substr($password, 1);
                 $user->password = Hash::make($password);
                 $user->password_confirmation = Input::get( 'password_confirmation' );
-
             }
         }
-
-
         
-
         if(filter_var($user->email, FILTER_VALIDATE_EMAIL)){}
         else
         {
@@ -195,10 +192,6 @@ $desig->save();
             {
                 $errorcheck=1;
                 Session::put('password_error', 'Password did not match with confirm password.');
-            }
-            else
-            {
-
             }
         }
         else
@@ -232,7 +225,12 @@ $desig->save();
         }
     }
 
-    public function edit()
+    public function edit_view($id) // MAKE EDIT USER VIEW
+    {
+        return View::make('useredit')->with('id',$id);
+    }
+
+    public function edit() // SAVING FOR USER ACCOUNT EDITING
     {
         $id=Input::get( 'id' );
         $user = User::find($id);
@@ -259,96 +257,74 @@ $desig->save();
 
         $user->firstname = trim(Input::get( 'firstname' ));
         $user->lastname = trim(Input::get( 'lastname' ));
-
         $user->office_id= Input::get('office');
- 
-
-
-     $user->password_confirmation = Input::get( 'password_confirmation' );
-
-
+        $user->password_confirmation = Input::get( 'password_confirmation' );
 
         $errorcheck=0;
 
-//Validations     
-        if(ctype_alpha(str_replace(' ','',$user->firstname)))
-        {}
-        else{
+        //Validations     
+        if(ctype_alpha(str_replace(' ','',$user->firstname))){}
+        else
+        {
             $errorcheck=1;
-            Session::put('firstname_error', 'Invalid first name.');}
+            Session::put('firstname_error', 'Invalid first name.');
+        }
 
-        if(ctype_alpha(str_replace(' ','',$user->lastname)))
-          {}
-        else{
+        if(ctype_alpha(str_replace(' ','',$user->lastname))){}
+        else
+        {
             $errorcheck=1;
-            Session::put('lastname_error', 'Invalid last name.');}
+            Session::put('lastname_error', 'Invalid last name.');
+        }
     
-            if(filter_var($user->email, FILTER_VALIDATE_EMAIL))
-            {}
-        else{
+        if(filter_var($user->email, FILTER_VALIDATE_EMAIL)){}
+        else
+        {
             $errorcheck=1;
-            Session::put('email_error', 'Invalid email.');}
+            Session::put('email_error', 'Invalid email.');
+        }
 
-            if($passnotchange==1){
-            }
-            elseif(ctype_alnum($password)&&(strlen($password)>=6))
+        if($passnotchange==1){}
+        elseif(ctype_alnum($password)&&(strlen($password)>=6))
+        {
+            if($password!=$user->password_confirmation)
             {
-                if ($password!=$user->password_confirmation){
-                    $errorcheck=1;
-                    Session::put('password_error', 'Password did not match with confirm password.');
-                }
-            }
-            else{
                 $errorcheck=1;
-                Session::put('password_error', 'Invalid password.');
+                Session::put('password_error', 'Password did not match with confirm password.');
             }
+        }
+        else
+        {
+            $errorcheck=1;
+            Session::put('password_error', 'Invalid password.');
+        }
 
+        if($errorcheck==1)
+        {
+            Session::put('msg', 'Failed to edit user.');
+            return Redirect::back()->withInput();
+        }
+        else
+        {
+            $roles=input::get('role');
+            if($roles=="3")
+                $role=3;
+            elseif($roles=="2")
+                $role=2;
+            else
+                $role=1;
+                    
+        DB::table('assigned_roles')->where('user_id', $id)->update(array( 'role_id' => $role));
 
-            if($errorcheck==1)
-            {
-                Session::put('msg', 'Failed to edit user.');
-                return Redirect::back()->withInput();}
+        DB::table('users')->where('id', $id)->update(array( 'firstname'=>$user->firstname, 'lastname'=>$user->lastname, 'email' => $user->email, 'password' => $user->password, 'office_id' => $user->office_id,));
+        
+        $notice = "Successfully edited user. ";         
+        // Redirect with success message, You may replace "Lang::get(..." for your custom message.
+        return Redirect::action('UserController@viewUser')->with( 'notice', $notice );
+        }
+    }
 
-                else
-                {
-
-                    $roles=input::get('role');
-                    if($roles=="3")
-                        $role=3;
-                    elseif($roles=="2")
-                        $role=2;
-                    else
-                        $role=1;
-                    DB::table('assigned_roles')
-                    ->where('user_id', $id)
-                    ->update(array( 'role_id' => $role));
-         /*
-DB::table('users')
-            ->where('id', $id)
-            ->update(array( 'email' => $user->email, 'password' => $user->password, 'office_id' => $user->office_id, 'firstname' => $user->firstname, 'lastname' => $user->lastname));
-                        $notice = "successfully edited user. ";         
-            // Redirect with success message, You may replace "Lang::get(..." for your custom message.
-                    return Redirect::action('UserController@viewUser')
-                            ->with( 'notice', $notice );
-        */
-                            DB::table('users')
-                            ->where('id', $id)
-                            ->update(array( 'firstname'=>$user->firstname, 'lastname'=>$user->lastname, 'email' => $user->email, 'password' => $user->password, 'office_id' => $user->office_id,));
-                            $notice = "Successfully edited user. ";         
-            // Redirect with success message, You may replace "Lang::get(..." for your custom message.
-                            return Redirect::action('UserController@viewUser')
-                            ->with( 'notice', $notice );
-                        }
-
-
-
-                    }
-
-    /**
-     * Displays the login form
-     *
-     */
-    public function login()
+    public function login() // DISPLAYS LOGIN FORM
     {
         if( Confide::user() )
         {
@@ -362,11 +338,7 @@ DB::table('users')
         }
     }
 
-    /**
-     * Attempt to do login
-     *
-     */
-    public function do_login()
+    public function do_login() // LOGIN FUNCTION
     {
         $username = Input::get( 'username' ); 
         $input = array(
@@ -433,99 +405,6 @@ DB::table('users')
         } 
     }
 
-    /**
-     * Attempt to confirm account with code
-     *
-     * @param    string  $code
-     */
-    public function confirm( $code )
-    {
-        if ( Confide::confirm( $code ) )
-        {
-            $notice_msg = Lang::get('confide::confide.alerts.confirmation');
-            return Redirect::action('UserController@login')
-            ->with( 'notice', $notice_msg );
-        }
-        else
-        {   
-            $error_msg = "Lang::get('confide::confide.alerts.wrong_confirmation')";
-            return Redirect::action('UserController@login')
-            ->with( 'error', $error_msg );
-        }
-    }
-
-    /**
-     * Displays the forgot password form
-     *
-     */
-    public function forgot_password()
-    {
-        return View::make(Config::get('confide::forgot_password_form'));
-    }
-
-    /**
-     * Attempt to send change password link to the given email
-     *
-     */
-    public function do_forgot_password()
-    {
-        if( Confide::forgotPassword( Input::get( 'email' ) ) )
-        {
-            $notice_msg = Lang::get('confide::confide.alerts.password_forgot');
-            return Redirect::action('UserController@login')
-            ->with( 'notice', $notice_msg );
-        }
-        else
-        {
-            $error_msg = Lang::get('confide::confide.alerts.wrong_password_forgot');
-            return Redirect::action('UserController@forgot_password')
-            ->withInput()
-            ->with( 'error', $error_msg );
-        }
-    }
-
-    /**
-     * Shows the change password form with the given token
-     *
-     */
-    public function reset_password( $token )
-    {
-        return View::make(Config::get('confide::reset_password_form'))
-        ->with('token', $token);
-    }
-
-    /**
-     * Attempt change password of the user
-     *
-     */
-    public function do_reset_password()
-    {
-        $input = array(
-            'token'=>Input::get( 'token' ),
-            'password'=>Input::get( 'password' ),
-            'password_confirmation'=>Input::get( 'password_confirmation' ),
-            );
-
-        // By passing an array with the token, password and confirmation
-        if( Confide::resetPassword( $input ) )
-        {
-            $notice_msg = Lang::get('confide::confide.alerts.password_reset');
-            return Redirect::action('UserController@login')
-            ->with( 'notice', $notice_msg );
-        }
-        else
-        {
-            $error_msg = Lang::get('confide::confide.alerts.wrong_password_reset');
-            return Redirect::action('UserController@reset_password', array('token'=>$input['token']))
-            ->withInput()
-            ->with( 'error', $error_msg );
-        }
-    }
-
-    /**
-     * Log the user out of the application.
-     *
-     */
     public function logout()
     {
         Confide::logout();
@@ -535,17 +414,8 @@ DB::table('users')
 
     public function dashboard()
     {
-        // Check PR is now Overdue
         $purchases = Purchase::all();
         $date_today =date('Y-m-d H:i:s');
-
-       /*foreach ($purchases as $purchase) 
-        {
-            $dateRequested = $purchase->dateRequested;
-
-            $dueDate = date('Y-m-d H:i:s', strtotime("$addToDateReceived days" ));
-        }*/
-
 
         return View::make('dashboard');
     }

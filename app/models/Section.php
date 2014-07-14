@@ -15,15 +15,18 @@ class Section extends Ardent implements UserInterface, RemindableInterface {
 	public $timestamps = false;
 	protected $table = 'section';
 
+	// RELATIONSHIPS
 	public function worklflow()
 	{
   		return $this->belongsToMany('Worklflow','workflow_id');
 	}
+	
 	public function task()
 	{
   		return $this->hasMany('Task');
 	}
-		public function otherDetails() //INVERSE OF RELATIONSHIP
+	
+	public function otherDetails()
 	{
   		return $this->hasMany('otherDetails');
 	}

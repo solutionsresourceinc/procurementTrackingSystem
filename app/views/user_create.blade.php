@@ -74,24 +74,18 @@
             <div class="form-group">
                 <label for="role">Office</label>
                 <select class="form-control" name="office">
-                    <option value=0 
-                    <?php if(Input::old('office')==0)  echo "selected"; ?>
-                    >none</option>
-                    <?php 
-                        $office= new Office; $office = DB::table('offices')->get();
-                    ?>
+                    <option value=0 <?php if(Input::old('office')==0){echo "selected";} ?>>none</option>
+                    <?php $office= new Office; $office = DB::table('offices')->get(); ?>
+
                     @foreach ($office as $offices)
-                        <option value= {{ $offices->id }} 
-                            <?php
-                            if(Input::old('office')==$offices->id)
-                                echo "selected";
-                            ?>
-                            > {{ $offices->officeName }}</option>
+                        <option value="{{{ $offices->id }}}" 
+                            <?php if(Input::old('office')==$offices->id){echo "selected";} ?>> {{ $offices->officeName }}</option>
                     @endforeach
                 </select>
             </div>
 
             <br/>
+
             <div class="form-actions form-group">
                 <button type="submit" class="btn btn-success" name="submit">Create</button>
                 {{ link_to( '/user/view', 'Cancel', array('class'=>'btn btn-default') ) }}
@@ -101,11 +95,12 @@
     </form>
 
     <?php
-    Session::forget('username_error');
-    Session::forget('firstname_error');
-    Session::forget('lastname_error');
-    Session::forget('password_error');
-    Session::forget('email_error');
-    Session::forget('msg');
+        // FOR ERRORS
+        Session::forget('username_error');
+        Session::forget('firstname_error');
+        Session::forget('lastname_error');
+        Session::forget('password_error');
+        Session::forget('email_error');
+        Session::forget('msg');
     ?>
 @stop
