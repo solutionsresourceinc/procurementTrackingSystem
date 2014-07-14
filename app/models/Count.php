@@ -18,5 +18,4 @@ class Count extends Eloquent{
 	 *
 	 * @var array
 	 */
-
 }

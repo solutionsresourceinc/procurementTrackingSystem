@@ -28,4 +28,9 @@ class Office extends Eloquent{
 		$this->errors = $validation->messages();
 		return false;
 	}
+
+	public function purchase()
+	{
+		return $this->hasMany('Purchase');
+	}
 }

@@ -3,14 +3,6 @@
     - variables must be descriptive
 -->
 
-<style type="text/css">
-	#description {
-		height: 400px;
-		top: calc(50% - 200px) !important;
-		overflow: hidden;
-	}
-</style>
-
 <?php $wfName = Workflow::find('1'); ?>
 <br/>
 
@@ -29,7 +21,7 @@
 
 	<div class="panel-body">
 
-		<!--Add Task-->
+		<!-- Displays form for adding new tasks to the workflow -->
 		<div id="office-create-form" class="well div-form">
 	    	{{ Form::open(['url'=>'addtask'], 'POST', array('role' => 'form')) }}
 		    	<div class="col-md-8">
@@ -43,20 +35,14 @@
 		    {{ Form::close() }}
 		</div>
 
-		<!--End Add Task-->
-
 		<table border="1" class="workflow-table">
 
-			<!--Additional Task-->
+			<!-- Displays the tasks added through the add new task form -->
 			<?php
-				$ctask= OtherDetails::where('section_id', $sectionName->id )->count();
-				if($ctask!=0){
+				$taskcount= OtherDetails::where('section_id', $sectionName->id )->count();
+				if($taskcount!=0){
 			?>
-			<!--tr>
-			<th class="workflow-th" width="25%" colspan="2">LABEL</th>
-									<th class="workflow-th" width="70%">ACTION</th>
-						
-			</tr-->
+			
 			<?php 
 					$addontask= OtherDetails::where('section_id', $sectionName->id )->get();
 			?>
@@ -74,8 +60,8 @@
 			<?php 
 				}
 			?>
-			<!--End Additional Task-->
 
+			<!-- Displays the defined tasks of the workflow -->
 			<tr>
 				<th class="workflow-th" width="25%">TASK</th>
 				<th class="workflow-th" width="45%">DESIGNATION ASSIGNED</th>
@@ -151,7 +137,7 @@
 
 	<div class="panel-body">
 
-		<!--Add Task-->
+		<!-- Displays the tasks added through the add new task form -->
 		<div id="office-create-form" class="well div-form">
 	    	{{ Form::open(['url'=>'addtask'], 'POST', array('role' => 'form')) }}
 		    	<div class="col-md-8">
@@ -165,19 +151,15 @@
 			    </div>
 		    {{ Form::close() }}
 		</div>
-		<!--End Add Task-->
 
 		<table border="1" class="workflow-table">
 
-		<!--Additional Task-->
+			<!-- Displays the tasks added through the add new task form -->
 			<?php
-				$ctask= OtherDetails::where('section_id', $sectionName->id )->count();
-				if($ctask!=0){
+				$taskcount= OtherDetails::where('section_id', $sectionName->id )->count();
+				if($taskcount!=0){
 			?>
-			<!--tr>
-			<th class="workflow-th" width="25%" colspan="2">LABEL</th>
-									<th class="workflow-th" width="70%">ACTION</th>		
-			</tr-->
+			
 			<?php 
 					$addontask= OtherDetails::where('section_id', $sectionName->id )->get();
 			?>
@@ -195,7 +177,8 @@
 			<?php 
 				}
 			?>
-			<!--End Additional Task-->
+
+			<!-- Displays the defined tasks of the workflow -->
 			<tr>
 				<th class="workflow-th" width="25%">TASK</th>
 				<th class="workflow-th" width="45%">DESIGNATION ASSIGNED</th>
@@ -268,7 +251,7 @@
 
 	<div class="panel-body">
 
-		<!--Add Task-->
+		<!-- Displays the tasks added through the add new task form -->
 		<div id="office-create-form" class="well div-form">
 		    	{{ Form::open(['url'=>'addtask'], 'POST', array('role' => 'form')) }}
 			    	<div class="col-md-8">
@@ -281,20 +264,15 @@
 				    </div>
 			    {{ Form::close() }}
 		</div>
-		<!--End Add Task-->
 			
 		<table border="1" class="workflow-table">		
 
-			<!--Additional Task-->
+			<!-- Displays the tasks added through the add new task form -->
 			<?php
-			$ctask= OtherDetails::where('section_id', $sectionName->id )->count();
-			if($ctask!=0){
+			$taskcount= OtherDetails::where('section_id', $sectionName->id )->count();
+			if($taskcount!=0){
 			?>
-			<!--tr>
-			<th class="workflow-th" width="25%" colspan="2">LABEL</th>
-									<th class="workflow-th" width="70%">ACTION</th>
-						
-			</tr-->
+			
 			<?php 
 				$addontask= OtherDetails::where('section_id', $sectionName->id )->get();
 			?>
@@ -310,8 +288,8 @@
 			</tr> 
 			@endforeach
 			<?php } ?>
-			<!--End Additional Task-->
 
+			<!-- Displays the defined tasks of the workflow -->
 			<tr>
 				<th class="workflow-th" width="25%">TASK</th>
 				<th class="workflow-th" width="45%">DESIGNATION ASSIGNED</th>
@@ -380,8 +358,10 @@
 		<?php $sectionName = Section::find('4'); ?>
 		<h3 class="panel-title"> {{{ strtoupper($sectionName->sectionName) }}} </h3>
 	</div>
+
 	<div class="panel-body">
-		<!--Add Task-->
+		
+		<!-- Displays the tasks added through the add new task form -->
 		<div id="office-create-form" class="well div-form">
 		    	{{ Form::open(['url'=>'addtask'], 'POST', array('role' => 'form')) }}
 			    	<div class="col-md-8">
@@ -393,20 +373,16 @@
 				    	{{ Form::submit('Add', array('class' => 'btn btn-success btn-block create-btn')) }}
 				    </div>
 			    {{ Form::close() }}
-		</div>
-		<!--End Add Task-->				
+		</div>				
 
 		<table border="1" class="workflow-table">
 			
-			<!--Additional Task-->
+			<!-- Displays the tasks added through the add new task form -->
 			<?php
-				$ctask= OtherDetails::where('section_id', $sectionName->id )->count();
-				if($ctask!=0){
+				$taskcount= OtherDetails::where('section_id', $sectionName->id )->count();
+				if($taskcount!=0){
 			?>
-			<!--tr>
-			<th class="workflow-th" width="25%" colspan="2">LABEL</th>
-									<th class="workflow-th" width="70%">ACTION</th>
-			</tr-->
+			
 			<?php 
 				$addontask= OtherDetails::where('section_id', $sectionName->id )->get();
 			?>
@@ -422,8 +398,8 @@
 			</tr> 
 			@endforeach
 			<?php }?>
-			<!--End Additional Task-->
 
+			<!-- Displays the defined tasks of the workflow -->
 			<tr>
 				<th class="workflow-th" width="25%">TASK</th>
 				<th class="workflow-th" width="45%">DESIGNATION ASSIGNED</th>

@@ -23,5 +23,8 @@ class Section extends Ardent implements UserInterface, RemindableInterface {
 	{
   		return $this->hasMany('Task');
 	}
-
+		public function otherDetails() //INVERSE OF RELATIONSHIP
+	{
+  		return $this->hasMany('otherDetails');
+	}
 }
