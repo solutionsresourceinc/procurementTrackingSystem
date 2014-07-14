@@ -877,8 +877,26 @@ public function editaddon()
         	return Redirect::back();
     }
   
+public function editpagecall($id)
+{
+
+	return View::make('pr_edit')->with('id',$id);
+
+}
+public function delimage()
+{
 
 
+	$id = Input::get('hide');
+	$attachn=DB::table('attachments')->where('id', $id)->first();
+		$destine= public_path()."/uploads/";
+	unlink($destine.$attachn->data);
+	$attach = DB::table('attachments')->where('id', $id)->delete();
+
+	$notice="Attachment successfully deleted.";
+	return Redirect::back()->with('notice', $notice);
+
+}
 
 
 }
