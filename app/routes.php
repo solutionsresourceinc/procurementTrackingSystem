@@ -26,52 +26,22 @@ Route::get('/', function()
 });
 
 //---------- Login Routes
-Route::get( 'login',                  'UserController@login');
-Route::get( 'logout',                 'UserController@logout');
-Route::post('login',                  'UserController@do_login');
+Route::get( 'login', 'UserController@login');
+Route::get( 'logout', 'UserController@logout');
+Route::post('login', 'UserController@do_login');
 
 
 //CODE REVIEW: try removing unnecessary routes made by confide
 //---------- User CRUD Routes
-Route::get('user/view',                    'UserController@viewUser');
-Route::get( 'user/create',                 'UserController@create');
-Route::get( 'user/confirm/{code}',         'UserController@confirm');
-Route::get( 'user/forgot_password',        'UserController@forgot_password');
-Route::get( 'user/reset_password/{token}', 'UserController@reset_password');
-Route::post('user/forgot_password',        'UserController@do_forgot_password');
-Route::post('user/reset_password',         'UserController@do_reset_password');
+Route::get('user/view', 'UserController@viewUser');
 Route::post('user/edit/{id}',[ 'uses' => 'UserController@edit']);
+Route::get('user/edit/{id}',[ 'uses' => 'UserController@edit_view']);
 Route::post('user/editprof/{id}',[ 'uses' => 'UserController@editprof']);
-Route::post('user',                        'UserController@store');
-Route::get( 'user/edit/{id}', function($id)
-{
-	return View::make('useredit')->with('id',$id);
-});
-Route::get( 'user/editprof/{id}', function($id)
-{
-	return View::make('user.editprofile')->with('id',$id);
-});
-Route::post( 'user/delete', function()
-{
-	$errors="Account Deactivated.";
-	$id=Input::get('hide');
-
-	DB::table('users')->where('id', $id)->update(array('confirmed' => 0));
-	
-	Session::flash('message','Successfully deleted the user.');
-	return Redirect::to('user/view');
-});
-
-Route::post( 'user/activate', function()
-{
-	$errors="Account Activated.";
-	$id=Input::get('hide');
-
-	DB::table('users')->where('id', $id)->update(array('confirmed' => 1));
-	
-	//Session::flash('message','Successfully activated the user.');
-	return Redirect::to('user/view');
-});
+Route::get('user/editprof/{id}',[ 'uses' => 'UserController@editprof_view']);
+Route::get( 'user/create', 'UserController@create');
+Route::post('user', 'UserController@store');
+Route::post( 'user/delete', 'UserController@disable');
+Route::post( 'user/activate', 'UserController@activate');
 
 //---------- Dashboard Routes
 Route::get('/dashboard', 'UserController@dashboard');

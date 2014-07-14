@@ -57,7 +57,7 @@
 			<th>Firstname</th>
 			<th>Lastname</th>
 			<th>Role</th>
-			<th>Office</th>s
+			<th>Office</th>
 			<?php
 				$admin = Assigned::where('user_id', Auth::User()->id)->first();
 				$users = DB::table('users')->get();
