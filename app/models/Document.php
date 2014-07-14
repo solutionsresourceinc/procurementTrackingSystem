@@ -15,10 +15,9 @@ class Document extends Ardent implements UserInterface, RemindableInterface {
 
 	public static $rules = array(
 		'work_id' => 'required',
-		//'pr_id' => 'required',
 	);
 
-
+	// RELATIONSHIPS
 	public function purchase()
 	{
   		return $this->belongsTo('Purchase');
