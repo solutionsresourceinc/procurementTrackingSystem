@@ -15,12 +15,12 @@ class CreateTaskDetailsTable extends Migration {
 		Schema::create('taskDetails', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->integer('task_id');
 			$table->string('status', 45);
 			$table->string('remarks', 255);
-			$table->integer('assignee_id');
 			$table->string('assignee', 255);
 			$table->integer('daysOfAction');
+			$table->integer('task_id')->references('id')->on('tasks');
+			$table->integer('assignee_id')->references('id')->on('users');
 			$table->integer('doc_id')->references('id')->on('purchase_request');
 			$table->dateTime('otherDate');
 			$table->dateTime('dateFinished');
