@@ -2,29 +2,22 @@
 
 class TaskDetails extends Eloquent{
 
-
-	/**
-	 * The database table used by the model.
-	 *
-	 * @var string
-	 */
-	
-
-	 
+	// RELATIONSHIPS
 	protected $table = 'taskDetails';
 
-	/**
-	 * The attributes excluded from the model's JSON form.
-	 *
-	 * @var array
-	 */
-	public function tasks() //INVERSE OF RELATIONSHIP
+	public function tasks()
 	{
   		return $this->hasMany('tasks');
 	}
 
-	public function purchase() //INVERSE OF RELATIONSHIP
+	public function document() 
 	{
-  		return $this->belongsTo('purchase_request');
+  		return $this->belongsTo('Document');
 	}
+	
+	public function user()
+	{
+  		return $this->belongsTo('User');
+	}
+
 }

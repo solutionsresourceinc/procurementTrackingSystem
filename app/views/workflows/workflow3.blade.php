@@ -3,14 +3,6 @@
     - variables must be descriptive
 -->
 
-<style type="text/css">
-	#description {
-	    height: 400px;
-	    top: calc(50% - 200px) !important;
-	    overflow: hidden;
-	}
-</style>
-
 <?php $wfName = Workflow::find('3'); ?>
 <br/>
 

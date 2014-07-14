@@ -4,19 +4,17 @@ class OtherDetails extends Eloquent{
 
 
 	public $timestamps=false;
-	/**
-	 * The database table used by the model.
-	 *
-	 * @var string
-	 */
-	
 
 	protected $table = 'otherdetails';
 
-	/**
-	 * The attributes excluded from the model's JSON form.
-	 *
-	 * @var array
-	 */
+	// RELATIONSHIPS
+	public function section()
+	{
+  		return $this->belongsTo('Section');
+	}
 
+	public function purchase()
+	{
+  		return $this->belongsToMany('Purchase','purchase_request_id','otherDetails_id');
+	}
 }

@@ -82,7 +82,7 @@
 							</select>
 							<input type="hidden" name="hide_modeOfProcurement" id="hide_modeOfProcurement">
 
-							@if (Session::get('m6'))
+							@if (Session::get('error_modeOfProcurement'))
 								<font color="red"><i>The mode of procurement is required field</i></font>
 							@endif
 						</div>
@@ -125,8 +125,8 @@
 						{{ Form::label('projectPurpose', 'Project/Purpose *', array('class' => 'create-label')) }}
 						{{ Form::text('projectPurpose','', array('class'=>'form-control')) }}
 					</div>
-					@if (Session::get('m1'))
-						<font color="red"><i>{{ Session::get('m1') }}</i></font>
+					@if (Session::get('error_projectPurpose'))
+						<font color="red"><i>{{ Session::get('error_projectPurpose') }}</i></font>
 					@endif
 					<br/>	
 
@@ -135,8 +135,8 @@
 							{{ Form::label('sourceOfFund', 'Source of Fund *', array('class' => 'create-label')) }}
 							{{ Form::text('sourceOfFund','', array('class'=>'form-control')) }}
 
-						@if (Session::get('m2'))
-							<font color="red"><i>{{ Session::get('m2') }}</i></font>
+						@if (Session::get('error_sourceOfFund'))
+							<font color="red"><i>{{ Session::get('error_sourceOfFund') }}</i></font>
 						@endif
 						</div>
 
@@ -144,8 +144,8 @@
 						<div class="col-md-6">
 							{{ Form::label('amount', 'Amount *', array('class' => 'create-label')) }}
 							{{ Form::text('amount','',array('class'=>'form-control','onchange'=>'numberWithCommas(this.value)', 'onkeypress' => 'return isNumberKey(event)','id'=>'num','maxlength'=>'12')) }}
-						@if (Session::get('m3'))
-							<font color="red"><i>{{ Session::get('m3') }}</i></font>
+						@if (Session::get('error_amount'))
+							<font color="red"><i>{{ Session::get('error_amount') }}</i></font>
 						@endif
 						</div>
 					</div>
@@ -156,16 +156,17 @@
 							{{ Form::label('office', 'Office *', array('class' => 'create-label')) }}
 							<select id="office" name="office" class="form-control" data-live-search="true">
 								<option value="">Please select</option>
-								@foreach($office as $key)
-									<option value="{{ $key->id }}" 
-										<?php if(Input::old('office')==$key->id)
-										echo "selected" ?>
-										>{{{ $key->officeName }}}
+								@foreach($office as $off)
+									<option value="{{ $off->id }}" 
+										<?php if(Input::old('office')==$off->id)
+											echo "selected" ?>
+										>
+										{{{ $off->officeName }}}
 									</option>
 								@endforeach
 							</select>
-							@if (Session::get('m4'))
-								<font color="red"><i>{{ Session::get('m4') }}</i></font>
+							@if (Session::get('error_office'))
+								<font color="red"><i>{{ Session::get('error_office') }}</i></font>
 							@endif
 						
 						</div>
@@ -174,21 +175,21 @@
 							{{ Form::label('requisitioner', 'Requisitioner *', array('class' => 'create-label')) }}
 							<select class="form-control" id="requisitioner" name="requisitioner"  data-live-search="true" >
 								<option value="">Please select</option>
-								@foreach($users as $key2)
-									{{{ $fullname = $key2->lastname . ", " . $key2->firstname }}}
-									@if($key2->confirmed == 0)
+								@foreach($users as $user)
+									{{{ $fullname = $user->lastname . ", " . $user->firstname }}}
+									@if($user->confirmed == 0)
 										continue;
 									@else
-									<option value="{{ $key2->id }}" class="{{$key2->office_id}}"
-										<?php if(Input::old('requisitioner')==$key2->id)
+									<option value="{{ $user->id }}" class="{{$user->office_id}}"
+										<?php if(Input::old('requisitioner')==$user->id)
 										echo "selected" ?>
 										>{{ $fullname }}
 									</option>
 									@endif
 								@endforeach
 							</select>
-							@if (Session::get('m5'))
-								<font color="red"><i>{{ Session::get('m5') }}</i></font>
+							@if (Session::get('error_requisitioner'))
+								<font color="red"><i>{{ Session::get('error_requisitioner') }}</i></font>
 							@endif
 						
 						</div>
@@ -203,21 +204,17 @@
 							<span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
 						</div>
 						<input type="hidden" id="dtp_input1" name="dateRequested" value="{{{ Input::old('dateRequested') }}}" />
-						@if (Session::get('m7'))
-							<font color="red"><i>{{ Session::get('m7') }}</i></font>
+						@if (Session::get('error_dateRequested'))
+							<font color="red"><i>{{ Session::get('error_dateRequested') }}</i></font>
 						@endif
 						<br>
 					</div>
 
-					<!--  
-					Image Module
-					-->
+					<!--  Image Module -->
 
 					<label class="create-label">Related files:</label>
 					<div class="panel panel-default fc-div">
 						<div class="panel-body" style="padding: 5px 20px;">
-							<!--h3>Attachments</h3>
-							<br-->
 							@if(Session::get('imgsuccess'))
 								<div class="alert alert-success"> {{ Session::get('imgsuccess') }}</div> 
 							@endif
@@ -232,6 +229,7 @@
 								$id = 0;
 								$purchase = Purchase::orderBy('id', 'ASC')->get(); 
 							?>
+
 							@foreach ($purchase as $purchases) 
 								<?php	$id = $purchases->id; ?>
 							@endforeach
@@ -240,10 +238,12 @@
 								$doc_id = 0;
 								$document = Document::orderBy('id', 'ASC')->get();
 							?>
+
 							@foreach ($document as $docs) 
 								<?php	$doc_id = $docs->id; ?>
 							@endforeach
-							<?php $doc_id=$doc_id+1; ?>
+
+							<?php $doc_id = $doc_id+1; ?>
 
 							{{ Form::open(array('url' => 'addimage', 'files' => true)) }}
 
@@ -266,19 +266,21 @@
 				</div>
 			</div>	
 		</div>		
+
 		{{ Form::close() }}	
-		
+	
 		{{ Session::forget('notice'); }}
 		{{ Session::forget('main_error'); }}
-		{{ Session::forget('m1'); }}
-		{{ Session::forget('m2'); }}
-		{{ Session::forget('m3'); }}
-		{{ Session::forget('m4'); }}
-		{{ Session::forget('m5'); }}
-		{{ Session::forget('m6'); }}
-		{{ Session::forget('m7'); }}
+		{{ Session::forget('error_projectPurpose'); }}
+		{{ Session::forget('error_sourceOfFund'); }}
+		{{ Session::forget('error_amount'); }}
+		{{ Session::forget('error_office'); }}
+		{{ Session::forget('error_requisitione'); }}
+		{{ Session::forget('error_modeOfProcurement'); }}
+		{{ Session::forget('error_dateRequested'); }}
 		{{ Session::forget('imgsuccess'); }}
 		{{ Session::forget('imgerror'); }}
+
 	</div>
 @stop
 

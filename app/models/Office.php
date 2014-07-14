@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Auth\UserInterface;
 use Illuminate\Auth\Reminders\RemindableInterface;
 
@@ -27,5 +26,11 @@ class Office extends Eloquent{
 
 		$this->errors = $validation->messages();
 		return false;
+	}
+
+	// RELATIONSHIPS
+	public function purchase()
+	{
+		return $this->hasMany('Purchase');
 	}
 }

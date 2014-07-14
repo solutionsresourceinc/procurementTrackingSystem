@@ -2,6 +2,14 @@
 
 @section('header')
     {{ HTML::style('ios_overlay/css/iosOverlay.css')}}
+
+    <style type="text/css">
+        #description {
+            height: 400px;
+            top: calc(50% - 200px) !important;
+            overflow: hidden;
+        }
+    </style>
 @stop
 
 @section('content')

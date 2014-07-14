@@ -21,8 +21,7 @@ class CreateDocumentTable extends Migration {
             //$table->integer('pr_id')->unisigned();
             //$table->integer('work_id')->unsigned();
             $table->timestamps();
-		}
-	);
+		});
 	}
 
 	/**
@@ -32,7 +31,7 @@ class CreateDocumentTable extends Migration {
 	 */
 	public function down()
 	{
-				Schema::drop('document');
+		Schema::drop('document');
 	}
 
 }

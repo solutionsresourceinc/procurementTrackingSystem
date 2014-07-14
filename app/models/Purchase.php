@@ -18,29 +18,33 @@ class Purchase extends Ardent implements UserInterface, RemindableInterface {
 		'requisitioner' => 'required',
 		'office' => 'required',
 		'requisitioner' => 'required',
-		//'dateRequested' => 'required',
-
 	);
 
 	protected $table = 'purchase_request';
 
-	// Customized Error Message
+	// CUSTOMIZABLE ERROR MESSAGE
 	public static $customMessages = array(
-	//	'alpha_spaces' => 'The :attribute field should only contain letters, numbers and spaces',
 		'price' => 'The :attribute field should only contain numbers, dot, comma',
-
-
 	);
+
+	// RELATIONSHIPS
 	public function users()
 	{
   		return $this->belongsToMany('User');
 	}
+
 	public function document()
 	{
   		return $this->hasOne('Document');
 	}
-	public function taskDetails()
+
+	public function otherDetails()
 	{
-  		return $this->hasMany('taskDetails');
+		return $this->belongsToMany('OtherDetails','values');
+	}
+
+	public function office()
+	{
+		return $this->belongsTo('Office');
 	}
 }
