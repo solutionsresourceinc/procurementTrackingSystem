@@ -12,18 +12,15 @@ class CreateAttachtmentsTable extends Migration {
 	 */
 	public function up()
 	{
-	
-
- Schema::create('attachments', function($table)
+		Schema::create('attachments', function($table)
         {
             $table->increments('id');
             $table->string('data', 255);
             $table->timestamps();
             $table->integer('saved')->default(0);
-            $table->integer('doc_id')->references('id')->on('document')->onDelete('cascade');
-		}
-	);
-}
+            $table->integer('doc_id')->references('id')->on('document');
+		});
+	}
 	/**
 	 * Reverse the migrations.
 	 *

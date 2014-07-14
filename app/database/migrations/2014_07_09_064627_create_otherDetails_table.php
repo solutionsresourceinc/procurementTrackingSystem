@@ -12,14 +12,11 @@ class CreateOtherDetailsTable extends Migration {
 	 */
 	public function up()
 	{
-		
-Schema::create('otherDetails', function($table)
+		Schema::create('otherDetails', function($table)
 		{
 			$table->increments('id');
-				$table->string('label', 45);
-			$table->integer('section_id');
-		
-		
+			$table->string('label', 45);
+			$table->integer('section_id')->references('id')->on('section');
 		});
 	}
 
@@ -30,8 +27,7 @@ Schema::create('otherDetails', function($table)
 	 */
 	public function down()
 	{
-		
 		Schema::drop('otherDetails');
-		}
+	}
 
 }

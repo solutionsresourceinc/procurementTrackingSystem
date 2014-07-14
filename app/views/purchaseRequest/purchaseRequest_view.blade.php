@@ -18,30 +18,7 @@
 
 @section('content')		
 <?php
-  //Office restriction
-                    if (Entrust::hasRole('Administrator'))
-                      {}
-                    else if(Entrust::hasRole('Procurement Personnel')){
-                            
-                            $useroffice=Auth::user()->office_id;
-                            $maker= User::find( $purchase->requisitioner);
-                             $docget=Document::where('pr_id', $request->id)->first();
-                        $taskd = TaskDetails::where('doc_id',$docget->id)->where('assignee_id',$userx)->count();
-                            if($taskd!=0){}
-                            else if ($userx==$purchase->created_by)
-                            {}
-                            else if ($useroffice!=$maker->office_id)
-                              Redirect::to('dashboard');
-                    }
-                    else
-                        {
-                            $useroffice=Auth::user()->office_id;
-                            $maker= User::find( $purchase->requisitioner);
-                            if ($useroffice!=$maker->office_id){
-                           Redirect::to('/dashboard');
-}
-                        }
-                //End Office restriction
+ 
 ?>
 	@if(Session::get('notice'))
         <div class="alert alert-success"> {{ Session::get('notice') }}</div> 

@@ -23,9 +23,9 @@ class CreateTasksTable extends Migration {
 			$table->integer('maxDuration')->unsigned();
 			$table->timestamps();
 			$table->integer('section_id')->references('id')->on('section')->onDelete('cascade');
-			$table->integer('designation_id')->references('id')->on('designation')->onDelete('cascade');
+			$table->integer('designation_id')->references('id')->on('designation');
+			$table->integer('taskDetails_id')->references('id')->on('taskDetails');
 			$table->integer('order_id')->unsigned();
-			$table->integer('taskDetails_id')->references('id')->on('taskDetails')->onDelete('cascade');
 		});
 	}
 

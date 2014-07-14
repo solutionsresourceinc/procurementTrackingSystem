@@ -23,8 +23,14 @@ class TaskDetails extends Eloquent{
   		return $this->hasMany('tasks');
 	}
 
-	public function purchase() //INVERSE OF RELATIONSHIP
+	public function document() //INVERSE OF RELATIONSHIP
 	{
-  		return $this->belongsTo('purchase_request');
+  		return $this->belongsTo('Document');
 	}
+	
+	public function user() //INVERSE OF RELATIONSHIP
+	{
+  		return $this->belongsTo('User');
+	}
+
 }
