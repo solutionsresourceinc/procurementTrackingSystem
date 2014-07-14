@@ -7,7 +7,7 @@
         - remove unnecessary codes
     -->
 
-<h1 class="pull-left">List of Active Purchase Requests</h1>
+<h1 class="pull-left">List of Closed Purchase Requests</h1>
     
     @if ( Entrust::hasRole('Administrator') || Entrust::hasRole('Procurement Personnel'))
       <div class="pull-right options">
@@ -62,7 +62,7 @@
             $date_today =date('Y-m-d H:i:s');
             $requests = new Purchase;
            
-            $userx=Auth::user()->id;
+            $user_selected=Auth::user()->id;
               $requests = DB::table('purchase_request')->where('status', '=', 'Closed')->paginate(10); 
             //End Query Restrictions
         ?>
@@ -78,9 +78,9 @@
                             $useroffice=Auth::user()->office_id;
                             $maker= User::find( $request->requisitioner);
                             $docget=Document::where('pr_id', $request->id)->first();
-                            $taskd = TaskDetails::where('doc_id',$docget->id)->where('assignee_id',$userx)->count();
+                            $taskd = TaskDetails::where('doc_id',$docget->id)->where('assignee_id',$user_selected)->count();
                             if($taskd!=0){}
-                            else if ($userx==$request->created_by){}
+                            else if ($user_selected==$request->created_by){}
                             else if ($useroffice!=$maker->office_id)
                                 continue;
                         }
@@ -94,9 +94,9 @@
                         //End Office restriction
                         $doc = new Document; $doc = DB::table('document')->where('pr_id', $request->id)->first();  
                         $doc_id= $doc->id;
-                        $userx= Auth::User()->id;
+                        $user_selected= Auth::User()->id;
                         $counter=0;
-                        $counter=Count::where('user_id', $userx)->where('doc_id', $doc_id)->count();
+                        $counter=Count::where('user_id', $user_selected)->where('doc_id', $doc_id)->count();
                         if ($counter!=0){
                             echo "class ='success'";
                         }
