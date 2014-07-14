@@ -31,16 +31,24 @@ class Purchase extends Ardent implements UserInterface, RemindableInterface {
 
 
 	);
+
 	public function users()
 	{
   		return $this->belongsToMany('User');
 	}
+
 	public function document()
 	{
   		return $this->hasOne('Document');
 	}
-	public function taskDetails()
+
+	public function otherDetails()
 	{
-  		return $this->hasMany('taskDetails');
+		return $this->belongsToMany('OtherDetails','values');
+	}
+
+	public function office()
+	{
+		return $this->belongsTo('Office');
 	}
 }

@@ -30,6 +30,6 @@ class Task extends Eloquent{
 
 	public function taskDetails() //INVERSE OF RELATIONSHIP
 	{
-  		return $this->belongsTo('taskDetails');
+  		return $this->belongsTo('TaskDetails');
 	}
 }

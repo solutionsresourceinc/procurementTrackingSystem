@@ -18,6 +18,4 @@ class Values extends Eloquent{
 	 *
 	 * @var array
 	 */
-	
-
 }
