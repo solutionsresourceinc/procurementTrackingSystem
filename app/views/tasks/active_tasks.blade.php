@@ -1,9 +1,5 @@
 @extends('layouts.dashboard')
 
-@section('header')
-
-@stop
-
 @section('content')
     <h1 class="page-header">Active Tasks</h1>
     <div class="list-group">

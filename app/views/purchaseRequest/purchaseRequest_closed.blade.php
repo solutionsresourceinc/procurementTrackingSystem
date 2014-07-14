@@ -2,6 +2,10 @@
 
 @section('content')
 
+    <!--CODE REVIEW:
+        - variable names must be descriptive
+        - remove unnecessary codes
+    -->
 
 <h1 class="pull-left">List of Active Purchase Requests</h1>
     
@@ -37,24 +41,6 @@
             </div>
         </div>
     </form>
-
-    <div class="modal fade" id="confirmActivate" role="dialog" aria-labelledby="confirmActivateLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Activate User</h4>
-                </div>
-                <div class="modal-body">
-                    <p>Are you sure about this ?</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-danger" id="confirm">Activate</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
     @if(Session::get('notice'))
         <div class="alert alert-success"> {{ Session::get('notice') }}</div> 
@@ -181,7 +167,8 @@
             document.getElementById("form").submit();
         }
     </script>
-
+    
+    <!--CODE REVIEW: remove unnecessary codes-->
     {{ Session::forget('main_error'); }}
     {{ Session::forget('m1'); }}
     {{ Session::forget('m2'); }}

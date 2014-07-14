@@ -1,5 +1,10 @@
 <?php
 
+/*
+	CODE REVIEW:
+		- remove this file
+*/
+
 class PagesController extends BaseController {
 
 	/*

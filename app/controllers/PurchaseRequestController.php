@@ -1,5 +1,13 @@
-
 <?php
+
+/*
+	CODE REVIEW:
+		- fix indention
+		- remove unnecessary comments
+		- remove unnecessary functions
+		- make variable names more descriptive
+		- abbreviate long variable names, but insert comment to describe
+*/
 
 class PurchaseRequestController extends Controller {
 
@@ -64,7 +72,7 @@ return Redirect::back();
 
 				$task=Task::where('wf_id', $document->work_id)->orderBy('section_id', 'ASC')->orderBy('order_id', 'ASC')->get();
 
-
+				// COED REVIEW: follow convention
 				foreach ($task as $tasks) 
 				{
 					$taskd= New TaskDetails;

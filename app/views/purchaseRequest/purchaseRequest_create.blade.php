@@ -27,6 +27,11 @@
 
 @section('content')
 
+	<!--CODE REVIEW:
+        - variable names must be descriptive
+        - remove unnecessary codes
+    -->
+
 	<!-- Modal Div -->
 	<div class="modal fade" id="description" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
 		<div class="modal-dialog">

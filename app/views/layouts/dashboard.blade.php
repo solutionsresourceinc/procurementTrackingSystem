@@ -1,4 +1,11 @@
 <!DOCTYPE html>
+
+<!--CODE REVIEW:
+    - fix indention
+    - remove comments
+    - use laravel for simple echoing
+-->
+
 <html lang="en">
     <head>
         <meta charset="utf-8">
@@ -21,27 +28,12 @@
         {{ HTML::script('js/bootstrap.min.js') }}
         {{ HTML::script('js/jquery-1.10.2.js') }}
 
-        <!-- Agile Image Uploader-->
-        {{ HTML::script('jquery-1.4.min.js')}}
-        {{ HTML::script('jquery.flash.min.js')}}
-        {{ HTML::script('agile-uploader-3.0.js')}}
-        {{ HTML::style('agile-uploader.css') }}
-
-        {{ HTML::style('colvix/css/jquery.dataTables.css')}}
-        {{ HTML::style('colvix/css/dataTables.colVis.css')}}
-        {{ HTML::style('colvix/css/shCore.css')}}
-        
-
-        {{ HTML::script('colvix/js/jquery.js')}}
-        {{ HTML::script('colvix/js/jquery.dataTables.js')}}
-        {{ HTML::script('colvix/js/dataTables.colVis.js')}}
-        {{ HTML::script('colvix/js/shCore.js')}}
-        {{ HTML::script('colvix/js/demo.js')}}
-
         {{ HTML::script('js/jquery.tablesorter.min.js')}}
 
         @yield('header')
         
+
+        <!-- CODE REVIEW: add to custom.css -->
         <style type="text/css">
         #confirmDelete {
         height: 400px;

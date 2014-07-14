@@ -24,6 +24,12 @@
 
 @section('content')
 
+    <!--CODE REVIEW:
+        - comments must be in sentence form
+        - remove unnecessary comments
+        - variables must be descriptive
+    -->
+
     <?php
         $pass=0;
         $epurchase=Purchase::find($id);

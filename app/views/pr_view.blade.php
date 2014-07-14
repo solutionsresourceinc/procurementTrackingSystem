@@ -2,6 +2,10 @@
 
 @section('content')
 
+<!--CODE REVIEW:
+    - remove comments
+    - variables must be descriptive
+-->
 
 <h1 class="pull-left">List of Active Purchase Requests</h1>
     
@@ -237,13 +241,6 @@
     </script>
 
 {{ Session::forget('main_error'); }}
-{{ Session::forget('m1'); }}
-{{ Session::forget('m2'); }}
-{{ Session::forget('m3'); }}
-{{ Session::forget('m4'); }}
-{{ Session::forget('m5'); }}
-{{ Session::forget('m6'); }}
-{{ Session::forget('m7'); }}
 {{ Session::forget('imgsuccess'); }}
 {{ Session::forget('imgerror'); }}
 

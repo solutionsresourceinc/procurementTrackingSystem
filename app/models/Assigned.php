@@ -1,6 +1,11 @@
 <?php
 
-
+/*
+	CODE REVIEW:
+		- remove comments
+		- insert relationships
+*/
+		
 class Assigned extends Eloquent{
 
 

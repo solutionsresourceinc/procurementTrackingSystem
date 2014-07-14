@@ -1,6 +1,12 @@
 @extends('layouts.dashboard')
 
 @section('content')
+	
+	<!--CODE REVIEW:
+	    - remove comments
+	    - variables must be descriptive
+	-->
+
     <h1 class="page-header">Offices</h1>
 
     <div id="message">
