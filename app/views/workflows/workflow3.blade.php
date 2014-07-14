@@ -1,11 +1,7 @@
-<!--CODE REVIEW:
-    - remove comments
-    - variables must be descriptive
--->
-
 <?php $wfName = Workflow::find('3'); ?>
 <br/>
 
+<!-- PURCHASE REQUEST SECTION -->
 <div class="panel panel-success">
 	<div class="panel-heading">
 		<?php $sectionName = Section::find('9'); ?>
@@ -17,7 +13,7 @@
 	</div>
 	<div class="panel-body">
 		
-		<!--Add Task-->
+		<!-- Displays form for adding new tasks to the workflow -->
 		<div id="office-create-form" class="well div-form">
 	    	{{ Form::open(['url'=>'addtask'], 'POST', array('role' => 'form')) }}
 		    	<div class="col-md-8">
@@ -30,29 +26,24 @@
 			    </div>
 		    {{ Form::close() }}
 		</div>
-		<!--End Add Task-->
 
 		<table border="1" class="workflow-table">
 
-			<!--Additional Task-->
+			<!-- Displays the tasks added through the add new task form -->
 			<?php
-				$ctask= OtherDetails::where('section_id', $sectionName->id )->count();
-				if($ctask!=0){
+				$taskcount= OtherDetails::where('section_id', $sectionName->id )->count();
+				if($taskcount!=0){
 			?>
-			<!--tr>
-			<th class="workflow-th" width="25%" colspan="2">LABEL</th>
-									<th class="workflow-th" width="70%">ACTION</th>
-						
-			</tr-->
+			
 			<?php 
-				$addontask= OtherDetails::where('section_id', $sectionName->id )->get();
+				$addedtasks= OtherDetails::where('section_id', $sectionName->id )->get();
 			?>
-			@foreach ($addontask as $addontasks)
+			@foreach ($addedtasks as $addedtask)
 				<tr>
-					<td colspan="2">{{$addontasks->label}}</td>
+					<td colspan="2">{{$addedtask->label}}</td>
 					<td>
 						{{Form::open(['url'=>'deladdtask'], 'POST')}}
-						<input type="hidden" name="id" value="<?php echo $addontasks->id ?>">
+						<input type="hidden" name="id" value="<?php echo $addedtask->id ?>">
 						<button class="btn btn-danger" data-title="Delete"><span class="glyphicon glyphicon-trash"></span></button>
 						{{Form::close()}}
 					</td>
@@ -61,34 +52,34 @@
 			<?php 
 				}
 			?>
-			<!--End Additional Task-->
 
+			<!-- Displays the defined tasks of the workflow -->
 			<tr>
 				<th class="workflow-th" width="25%">TASK</th>
 				<th class="workflow-th" width="45%">DESIGNATION ASSIGNED</th>
 				<th class="workflow-th" width="25%">ACTION</th>
 			</tr>
 			<?php 
-				$section1 = DB::table('tasks')->where('wf_id','3')->get(); 
+				$sections = DB::table('tasks')->where('wf_id','3')->get(); 
 			?>
 
-			@foreach($section1 as $section)
+			@foreach($sections as $section)
 				@if($section->section_id == 1)
 					<?php 
-					$d_id=$section->designation_id; 
+					$designation_id=$section->designation_id; 
 
 					?>
 					<tr>
 						<td> {{{ $section->taskName }}} </td>
 						<td>
 							<?php
-							$desig = DB::table('designation')->where('id', $d_id)->get();	
-							if($d_id!=0){
+							$designations = DB::table('designation')->where('id', $designation_id)->get();	
+							if($designation_id!=0){
 								?>
 
-								@foreach ($desig as $desigs)
+								@foreach ($designations as $designation)
 								<div class="mode1" id="insert_{{$section->id}}">
-									{{$desigs->designation }}
+									{{$designation->designation }}
 								</div>
 								@endforeach
 
@@ -100,13 +91,13 @@
 								<div class="mode1" id="insert_{{$section->id}}"></div>
 								<?php
 							}
-							$desig = DB::table('designation')->get();	
+							$designations = DB::table('designation')->get();	
 							?>
 							<form class="form ajax" action="/workflow/submit/{{$section->id}}" data-replace="#insert_{{$section->id}}" method="post" role="form" class="form-inline">
 								<select name ="designa" class = "form-control mode2 edit-text" style="width:100%">
 									<option value=0>None                                 </option>
-									@foreach ($desig as $desigs)
-									<option value="{{$desigs->id}}">{{$desigs->designation}}</option>
+									@foreach ($designations as $designation)
+									<option value="{{$designation->id}}">{{$designation->designation}}</option>
 									@endforeach
 
 								</select>
@@ -128,6 +119,7 @@
 	</div>
 </div>
 
+<!-- BAC REQUIREMENTS SECTION -->
 <div class="panel panel-success">
 	<div class="panel-heading">
 		<?php $sectionName = Section::find('10'); ?>
@@ -135,7 +127,7 @@
 	</div>
 	<div class="panel-body">
 	
-		<!--Add Task-->
+		<!-- Displays the tasks added through the add new task form -->
 		<div id="office-create-form" class="well div-form">
 	    	{{ Form::open(['url'=>'addtask'], 'POST', array('role' => 'form')) }}
 		    	<div class="col-md-8">
@@ -148,28 +140,24 @@
 			    </div>
 		    {{ Form::close() }}
 		</div>
-		<!--End Add Task-->
 
 		<table border="1" class="workflow-table">
 
-			<!--Additional Task-->
+			<!-- Displays the tasks added through the add new task form -->
 			<?php
-				$ctask= OtherDetails::where('section_id', $sectionName->id )->count();
-				if($ctask!=0){
+				$taskcount= OtherDetails::where('section_id', $sectionName->id )->count();
+				if($taskcount!=0){
 			?>
-			<!--tr>
-			<th class="workflow-th" width="25%" colspan="2">LABEL</th>
-									<th class="workflow-th" width="70%">ACTION</th>		
-			</tr-->
+			
 			<?php 
-				$addontask= OtherDetails::where('section_id', $sectionName->id )->get();
+				$addedtasks= OtherDetails::where('section_id', $sectionName->id )->get();
 			?>
-			@foreach ($addontask as $addontasks)
+			@foreach ($addedtasks as $addedtask)
 				<tr>
-					<td colspan="2">{{$addontasks->label}}</td>
+					<td colspan="2">{{$addedtask->label}}</td>
 					<td>
 						{{Form::open(['url'=>'deladdtask'])}}
-						<input type="hidden" name="id" value="<?php echo $addontasks->id ?>">
+						<input type="hidden" name="id" value="<?php echo $addedtask->id ?>">
 						<button class="btn btn-danger" data-title="Delete"><span class="glyphicon glyphicon-trash"></span></button>
 						{{Form::close()}}
 					</td>
@@ -179,33 +167,33 @@
 			}
 			?>
 
-			<!--End Additional Task-->
+			<!-- Displays the defined tasks of the workflow -->
 			<tr>
 				<th class="workflow-th" width="25%">TASK</th>
 				<th class="workflow-th" width="45%">DESIGNATION ASSIGNED</th>
 				<th class="workflow-th" width="25%">ACTION</th>
 			</tr>
 			<?php 
-				$section1 = DB::table('tasks')->where('wf_id','3')->get(); 
+				$sections = DB::table('tasks')->where('wf_id','3')->get(); 
 			?>
 
-			@foreach($section1 as $section)
+			@foreach($sections as $section)
 				@if($section->section_id == 2)
 					<?php 
-					$d_id=$section->designation_id; 
+					$designation_id=$section->designation_id; 
 
 					?>
 					<tr>
 						<td> {{{ $section->taskName }}} </td>
 						<td>
 							<?php
-							$desig = DB::table('designation')->where('id', $d_id)->get();	
-							if($d_id!=0){
+							$designations = DB::table('designation')->where('id', $designation_id)->get();	
+							if($designation_id!=0){
 								?>
 
-								@foreach ($desig as $desigs)
+								@foreach ($designations as $designation)
 								<div class="mode1" id="insert_{{$section->id}}">
-									{{$desigs->designation }}
+									{{$designation->designation }}
 								</div>
 								@endforeach
 
@@ -217,13 +205,13 @@
 								<div class="mode1" id="insert_{{$section->id}}"></div>
 								<?php
 							}
-							$desig = DB::table('designation')->get();	
+							$designations = DB::table('designation')->get();	
 							?>
 							<form class="form ajax" action="/workflow/submit/{{$section->id}}" data-replace="#insert_{{$section->id}}" method="post" role="form" class="form-inline">
 								<select name ="designa" class = "form-control mode2 edit-text" style="width:100%">
 									<option value=0>None                                 </option>
-									@foreach ($desig as $desigs)
-									<option value="{{$desigs->id}}">{{$desigs->designation}}</option>
+									@foreach ($designations as $designation)
+									<option value="{{$designation->id}}">{{$designation->designation}}</option>
 									@endforeach
 
 								</select>
@@ -245,6 +233,7 @@
 	</div>
 </div>
 
+<!-- PURCHASE ORDER SECTION -->
 <div class="panel panel-success">
 	<div class="panel-heading">
 		<?php $sectionName = Section::find('11'); ?>
@@ -252,7 +241,8 @@
 	</div>
 
 	<div class="panel-body">			
-		<!--Add Task-->
+		
+		<!-- Displays the tasks added through the add new task form -->
 		<div id="office-create-form" class="well div-form">
 	    	{{ Form::open(['url'=>'addtask'], 'POST', array('role' => 'form')) }}
 		    	<div class="col-md-8">
@@ -265,29 +255,24 @@
 			    </div>
 		    {{ Form::close() }}
 		</div>
-		<!--End Add Task-->
 
 		<table border="1" class="workflow-table">
 
-			<!--Additional Task-->
+			<!-- Displays the tasks added through the add new task form -->
 			<?php
-				$ctask= OtherDetails::where('section_id', $sectionName->id )->count();
-				if($ctask!=0){
+				$taskcount= OtherDetails::where('section_id', $sectionName->id )->count();
+				if($taskcount!=0){
 			?>
-			<!--tr>
-			<th class="workflow-th" width="25%" colspan="2">LABEL</th>
-									<th class="workflow-th" width="70%">ACTION</th>
-						
-			</tr-->
+			
 			<?php 
-			$addontask= OtherDetails::where('section_id', $sectionName->id )->get();
+			$addedtasks= OtherDetails::where('section_id', $sectionName->id )->get();
 			?>
-			@foreach ($addontask as $addontasks)
+			@foreach ($addedtasks as $addedtask)
 			<tr>
-				<td colspan="2">{{$addontasks->label}}</td>
+				<td colspan="2">{{$addedtask->label}}</td>
 				<td>
 					{{Form::open(['url'=>'deladdtask'])}}
-					<input type="hidden" name="id" value="<?php echo $addontasks->id ?>">
+					<input type="hidden" name="id" value="<?php echo $addedtask->id ?>">
 					<button class="btn btn-danger" data-title="Delete"><span class="glyphicon glyphicon-trash"></span></button>
 					{{Form::close()}}
 				</td>
@@ -296,33 +281,33 @@
 			<?php 
 			}
 			?>
-			<!--End Additional Task-->
-							
+				
+			<!-- Displays the defined tasks of the workflow -->			
 			<tr>
 				<th class="workflow-th" width="25%">TASK</th>
 				<th class="workflow-th" width="45%">DESIGNATION ASSIGNED</th>
 				<th class="workflow-th" width="25%">ACTION</th>
 			</tr>
 			<?php 
-				$section1 = DB::table('tasks')->where('wf_id','3')->get(); 
+				$sections = DB::table('tasks')->where('wf_id','3')->get(); 
 			?>
 
-			@foreach($section1 as $section)
+			@foreach($sections as $section)
 				@if($section->section_id == 3)
 					<?php 
-						$d_id=$section->designation_id; 
+						$designation_id=$section->designation_id; 
 					?>
 					<tr>
 						<td> {{{ $section->taskName }}} </td>
 						<td>
 							<?php
-							$desig = DB::table('designation')->where('id', $d_id)->get();	
-							if($d_id!=0){
+							$designations = DB::table('designation')->where('id', $designation_id)->get();	
+							if($designation_id!=0){
 								?>
 
-								@foreach ($desig as $desigs)
+								@foreach ($designations as $desigs)
 								<div class="mode1" id="insert_{{$section->id}}">
-									{{$desigs->designation }}
+									{{$designation->designation }}
 								</div>
 								@endforeach
 
@@ -334,13 +319,13 @@
 								<div class="mode1" id="insert_{{$section->id}}"></div>
 								<?php
 							}
-							$desig = DB::table('designation')->get();	
+							$designations = DB::table('designation')->get();	
 							?>
 							<form class="form ajax" action="/workflow/submit/{{$section->id}}" data-replace="#insert_{{$section->id}}" method="post" role="form" class="form-inline">
 								<select name ="designa" class = "form-control mode2 edit-text" style="width:100%">
 									<option value=0>None                                 </option>
-									@foreach ($desig as $desigs)
-									<option value="{{$desigs->id}}">{{$desigs->designation}}</option>
+									@foreach ($designations as $designation)
+									<option value="{{$designation->id}}">{{$designation->designation}}</option>
 									@endforeach
 
 								</select>
@@ -362,6 +347,7 @@
 	</div>
 </div>
 
+<!-- VOUCHER SECTION -->
 <div class="panel panel-success">
 	<div class="panel-heading">
 		<?php $sectionName = Section::find('12'); ?>
@@ -370,7 +356,7 @@
 
 	<div class="panel-body">
 
-		<!--Add Task-->
+		<!-- Displays the tasks added through the add new task form -->
 		<div id="office-create-form" class="well div-form">
 	    	{{ Form::open(['url'=>'addtask'], 'POST', array('role' => 'form')) }}
 		    	<div class="col-md-8">
@@ -383,29 +369,24 @@
 			    </div>
 		    {{ Form::close() }}
 		</div>
-		<!--End Add Task-->
 
 		<table border="1" class="workflow-table">
 
-			<!--Additional Task-->
+			<!-- Displays the tasks added through the add new task form -->
 			<?php
-				$ctask= OtherDetails::where('section_id', $sectionName->id )->count();
-				if($ctask!=0){
+				$taskcount= OtherDetails::where('section_id', $sectionName->id )->count();
+				if($taskcount!=0){
 			?>
-			<!--tr>
-			<th class="workflow-th" width="25%" colspan="2">LABEL</th>
-									<th class="workflow-th" width="70%">ACTION</th>
-						
-			</tr-->
+			
 			<?php 
-				$addontask= OtherDetails::where('section_id', $sectionName->id )->get();
+				$addedtasks= OtherDetails::where('section_id', $sectionName->id )->get();
 			?>
-			@foreach ($addontask as $addontasks)
+			@foreach ($addedtasks as $addedtask)
 			<tr>
-				<td colspan="2">{{$addontasks->label}}</td>
+				<td colspan="2">{{$addedtask->label}}</td>
 				<td>
 					{{Form::open(['url'=>'deladdtask'])}}
-					<input type="hidden" name="id" value="<?php echo $addontasks->id ?>">
+					<input type="hidden" name="id" value="<?php echo $addedtask->id ?>">
 					<button class="btn btn-danger" data-title="Delete"><span class="glyphicon glyphicon-trash"></span></button>
 					{{Form::close()}}
 				</td>
@@ -414,34 +395,34 @@
 			<?php 
 			}
 			?>
-			<!--End Additional Task-->
-
+			
+			<!-- Displays the defined tasks of the workflow -->
 			<tr>
 				<th class="workflow-th" width="25%">TASK</th>
 				<th class="workflow-th" width="45%">DESIGNATION ASSIGNED</th>
 				<th class="workflow-th" width="25%">ACTION</th>
 			</tr>
 			<?php 
-			$section1 = DB::table('tasks')->where('wf_id','3')->get(); 
+			$sections = DB::table('tasks')->where('wf_id','3')->get(); 
 			?>
 
-			@foreach($section1 as $section)
+			@foreach($sections as $section)
 				@if($section->section_id == 4)
 					<?php 
-					$d_id=$section->designation_id; 
+					$designation_id=$section->designation_id; 
 
 					?>
 					<tr>
 						<td> {{{ $section->taskName }}} </td>
 						<td>
 							<?php
-							$desig = DB::table('designation')->where('id', $d_id)->get();	
-							if($d_id!=0){
+							$designations = DB::table('designation')->where('id', $designation_id)->get();	
+							if($designation_id!=0){
 								?>
 
-								@foreach ($desig as $desigs)
+								@foreach ($designations as $designation)
 								<div class="mode1" id="insert_{{$section->id}}">
-									{{$desigs->designation }}
+									{{$designation->designation }}
 								</div>
 								@endforeach
 
@@ -453,13 +434,13 @@
 								<div class="mode1" id="insert_{{$section->id}}"></div>
 								<?php
 							}
-							$desig = DB::table('designation')->get();	
+							$designations = DB::table('designation')->get();	
 							?>
 							<form class="form ajax" action="/workflow/submit/{{$section->id}}" data-replace="#insert_{{$section->id}}" method="post" role="form" class="form-inline">
 								<select name ="designa" class = "form-control mode2 edit-text" style="width:100%">
 									<option value=0>None                                 </option>
-									@foreach ($desig as $desigs)
-									<option value="{{$desigs->id}}">{{$desigs->designation}}</option>
+									@foreach ($designations as $designation)
+									<option value="{{$designation->id}}">{{$designation->designation}}</option>
 									@endforeach
 
 								</select>
