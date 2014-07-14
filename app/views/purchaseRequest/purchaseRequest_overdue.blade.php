@@ -1,11 +1,6 @@
 @extends('layouts.dashboard')
 
 @section('content')
-    
-    <!--CODE REVIEW:
-        - variable names must be descriptive
-        - remove unnecessary codes
-    -->
 
     <h1 class="pull-left">List of Active Purchase Requests</h1>
     
@@ -101,7 +96,8 @@
                         $user_selected= Auth::User()->id;
                         $counter=0;
                         $counter=Count::where('user_id', $user_selected)->where('doc_id', $doc_id)->count();
-                        if ($counter!=0){
+                        if ($counter!=0)
+                        {
                             echo "class ='success'";
                         }
                     ?>
@@ -219,35 +215,23 @@
         });
 
         $('#confirmDelete').find('.modal-footer #confirm').on('click', function(){
-            //$(this).data('form').submit();
             var name = "myForm_" + window.my_id; 
             document.getElementById(name).submit();
-            //alert(name);
         });
         function hello(pass_id)
         {
             window.my_id = pass_id;
-           // alert(window.my_id);
         }
 
         function submitForm()
         {
             var reason = document.getElementById('reason').value;
             document.getElementById('hide_reason').value = reason;
-            //alert(reason);
             document.getElementById("form").submit();
         }
     </script>
 
-    <!--CODE REVIEW: remove unnecessary codes-->
     {{ Session::forget('main_error'); }}
-    {{ Session::forget('m1'); }}
-    {{ Session::forget('m2'); }}
-    {{ Session::forget('m3'); }}
-    {{ Session::forget('m4'); }}
-    {{ Session::forget('m5'); }}
-    {{ Session::forget('m6'); }}
-    {{ Session::forget('m7'); }}
     {{ Session::forget('imgsuccess'); }}
     {{ Session::forget('imgerror'); }}
 @stop
