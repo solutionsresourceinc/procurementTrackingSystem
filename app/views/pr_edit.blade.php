@@ -10,8 +10,8 @@
     {{ HTML::script('date_picker/bootstrap-datetimepicker.fr.js') }}
     {{ HTML::style('css/datepicker.css')}}
     {{ HTML::script('js/bootstrap-datepicker.js') }}
+    
     <!--Image Display-->
-
     {{ HTML::script('js/lightbox.min.js') }} 
     {{ HTML::style('css/lightbox.css')}}
     <!--End Image Display-->
@@ -31,13 +31,17 @@
     -->
 
     <?php
-        $pass=0;
-        $epurchase=Purchase::find($id);
-        $cuser=Auth::User()->id;
+        
+    //Initialization for page query
+       
+        $pass=0; //Use in role restriction.
+        $purchaseToEdit=Purchase::find($id);
+        $user_id=Auth::User()->id;
     ?>
 
     <?php 
-        //retainer
+        //Retain Inputte Values
+
         if (Input::old('projectPurpose')||Input::old('sourceOfFund')||Input::old('amount')){
             $valprojectPurpose=Input::old('projectPurpose');
             $valsourceOfFund=Input::old('sourceOfFund');
@@ -45,9 +49,9 @@
         }
         else
         {
-            $valprojectPurpose=$epurchase->projectPurpose;
-            $valsourceOfFund=$epurchase->sourceOfFund;
-            $valamount=$epurchase->amount; 
+            $valprojectPurpose=$purchaseToEdit->projectPurpose;
+            $valsourceOfFund=$purchaseToEdit->sourceOfFund;
+            $valamount=$purchaseToEdit->amount; 
 
         }
     ?>
@@ -91,7 +95,7 @@
         if ( Entrust::hasRole('Administrator')) { $pass=1; }
         else if (Entrust::hasRole('Procurement Personnel'))
         {
-            if($epurchase->created_by==$cuser)  $pass=1;
+            if($purchaseToEdit->created_by==$user_id)  $pass=1;
         }
         if ($pass==0)
             Redirect::back();
@@ -127,7 +131,7 @@
 
                     <div class="col-md-3">
                         {{ Form::label('status', 'Status: ', array('class' => 'create-label')) }}
-                        <input type="text" value="{{$epurchase->status}}" readonly class="form-control">
+                        <input type="text" value="{{$purchaseToEdit->status}}" readonly class="form-control">
                     </div>
 
                     <div class="col-md-3">
@@ -143,9 +147,9 @@
 
                         {{ Form::label('dispCN', 'Control No. *', array('class' => 'create-label')) }}
                         <input type="text"  name="dispCN"  class="form-control" value="{{
-                        $epurchase->controlNo}}"disabled>
+                        $purchaseToEdit->controlNo}}"disabled>
                         <input type="hidden" name="controlNo" value="{{
-                        $epurchase->controlNo}}">
+                        $purchaseToEdit->controlNo}}">
                     </div>
                 </div>
                 <br/>
@@ -155,8 +159,8 @@
                     {{ Form::text('projectPurpose',$valprojectPurpose, array('class'=>'form-control')) }}
                 </div>
 
-                @if (Session::get('m1'))
-                    <font color="red"><i>{{ Session::get('m1') }}</i></font>
+                @if (Session::get('error_projectPurpose'))
+                    <font color="red"><i>{{ Session::get('error_projectPurpose') }}</i></font>
                 @endif
                 <br/>            
 
@@ -164,21 +168,17 @@
                     <div class="col-md-6">
                         {{ Form::label('sourceOfFund', 'Source of Fund *', array('class' => 'create-label')) }}
                         {{ Form::text('sourceOfFund',$valsourceOfFund, array('class'=>'form-control')) }}
-                        @if (Session::get('m2'))
-                            <font color="red"><i>{{ Session::get('m2') }}</i></font>
+                        @if (Session::get('error_sourceOfFund'))
+                            <font color="red"><i>{{ Session::get('error_sourceOfFund') }}</i></font>
                         @endif
                     </div>
 
                     
                     <div class="col-md-6">
                         {{ Form::label('amount', 'Amount *', array('class' => 'create-label')) }}
-                        {{ Form::text('amount', $epurchase->amount ,array('class'=>'form-control','onchange'=>'numberWithCommas(this.value)','id'=>'num','disabled')) }}
+                        {{ Form::text('amount', $purchaseToEdit->amount ,array('class'=>'form-control','onchange'=>'numberWithCommas(this.value)','id'=>'num','disabled')) }}
                     </div>
-                    @if (Session::get('m3'))
-                        <font color="red"><i>{{ Session::get('m3') }}</i></font>
-                    @endif
-
-
+           
                 </div>
                 <br/>
 
@@ -195,15 +195,15 @@
                                     <?php 
                                         if (Input::old('office')==$key->id)
                                           echo "selected";
-                                        else if($epurchase->office==$key->id)
+                                        else if($purchaseToEdit->office==$key->id)
                                         echo "selected" 
                                     ?>
                                     >{{{ $key->officeName }}}
                                 </option>
                             @endforeach
                         </select>
-                        @if (Session::get('m4'))
-                            <font color="red"><i>{{ Session::get('m4') }}</i></font>
+                        @if (Session::get('error_office'))
+                            <font color="red"><i>{{ Session::get('error_office') }}</i></font>
                         @endif
                     
                     </div>
@@ -224,7 +224,7 @@
                                         <?php 
                                         if (Input::old('requisitioner')==$key2->id)
                                           echo "selected";
-                                        else if($epurchase->requisitioner==$key2->id)
+                                        else if($purchaseToEdit->requisitioner==$key2->id)
                                             echo "selected" 
                                         ?>
                                         >{{ $fullname }}
@@ -232,8 +232,8 @@
                                 @endif
                             @endforeach
                         </select>
-                        @if (Session::get('m5'))
-                            <font color="red"><i>{{ Session::get('m5') }}</i></font>
+                        @if (Session::get('error_requisitioner'))
+                            <font color="red"><i>{{ Session::get('error_requisitioner') }}</i></font>
                         @endif
                   
                     </div>
@@ -248,7 +248,7 @@
                         if (NULL!=Input::old('dateRequested'))
                             echo Input::old('dateRequested');
                         else
-                         echo $epurchase->dateRequested; ?>" readonly>
+                         echo $purchaseToEdit->dateRequested; ?>" readonly>
                         <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
                         <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
                     </div>
@@ -256,9 +256,9 @@
                         if (NULL!=Input::old('dateRequested'))
                             echo Input::old('dateRequested');
                         else
-                            echo $epurchase->dateRequested; ?>" />
-                    @if (Session::get('m7'))
-                        <font color="red"><i>{{ Session::get('m7') }}</i></font>
+                            echo $purchaseToEdit->dateRequested; ?>" />
+                    @if (Session::get('error_dateRequested'))
+                        <font color="red"><i>{{ Session::get('error_dateRequested') }}</i></font>
                     @endif
                     <br>
                 </div>
@@ -278,7 +278,7 @@
                     @endif
 
                     <?php
-                        $document = Document::where('pr_id', $epurchase->id)->first();
+                        $document = Document::where('pr_id', $purchaseToEdit->id)->first();
                         $doc_id= $document->id;
                     ?>
                     <input name="file[]" type="file"  multiple title="Select image to attach" data-filename-placement="inside"/>
@@ -321,13 +321,11 @@
 
                 {{ Session::forget('notice'); }}
                 {{ Session::forget('main_error'); }}
-                {{ Session::forget('m1'); }}
-                {{ Session::forget('m2'); }}
-                {{ Session::forget('m3'); }}
-                {{ Session::forget('m4'); }}
-                {{ Session::forget('m5'); }}
-                {{ Session::forget('m6'); }}
-                {{ Session::forget('m7'); }}
+                {{Session::forget('error_projectPurpose');}}
+                {{Session::forget('error_sourceOfFund');}}
+                {{Session::forget('error_office');}}
+                {{Session::forget('error_requisitioner');}}
+                {{Session::forget('error_dateRequested');}}
                 {{ Session::forget('imgerror'); }}
                 {{ Session::forget('imgsuccess'); }}
             </div>
@@ -356,25 +354,24 @@
                     echo "<div class='panel panel-success'><div class='panel-heading'>
                         <h3 class='panel-title'>".$sections->section_order_id.". ".$sections->sectionName."</h3>
                         </div>";
-                    //echo "<tr><th colspan='5' >".$sections->section_order_id.". ".$sections->sectionName."</th></tr>";
+                 
                     echo "<div class='panel-body'>";
                     echo "<table border='1' class='workflow-table'>";
 
                     //Addon Display
                     $otherc=OtherDetails::where('section_id', $sections->id)->count();
                     if($otherc!=0){
-                        //echo "<tr><th class='workflow-th'>Label</th><th class='workflow-th' colspan='3'>Input</th><th class='workflow-th'>Action</th></tr>";
-
+                       
                         $otherd= OtherDetails::where('section_id', $sections->id)->get();
                         foreach ($otherd as $otherdetails) {
                             echo "<tr><td width='30%'>".$otherdetails->label."</td>";
-                            $valuesc=Values::where('otherDetails_id', $otherdetails->id)->where('purchase_request_id', $epurchase->id)->count();
-                            $values=Values::where('otherDetails_id', $otherdetails->id)->where('purchase_request_id', $epurchase->id)->first();    
+                            $valuesc=Values::where('otherDetails_id', $otherdetails->id)->where('purchase_request_id', $purchaseToEdit->id)->count();
+                            $values=Values::where('otherDetails_id', $otherdetails->id)->where('purchase_request_id', $purchaseToEdit->id)->first();    
                             if ($valuesc==0) {
                     ?>
                                 {{Form::open(['url'=>'insertaddon'], 'POST')}}
                                     <input type="hidden" name="otherDetails_id" value="{{$otherdetails->id}}">
-                                    <input type="hidden" name="purchase_request_id" value="{{$epurchase->id}}">
+                                    <input type="hidden" name="purchase_request_id" value="{{$purchaseToEdit->id}}">
                                     <td colspan="3"><input name ="value" type="text" class="form-control"></td>
                                     <td align="center"><button class ="btn btn-primary">Save</button></td>
                                 {{Form::close()}}
@@ -385,9 +382,7 @@
                     ?>
                                 {{Form::open(['url'=>'editaddon', 'POST'])}}
                     <?php
-                                /*echo"<input type='hidden' name='otherDetails_id' value='".$otherdetails->id."'>
-                                <input type='hidden' name='purchase_request_id' value='".$epurchase->id."'>";
-                                echo "<td>"."<button class ='btn btn-success'>Edit</button>"."</td>";*/
+                              
                                 echo"<input type='hidden' name='values_id' value='".$values->id."'>";
                                 echo "<td colspan='2' align='center'>"."<button class ='btn btn-default'>Edit</button>"."</td>";
                     ?>
