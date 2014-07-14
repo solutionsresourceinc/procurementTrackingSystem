@@ -106,11 +106,11 @@
                         <td width="10%">{{ $request->controlNo; }}</td>
                         <td width="30%"><a data-toggle="tooltip" data-placement="top" class="purpose" href="{{ URL::to('purchaseRequest/vieweach/'. $request->id) }}" title="View Project Details">{{ $request->projectPurpose; }}</a></td>
                         <?php 
-                            $doc = new Purchase; 
-                            $doc = DB::table('document')->where('pr_id', $request->id)->get(); 
+                            $docs = new Purchase; 
+                            $docs = DB::table('document')->where('pr_id', $request->id)->get(); 
                         ?>
                         <td width="18%">
-                            @foreach ($doc as $docs) {{ Workflow::find($docs->work_id)->workFlowName; }} @endforeach
+                            @foreach ($docs as $doc) {{ Workflow::find($doc->work_id)->workFlowName; }} @endforeach
                         </td>
                         <td width="12%" style="text-align: center"><span class="label {{($request->status == 'New') ? 'label-primary' : (($request->status == 'Active') ? 'label-success' : (($request->status == 'Overdue') ? 'label-danger' : 'label-default'))}}">{{ $request->status; }}</span></td>
                         <td width="20%">{{ $request->dateRequested; }}</td>
@@ -170,13 +170,6 @@
     
     <!--CODE REVIEW: remove unnecessary codes-->
     {{ Session::forget('main_error'); }}
-    {{ Session::forget('m1'); }}
-    {{ Session::forget('m2'); }}
-    {{ Session::forget('m3'); }}
-    {{ Session::forget('m4'); }}
-    {{ Session::forget('m5'); }}
-    {{ Session::forget('m6'); }}
-    {{ Session::forget('m7'); }}
     {{ Session::forget('imgsuccess'); }}
     {{ Session::forget('imgerror'); }}
 @stop

@@ -64,8 +64,8 @@
             $date_today =date('Y-m-d H:i:s');
             $requests = new Purchase;
            
-            $userx=Auth::user()->id;
-            $requests = DB::table('purchase_request')->where('dueDate','<=',$date_today)->where('status', '=', 'Active')->paginate(10)); 
+            $user_selected=Auth::user()->id;
+            $requests = DB::table('purchase_request')->where('dueDate','<=',$date_today)->where('status', '=', 'Active')->paginate(10); 
             //End Query Restrictions
         ?>
 
@@ -80,9 +80,9 @@
                             $useroffice=Auth::user()->office_id;
                             $maker= User::find( $request->requisitioner);
                             $docget=Document::where('pr_id', $request->id)->first();
-                            $taskd = TaskDetails::where('doc_id',$docget->id)->where('assignee_id',$userx)->count();
+                            $taskd = TaskDetails::where('doc_id',$docget->id)->where('assignee_id',$user_selected)->count();
                             if($taskd!=0){}
-                            else if ($userx==$request->created_by)
+                            else if ($user_selected==$request->created_by)
                             {}
                             else if ($useroffice!=$maker->office_id)
                                 continue;
@@ -98,9 +98,9 @@
 
                         $doc = new Document; $doc = DB::table('document')->where('pr_id', $request->id)->first();  
                         $doc_id= $doc->id;
-                        $userx= Auth::User()->id;
+                        $user_selected= Auth::User()->id;
                         $counter=0;
-                        $counter=Count::where('user_id', $userx)->where('doc_id', $doc_id)->count();
+                        $counter=Count::where('user_id', $user_selected)->where('doc_id', $doc_id)->count();
                         if ($counter!=0){
                             echo "class ='success'";
                         }
@@ -109,11 +109,11 @@
                         <td width="10%">{{ $request->controlNo; }}</td>
                         <td width="30%"><a data-toggle="tooltip" data-placement="top" class="purpose" href="{{ URL::to('purchaseRequest/vieweach/'. $request->id) }}" title="View Project Details">{{ $request->projectPurpose; }}</a></td>
                         <?php 
-                            $doc = new Purchase; 
-                            $doc = DB::table('document')->where('pr_id', $request->id)->get(); 
+                            $docs = new Purchase; 
+                            $docs = DB::table('document')->where('pr_id', $request->id)->get(); 
                         ?>
                         <td width="18%">
-                            @foreach ($doc as $docs) {{ Workflow::find($docs->work_id)->workFlowName; }} @endforeach
+                            @foreach ($docs as $doc) {{ Workflow::find($doc->work_id)->workFlowName; }} @endforeach
                         </td>
                         <td width="12%" style="text-align: center"><span class="label {{($request->status == 'New') ? 'label-primary' : (($request->status == 'Active') ? 'label-success' : (($request->status == 'Overdue') ? 'label-danger' : 'label-default'))}}">{{ $request->status; }}</span></td>
                         <td width="20%">{{ $request->dateRequested; }}</td>
@@ -134,7 +134,7 @@
                             <td width="10%">
                             <?php
                                 $docget=Document::where('pr_id', $request->id)->first();
-                                $taskd = TaskDetails::where('doc_id',$docget->id)->where('assignee_id',$userx)->count();
+                                $taskd = TaskDetails::where('doc_id',$docget->id)->where('assignee_id',$user_selected)->count();
                                 $showcancel=0;
                          
                                 if($taskd!=0){
@@ -143,13 +143,13 @@
                             <?php
                                     $showcancel=1;
                                 }
-                                else if($userx==$request->created_by){
+                                else if($user_selected==$request->created_by){
                             ?><a data-toggle="tooltip" data-placement="top" class='iframe btn btn-success' href='edit/{{$request->id}}' title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
                             
                             <?php
                                     $showcancel=1;
                                 }
-                                else if($userx==$request->requisitioner){
+                                else if($user_selected==$request->requisitioner){
                                 
                                     $showcancel=1;
                                 }
@@ -171,7 +171,7 @@
                                     $showcancel=0;
                                     if($reqrestrict==1)
                                     {
-                                        if($userx!=$maker->id)
+                                        if($user_selected!=$maker->id)
                                             $showcancel=1;
                                     }
 
