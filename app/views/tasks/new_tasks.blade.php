@@ -41,9 +41,8 @@
                             <span class="list-group-item-text">{{ $task->description }}</span> &nbsp;<br> Project: <small><font color="blue">{{$projectName}}</font></i></small>
                         </div> 
                         {{ Form::open() }}
-                        {{ Form::hidden('hide_taskid',$taskDetail->id) }}
-                        {{Form::submit('Accept Task', ['class' => 'btn btn-sm btn-primary accept-button'])}}     
-
+                            {{ Form::hidden('hide_taskid',$taskDetail->id) }}
+                            {{ Form::submit('Accept Task', ['class' => 'btn btn-sm btn-primary accept-button'])}}     
                         {{ Form::close() }}
                     </a>
                

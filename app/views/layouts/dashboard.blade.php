@@ -66,7 +66,7 @@
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse navbar-ex1-collapse">
-          <ul class="nav navbar-nav side-nav">
+            <ul class="nav navbar-nav side-nav">
             <li class="{{Request::is('dashboard') ? 'active':''}}"><a href="/" style="border-bottom: solid 1px rgba(0, 0, 0, 0.2);"><!--i class="fa fa-dashboard"></i--> Dashboard</a></li>
             <li class="{{(Request::is('purchaseRequests') || Request::is('purchaseRequest/view') || Request::is('purchaseRequest/closed') || Request::is('purchaseRequest/overdue')) ? 'active' : ''}}"><a href="#" class="unlink">Purchase Requests</a>
                 <ul class="side-submenu">
@@ -82,41 +82,41 @@
                                 foreach ($cpurchase as $cpurchases ) {
                                     $doc=Document::where('pr_id', $cpurchases->id)->first();
                                     $count= DB::table('count')->where('doc_id', $doc->id)->where('user_id', $cuser)->count();
-                                    if($count==0){
-
-                                    }
+                                    if($count==0)
+                                    {}
                                     else
+                                    {
+                                        if ( Entrust::hasRole('Administrator')) 
                                         {
-                                        if ( Entrust::hasRole('Administrator')) {
                                             $result=$result+1; }
+                                            
                                             else if (Entrust::hasRole('Procurement Personnel'))
                                             {    
                                                 $useroffice=Auth::user()->office_id;
                                                 $req= User::find($cpurchases->requisitioner);
-
-                        $docget=Document::where('pr_id', $cpurchases->id)->first();
-                        $taskcon = TaskDetails::where('doc_id',$docget->id)->where('assignee_id',$cuser)->count();
+                                                $docget=Document::where('pr_id', $cpurchases->id)->first();
+                                                $taskcon = TaskDetails::where('doc_id',$docget->id)->where('assignee_id',$cuser)->count();
                       
-                            if($taskcon!=0){
-
-                                  $result=$result+1;
-                            }
-                       
-                                                 else if($useroffice==$req->office_id) 
+                                                if($taskcon!=0)      
+                                                    $result=$result+1;
+                                                else if($useroffice==$req->office_id) 
                                                     $result=$result+1;
                                                 else if($cpurchases->created_by==$cuser)   
                                                     $result=$result+1;
                                             }
                                             else if(Entrust::hasRole('Requisitioner'))
-                                            {   $useroffice=Auth::user()->office_id;
+                                            {   
+                                                $useroffice=Auth::user()->office_id;
                                                 $req= User::find($cpurchases->requisitioner);
-                                                if($useroffice==$req->office_id) $result=$result+1;
+                                                
+                                                if($useroffice==$req->office_id) 
+                                                    $result=$result+1;
                                             }
                                         }
-                                }
-                                echo $result;
+                                    }
+                                    echo $result;
 
-                                ?>
+                                    ?>
                             </span>
                         </a>
                     </li>
@@ -127,89 +127,96 @@
                                <?php
                                         $result=0;
                                         $cuser= Auth::user()->id;
-                                   $cpurchase= DB::table('purchase_request')->where('status', '=', 'Closed')->get();
-                                foreach ($cpurchase as $cpurchases ) {
-                                    $doc=Document::where('pr_id', $cpurchases->id)->first();
-                                    $count= DB::table('count')->where('doc_id', $doc->id)->where('user_id', $cuser)->count();
-                                    if($count==0){
-
-                                    }
-                                    else
-                                        {if ( Entrust::hasRole('Administrator')) {
-                                            $result=$result+1; }
-                                            else if (Entrust::hasRole('Procurement Personnel'))
-                                            {    
-                                                $useroffice=Auth::user()->office_id;
-                                                $req= User::find($cpurchases->requisitioner);
-
-                        $docget=Document::where('pr_id', $cpurchases->id)->first();
-                        $taskcon = TaskDetails::where('doc_id',$docget->id)->where('assignee_id',$cuser)->count();
+                                        $cpurchase= DB::table('purchase_request')->where('status', '=', 'Closed')->get();
+                                        foreach ($cpurchase as $cpurchases ) 
+                                        {
+                                            $doc=Document::where('pr_id', $cpurchases->id)->first();
+                                            $count= DB::table('count')->where('doc_id', $doc->id)->where('user_id', $cuser)->count();
+                                            
+                                            if($count==0)
+                                            {}
+                                            else
+                                            {   
+                                                if ( Entrust::hasRole('Administrator')) 
+                                                    $result=$result+1; 
+                                                else if (Entrust::hasRole('Procurement Personnel'))
+                                                {    
+                                                    $useroffice=Auth::user()->office_id;
+                                                    $req= User::find($cpurchases->requisitioner);
+                                                    $docget=Document::where('pr_id', $cpurchases->id)->first();
+                                                    $taskcon = TaskDetails::where('doc_id',$docget->id)->where('assignee_id',$cuser)->count();
                       
-                            if($taskcon!=0){
-
-                                  $result=$result+1;
-                            }
-                       
-                                                 else if($useroffice==$req->office_id) 
-                                                    $result=$result+1;
-                                                else if($cpurchases->created_by==$cuser)   
-                                                    $result=$result+1;
+                                                    if($taskcon!=0)
+                                                        $result=$result+1;
+                                                    else if($useroffice==$req->office_id) 
+                                                        $result=$result+1;
+                                                    else if($cpurchases->created_by==$cuser)   
+                                                        $result=$result+1;
+                                                }
+                                                else if(Entrust::hasRole('Requisitioner'))
+                                                {
+                                                    $useroffice=Auth::user()->office_id;
+                                                    $req= User::find($cpurchases->requisitioner);
+                                                
+                                                    if($useroffice==$req->office_id) 
+                                                        $result=$result+1;
+                                                }
                                             }
-                                            else if(Entrust::hasRole('Requisitioner'))
-                                            { $useroffice=Auth::user()->office_id;
-                                                $req= User::find($cpurchases->requisitioner);
-                                                if($useroffice==$req->office_id) $result=$result+1;
-                                            }}
-                                }
-                                echo $result;
+                                        }
+                                        echo $result;
 
-                                ?>
-                            </span></a>
+                                    ?>
+                                </span></a>
                     </li>
                     <li class="{{Request::is('purchaseRequest/overdue') ? 'active':''}}">
                         <a href="/purchaseRequest/overdue">
                             Overdue Purchase Requests
                             <span class="badge pull-right">
-                                      <?php
-                                        $result=0;
-                                        $cuser= Auth::user()->id;
-                             $date_today =date('Y-m-d H:i:s');
-                                   $cpurchase= DB::table('purchase_request')->where('dueDate','<=',$date_today)->where('status', '=', 'Active')->get();
-                                foreach ($cpurchase as $cpurchases ) {
-                                   $doc=Document::where('pr_id', $cpurchases->id)->first();
-                                    $count= DB::table('count')->where('doc_id', $doc->id)->where('user_id', $cuser)->count();
-                                    if($count==0){
-
-                                    }
-                                    else
-                                        {if ( Entrust::hasRole('Administrator')) {
-                                            $result=$result+1; }
-                                              else if (Entrust::hasRole('Procurement Personnel'))
+                                <?php
+                                    $result=0;
+                                    $cuser= Auth::user()->id;
+                                    $date_today =date('Y-m-d H:i:s');
+                                    $cpurchase= DB::table('purchase_request')->where('dueDate','<=',$date_today)->where('status', '=', 'Active')->get();
+                    
+                                    foreach ($cpurchase as $cpurchases ) 
+                                    {
+                                        $doc=Document::where('pr_id', $cpurchases->id)->first();
+                                        $count= DB::table('count')->where('doc_id', $doc->id)->where('user_id', $cuser)->count();
+                                    
+                                        if($count==0)
+                                        {}
+                                        else
+                                        {
+                                            if ( Entrust::hasRole('Administrator')) 
+                                            {
+                                                $result=$result+1; 
+                                            }
+                                            else if (Entrust::hasRole('Procurement Personnel'))
                                             {    
                                                 $useroffice=Auth::user()->office_id;
                                                 $req= User::find($cpurchases->requisitioner);
-
-                        $docget=Document::where('pr_id', $cpurchases->id)->first();
-                        $taskcon = TaskDetails::where('doc_id',$docget->id)->where('assignee_id',$cuser)->count();
+                                                $docget=Document::where('pr_id', $cpurchases->id)->first();
+                                                $taskcon = TaskDetails::where('doc_id',$docget->id)->where('assignee_id',$cuser)->count();
                       
-                            if($taskcon!=0){
-
-                                  $result=$result+1;
-                            }
-                       
-                                                 else if($useroffice==$req->office_id) 
+                                                if($taskcon!=0)
+                                                {
+                                                    $result=$result+1;
+                                                }
+                                                else if($useroffice==$req->office_id) 
                                                     $result=$result+1;
                                                 else if($cpurchases->created_by==$cuser)   
                                                     $result=$result+1;
                                             }
                                             else if(Entrust::hasRole('Requisitioner'))
-                                            { $useroffice=Auth::user()->office_id;
+                                            { 
+                                                $useroffice=Auth::user()->office_id;
                                                 $req= User::find($cpurchases->requisitioner);
+                                                
                                                 if($useroffice==$req->office_id) $result=$result+1;
-                                            }}
-                                }
+                                            }
+                                        }
+                                    }
                                 echo $result;
-
                                 ?>
                             </span>
                         </a>
@@ -218,45 +225,46 @@
                         <a href="/purchaseRequest/cancelled">
                             Cancelled Purchase Requests
                             <span class="badge pull-right">
-                                      <?php
-                                        $result=0;
-                                        $cuser= Auth::user()->id;
-                                   $cpurchase= DB::table('purchase_request')->where('status', '=', 'Cancelled')->orWhere('status', '=', 'In progress')->get();
-                                foreach ($cpurchase as $cpurchases ) {
-                                  $doc=Document::where('pr_id', $cpurchases->id)->first();
-                                    $count= DB::table('count')->where('doc_id', $doc->id)->where('user_id', $cuser)->count();
-                                    if($count==0){
-
-                                    }
-                                    else
-                                        {if ( Entrust::hasRole('Administrator')) {
-                                            $result=$result+1; }
-                                              else if (Entrust::hasRole('Procurement Personnel'))
+                                <?php
+                                    $result=0;
+                                    $cuser= Auth::user()->id;
+                                    $cpurchase= DB::table('purchase_request')->where('status', '=', 'Cancelled')->orWhere('status', '=', 'In progress')->get();
+                                    foreach ($cpurchase as $cpurchases ) 
+                                    {
+                                        $doc=Document::where('pr_id', $cpurchases->id)->first();
+                                        $count= DB::table('count')->where('doc_id', $doc->id)->where('user_id', $cuser)->count();
+                                        if($count==0)
+                                        {
+                                        }
+                                        else
+                                        {
+                                            if ( Entrust::hasRole('Administrator')) 
+                                                $result=$result+1; 
+                                            else if (Entrust::hasRole('Procurement Personnel'))
                                             {    
                                                 $useroffice=Auth::user()->office_id;
                                                 $req= User::find($cpurchases->requisitioner);
-
-                        $docget=Document::where('pr_id', $cpurchases->id)->first();
-                        $taskcon = TaskDetails::where('doc_id',$docget->id)->where('assignee_id',$cuser)->count();
+                                                $docget=Document::where('pr_id', $cpurchases->id)->first();
+                                                $taskcon = TaskDetails::where('doc_id',$docget->id)->where('assignee_id',$cuser)->count();
                       
-                            if($taskcon!=0){
-
-                                  $result=$result+1;
-                            }
-                       
-                                                 else if($useroffice==$req->office_id) 
+                                                if($taskcon!=0)
+                                                    $result=$result+1;
+                                                else if($useroffice==$req->office_id) 
                                                     $result=$result+1;
                                                 else if($cpurchases->created_by==$cuser)   
                                                     $result=$result+1;
                                             }
                                             else if(Entrust::hasRole('Requisitioner'))
-                                            { $useroffice=Auth::user()->office_id;
+                                            { 
+                                                $useroffice=Auth::user()->office_id;
                                                 $req= User::find($cpurchases->requisitioner);
-                                                if($useroffice==$req->office_id) $result=$result+1;
-                                            }}
-                                }
+                                                
+                                                if($useroffice==$req->office_id) 
+                                                    $result=$result+1;
+                                            }
+                                        }
+                                    }
                                 echo $result;
-
                                 ?>
                             </span>
                         </a>
@@ -265,50 +273,48 @@
             </li>
             
             <!-- Change ID -->
-             @if( Entrust::hasRole('Administrator') || Entrust::hasRole('Procurement Personnel') )
+            @if( Entrust::hasRole('Administrator') || Entrust::hasRole('Procurement Personnel') )
+
             <li class="{{(Request::is('task/new') || Request::is('task/active') || Request::is('task/overdue') || Request::is('task/task-id')) ? 'active' : ''}}"><a href="#" class="unlink">Tasks</a>
                 <ul class="side-submenu">
                     <li class="{{Request::is('task/new') ? 'active':''}}">
                         <a href="/task/new">New Tasks<span class="badge pull-right">
                         <?php
-
-                         $user_id = Auth::user()->id;
-                 $desig=DB::table('user_has_designation')->where('users_id',$user_id)->get();
-                 $counting=0;
-                        $taskcount=Taskdetails::where('status', 'New'
-                            )->get();
-foreach ($taskcount as $taskcounter) {
-    $task=Task::find($taskcounter->task_id);
-
-
-foreach ($desig as $desigs) {
-
-
-    if ($task->designation_id==$desigs->designation_id)
-        {
-    if($task->designation_id!=0)
-        {
-            $counting=$counting+1;
-        }
-        }
-}
-}
-                        echo $counting;
-
-
-                        ?>
-                        </span></a>
-                    </li>
-                    <li class="{{Request::is('task/active') ? 'active':''}}">
-                        <a href="/task/active">Active Tasks<span class="badge pull-right">
-                        <?php
                             $user_id = Auth::user()->id;
-                            $date_today =date('Y-m-d H:i:s');
-                            $taskcount=Taskdetails::where('status', 'Active')->where("dueDate",">",$date_today)->whereAssigneeId($user_id)->count();
-                            echo $taskcount;
-                        ?>
-                        </span></a>
-                    </li>
+                            $designations=DB::table('user_has_designation')->where('users_id',$user_id)->get();
+                            $counting=0;
+                            $taskcount=Taskdetails::where('status', 'New'
+                            )->get();
+
+            foreach ($taskcount as $taskcounter) 
+            {
+                $task=Task::find($taskcounter->task_id);
+            
+                foreach ($designations as $designation) 
+                {
+                    if ($task->designation_id==$designation->designation_id)
+                    {
+                        if($task->designation_id!=0)
+                        {
+                            $counting=$counting+1;
+                        }
+                    }
+                }
+            }
+            echo $counting;
+            ?>
+                </span></a>
+            </li>
+            <li class="{{Request::is('task/active') ? 'active':''}}">
+                <a href="/task/active">Active Tasks<span class="badge pull-right">
+                    <?php
+                        $user_id = Auth::user()->id;
+                        $date_today =date('Y-m-d H:i:s');
+                        $taskcount=Taskdetails::where('status', 'Active')->where("dueDate",">",$date_today)->whereAssigneeId($user_id)->count();
+                        echo $taskcount;
+                    ?>
+                </span></a>
+            </li>
                     <li class="{{Request::is('task/overdue') ? 'active':''}}">
                         <a href="/task/overdue">Overdue Tasks<span class="badge pull-right">
 
@@ -326,7 +332,7 @@ foreach ($desig as $desigs) {
             @endif
         </ul>
 
-          <ul class="nav navbar-nav navbar-right navbar-user">
+        <ul class="nav navbar-nav navbar-right navbar-user">
             @if( Entrust::hasRole('Administrator') )
             <li class="dropdown user-dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Administration  <b class="caret" style="margin-top: 0;"></b></a>
@@ -351,27 +357,26 @@ foreach ($desig as $desigs) {
                     </li>
                 </ul>
             </li>
-          </ul>
-        </div><!-- /.navbar-collapse -->
-      </nav>
+        </ul>
+    </div><!-- /.navbar-collapse -->
+</nav>
 
-      <div id="page-wrapper">
-
-        <div class="row">
-          <div class="col-lg-12">
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
             <div>
                 @yield('content')
             </div>
-          </div>
-        </div><!-- /.row -->
+        </div>
+    </div><!-- /.row -->
 
-      </div><!-- /#page-wrapper -->
+</div><!-- /#page-wrapper -->
 
-    </div><!-- /#wrapper -->
+</div><!-- /#wrapper -->
 
     <!-- JavaScript -->
-    {{ HTML::script('js/bootstrap.min.js') }}
-    <script type="text/javascript">
+{{ HTML::script('js/bootstrap.min.js') }}
+<script type="text/javascript">
         $(document).ready(function(){ 
             $('.btn').tooltip(); 
 

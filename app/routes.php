@@ -12,14 +12,6 @@
 |
 */
 
-/*
-	CODE REVIEW:
-		- put functions to controller
-		- use 'as' when necessary
-		- try removing unnecessary routes made by confide
-		- remove spaces
-		- remove unused routes
-*/
 Route::get('/', function()
 {
 	return Redirect::to('login');
@@ -31,7 +23,6 @@ Route::get( 'logout', 'UserController@logout');
 Route::post('login', 'UserController@do_login');
 
 
-//CODE REVIEW: try removing unnecessary routes made by confide
 //---------- User CRUD Routes
 Route::get('user/view', 'UserController@viewUser');
 Route::post('user/edit/{id}',[ 'uses' => 'UserController@edit']);
@@ -100,45 +91,10 @@ Route::post('designation/assign',['as'=>'designation.assign', 'uses' => 'Designa
 
 Route::post('designation/{id}/members', ['as'=>'designation_members_save', 'uses' => 'DesignationController@save_members']);
 
-//CODE REVIEW: remove unused routes
+
 //---------- Workflow Routes
-Route::get('workflow/below-fifty', function(){
-	return View::make('workflows.below_fifty_workflow');
-});
-Route::get('workflow/belowFifty', function(){
-	return View::make('workflows.below_fifty');
-});
-Route::get('workflow/aboveFifty', function(){
-	return View::make('workflows.above_fifty');
-});
-Route::get('workflow/aboveFive', function(){
-	return View::make('workflows.above_five');
-});
 Route::get('workflow', function(){
 	return View::make('workflows.workflowdash');
-});
-Route::get('workflowsample', function(){
-	return View::make('workflows.below_fifty_workflow');
-});
-
-Route::post('workflow/replace/{id}', function($id)
-{
-	//$user = User::find($id);
-	$desc = Task::find($id);
-	//{{ $fullname = $user->lastname . ", " . $user->firstname; }}
-	// If you had a database you could easily fetch the content from the database here...
-
-	$data = array(
-		"html" => "<div id='description_body'>  $desc->description </h6> </p></div>"
-	);
-	
-	return Response::json($data);
-});
-
-
-Route::filter('csrf', function()
-{
-	if (Request::forged()) return Response::error('500');
 });
 
 
@@ -150,52 +106,10 @@ Route::post('addtask', [ 'uses' => 'TaskController@addtask']);
 Route::post('task/new', ['as' => 'accept_task', 'uses' => 'TaskController@assignTask']);
 Route::post('remarks', 'TaskController@remarks');
 Route::post('done', 'TaskController@done');
+Route::post('taskimage', 'TaskController@taskimage');	
 Route::get('task/active', 'TaskController@active');
 Route::get('task/overdue', 'TaskController@overdue');
 Route::get('task/{id}', [ 'uses' => 'TaskController@taskpagecall']);
-	
-
-//---------- AJAX Routes
-Route::post('workflow/submit/{id}', function()
-{
-	// When the form is submitted, we can do some DB queries and let the user know that the form was submitted.
-
-	//$name = e(Input::get('task_id'));
-	$designation = e(Input::get('designa'));
-
-	//$id_drop= Input::get('task_id');
-	if($designation == 0)
-	{
-		$des_name = "";
-	}
-	else
-	{
-		$des = Designation::find($designation);
-		$des_name = e($des->designation);
-	}
-
-	$id = Input::get('task_id');
-	$assignd = Task::find($id);
-	$assignd->designation_id = Input::get('designa');
-	$assignd->save();
-
-
-	
-	if($designation == 0)
-	{
-		$data = array(
-			"html" => "<div id='insert_$id' class='mode1'> None  </div>"
-		);
-	}
-	else
-	{
-		$data = array(
-			"html" => "<div id='insert_$id' class='mode1'> $des_name  </div>"
-		);
-	}
-
-	return Response::json($data);
-});
 
 
 //---------- Image Module Components
@@ -205,3 +119,15 @@ Route::post('addimage', ['uses' => 'purchaseRequestController@addimage']);
 Route::post('delimage', ['uses'=> 'purchaseRequestController@delimage']);
 
 
+//---------- AJAX Routes
+
+Route::post('workflow/submit/{id}', 'AjaxController@workflowSubmit');
+
+Route::post('workflow/replace/{id}', function($id)
+{
+	$desc = Task::find($id);
+	$data = array(
+		"html" => "<div id='description_body'>  $desc->description </h6> </p></div>"
+	);
+	return Response::json($data);
+}); 

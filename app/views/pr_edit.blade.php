@@ -123,7 +123,7 @@
                         <input type="text" value="{{$purchaseToEdit->status}}" readonly class="form-control">
                     </div>
 
-                    <div class="col-md-3">
+                 a   <div class="col-md-3">
                         <?php 
                             $cn = 0;
                             $purchase = Purchase::orderBy('controlNo', 'ASC')->get();
@@ -185,9 +185,9 @@
                                 <option value="{{ $key->id }}" 
                                     <?php 
                                         if (Input::old('office')==$key->id)
-                                          echo "selected";
+                                            echo "selected";
                                         else if($purchaseToEdit->office==$key->id)
-                                        echo "selected" 
+                                            echo "selected" 
                                     ?>
                                     >{{{ $key->officeName }}}
                                 </option>
@@ -237,7 +237,7 @@
 
                 <div class="form-group">
                     
-                    {{ Form::label('dateTime', 'Date Requested *', array('class' => 'create-label')) }}
+                    {{ Form::label('dateTime', 'Date Requested ', array('class' => 'create-label')) }}
 
                     <div class="input-group date form_datetime col-md-12" data-date="{{ date('Y-m-d') }}T{{ date('H:i:s') }}Z" data-date-format="dd MM yyyy - HH:ii p" data-link-field="dtp_input1">
                         
@@ -300,6 +300,7 @@
             
             {{ Form::close() }} 
 
+
             <!--  
             Image Module
             -->
@@ -317,8 +318,8 @@
                         <a href="{{asset('uploads/'.$attachment->data)}}" data-lightbox="roadtrip">
                         <img class="img-thumbnail" src="{{asset('uploads/'.$attachment->data)}}" style="width: 100px; height: 100px;" /></a>
                         {{ Form::open(array('method' => 'post', 'url' => 'delimage')) }}
-                        <input type="hidden" name="hide" value="{{$attachment->id}}">
-                        <button class="star-button"><img src="{{asset('img/Delete_Icon.png')}}"></button>
+                            <input type="hidden" name="hide" value="{{$attachment->id}}">
+                            <button class="star-button"><img src="{{asset('img/Delete_Icon.png')}}"></button>
                         {{Form::close()}}
                     </div>
                 @endforeach
@@ -420,59 +421,93 @@
                     ?>
                             {{Form::open(['url'=>'checklistedit'], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
-                                <td class="edit-pr-input"><input type ="text" name="assignee" class="form-control" width="100%"></td>
-                                <td class="edit-pr-input"> <input class="datepicker" size="16" type="text" name="dateFinished" class="form-control" value="12/02/2012" width="100%">
-                                  <span class="add-on"><i class="icon-th"></i></span>
+                                <td class="edit-pr-input">
+                                    <input type ="text" name="assignee" class="form-control" width="100%">
+                                </td>
+                                <td class="edit-pr-input"> 
+                                    <?php 
+                                    $today = date("m/d/y");
+                                    ?>
+                                    <input class="datepicker" size="16" type="text" name="dateFinished" class="form-control" value="{{$today}}" width="100%">
+                                    <span class="add-on"><i class="icon-th"></i></span>
                                 </td>
                                 <td class="edit-pr-input">
-                                <input type="number" name="daysOfAction" class="form-control"  min="0" width="100%">
+                                    <input type="number" name="daysOfAction" class="form-control"  min="0" width="100%">
                                 </td>
                                 <td class="edit-pr-input">
-                                <input type="text" name="remarks"  class="form-control" maxlength="255" width="100%">
+                                    <input type="text" name="remarks"  class="form-control" maxlength="255" width="100%">
                                 </td>
-
-                                </tr><tr class="current-task">
+                                </tr>
+                                <tr class="current-task">
                                 <td colspan="4" style="border-right: none"></td>
-                                <td style="border-left: none; text-align: center;"><input type="submit" class="btn btn-success"> </td>
+                                <td style="border-left: none; text-align: center;">
+                                    <input type="submit" class="btn btn-success"> 
+                                </td>
                             {{Form::close()}}
-            <?php       }
-            //END Cursor Open Form
+                        <?php
+                        }
+                        
+                        //END Cursor Open Form
+                        
                         else{
                             echo "<tr><td>".$tasks->order_id.". ".$tasks->taskName."</td>";
-            ?>
+                        ?>
 
-                            <td ><?php
+                            <td>
+                                <?php
                                 if($taskp->assignee!=NULL)
-                                  { $dassignee=chunk_split($taskp->assignee, 20, "<br>");
-                                    echo $dassignee; }
-                                else if($taskp->assignee_id!=0){
+                                { 
+                                    $dassignee=chunk_split($taskp->assignee, 20, "<br>");
+                                    echo $dassignee;
+                                }
+                                else if($taskp->assignee_id!=0)
+                                {
                                     $assign_user=User::find($taskp->assignee_id);
-                                echo $assign_user->lastname.", ".$assign_user->firstname;
+                                    echo $assign_user->lastname.", ".$assign_user->firstname;
                                 }
                                 $date = new DateTime($taskp->dateFinished);
                                 $datef = $date->format('m/d/y');
-                            ?></td>
-
-                            <td ><?php if($taskp->dateFinished!="0000-00-00 00:00:00") echo $datef ?></td>
-                            <td ><?php if($taskp->dateFinished!="0000-00-00 00:00:00") echo $taskp->daysOfAction; ?></td>
-                            <td ><?php 
-                                $dremarks=chunk_split($taskp->remarks, 20, "<br>");
-                                    
-                                echo $dremarks; ?>
+                            ?>
                             </td>
-            <?php 
-                        $sectiondays=$sectiondays+$taskp->daysOfAction;
-                        $prdays=$prdays+$taskp->daysOfAction;
+
+                            <td >
+                            <?php 
+                                if($taskp->dateFinished!="0000-00-00 00:00:00") 
+                                    echo $datef; 
+                            ?>
+                            </td>
+                            <td>
+                            <?php 
+                                if($taskp->dateFinished!="0000-00-00 00:00:00") 
+                                    echo $taskp->daysOfAction; 
+                            ?>
+                            </td>
+                            <td>
+                            <?php 
+                                $dremarks=chunk_split($taskp->remarks, 20, "<br>");
+                                echo $dremarks; 
+                            ?>
+                            </td>
+                            <?php 
+                                $sectiondays=$sectiondays+$taskp->daysOfAction;
+                                $prdays=$prdays+$taskp->daysOfAction;
                         }   
                         echo "</tr>";
                     }
-                    echo "<tr><td>TOTAL NO. OF DAYS</td><td></td><td></td><td>".$sectiondays."</td><td></td></tr>";
+                    echo "<tr>
+                            <td>TOTAL NO. OF DAYS</td>
+                            <td></td>
+                            <td></td>
+                            <td>".$sectiondays."</td>
+                            <td></td>
+                        </tr>";
                     echo "</table></div></div>";
             
                 }
                 echo "<div class='panel panel-success'><div class='panel-body'>
                         <table border='1' class='proc-details'>
-                            <tr><td width='66%'><h4 style='margin-left: 10px'>TOTAL NO. OF DAYS FROM PR TO PAYMENT: </h4></td>
+                            <tr>
+                                <td width='66%'><h4 style='margin-left: 10px'>TOTAL NO. OF DAYS FROM PR TO PAYMENT: </h4></td>
                                 <td><h4 style='margin-left: 50px;'>".$prdays."</h4></td>
                             </tr>
                         </table>

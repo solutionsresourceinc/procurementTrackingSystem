@@ -48,6 +48,16 @@
     <div class="alert alert-success"> {{ Session::get('notice') }}</div> 
 @endif
     
+    <!-- START OF SEARCH BOX -->
+    <div align="center" class="col-md-8"></div>   
+    <div align="center" class="col-md-4">   
+        <input type="text" class="form-control filter" placeholder="Enter Seach Keywords"> 
+    </div>
+    <br/>
+    <br/>
+    <br/>
+    <!-- END OF SEARCH BOX -->
+
     <table id="table_id" class="table table-striped display ">
         <thead>
     		<tr>
@@ -69,7 +79,7 @@
             //End Query Restrictions
         ?>
 
-      	<tbody>
+      	<tbody class="searchable">
             @if(count($requests))
                 @foreach ($requests as $request)
 
@@ -206,6 +216,16 @@
 @section('footer')
     {{ HTML::script('js/bootstrap-ajax.js');}}
     <script type="text/javascript">
+        // START *code for search box
+        $('input.filter').on('keyup', function() {
+        var rex = new RegExp($(this).val(), 'i');
+        $('.searchable tr').hide();
+            $('.searchable tr').filter(function() {
+                return rex.test($(this).text());
+            }).show();
+        });
+        // END
+
         $('#confirmDelete').on('show.bs.modal', function (e) {
             $message = $(e.relatedTarget).attr('data-message');
             $(this).find('.modal-body p').text($message);

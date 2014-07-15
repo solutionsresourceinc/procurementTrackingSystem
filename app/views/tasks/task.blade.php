@@ -59,9 +59,8 @@
 							{
 						?>	
 								{{ Form::open(['route'=>'accept_task']) }}
-								{{ Form::hidden('hide_taskid',$taskdetails_id) }}
-								{{Form::submit('Accept Task', ['class' => 'btn btn-sm btn-primary accept-button', 'style' => 'margin-bottom: 10px'])}}     
-
+									{{ Form::hidden('hide_taskid',$taskdetails_id) }}
+									{{Form::submit('Accept Task', ['class' => 'btn btn-sm btn-primary accept-button', 'style' => 'margin-bottom: 10px'])}}     
 								{{ Form::close() }}
 						<?php
 							}
@@ -178,8 +177,38 @@
 					</tr>
 						
 			</table>
+
 			<br/>
 			<br/>
+			<!--Upload Image-->
+			{{ Form::open(array('url' => 'taskimage', 'files' => true), 'POST') }}
+			<label class="create-label">Related files:</label>
+            <div class="panel panel-default fc-div">
+                <div class="panel-body" style="padding: 5px 20px;">
+                    <br/>
+
+                    @if(Session::get('imgsuccess'))
+                        <div class="alert alert-success"> {{ Session::get('imgsuccess') }}</div> 
+                    @endif
+
+                    @if(Session::get('imgerror'))
+                        <div class="alert alert-danger"> {{ Session::get('imgerror') }}</div> 
+                    @endif
+
+                    <input name="file[]" type="file"  multiple title="Select image to attach" data-filename-placement="inside"/>
+                    <input name="doc_id" type="hidden" value="{{ $doc->id }}">
+                    
+                    <br>
+                    <br>
+                    
+                    {{Session::forget('imgerror');}}
+                    {{Session::forget('imgsuccess');}}
+
+               		{{ Form::submit('Save',array('class'=>'btn btn-success')) }}
+                </div>
+            </div>
+            {{Form::close()}}
+            <!--End Upload Image-->
 			<br/>
 		</div>
 	</div>
@@ -201,3 +230,4 @@
 
 	}</script>
 	@stop
+
