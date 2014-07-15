@@ -4,11 +4,7 @@
 
     <h1 class="pull-left">List of Active Purchase Requests</h1>
     
-    @if ( Entrust::hasRole('Administrator') || Entrust::hasRole('Procurement Personnel'))
-      <div class="pull-right options">
-          <a href="{{ URL::to('purchaseRequest/create') }}" class="btn btn-success">Create New</a>
-      </div>
-    @endif
+   
 
     <hr class="clear" />
     <div id="pr_form">
