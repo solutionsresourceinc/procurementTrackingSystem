@@ -123,7 +123,7 @@
                         <input type="text" value="{{$purchaseToEdit->status}}" readonly class="form-control">
                     </div>
 
-                    <div class="col-md-3">
+                 a   <div class="col-md-3">
                         <?php 
                             $cn = 0;
                             $purchase = Purchase::orderBy('controlNo', 'ASC')->get();
@@ -237,7 +237,7 @@
 
                 <div class="form-group">
                     
-                    {{ Form::label('dateTime', 'Date Requested *', array('class' => 'create-label')) }}
+                    {{ Form::label('dateTime', 'Date Requested ', array('class' => 'create-label')) }}
 
                     <div class="input-group date form_datetime col-md-12" data-date="{{ date('Y-m-d') }}T{{ date('H:i:s') }}Z" data-date-format="dd MM yyyy - HH:ii p" data-link-field="dtp_input1">
                         
