@@ -1,3 +1,5 @@
+<!-- MODAL TEMPLATE FOR DELETE TASK -->
+
 <div class="modal fade" id="confirmDelete" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
