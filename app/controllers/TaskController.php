@@ -173,7 +173,7 @@ public function deladdtask()
       }
 
 
-      public function taskpagecall(){
+      public function taskpagecall($id){
 
 	$user_id = Auth::User()->id;
 	$taskd = TaskDetails::find($id);
