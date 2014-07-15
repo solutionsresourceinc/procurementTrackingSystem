@@ -1,11 +1,5 @@
 <?php
 
-/*
-	CODE REVIEW:
-		- remove comments
-		- fix indention
-*/
-
 class TaskController extends Controller {
 
 	public function newTask()
@@ -13,20 +7,15 @@ class TaskController extends Controller {
 		$user_id = Auth::user()->id;
 		$user_designations = UserHasDesignation::whereUsersId($user_id)->get();
 
-		return View::make('tasks.new_tasks')
-				->with('user_designations',$user_designations);
-		//return $user_designations;
+		return View::make('tasks.new_tasks')->with('user_designations',$user_designations);
 	}
 
 	public function active()
 	{
-
-
 		$user_id = Auth::user()->id;
 		$user_designations = UserHasDesignation::whereUsersId($user_id)->get();
 
-		return View::make('tasks.active_tasks')
-				->with('user_designations',$user_designations);
+		return View::make('tasks.active_tasks')->with('user_designations',$user_designations);
 	}
 
 	public function overdue()
@@ -34,36 +23,37 @@ class TaskController extends Controller {
 		$user_id = Auth::user()->id;
 		$user_designations = UserHasDesignation::whereUsersId($user_id)->get();
 
-		return View::make('tasks.overdue_tasks')
-				->with('user_designations',$user_designations);
+		return View::make('tasks.overdue_tasks')->with('user_designations',$user_designations);
 	}
 
-	public function done(){
+	public function done()
+	{
 		$taskdetails_id=Input::get('taskdetails_id');
 
-		$taskd= TaskDetails::find($taskdetails_id);
-		$taskd->status="Done";
+		$taskDetails= TaskDetails::find($taskdetails_id);
+		$taskDetails->status="Done";
 		$docs=Document::find($taskd->doc_id);
 
 		$delcount= Count::where('doc_id', $docs->id)->delete();
 		  
-		$userx= User::get();
-		foreach($userx as $userv){
+		$users = User::get();
+		foreach($users as $user)
+		{
 			$count= new Count;
-			$count->user_id= $userv->id;
+			$count->user_id= $user->id;
 			$count->doc_id= $docs->id;
 			$count->save();
 		}
 
-		$birth = new DateTime($taskd->dateReceived); 
+		$birth = new DateTime($taskDetails->dateReceived); 
 		$today = new DateTime(); 
 		$diff = $birth->diff($today); 
-		$aDays= $diff->format('%d');
-		$taskd->daysOfAction=$aDays;
-		$taskd->dateFinished=$today;
-		$taskd->save();
+		$actionDays= $diff->format('%d');
+		$taskDetails->daysOfAction=$actionDays;
+		$taskDetails->dateFinished=$today;
+		$taskDetails->save();
 		$tasknext=TaskDetails::find($taskdetails_id+1);
-		if ($tasknext->doc_id==$taskd->doc_id)
+		if ($tasknext->doc_id==$taskDetails->doc_id)
 		{
 			$tasknext->status="New";
 			$tasknext->save();
@@ -160,8 +150,8 @@ class TaskController extends Controller {
    		return Redirect::back();
       }
 
-    public function taskpagecall()
-    {
+	public function taskpagecall($id)
+	{
 		$user_id = Auth::User()->id;
 		$taskd = TaskDetails::find($id);
 		$task= Task::find($taskd->task_id);
@@ -176,13 +166,12 @@ class TaskController extends Controller {
 			else
 			{
 				Session::put('taskdetails_id', $id);
-
 				return View::make('tasks.task');
 			}
 		}
 		else
 		{
-			if ($taskd->assignee_id==$user_id)
+			if($taskd->assignee_id==$user_id)
 			{
 				Session::put('taskdetails_id', $id);
 				return View::make('tasks.task');
@@ -190,5 +179,5 @@ class TaskController extends Controller {
 			else
 				return Redirect::to('/');
 		}
-    }
+    }	
 }

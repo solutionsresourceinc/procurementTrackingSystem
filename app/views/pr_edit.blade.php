@@ -425,7 +425,10 @@
                                     <input type ="text" name="assignee" class="form-control" width="100%">
                                 </td>
                                 <td class="edit-pr-input"> 
-                                    <input class="datepicker" size="16" type="text" name="dateFinished" class="form-control" value="12/02/2012" width="100%">
+                                    <?php 
+                                    $today = date("m/d/y");
+                                    ?>
+                                    <input class="datepicker" size="16" type="text" name="dateFinished" class="form-control" value="{{$today}}" width="100%">
                                     <span class="add-on"><i class="icon-th"></i></span>
                                 </td>
                                 <td class="edit-pr-input">

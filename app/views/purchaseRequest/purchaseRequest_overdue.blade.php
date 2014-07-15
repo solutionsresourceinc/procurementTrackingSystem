@@ -2,13 +2,9 @@
 
 @section('content')
 
-    <h1 class="pull-left">List of Active Purchase Requests</h1>
+    <h1 class="pull-left">List of Overdue Purchase Requests</h1>
     
-    @if ( Entrust::hasRole('Administrator') || Entrust::hasRole('Procurement Personnel'))
-      <div class="pull-right options">
-          <a href="{{ URL::to('purchaseRequest/create') }}" class="btn btn-success">Create New</a>
-      </div>
-    @endif
+   
 
     <hr class="clear" />
     <div id="pr_form">
@@ -58,7 +54,6 @@
            //Query Restrictions
             $date_today =date('Y-m-d H:i:s');
             $requests = new Purchase;
-           
             $user_selected=Auth::user()->id;
             $requests = DB::table('purchase_request')->where('dueDate','<=',$date_today)->where('status', '=', 'Active')->paginate(10); 
             //End Query Restrictions

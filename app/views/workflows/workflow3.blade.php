@@ -1,8 +1,3 @@
-<!--CODE REVIEW:
-    - remove comments
-    - variables must be descriptive
--->
-
 <?php $wfName = Workflow::find('3'); ?>
 <br/>
 
@@ -16,7 +11,7 @@
 	?>  </h3>
 	</div>
 	<div class="panel-body">
-		
+		   
 		<!--Add Task-->
 		<div id="office-create-form" class="well div-form">
 	    	{{ Form::open(['url'=>'addtask'], 'POST', array('role' => 'form')) }}
@@ -34,33 +29,21 @@
 
 		<table border="1" class="workflow-table">
 
-			<!--Additional Task-->
-			<?php
-				$ctask= OtherDetails::where('section_id', $sectionName->id )->count();
-				if($ctask!=0){
-			?>
-			<!--tr>
-			<th class="workflow-th" width="25%" colspan="2">LABEL</th>
-									<th class="workflow-th" width="70%">ACTION</th>
-						
-			</tr-->
-			<?php 
-				$addontask= OtherDetails::where('section_id', $sectionName->id )->get();
-			?>
-			@foreach ($addontask as $addontasks)
-				<tr>
-					<td colspan="2">{{$addontasks->label}}</td>
-					<td>
-						<form method="POST" action="deladdtask"  id="myForm_{{ $addontasks->id }}" name="myForm" style="display: -webkit-inline-box;">
-							<input type="hidden" name="id" value="<?php echo $addontasks->id ?>">
-							<button type="button" onclick="hello( {{{ $addontasks->id }}})" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete"><span class="glyphicon glyphicon-trash"></span></button>
-						</form>
-					</td>
-				</tr> 
-			@endforeach
-			<?php 
-				}
-			?>
+			<?php $ctask= OtherDetails::where('section_id', $sectionName->id )->count(); ?>
+			@if($ctask!=0)
+				<?php $addontask= OtherDetails::where('section_id', $sectionName->id )->get(); ?>
+				@foreach ($addontask as $addontasks)
+					<tr>
+						<td colspan="2">{{$addontasks->label}}</td>
+						<td>
+							<form method="POST" action="deladdtask"  id="myForm_{{ $addontasks->id }}" name="myForm" style="display: -webkit-inline-box;">
+								<input type="hidden" name="id" value="<?php echo $addontasks->id ?>">
+								<button type="button" onclick="hello( {{{ $addontasks->id }}})" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete"><span class="glyphicon glyphicon-trash"></span></button>
+							</form>
+						</td>
+					</tr> 
+				@endforeach
+			@endif
 			<!--End Additional Task-->
 
 			<tr>
