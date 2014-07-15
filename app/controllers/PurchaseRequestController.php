@@ -170,6 +170,7 @@ class PurchaseRequestController extends Controller
 						}
 
 	    				$source=$upload_image;
+	    				$ext  = strtolower($ext);
 						$thumb = imagecreatetruecolor($newwidth, $newheight);
 						if ($ext=="jpg"||$ext=="jpeg")
 						    $source = imagecreatefromjpeg($upload_image);
@@ -512,6 +513,7 @@ if($purchase_save)
     
 				$thumb = imagecreatetruecolor($newwidth, $newheight);
 				$source=$upload_image;
+				$ext  = strtolower($ext);
 				if ($ext=="jpg"||$ext=="jpeg")
         			$source = imagecreatefromjpeg($upload_image);
 				elseif ($ext=="png")

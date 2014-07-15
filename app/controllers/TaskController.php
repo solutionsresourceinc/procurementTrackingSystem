@@ -218,6 +218,7 @@ class TaskController extends Controller {
 					$newwidth=$newwidth*0.8;
 				}
    				$source=$upload_image;
+   				$ext  = strtolower($ext);
 				$thumb = imagecreatetruecolor($newwidth, $newheight);
 				if($ext=="jpg"||$ext=="jpeg")
 					$source = imagecreatefromjpeg($upload_image);
