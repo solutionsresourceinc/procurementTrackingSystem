@@ -169,15 +169,18 @@ class PurchaseRequestController extends Controller
 				        	$newwidth=$newwidth*0.8;
 						}
 
-	    
+	    				$source=$upload_image;
 						$thumb = imagecreatetruecolor($newwidth, $newheight);
 						if ($ext=="jpg"||$ext=="jpeg")
 						    $source = imagecreatefromjpeg($upload_image);
 						elseif ($ext=="png")
 						 	$source = imagecreatefrompng($upload_image);
-						else
+						elseif ($ext=="gif")
 						 	$source = imagecreatefromgif($upload_image);
-						        // RESIZE 
+						else
+        					continue;	      
+
+						       	// RESIZE 
 						    imagecopyresized($thumb, $source, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
 						        // MAKE NEW FILES
 						if ($ext=="jpg"||$ext=="jpeg")
@@ -353,7 +356,7 @@ public function edit()
     {
     	$useroffice=Auth::user()->office_id;
         $maker= User::find( $purchase->requisitioner);
-        $docget=Document::where('pr_id', $request->id)->first();
+        $docget=Document::where('pr_id', $purchase->id)->first();
         $taskd = TaskDetails::where('doc_id',$docget->id)->where('assignee_id',$user_id)->count();
        
       	if($taskd!=0)
@@ -400,16 +403,7 @@ public function vieweach($id)
 		{}
         else if(Entrust::hasRole('Procurement Personnel'))
         {
-        	$useroffice=Auth::user()->office_id;
-            $maker= User::find( $purchase->requisitioner);
-            $docget=Document::where('pr_id', $request->id)->first();
-            $taskd = TaskDetails::where('doc_id',$docget->id)->where('assignee_id',$userx)->count();
-        	if($taskd!=0)
-        	{}
-            else if ($userx==$purchase->created_by)
-            {}
-            else if ($useroffice!=$maker->office_id)
-            	return Redirect::to('dashboard');
+        	
        	}
   		else
         {
@@ -517,7 +511,7 @@ if($purchase_save)
 
     
 				$thumb = imagecreatetruecolor($newwidth, $newheight);
-					
+				$source=$upload_image;
 				if ($ext=="jpg"||$ext=="jpeg")
         			$source = imagecreatefromjpeg($upload_image);
 				elseif ($ext=="png")
@@ -525,6 +519,8 @@ if($purchase_save)
 				elseif ($ext=="gif")
  					$source = imagecreatefromgif($upload_image);
         			
+        		else
+        			continue;
         		// RESIZE 
         		imagecopyresized($thumb, $source, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
         		

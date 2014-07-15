@@ -185,9 +185,9 @@
                                 <option value="{{ $key->id }}" 
                                     <?php 
                                         if (Input::old('office')==$key->id)
-                                          echo "selected";
+                                            echo "selected";
                                         else if($purchaseToEdit->office==$key->id)
-                                        echo "selected" 
+                                            echo "selected" 
                                     ?>
                                     >{{{ $key->officeName }}}
                                 </option>
