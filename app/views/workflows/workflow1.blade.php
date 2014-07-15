@@ -18,7 +18,7 @@
 			?> 
 		</div>
 	</div>
-
+	
 	<div class="panel-body">
 
 		<!-- Displays form for adding new tasks to the workflow -->
@@ -50,10 +50,10 @@
 				<tr>
 					<td colspan="2">{{$addontasks->label}}</td>
 					<td>
-						{{Form::open(['url'=>'deladdtask'], 'POST')}}
+						<form method="POST" action="deladdtask"  id="myForm_{{ $addontasks->id }}" name="myForm" style="display: -webkit-inline-box;">
 							<input type="hidden" name="id" value="<?php echo $addontasks->id ?>">
-							<button class="btn btn-danger" data-title="Delete"><span class="glyphicon glyphicon-trash"></span></button>
-						{{Form::close()}}
+							<button type="button" onclick="hello( {{{ $addontasks->id }}})" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete"><span class="glyphicon glyphicon-trash"></span></button>
+						</form>
 					</td>
 				</tr> 
 				@endforeach

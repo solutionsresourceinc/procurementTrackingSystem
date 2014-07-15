@@ -8,16 +8,6 @@
 
 class TaskController extends Controller {
 
-	public function hehe()
-	{
-
-		$desc = Task::find($id);
-		$data = array(
-			"html" => "<div id='description_body'>  $desc->description </h6> </p></div>"
-		);
-		return Response::json($data);
-	}
-
 	public function newTask()
 	{
 		$user_id = Auth::user()->id;
@@ -47,8 +37,6 @@ class TaskController extends Controller {
 		return View::make('tasks.overdue_tasks')
 				->with('user_designations',$user_designations);
 	}
-
-
 
 	public function done(){
 		$taskdetails_id=Input::get('taskdetails_id');
@@ -139,14 +127,12 @@ class TaskController extends Controller {
  
  	}
 
-
-
-public function addtask()
+	public function addtask()
 	{
 		$section_id= Input::get('section_id');
-
 		$label= Input::get('label');
-	if(ctype_alpha(str_replace(str_split(' \\/:*?".,|'),'',$label)))
+		
+		if(ctype_alpha(str_replace(str_split(' \\/:*?".,|'),'',$label)))
         {
         	$newtask= new OtherDetails;
         	$newtask->section_id=$section_id;
@@ -155,53 +141,54 @@ public function addtask()
         	Session::put('successlabel', 'Successfully added new task.');
         	return Redirect::back();
         }
-    else {
-    	Session::put('errorlabel','Invalid label.');
-return Redirect::back();
-
-    }
+    	else
+    	{
+    		Session::put('errorlabel','Invalid label.');
+			return Redirect::back();
+		}
 
 	}
-public function deladdtask()
+
+	public function deladdtask()
 	{
 		$otherdetails_id= Input::get('id');
-
-        	$delOD=OtherDetails::find($otherdetails_id);
-   $delOD->delete();
-  Values::where('otherDetails_id', $otherdetails_id)->delete();
-   return Redirect::back();
+        $delOD=OtherDetails::find($otherdetails_id);
+   		$delOD->delete();
+  		Values::where('otherDetails_id', $otherdetails_id)->delete();
+   		
+   		Session::put('successlabel', 'Successfully deleted task.');
+   		return Redirect::back();
       }
 
+    public function taskpagecall()
+    {
+		$user_id = Auth::User()->id;
+		$taskd = TaskDetails::find($id);
+		$task= Task::find($taskd->task_id);
+		$desig= UserHasDesignation::where('users_id', $user_id)->where('designation_id', $task->designation_id)->count();
 
-      public function taskpagecall(){
-
-	$user_id = Auth::User()->id;
-	$taskd = TaskDetails::find($id);
-
-	$task= Task::find($taskd->task_id);
-	$desig= UserHasDesignation::where('users_id', $user_id)->where('designation_id', $task->designation_id)->count();
-
-	if ($taskd->status=="New"){
-		if($desig==0)
+		if($taskd->status=="New")
 		{
-			return Redirect::to('/');
-		} 
-		else{
-			Session::put('taskdetails_id', $id);
+			if($desig==0)
+			{
+				return Redirect::to('/');
+			} 
+			else
+			{
+				Session::put('taskdetails_id', $id);
 
-		return View::make('tasks.task');
-		}
-	}
-	else{
-		if ($taskd->assignee_id==$user_id){
-			Session::put('taskdetails_id', $id);
-			return View::make('tasks.task');
+				return View::make('tasks.task');
+			}
 		}
 		else
-			return Redirect::to('/');
-	}
-
-      }
-
-
+		{
+			if ($taskd->assignee_id==$user_id)
+			{
+				Session::put('taskdetails_id', $id);
+				return View::make('tasks.task');
+			}
+			else
+				return Redirect::to('/');
+		}
+    }
 }

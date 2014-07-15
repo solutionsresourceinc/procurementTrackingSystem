@@ -13,6 +13,7 @@
 @stop
 
 @section('content')
+    <?php include('app/views/workflows/delete_task.blade.php'); ?>
     <!--CODE REVIEW:
         - remove comments
     -->
