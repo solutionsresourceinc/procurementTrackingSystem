@@ -24,6 +24,7 @@
 
 	<h2 class="pull-left">Purchase Request Details </h2>
 
+
 	<div class="btn-group pull-right options">
 	<?php 
 		$cuser=Auth::User()->id;
@@ -49,6 +50,7 @@
 					<a href="../edit/{{$purchase->id}}" class="btn btn-success">
 						<span class="glyphicon glyphicon-edit"></span>&nbsp;&nbsp;Edit
 					</a>
+
 
 	<?php 
 				} 
