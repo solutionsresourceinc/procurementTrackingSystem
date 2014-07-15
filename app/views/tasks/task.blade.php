@@ -59,9 +59,8 @@
 							{
 						?>	
 								{{ Form::open(['route'=>'accept_task']) }}
-								{{ Form::hidden('hide_taskid',$taskdetails_id) }}
-								{{Form::submit('Accept Task', ['class' => 'btn btn-sm btn-primary accept-button', 'style' => 'margin-bottom: 10px'])}}     
-
+									{{ Form::hidden('hide_taskid',$taskdetails_id) }}
+									{{Form::submit('Accept Task', ['class' => 'btn btn-sm btn-primary accept-button', 'style' => 'margin-bottom: 10px'])}}     
 								{{ Form::close() }}
 						<?php
 							}
