@@ -106,10 +106,11 @@ Route::post('addtask', [ 'uses' => 'TaskController@addtask']);
 Route::post('task/new', ['as' => 'accept_task', 'uses' => 'TaskController@assignTask']);
 Route::post('remarks', 'TaskController@remarks');
 Route::post('done', 'TaskController@done');
+Route::post('taskimage', 'TaskController@taskimage');	
 Route::get('task/active', 'TaskController@active');
 Route::get('task/overdue', 'TaskController@overdue');
 Route::get('task/{id}', [ 'uses' => 'TaskController@taskpagecall']);
-	
+
 
 //---------- Image Module Components
 Route::post('newcreate', ['uses' => 'purchaseRequestController@create_submit']);
