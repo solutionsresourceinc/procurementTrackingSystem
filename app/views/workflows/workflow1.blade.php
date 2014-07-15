@@ -21,6 +21,8 @@
 
 	<div class="panel-body">
 
+    	
+
 		<!-- Displays form for adding new tasks to the workflow -->
 		<div id="office-create-form" class="well div-form">
 	    	{{ Form::open(['url'=>'addtask'], 'POST', array('role' => 'form')) }}

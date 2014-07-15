@@ -17,7 +17,7 @@
 	</div>
 
 	<div class="panel-body">
-	
+		  
 		<!--Add Task-->
 		<div id="office-create-form" class="well div-form">
 		    	{{ Form::open(['url'=>'addtask'], 'POST', array('role' => 'form')) }}

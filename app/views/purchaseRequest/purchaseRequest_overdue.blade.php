@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <h1 class="pull-left">List of Active Purchase Requests</h1>
+    <h1 class="pull-left">List of Overdue Purchase Requests</h1>
     
    
 
