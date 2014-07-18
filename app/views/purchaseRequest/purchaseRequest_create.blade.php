@@ -128,7 +128,7 @@
 
 
 						<div class="col-md-4">
-							{{ Form::label('otherType', 'Project Type', array('class' => 'create-label')) }}
+							{{ Form::label('projectType', 'Project Type', array('class' => 'create-label')) }}
 							<select name="projectType" class="form-control" >
 								<option value="">None</option>
 								<option value="Goods/Services">Goods/Services</option>
@@ -138,7 +138,7 @@
 							<p> </p>
 
 							@if (Session::get('error_amount'))
-								<font color="red"><i>{{ Session::get('error_amount') }}</i></font>
+								<font color="red"><i>{{ Session::get('error_projectType') }}</i></font>
 							@endif
 						</div>
 

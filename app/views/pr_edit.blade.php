@@ -42,6 +42,7 @@
         else
         {
             $valprojectPurpose=$purchaseToEdit->projectPurpose;
+            $valprojectType=$purchaseToEdit->projectType;
             $valsourceOfFund=$purchaseToEdit->sourceOfFund;
             $valamount=$purchaseToEdit->amount; 
 
@@ -123,7 +124,7 @@
                         <input type="text" value="{{$purchaseToEdit->status}}" readonly class="form-control">
                     </div>
 
-                 a   <div class="col-md-3">
+                    <div class="col-md-3">
                         <?php 
                             $cn = 0;
                             $purchase = Purchase::orderBy('controlNo', 'ASC')->get();
@@ -142,16 +143,24 @@
                     </div>
                 </div>
                 <br/>
-              
-                <div>
-                    {{ Form::label('projectPurpose', 'Project/Purpose *', array('class' => 'create-label')) }}
-                    {{ Form::text('projectPurpose',$valprojectPurpose, array('class'=>'form-control')) }}
-                </div>
 
-                @if (Session::get('error_projectPurpose'))
-                    <font color="red"><i>{{ Session::get('error_projectPurpose') }}</i></font>
-                @endif
-                <br/>            
+                <div class="row">
+                    <div class="col-md-8">
+                        {{ Form::label('projectPurpose', 'Project/Purpose *', array('class' => 'create-label')) }}
+                        {{ Form::text('projectPurpose',$valprojectPurpose, array('class'=>'form-control')) }}
+
+                        @if (Session::get('error_projectPurpose'))
+                            <font color="red"><i>{{ Session::get('error_projectPurpose') }}</i></font>
+                        @endif
+                    </div>
+
+
+                    <div class="col-md-4">
+                        {{ Form::label('projectType', 'Project Type', array('class' => 'create-label')) }}
+                        {{ Form::text('projectPurpose',$valprojectType, array('class'=>'form-control', 'disabled')) }}
+                    </div>
+                </div>
+                <br/>              
 
                 <div class="row">
                     <div class="col-md-6">
