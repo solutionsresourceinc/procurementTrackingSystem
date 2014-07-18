@@ -116,13 +116,34 @@
 						</div>
 					</div>
 
-					<div>
-						{{ Form::label('projectPurpose', 'Project/Purpose *', array('class' => 'create-label')) }}
-						{{ Form::text('projectPurpose','', array('class'=>'form-control')) }}
+					<div class="row">
+						<div class="col-md-8">
+							{{ Form::label('projectPurpose', 'Project/Purpose *', array('class' => 'create-label')) }}
+							{{ Form::text('projectPurpose','', array('class'=>'form-control')) }}
+
+						@if (Session::get('error_projectPurpose'))
+							<font color="red"><i>{{ Session::get('error_projectPurpose') }}</i></font>
+						@endif
+						</div>
+
+
+						<div class="col-md-4">
+							{{ Form::label('otherType', 'Project Type', array('class' => 'create-label')) }}
+							<select name="projectType" class="form-control" >
+								<option value="">None</option>
+								<option value="Goods/Services">Goods/Services</option>
+								<option value="Infrastructure">Infrastructure</option>
+								<option value="Consulting Services">Consulting Services</option>
+							</select>
+							<p> </p>
+
+							@if (Session::get('error_amount'))
+								<font color="red"><i>{{ Session::get('error_amount') }}</i></font>
+							@endif
+						</div>
+
+						
 					</div>
-					@if (Session::get('error_projectPurpose'))
-						<font color="red"><i>{{ Session::get('error_projectPurpose') }}</i></font>
-					@endif
 					<br/>	
 
 					<div class="row">
@@ -270,7 +291,7 @@
 		{{ Session::forget('error_sourceOfFund'); }}
 		{{ Session::forget('error_amount'); }}
 		{{ Session::forget('error_office'); }}
-		{{ Session::forget('error_requisitione'); }}
+		{{ Session::forget('error_requisitioner'); }}
 		{{ Session::forget('error_modeOfProcurement'); }}
 		{{ Session::forget('error_dateRequested'); }}
 		{{ Session::forget('imgsuccess'); }}

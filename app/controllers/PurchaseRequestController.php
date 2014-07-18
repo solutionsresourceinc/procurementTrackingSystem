@@ -51,6 +51,7 @@ class PurchaseRequestController extends Controller
 		$purchase->controlNo = Input::get('controlNo');
 		$purchase->status = 'Active';
 		$purchase->otherType = Input::get('otherType');
+		$purchase->projectType = Input::get('projectType');
 
 		// Set creator id
 		$user_id = Auth::user()->id;
@@ -221,6 +222,7 @@ class PurchaseRequestController extends Controller
 
 					// Get Other Error Messages
 					$error_projectPurpose = $purchase->validationErrors->first('projectPurpose');
+					$error_projectType = $purchase->validationErrors->first('projectType');
 					$error_sourceOfFund = $purchase->validationErrors->first('sourceOfFund');
 					$error_amount = $purchase->validationErrors->first('amount');
 					$error_office = $purchase->validationErrors->first('office');
@@ -234,6 +236,9 @@ class PurchaseRequestController extends Controller
 					Session::put('error_office', $error_office );
 					Session::put('error_requisitioner', $error_requisitioner );
 					Session::put('error_dateRequested', $error_dateRequested );
+					Session::put('error_projectType', $error_projectType );
+
+
 
 					return Redirect::back()->withInput();
 				} //End Image Upload
@@ -289,8 +294,10 @@ class PurchaseRequestController extends Controller
 				$message = "Failed to create purchase request.";
 				Session::put('main_error', $message );
 
+
 				// Get Other Error Messages
 				$error_projectPurpose = $purchase->validationErrors->first('projectPurpose');
+				$error_projectType = $purchase->validationErrors->first('projectType');
 				$error_sourceOfFund = $purchase->validationErrors->first('sourceOfFund');
 				$error_amount = $purchase->validationErrors->first('amount');
 				$error_office = $purchase->validationErrors->first('office');
@@ -304,6 +311,7 @@ class PurchaseRequestController extends Controller
 				Session::put('error_office', $error_office );
 				Session::put('error_requisitioner', $error_requisitioner );
 				Session::put('error_dateRequested', $error_dateRequested );
+				Session::put('error_projectType', $error_projectType );
 
 				if(Input::get('hide_modeOfProcurement') == "")
 				{
@@ -321,8 +329,10 @@ class PurchaseRequestController extends Controller
 			$message = "Failed to create purchase request.";
 			Session::put('main_error', $message );
 
+
 			// Get Other Error Messages
 			$error_projectPurpose = $purchase->validationErrors->first('projectPurpose');
+			$error_projectType = $purchase->validationErrors->first('projectType');
 			$error_sourceOfFund = $purchase->validationErrors->first('sourceOfFund');
 			$error_amount = $purchase->validationErrors->first('amount');
 			$error_office = $purchase->validationErrors->first('office');
@@ -336,6 +346,7 @@ class PurchaseRequestController extends Controller
 			Session::put('error_office', $error_office );
 			Session::put('error_requisitioner', $error_requisitioner );
 			Session::put('error_dateRequested', $error_dateRequested );
+			Session::put('error_projectType', $error_projectType );
 
 			if(Input::get('modeOfProcurement') == "")
 			{
@@ -560,18 +571,22 @@ if($purchase_save)
 			$message = "Failed to save purchase request.";
 			Session::put('main_error', $message );
 
+
 			// Get Other Error Messages
 			$error_projectPurpose = $purchase->validationErrors->first('projectPurpose');
+			$error_projectType = $purchase->validationErrors->first('projectType');
 			$error_sourceOfFund = $purchase->validationErrors->first('sourceOfFund');
 			$error_office = $purchase->validationErrors->first('office');
 			$error_requisitioner = $purchase->validationErrors->first('requisitioner');
 			$error_dateRequested = $purchase->validationErrors->first('dateRequested');
+
 			// Inserting Error Message To a Session
 			Session::put('error_projectPurpose', $error_projectPurpose );
 			Session::put('error_sourceOfFund', $error_sourceOfFund );
 			Session::put('error_office', $error_office );
 			Session::put('error_requisitioner', $error_requisitioner );
 			Session::put('error_dateRequested', $error_dateRequested );
+			Session::put('error_projectType', $error_projectType );
 
 			return Redirect::back()->withInput();
 		}
@@ -622,6 +637,22 @@ if($purchase_save)
 			Session::put('error_office', $error_office );
 			Session::put('error_requisitioner', $error_requisitioner );
 			Session::put('error_dateRequested', $error_dateRequested );
+
+			// Get Other Error Messages
+			$error_projectPurpose = $purchase->validationErrors->first('projectPurpose');
+			$error_projectType = $purchase->validationErrors->first('projectType');
+			$error_sourceOfFund = $purchase->validationErrors->first('sourceOfFund');
+			$error_office = $purchase->validationErrors->first('office');
+			$error_requisitioner = $purchase->validationErrors->first('requisitioner');
+			$error_dateRequested = $purchase->validationErrors->first('dateRequested');
+
+			// Inserting Error Message To a Session
+			Session::put('error_projectPurpose', $error_projectPurpose );
+			Session::put('error_sourceOfFund', $error_sourceOfFund );
+			Session::put('error_office', $error_office );
+			Session::put('error_requisitioner', $error_requisitioner );
+			Session::put('error_dateRequested', $error_dateRequested );
+			Session::put('error_projectType', $error_projectType );
 
 			return Redirect::back()->withInput();
 	}

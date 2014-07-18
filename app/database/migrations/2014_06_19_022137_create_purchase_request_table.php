@@ -16,6 +16,7 @@ class CreatePurchaseRequestTable extends Migration {
 		{
 			$table->increments('id');
 			$table->string('projectPurpose', 255);
+			$table->string('projectType', 255);
 			$table->string('sourceOfFund', 255);
 			$table->string('amount', 45);
 			$table->string('controlNo',255);
