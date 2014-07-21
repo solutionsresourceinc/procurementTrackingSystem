@@ -433,6 +433,18 @@
                         echo "<th class='workflow-th' width='12.5%'>Days of Action</th>";
                         echo "<th class='workflow-th'>Remarks</th></tr>";
                     }
+                    if ($previousTaskType!="datebyremark"&&$tasks->taskType=="datebyremark"){
+                        echo "<tr><th width='30%'></th>";
+                        echo "<th class='workflow-th' >Date:</th>";
+                        echo "<th class='workflow-th' >By:</th>";
+                        echo "<th class='workflow-th' colspan='2'>Remarks</th></tr>";
+                    }
+
+                    if ($previousTaskType!="dateby"&&$tasks->taskType=="dateby"){
+                        echo "<tr><th width='30%'></th>";
+                        echo "<th class='workflow-th' colspan='2'>Date:</th>";
+                        echo "<th class='workflow-th' colspan='2'>By:</th></tr>";
+                    }
                         $previousTaskType=$tasks->taskType;
                     //Cursor Open form 
                         //Displayer 
@@ -785,6 +797,53 @@
                                 </td>
                             {{Form::close()}}
                         @endif
+
+                    @if($tasks->taskType == "dateby")
+                            {{Form::open(['url'=>'dateby'], 'POST')}}
+                                <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
+                                <td class="edit-pr-input" colspan="2"> 
+                                    <?php 
+                                    $today = date("m/d/y");
+                                    ?>
+                                    <input class="datepicker" size="16" type="text" name="dateFinished" class="form-control" value="{{$today}}" width="100%">
+                                    <span class="add-on"><i class="icon-th"></i></span>
+                                </td>
+                                <td class="edit-pr-input" colspan="2">
+                                    <input type ="text" name="assignee" class="form-control" width="100%">
+                                </td>
+                                </tr>
+                                <tr class="current-task">
+                                <td colspan="4" style="border-right: none"></td>
+                                <td style="border-left: none; text-align: center;">
+                                    <input type="submit" class="btn btn-success"> 
+                                </td>
+                            {{Form::close()}}
+                    @endif
+                     @if($tasks->taskType == "datebyremark")
+                            {{Form::open(['url'=>'datebyremark'], 'POST')}}
+                                <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
+                                
+                                <td class="edit-pr-input"> 
+                                    <?php 
+                                    $today = date("m/d/y");
+                                    ?>
+                                    <input class="datepicker" size="16" type="text" name="dateFinished" class="form-control" value="{{$today}}" width="100%">
+                                    <span class="add-on"><i class="icon-th"></i></span>
+                                </td>
+                                <td class="edit-pr-input">
+                                    <input type ="text" name="assignee" class="form-control" width="100%">
+                                </td>
+                                <td class="edit-pr-input" colspan="2">
+                                    <input type="text" name="remarks"  class="form-control" maxlength="255" width="100%">
+                                </td>
+                                </tr>
+                                <tr class="current-task">
+                                <td colspan="4" style="border-right: none"></td>
+                                <td style="border-left: none; text-align: center;">
+                                    <input type="submit" class="btn btn-success"> 
+                                </td>
+                            {{Form::close()}}
+                    @endif
                     <!--End Task Forms-->
                         <?php
                     }
@@ -1003,6 +1062,69 @@
                                     <td class="edit-pr-input" colspan="2">  
                                     {{$taskp->custom3}}
                                     </td>
+                        @endif
+                        @if($tasks->taskType=="dateby")
+                            
+
+                            <td colspan="2">
+                            <?php 
+                                if($taskp->dateFinished!="0000-00-00 00:00:00") 
+                                    echo $datef; 
+                            ?>
+                            </td>
+                            <td colspan="2">
+                                <?php
+                                if($taskp->assignee!=NULL)
+                                { 
+                                    $dassignee=chunk_split($taskp->assignee, 20, "<br>");
+                                    echo $dassignee;
+                                }
+                                else if($taskp->assignee_id!=0)
+                                {
+                                    $assign_user=User::find($taskp->assignee_id);
+                                    echo $assign_user->lastname.", ".$assign_user->firstname;
+                                }
+                                $date = new DateTime($taskp->dateFinished);
+                                $datef = $date->format('m/d/y');
+                            ?>
+                            </td>
+                           
+                        
+                        
+                        @endif
+                         @if($tasks->taskType=="datebyremark")
+                            
+
+                            <td >
+                            <?php 
+                                if($taskp->dateFinished!="0000-00-00 00:00:00") 
+                                    echo $datef; 
+                            ?>
+                            </td>
+                            <td>
+                                <?php
+                                if($taskp->assignee!=NULL)
+                                { 
+                                    $dassignee=chunk_split($taskp->assignee, 20, "<br>");
+                                    echo $dassignee;
+                                }
+                                else if($taskp->assignee_id!=0)
+                                {
+                                    $assign_user=User::find($taskp->assignee_id);
+                                    echo $assign_user->lastname.", ".$assign_user->firstname;
+                                }
+                                $date = new DateTime($taskp->dateFinished);
+                                $datef = $date->format('m/d/y');
+                            ?>
+                            </td>
+                            <td colspan="2">
+                            <?php 
+                                $dremarks=chunk_split($taskp->remarks, 20, "<br>");
+                                echo $dremarks; 
+                            ?>
+                            </td>
+                        
+                        
                         @endif
                         <?php 
                         //End Task Display

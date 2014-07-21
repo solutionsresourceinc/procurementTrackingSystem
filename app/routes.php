@@ -85,6 +85,8 @@ Route::post('evaluations', ['uses' => 'PurchaseRequestController@evaluations']);
 Route::post('conference', ['uses' => 'PurchaseRequestController@conference']);
 Route::post('contractmeeting', ['uses' => 'PurchaseRequestController@contractmeeting']);
 Route::post('rfq', ['uses' => 'PurchaseRequestController@rfq']);
+Route::post('dateby', ['uses' => 'PurchaseRequestController@dateby']);
+Route::post('datebyremark', ['uses' => 'PurchaseRequestController@datebyremark']);
 //End Checklist Rowtype Routes
 
 
