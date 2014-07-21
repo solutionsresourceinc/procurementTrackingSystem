@@ -447,7 +447,7 @@
                     if ($taskch!=0 && $taskc->task_id==$tasks->id && $tasks->designation_id==0)
                     {   
                         echo "<tr class='current-task'>";
-                        if ($tasks->taskType!="cheque")
+                        if ($tasks->taskType!="cheque"&&$tasks->taskType!="published")
                         echo "<td>".$tasks->order_id.". ".$tasks->taskName."</td>";
                     
                     //normal taskType form
@@ -581,6 +581,40 @@
                                 </td>
                             {{Form::close()}}
                     @endif
+                    @if($tasks->taskType == "published")
+                            {{Form::open(['url'=>'published'], 'POST')}}
+                                <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
+                                    <td>
+                                    <b>{{$tasks->taskName}}</b>
+                                    <br>
+                                    <?php 
+                                    $today = date("m/d/y");
+                                    ?>
+                                    <input class="datepicker" size="16" type="text" name="datepublished" class="form-control" value="{{$today}}" width="100%">
+                                    <span class="add-on"><i class="icon-th"></i></span>
+                                    </td>
+                                    <td>
+                                    <b>End Date</b>
+                                    <br>
+                                    <input class="datepicker" size="16" type="text" name="enddate" class="form-control" value="{{$today}}" width="100%">
+                                    <span class="add-on"><i class="icon-th"></i></span>
+                                    </td>
+                                    <td >
+                                    <b>Posted By</b>
+                                    </td>
+                                    <td class="edit-pr-input" colspan="2">  
+                                    <input type="text" name="by"  class="form-control" maxlength="100" width="80%">
+                                    </td>
+                                
+                                </tr>
+                                <tr class="current-task">
+                                <td colspan="4" style="border-right: none"></td>
+                                <td style="border-left: none; text-align: center;">
+                                    <input type="submit" class="btn btn-success"> 
+                                </td>
+                            {{Form::close()}}
+
+                    @endif
                         <?php
                     }
                         
@@ -589,7 +623,7 @@
                     else
                     {
                         echo "<tr>";
-                        if ($tasks->taskType!="cheque")
+                        if ($tasks->taskType!="cheque"&&$tasks->taskType!="published")
                         echo "<td>".$tasks->order_id.". ".$tasks->taskName."</td>";
                         ?>
                         @if ($tasks->taskType=="normal")
@@ -682,6 +716,25 @@
                                     <b>Cheque Date:</b>
                                     {{$taskp->custom3}}
                                 </td>
+                        @endif
+                        @if($tasks->taskType=="published")
+                                    <td>
+                                    <b>{{$tasks->taskName}}</b>
+                                    <br>
+                                    {{$taskp->custom1}}
+                                    <span class="add-on"><i class="icon-th"></i></span>
+                                    </td>
+                                    <td>
+                                    <b>End Date</b>
+                                    <br>
+                                    {{$taskp->custom2}}
+                                    </td>
+                                    <td >
+                                    <b>Posted By</b>
+                                    </td>
+                                    <td class="edit-pr-input" colspan="2">  
+                                    {{$taskp->custom3}}
+                                    </td>
                         @endif
                        
                         <?php 
