@@ -475,6 +475,7 @@ $purchase->sourceOfFund = strip_tags(Input::get( 'sourceOfFund' ));
 $purchase->office = Input::get( 'office' );
 $purchase->requisitioner = Input::get( 'requisitioner' );
 $purchase->dateRequested = Input::get( 'dateRequested' );
+$purchase->dateReceived = Input::get( 'dateReceived' );
 $purchase->controlNo = Input::get('controlNo');
 $purchase_save = $purchase->save();
 
@@ -588,6 +589,7 @@ if($purchase_save)
 			$error_office = $purchase->validationErrors->first('office');
 			$error_requisitioner = $purchase->validationErrors->first('requisitioner');
 			$error_dateRequested = $purchase->validationErrors->first('dateRequested');
+			$error_dateReceived = $purchase->validationErrors->first('dateReceived');
 
 			// Inserting Error Message To a Session
 			Session::put('error_projectPurpose', $error_projectPurpose );
@@ -595,6 +597,7 @@ if($purchase_save)
 			Session::put('error_office', $error_office );
 			Session::put('error_requisitioner', $error_requisitioner );
 			Session::put('error_dateRequested', $error_dateRequested );
+			Session::put('error_dateReceived', $error_dateReceived );
 			Session::put('error_projectType', $error_projectType );
 
 			return Redirect::back()->withInput();
@@ -640,12 +643,14 @@ if($purchase_save)
 			$error_office = $purchase->validationErrors->first('office');
 			$error_requisitioner = $purchase->validationErrors->first('requisitioner');
 			$error_dateRequested = $purchase->validationErrors->first('dateRequested');
+			$error_dateReceived = $purchase->validationErrors->first('dateReceived');
 			// Inserting Error Message To a Session
 			Session::put('error_projectPurpose', $error_projectPurpose );
 			Session::put('error_sourceOfFund', $error_sourceOfFund );
 			Session::put('error_office', $error_office );
 			Session::put('error_requisitioner', $error_requisitioner );
 			Session::put('error_dateRequested', $error_dateRequested );
+			Session::put('error_dateReceived', $error_dateReceived );
 
 			// Get Other Error Messages
 			$error_projectPurpose = $purchase->validationErrors->first('projectPurpose');
@@ -654,6 +659,7 @@ if($purchase_save)
 			$error_office = $purchase->validationErrors->first('office');
 			$error_requisitioner = $purchase->validationErrors->first('requisitioner');
 			$error_dateRequested = $purchase->validationErrors->first('dateRequested');
+			$error_dateReceived = $purchase->validationErrors->first('dateReceived');
 
 			// Inserting Error Message To a Session
 			Session::put('error_projectPurpose', $error_projectPurpose );
@@ -661,6 +667,7 @@ if($purchase_save)
 			Session::put('error_office', $error_office );
 			Session::put('error_requisitioner', $error_requisitioner );
 			Session::put('error_dateRequested', $error_dateRequested );
+			Session::put('error_dateReceived', $error_dateReceived );
 			Session::put('error_projectType', $error_projectType );
 
 			return Redirect::back()->withInput();
