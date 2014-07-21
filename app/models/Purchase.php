@@ -13,6 +13,7 @@ class Purchase extends Ardent implements UserInterface, RemindableInterface {
 
 	public static $rules = array(
 		'projectPurpose' => 'required',
+		'projectType' => 'required',
 		'sourceOfFund' => 'required',
 		'amount' => 'required | price',
 		'requisitioner' => 'required',

@@ -42,6 +42,7 @@
         else
         {
             $valprojectPurpose=$purchaseToEdit->projectPurpose;
+            $valprojectType=$purchaseToEdit->projectType;
             $valsourceOfFund=$purchaseToEdit->sourceOfFund;
             $valamount=$purchaseToEdit->amount; 
 
@@ -123,7 +124,7 @@
                         <input type="text" value="{{$purchaseToEdit->status}}" readonly class="form-control">
                     </div>
 
-                 a   <div class="col-md-3">
+                    <div class="col-md-3">
                         <?php 
                             $cn = 0;
                             $purchase = Purchase::orderBy('controlNo', 'ASC')->get();
@@ -142,16 +143,24 @@
                     </div>
                 </div>
                 <br/>
-              
-                <div>
-                    {{ Form::label('projectPurpose', 'Project/Purpose *', array('class' => 'create-label')) }}
-                    {{ Form::text('projectPurpose',$valprojectPurpose, array('class'=>'form-control')) }}
-                </div>
 
-                @if (Session::get('error_projectPurpose'))
-                    <font color="red"><i>{{ Session::get('error_projectPurpose') }}</i></font>
-                @endif
-                <br/>            
+                <div class="row">
+                    <div class="col-md-8">
+                        {{ Form::label('projectPurpose', 'Project/Purpose *', array('class' => 'create-label')) }}
+                        {{ Form::text('projectPurpose',$valprojectPurpose, array('class'=>'form-control')) }}
+
+                        @if (Session::get('error_projectPurpose'))
+                            <font color="red"><i>{{ Session::get('error_projectPurpose') }}</i></font>
+                        @endif
+                    </div>
+
+
+                    <div class="col-md-4">
+                        {{ Form::label('projectType', 'Project Type', array('class' => 'create-label')) }}
+                        {{ Form::text('projectPurpose',$valprojectType, array('class'=>'form-control', 'disabled')) }}
+                    </div>
+                </div>
+                <br/>              
 
                 <div class="row">
                     <div class="col-md-6">
@@ -233,39 +242,29 @@
                     </div>
                 </div>
 
-         
-
-                <div class="form-group">
-                    
-                    {{ Form::label('dateTime', 'Date Requested ', array('class' => 'create-label')) }}
-
-                    <div class="input-group date form_datetime col-md-12" data-date="{{ date('Y-m-d') }}T{{ date('H:i:s') }}Z" data-date-format="dd MM yyyy - HH:ii p" data-link-field="dtp_input1">
+                <div class="row">
+                    <div class="form-group col-md-6" id="template">
+                        {{ Form::label('dateTime', 'Date Received ', array('class' => 'create-label')) }}
+                        <div class="input-group date form_datetime col-md-12" data-date="{{ date('Y-m-d') }}T{{ date('H:i:s') }}Z" data-date-format="dd MM yyyy - HH:ii p" data-link-field="dtp_input2">
+                            <input id="disabled_datetimeDateRec" onchange="fix_formatDateRec()" class="form-control" size="16" type="text" value="<?php
+                            if (NULL!=Input::old('dateReceived'))
+                                echo Input::old('dateReceived');
+                            else
+                                echo $purchaseToEdit->dateReceived; ?>" readonly>
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                        </div>
                         
-                        <input id="disabled_datetime" onchange="fix_format()" class="form-control" size="16" type="text" value="<?php
-                        
-                        if (NULL!=Input::old('dateRequested'))
-                            echo Input::old('dateRequested');
-                        else
-                            echo $purchaseToEdit->dateRequested; ?>" readonly>
-                        
-                        <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
-                        
-                        <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
-                    
+                        <input type="hidden" id="dtp_input1" name="dateRequested" value="<?php
+                            if (NULL!=Input::old('dateRequested'))
+                                echo Input::old('dateRequested');
+                            else
+                                echo $purchaseToEdit->dateRequested; ?>" />
+                        @if (Session::get('error_dateRequested'))
+                            <font color="red"><i>{{ Session::get('error_dateRequested') }}</i></font>
+                        @endif
+                        <br>
                     </div>
-                    
-                    <input type="hidden" id="dtp_input1" name="dateRequested" value="<?php
-                        
-                        if (NULL!=Input::old('dateRequested'))
-                            echo Input::old('dateRequested');
-                        else
-                            echo $purchaseToEdit->dateRequested; ?>" />
-                    
-                    @if (Session::get('error_dateRequested'))
-                        <font color="red"><i>{{ Session::get('error_dateRequested') }}</i></font>
-                    @endif
-
-                    <br>
                 </div>
             </div>
 
@@ -404,21 +403,31 @@
                     }
                     //End of Addon Display
 
-                    echo "<tr><th width='30%'></th>";
-                    echo "<th class='workflow-th' width='18%'>By:</th>";
-                    echo "<th class='workflow-th' width='18%'>Date:</th>";
-                    echo "<th class='workflow-th' width='12.5%'>Days of Action</th>";
-                    echo "<th class='workflow-th'>Remarks</th></tr>";
+               
+                    $previousTaskType="0";
+                    foreach ($task as $tasks) 
+                    {
+                    
 
-                    foreach ($task as $tasks) {
-                   
+                    if ($previousTaskType!="normal"&&$tasks->taskType=="normal"){
+                        echo "<tr><th width='30%'></th>";
+                        echo "<th class='workflow-th' width='18%'>By:</th>";
+                        echo "<th class='workflow-th' width='18%'>Date:</th>";
+                        echo "<th class='workflow-th' width='12.5%'>Days of Action</th>";
+                        echo "<th class='workflow-th'>Remarks</th></tr>";
+                    }
+                        $previousTaskType=$tasks->taskType;
                     //Cursor Open form 
                         //Displayer 
                         $taskp =TaskDetails::where('doc_id', $docs->id)->where('task_id', $tasks->id)->first();
 
-                           if ($taskch!=0 && $taskc->task_id==$tasks->id && $tasks->designation_id==0){
-                            echo "<tr class='current-task'><td>".$tasks->order_id.". ".$tasks->taskName."</td>";
+                    if ($taskch!=0 && $taskc->task_id==$tasks->id && $tasks->designation_id==0)
+                    {
+                        echo "<tr class='current-task'><td>".$tasks->order_id.". ".$tasks->taskName."</td>";
+                    
+                    //normal taskType form
                     ?>
+                    @if($tasks->taskType == "normal")
                             {{Form::open(['url'=>'checklistedit'], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
                                 <td class="edit-pr-input">
@@ -444,15 +453,40 @@
                                     <input type="submit" class="btn btn-success"> 
                                 </td>
                             {{Form::close()}}
+                    @endif
+                    @if($tasks->taskType == "certification")
+                            {{Form::open(['url'=>'certification'], 'POST')}}
+                                <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
+                               
+                                <td class="edit-pr-input">
+                                    <input type="radio" name="radio" value="yes" />Yes<br />
+                                    <input type="radio" name="radio" value="no" />No<br />
+                                </td>
+                                
+                                <td class="edit-pr-input" colspan="3">
+                                <b>By: </b>
+                                    <input type="text" name="by"  class="form-control" maxlength="255" width="80%">
+                                </td>
+
+                                </tr>
+                                <tr class="current-task">
+                                <td colspan="4" style="border-right: none"></td>
+                                <td style="border-left: none; text-align: center;">
+                                    <input type="submit" class="btn btn-success"> 
+                                </td>
+                            {{Form::close()}}
+
+                    @endif
                         <?php
-                        }
+                    }
                         
                         //END Cursor Open Form
                         
-                        else{
-                            echo "<tr><td>".$tasks->order_id.". ".$tasks->taskName."</td>";
+                    else
+                    {
+                        echo "<tr><td>".$tasks->order_id.". ".$tasks->taskName."</td>";
                         ?>
-
+                        @if ($tasks->taskType=="normal")
                             <td>
                                 <?php
                                 if($taskp->assignee!=NULL)
@@ -488,12 +522,21 @@
                                 echo $dremarks; 
                             ?>
                             </td>
+                        @endif
+
+                        @if($tasks->taskType=="certification")
+                        
+                        @endif
+
+                        
                             <?php 
                                 $sectiondays=$sectiondays+$taskp->daysOfAction;
                                 $prdays=$prdays+$taskp->daysOfAction;
-                        }   
+
+                        
+                    }   
                         echo "</tr>";
-                    }
+                }
                     echo "<tr>
                             <td>TOTAL NO. OF DAYS</td>
                             <td></td>
@@ -617,9 +660,16 @@
 
     function fix_format()
     {
+        document.getElementById('disabled_datetimeDateRec').value = document.getElementById('dtp_input2').value;
+         
+    }
+
+    function fix_format()
+    {
         document.getElementById('disabled_datetime').value = document.getElementById('dtp_input1').value;
          
     }
+
 function fix_format2()
 {
     var counter = 0;

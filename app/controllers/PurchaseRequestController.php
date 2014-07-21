@@ -48,9 +48,11 @@ class PurchaseRequestController extends Controller
 		$purchase->office = Input::get( 'office' );
 		$purchase->requisitioner = Input::get( 'requisitioner' );
 		$purchase->dateRequested = Input::get( 'dateRequested' );
+		$purchase->dateReceived = Input::get( 'dateReceived' );
 		$purchase->controlNo = Input::get('controlNo');
 		$purchase->status = 'Active';
 		$purchase->otherType = Input::get('otherType');
+		$purchase->projectType = Input::get('projectType');
 
 		// Set creator id
 		$user_id = Auth::user()->id;
@@ -221,11 +223,13 @@ class PurchaseRequestController extends Controller
 
 					// Get Other Error Messages
 					$error_projectPurpose = $purchase->validationErrors->first('projectPurpose');
+					$error_projectType = $purchase->validationErrors->first('projectType');
 					$error_sourceOfFund = $purchase->validationErrors->first('sourceOfFund');
 					$error_amount = $purchase->validationErrors->first('amount');
 					$error_office = $purchase->validationErrors->first('office');
 					$error_requisitioner = $purchase->validationErrors->first('requisitioner');
 					$error_dateRequested = $purchase->validationErrors->first('dateRequested');
+					$error_dateReceived = $purchase->validationErrors->first('dateReceived');
 
 					// Inserting Error Message To a Session
 					Session::put('error_projectPurpose', $error_projectPurpose );
@@ -234,6 +238,10 @@ class PurchaseRequestController extends Controller
 					Session::put('error_office', $error_office );
 					Session::put('error_requisitioner', $error_requisitioner );
 					Session::put('error_dateRequested', $error_dateRequested );
+					Session::put('error_dateReceived', $error_dateReceived );
+					Session::put('error_projectType', $error_projectType );
+
+
 
 					return Redirect::back()->withInput();
 				} //End Image Upload
@@ -289,13 +297,16 @@ class PurchaseRequestController extends Controller
 				$message = "Failed to create purchase request.";
 				Session::put('main_error', $message );
 
+
 				// Get Other Error Messages
 				$error_projectPurpose = $purchase->validationErrors->first('projectPurpose');
+				$error_projectType = $purchase->validationErrors->first('projectType');
 				$error_sourceOfFund = $purchase->validationErrors->first('sourceOfFund');
 				$error_amount = $purchase->validationErrors->first('amount');
 				$error_office = $purchase->validationErrors->first('office');
 				$error_requisitioner = $purchase->validationErrors->first('requisitioner');
 				$error_dateRequested = $purchase->validationErrors->first('dateRequested');
+				$error_dateReceived = $purchase->validationErrors->first('dateReceived');
 
 				// Inserting Error Message To a Session
 				Session::put('error_projectPurpose', $error_projectPurpose );
@@ -304,6 +315,8 @@ class PurchaseRequestController extends Controller
 				Session::put('error_office', $error_office );
 				Session::put('error_requisitioner', $error_requisitioner );
 				Session::put('error_dateRequested', $error_dateRequested );
+				Session::put('error_dateReceived', $error_dateReceived );
+				Session::put('error_projectType', $error_projectType );
 
 				if(Input::get('hide_modeOfProcurement') == "")
 				{
@@ -311,8 +324,6 @@ class PurchaseRequestController extends Controller
 				}
 
 				return Redirect::back()->withInput();
-
-
 			}
 		}
 		else
@@ -321,13 +332,16 @@ class PurchaseRequestController extends Controller
 			$message = "Failed to create purchase request.";
 			Session::put('main_error', $message );
 
+
 			// Get Other Error Messages
 			$error_projectPurpose = $purchase->validationErrors->first('projectPurpose');
+			$error_projectType = $purchase->validationErrors->first('projectType');
 			$error_sourceOfFund = $purchase->validationErrors->first('sourceOfFund');
 			$error_amount = $purchase->validationErrors->first('amount');
 			$error_office = $purchase->validationErrors->first('office');
 			$error_requisitioner = $purchase->validationErrors->first('requisitioner');
 			$error_dateRequested = $purchase->validationErrors->first('dateRequested');
+			$error_dateReceived = $purchase->validationErrors->first('dateReceived');
 
 			// Inserting Error Message To a Session
 			Session::put('error_projectPurpose', $error_projectPurpose );
@@ -336,8 +350,10 @@ class PurchaseRequestController extends Controller
 			Session::put('error_office', $error_office );
 			Session::put('error_requisitioner', $error_requisitioner );
 			Session::put('error_dateRequested', $error_dateRequested );
+			Session::put('error_dateReceived', $error_dateReceived );
+			Session::put('error_projectType', $error_projectType );
 
-			if(Input::get('modeOfProcurement') == "")
+			if(Input::get('hide_modeOfProcurement') == "")
 			{
 				Session::put('error_modeOfProcurement', 'required' );
 			}
@@ -564,18 +580,22 @@ if($purchase_save)
 			$message = "Failed to save purchase request.";
 			Session::put('main_error', $message );
 
+
 			// Get Other Error Messages
 			$error_projectPurpose = $purchase->validationErrors->first('projectPurpose');
+			$error_projectType = $purchase->validationErrors->first('projectType');
 			$error_sourceOfFund = $purchase->validationErrors->first('sourceOfFund');
 			$error_office = $purchase->validationErrors->first('office');
 			$error_requisitioner = $purchase->validationErrors->first('requisitioner');
 			$error_dateRequested = $purchase->validationErrors->first('dateRequested');
+
 			// Inserting Error Message To a Session
 			Session::put('error_projectPurpose', $error_projectPurpose );
 			Session::put('error_sourceOfFund', $error_sourceOfFund );
 			Session::put('error_office', $error_office );
 			Session::put('error_requisitioner', $error_requisitioner );
 			Session::put('error_dateRequested', $error_dateRequested );
+			Session::put('error_projectType', $error_projectType );
 
 			return Redirect::back()->withInput();
 		}
@@ -626,6 +646,22 @@ if($purchase_save)
 			Session::put('error_office', $error_office );
 			Session::put('error_requisitioner', $error_requisitioner );
 			Session::put('error_dateRequested', $error_dateRequested );
+
+			// Get Other Error Messages
+			$error_projectPurpose = $purchase->validationErrors->first('projectPurpose');
+			$error_projectType = $purchase->validationErrors->first('projectType');
+			$error_sourceOfFund = $purchase->validationErrors->first('sourceOfFund');
+			$error_office = $purchase->validationErrors->first('office');
+			$error_requisitioner = $purchase->validationErrors->first('requisitioner');
+			$error_dateRequested = $purchase->validationErrors->first('dateRequested');
+
+			// Inserting Error Message To a Session
+			Session::put('error_projectPurpose', $error_projectPurpose );
+			Session::put('error_sourceOfFund', $error_sourceOfFund );
+			Session::put('error_office', $error_office );
+			Session::put('error_requisitioner', $error_requisitioner );
+			Session::put('error_dateRequested', $error_dateRequested );
+			Session::put('error_projectType', $error_projectType );
 
 			return Redirect::back()->withInput();
 	}
@@ -786,6 +822,68 @@ public function delimage()
 	$notice="Attachment successfully deleted.";
 	return Redirect::back()->with('notice', $notice);
 }
+
+
+//Other Tasks Functions
+public function certification()
+{
+//Initializations
+$radio=Input::get('radio');
+$by=Input::get('by');
+$taskdetails_id=Input::get('taskdetails_id');
+$check=0;
+
+//Validation Process
+
+         
+if(ctype_alpha(str_replace(array(' ', '-', '.'),'',$by)))
+        $check=$check+1;
+
+if ($check==1)
+{
+	$taskd= TaskDetails::find($taskdetails_id);
+	$docs=Document::find($taskd->doc_id);
+	$delcount= Count::where('doc_id', $docs->id)->delete();
+	$userx= User::get();
+	foreach($userx as $userv)
+	{
+		$count= new Count;
+		$count->user_id= $userv->id;
+		$count->doc_id= $docs->id;
+		$count->save();
+	}
+
+	Session::put('successchecklist','Saved.');
+
+	$taskd= TaskDetails::find($taskdetails_id);
+	$taskd->status="Done";
+	$taskd->custom1=$radio;
+	$taskd->custom2=$by;
+	$taskd->save();
+	$tasknext=TaskDetails::find($taskdetails_id+1);
+	$tasknextc=TaskDetails::where('id', $taskdetails_id+1)->where('doc_id', $docs->pr_id)->count();
+
+	if ($tasknextc!=0)
+	{
+		$tasknext->status="New";
+		$tasknext->save();
+	}
+	else
+	{
+		$purchase= Purchase::find($docs->pr_id);
+		$purchase->status="Closed";
+		$purchase->save();
+	}
+}
+else
+	Session::put('errorchecklist','Invalid input.');
+	
+return Redirect::back();
+
+}
+//End Other Tasks Functions
+
+
 
 
 }
