@@ -70,12 +70,12 @@
 								@foreach($workflow as $wf)
 								<option value="{{ $wf->id }}" 
 									<?php
-									if(Input::old('modeOfProcurement')==$wf->id)
+									if(Input::old('hide_modeOfProcurement') == $wf->id)
 										echo "selected";
 									?> >{{$wf->workFlowName}}</option>
 									@endforeach
 							</select>
-							<input type="hidden" name="hide_modeOfProcurement" id="hide_modeOfProcurement">
+							<input type="hidden" name="hide_modeOfProcurement" id="hide_modeOfProcurement" value="{{ Input::old('hide_modeOfProcurement') }} ">
 
 							@if (Session::get('error_modeOfProcurement'))
 								<font color="red"><i>The mode of procurement is required field</i></font>
@@ -128,7 +128,7 @@
 
 
 						<div class="col-md-4">
-							{{ Form::label('projectType', 'Project Type', array('class' => 'create-label')) }}
+							{{ Form::label('projectType', 'Project Type *', array('class' => 'create-label')) }}
 							<select name="projectType" class="form-control" >
 								<option value="">None</option>
 								<option value="Goods/Services">Goods/Services</option>
@@ -137,7 +137,7 @@
 							</select>
 							<p> </p>
 
-							@if (Session::get('error_amount'))
+							@if (Session::get('error_projectType'))
 								<font color="red"><i>{{ Session::get('error_projectType') }}</i></font>
 							@endif
 						</div>
@@ -288,6 +288,7 @@
 		{{ Session::forget('notice'); }}
 		{{ Session::forget('main_error'); }}
 		{{ Session::forget('error_projectPurpose'); }}
+		{{ Session::forget('error_projectType'); }}
 		{{ Session::forget('error_sourceOfFund'); }}
 		{{ Session::forget('error_amount'); }}
 		{{ Session::forget('error_office'); }}

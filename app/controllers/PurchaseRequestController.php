@@ -348,7 +348,7 @@ class PurchaseRequestController extends Controller
 			Session::put('error_dateRequested', $error_dateRequested );
 			Session::put('error_projectType', $error_projectType );
 
-			if(Input::get('modeOfProcurement') == "")
+			if(Input::get('hide_modeOfProcurement') == "")
 			{
 				Session::put('error_modeOfProcurement', 'required' );
 			}
