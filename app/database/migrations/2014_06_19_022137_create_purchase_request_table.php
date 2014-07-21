@@ -25,6 +25,7 @@ class CreatePurchaseRequestTable extends Migration {
 			$table->integer('office')->references('id')->on('offices');
 			$table->string('reason', 255);
 			$table->dateTime('dateRequested');
+			$table->dateTime('dateReceived');
 			$table->dateTime('dueDate');
 			$table->string('otherType', 255);
 			$table->integer('created_by')->unsigned();

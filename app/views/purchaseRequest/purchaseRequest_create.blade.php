@@ -70,12 +70,12 @@
 								@foreach($workflow as $wf)
 								<option value="{{ $wf->id }}" 
 									<?php
-									if(Input::old('modeOfProcurement')==$wf->id)
+									if(Input::old('hide_modeOfProcurement') == $wf->id)
 										echo "selected";
 									?> >{{$wf->workFlowName}}</option>
 									@endforeach
 							</select>
-							<input type="hidden" name="hide_modeOfProcurement" id="hide_modeOfProcurement">
+							<input type="hidden" name="hide_modeOfProcurement" id="hide_modeOfProcurement" value="{{ Input::old('hide_modeOfProcurement') }} ">
 
 							@if (Session::get('error_modeOfProcurement'))
 								<font color="red"><i>The mode of procurement is required field</i></font>
@@ -128,7 +128,7 @@
 
 
 						<div class="col-md-4">
-							{{ Form::label('projectType', 'Project Type', array('class' => 'create-label')) }}
+							{{ Form::label('projectType', 'Project Type *', array('class' => 'create-label')) }}
 							<select name="projectType" class="form-control" >
 								<option value="">None</option>
 								<option value="Goods/Services">Goods/Services</option>
@@ -137,7 +137,7 @@
 							</select>
 							<p> </p>
 
-							@if (Session::get('error_amount'))
+							@if (Session::get('error_projectType'))
 								<font color="red"><i>{{ Session::get('error_projectType') }}</i></font>
 							@endif
 						</div>
@@ -184,7 +184,6 @@
 							@if (Session::get('error_office'))
 								<font color="red"><i>{{ Session::get('error_office') }}</i></font>
 							@endif
-						
 						</div>
 
 						<div class="form-group col-md-6" id="template">
@@ -207,23 +206,37 @@
 							@if (Session::get('error_requisitioner'))
 								<font color="red"><i>{{ Session::get('error_requisitioner') }}</i></font>
 							@endif
-						
 						</div>
 					</div>
 			
-
-					<div class="form-group">
-						{{ Form::label('dateTime', 'Date Requested ', array('class' => 'create-label')) }}
-						<div class="input-group date form_datetime col-md-12" data-date="{{ date('Y-m-d') }}T{{ date('H:i:s') }}Z" data-date-format="dd MM yyyy - HH:ii p" data-link-field="dtp_input1">
-							<input id="disabled_datetime" onchange="fix_format()" class="form-control" size="16" type="text" value="{{{ Input::old('dateRequested') }}}" readonly>
-							<span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
-							<span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+					<div class="row">
+						<div class="form-group col-md-6" id="template">
+							{{ Form::label('dateTime', 'Date Received ', array('class' => 'create-label')) }}
+							<div class="input-group date form_datetime col-md-12" data-date="{{ date('Y-m-d') }}T{{ date('H:i:s') }}Z" data-date-format="dd MM yyyy - HH:ii p" data-link-field="dtp_input2">
+								<input id="disabled_datetimeDateRec" onchange="fix_formatDateRec()" class="form-control" size="16" type="text" value="{{{ Input::old('dateReceived') }}}" readonly>
+								<span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+								<span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+							</div>
+							<input type="hidden" id="dtp_input2" name="dateReceived" value="{{{ Input::old('dateReceived') }}}" />
+							@if (Session::get('error_dateReceived'))
+								<font color="red"><i>{{ Session::get('error_dateReceived') }}</i></font>
+							@endif
+							<br>
 						</div>
-						<input type="hidden" id="dtp_input1" name="dateRequested" value="{{{ Input::old('dateRequested') }}}" />
-						@if (Session::get('error_dateRequested'))
-							<font color="red"><i>{{ Session::get('error_dateRequested') }}</i></font>
-						@endif
-						<br>
+
+						<div class="form-group col-md-6" id="template">
+							{{ Form::label('dateTime', 'Date Requested ', array('class' => 'create-label')) }}
+							<div class="input-group date form_datetime col-md-12" data-date="{{ date('Y-m-d') }}T{{ date('H:i:s') }}Z" data-date-format="dd MM yyyy - HH:ii p" data-link-field="dtp_input1">
+								<input id="disabled_datetime" onchange="fix_format()" class="form-control" size="16" type="text" value="{{{ Input::old('dateRequested') }}}" readonly>
+								<span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+								<span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+							</div>
+							<input type="hidden" id="dtp_input1" name="dateRequested" value="{{{ Input::old('dateRequested') }}}" />
+							@if (Session::get('error_dateRequested'))
+								<font color="red"><i>{{ Session::get('error_dateRequested') }}</i></font>
+							@endif
+							<br>
+						</div>
 					</div>
 
 					<!--  Image Module -->
@@ -288,12 +301,14 @@
 		{{ Session::forget('notice'); }}
 		{{ Session::forget('main_error'); }}
 		{{ Session::forget('error_projectPurpose'); }}
+		{{ Session::forget('error_projectType'); }}
 		{{ Session::forget('error_sourceOfFund'); }}
 		{{ Session::forget('error_amount'); }}
 		{{ Session::forget('error_office'); }}
 		{{ Session::forget('error_requisitioner'); }}
 		{{ Session::forget('error_modeOfProcurement'); }}
 		{{ Session::forget('error_dateRequested'); }}
+		{{ Session::forget('error_dateReceived'); }}
 		{{ Session::forget('imgsuccess'); }}
 		{{ Session::forget('imgerror'); }}
 
@@ -439,6 +454,10 @@
 			document.getElementById('disabled_datetime').value = document.getElementById('dtp_input1').value;
 		}
 
+		function fix_formatDateRec()
+		{
+			document.getElementById('disabled_datetimeDateRec').value = document.getElementById('dtp_input2').value;
+		}
 	</script>
 
 	<script>
