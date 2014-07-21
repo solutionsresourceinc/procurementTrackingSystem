@@ -641,6 +641,32 @@
                                 </td>
                             {{Form::close()}}
                         @endif
+                        @if($tasks->taskType == "evaluations")
+                            {{Form::open(['url'=>'evaluations'], 'POST')}}
+                                <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
+
+                                    <td>
+                                    <?php 
+                                    $today = date("m/d/y");
+                                    ?>
+                                    <input class="datepicker" size="16" type="text" name="date" class="form-control" value="{{$today}}" width="100%">
+                                    <span class="add-on"><i class="icon-th"></i></span>
+                                    </td>
+                                    
+                                    <td >
+                                    <b>No. of Days Accomplished</b>
+                                    </td>
+                                    <td class="edit-pr-input" colspan="3">  
+                                    <input type="number" name="noofdays"  class="form-control" maxlength="100" width="80%">
+                                    </td>
+                                </tr>
+                                <tr class="current-task">
+                                <td colspan="4" style="border-right: none"></td>
+                                <td style="border-left: none; text-align: center;">
+                                    <input type="submit" class="btn btn-success"> 
+                                </td>
+                            {{Form::close()}}
+                        @endif
                     <!--End Task Forms-->
                         <?php
                     }
@@ -781,6 +807,18 @@
                                     </td>
                                     <td class="edit-pr-input" colspan="2">  
                                     {{$taskp->custom3}}
+                                    </td>
+                        @endif
+                        @if($tasks->taskType=="evaluations")
+                                    <td>
+                                    {{$taskp->custom1}}
+                                    </td>
+                                    
+                                    <td >
+                                    <b>No. of Days Accomplished</b>
+                                    </td>
+                                    <td class="edit-pr-input" colspan="3">  
+                                    {{$taskp->custom2}}
                                     </td>
                         @endif
                         <?php 
