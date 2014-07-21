@@ -44,8 +44,8 @@
                 <th>Control No.</th>
                 <th>Project/Purpose</th>
                 <th>Mode</th>
-                <th style="text-align: center">Status</th>
-                <th>Date Requested</th>
+                <th style="text-align: center">Amount</th>
+                <th>Date Received</th>
                 <th>Action</th>
               </tr>
         </thead>
@@ -106,8 +106,8 @@
                         <td width="18%">
                             @foreach ($docs as $doc) {{ Workflow::find($doc->work_id)->workFlowName; }} @endforeach
                         </td>
-                        <td width="12%" style="text-align: center"><span class="label {{($request->status == 'New') ? 'label-primary' : (($request->status == 'Active') ? 'label-success' : (($request->status == 'Overdue') ? 'label-danger' : 'label-default'))}}">{{ $request->status; }}</span></td>
-                        <td width="20%">{{ $request->dateRequested; }}</td>
+                        <td width="17%" style="text-align: center">P{{{ $request->amount }}}</td>
+                        <td width="15%">{{ $request->dateReceived; }}</td>
 
                         @if(Entrust::hasRole('Administrator') )
                         
