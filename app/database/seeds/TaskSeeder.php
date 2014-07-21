@@ -100,7 +100,7 @@ class TaskSeeder extends Seeder {
         $task->wf_id = '1';
         $task->section_id = '3';
         $task->taskName = 'LCRB / HRB / SUPPLIER';
-        $task->taskType = 'normal';
+        $task->taskType = 'supplier';
         $task->maxDuration = '3';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
