@@ -211,7 +211,7 @@
 </div>
 
 <div id="searchTable">
-    <table id="table_id2" class="table table-striped display " border="1" style="display:none">
+    <table id="table_id2" class="table table-striped display" style="display:none">
         <thead>
             <tr>
                 <th>Control No.</th>

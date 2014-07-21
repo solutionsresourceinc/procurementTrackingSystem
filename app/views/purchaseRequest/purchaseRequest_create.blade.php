@@ -124,7 +124,7 @@
 
 						<div class="col-md-4">
 							{{ Form::label('projectType', 'Project Type *', array('class' => 'create-label')) }}
-							<select name="projectType" class="form-control" >
+							<select name="projectType" class="form-control" id="projectType">
 								<option value="">None</option>
 								<option value="Goods/Services">Goods/Services</option>
 								<option value="Infrastructure">Infrastructure</option>
@@ -461,6 +461,7 @@
 			//alert(value);
 			if(value == "pakyaw")
 			{
+				document.getElementById('projectType').disabled = true;
 				window.last_selected = document.getElementById('modeOfProcurement').selectedIndex 
 				document.getElementById('modeOfProcurement').selectedIndex = 4;
 				document.getElementById('modeOfProcurement').onchange = 4;
