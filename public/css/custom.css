@@ -394,6 +394,10 @@ table.table td{
 	background: rgb(248, 255, 200);
 }
 
+.summary{
+	width: 80%; margin: 0px 15px;
+}
+
 .summary-panel{
 	padding: 35px 25px;
 	border-radius: 5px;
@@ -404,7 +408,7 @@ table.table td{
 }
 
 .summary-amount{
-	font-size: 75px;
+	font-size: 60px;
 }
 
 th.today{
