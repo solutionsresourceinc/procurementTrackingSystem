@@ -126,9 +126,89 @@
             @endif
         </tbody>
     </table>  
-    <div>
-       <center> {{ $requests->links(); }} </center>
-    </div>
+<div id="pages">
+    <center> {{ $requests->links(); }} </center>
+</div>
+
+<div id="searchTable">
+    <table id="table_id2" class="table table-striped display " style="display:none">
+        <thead>
+            <tr>
+                <th>Control No.</th>
+                <th>Project/Purpose</th>
+                <th>Mode</th>
+                <th style="text-align: center">Amount</th>
+                <th>Date Received</th>
+              </tr>
+        </thead>
+
+        <?php
+           //Query Restrictions
+            $date_today =date('Y-m-d H:i:s');
+            $requests = new Purchase;
+           
+            $user_selected=Auth::user()->id;
+              $requests = DB::table('purchase_request')->where('status', '=', 'Closed')->paginate(10); 
+            //End Query Restrictions
+        ?>
+
+        <tbody class="searchable">
+            @if(count($requests))
+                @foreach ($requests as $request)
+                    <tr
+                    <?php 
+                        //Office restriction
+                        if (Entrust::hasRole('Administrator')){}
+                        else if(Entrust::hasRole('Procurement Personnel')){
+                            $useroffice=Auth::user()->office_id;
+                            $maker= User::find( $request->requisitioner);
+                            $docget=Document::where('pr_id', $request->id)->first();
+                            $taskd = TaskDetails::where('doc_id',$docget->id)->where('assignee_id',$user_selected)->count();
+                            if($taskd!=0){}
+                            else if ($user_selected==$request->created_by){}
+                            else if ($useroffice!=$maker->office_id)
+                                continue;
+                        }
+                        else
+                            {
+                                $useroffice=Auth::user()->office_id;
+                                $maker= User::find( $request->requisitioner);
+                                if ($useroffice!=$maker->office_id)
+                                    continue;
+                            }
+                        //End Office restriction
+                        $doc = new Document; $doc = DB::table('document')->where('pr_id', $request->id)->first();  
+                        $doc_id= $doc->id;
+                        $user_selected= Auth::User()->id;
+                        $counter=0;
+                        $counter=Count::where('user_id', $user_selected)->where('doc_id', $doc_id)->count();
+                        if ($counter!=0){
+                            echo "class ='success'";
+                        }
+
+                    ?>
+                        >
+                        <td width="10%">{{ $request->controlNo; }}</td>
+                        <td width="30%"><a data-toggle="tooltip" data-placement="top" class="purpose" href="{{ URL::to('purchaseRequest/vieweach/'. $request->id) }}" title="View Project Details">{{ $request->projectPurpose; }}</a></td>
+                        <?php 
+                            $docs = new Purchase; 
+                            $docs = DB::table('document')->where('pr_id', $request->id)->get(); 
+                        ?>
+                        <td width="18%">
+                            @foreach ($docs as $doc) {{ Workflow::find($doc->work_id)->workFlowName; }} @endforeach
+                        </td>
+                        <td width="17%" style="text-align: center">P{{{ $request->amount }}}</td>
+                        <td width="15%">{{ $request->dateReceived; }}</td>
+                   </tr>
+                @endforeach
+            @endif
+        </tbody>
+    </table>
+</div>
+
+<div class="row" id="table_id3" style="display:none">
+    <span class="error-view">No data available.</span>
+</div>
 
     {{ Session::forget('notice'); }}
 @stop
