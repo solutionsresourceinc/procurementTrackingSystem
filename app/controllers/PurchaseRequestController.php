@@ -1429,4 +1429,140 @@ return Redirect::back();
 
 }
 
+
+public function datebyremark()
+{
+//Initializations	
+$taskdetails_id= Input::get('taskdetails_id');
+$assignee=strip_tags(Input::get('assignee'));
+$mydate=Input::get('dateFinished');
+$timestamp = strtotime($mydate);
+$dateFinished= date("Y-m-d H:i:s", $timestamp);
+
+$remarks=" ".strip_tags(Input::get('remarks'));
+$check=0;
+
+//Validation Process
+
+if(ctype_alpha(str_replace(array(' ', '-', '.'),'',$remarks)))
+        $check=$check+1;
+         
+if(ctype_alpha(str_replace(array(' ', '-', '.'),'',$assignee)))
+        $check=$check+1;
+         
+
+if (($check==2||$remarks==" ")&&$assignee!=NULL)
+{
+	$taskd= TaskDetails::find($taskdetails_id);
+	$docs=Document::find($taskd->doc_id);
+	$delcount= Count::where('doc_id', $docs->id)->delete();
+	$userx= User::get();
+	foreach($userx as $userv)
+	{
+		$count= new Count;
+		$count->user_id= $userv->id;
+		$count->doc_id= $docs->id;
+		$count->save();
+	}
+
+	Session::put('successchecklist','Saved.');
+
+	$taskd= TaskDetails::find($taskdetails_id);
+	$taskd->status="Done";
+
+	$taskd->dateFinished=$dateFinished;
+	$taskd->assignee=$assignee;
+	$remarks= ltrim ($remarks,'0');
+	$taskd->remarks=$remarks;
+	$taskd->save();
+	$tasknext=TaskDetails::find($taskdetails_id+1);
+	$tasknextc=TaskDetails::where('id', $taskdetails_id+1)->where('doc_id', $docs->pr_id)->count();
+
+	if ($tasknextc!=0)
+	{
+		$tasknext->status="New";
+		$tasknext->save();
+	}
+	else
+	{
+		$purchase= Purchase::find($docs->pr_id);
+		$purchase->status="Closed";
+		$purchase->save();
+	}
+}
+else
+	Session::put('errorchecklist','Invalid input.');
+	
+return Redirect::back();
+
+}
+
+
+
+public function dateby()
+{
+//Initializations	
+$taskdetails_id= Input::get('taskdetails_id');
+$assignee=strip_tags(Input::get('assignee'));
+$mydate=Input::get('dateFinished');
+$timestamp = strtotime($mydate);
+$dateFinished= date("Y-m-d H:i:s", $timestamp);
+
+$check=0;
+
+//Validation Process
+
+
+         
+if(ctype_alpha(str_replace(array(' ', '-', '.'),'',$assignee)))
+        $check=$check+1;
+         
+
+
+if (($check==1)&&$assignee!=NULL)
+{
+	$taskd= TaskDetails::find($taskdetails_id);
+	$docs=Document::find($taskd->doc_id);
+	$delcount= Count::where('doc_id', $docs->id)->delete();
+	$userx= User::get();
+	foreach($userx as $userv)
+	{
+		$count= new Count;
+		$count->user_id= $userv->id;
+		$count->doc_id= $docs->id;
+		$count->save();
+	}
+
+	Session::put('successchecklist','Saved.');
+
+	$taskd= TaskDetails::find($taskdetails_id);
+	$taskd->status="Done";
+	$taskd->dateFinished=$dateFinished;
+	$taskd->assignee=$assignee;
+	$taskd->save();
+	$tasknext=TaskDetails::find($taskdetails_id+1);
+	$tasknextc=TaskDetails::where('id', $taskdetails_id+1)->where('doc_id', $docs->pr_id)->count();
+
+	if ($tasknextc!=0)
+	{
+		$tasknext->status="New";
+		$tasknext->save();
+	}
+	else
+	{
+		$purchase= Purchase::find($docs->pr_id);
+		$purchase->status="Closed";
+		$purchase->save();
+	}
+}
+else
+	Session::put('errorchecklist','Invalid input.');
+	
+return Redirect::back();
+
+}
+
+
+
+
 }
