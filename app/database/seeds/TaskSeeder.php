@@ -931,5 +931,237 @@ class TaskSeeder extends Seeder {
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
+
+        // WORKFLOW 5 | SECTION 1
+        $orderID = 1; // controller for order_id
+
+        $task = new Task;
+        $task->wf_id = '5';
+        $task->section_id = '1';
+        $task->taskName = 'DATE OF P.R.';
+        $task->taskType = 'datebyremark';
+        $task->maxDuration = '3';
+        $task->order_id = $orderID++;
+        $task->description = 'This is a task description';
+        $task->save();
+
+        $task = new Task;
+        $task->wf_id = '5';
+        $task->section_id = '1';
+        $task->taskName = 'RECEIVED GSD';
+        $task->taskType = 'datebyremark';
+        $task->maxDuration = '3';
+        $task->order_id = $orderID++;
+        $task->description = 'This is a task description';
+        $task->save();
+
+        $task = new Task;
+        $task->wf_id = '5';
+        $task->section_id = '1';
+        $task->taskName = 'BUDGET / ACCTNG';
+        $task->taskType = 'datebyremark';
+        $task->maxDuration = '3';
+        $task->order_id = $orderID++;
+        $task->description = 'This is a task description';
+        $task->save();
+
+        $task = new Task;
+        $task->wf_id = '5';
+        $task->section_id = '1';
+        $task->taskName = 'P.A. OFFICE';
+        $task->taskType = 'datebyremark';
+        $task->maxDuration = '3';
+        $task->order_id = $orderID++;
+        $task->description = 'This is a task description';
+        $task->save();
+
+        $task = new Task;
+        $task->wf_id = '5';
+        $task->section_id = '1';
+        $task->taskName = 'PGO';
+        $task->taskType = 'datebyremark';
+        $task->maxDuration = '3';
+        $task->order_id = $orderID++;
+        $task->description = 'This is a task description';
+        $task->save();
+
+        // WORKFLOW 5 | SECTION 2
+        $orderID = 1; // controller for order_id
+
+        $task = new Task;
+        $task->wf_id = '5';
+        $task->section_id = '2';
+        $task->taskName = 'PHILGEPS DATE PUBLISHED';
+        $task->taskType = 'published';
+        $task->maxDuration = '3';
+        $task->order_id = $orderID++;
+        $task->description = 'This is a task description';
+        $task->save();
+
+        $task = new Task;
+        $task->wf_id = '5';
+        $task->section_id = '2';
+        $task->taskName = 'RFQ NO. OF SUPPLIERS';
+        $task->taskType = 'rfq';
+        $task->maxDuration = '3';
+        $task->order_id = $orderID++;
+        $task->description = 'This is a task description';
+        $task->save();
+
+        $task = new Task;
+        $task->wf_id = '5';
+        $task->section_id = '2';
+        $task->taskName = 'CERTIFICATION OF EMERGENCY';
+        $task->taskType = 'dateby';
+        $task->maxDuration = '3';
+        $task->order_id = $orderID++;
+        $task->description = 'This is a task description';
+        $task->save();
+
+        $task = new Task;
+        $task->wf_id = '5';
+        $task->section_id = '2';
+        $task->taskName = 'CERTIFICATE OF EXCLUSIVE DISTRIBUTOR, MANUFACTURER';
+        $task->taskType = 'dateby';
+        $task->maxDuration = '3';
+        $task->order_id = $orderID++;
+        $task->description = 'This is a task description';
+        $task->save();
+
+        $task = new Task;
+        $task->wf_id = '5';
+        $task->section_id = '2';
+        $task->taskName = 'BAC RESO DATE (SIGNED BY ALL BAC MEMBERS)';
+        $task->taskType = 'evaluation';
+        $task->maxDuration = '3';
+        $task->order_id = $orderID++;
+        $task->description = 'This is a task description';
+        $task->save();
+
+        $task = new Task;
+        $task->wf_id = '5';
+        $task->section_id = '2';
+        $task->taskName = 'CERTIFICATE OF EXCLUSIVE DISTRIBUTOR, MANUFACTURER';
+        $task->taskType = 'evaluation';
+        $task->maxDuration = '3';
+        $task->order_id = $orderID++;
+        $task->description = 'This is a task description';
+        $task->save();
+        
+        // WORKFLOW 5 | SECTION 3
+        $orderID = 1; // controller for order_id
+
+        $task = new Task;
+        $task->wf_id = '5';
+        $task->section_id = '3';
+        $task->taskName = 'RECEIVED GSD';
+        $task->taskType = 'dateby';
+        $task->maxDuration = '3';
+        $task->order_id = $orderID++;
+        $task->description = 'This is a task description';
+        $task->save();
+
+        $task = new Task;
+        $task->wf_id = '5';
+        $task->section_id = '3';
+        $task->taskName = 'ACCOUNTING OFFICE';
+        $task->taskType = 'dateby';
+        $task->maxDuration = '3';
+        $task->order_id = $orderID++;
+        $task->description = 'This is a task description';
+        $task->save();
+
+        $task = new Task;
+        $task->wf_id = '5';
+        $task->section_id = '3';
+        $task->taskName = 'P.A. OFFICE';
+        $task->taskType = 'dateby';
+        $task->maxDuration = '3';
+        $task->order_id = $orderID++;
+        $task->description = 'This is a task description';
+        $task->save();
+    
+        $task = new Task;
+        $task->wf_id = '5';
+        $task->section_id = '3';
+        $task->taskName = 'GOVERNORS OFFICE';
+        $task->taskType = 'dateby';
+        $task->maxDuration = '3';
+        $task->order_id = $orderID++;
+        $task->description = 'This is a task description';
+        $task->save();
+    
+        // WORKFLOW 5 | SECTION 4
+        $orderID = 1; // controller for order_id
+
+        $task = new Task;
+        $task->wf_id = '5';
+        $task->section_id = '4';
+        $task->taskName = 'BUDGET';
+        $task->taskType = 'datebyremark';
+        $task->maxDuration = '3';
+        $task->order_id = $orderID++;
+        $task->description = 'This is a task description';
+        $task->save();
+    
+        $task = new Task;
+        $task->wf_id = '5';
+        $task->section_id = '4';
+        $task->taskName = 'ACCOUNTING';
+        $task->taskType = 'datebyremark';
+        $task->maxDuration = '3';
+        $task->order_id = $orderID++;
+        $task->description = 'This is a task description';
+        $task->save();
+
+        $task = new Task;
+        $task->wf_id = '5';
+        $task->section_id = '4';
+        $task->taskName = 'TREASURY';
+        $task->taskType = 'datebyremark';
+        $task->maxDuration = '3';
+        $task->order_id = $orderID++;
+        $task->description = 'This is a task description';
+        $task->save();
+
+        $task = new Task;
+        $task->wf_id = '5';
+        $task->section_id = '4';
+        $task->taskName = 'P.A. OFFICE';
+        $task->taskType = 'datebyremark';
+        $task->maxDuration = '3';
+        $task->order_id = $orderID++;
+        $task->description = 'This is a task description';
+        $task->save();
+
+        $task = new Task;
+        $task->wf_id = '5';
+        $task->section_id = '4';
+        $task->taskName = 'PGO';
+        $task->taskType = 'datebyremark';
+        $task->maxDuration = '3';
+        $task->order_id = $orderID++;
+        $task->description = 'This is a task description';
+        $task->save();
+
+        $task = new Task;
+        $task->wf_id = '5';
+        $task->section_id = '4';
+        $task->taskName = 'ACCOUNTING';
+        $task->taskType = 'datebyremark';
+        $task->maxDuration = '3';
+        $task->order_id = $orderID++;
+        $task->description = 'This is a task description';
+        $task->save();
+
+        $task = new Task;
+        $task->wf_id = '5';
+        $task->section_id = '4';
+        $task->taskName = 'CHECK RELEASED';
+        $task->taskType = 'datebyremark';
+        $task->maxDuration = '3';
+        $task->order_id = $orderID++;
+        $task->description = 'This is a task description';
+        $task->save();
     }
 }
