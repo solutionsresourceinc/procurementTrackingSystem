@@ -18,7 +18,7 @@ class CreateTasksTable extends Migration {
 			$table->integer('wf_id')->unsigned();
 			$table->string('taskName', 255);
 			$table->string('description', 255);
-			$table->integer('taskType');
+	
 			$table->integer('assignee_id');
 			$table->integer('maxDuration')->unsigned();
 			$table->timestamps();
@@ -26,6 +26,7 @@ class CreateTasksTable extends Migration {
 			$table->integer('designation_id')->references('id')->on('designation');
 			$table->integer('taskDetails_id')->references('id')->on('taskDetails');
 			$table->integer('order_id')->unsigned();
+			$table->string('taskType', 255);
 		});
 	}
 
