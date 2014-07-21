@@ -75,6 +75,7 @@ Route::post('purchaseRequest/submitForm/{id}', ['as' => 'submitForm', 'uses' => 
 //Checklist Rowtype Routes
 Route::post('checklistedit', ['uses' => 'PurchaseRequestController@checklistedit']);
 Route::post('certification', ['uses' => 'PurchaseRequestController@certification']);
+Route::post('posting', ['uses' => 'PurchaseRequestController@posting']);
 //End Checklist Rowtype Routes
 
 

@@ -477,6 +477,35 @@
                             {{Form::close()}}
 
                     @endif
+                     @if($tasks->taskType == "posting")
+                            {{Form::open(['url'=>'posting'], 'POST')}}
+                                <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
+                                <td class="edit-pr-input">
+                                    <b>Reference No. : </b>
+                                    <input type="text" name="referenceno"  class="form-control" maxlength="100" width="80%">
+                                </td>
+                                <td class="edit-pr-input"> 
+                                    <b>Date: </b>
+                                    <?php 
+                                    $today = date("m/d/y");
+                                    ?>
+                                    <input class="datepicker" size="16" type="text" name="date" class="form-control" value="{{$today}}" width="100%">
+                                    <span class="add-on"><i class="icon-th"></i></span>
+                                </td>
+                                <td class="edit-pr-input" colspan="3">
+                                    <b>By: </b>
+                                    <input type="text" name="by"  class="form-control" maxlength="100" width="80%">
+                                </td>
+
+                                </tr>
+                                <tr class="current-task">
+                                <td colspan="4" style="border-right: none"></td>
+                                <td style="border-left: none; text-align: center;">
+                                    <input type="submit" class="btn btn-success"> 
+                                </td>
+                            {{Form::close()}}
+
+                        @endif
                         <?php
                     }
                         
@@ -525,11 +554,36 @@
                         @endif
 
                         @if($tasks->taskType=="certification")
-                        
+                            <td>
+                                <input type="checkbox" name="displayradio" value="yes" 
+                                <?php if($taskp->custom1=="yes") echo " checked";?> 
+                                disabled > Yes
+                                <input type ="checkbox" name ="displayradio" value="no" 
+                                <?php if($taskp->custom1=="no") echo " checked";?>
+                                disabled> No
+                            </td>
+                            <td colspan="3">
+                                <b>By: </b>          
+                                {{$taskp->custom2;}}
+                            </td>
                         @endif
 
-                        
-                            <?php 
+                        @if($tasks->taskType=="posting")
+                            <td colspan="2">
+                                <b>Reference No. : </b>          
+                                {{$taskp->custom1;}}
+                            </td>
+                             <td>
+                                <b>Date: </b>          
+                                {{$taskp->custom2;}}
+                            </td>
+                            <td>
+                                <b>By: </b>          
+                                {{$taskp->custom3;}}
+                            </td>
+                        @endif
+                       
+                        <?php 
                                 $sectiondays=$sectiondays+$taskp->daysOfAction;
                                 $prdays=$prdays+$taskp->daysOfAction;
 
