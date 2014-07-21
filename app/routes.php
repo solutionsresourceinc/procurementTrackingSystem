@@ -72,8 +72,12 @@ Route::post('purchaseRequest/changeForm/{id}', function($id)
 
 Route::post('purchaseRequest/submitForm/{id}', ['as' => 'submitForm', 'uses' => 'PurchaseRequestController@changeForm']);
 
-
+//Checklist Rowtype Routes
 Route::post('checklistedit', ['uses' => 'PurchaseRequestController@checklistedit']);
+Route::post('certification', ['uses' => 'PurchaseRequestController@certification']);
+//End Checklist Rowtype Routes
+
+
 Route::post('insertaddon', ['uses' => 'PurchaseRequestController@insertaddon']);
 Route::post('editaddon', ['uses' => 'PurchaseRequestController@editaddon']);
 Route::get( 'purchaseRequest/edit/{id}', ['uses'=>'PurchaseRequestController@editpagecall']);
