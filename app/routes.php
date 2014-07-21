@@ -80,6 +80,7 @@ Route::post('posting', ['uses' => 'PurchaseRequestController@posting']);
 Route::post('supplier', ['uses' => 'PurchaseRequestController@supplier']);
 Route::post('cheque', ['uses' => 'PurchaseRequestController@cheque']);
 Route::post('published', ['uses' => 'PurchaseRequestController@published']);
+Route::post('documents', ['uses' => 'PurchaseRequestController@documents']);
 //End Checklist Rowtype Routes
 
 
