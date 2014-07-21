@@ -37,6 +37,16 @@
     @if(Session::get('notice'))
         <div class="alert alert-success"> {{ Session::get('notice') }}</div> 
     @endif
+    
+    <!-- START OF SEARCH BOX -->
+    <div align="center" class="col-md-8"></div>   
+    <div align="center" class="col-md-4">   
+        <input type="text" class="form-control filter" placeholder="Enter Seach Keywords"> 
+    </div>
+    <br/>
+    <br/>
+    <br/>
+    <!-- END OF SEARCH BOX -->
 
     <table id="table_id" class="table table-striped display ">
         <thead>
@@ -59,7 +69,7 @@
             //End Query Restrictions
         ?>
 
-        <tbody>
+        <tbody class="searchable">
             @if(count($requests))
                 @foreach ($requests as $request)
                     <tr
@@ -197,6 +207,54 @@
 @section('footer')
     {{ HTML::script('js/bootstrap-ajax.js');}}
     <script type="text/javascript">
+        // START *code for search box
+        $('input.filter').on('keyup', function() 
+        {
+            var rex = new RegExp($(this).val(), 'i');
+            if(rex == '/(?:)/i')
+            {
+                document.getElementById('table_id2').style.display = 'block';
+                $('.searchable tr').hide();
+                $('.searchable tr').filter(function() {
+                    return rex.test($(this).text());
+                }).show();
+                document.getElementById('table_id').style.display = 'block';
+                document.getElementById('pages').style.display = 'block';
+                document.getElementById('table_id2').style.display = 'none';
+                document.getElementById('table_id3').style.display = 'none';
+
+            }
+            else
+            {
+                document.getElementById('table_id2').style.display = 'block';
+                $('.searchable tr').hide();
+                $('.searchable tr').filter(function() {
+                    return rex.test($(this).text());
+                }).show();
+
+                var rowNum = $('#table_id2 tr:visible ').length;
+                if(rowNum == 1)
+                {
+                    document.getElementById('table_id').style.display = 'none';
+                    document.getElementById('pages').style.display = 'none';
+                    document.getElementById('table_id2').style.display = 'none';
+                    document.getElementById('table_id3').style.display = 'block';
+                }
+                else
+                {
+                    document.getElementById('table_id').style.display = 'none';
+                    document.getElementById('pages').style.display = 'none';
+                    document.getElementById('table_id2').style.display = 'block';
+                    document.getElementById('table_id3').style.display = 'none';
+                }
+                
+
+            }
+            
+        });
+       
+        // END
+
         $('#confirmDelete').on('show.bs.modal', function (e) {
             $message = $(e.relatedTarget).attr('data-message');
             $(this).find('.modal-body p').text($message);
