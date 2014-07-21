@@ -97,7 +97,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         
-                        {{ Form::label('modeOfProcurement', 'Mode of Procurement *', array('class' => 'create-label')) }}
+                        {{ Form::label('modeOfProcurement', 'Mode of Procurement', array('class' => 'create-label')) }}
 
                         <select  name="modeOfProcurement" id="modeOfProcurement" class="form-control" data-live-search="true" disabled="disabled">
                                 <option value="">Please select</option>
@@ -118,13 +118,7 @@
                         @endif
                       
                     </div>
-
-                    <div class="col-md-3">
-                        {{ Form::label('status', 'Status: ', array('class' => 'create-label')) }}
-                        <input type="text" value="{{$purchaseToEdit->status}}" readonly class="form-control">
-                    </div>
-
-                    <div class="col-md-3">
+                    <div class="col-md-6">
                         <?php 
                             $cn = 0;
                             $purchase = Purchase::orderBy('controlNo', 'ASC')->get();
@@ -135,7 +129,7 @@
                             $cn =$cn+1;
                         ?>
 
-                        {{ Form::label('dispCN', 'Control No. *', array('class' => 'create-label')) }}
+                        {{ Form::label('dispCN', 'Control No.', array('class' => 'create-label')) }}
                         <input type="text"  name="dispCN"  class="form-control" value="{{
                         $purchaseToEdit->controlNo}}"disabled>
                         <input type="hidden" name="controlNo" value="{{
@@ -173,7 +167,7 @@
 
                     
                     <div class="col-md-6">
-                        {{ Form::label('amount', 'Amount *', array('class' => 'create-label')) }}
+                        {{ Form::label('amount', 'Amount', array('class' => 'create-label')) }}
                         {{ Form::text('amount', $purchaseToEdit->amount ,array('class'=>'form-control','onchange'=>'numberWithCommas(this.value)','id'=>'num','disabled')) }}
                     </div>
            

@@ -27,10 +27,11 @@
         <br><br><br>
 	</div-->
     <ul class="nav nav-tabs" role="tablist" id="myTab">
-      <li class="active"><a href="#home" role="tab" data-toggle="tab">Below P50,000</a></li>
-      <li><a href="#profile" role="tab" data-toggle="tab">Between P50,000 and P500,000</a></li>
-      <li><a href="#messages" role="tab" data-toggle="tab">Above P500,000</a></li>
+      <li class="active"><a href="#home" role="tab" data-toggle="tab">SVP (Below P50,000)</a></li>
+      <li><a href="#profile" role="tab" data-toggle="tab">SVP (P50,000 and P499,000)</a></li>
+      <li><a href="#messages" role="tab" data-toggle="tab">Bidding</a></li>
       <li><a href="#pakyaw" role="tab" data-toggle="tab">Pakyaw</a></li> <!-- FOR PAKYAW WORKFLOW -->
+      <li><a href="#directContracting" role="tab" data-toggle="tab">Direct Contracting</a></li> <!-- FOR DIRECT CONTRACTING WORKFLOW -->
     </ul>
 
     <div class="modal fade" id="description" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
@@ -65,6 +66,7 @@
       <div class="tab-pane fade" id="profile">@include('workflows.workflow2')</div>
       <div class="tab-pane fade" id="messages">@include('workflows.workflow3')</div>
       <div class="tab-pane fade" id="pakyaw">@include('workflows.workflow4')</div> <!-- FOR PAKYAW WORKFLOW -->
+      <div class="tab-pane fade" id="directContracting">@include('workflows.workflow5')</div> <!-- FOR DIRECT CONTRACTING WORKFLOW -->
     </div>
 
     
