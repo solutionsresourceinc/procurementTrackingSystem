@@ -26,6 +26,9 @@ class CreateTaskDetailsTable extends Migration {
 			$table->dateTime('dateFinished');
 			$table->dateTime('dateReceived');
 			$table->dateTime('dueDate');
+			$table->string('custom1', 255);
+			$table->string('custom2', 255);
+			$table->string('custom3', 255);
 			$table->timestamps();
 		});
 	}

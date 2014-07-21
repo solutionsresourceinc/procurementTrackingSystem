@@ -18,7 +18,6 @@ class CreateTasksTable extends Migration {
 			$table->integer('wf_id')->unsigned();
 			$table->string('taskName', 255);
 			$table->string('description', 255);
-	
 			$table->integer('assignee_id');
 			$table->integer('maxDuration')->unsigned();
 			$table->timestamps();

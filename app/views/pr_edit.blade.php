@@ -413,21 +413,31 @@
                     }
                     //End of Addon Display
 
-                    echo "<tr><th width='30%'></th>";
-                    echo "<th class='workflow-th' width='18%'>By:</th>";
-                    echo "<th class='workflow-th' width='18%'>Date:</th>";
-                    echo "<th class='workflow-th' width='12.5%'>Days of Action</th>";
-                    echo "<th class='workflow-th'>Remarks</th></tr>";
+               
+                    $previousTaskType="0";
+                    foreach ($task as $tasks) 
+                    {
+                    
 
-                    foreach ($task as $tasks) {
-                   
+                    if ($previousTaskType!="normal"&&$tasks->taskType=="normal"){
+                        echo "<tr><th width='30%'></th>";
+                        echo "<th class='workflow-th' width='18%'>By:</th>";
+                        echo "<th class='workflow-th' width='18%'>Date:</th>";
+                        echo "<th class='workflow-th' width='12.5%'>Days of Action</th>";
+                        echo "<th class='workflow-th'>Remarks</th></tr>";
+                    }
+                        $previousTaskType=$tasks->taskType;
                     //Cursor Open form 
                         //Displayer 
                         $taskp =TaskDetails::where('doc_id', $docs->id)->where('task_id', $tasks->id)->first();
 
-                           if ($taskch!=0 && $taskc->task_id==$tasks->id && $tasks->designation_id==0){
-                            echo "<tr class='current-task'><td>".$tasks->order_id.". ".$tasks->taskName."</td>";
+                    if ($taskch!=0 && $taskc->task_id==$tasks->id && $tasks->designation_id==0)
+                    {
+                        echo "<tr class='current-task'><td>".$tasks->order_id.". ".$tasks->taskName."</td>";
+                    
+                    //normal taskType form
                     ?>
+                    @if($tasks->taskType == "normal")
                             {{Form::open(['url'=>'checklistedit'], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
                                 <td class="edit-pr-input">
@@ -453,15 +463,41 @@
                                     <input type="submit" class="btn btn-success"> 
                                 </td>
                             {{Form::close()}}
+                    @endif
+                    @if($tasks->taskType == "certification")
+                            {{Form::open(['url'=>'certification'], 'POST')}}
+                                <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
+                               
+                                <td class="edit-pr-input">
+                                    <input type="radio" name="radio" value="yes" />Yes<br />
+                                    <input type="radio" name="radio" value="no" />No<br />
+                                </td>
+                                <td>By:</td>
+                                <td class="edit-pr-input" colspan="2">
+                                    <input type="text" name="by"  class="form-control" maxlength="255" width="100%">
+                                </td>
+
+                                </tr>
+                                <tr class="current-task">
+                                <td colspan="4" style="border-right: none"></td>
+                                <td style="border-left: none; text-align: center;">
+                                    <input type="submit" class="btn btn-success"> 
+                                </td>
+                            {{Form::close()}}
+
+                    @endif
+                    
+
                         <?php
-                        }
+                    }
                         
                         //END Cursor Open Form
                         
-                        else{
-                            echo "<tr><td>".$tasks->order_id.". ".$tasks->taskName."</td>";
+                    else
+                    {
+                        echo "<tr><td>".$tasks->order_id.". ".$tasks->taskName."</td>";
                         ?>
-
+                        @if ($tasks->taskType=="normal")
                             <td>
                                 <?php
                                 if($taskp->assignee!=NULL)
@@ -497,12 +533,21 @@
                                 echo $dremarks; 
                             ?>
                             </td>
+                        @endif
+
+                        @if($tasks->taskType=="certification")
+                        
+                        @endif
+
+                        
                             <?php 
                                 $sectiondays=$sectiondays+$taskp->daysOfAction;
                                 $prdays=$prdays+$taskp->daysOfAction;
-                        }   
+
+                        
+                    }   
                         echo "</tr>";
-                    }
+                }
                     echo "<tr>
                             <td>TOTAL NO. OF DAYS</td>
                             <td></td>
