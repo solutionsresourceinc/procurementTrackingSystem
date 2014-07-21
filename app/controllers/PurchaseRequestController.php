@@ -941,6 +941,69 @@ else
 return Redirect::back();
 
 }
+
+
+public function supplier()
+{
+//Initializations
+$supplier=Input::get('supplier');
+$amount=Input::get('amount');
+$taskdetails_id=Input::get('taskdetails_id');
+$check=0;
+
+//Validation Process
+if(ctype_alnum(str_replace(array(' ', '-', '.'),'',$supplier)))
+        $check=$check+1;
+if(ctype_alnum(str_replace(array(' ', '-', '.'),'',$amount)))
+        $check=$check+1;
+
+if ($check==2)
+{
+	$taskd= TaskDetails::find($taskdetails_id);
+	$docs=Document::find($taskd->doc_id);
+	$delcount= Count::where('doc_id', $docs->id)->delete();
+	$userx= User::get();
+	foreach($userx as $userv)
+	{
+		$count= new Count;
+		$count->user_id= $userv->id;
+		$count->doc_id= $docs->id;
+		$count->save();
+	}
+
+	Session::put('successchecklist','Saved.');
+
+	$taskd= TaskDetails::find($taskdetails_id);
+	$taskd->status="Done";
+	$taskd->custom1=$supplier;
+	$taskd->custom2=$amount;
+	$taskd->save();
+	$tasknext=TaskDetails::find($taskdetails_id+1);
+	$tasknextc=TaskDetails::where('id', $taskdetails_id+1)->where('doc_id', $docs->pr_id)->count();
+
+	if ($tasknextc!=0)
+	{
+		$tasknext->status="New";
+		$tasknext->save();
+	}
+	else
+	{
+		$purchase= Purchase::find($docs->pr_id);
+		$purchase->status="Closed";
+		$purchase->save();
+	}
+}
+else
+	Session::put('errorchecklist','Invalid input.');
+	
+return Redirect::back();
+
+}
+
+
+
+
+
 //End Other Tasks Functions
 
 
