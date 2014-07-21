@@ -1249,9 +1249,124 @@ return Redirect::back();
 }
 
 
+public function conference()
+{
+//Initializations
+
+$date=Input::get('date');
+$taskdetails_id=Input::get('taskdetails_id');
+$check=0;
+
+//Validation Process
+
+
+
+if ($check==0)
+{
+	$taskd= TaskDetails::find($taskdetails_id);
+	$docs=Document::find($taskd->doc_id);
+	$delcount= Count::where('doc_id', $docs->id)->delete();
+	$userx= User::get();
+	foreach($userx as $userv)
+	{
+		$count= new Count;
+		$count->user_id= $userv->id;
+		$count->doc_id= $docs->id;
+		$count->save();
+	}
+
+	Session::put('successchecklist','Saved.');
+
+	$taskd= TaskDetails::find($taskdetails_id);
+	$taskd->status="Done";
+	$taskd->custom1=$date;
+	$taskd->save();
+	$tasknext=TaskDetails::find($taskdetails_id+1);
+	$tasknextc=TaskDetails::where('id', $taskdetails_id+1)->where('doc_id', $docs->pr_id)->count();
+
+	if ($tasknextc!=0)
+	{
+		$tasknext->status="New";
+		$tasknext->save();
+	}
+	else
+	{
+		$purchase= Purchase::find($docs->pr_id);
+		$purchase->status="Closed";
+		$purchase->save();
+	}
+}
+else
+	Session::put('errorchecklist','Invalid input.');
+	
+return Redirect::back();
+
+}
+
+
+
 //End Other Tasks Functions
 
+public function contractmeeting()
+{
+//Initializations
+$date=Input::get('date');
+$noofdays=Input::get('noofdays');
+$contractmeeting=Input::get('contractmeeting');
 
+$taskdetails_id=Input::get('taskdetails_id');
+$check=0;
+
+//Validation Process
+if(ctype_alnum(str_replace(array(' ', '-', '.'),'',$contractmeeting)))
+        $check=$check+1;
+if(ctype_digit($noofdays))
+        $check=$check+1;
+
+if ($check==2)
+{
+	$taskd= TaskDetails::find($taskdetails_id);
+	$docs=Document::find($taskd->doc_id);
+	$delcount= Count::where('doc_id', $docs->id)->delete();
+	$userx= User::get();
+	foreach($userx as $userv)
+	{
+		$count= new Count;
+		$count->user_id= $userv->id;
+		$count->doc_id= $docs->id;
+		$count->save();
+	}
+
+	Session::put('successchecklist','Saved.');
+
+	$taskd= TaskDetails::find($taskdetails_id);
+	$taskd->status="Done";
+	$taskd->custom1=$date;
+	$taskd->custom2=$noofdays;
+	$taskd->custom3=$contractmeeting;
+
+	$taskd->save();
+	$tasknext=TaskDetails::find($taskdetails_id+1);
+	$tasknextc=TaskDetails::where('id', $taskdetails_id+1)->where('doc_id', $docs->pr_id)->count();
+
+	if ($tasknextc!=0)
+	{
+		$tasknext->status="New";
+		$tasknext->save();
+	}
+	else
+	{
+		$purchase= Purchase::find($docs->pr_id);
+		$purchase->status="Closed";
+		$purchase->save();
+	}
+}
+else
+	Session::put('errorchecklist','Invalid input.');
+	
+return Redirect::back();
+
+}
 
 
 }

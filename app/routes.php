@@ -82,6 +82,8 @@ Route::post('cheque', ['uses' => 'PurchaseRequestController@cheque']);
 Route::post('published', ['uses' => 'PurchaseRequestController@published']);
 Route::post('documents', ['uses' => 'PurchaseRequestController@documents']);
 Route::post('evaluations', ['uses' => 'PurchaseRequestController@evaluations']);
+Route::post('conference', ['uses' => 'PurchaseRequestController@conference']);
+Route::post('contractmeeting', ['uses' => 'PurchaseRequestController@contractmeeting']);
 //End Checklist Rowtype Routes
 
 
