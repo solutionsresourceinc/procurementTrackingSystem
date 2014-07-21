@@ -7,7 +7,7 @@ class TaskSeeder extends Seeder {
         // TASK TYPE : 0 = ADHOC, 1 = REVIEW TASK
 
         // WORKFLOW 1 | SECTION 1 <-- BELOW 50,000
-        $orderID = 0; // controller for order_id
+        $orderID = 1; // controller for order_id
 
         $task = new Task;
         $task->wf_id = '1';
@@ -25,7 +25,7 @@ class TaskSeeder extends Seeder {
         $task->taskName = 'GSD';
         $task->taskType = 'normal';
         $task->maxDuration = '3';
-        $task->order_id = '2';
+        $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
 
@@ -71,7 +71,7 @@ class TaskSeeder extends Seeder {
 
 
         // WORKFLOW 1 | SECTION 2
-        $orderID = 0; // controller for order_id
+        $orderID = 1; // controller for order_id
 
         $task = new Task;
         $task->wf_id = '1';
@@ -94,7 +94,7 @@ class TaskSeeder extends Seeder {
         $task->save();
 
         // WORKFLOW 1 | SECTION 3
-        $orderID = 0; // controller for order_id
+        $orderID = 1; // controller for order_id
 
         $task = new Task;
         $task->wf_id = '1';
@@ -157,13 +157,13 @@ class TaskSeeder extends Seeder {
         $task->save();
 
         // WORKFLOW 1 | SECTION 4
-        $orderID = 0; // controller for order_id
+        $orderID = 1; // controller for order_id
 
         $task = new Task;
         $task->wf_id = '1';
         $task->section_id = '4';
         $task->taskName = 'CHEQUE';
-        $task->taskType = '0';
+        $task->taskType = 'cheque';
         $task->maxDuration = '3';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
@@ -173,7 +173,7 @@ class TaskSeeder extends Seeder {
         $task->wf_id = '1';
         $task->section_id = '4';
         $task->taskName = 'BUDGET';
-        $task->taskType = '0';
+        $task->taskType = 'normal';
         $task->maxDuration = '3';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
@@ -183,7 +183,7 @@ class TaskSeeder extends Seeder {
         $task->wf_id = '1';
         $task->section_id = '4';
         $task->taskName = 'ACCOUNTING';
-        $task->taskType = '0';
+        $task->taskType = 'normal';
         $task->maxDuration = '3';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
@@ -193,7 +193,7 @@ class TaskSeeder extends Seeder {
         $task->wf_id = '1';
         $task->section_id = '4';
         $task->taskName = 'TREASURY';
-        $task->taskType = '0';
+        $task->taskType = 'normal';
         $task->maxDuration = '3';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
@@ -203,7 +203,7 @@ class TaskSeeder extends Seeder {
         $task->wf_id = '1';
         $task->section_id = '4';
         $task->taskName = 'PA';
-        $task->taskType = '0';
+        $task->taskType = 'normal';
         $task->maxDuration = '3';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
@@ -213,14 +213,14 @@ class TaskSeeder extends Seeder {
         $task->wf_id = '1';
         $task->section_id = '4';
         $task->taskName = 'PGO';
-        $task->taskType = '0';
+        $task->taskType = 'normal';
         $task->maxDuration = '3';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
 
         //WORKFLOW 2 | SECTION 1 <-- ABOVE 50,000 BELOW 500,000
-        $orderID = 0; // controller for order_id
+        $orderID = 1; // controller for order_id
 
         $task = new Task;
         $task->wf_id = '2';
@@ -258,7 +258,7 @@ class TaskSeeder extends Seeder {
         $task->taskName = 'PA';
         $task->taskType = 'normal';
         $task->maxDuration = '3';
-        $task->order_id = '4';
+        $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
 
@@ -283,7 +283,7 @@ class TaskSeeder extends Seeder {
         $task->save();
 
         //WORKFLOW 2 | SECTION 2 ====================================================================================================================================================
-        $orderID = 0; // controller for order_id
+        $orderID = 1; // controller for order_id
 
         $task = new Task;
         $task->wf_id = '2';
@@ -336,7 +336,7 @@ class TaskSeeder extends Seeder {
         $task->save();
 
         //WORKFLOW 2 | SECTION 3
-        $orderID = 0; // controller for order_id
+        $orderID = 1; // controller for order_id
 
         $task = new Task;
         $task->wf_id = '2';
@@ -389,7 +389,7 @@ class TaskSeeder extends Seeder {
         $task->save();
 
         //WORKFLOW 2 | SECTION 4
-        $orderID = 0; // controller for order_id
+        $orderID = 1; // controller for order_id
 
         $task = new Task;
         $task->wf_id = '2';
@@ -405,7 +405,7 @@ class TaskSeeder extends Seeder {
         $task->wf_id = '2';
         $task->section_id = '4';
         $task->taskName = 'BUDGET';
-        $task->taskType = '0';
+        $task->taskType = 'normal';
         $task->maxDuration = '3';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
@@ -452,7 +452,7 @@ class TaskSeeder extends Seeder {
         $task->save();
 
         //WORKFLOW 3 | SECTION 1 <-- ABOVE 500,000
-        $orderID = 0; // controller for order_id
+        $orderID = 1; // controller for order_id
 
         $task = new Task;
         $task->wf_id = '3';
@@ -505,7 +505,7 @@ class TaskSeeder extends Seeder {
         $task->save();
 
         //WORKFLOW 3 | SECTION 2
-        $orderID = 0; // controller for order_id
+        $orderID = 1; // controller for order_id
 
         $task = new Task;
         $task->wf_id = '3';
@@ -628,7 +628,7 @@ class TaskSeeder extends Seeder {
         $task->save();
 
         //WORKFLOW 3 | SECTION 3
-        $orderID = 0; // controller for order_id
+        $orderID = 1; // controller for order_id
 
         $task = new Task;
         $task->wf_id = '3';
@@ -691,7 +691,7 @@ class TaskSeeder extends Seeder {
         $task->save();
 
         //WORKFLOW 3 | SECTION 4
-        $orderID = 0; // controller for order_id
+        $orderID = 1; // controller for order_id
 
         $task = new Task;
         $task->wf_id = '3';
@@ -754,7 +754,7 @@ class TaskSeeder extends Seeder {
         $task->save();
 
         // WORKFLOW 4 | SECTION 1
-        $orderID = 0; // controller for order_id
+        $orderID = 1; // controller for order_id
 
         $task = new Task;
         $task->wf_id = '4';
@@ -807,7 +807,7 @@ class TaskSeeder extends Seeder {
         $task->save();
 
         // WORKFLOW 4 | SECTION 2
-        $orderID = 0; // controller for order_id
+        $orderID = 1; // controller for order_id
 
         $task = new Task;
         $task->wf_id = '4';
@@ -860,7 +860,7 @@ class TaskSeeder extends Seeder {
         $task->save();
 
         // WORKFLOW 4 | SECTION 3
-        $orderID = 0; // controller for order_id
+        $orderID = 1; // controller for order_id
 
         $task = new Task;
         $task->wf_id = '4';
