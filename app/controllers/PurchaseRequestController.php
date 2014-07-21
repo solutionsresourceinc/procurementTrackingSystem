@@ -52,7 +52,11 @@ class PurchaseRequestController extends Controller
 		$purchase->controlNo = Input::get('controlNo');
 		$purchase->status = 'Active';
 		$purchase->otherType = Input::get('otherType');
-		$purchase->projectType = Input::get('projectType');
+
+		if(Input::get('otherType') == 'pakyaw')
+			$purchase->projectType = "None";
+		else
+			$purchase->projectType = Input::get('projectType');
 
 		// Set creator id
 		$user_id = Auth::user()->id;
