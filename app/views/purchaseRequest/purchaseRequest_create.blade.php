@@ -126,11 +126,11 @@
 							{{ Form::label('projectType', 'Project Type *', array('class' => 'create-label')) }}
 							<select name="projectType" class="form-control" >
 								<option value="">None</option>
-								<option value="Goods/Services">Goods/Services</option>
-								<option value="Infrastructure">Infrastructure</option>
-								<option value="Consulting Services">Consulting Services</option>
+								<option value="Goods/Services" <?php if( Input::old('projectType') == "Goods/Services" ) echo "selected" ?>>Goods/Services</option>
+								<option value="Infrastructure" <?php if( Input::old('projectType') == "Infrastructure" ) echo "selected" ?>>Infrastructure</option>
+								<option value="Consulting Services" <?php if( Input::old('projectType') == "Consulting Services" ) echo "selected" ?>>Consulting Services</option>
 							</select>
-							<p> </p>
+							<p> {{ Input::get('projectType')  }} </p>
 
 							@if (Session::get('error_projectType'))
 								<font color="red"><i>{{ Session::get('error_projectType') }}</i></font>
@@ -206,7 +206,7 @@
 			
 					<div class="row">
 						<div class="form-group col-md-6" id="template">
-							{{ Form::label('dateTime', 'Date Received ', array('class' => 'create-label')) }}
+							{{ Form::label('dateTime', 'Date Received *', array('class' => 'create-label')) }}
 							<div class="input-group date form_datetime col-md-12" data-date="{{ date('Y-m-d') }}T{{ date('H:i:s') }}Z" data-date-format="dd MM yyyy - HH:ii p" data-link-field="dtp_input2">
 								<input id="disabled_datetimeDateRec" onchange="fix_formatDateRec()" class="form-control" size="16" type="text" value="{{{ Input::old('dateReceived') }}}" readonly>
 								<span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
