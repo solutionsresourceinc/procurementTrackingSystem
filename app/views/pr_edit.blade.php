@@ -462,9 +462,10 @@
                                     <input type="radio" name="radio" value="yes" />Yes<br />
                                     <input type="radio" name="radio" value="no" />No<br />
                                 </td>
-                                <td>By:</td>
-                                <td class="edit-pr-input" colspan="2">
-                                    <input type="text" name="by"  class="form-control" maxlength="255" width="100%">
+                                
+                                <td class="edit-pr-input" colspan="3">
+                                <b>By: </b>
+                                    <input type="text" name="by"  class="form-control" maxlength="255" width="80%">
                                 </td>
 
                                 </tr>
@@ -476,8 +477,6 @@
                             {{Form::close()}}
 
                     @endif
-                    
-
                         <?php
                     }
                         

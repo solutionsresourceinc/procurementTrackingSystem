@@ -269,6 +269,11 @@
                             </span>
                         </a>
                     </li>
+                    <li class="{{Request::is('summary') ? 'active':''}}">
+                        <a href="/summary">
+                            Summary
+                        </a>
+                    </li>
                 </ul>
             </li>
             

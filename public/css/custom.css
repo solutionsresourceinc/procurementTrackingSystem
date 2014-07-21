@@ -394,6 +394,23 @@ table.table td{
 	background: rgb(248, 255, 200);
 }
 
+.summary-panel{
+	padding: 35px 25px;
+	border-radius: 5px;
+}
+
+.summary-panel-title{
+	font-size: 17px;
+}
+
+.summary-amount{
+	font-size: 75px;
+}
+
+th.today{
+	cursor: pointer;
+}
+
 @media all and (max-width: 1065px){
 	.accept-button{
 		margin: 8px 25px;

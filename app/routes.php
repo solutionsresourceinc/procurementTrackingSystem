@@ -53,6 +53,7 @@ Route::get( 'purchaseRequest/vieweach/{id}', 'PurchaseRequestController@vieweach
 Route::get( 'purchaseRequest/closed', 'PurchaseRequestController@viewClosed');
 Route::get( 'purchaseRequest/overdue', 'PurchaseRequestController@viewOverdue');
 Route::get( 'purchaseRequest/cancelled', 'PurchaseRequestController@viewCancelled');
+Route::get('/summary', 'PurchaseRequestController@viewSummary');
 Route::post('purchaseRequest/edit/{id}',[ 'as' => 'purchaseRequest_editsubmit', 'uses' => 'PurchaseRequestController@edit_submit']);
 Route::post('purchaseRequest/create', ['as' => 'purchaseRequest_submit', 'uses' => 'PurchaseRequestController@create_submit']);
 Route::post('purchaseRequest/changeForm/{id}', function($id)
@@ -72,8 +73,12 @@ Route::post('purchaseRequest/changeForm/{id}', function($id)
 
 Route::post('purchaseRequest/submitForm/{id}', ['as' => 'submitForm', 'uses' => 'PurchaseRequestController@changeForm']);
 
-
+//Checklist Rowtype Routes
 Route::post('checklistedit', ['uses' => 'PurchaseRequestController@checklistedit']);
+Route::post('certification', ['uses' => 'PurchaseRequestController@certification']);
+//End Checklist Rowtype Routes
+
+
 Route::post('insertaddon', ['uses' => 'PurchaseRequestController@insertaddon']);
 Route::post('editaddon', ['uses' => 'PurchaseRequestController@editaddon']);
 Route::get( 'purchaseRequest/edit/{id}', ['uses'=>'PurchaseRequestController@editpagecall']);
