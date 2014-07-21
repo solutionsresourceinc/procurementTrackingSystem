@@ -441,7 +441,7 @@
                     if ($taskch!=0 && $taskc->task_id==$tasks->id && $tasks->designation_id==0)
                     {   
                         echo "<tr class='current-task'>";
-                        if ($tasks->taskType!="cheque"&&$tasks->taskType!="published")
+                        if ($tasks->taskType!="cheque"&&$tasks->taskType!="published"&&$tasks->taskType!="contract"&&$tasks->taskType!="meeting")
                         echo "<td>".$tasks->order_id.". ".$tasks->taskName."</td>";
                     
                     //Task Forms
@@ -667,6 +667,93 @@
                                 </td>
                             {{Form::close()}}
                         @endif
+                        @if($tasks->taskType == "conference")
+                            {{Form::open(['url'=>'conference'], 'POST')}}
+                                <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
+                                    <td colspan="4">
+                                    <?php 
+                                    $today = date("m/d/y");
+                                    ?>
+                                    <input class="datepicker" size="16" type="text" name="date" class="form-control" value="{{$today}}" width="100%">
+                                    <span class="add-on"><i class="icon-th"></i></span>
+                                    </td>
+                                  
+                                </tr>
+                                <tr class="current-task">
+                                <td colspan="4" style="border-right: none"></td>
+                                <td style="border-left: none; text-align: center;">
+                                    <input type="submit" class="btn btn-success"> 
+                                </td>
+                            {{Form::close()}}
+                        @endif
+                        @if($tasks->taskType == "contract")
+                            {{Form::open(['url'=>'contractmeeting'], 'POST')}}
+                                <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
+
+                                    <td>
+                                        <b>{{$tasks->taskName}}</b>
+                                    <?php 
+                                    $today = date("m/d/y");
+                                    ?>
+                                    <input class="datepicker" size="16" type="text" name="date" class="form-control" value="{{$today}}" width="100%">
+                                    <span class="add-on"><i class="icon-th"></i></span>
+                                    </td>
+                                    
+                                    <td >
+                                    <b>No. of Days Accomplished</b>
+                                    </td>
+                                    <td class="edit-pr-input">  
+                                    <input type="number" name="noofdays"  class="form-control" maxlength="100" width="80%">
+                                    </td>
+                                    <td>
+                                    <b>Contract Agreement</b>
+                                    </td>
+                                    <td class="edit-pr-input" colspan="2">  
+                                    <input type="text" name="contractmeeting"  class="form-control" maxlength="100" width="80%">
+                                    </td>
+
+                                </tr>
+                                <tr class="current-task">
+                                <td colspan="4" style="border-right: none"></td>
+                                <td style="border-left: none; text-align: center;">
+                                    <input type="submit" class="btn btn-success"> 
+                                </td>
+                            {{Form::close()}}
+                        @endif
+                        @if($tasks->taskType == "meeting")
+                            {{Form::open(['url'=>'contractmeeting'], 'POST')}}
+                                <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
+
+                                    <td>
+                                        <b>{{$tasks->taskName}}</b>
+                                    <?php 
+                                    $today = date("m/d/y");
+                                    ?>
+                                    <input class="datepicker" size="16" type="text" name="date" class="form-control" value="{{$today}}" width="100%">
+                                    <span class="add-on"><i class="icon-th"></i></span>
+                                    </td>
+                                    
+                                    <td >
+                                    <b>No. of Days Accomplished</b>
+                                    </td>
+                                    <td class="edit-pr-input">  
+                                    <input type="number" name="noofdays"  class="form-control" maxlength="100" width="80%">
+                                    </td>
+                                    <td>
+                                    <b>Minutes of Meeting</b>
+                                    </td>
+                                    <td class="edit-pr-input" colspan="2">  
+                                    <input type="text" name="contractmeeting"  class="form-control" maxlength="100" width="80%">
+                                    </td>
+
+                                </tr>
+                                <tr class="current-task">
+                                <td colspan="4" style="border-right: none"></td>
+                                <td style="border-left: none; text-align: center;">
+                                    <input type="submit" class="btn btn-success"> 
+                                </td>
+                            {{Form::close()}}
+                        @endif
                     <!--End Task Forms-->
                         <?php
                     }
@@ -676,7 +763,7 @@
                     else
                     {
                         echo "<tr>";
-                        if ($tasks->taskType!="cheque"&&$tasks->taskType!="published")
+                        if ($tasks->taskType!="cheque"&&$tasks->taskType!="published"&&$tasks->taskType!="contract"&&$tasks->taskType!="meeting")
                         echo "<td>".$tasks->order_id.". ".$tasks->taskName."</td>";
                         //Task Display
                         ?>
@@ -819,6 +906,53 @@
                                     </td>
                                     <td class="edit-pr-input" colspan="3">  
                                     {{$taskp->custom2}}
+                                    </td>
+                        @endif
+                        @if($tasks->taskType=="conference")
+                                    <td colspan="4">
+                                    {{$taskp->custom1}}
+                                    </td>
+                        @endif
+                        @if($tasks->taskType=="contract")
+                                    <td>
+                                    <b>{{$tasks->taskName}}</b>
+                                    <?php 
+                                    $today = date("m/d/y");
+                                    ?>
+                                    {{$taskp->custom1}}
+                                    </td>
+                                    <td >
+                                    <b>No. of Days Accomplished</b>
+                                    </td>
+                                    <td class="edit-pr-input">  
+                                    {{$taskp->custom2}}
+                                    </td>
+                                    <td>
+                                    <b>Contract Agreement</b>
+                                    </td>
+                                    <td class="edit-pr-input" colspan="2">  
+                                    {{$taskp->custom3}}
+                                    </td>
+                        @endif
+                         @if($tasks->taskType=="meeting")
+                                    <td>
+                                    <b>{{$tasks->taskName}}</b>
+                                    <?php 
+                                    $today = date("m/d/y");
+                                    ?>
+                                    {{$taskp->custom1}}
+                                    </td>
+                                    <td >
+                                    <b>No. of Days Accomplished</b>
+                                    </td>
+                                    <td class="edit-pr-input">  
+                                    {{$taskp->custom2}}
+                                    </td>
+                                    <td>
+                                    <b>Minutes of Meeting</b>
+                                    </td>
+                                    <td class="edit-pr-input" colspan="2">  
+                                    {{$taskp->custom3}}
                                     </td>
                         @endif
                         <?php 
