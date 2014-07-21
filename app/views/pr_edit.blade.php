@@ -441,7 +441,7 @@
                     if ($taskch!=0 && $taskc->task_id==$tasks->id && $tasks->designation_id==0)
                     {   
                         echo "<tr class='current-task'>";
-                        if ($tasks->taskType!="cheque"&&$tasks->taskType!="published"&&$tasks->taskType!="contract"&&$tasks->taskType!="meeting")
+                        if ($tasks->taskType!="cheque"&&$tasks->taskType!="published"&&$tasks->taskType!="contract"&&$tasks->taskType!="meeting"&&$tasks->taskType!="rfq")
                         echo "<td>".$tasks->order_id.". ".$tasks->taskName."</td>";
                     
                     //Task Forms
@@ -754,6 +754,37 @@
                                 </td>
                             {{Form::close()}}
                         @endif
+                         @if($tasks->taskType == "rfq")
+                            {{Form::open(['url'=>'rfq'], 'POST')}}
+                                <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
+                                    <td>
+                                    <b>{{$tasks->taskName}}</b>
+                                    <input type="number" name="noofsuppliers"  class="form-control" maxlength="100" width="80%">
+                                    </td>
+                                    <td>
+                                    <b>Date of RFQ</b> (Within PGEPS 7 Days)
+                                    </td>
+                                    <?php 
+                                    $today = date("m/d/y");
+                                    ?>
+                                    <td>
+                                    <input class="datepicker" size="16" type="text" name="date" class="form-control" value="{{$today}}" width="100%">
+                                    <span class="add-on"><i class="icon-th"></i></span>
+                                    </td>
+                                    <td>
+                                    <b>By</b>
+                                    </td>
+                                    <td class="edit-pr-input" colspan="2">  
+                                    <input type="text" name="by"  class="form-control" maxlength="100" width="80%">
+                                    </td>
+                                </tr>
+                                <tr class="current-task">
+                                <td colspan="4" style="border-right: none"></td>
+                                <td style="border-left: none; text-align: center;">
+                                    <input type="submit" class="btn btn-success"> 
+                                </td>
+                            {{Form::close()}}
+                        @endif
                     <!--End Task Forms-->
                         <?php
                     }
@@ -763,7 +794,7 @@
                     else
                     {
                         echo "<tr>";
-                        if ($tasks->taskType!="cheque"&&$tasks->taskType!="published"&&$tasks->taskType!="contract"&&$tasks->taskType!="meeting")
+                        if ($tasks->taskType!="cheque"&&$tasks->taskType!="published"&&$tasks->taskType!="contract"&&$tasks->taskType!="meeting"&&$tasks->taskType!="rfq")
                         echo "<td>".$tasks->order_id.". ".$tasks->taskName."</td>";
                         //Task Display
                         ?>
@@ -950,6 +981,24 @@
                                     </td>
                                     <td>
                                     <b>Minutes of Meeting</b>
+                                    </td>
+                                    <td class="edit-pr-input" colspan="2">  
+                                    {{$taskp->custom3}}
+                                    </td>
+                        @endif
+                        @if($tasks->taskType=="rfq")
+                                    <td>
+                                    <b>{{$tasks->taskName}}</b>
+                                    {{$taskp->custom1}}
+                                    </td>
+                                    <td>
+                                    <b>Date of RFQ</b> (Within PGEPS 7 Days)
+                                    </td>
+                                    <td>
+                                    {{$taskp->custom2}}
+                                    </td>
+                                    <td>
+                                    <b>By</b>
                                     </td>
                                     <td class="edit-pr-input" colspan="2">  
                                     {{$taskp->custom3}}
