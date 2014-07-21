@@ -461,6 +461,10 @@ public function viewOverdue()
 	return View::make('purchaseRequest.purchaseRequest_overdue');
 }
 
+public function viewSummary(){
+	return View::make('purchaseRequest.summary');
+}
+
 public function edit_submit(){
 
 $id = Input::get('id');
