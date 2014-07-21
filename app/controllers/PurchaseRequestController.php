@@ -48,6 +48,7 @@ class PurchaseRequestController extends Controller
 		$purchase->office = Input::get( 'office' );
 		$purchase->requisitioner = Input::get( 'requisitioner' );
 		$purchase->dateRequested = Input::get( 'dateRequested' );
+		$purchase->dateReceived = Input::get( 'dateReceived' );
 		$purchase->controlNo = Input::get('controlNo');
 		$purchase->status = 'Active';
 		$purchase->otherType = Input::get('otherType');
@@ -228,6 +229,7 @@ class PurchaseRequestController extends Controller
 					$error_office = $purchase->validationErrors->first('office');
 					$error_requisitioner = $purchase->validationErrors->first('requisitioner');
 					$error_dateRequested = $purchase->validationErrors->first('dateRequested');
+					$error_dateReceived = $purchase->validationErrors->first('dateReceived');
 
 					// Inserting Error Message To a Session
 					Session::put('error_projectPurpose', $error_projectPurpose );
@@ -236,6 +238,7 @@ class PurchaseRequestController extends Controller
 					Session::put('error_office', $error_office );
 					Session::put('error_requisitioner', $error_requisitioner );
 					Session::put('error_dateRequested', $error_dateRequested );
+					Session::put('error_dateReceived', $error_dateReceived );
 					Session::put('error_projectType', $error_projectType );
 
 
@@ -303,6 +306,7 @@ class PurchaseRequestController extends Controller
 				$error_office = $purchase->validationErrors->first('office');
 				$error_requisitioner = $purchase->validationErrors->first('requisitioner');
 				$error_dateRequested = $purchase->validationErrors->first('dateRequested');
+				$error_dateReceived = $purchase->validationErrors->first('dateReceived');
 
 				// Inserting Error Message To a Session
 				Session::put('error_projectPurpose', $error_projectPurpose );
@@ -311,6 +315,7 @@ class PurchaseRequestController extends Controller
 				Session::put('error_office', $error_office );
 				Session::put('error_requisitioner', $error_requisitioner );
 				Session::put('error_dateRequested', $error_dateRequested );
+				Session::put('error_dateReceived', $error_dateReceived );
 				Session::put('error_projectType', $error_projectType );
 
 				if(Input::get('hide_modeOfProcurement') == "")
@@ -319,8 +324,6 @@ class PurchaseRequestController extends Controller
 				}
 
 				return Redirect::back()->withInput();
-
-
 			}
 		}
 		else
@@ -338,6 +341,7 @@ class PurchaseRequestController extends Controller
 			$error_office = $purchase->validationErrors->first('office');
 			$error_requisitioner = $purchase->validationErrors->first('requisitioner');
 			$error_dateRequested = $purchase->validationErrors->first('dateRequested');
+			$error_dateReceived = $purchase->validationErrors->first('dateReceived');
 
 			// Inserting Error Message To a Session
 			Session::put('error_projectPurpose', $error_projectPurpose );
@@ -346,6 +350,7 @@ class PurchaseRequestController extends Controller
 			Session::put('error_office', $error_office );
 			Session::put('error_requisitioner', $error_requisitioner );
 			Session::put('error_dateRequested', $error_dateRequested );
+			Session::put('error_dateReceived', $error_dateReceived );
 			Session::put('error_projectType', $error_projectType );
 
 			if(Input::get('hide_modeOfProcurement') == "")
