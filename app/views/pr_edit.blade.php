@@ -479,7 +479,7 @@
                             {{Form::open(['url'=>'checklistedit'], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
                                 <td class="edit-pr-input">
-                                    <input type ="text" name="assignee" class="form-control" width="100%">
+                                    <input type ="text" name="assignee" placeholder="Enter name here" class="form-control" width="100%">
                                 </td>
                                 <td class="edit-pr-input"> 
                                     <?php 
@@ -513,7 +513,7 @@
                                 
                                 <td class="edit-pr-input" colspan="2">
                                 <b>By: </b>
-                                    <input type="text" name="by"  class="form-control" maxlength="255" width="80%">
+                                    <input type="text" name="by"  placeholder="Enter name here" class="form-control" maxlength="255" width="80%">
                                 </td>
 
                                 </tr>
@@ -542,7 +542,7 @@
                                 </td>
                                 <td class="edit-pr-input" colspan="3">
                                     <b>By: </b>
-                                    <input type="text" name="by"  class="form-control" maxlength="100" width="80%">
+                                    <input type="text" name="by"  placeholder="Enter name here" class="form-control" maxlength="100" width="80%">
                                 </td>
 
                                 </tr>
@@ -626,7 +626,7 @@
                                     <b>Posted By</b>
                                     </td>
                                     <td class="edit-pr-input" colspan="2">  
-                                    <input type="text" name="by"  class="form-control" maxlength="100" width="80%">
+                                    <input type="text" name="by"  placeholder="Enter name here" class="form-control" maxlength="100" width="80%">
                                     </td>
                                 </tr>
                                 <tr class="current-task">
@@ -825,7 +825,7 @@
                                     <span class="add-on"><i class="icon-th"></i></span>
                                 </td>
                                 <td class="edit-pr-input" colspan="2">
-                                    <input type ="text" name="assignee" class="form-control" width="100%">
+                                    <input type ="text" name="assignee" placeholder="Enter name here" class="form-control" width="100%">
                                 </td>
                                 </tr>
                                 <tr class="current-task">
@@ -847,7 +847,7 @@
                                     <span class="add-on"><i class="icon-th"></i></span>
                                 </td>
                                 <td class="edit-pr-input">
-                                    <input type ="text" name="assignee" class="form-control" width="100%">
+                                    <input type ="text" name="assignee" placeholder="Enter name here" class="form-control" width="100%">
                                 </td>
                                 <td class="edit-pr-input" colspan="2">
                                     <input type="text" name="remarks"  class="form-control" maxlength="255" width="100%">
