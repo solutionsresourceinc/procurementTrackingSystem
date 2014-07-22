@@ -369,7 +369,6 @@
 				document.getElementById("num").value = window.old_amount;
 				amount = 0;
 			}
-			
 
 			newamount =	amount; 
 
