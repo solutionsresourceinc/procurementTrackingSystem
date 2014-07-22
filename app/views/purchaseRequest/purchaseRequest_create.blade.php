@@ -89,6 +89,7 @@
 								<option value="shopping">Shopping</option>
 								<option value="fuel">Fuel</option>
 								<option value="pakyaw">Pakyaw</option>
+								<option value="Direct Contracting">Direct Contracting</option>
 							</select>
 							<p> </p>
 						</div>
@@ -468,6 +469,16 @@
 				document.getElementById("num").onchange = new Function("numberWithCommas2(this.value)");
 				document.getElementById('hide_modeOfProcurement').value = document.getElementById('modeOfProcurement').value;
 				
+			}
+			else if(value == "Direct Contracting")
+			{
+				document.getElementById('projectType').disabled = false;
+				window.last_selected = document.getElementById('modeOfProcurement').selectedIndex 
+				document.getElementById('modeOfProcurement').selectedIndex = 5;
+				document.getElementById('modeOfProcurement').onchange = 5;
+				document.getElementById("num").onchange = new Function("numberWithCommas2(this.value)");
+				document.getElementById('hide_modeOfProcurement').value = document.getElementById('modeOfProcurement').value;
+
 			}
 			else
 			{
