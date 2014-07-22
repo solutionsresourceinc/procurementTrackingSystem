@@ -121,7 +121,7 @@
                     ?>
                         >
                         <td width="10%">{{ $request->controlNo; }}</td>
-                        <td width="30%"><a data-toggle="tooltip" data-placement="top" class="purpose" href="{{ URL::to('purchaseRequest/vieweach/'. $request->id) }}" title="View Project Details">{{ $request->projectPurpose; }}</a></td>
+                        <td width="27%"><a data-toggle="tooltip" data-placement="top" class="purpose" href="{{ URL::to('purchaseRequest/vieweach/'. $request->id) }}" title="View Project Details">{{ $request->projectPurpose; }}</a></td>
                         <?php 
                             $doc = new Purchase; 
                             $doc = DB::table('document')->where('pr_id', $request->id)->get(); 
@@ -129,12 +129,12 @@
                         <td width="18%">
                             @foreach ($doc as $docs) {{ Workflow::find($docs->work_id)->workFlowName; }} @endforeach
                         </td>
-                        <td width="17%" style="text-align: center">P{{{ $request->amount }}}</td>
-                        <td width="15%">{{ $request->dateReceived; }}</td>
+                        <td width="12%" style="text-align: center">P{{{ $request->amount }}}</td>
+                        <td width="20%">{{ $request->dateReceived; }}</td>
 
                         @if(Entrust::hasRole('Administrator') )
                         
-                            <td width="10%">
+                            <td width="13%">
                                 <a data-toggle="tooltip" data-placement="top" class='iframe btn btn-success' href='edit/{{$request->id}}' title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
                                 <form method="POST" action="delete" id="myForm_{{ $request->id }}" name="myForm" style="display: -webkit-inline-box;">
                                    <input type="hidden" name="del_pr" value="{{ $request->id }}">
@@ -211,7 +211,7 @@
 </div>
 
 <div id="searchTable">
-    <table id="table_id2" class="table table-striped display " border="1" style="display:none">
+    <table id="table_id2" class="table table-striped display" style="display:none">
         <thead>
             <tr>
                 <th>Control No.</th>
@@ -370,20 +370,20 @@
             var rex = new RegExp($(this).val(), 'i');
             if(rex == '/(?:)/i')
             {
-                document.getElementById('table_id2').style.display = 'block';
+                document.getElementById('table_id2').style.display = 'table';
                 $('.searchable tr').hide();
                 $('.searchable tr').filter(function() {
                     return rex.test($(this).text());
                 }).show();
-                document.getElementById('table_id').style.display = 'block';
-                document.getElementById('pages').style.display = 'block';
+                document.getElementById('table_id').style.display = 'table';
+                document.getElementById('pages').style.display = 'table';
                 document.getElementById('table_id2').style.display = 'none';
                 document.getElementById('table_id3').style.display = 'none';
 
             }
             else
             {
-                document.getElementById('table_id2').style.display = 'block';
+                document.getElementById('table_id2').style.display = 'table';
                 $('.searchable tr').hide();
                 $('.searchable tr').filter(function() {
                     return rex.test($(this).text());
@@ -401,7 +401,7 @@
                 {
                     document.getElementById('table_id').style.display = 'none';
                     document.getElementById('pages').style.display = 'none';
-                    document.getElementById('table_id2').style.display = 'block';
+                    document.getElementById('table_id2').style.display = 'table';
                     document.getElementById('table_id3').style.display = 'none';
                 }
                 
