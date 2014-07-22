@@ -126,7 +126,7 @@
             @endif
         </tbody>
     </table>  
-<div id="pages">
+<div id="pages" align="center">
     <center> {{ $requests->links(); }} </center>
 </div>
 
@@ -148,7 +148,7 @@
             $requests = new Purchase;
            
             $user_selected=Auth::user()->id;
-              $requests = DB::table('purchase_request')->where('status', '=', 'Closed')->paginate(10); 
+              $requests = DB::table('purchase_request')->where('status', '=', 'Closed')->get(); 
             //End Query Restrictions
         ?>
 

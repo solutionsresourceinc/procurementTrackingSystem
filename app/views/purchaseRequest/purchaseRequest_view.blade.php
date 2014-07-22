@@ -538,7 +538,7 @@
 
 	<!-- images section -->
 	
-	<div id="img-section">
+	<div id="img-section" class="no-print">
 
 		<?php
 			$docs= Document::where('pr_id', $purchase->id)->first();
