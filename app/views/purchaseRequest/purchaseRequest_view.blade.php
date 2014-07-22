@@ -8,6 +8,28 @@
 		vertical-align:top;
 		word-break:break-word;
 	}
+    
+    @media print /*FOR PRINT LAYOUT*/
+    {    
+        .no-print, .no-print *
+        {
+            display: none !important;
+        }
+            
+        table, tr, td, th, p, h1, h2, h3, h4, h5
+        {
+            border-collapse: collapse !important;
+            padding : 0px !important;
+            font-size : 86% !important;
+            height : 4px !important;
+        }
+
+        .panel, .panel-heading
+        {
+            margin: 0px !important;
+            /*padding : 5px !important;*/
+        }
+    }
 	</style>
 
 
@@ -26,6 +48,9 @@
 
 
 	<div class="btn-group pull-right options">
+            <button class="btn btn-info no-print" onclick="window.print()">
+                <span class="glyphicon glyphicon-print"></span>&nbsp;&nbsp;Print
+            </button>
 	<?php 
 		$cuser=Auth::User()->id;
 		if (Entrust::hasRole('Administrator'))
@@ -33,7 +58,7 @@
 			if($purchase->status!="Cancelled")
 			{
 	?>
-				<a href="../edit/{{$purchase->id}}" class="btn btn-success">
+				<a href="../edit/{{$purchase->id}}" class="btn btn-success no-print">
 					<span class="glyphicon glyphicon-edit"></span>&nbsp;&nbsp;Edit
 				</a>
 	<?php
@@ -47,7 +72,7 @@
 				if($purchase->status!="Cancelled")
 				{
 	?>
-					<a href="../edit/{{$purchase->id}}" class="btn btn-success">
+					<a href="../edit/{{$purchase->id}}" class="btn btn-success no-print">
 						<span class="glyphicon glyphicon-edit"></span>&nbsp;&nbsp;Edit
 					</a>
 
@@ -58,13 +83,13 @@
 		}
 	?>
 
-		<button type="button" class="btn btn-default" onclick="window.location.href='../../purchaseRequest/view'">
+		<button type="button" class="btn btn-default no-print" onclick="window.location.href='../../purchaseRequest/view'">
 			<span class="glyphicon glyphicon-step-backward"></span>&nbsp;Back
 		</button>
 		
 	</div>
 
-	<hr class="clear" />
+	<hr class="clear no-print" />
 
 	@if($purchase->status == "Cancelled")
 		<div class="alert alert-danger"> Reason: {{ strip_tags($purchase->reason) }}</div> 
