@@ -27,7 +27,7 @@
         <div class="col-md-4">
             <div class="well" style="">
                 <span class="summary-panel-title"><strong>Total Number of PR Received:</strong></span><br/>
-                <span class="summary-amount" style="color: #246D27">100</span>
+                <span class="summary-amount" style="color: #246D27">{{ $prCount }}</span>
             </div>
         </div>
         <div class="col-md-4">

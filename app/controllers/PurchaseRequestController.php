@@ -66,6 +66,12 @@ class PurchaseRequestController extends Controller
 
 		if($purchase_save)
 		{
+			// Insert data to reports table
+			$reports = new Reports;
+			$reports->purchaseNo = $purchase->id;
+			$reports->pRequestDateReceived = Input::get( 'dateReceived' );
+			$reports->save();
+
 			$document->pr_id = $purchase->id;
 			$document->work_id = Input::get('hide_modeOfProcurement');
 			$document_save = $document->save();
@@ -464,8 +470,12 @@ public function viewOverdue()
 	return View::make('purchaseRequest.purchaseRequest_overdue');
 }
 
-public function viewSummary(){
-	return View::make('purchaseRequest.summary');
+public function viewSummary()
+{
+	$prCount = Reports::count();
+
+	return View::make('purchaseRequest.summary')
+		->with('prCount',$prCount);
 }
 
 public function getDateRange()
