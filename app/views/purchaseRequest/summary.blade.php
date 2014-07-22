@@ -33,13 +33,13 @@
         <div class="col-md-4">
             <div class="well" style="">
                 <span class="summary-panel-title"><strong>Total Number of PO Received:</strong></span><br/>
-                <span class="summary-amount" style="color: #4E3A17">765</span>
+                <span class="summary-amount" style="color: #4E3A17">{{ $POCount }}</span>
             </div>
         </div>
         <div class="col-md-4">
             <div class="well" style="">
                 <span class="summary-panel-title"><strong>Total Number of Cheque Received:</strong></span><br/>
-                <span class="summary-amount" style="color: #1B4F69">983</span>
+                <span class="summary-amount" style="color: #1B4F69">{{ $chequeCount }}</span>
             </div>
         </div>
     </div>

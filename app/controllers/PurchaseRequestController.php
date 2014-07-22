@@ -473,9 +473,13 @@ public function viewOverdue()
 public function viewSummary()
 {
 	$prCount = Reports::count();
+	$POCount = Reports::where('pOrderDateReceived', '!=' , '0000-00-00 00:00:00')->count();
+	$chequeCount = Reports::where('chequeDateReceived', '!=' , '0000-00-00 00:00:00')->count();
 
 	return View::make('purchaseRequest.summary')
-		->with('prCount',$prCount);
+		->with('prCount',$prCount)
+		->with('POCount',$POCount)
+		->with('chequeCount',$chequeCount);
 }
 
 public function getDateRange()
@@ -764,7 +768,13 @@ if (($check==3||$remarks==" ")&&$assignee!=NULL)
 	$taskcurrent=Tasks::find($taskd->task_id);
 	if($taskcurrent->taskName=="BAC (DELIVERY)"||$taskcurrent->taskName=="Governor's Office")
 	{
+		$purchaseNo = $docs->pr_id;
+		date_default_timezone_set("Asia/Manila");
+		$dateToday = date('Y-m-d H:i:s');
 
+		$reports = Reports::wherePurchaseNo($purchaseNo);
+		$reports->pOrderDateReceived = $dateToday;
+		$reports->save();
 	}
 
 	//End PO Section Check
@@ -1106,6 +1116,16 @@ if ($check==2)
 	$docs=Document::find($taskd->doc_id);
 
 	//Cheque
+
+	$purchaseNo = $docs->pr_id;
+	date_default_timezone_set("Asia/Manila");
+	$dateToday = date('Y-m-d H:i:s');
+
+	$reports = Reports::wherePurchaseNo($purchaseNo);
+	$reports->chequeDateReceived = $dateToday;
+	$reports->save();
+
+
 
 	//End Cheque
 	$delcount= Count::where('doc_id', $docs->id)->delete();
