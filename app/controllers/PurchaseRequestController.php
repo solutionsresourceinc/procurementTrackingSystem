@@ -770,8 +770,8 @@ if (($check==3||$remarks==" ")&&$assignee!=NULL)
 	{
 		$purchaseNo = $docs->pr_id;
 		
-		$reports = Reports::wherePurchaseNo($purchaseNo);
-		$reports->pOrderDateReceived = Input::get('dateFinished');
+		$reports = Reports::where('purchaseNo', '=', $purchaseNo)->first();
+		$reports->pOrderDateReceived = $dateFinished;
 		$reports->save();
 	}
 
@@ -1145,8 +1145,10 @@ if ($check==2)
 
 	$purchaseNo = $docs->pr_id;
 
-	$reports = Reports::wherePurchaseNo($purchaseNo);
-	$reports->chequeDateReceived = Input::get('date');
+	$reports = Reports::where('purchaseNo', '=', $purchaseNo)->first();
+	$timestamp = strtotime($date);
+	$dateFinished= date("Y-m-d H:i:s", $timestamp);
+	$reports->chequeDateReceived = $dateFinished;
 	$reports->save();
 
 
