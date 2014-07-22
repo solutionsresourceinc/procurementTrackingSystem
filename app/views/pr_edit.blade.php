@@ -897,10 +897,10 @@
 
                         @if($tasks->taskType=="certification")
                             <td colspan="2">
-                                <input type="checkbox" name="displayradio" value="yes" 
+                                <input type="radio" name="displayradio" value="yes" 
                                 <?php if($taskp->custom1=="yes") echo " checked";?> 
                                 disabled > Yes
-                                <input type ="checkbox" name ="displayradio" value="no" 
+                                <input type="radio" name ="displayradio" value="no" 
                                 <?php if($taskp->custom1=="no") echo " checked";?>
                                 disabled> No
                             </td>
