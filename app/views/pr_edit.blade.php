@@ -489,7 +489,7 @@
                                     <span class="add-on"><i class="icon-th"></i></span>
                                 </td>
                                 <td class="edit-pr-input">
-                                    <input type="number" name="daysOfAction" class="form-control"  min="0" width="100%">
+                                    <input type="number" name="daysOfAction" class="form-control"  min="0" value="1" width="100%">
                                 </td>
                                 <td class="edit-pr-input">
                                     <input type="text" name="remarks"  class="form-control" maxlength="255" width="100%">
