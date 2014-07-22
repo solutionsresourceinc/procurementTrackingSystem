@@ -92,7 +92,7 @@
 	<hr class="clear no-print" />
 
 	@if($purchase->status == "Cancelled")
-		<div class="alert alert-danger"> Reason: {{ strip_tags($purchase->reason) }}</div> 
+		<div class="alert alert-danger no-print"> Reason: {{ strip_tags($purchase->reason) }}</div> 
 	@endif
 	
 	<div class="panel panel-success">
@@ -104,7 +104,7 @@
 						<?php $workName = DB::table('workflow')->where('id',$wfName->work_id)->first(); ?>
 						{{{ strtoupper($workName->workFlowName) }}}
 
-						<span class="label {{($purchase->status == 'New') ? 'label-primary' : (($purchase->status == 'Active') ? 'label-success' : (($purchase->status == 'Overdue') ? 'label-danger' : 'label-default'))}}">
+						<span class="no-print label {{($purchase->status == 'New') ? 'label-primary' : (($purchase->status == 'Active') ? 'label-success' : (($purchase->status == 'Overdue') ? 'label-danger' : 'label-default'))}}">
 							{{ $purchase->status; }}
 						</span>
 						</h4>
