@@ -19,7 +19,7 @@ class CreatePurchaseRequestTable extends Migration {
 			$table->string('projectType', 255);
 			$table->string('sourceOfFund', 255);
 			$table->string('amount', 45);
-			$table->string('controlNo',255);
+			$table->integer('controlNo');
 			$table->string('status', 255);
 			$table->integer('requisitioner')->references('id')->on('users');
 			$table->integer('office')->references('id')->on('offices');
