@@ -422,9 +422,17 @@
 
                
                     $previousTaskType="0";
+                    $countadjust=0;
                     foreach ($task as $tasks) 
                     {
-                    
+                        $taskp =TaskDetails::where('doc_id', $docs->id)->where('task_id', $tasks->id)->first();
+
+                        if($taskp->status=="Lock")
+                            {
+                                $countadjust=$countadjust+1;
+                                continue;
+                            }
+                        //-$countadjust;
 
                     if ($previousTaskType!="normal"&&$tasks->taskType=="normal"){
                         echo "<tr><th width='30%'></th>";
@@ -454,7 +462,15 @@
                     {   
                         echo "<tr class='current-task'>";
                         if ($tasks->taskType!="cheque"&&$tasks->taskType!="published"&&$tasks->taskType!="contract"&&$tasks->taskType!="meeting"&&$tasks->taskType!="rfq")
-                        echo "<td>".$tasks->order_id.". ".$tasks->taskName."</td>";
+                        {
+                        echo "<td>";
+                        echo $tasks->order_id-$countadjust;
+                        echo ". ".$tasks->taskName."</td>";
+                        }
+                        else
+                        {
+                            $countadjust=$countadjust+1;
+                        }
                     
                     //Task Forms
                     ?>
@@ -853,8 +869,14 @@
                     else
                     {
                         echo "<tr>";
-                        if ($tasks->taskType!="cheque"&&$tasks->taskType!="published"&&$tasks->taskType!="contract"&&$tasks->taskType!="meeting"&&$tasks->taskType!="rfq")
-                        echo "<td>".$tasks->order_id.". ".$tasks->taskName."</td>";
+                        if ($tasks->taskType!="cheque"&&$tasks->taskType!="published"&&$tasks->taskType!="contract"&&$tasks->taskType!="meeting"&&$tasks->taskType!="rfq"){
+                        echo "<td>";
+                    echo $tasks->order_id-$countadjust;
+                    echo ". ".$tasks->taskName."</td>";}
+                        else
+                        {
+                        $countadjust=$countadjust+1;
+                        }
                         //Task Display
                         ?>
                         @if ($tasks->taskType=="normal")

@@ -102,32 +102,36 @@ class PurchaseRequestController extends Controller
 				{
 					$task_details = New TaskDetails;
 					$task_details->task_id = $task->id;
+					$stringamount=$new_purchase->amount;
+					$stringamount=str_replace(str_split(','), '', $stringamount);
+					$amount = (float)$stringamount;
 
 					if($firstnew == 0)
 					 	$task_details->status = "New";
 				 	else
 				 		$task_details->status = "Pending";
 				 	//Project Type 
-				 	if($task->taskName=="PRE-PROCUREMENT CONFERENCE"||$task->taskName=="ADVERTISMENT"||$task->taskName=="PRE-BID CONFERENCE")
+				 	if($task->taskName=="PRE-PROCUREMENT CONFERENCE"||$task->taskName=="ADVERTISEMENT"||$task->taskName=="PRE-BID CONFERENCE")
 				 	{
+				 		
+				 		$task_details->status="Lock";
+
 				 		if($new_purchase->projectType=="Goods/Services")
 						{
-							if($task->taskName=="PRE-PROCUREMENT CONFERENCE"||$task->taskName=="ADVERTISMENT")
+							if($task->taskName=="PRE-PROCUREMENT CONFERENCE"||$task->taskName=="ADVERTISEMENT")
 							{
-								if(!($new_purchase->amount>2000000))
+								if(($amount>2000000))
 								{
 				
-								$task_details->status="Lock";
+								$task_details->status="Pending";
 				
 								}
 							}
-							if($task->taskName=="PRE-BID CONFERENCE")				
+							else if($task->taskName=="PRE-BID CONFERENCE")				
 							{
-								if(!($new_purchasee->amount>1000000))
+								if(($amount>1000000))
 								{
-
-								$task_details->status="Lock";
-								
+								$task_details->status="Pending";
 								}
 							}
 						}
@@ -135,24 +139,24 @@ class PurchaseRequestController extends Controller
 						{
 							if($task->taskName=="PRE-PROCUREMENT CONFERENCE"||$task->taskName=="ADVERTISMENT")
 							{
-								if($new_purchase->amount<5000000)
+								if(($amount>5000000))
 								{
-								$task_details->status="Lock";
+								$task_details->status="Pending";
 								}
 							}
-							if($task->taskName=="PRE-BID CONFERENCE")
+							else if($task->taskName=="PRE-BID CONFERENCE")
 							{
-								if(!($new_purchase->amount>1000000))
+								if(($amount>1000000))
 								{
-								$task_details->status="Lock";
+								$task_details->status="Pending";
 								}
 							}				
 						}
 						elseif($new_purchase->projectType=="Consulting Service")
 						{
-							if(!($new_purchase->amount>1000000))
+							if(($amount>1000000))
 							{
-							$task_details->status="Lock";
+							$task_details->status="Pending";
 							}
 						}
 
@@ -962,8 +966,19 @@ if ($check==1)
 
 	if ($tasknextc!=0)
 	{
+		//Project Type Filter
+		$counter=1;
+		$tasknext=TaskDetails::find($taskdetails_id+$counter);
+	
+		while($tasknext->status=="Lock")
+		{
+			$counter=$counter+1;
+			$tasknext=TaskDetails::find($taskdetails_id+$counter);
+		}
+	
 		$tasknext->status="New";
 		$tasknext->save();
+		//End Project Type Filter
 	}
 	else
 	{
@@ -1024,8 +1039,19 @@ if ($check==2)
 
 	if ($tasknextc!=0)
 	{
+		//Project Type Filter
+		$counter=1;
+		$tasknext=TaskDetails::find($taskdetails_id+$counter);
+	
+		while($tasknext->status=="Lock")
+		{
+			$counter=$counter+1;
+			$tasknext=TaskDetails::find($taskdetails_id+$counter);
+		}
+	
 		$tasknext->status="New";
 		$tasknext->save();
+		//End Project Type Filter
 	}
 	else
 	{
@@ -1173,8 +1199,19 @@ if ($check==2)
 
 	if ($tasknextc!=0)
 	{
+		//Project Type Filter
+		$counter=1;
+		$tasknext=TaskDetails::find($taskdetails_id+$counter);
+	
+		while($tasknext->status=="Lock")
+		{
+			$counter=$counter+1;
+			$tasknext=TaskDetails::find($taskdetails_id+$counter);
+		}
+	
 		$tasknext->status="New";
 		$tasknext->save();
+		//End Project Type Filter
 	}
 	else
 	{
@@ -1233,8 +1270,19 @@ if ($check==1)
 
 	if ($tasknextc!=0)
 	{
+		//Project Type Filter
+		$counter=1;
+		$tasknext=TaskDetails::find($taskdetails_id+$counter);
+	
+		while($tasknext->status=="Lock")
+		{
+			$counter=$counter+1;
+			$tasknext=TaskDetails::find($taskdetails_id+$counter);
+		}
+	
 		$tasknext->status="New";
 		$tasknext->save();
+		//End Project Type Filter
 	}
 	else
 	{
@@ -1292,8 +1340,19 @@ if ($check==1)
 
 	if ($tasknextc!=0)
 	{
+		//Project Type Filter
+		$counter=1;
+		$tasknext=TaskDetails::find($taskdetails_id+$counter);
+	
+		while($tasknext->status=="Lock")
+		{
+			$counter=$counter+1;
+			$tasknext=TaskDetails::find($taskdetails_id+$counter);
+		}
+	
 		$tasknext->status="New";
 		$tasknext->save();
+		//End Project Type Filter
 	}
 	else
 	{
@@ -1352,8 +1411,19 @@ if ($check==1)
 
 	if ($tasknextc!=0)
 	{
+		//Project Type Filter
+		$counter=1;
+		$tasknext=TaskDetails::find($taskdetails_id+$counter);
+	
+		while($tasknext->status=="Lock")
+		{
+			$counter=$counter+1;
+			$tasknext=TaskDetails::find($taskdetails_id+$counter);
+		}
+	
 		$tasknext->status="New";
 		$tasknext->save();
+		//End Project Type Filter
 	}
 	else
 	{
@@ -1407,8 +1477,19 @@ if ($check==0)
 
 	if ($tasknextc!=0)
 	{
+		//Project Type Filter
+		$counter=1;
+		$tasknext=TaskDetails::find($taskdetails_id+$counter);
+	
+		while($tasknext->status=="Lock")
+		{
+			$counter=$counter+1;
+			$tasknext=TaskDetails::find($taskdetails_id+$counter);
+		}
+	
 		$tasknext->status="New";
 		$tasknext->save();
+		//End Project Type Filter
 	}
 	else
 	{
@@ -1472,8 +1553,19 @@ if ($check==2)
 
 	if ($tasknextc!=0)
 	{
+		//Project Type Filter
+		$counter=1;
+		$tasknext=TaskDetails::find($taskdetails_id+$counter);
+	
+		while($tasknext->status=="Lock")
+		{
+			$counter=$counter+1;
+			$tasknext=TaskDetails::find($taskdetails_id+$counter);
+		}
+	
 		$tasknext->status="New";
 		$tasknext->save();
+		//End Project Type Filter
 	}
 	else
 	{
@@ -1533,8 +1625,19 @@ if ($check==2)
 
 	if ($tasknextc!=0)
 	{
+		//Project Type Filter
+		$counter=1;
+		$tasknext=TaskDetails::find($taskdetails_id+$counter);
+	
+		while($tasknext->status=="Lock")
+		{
+			$counter=$counter+1;
+			$tasknext=TaskDetails::find($taskdetails_id+$counter);
+		}
+	
 		$tasknext->status="New";
 		$tasknext->save();
+		//End Project Type Filter
 	}
 	else
 	{
@@ -1601,8 +1704,19 @@ if (($check==2||$remarks==" ")&&$assignee!=NULL)
 
 	if ($tasknextc!=0)
 	{
+		//Project Type Filter
+		$counter=1;
+		$tasknext=TaskDetails::find($taskdetails_id+$counter);
+	
+		while($tasknext->status=="Lock")
+		{
+			$counter=$counter+1;
+			$tasknext=TaskDetails::find($taskdetails_id+$counter);
+		}
+	
 		$tasknext->status="New";
 		$tasknext->save();
+		//End Project Type Filter
 	}
 	else
 	{
@@ -1666,8 +1780,19 @@ if (($check==1)&&$assignee!=NULL)
 
 	if ($tasknextc!=0)
 	{
+		//Project Type Filter
+		$counter=1;
+		$tasknext=TaskDetails::find($taskdetails_id+$counter);
+	
+		while($tasknext->status=="Lock")
+		{
+			$counter=$counter+1;
+			$tasknext=TaskDetails::find($taskdetails_id+$counter);
+		}
+	
 		$tasknext->status="New";
 		$tasknext->save();
+		//End Project Type Filter
 	}
 	else
 	{
