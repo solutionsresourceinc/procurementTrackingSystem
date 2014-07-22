@@ -468,6 +468,14 @@ public function viewSummary(){
 	return View::make('purchaseRequest.summary');
 }
 
+public function getDateRange()
+	{
+		$start = Input::get('start');
+		$end = Input::get('end');
+
+		return $start.' '.$end;	
+	}
+
 public function edit_submit(){
 
 $id = Input::get('id');
