@@ -4,9 +4,8 @@
 	"keywords": ["framework", "laravel"],
 	"license": "MIT",
 	"require": {
-	
 		"laravel/framework": "4.2.*",
-		"laravelbook/ardent": "dev-master",
+		"laravelbook/ardent": "2.*",
 		"zizaco/confide": "3.2.x",
 		"zizaco/entrust": "dev-master",
 		"intervention/image": "2.*",

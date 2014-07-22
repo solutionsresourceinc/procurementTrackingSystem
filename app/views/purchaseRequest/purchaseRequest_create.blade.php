@@ -362,12 +362,13 @@
 			{
 				document.getElementById("num").value = "0.00";
 				window.old_amount = 0.00; 
+				amount = 0;
 			}
 			else
 			{
 				document.getElementById("num").value = window.old_amount;
+				amount = 0;
 			}
-			
 
 			newamount =	amount; 
 

@@ -66,6 +66,15 @@ class PurchaseRequestController extends Controller
 
 		if($purchase_save)
 		{
+			// Insert data to reports table
+			$reports = new Reports;
+			$reports->purchaseNo = $purchase->id;
+			$date_received = Input::get( 'dateReceived' );
+			$date_received =substr($date_received, 0, strrpos($date_received, ' '));
+
+			$reports->pRequestDateReceived = $date_received;
+			$reports->save();
+
 			$document->pr_id = $purchase->id;
 			$document->work_id = Input::get('hide_modeOfProcurement');
 			$document_save = $document->save();
@@ -91,7 +100,7 @@ class PurchaseRequestController extends Controller
 				$tasks = Task::where('wf_id', $document->work_id)->orderBy('section_id', 'ASC')->orderBy('order_id', 'ASC')->get();
 
 
-				// COED REVIEW: follow convention
+				
 				foreach ($tasks as $task) 
 				{
 					$task_details = New TaskDetails;
@@ -100,9 +109,8 @@ class PurchaseRequestController extends Controller
 					if($firstnew == 0)
 					 	$task_details->status = "New";
 				 	else
-
 				 		$task_details->status = "Pending";
-
+				 
 						$firstnew=1;
 						$task_details->doc_id = $document->id;
 						$task_details->save();
@@ -465,8 +473,16 @@ public function viewOverdue()
 	return View::make('purchaseRequest.purchaseRequest_overdue');
 }
 
-public function viewSummary(){
-	return View::make('purchaseRequest.summary');
+public function viewSummary()
+{
+	$prCount = Reports::count();
+	$POCount = Reports::where('pOrderDateReceived', '!=' , '0000-00-00')->count();
+	$chequeCount = Reports::where('chequeDateReceived', '!=' , '0000-00-00')->count();
+
+	return View::make('purchaseRequest.summary')
+		->with('prCount',$prCount)
+		->with('POCount',$POCount)
+		->with('chequeCount',$chequeCount);
 }
 
 public function getDateRange()
@@ -745,8 +761,24 @@ if(ctype_digit($daysOfAction))
 
 if (($check==3||$remarks==" ")&&$assignee!=NULL)
 {
+
+
 	$taskd= TaskDetails::find($taskdetails_id);
 	$docs=Document::find($taskd->doc_id);
+
+
+	//PO Section Check
+	$taskcurrent=Task::find($taskd->task_id);
+	if($taskcurrent->taskName=="BAC (DELIVERY)"||$taskcurrent->taskName=="Governor's Office")
+	{
+		$purchaseNo = $docs->pr_id;
+		
+		$reports = Reports::where('purchaseNo', '=', $purchaseNo)->first();
+		$reports->pOrderDateReceived = $dateFinished;
+		$reports->save();
+	}
+
+	//End PO Section Check
 	$delcount= Count::where('doc_id', $docs->id)->delete();
 	$userx= User::get();
 	foreach($userx as $userv)
@@ -1004,6 +1036,75 @@ if ($check==2)
 	{
 		$tasknext->status="New";
 		$tasknext->save();
+		$taskd= TaskDetails::find($taskdetails_id);
+	$taskd->status="Done";
+	$taskd->save();
+		//Project Type Filter
+		$counter=1;
+		$task=Task::find($taskd->task_id+$counter);
+		while($task->taskName=="PRE-PROCUREMENT CONFERENCE"||$task->taskName=="ADVERTISMENT"||$task->taskName=="PRE-BID CONFERENCE")	
+		{
+
+		$purchase= Purchase::find($docs->pr_id);
+		if($purchase->projectType=="Goods/Services")
+		{
+			if($task->taskName=="PRE-PROCUREMENT CONFERENCE"||$task->taskName=="ADVERTISMENT")
+			{
+				if(!($purchase->amount>2000000))
+				{
+				$taskd= TaskDetails::find($taskd->task_id+$counter);
+				$taskd->status="Done";
+				$taskd->save();
+				}
+			}
+			if($task->taskName=="PRE-BID CONFERENCE")
+			{
+				if(!($purchase->amount>1000000))
+				{
+				$taskd= TaskDetails::find($taskd->task_id+$counter);
+				$taskd->status="Done";
+				$taskd->save();	
+				}
+			}
+		}
+		elseif($purchase->projectType=="Infrastructure")
+		{
+			if($task->taskName=="PRE-PROCUREMENT CONFERENCE"||$task->taskName=="ADVERTISMENT")
+			{
+				if(!($purchase->amount>5000000))
+				{
+				$taskd= TaskDetails::find($taskd->task_id+$counter);
+				$taskd->status="Done";
+				$taskd->save();
+				}
+			}
+			if($task->taskName=="PRE-BID CONFERENCE")
+			{
+				if(!($purchase->amount>1000000))
+				{
+				$taskd= TaskDetails::find($taskd->task_id+$counter);
+				$taskd->status="Done";
+				$taskd->save();
+				}
+			}
+		}
+		elseif($purchase->projectType=="Consulting Service")
+		{
+			if(!($purchase->amount>1000000))
+			{
+			$taskd= TaskDetails::find($taskd->task_id+$counter);
+			$taskd->status="Done";
+			$taskd->save();
+			}
+		}
+		$counter=$counter+1;
+	
+	
+		}
+		$tasknext=TaskDetails::find($taskd->task_id+$counter);
+		$tasknext->status="New";
+		$tasknext->save();
+		//End Project Type Filter
 	}
 	else
 	{
@@ -1039,8 +1140,23 @@ if(ctype_digit(str_replace(array(' ', ',', '.'),'',$amt)))
 
 if ($check==2)
 {
+
 	$taskd= TaskDetails::find($taskdetails_id);
 	$docs=Document::find($taskd->doc_id);
+
+	//Cheque
+
+	$purchaseNo = $docs->pr_id;
+
+	$reports = Reports::where('purchaseNo', '=', $purchaseNo)->first();
+	$timestamp = strtotime($date);
+	$dateFinished= date("Y-m-d H:i:s", $timestamp);
+	$reports->chequeDateReceived = $dateFinished;
+	$reports->save();
+
+
+
+	//End Cheque
 	$delcount= Count::where('doc_id', $docs->id)->delete();
 	$userx= User::get();
 	foreach($userx as $userv)
