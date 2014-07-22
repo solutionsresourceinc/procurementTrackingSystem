@@ -28,5 +28,11 @@ class WorkflowSeeder extends Seeder {
         $flow->workFlowName = 'Pakyaw';
         $flow->totalDays = '45';
         $flow->save();
+
+        $flow = new Workflow;
+        $flow->id = '5';
+        $flow->workFlowName = 'Contract Bidding';
+        $flow->totalDays = '45';
+        $flow->save();
     }
 }

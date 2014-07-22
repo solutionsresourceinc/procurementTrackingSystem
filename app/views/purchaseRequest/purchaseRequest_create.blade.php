@@ -64,7 +64,7 @@
 				<div class="form-group">
 					<div class="row">
 						<div class="col-md-6">
-							{{ Form::label('modeOfProcurement', 'Mode of Procurement *', array('class' => 'create-label')) }}
+							{{ Form::label('modeOfProcurement', 'Mode of Procurement', array('class' => 'create-label')) }}
 							<select  disabled name="modeOfProcurement" id="modeOfProcurement" class="form-control" data-live-search="true">
 								<option value="">None</option>
 								@foreach($workflow as $wf)
@@ -82,7 +82,7 @@
 							@endif
 						</div>
 
-						<div class="col-md-2">
+						<div class="col-md-3">
 							{{ Form::label('otherType', 'Other Type', array('class' => 'create-label')) }}
 							<select name="otherType" class="form-control" onchange="change_OtherType(this.value)">
 								<option value="">None</option>
@@ -95,12 +95,7 @@
 						</select>
 						<input type="hidden" name="Procurement" id="hide_modeOfProcurement">
 
-						<div class="col-md-2">
-							{{ Form::label('status', 'Status: ', array('class' => 'create-label')) }}
-							<input type="text" value="New" readonly class="form-control">
-						</div>
-
-						<div class="col-md-2">
+						<div class="col-md-3">
 							<?php 
 								$cn = 0;
 								$purchase = Purchase::orderBy('ControlNo', 'ASC')->get();
@@ -110,7 +105,7 @@
 								$cn =$cn+1;
 							?>
 
-							{{ Form::label('dispCN', 'Control No. *', array('class' => 'create-label')) }}
+							{{ Form::label('dispCN', 'Control No.', array('class' => 'create-label')) }}
 							<input type="text"  name="dispCN"  class="form-control" value="{{$cn}}"disabled>
 							<input type="hidden" name="controlNo" value="<?php echo $cn; ?>">
 						</div>

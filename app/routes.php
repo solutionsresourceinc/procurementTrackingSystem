@@ -77,6 +77,14 @@ Route::post('purchaseRequest/submitForm/{id}', ['as' => 'submitForm', 'uses' => 
 //Checklist Rowtype Routes
 Route::post('checklistedit', ['uses' => 'PurchaseRequestController@checklistedit']);
 Route::post('certification', ['uses' => 'PurchaseRequestController@certification']);
+Route::post('posting', ['uses' => 'PurchaseRequestController@posting']);
+Route::post('supplier', ['uses' => 'PurchaseRequestController@supplier']);
+Route::post('cheque', ['uses' => 'PurchaseRequestController@cheque']);
+Route::post('published', ['uses' => 'PurchaseRequestController@published']);
+Route::post('documents', ['uses' => 'PurchaseRequestController@documents']);
+Route::post('evaluations', ['uses' => 'PurchaseRequestController@evaluations']);
+Route::post('conference', ['uses' => 'PurchaseRequestController@conference']);
+Route::post('contractmeeting', ['uses' => 'PurchaseRequestController@contractmeeting']);
 //End Checklist Rowtype Routes
 
 
@@ -87,14 +95,11 @@ Route::get( 'purchaseRequest/edit/{id}', ['uses'=>'PurchaseRequestController@edi
 
 //---------- Designation Routes
 Route::resource('designation', 'DesignationController');
-
 Route::get('designation', 'DesignationController@index');
 Route::post('designation/delete/{id}',['as' => 'designation.delete', 'uses' => 'DesignationController@deleteDesignation']);
 Route::post('designation/{id}/edit',['as' => 'desingation.update', 'uses' => 'DesignationController@update']);
-
 Route::get('designation/{id}/members', ['as'=>'designation_members', 'uses' => 'DesignationController@members']);
 Route::post('designation/assign',['as'=>'designation.assign', 'uses' => 'DesignationController@assign']);
-
 Route::post('designation/{id}/members', ['as'=>'designation_members_save', 'uses' => 'DesignationController@save_members']);
 
 
