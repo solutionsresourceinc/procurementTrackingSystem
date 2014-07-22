@@ -145,3 +145,25 @@ Route::post('workflow/replace/{id}', function($id)
 	);
 	return Response::json($data);
 }); 
+
+Route::post('summary/changeDate', 'AjaxController@SummarySubmit');
+
+/*Route::post('summary/changeDate', function()
+{
+	$start = Input::get('start');
+		$end = Input::get('end');
+
+		$prCount = Reports::whereBetween('pRequestDateReceived', array($start, $end))->count(); 
+		$POCount  = Reports::whereBetween('pOrderDateReceived', array($start, $end))->count(); 
+		$chequeCount = Reports::whereBetween('chequeDateReceived', array($start, $end))->count(); 
+
+		$data = array(
+		"fragments" => array(
+			"#PR" => 
+			"<div class='well' style='' id='PR'>
+				aw
+			</div>"),
+		);	
+
+		return Response::json($data);
+});*/

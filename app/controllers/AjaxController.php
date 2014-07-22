@@ -38,4 +38,43 @@ class AjaxController extends Controller
 		return Response::json($data);
 	}
 
+	public function SummarySubmit()
+	{
+		$start = Input::get('start');
+		$end = Input::get('end');
+
+		$prCount = Reports::whereBetween('pRequestDateReceived', array($start, $end))->count(); 
+		$POCount  = Reports::whereBetween('pOrderDateReceived', array($start, $end))->count(); 
+		$chequeCount = Reports::whereBetween('chequeDateReceived', array($start, $end))->count(); 
+
+		$data = array(
+		"inner-fragments" => array(
+			"#PR" => 
+			"
+				<span class='summary-panel-title'><strong>Total Number of PR Received:</strong></span><br/>
+                <span class='summary-amount' style='color: #246D27'> $prCount </span>
+			",
+			"#PO" => 
+			"
+				<span class='summary-panel-title'><strong>Total Number of PO Received:</strong></span><br/>
+                <span class='summary-amount' style='color: #4E3A17'> $POCount </span>
+			",
+
+			"#Cheque" => 
+			"
+				<span class='summary-panel-title'><strong>Total Number of Cheque Received:</strong></span><br/>
+                <span class='summary-amount' style='color: #1B4F69'> $chequeCount </span>
+			",
+
+			"#dateReport" =>
+			"
+				<div id='dateReport'  class='alert alert-info'>
+		            <p>Summary Reports from $start to $end.</p>
+		        </div>
+			"
+			),
+		);	
+
+		return Response::json($data);
+	}
 }

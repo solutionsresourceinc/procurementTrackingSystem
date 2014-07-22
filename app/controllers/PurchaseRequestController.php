@@ -69,7 +69,10 @@ class PurchaseRequestController extends Controller
 			// Insert data to reports table
 			$reports = new Reports;
 			$reports->purchaseNo = $purchase->id;
-			$reports->pRequestDateReceived = Input::get( 'dateReceived' );
+			$date_received = Input::get( 'dateReceived' );
+			$date_received =substr($date_received, 0, strrpos($date_received, ' '));
+
+			$reports->pRequestDateReceived = $date_received;
 			$reports->save();
 
 			$document->pr_id = $purchase->id;
@@ -473,8 +476,8 @@ public function viewOverdue()
 public function viewSummary()
 {
 	$prCount = Reports::count();
-	$POCount = Reports::where('pOrderDateReceived', '!=' , '0000-00-00 00:00:00')->count();
-	$chequeCount = Reports::where('chequeDateReceived', '!=' , '0000-00-00 00:00:00')->count();
+	$POCount = Reports::where('pOrderDateReceived', '!=' , '0000-00-00')->count();
+	$chequeCount = Reports::where('chequeDateReceived', '!=' , '0000-00-00')->count();
 
 	return View::make('purchaseRequest.summary')
 		->with('prCount',$prCount)
