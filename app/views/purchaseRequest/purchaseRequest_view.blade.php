@@ -100,7 +100,6 @@
 			<table border="1" class="proc-details">
 				<tr>
 					<td class="proc-headers" colspan="3"><h4 style="line-height: 25px;">
-						
 						<?php $workName = DB::table('workflow')->where('id',$wfName->work_id)->first(); ?>
 						{{{ strtoupper($workName->workFlowName) }}}
 
@@ -114,29 +113,32 @@
 						<span class="bac-ctrl-no">BAC CTRL. NO.:</span><br/>
 						<h4 align="center" class="ctrl-no">{{ $purchase->controlNo }}</h4>
 					</td>
-
 				</tr>
 
 				<tr>
-					<td class="proc-headers" width="30%"><h5>REQUISITIONER</h5></td>
-					<td class="proc-data" colspan="3">
+					<td class="proc-headers" width="20%"><h5>REQUISITIONER</h5></td>
+					<td class="proc-data">
 						<?php $user = User::find($purchase->requisitioner) ?>
 						{{ $user->lastname . ", " . $user->firstname }}
 					</td>
+                    <td class="proc-data">DATE REQUESTED</td>
+                    <td class="proc-data">{{ $purchase->dateRequested }}</td>
 				</tr>
 
 				<tr>
-					<td class="proc-headers" width="30%"><h5>PROJECT / PURPOSE</h5></td>
-					<td class="proc-data" colspan="3">{{ $purchase->projectPurpose }}</td>
+					<td class="proc-headers" width="20%"><h5>PROJECT / PURPOSE</h5></td>
+                    <td class="proc-data">{{ $purchase->projectPurpose }}</td>
+                    <td class="proc-data">DATE RECEIVED</td>
+					<td class="proc-data">{{ $purchase->dateReceived }}</td>
 				</tr>
 
 				<tr>
-					<td class="proc-headers" width="30%"><h5>SOURCE OF FUNDS</h5></td>
+					<td class="proc-headers" width="20%"><h5>SOURCE OF FUNDS</h5></td>
 					<td class="proc-data" colspan="3">{{ $purchase->sourceOfFund }}</td>
 				</tr>
 
 				<tr>
-					<td class="proc-headers" width="30%"><h5>ABC AMOUNT</h5></td>
+					<td class="proc-headers" width="20%"><h5>ABC AMOUNT</h5></td>
 					<td class="proc-data" colspan="3">{{ $purchase->amount }}</td>
 				</tr>
 
