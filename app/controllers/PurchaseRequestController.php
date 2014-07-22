@@ -107,7 +107,58 @@ class PurchaseRequestController extends Controller
 					 	$task_details->status = "New";
 				 	else
 				 		$task_details->status = "Pending";
-				 
+				 	//Project Type 
+				 	if($task->taskName=="PRE-PROCUREMENT CONFERENCE"||$task->taskName=="ADVERTISMENT"||$task->taskName=="PRE-BID CONFERENCE")
+				 	{
+				 		if($new_purchase->projectType=="Goods/Services")
+						{
+							if($task->taskName=="PRE-PROCUREMENT CONFERENCE"||$task->taskName=="ADVERTISMENT")
+							{
+								if(!($new_purchase->amount>2000000))
+								{
+				
+								$task_details->status="Lock";
+				
+								}
+							}
+							if($task->taskName=="PRE-BID CONFERENCE")				
+							{
+								if(!($new_purchasee->amount>1000000))
+								{
+
+								$task_details->status="Lock";
+								
+								}
+							}
+						}
+						elseif($new_purchase->projectType=="Infrastructure")
+						{
+							if($task->taskName=="PRE-PROCUREMENT CONFERENCE"||$task->taskName=="ADVERTISMENT")
+							{
+								if($new_purchase->amount<5000000)
+								{
+								$task_details->status="Lock";
+								}
+							}
+							if($task->taskName=="PRE-BID CONFERENCE")
+							{
+								if(!($new_purchase->amount>1000000))
+								{
+								$task_details->status="Lock";
+								}
+							}				
+						}
+						elseif($new_purchase->projectType=="Consulting Service")
+						{
+							if(!($new_purchase->amount>1000000))
+							{
+							$task_details->status="Lock";
+							}
+						}
+
+				 	}
+				 	//End Project Type
+
 						$firstnew=1;
 						$task_details->doc_id = $document->id;
 						$task_details->save();
@@ -1033,77 +1084,22 @@ if ($check==2)
 
 	if ($tasknextc!=0)
 	{
-		$tasknext->status="New";
-		$tasknext->save();
-		$taskd= TaskDetails::find($taskdetails_id);
-	$taskd->status="Done";
-	$taskd->save();
+
+
 		//Project Type Filter
 		$counter=1;
-		$task=Task::find($taskd->task_id+$counter);
-		while($task->taskName=="PRE-PROCUREMENT CONFERENCE"||$task->taskName=="ADVERTISMENT"||$task->taskName=="PRE-BID CONFERENCE")	
-		{
-
-		$purchase= Purchase::find($docs->pr_id);
-		if($purchase->projectType=="Goods/Services")
-		{
-			if($task->taskName=="PRE-PROCUREMENT CONFERENCE"||$task->taskName=="ADVERTISMENT")
-			{
-				if(!($purchase->amount>2000000))
-				{
-				$taskd= TaskDetails::find($taskd->task_id+$counter);
-				$taskd->status="Done";
-				$taskd->save();
-				}
-			}
-			if($task->taskName=="PRE-BID CONFERENCE")
-			{
-				if(!($purchase->amount>1000000))
-				{
-				$taskd= TaskDetails::find($taskd->task_id+$counter);
-				$taskd->status="Done";
-				$taskd->save();	
-				}
-			}
-		}
-		elseif($purchase->projectType=="Infrastructure")
-		{
-			if($task->taskName=="PRE-PROCUREMENT CONFERENCE"||$task->taskName=="ADVERTISMENT")
-			{
-				if(!($purchase->amount>5000000))
-				{
-				$taskd= TaskDetails::find($taskd->task_id+$counter);
-				$taskd->status="Done";
-				$taskd->save();
-				}
-			}
-			if($task->taskName=="PRE-BID CONFERENCE")
-			{
-				if(!($purchase->amount>1000000))
-				{
-				$taskd= TaskDetails::find($taskd->task_id+$counter);
-				$taskd->status="Done";
-				$taskd->save();
-				}
-			}
-		}
-		elseif($purchase->projectType=="Consulting Service")
-		{
-			if(!($purchase->amount>1000000))
-			{
-			$taskd= TaskDetails::find($taskd->task_id+$counter);
-			$taskd->status="Done";
-			$taskd->save();
-			}
-		}
-		$counter=$counter+1;
+		$tasknext=TaskDetails::find($taskdetails_id+$counter);
 	
-	
+		while($tasknext->status=="Lock")
+		{
+			$counter=$counter+1;
+			$tasknext=TaskDetails::find($taskdetails_id+$counter);
 		}
-		$tasknext=TaskDetails::find($taskd->task_id+$counter);
+	
 		$tasknext->status="New";
 		$tasknext->save();
 		//End Project Type Filter
+		
 	}
 	else
 	{

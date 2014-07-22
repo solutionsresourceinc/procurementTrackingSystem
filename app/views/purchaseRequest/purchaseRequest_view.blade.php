@@ -339,7 +339,6 @@
                                     <td>
                                     {{$taskp->custom1}}
                                     </td>
-                                    
                                     <td >
                                     <b>No. of Days Accomplished</b>
                                     </td>
