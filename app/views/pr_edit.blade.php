@@ -579,15 +579,15 @@
                             {{Form::open(['url'=>'cheque'], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
                                 <td class="edit-pr-input" colspan="2">
-                                    <b>Cheque Amt:</b>
+                                    <b>CHEQUE AMT:</b>
                                     <input type="decimal" name="amt"  class="form-control" maxlength="12" width="80%">
                                 </td>
                                 <td class="edit-pr-input" colspan="2">
-                                    <b>Cheque Num:</b>
+                                    <b>CHEQUE NUM:</b>
                                     <input type="decimal" name="num"  class="form-control" maxlength="12" width="80%">
                                 </td>
                                 <td class="edit-pr-input" colspan="2">
-                                    <b>Cheque Date:</b>
+                                    <b>CHEQUE DATE:</b>
                                     <?php 
                                     $today = date("m/d/y");
                                     ?>
@@ -958,15 +958,15 @@
                         @endif
                         @if($tasks->taskType=="cheque")
                         <td class="edit-pr-input" colspan="2">
-                                    <b>Cheque Amt:</b>
+                                    <b>CHEQUE AMT:</b>
                                     {{$taskp->custom1}}
                                 </td>
                                 <td class="edit-pr-input" colspan="2">
-                                    <b>Cheque Num:</b>
+                                    <b>CHEQUE NUM:</b>
                                     {{$taskp->custom2}}
                                 </td>
                                 <td class="edit-pr-input" colspan="2">
-                                    <b>Cheque Date:</b>
+                                    <b>CHEQUE DATE:</b>
                                     {{$taskp->custom3}}
                                 </td>
                         @endif
