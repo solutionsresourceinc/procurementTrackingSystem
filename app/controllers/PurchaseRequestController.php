@@ -769,11 +769,9 @@ if (($check==3||$remarks==" ")&&$assignee!=NULL)
 	if($taskcurrent->taskName=="BAC (DELIVERY)"||$taskcurrent->taskName=="Governor's Office")
 	{
 		$purchaseNo = $docs->pr_id;
-		date_default_timezone_set("Asia/Manila");
-		$dateToday = date('Y-m-d H:i:s');
-
-		$reports = Reports::wherePurchaseNo($purchaseNo);
-		$reports->pOrderDateReceived = $dateToday;
+		
+		$reports = Reports::where('purchaseNo', '=', $purchaseNo)->first();
+		$reports->pOrderDateReceived = $dateFinished;
 		$reports->save();
 	}
 
@@ -1146,11 +1144,11 @@ if ($check==2)
 	//Cheque
 
 	$purchaseNo = $docs->pr_id;
-	date_default_timezone_set("Asia/Manila");
-	$dateToday = date('Y-m-d H:i:s');
 
-	$reports = Reports::wherePurchaseNo($purchaseNo);
-	$reports->chequeDateReceived = $dateToday;
+	$reports = Reports::where('purchaseNo', '=', $purchaseNo)->first();
+	$timestamp = strtotime($date);
+	$dateFinished= date("Y-m-d H:i:s", $timestamp);
+	$reports->chequeDateReceived = $dateFinished;
 	$reports->save();
 
 
