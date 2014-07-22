@@ -761,7 +761,7 @@ if (($check==3||$remarks==" ")&&$assignee!=NULL)
 
 
 	//PO Section Check
-	$taskcurrent=Tasks::find($taskd->task_id);
+	$taskcurrent=Task::find($taskd->task_id);
 	if($taskcurrent->taskName=="BAC (DELIVERY)"||$taskcurrent->taskName=="Governor's Office")
 	{
 
@@ -1025,46 +1025,74 @@ if ($check==2)
 	{
 		$tasknext->status="New";
 		$tasknext->save();
-
+		$taskd= TaskDetails::find($taskdetails_id);
+	$taskd->status="Done";
+	$taskd->save();
 		//Project Type Filter
-		$counter=0;
-		$task=Tasks::find($tasknext->task_id+$counter);
+		$counter=1;
+		$task=Task::find($taskd->task_id+$counter);
 		while($task->taskName=="PRE-PROCUREMENT CONFERENCE"||$task->taskName=="ADVERTISMENT"||$task->taskName=="PRE-BID CONFERENCE")	
 		{
+
 		$purchase= Purchase::find($docs->pr_id);
-		if($purchase->projectType!="Goods/Services")
+		if($purchase->projectType=="Goods/Services")
 		{
-			if($purchase->amount>2000000)
+			if($task->taskName=="PRE-PROCUREMENT CONFERENCE"||$task->taskName=="ADVERTISMENT")
 			{
-				
+				if(!($purchase->amount>2000000))
+				{
+				$taskd= TaskDetails::find($taskd->task_id+$counter);
+				$taskd->status="Done";
+				$taskd->save();
+				}
 			}
-			if($purchase->amount>1000000)
+			if($task->taskName=="PRE-BID CONFERENCE")
 			{
-				
+				if(!($purchase->amount>1000000))
+				{
+				$taskd= TaskDetails::find($taskd->task_id+$counter);
+				$taskd->status="Done";
+				$taskd->save();	
+				}
 			}
 		}
 		elseif($purchase->projectType=="Infrastructure")
 		{
-			if($purchase->amount>5000000)
+			if($task->taskName=="PRE-PROCUREMENT CONFERENCE"||$task->taskName=="ADVERTISMENT")
 			{
-				
+				if(!($purchase->amount>5000000))
+				{
+				$taskd= TaskDetails::find($taskd->task_id+$counter);
+				$taskd->status="Done";
+				$taskd->save();
+				}
 			}
-			if($purchase->amount>1000000)
+			if($task->taskName=="PRE-BID CONFERENCE")
 			{
-				
+				if(!($purchase->amount>1000000))
+				{
+				$taskd= TaskDetails::find($taskd->task_id+$counter);
+				$taskd->status="Done";
+				$taskd->save();
+				}
 			}
 		}
 		elseif($purchase->projectType=="Consulting Service")
 		{
-			if($purchase->amount>1000000)
+			if(!($purchase->amount>1000000))
 			{
-				
+			$taskd= TaskDetails::find($taskd->task_id+$counter);
+			$taskd->status="Done";
+			$taskd->save();
 			}
 		}
 		$counter=$counter+1;
-		$task=Tasks::find($tasknext->task_id+$counter);
-
+	
+	
 		}
+		$tasknext=TaskDetails::find($taskd->task_id+$counter);
+		$tasknext->status="New";
+		$tasknext->save();
 		//End Project Type Filter
 	}
 	else
