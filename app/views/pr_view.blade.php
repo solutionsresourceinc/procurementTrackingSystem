@@ -206,7 +206,7 @@
       	</tbody>
     </table>  
  
-<div id="pages">
+<div id="pages" align="center">
     <center> {{ $requests->links(); }} </center>
 </div>
 
