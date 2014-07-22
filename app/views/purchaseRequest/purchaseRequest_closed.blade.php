@@ -222,20 +222,20 @@
             var rex = new RegExp($(this).val(), 'i');
             if(rex == '/(?:)/i')
             {
-                document.getElementById('table_id2').style.display = 'block';
+                document.getElementById('table_id2').style.display = 'table';
                 $('.searchable tr').hide();
                 $('.searchable tr').filter(function() {
                     return rex.test($(this).text());
                 }).show();
-                document.getElementById('table_id').style.display = 'block';
-                document.getElementById('pages').style.display = 'block';
+                document.getElementById('table_id').style.display = 'table';
+                document.getElementById('pages').style.display = 'table';
                 document.getElementById('table_id2').style.display = 'none';
                 document.getElementById('table_id3').style.display = 'none';
 
             }
             else
             {
-                document.getElementById('table_id2').style.display = 'block';
+                document.getElementById('table_id2').style.display = 'table';
                 $('.searchable tr').hide();
                 $('.searchable tr').filter(function() {
                     return rex.test($(this).text());
@@ -253,7 +253,7 @@
                 {
                     document.getElementById('table_id').style.display = 'none';
                     document.getElementById('pages').style.display = 'none';
-                    document.getElementById('table_id2').style.display = 'block';
+                    document.getElementById('table_id2').style.display = 'table';
                     document.getElementById('table_id3').style.display = 'none';
                 }
                 
