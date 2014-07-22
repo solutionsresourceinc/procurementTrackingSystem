@@ -68,7 +68,7 @@
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav side-nav">
             <li class="{{Request::is('dashboard') ? 'active':''}}"><a href="/" style="border-bottom: solid 1px rgba(0, 0, 0, 0.2);"><!--i class="fa fa-dashboard"></i--> Dashboard</a></li>
-            <li class="{{(Request::is('purchaseRequests') || Request::is('purchaseRequest/view') || Request::is('purchaseRequest/closed') || Request::is('purchaseRequest/overdue')) ? 'active' : ''}}"><a href="#" class="unlink">Purchase Requests</a>
+            <li class="{{(Request::is('purchaseRequests') || Request::is('purchaseRequest/view') || Request::is('purchaseRequest/closed') || Request::is('purchaseRequest/overdue') || Request::is('purchaseRequest/cancelled') || Request::is('summary')) ? 'active' : ''}}"><a href="#" class="unlink">Purchase Requests</a>
                 <ul class="side-submenu">
                     <li class="{{Request::is('purchaseRequest/view') ? 'active':''}}">
                         <a href="/purchaseRequest/view">
