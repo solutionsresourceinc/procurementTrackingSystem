@@ -1022,7 +1022,7 @@ if ($check==2)
 		while($task->taskName=="PRE-PROCUREMENT CONFERENCE"||$task->taskName=="ADVERTISMENT"||$task->taskName=="PRE-BID CONFERENCE")	
 		{
 		$purchase= Purchase::find($docs->pr_id);
-		if($purchase->projectType=="Goods/Services")
+		if($purchase->projectType!="Goods/Services")
 		{
 			if($purchase->amount>2000000)
 			{
@@ -1037,24 +1037,21 @@ if ($check==2)
 		{
 			if($purchase->amount>5000000)
 			{
-				if($task->taskName!="PRE-PROCUREMENT CONFERENCE"||$task->taskName!="ADVERTISMENT")
-				{}
+				
 			}
 			if($purchase->amount>1000000)
 			{
-				if($task->taskName!="PRE-BID CONFERENCE")
-				{}
+				
 			}
 		}
 		elseif($purchase->projectType=="Consulting Service")
 		{
 			if($purchase->amount>1000000)
 			{
-				if($task->taskName!="PRE-PROCUREMENT CONFERENCE"||$task->taskName!="ADVERTISMENT"||$task->taskName!="PRE-BID CONFERENCE")
-				{}
+				
 			}
 		}
-		$counter=$counter+1
+		$counter=$counter+1;
 		$task=Tasks::find($tasknext->task_id+$counter);
 
 		}
