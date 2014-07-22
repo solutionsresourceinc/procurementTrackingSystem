@@ -159,3 +159,5 @@ Entrust::routeNeedsRole( 'task/new', array('Administrator','Procurement Personne
 Entrust::routeNeedsRole( 'task/*', array('Administrator','Procurement Personnel'), Redirect::to('/'), false );
 
 
+// Filter for Summary
+Entrust::routeNeedsRole( 'summary', array('Administrator','Procurement Personnel'), Redirect::to('/'), false );

@@ -8,6 +8,28 @@
 		vertical-align:top;
 		word-break:break-word;
 	}
+    
+    @media print /*FOR PRINT LAYOUT*/
+    {    
+        .no-print, .no-print *
+        {
+            display: none !important;
+        }
+            
+        table, tr, td, th, p, h1, h2, h3, h4, h5
+        {
+            border-collapse: collapse !important;
+            padding : 0px !important;
+            font-size : 86% !important;
+            height : 4px !important;
+        }
+
+        .panel, .panel-heading
+        {
+            margin: 0px !important;
+            /*padding : 5px !important;*/
+        }
+    }
 	</style>
 
 
@@ -26,6 +48,9 @@
 
 
 	<div class="btn-group pull-right options">
+            <button class="btn btn-info no-print" onclick="window.print()">
+                <span class="glyphicon glyphicon-print"></span>&nbsp;&nbsp;Print
+            </button>
 	<?php 
 		$cuser=Auth::User()->id;
 		if (Entrust::hasRole('Administrator'))
@@ -33,7 +58,7 @@
 			if($purchase->status!="Cancelled")
 			{
 	?>
-				<a href="../edit/{{$purchase->id}}" class="btn btn-success">
+				<a href="../edit/{{$purchase->id}}" class="btn btn-success no-print">
 					<span class="glyphicon glyphicon-edit"></span>&nbsp;&nbsp;Edit
 				</a>
 	<?php
@@ -47,7 +72,7 @@
 				if($purchase->status!="Cancelled")
 				{
 	?>
-					<a href="../edit/{{$purchase->id}}" class="btn btn-success">
+					<a href="../edit/{{$purchase->id}}" class="btn btn-success no-print">
 						<span class="glyphicon glyphicon-edit"></span>&nbsp;&nbsp;Edit
 					</a>
 
@@ -58,16 +83,16 @@
 		}
 	?>
 
-		<button type="button" class="btn btn-default" onclick="window.location.href='../../purchaseRequest/view'">
+		<button type="button" class="btn btn-default no-print" onclick="window.location.href='../../purchaseRequest/view'">
 			<span class="glyphicon glyphicon-step-backward"></span>&nbsp;Back
 		</button>
 		
 	</div>
 
-	<hr class="clear" />
+	<hr class="clear no-print" />
 
 	@if($purchase->status == "Cancelled")
-		<div class="alert alert-danger"> Reason: {{ strip_tags($purchase->reason) }}</div> 
+		<div class="alert alert-danger no-print"> Reason: {{ strip_tags($purchase->reason) }}</div> 
 	@endif
 	
 	<div class="panel panel-success">
@@ -75,11 +100,10 @@
 			<table border="1" class="proc-details">
 				<tr>
 					<td class="proc-headers" colspan="3"><h4 style="line-height: 25px;">
-						
 						<?php $workName = DB::table('workflow')->where('id',$wfName->work_id)->first(); ?>
 						{{{ strtoupper($workName->workFlowName) }}}
 
-						<span class="label {{($purchase->status == 'New') ? 'label-primary' : (($purchase->status == 'Active') ? 'label-success' : (($purchase->status == 'Overdue') ? 'label-danger' : 'label-default'))}}">
+						<span class="no-print label {{($purchase->status == 'New') ? 'label-primary' : (($purchase->status == 'Active') ? 'label-success' : (($purchase->status == 'Overdue') ? 'label-danger' : 'label-default'))}}">
 							{{ $purchase->status; }}
 						</span>
 						</h4>
@@ -89,29 +113,32 @@
 						<span class="bac-ctrl-no">BAC CTRL. NO.:</span><br/>
 						<h4 align="center" class="ctrl-no">{{ $purchase->controlNo }}</h4>
 					</td>
-
 				</tr>
 
 				<tr>
-					<td class="proc-headers" width="30%"><h5>REQUISITIONER</h5></td>
-					<td class="proc-data" colspan="3">
+					<td class="proc-headers" width="20%"><h5>REQUISITIONER</h5></td>
+					<td class="proc-data">
 						<?php $user = User::find($purchase->requisitioner) ?>
 						{{ $user->lastname . ", " . $user->firstname }}
 					</td>
+                    <td class="proc-data">DATE REQUESTED</td>
+                    <td class="proc-data">{{ $purchase->dateRequested }}</td>
 				</tr>
 
 				<tr>
-					<td class="proc-headers" width="30%"><h5>PROJECT / PURPOSE</h5></td>
-					<td class="proc-data" colspan="3">{{ $purchase->projectPurpose }}</td>
+					<td class="proc-headers" width="20%"><h5>PROJECT / PURPOSE</h5></td>
+                    <td class="proc-data">{{ $purchase->projectPurpose }}</td>
+                    <td class="proc-data">DATE RECEIVED</td>
+					<td class="proc-data">{{ $purchase->dateReceived }}</td>
 				</tr>
 
 				<tr>
-					<td class="proc-headers" width="30%"><h5>SOURCE OF FUNDS</h5></td>
+					<td class="proc-headers" width="20%"><h5>SOURCE OF FUNDS</h5></td>
 					<td class="proc-data" colspan="3">{{ $purchase->sourceOfFund }}</td>
 				</tr>
 
 				<tr>
-					<td class="proc-headers" width="30%"><h5>ABC AMOUNT</h5></td>
+					<td class="proc-headers" width="20%"><h5>ABC AMOUNT</h5></td>
 					<td class="proc-data" colspan="3">{{ $purchase->amount }}</td>
 				</tr>
 

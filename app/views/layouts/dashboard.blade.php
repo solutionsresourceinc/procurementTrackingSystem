@@ -269,11 +269,13 @@
                             </span>
                         </a>
                     </li>
-                    <li class="{{Request::is('summary') ? 'active':''}}">
-                        <a href="/summary">
-                            Summary
-                        </a>
-                    </li>
+                    @if(Entrust::hasRole('Administrator')||Entrust::hasRole('Procurement Personnel'))
+                        <li class="{{Request::is('summary') ? 'active':''}}">
+                            <a href="/summary">
+                                Summary
+                            </a>
+                        </li>
+                    @endif
                 </ul>
             </li>
             
