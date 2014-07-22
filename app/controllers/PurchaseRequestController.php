@@ -91,7 +91,7 @@ class PurchaseRequestController extends Controller
 				$tasks = Task::where('wf_id', $document->work_id)->orderBy('section_id', 'ASC')->orderBy('order_id', 'ASC')->get();
 
 
-				// COED REVIEW: follow convention
+				
 				foreach ($tasks as $task) 
 				{
 					$task_details = New TaskDetails;
@@ -100,9 +100,8 @@ class PurchaseRequestController extends Controller
 					if($firstnew == 0)
 					 	$task_details->status = "New";
 				 	else
-
 				 		$task_details->status = "Pending";
-
+				 
 						$firstnew=1;
 						$task_details->doc_id = $document->id;
 						$task_details->save();
@@ -737,8 +736,20 @@ if(ctype_digit($daysOfAction))
 
 if (($check==3||$remarks==" ")&&$assignee!=NULL)
 {
+
+
 	$taskd= TaskDetails::find($taskdetails_id);
 	$docs=Document::find($taskd->doc_id);
+
+
+	//PO Section Check
+	$taskcurrent=Tasks::find($taskd->task_id);
+	if($taskcurrent->taskName=="BAC (DELIVERY)"||$taskcurrent->taskName=="Governor's Office")
+	{
+
+	}
+
+	//End PO Section Check
 	$delcount= Count::where('doc_id', $docs->id)->delete();
 	$userx= User::get();
 	foreach($userx as $userv)
@@ -996,6 +1007,50 @@ if ($check==2)
 	{
 		$tasknext->status="New";
 		$tasknext->save();
+
+		//Project Type Filter
+		$counter=0;
+		$task=Tasks::find($tasknext->task_id+$counter);
+		while($task->taskName=="PRE-PROCUREMENT CONFERENCE"||$task->taskName=="ADVERTISMENT"||$task->taskName=="PRE-BID CONFERENCE")	
+		{
+		$purchase= Purchase::find($docs->pr_id);
+		if($purchase->projectType=="Goods/Services")
+		{
+			if($purchase->amount>2000000)
+			{
+				
+			}
+			if($purchase->amount>1000000)
+			{
+				
+			}
+		}
+		elseif($purchase->projectType=="Infrastructure")
+		{
+			if($purchase->amount>5000000)
+			{
+				if($task->taskName!="PRE-PROCUREMENT CONFERENCE"||$task->taskName!="ADVERTISMENT")
+				{}
+			}
+			if($purchase->amount>1000000)
+			{
+				if($task->taskName!="PRE-BID CONFERENCE")
+				{}
+			}
+		}
+		elseif($purchase->projectType=="Consulting Service")
+		{
+			if($purchase->amount>1000000)
+			{
+				if($task->taskName!="PRE-PROCUREMENT CONFERENCE"||$task->taskName!="ADVERTISMENT"||$task->taskName!="PRE-BID CONFERENCE")
+				{}
+			}
+		}
+		$counter=$counter+1
+		$task=Tasks::find($tasknext->task_id+$counter);
+
+		}
+		//End Project Type Filter
 	}
 	else
 	{
@@ -1031,8 +1086,13 @@ if(ctype_digit(str_replace(array(' ', ',', '.'),'',$amt)))
 
 if ($check==2)
 {
+
 	$taskd= TaskDetails::find($taskdetails_id);
 	$docs=Document::find($taskd->doc_id);
+
+	//Cheque
+
+	//End Cheque
 	$delcount= Count::where('doc_id', $docs->id)->delete();
 	$userx= User::get();
 	foreach($userx as $userv)
