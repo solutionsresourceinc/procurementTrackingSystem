@@ -170,47 +170,316 @@
 				}
 			} //End Addon Display 
 
-			echo " <tr><th width='30%'></th>";
-			echo "<th class='workflow-th' width='12.5%'>By:</th>";
-			echo "<th class='workflow-th' width='12.5%'>Date:</th>";
-			echo "<th class='workflow-th' width='12.5%'>Days of Action</th>";
-			echo "<th class='workflow-th'>Remarks</th></tr>";
-			foreach ($task as $tasks) 
-			{
+			 $previousTaskType="0";
+                    foreach ($task as $tasks) 
+                    {
+                    
+
+                    if ($previousTaskType!="normal"&&$tasks->taskType=="normal"){
+                        echo "<tr><th width='30%'></th>";
+                        echo "<th class='workflow-th' width='18%'>By:</th>";
+                        echo "<th class='workflow-th' width='18%'>Date:</th>";
+                        echo "<th class='workflow-th' width='12.5%'>Days of Action</th>";
+                        echo "<th class='workflow-th'>Remarks</th></tr>";
+                    }
+                    if ($previousTaskType!="datebyremark"&&$tasks->taskType=="datebyremark"){
+                        echo "<tr><th width='30%'></th>";
+                        echo "<th class='workflow-th' >Date:</th>";
+                        echo "<th class='workflow-th' >By:</th>";
+                        echo "<th class='workflow-th' colspan='2'>Remarks</th></tr>";
+                    }
+
+                    if ($previousTaskType!="dateby"&&$tasks->taskType=="dateby"){
+                        echo "<tr><th width='30%'></th>";
+                        echo "<th class='workflow-th' colspan='2'>Date:</th>";
+                        echo "<th class='workflow-th' colspan='2'>By:</th></tr>";
+                    }
+                        $previousTaskType=$tasks->taskType;
 					    //Displayer 
 				$taskpc =TaskDetails::where('doc_id', $docs->id)->where('task_id', $tasks->id)->count();
 				if ($taskpc==0)
 					continue;
 				$taskp =TaskDetails::where('doc_id', $docs->id)->where('task_id', $tasks->id)->first();
 
-				echo "<tr><td >".$tasks->order_id.". ".$tasks->taskName."</td>";
+				echo "<tr>";
+                        if ($tasks->taskType!="cheque"&&$tasks->taskType!="published"&&$tasks->taskType!="contract"&&$tasks->taskType!="meeting"&&$tasks->taskType!="rfq")
+                        echo "<td>".$tasks->order_id.". ".$tasks->taskName."</td>";
+                        //Task Display
+                        ?>
+                        @if ($tasks->taskType=="normal")
+                            <td>
+                                <?php
+                                if($taskp->assignee!=NULL)
+                                { 
+                                    $dassignee=chunk_split($taskp->assignee, 20, "<br>");
+                                    echo $dassignee;
+                                }
+                                else if($taskp->assignee_id!=0)
+                                {
+                                    $assign_user=User::find($taskp->assignee_id);
+                                    echo $assign_user->lastname.", ".$assign_user->firstname;
+                                }
+                                $date = new DateTime($taskp->dateFinished);
+                                $datef = $date->format('m/d/y');
+                            ?>
+                            </td>
 
-				?>
+                            <td >
+                            <?php 
+                                if($taskp->dateFinished!="0000-00-00 00:00:00") 
+                                    echo $datef; 
+                            ?>
+                            </td>
+                            <td>
+                            <?php 
+                                if($taskp->dateFinished!="0000-00-00 00:00:00") 
+                                    echo $taskp->daysOfAction; 
+                            ?>
+                            </td>
+                            <td>
+                            <?php 
+                                $dremarks=chunk_split($taskp->remarks, 20, "<br>");
+                                echo $dremarks; 
+                            ?>
+                            </td>
+                        @endif
 
-				<td>
-					<?php
-						if($taskp->assignee!=NULL)
-						{
-							$dassignee=chunk_split($taskp->assignee, 20, "<br>");
-							echo $dassignee; 
-						}
-						else if($taskp->assignee_id!=0)
-						{
-							$assign_user=User::find($taskp->assignee_id);
-							echo $assign_user->lastname.", ".$assign_user->firstname;
-						}
-							$date = new DateTime($taskp->dateFinished);
-							$datef = $date->format('m/d/y');
-					?>
-				</td>
+                        @if($tasks->taskType=="certification")
+                            <td colspan="2">
+                                <input type="radio" name="displayradio" value="yes" 
+                                <?php if($taskp->custom1=="yes") echo " checked";?> 
+                                disabled > Yes
+                                <input type="radio" name ="displayradio" value="no" 
+                                <?php if($taskp->custom1=="no") echo " checked";?>
+                                disabled> No
+                            </td>
+                            <td colspan="2">
+                                <b>By: </b>          
+                                {{$taskp->custom2;}}
+                            </td>
+                        @endif
 
-				<td><?php if($taskp->dateFinished!="0000-00-00 00:00:00") echo $datef; ?></td>
-				<td><?php if($taskp->dateFinished!="0000-00-00 00:00:00") echo $taskp->daysOfAction; ?></td>
-				<td>
-					<?php 
-						$dremarks=chunk_split($taskp->remarks, 20, "<br>");
-						echo $dremarks. "</td></tr>";
-						$sectiondays=$sectiondays+$taskp->daysOfAction;
+                        @if($tasks->taskType=="posting")
+                            <td colspan="2">
+                                <b>Reference No. : </b>          
+                                {{$taskp->custom1;}}
+                            </td>
+                             <td>
+                                <b>Date: </b>          
+                                {{$taskp->custom2;}}
+                            </td>
+                            <td>
+                                <b>By: </b>          
+                                {{$taskp->custom3;}}
+                            </td>
+                        @endif
+                        @if($tasks->taskType == "supplier")
+                                <td class="edit-pr-input" colspan="2">
+                                    {{$taskp->custom1}}
+                                </td>
+                                
+                                <td class="edit-pr-input" colspan="2">
+                                    <b>Amount: </b>
+                                    {{$taskp->custom2}}
+                                </td>     
+                        @endif
+                        @if($tasks->taskType=="cheque")
+                        <td class="edit-pr-input" colspan="2">
+                                    <b>Cheque Amt:</b>
+                                    {{$taskp->custom1}}
+                                </td>
+                                <td class="edit-pr-input" colspan="2">
+                                    <b>Cheque Num:</b>
+                                    {{$taskp->custom2}}
+                                </td>
+                                <td class="edit-pr-input" colspan="2">
+                                    <b>Cheque Date:</b>
+                                    {{$taskp->custom3}}
+                                </td>
+                        @endif
+                        @if($tasks->taskType=="published")
+                                    <td>
+                                    <b>{{$tasks->taskName}}</b>
+                                    <br>
+                                    {{$taskp->custom1}}
+                                    <span class="add-on"><i class="icon-th"></i></span>
+                                    </td>
+                                    <td>
+                                    <b>End Date</b>
+                                    <br>
+                                    {{$taskp->custom2}}
+                                    </td>
+                                    <td >
+                                    <b>Posted By</b>
+                                    </td>
+                                    <td class="edit-pr-input" colspan="2">  
+                                    {{$taskp->custom3}}
+                                    </td>
+                        @endif
+                        @if($tasks->taskType=="documents")
+                                    <td>
+                                    <b>{{$tasks->taskName}}</b>
+                                    <br>
+                                    {{$taskp->custom1}}
+                                    <span class="add-on"><i class="icon-th"></i></span>
+                                    </td>
+                                    <td>
+                                    <b>Date of Bidding</b>
+                                    <br>
+                                    {{$taskp->custom2}}
+                                    </td>
+                                    <td >
+                                    <b>Checked By</b>
+                                    </td>
+                                    <td class="edit-pr-input" colspan="2">  
+                                    {{$taskp->custom3}}
+                                    </td>
+                        @endif
+                        @if($tasks->taskType=="evaluations")
+                                    <td>
+                                    {{$taskp->custom1}}
+                                    </td>
+                                    
+                                    <td >
+                                    <b>No. of Days Accomplished</b>
+                                    </td>
+                                    <td class="edit-pr-input" colspan="3">  
+                                    {{$taskp->custom2}}
+                                    </td>
+                        @endif
+                        @if($tasks->taskType=="conference")
+                                    <td colspan="4">
+                                    {{$taskp->custom1}}
+                                    </td>
+                        @endif
+                        @if($tasks->taskType=="contract")
+                                    <td>
+                                    <b>{{$tasks->taskName}}</b>
+                                    <?php 
+                                    $today = date("m/d/y");
+                                    ?>
+                                    {{$taskp->custom1}}
+                                    </td>
+                                    <td >
+                                    <b>No. of Days Accomplished</b>
+                                    </td>
+                                    <td class="edit-pr-input">  
+                                    {{$taskp->custom2}}
+                                    </td>
+                                    <td>
+                                    <b>Contract Agreement</b>
+                                    </td>
+                                    <td class="edit-pr-input" colspan="2">  
+                                    {{$taskp->custom3}}
+                                    </td>
+                        @endif
+                         @if($tasks->taskType=="meeting")
+                                    <td>
+                                    <b>{{$tasks->taskName}}</b>
+                                    <?php 
+                                    $today = date("m/d/y");
+                                    ?>
+                                    {{$taskp->custom1}}
+                                    </td>
+                                    <td >
+                                    <b>No. of Days Accomplished</b>
+                                    </td>
+                                    <td class="edit-pr-input">  
+                                    {{$taskp->custom2}}
+                                    </td>
+                                    <td>
+                                    <b>Minutes of Meeting</b>
+                                    </td>
+                                    <td class="edit-pr-input" colspan="2">  
+                                    {{$taskp->custom3}}
+                                    </td>
+                        @endif
+                        @if($tasks->taskType=="rfq")
+                                    <td>
+                                    <b>{{$tasks->taskName}}</b>
+                                    <br>
+                                    {{$taskp->custom1}}
+                                    </td>
+                                    <td>
+                                    <b>Date of RFQ</b> (Within PGEPS 7 Days)
+                                    </td>
+                                    <td>
+                                    {{$taskp->custom2}}
+                                    </td>
+                                    <td>
+                                    <b>By</b>
+                                    </td>
+                                    <td class="edit-pr-input" colspan="2">  
+                                    {{$taskp->custom3}}
+                                    </td>
+                        @endif
+                        @if($tasks->taskType=="dateby")
+                            
+
+                            <td colspan="2">
+                            <?php 
+                                if($taskp->dateFinished!="0000-00-00 00:00:00") 
+                                    echo $datef; 
+                            ?>
+                            </td>
+                            <td colspan="2">
+                                <?php
+                                if($taskp->assignee!=NULL)
+                                { 
+                                    $dassignee=chunk_split($taskp->assignee, 20, "<br>");
+                                    echo $dassignee;
+                                }
+                                else if($taskp->assignee_id!=0)
+                                {
+                                    $assign_user=User::find($taskp->assignee_id);
+                                    echo $assign_user->lastname.", ".$assign_user->firstname;
+                                }
+                                $date = new DateTime($taskp->dateFinished);
+                                $datef = $date->format('m/d/y');
+                            ?>
+                            </td>
+                           
+                        
+                        
+                        @endif
+                         @if($tasks->taskType=="datebyremark")
+                            
+
+                            <td >
+                            <?php 
+                                if($taskp->dateFinished!="0000-00-00 00:00:00") 
+                                    echo $datef; 
+                            ?>
+                            </td>
+                            <td>
+                                <?php
+                                if($taskp->assignee!=NULL)
+                                { 
+                                    $dassignee=chunk_split($taskp->assignee, 20, "<br>");
+                                    echo $dassignee;
+                                }
+                                else if($taskp->assignee_id!=0)
+                                {
+                                    $assign_user=User::find($taskp->assignee_id);
+                                    echo $assign_user->lastname.", ".$assign_user->firstname;
+                                }
+                                $date = new DateTime($taskp->dateFinished);
+                                $datef = $date->format('m/d/y');
+                            ?>
+                            </td>
+                            <td colspan="2">
+                            <?php 
+                                $dremarks=chunk_split($taskp->remarks, 20, "<br>");
+                                echo $dremarks; 
+                            ?>
+                            </td>
+                        
+                        
+                        @endif
+                        <?php 
+                        //End Task Display
+                                $sectiondays=$sectiondays+$taskp->daysOfAction;
+                                $prdays=$prdays+$taskp->daysOfAction;
 			}
 
 			echo "<tr><td>TOTAL NO. OF DAYS</td><td></td><td></td><td>".$sectiondays."</td><td></td></tr>";
