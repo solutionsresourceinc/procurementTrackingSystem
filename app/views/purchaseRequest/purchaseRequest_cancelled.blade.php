@@ -149,7 +149,7 @@
             $requests = new Purchase;
            
             $user_selected=Auth::user()->id;
-              $requests = DB::table('purchase_request')->where('status', '=', 'Cancelled')->paginate(10); 
+              $requests = DB::table('purchase_request')->where('status', '=', 'Cancelled')->get(); 
             //End Query Restrictions
         ?>
 
