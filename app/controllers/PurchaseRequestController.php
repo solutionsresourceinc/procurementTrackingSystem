@@ -67,12 +67,27 @@ class PurchaseRequestController extends Controller
 		if($purchase_save)
 		{
 			// Insert data to reports table
-			$reports = new Reports;
-			$reports->purchaseNo = $purchase->id;
-			$date_received = Input::get( 'dateReceived' );
-			$date_received =substr($date_received, 0, strrpos($date_received, ' '));
 
-			$reports->pRequestDateReceived = $date_received;
+			
+			$date_received = Input::get( 'dateReceived' );
+			$date_received = substr($date_received, 0, strrpos($date_received, ' '));
+
+			$reports = Reports::whereDate($date_received)->first();
+
+			if($reports == null)
+			{
+				$reports = new Reports;
+				$reports->date = $date_received;
+				$reports->pRequestCount = 1;
+
+
+			}
+			else
+			{
+				$reports->pRequestCount = $reports->pRequestCount + 1;
+			}
+			
+
 			$reports->save();
 
 			$document->pr_id = $purchase->id;
@@ -391,7 +406,7 @@ class PurchaseRequestController extends Controller
 				}
 
 				return Redirect::back()->withInput();
-			}
+			} 
 		}
 		else
 		{
@@ -427,7 +442,7 @@ class PurchaseRequestController extends Controller
 
 			return Redirect::back()->withInput();
 
-		}
+		} 
 }
 
 public function edit()
@@ -530,9 +545,18 @@ public function viewOverdue()
 
 public function viewSummary()
 {
-	$prCount = Reports::count();
-	$POCount = Reports::where('pOrderDateReceived', '!=' , '0000-00-00')->count();
-	$chequeCount = Reports::where('chequeDateReceived', '!=' , '0000-00-00')->count();
+
+	$prCount = 0;
+	$POCount = 0;
+	$chequeCount = 0;
+
+	$reports = Reports::all();
+	foreach ($reports as $report) 
+	{
+		$prCount = $prCount + $report->pRequestCount;
+		$POCount = $POCount + $report->pOrderCount;
+		$chequeCount = $chequeCount + $report->chequeCount;
+	}
 
 	return View::make('purchaseRequest.summary')
 		->with('prCount',$prCount)
@@ -826,10 +850,22 @@ if (($check==3||$remarks==" ")&&$assignee!=NULL)
 	$taskcurrent=Task::find($taskd->task_id);
 	if($taskcurrent->taskName=="BAC (DELIVERY)"||$taskcurrent->taskName=="Governor's Office")
 	{
-		$purchaseNo = $docs->pr_id;
-		
-		$reports = Reports::where('purchaseNo', '=', $purchaseNo)->first();
-		$reports->pOrderDateReceived = $dateFinished;
+		$dateFinished = substr($dateFinished, 0, strrpos($dateFinished, ' '));
+
+		$reports = Reports::whereDate($dateFinished)->first();
+
+		if($reports == null)
+		{
+			$reports = new Reports;
+			$reports->date = $dateFinished;
+			$reports->pOrderCount = 1;
+			//return $reports . " aw " . $dateFinished;
+		}
+		else
+		{
+			$reports->pOrderCount = $reports->pOrderCount + 1;
+		}
+
 		$reports->save();
 	}
 
@@ -1168,12 +1204,25 @@ if ($check==2)
 
 	//Cheque
 
-	$purchaseNo = $docs->pr_id;
-
-	$reports = Reports::where('purchaseNo', '=', $purchaseNo)->first();
 	$timestamp = strtotime($date);
-	$dateFinished= date("Y-m-d H:i:s", $timestamp);
-	$reports->chequeDateReceived = $dateFinished;
+	$dateFinished = date("Y-m-d H:i:s", $timestamp);
+
+	$dateFinished = substr($dateFinished, 0, strrpos($dateFinished, ' '));
+	
+	$reports = Reports::whereDate($dateFinished)->first();
+
+	if($reports == null)
+	{
+		$reports = new Reports;
+		$reports->date = $dateFinished;
+		$reports->chequeCount = 1;
+
+	}
+	else
+	{
+		$reports->chequeCount = $reports->chequeCount + 1;
+	}
+
 	$reports->save();
 
 

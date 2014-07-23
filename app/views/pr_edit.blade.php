@@ -513,7 +513,7 @@
                                 
                                 <td class="edit-pr-input" colspan="2">
                                 <b>By: </b>
-                                    <input type="text" name="by"  placeholder="Enter name" class="form-control" maxlength="255" width="80%">
+                                    <input type="text" name="by"  placeholder="Enter name" class="form-control" maxlength="100" width="80%">
                                 </td>
 
                                 </tr>

@@ -43,9 +43,18 @@ class AjaxController extends Controller
 		$start = Input::get('start');
 		$end = Input::get('end');
 
-		$prCount = Reports::whereBetween('pRequestDateReceived', array($start, $end))->count(); 
-		$POCount  = Reports::whereBetween('pOrderDateReceived', array($start, $end))->count(); 
-		$chequeCount = Reports::whereBetween('chequeDateReceived', array($start, $end))->count(); 
+		$prCount = 0;
+		$POCount = 0;
+		$chequeCount = 0;
+
+		$reports = Reports::whereBetween('date', array($start, $end))->get(); 
+		foreach ($reports as $report) 
+		{
+			$prCount = $prCount + $report->pRequestCount;
+			$POCount = $POCount + $report->pOrderCount;
+			$chequeCount = $chequeCount + $report->chequeCount;
+		}
+
 
 		$data = array(
 		"inner-fragments" => array(
