@@ -115,7 +115,7 @@
 					<div class="row">
 						<div class="col-md-8">
 							{{ Form::label('projectPurpose', 'Project/Purpose *', array('class' => 'create-label')) }}
-							{{ Form::text('projectPurpose','', array('class'=>'form-control')) }}
+							{{ Form::text('projectPurpose','', array('class'=>'form-control', 'placeholder' => 'Enter project/purpose')) }}
 
 						@if (Session::get('error_projectPurpose'))
 							<font color="red"><i>{{ Session::get('error_projectPurpose') }}</i></font>
@@ -145,7 +145,7 @@
 					<div class="row">
 						<div class="col-md-6">
 							{{ Form::label('sourceOfFund', 'Source of Fund *', array('class' => 'create-label')) }}
-							{{ Form::text('sourceOfFund','', array('class'=>'form-control')) }}
+							{{ Form::text('sourceOfFund','', array('class'=>'form-control', 'placeholder'=>'Enter source')) }}
 
 						@if (Session::get('error_sourceOfFund'))
 							<font color="red"><i>{{ Session::get('error_sourceOfFund') }}</i></font>
@@ -155,7 +155,7 @@
 
 						<div class="col-md-6">
 							{{ Form::label('amount', 'Amount *', array('class' => 'create-label')) }}
-							{{ Form::text('amount','',array('class'=>'form-control','onchange'=>'numberWithCommas(this.value)', 'onkeypress' => 'return isNumberKey(event)','id'=>'num','maxlength'=>'12')) }}
+							{{ Form::text('amount','',array('class'=>'form-control','onchange'=>'numberWithCommas(this.value)', 'onkeypress' => 'return isNumberKey(event)','id'=>'num','maxlength'=>'12', 'placeholder' => 'Enter amount')) }}
 						@if (Session::get('error_amount'))
 							<font color="red"><i>{{ Session::get('error_amount') }}</i></font>
 						@endif
