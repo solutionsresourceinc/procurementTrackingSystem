@@ -135,7 +135,7 @@ class UserController extends BaseController {
             $desig->users_id= $user->id;
             $desig->designation_id=0;
             $desig->save();
-            $notice = "User created successfully! "; 
+            $notice = "User created successfully. "; 
             // Redirect with success message, You may replace "Lang::get(..." for your custom message.
             return Redirect::action('UserController@viewUser')->with( 'notice', $notice );
         }
