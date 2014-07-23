@@ -1174,8 +1174,6 @@ class TaskSeeder extends Seeder {
         $task->description = 'This is a task description';
         $task->save();
 
-        //Seeding this causes an error in edit 
-    /*
         $task = new Task;
         $task->wf_id = '5';
         $task->section_id = '4';
@@ -1193,12 +1191,20 @@ class TaskSeeder extends Seeder {
         ]);
         OtherDetails::create([
             'id'        => '2',
+            'label'    => 'Total Days for BAC Documents Preparation',
+            'section_id' => '17',
+        ]);
+        OtherDetails::create([
+            'id'        => '3',
+            'label'    => 'Compliance',
+            'section_id' => '17',
+        ]);
+        OtherDetails::create([
+            'id'        => '4',
             'label'    => 'Amount',
             'section_id' => '18',
         ]);
 
-    */
-    //
     }
 
 }

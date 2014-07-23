@@ -1736,7 +1736,6 @@ return Redirect::back();
 }
 
 
-
 public function dateby()
 {
 //Initializations	

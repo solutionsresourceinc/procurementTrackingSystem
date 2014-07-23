@@ -14,8 +14,8 @@
     <!--Image Display-->
     {{ HTML::script('js/lightbox.min.js') }} 
     {{ HTML::style('css/lightbox.css')}}
+    
     <!--End Image Display-->
-
     {{ HTML::script('js/jquery.chained.min.js') }} 
     {{ HTML::script('js/bootstrap.file-input.js') }} 
 @stop
@@ -376,9 +376,7 @@
                 {
                     $sectiondays=0;
                     $task= Task::where('section_id', $sections->section_order_id)->where('wf_id', $workflow->id)->orderBy('order_id', 'ASC')->get();
-                    echo "<div class='panel panel-success'><div class='panel-heading'>
-                        <h3 class='panel-title'>".$sections->section_order_id.". ".$sections->sectionName."</h3>
-                        </div>";
+                    echo "<div class='panel panel-success'><div class='panel-heading'><h3 class='panel-title'>".$sections->section_order_id.". ".$sections->sectionName."</h3></div>";
                  
                     echo "<div class='panel-body'>";
                     echo "<table border='1' class='workflow-table'>";
@@ -386,92 +384,85 @@
                     //Addon Display
                     $otherc=OtherDetails::where('section_id', $sections->id)->count();
 
-                    if($otherc!=0){
+                    if($otherc!=0)
+                    {
                         $otherd= OtherDetails::where('section_id', $sections->id)->get();
-                        foreach ($otherd as $otherdetails) {
+                        foreach ($otherd as $otherdetails) 
+                        {
+                            if($otherdetails->label!="Total Days for BAC Documents Preparation"&&$otherdetails->label!="Compliance")
+                            {
 
                             echo "<tr><td width='30%'>".$otherdetails->label."</td>";
                             $valuesc=Values::where('otherDetails_id', $otherdetails->id)->where('purchase_request_id', $purchaseToEdit->id)->count();
-                            $values=Values::where('otherDetails_id', $otherdetails->id)->where('purchase_request_id', $purchaseToEdit->id)->first();    
-                            if ($valuesc==0) {
-                    ?>
+                            $values=Values::where('otherDetails_id', $otherdetails->id)->where('purchase_request_id', $purchaseToEdit->id)->first();  
+                             ?>  
+                            @if ($valuesc==0) 
                                 {{Form::open(['url'=>'insertaddon'], 'POST')}}
                                     <input type="hidden" name="otherDetails_id" value="{{$otherdetails->id}}">
                                     <input type="hidden" name="purchase_request_id" value="{{$purchaseToEdit->id}}">
                                     <td colspan="3"><input name ="value" type="text" class="form-control"></td>
                                     <td align="center"><button class ="btn btn-primary">Save</button></td>
                                 {{Form::close()}}
-                    <?php
-                            }
-                            else {
-                                echo "<td width='48.5%' colspan='3'>".$values->value."</td>";
-                    ?>
+                            @else 
+                                <td width='48.5%' colspan='3'>{{$values->value}}</td>
+                    
                                 {{Form::open(['url'=>'editaddon', 'POST'])}}
-                                    
                                     <input type='hidden' name='values_id' value="{{$values->id}}">
                                     <td colspan='2' align='center'>
                                         <button class ='btn btn-default'>Edit</button>
                                     </td>
-                
                                 {{Form::close()}}
-                    <?php
+                            @endif
+                   
+                        
+                            </tr>
+                             <?php
                             }
-                            echo "</tr>";
                         }   
                     }
                     //End of Addon Display
-
-               
                     $previousTaskType="0";
-                    $countadjust=0;
-                    foreach ($task as $tasks) 
-                    {
+                  
+                foreach ($task as $tasks) 
+                {
                         $taskp =TaskDetails::where('doc_id', $docs->id)->where('task_id', $tasks->id)->first();
 
-                        if($taskp->status=="Lock")
-                            {
-                                $countadjust=$countadjust+1;
-                                continue;
-                            }
-                        //-$countadjust;
-
-                    if ($previousTaskType!="normal"&&$tasks->taskType=="normal"){
+                    if ($previousTaskType!="normal"&&$tasks->taskType=="normal")
+                    {
                         echo "<tr><th width='30%'></th>";
                         echo "<th class='workflow-th' width='18%'>By:</th>";
                         echo "<th class='workflow-th' width='18%'>Date:</th>";
                         echo "<th class='workflow-th' width='12.5%'>Days of Action</th>";
                         echo "<th class='workflow-th'>Remarks</th></tr>";
                     }
-                    if ($previousTaskType!="datebyremark"&&$tasks->taskType=="datebyremark"){
+                    if ($previousTaskType!="datebyremark"&&$tasks->taskType=="datebyremark")
+                    {
                         echo "<tr><th width='30%'></th>";
                         echo "<th class='workflow-th' >Date:</th>";
                         echo "<th class='workflow-th' >By:</th>";
                         echo "<th class='workflow-th' colspan='2'>Remarks</th></tr>";
                     }
-
-                    if ($previousTaskType!="dateby"&&$tasks->taskType=="dateby"){
+                    if ($previousTaskType!="dateby"&&$tasks->taskType=="dateby")
+                    {
                         echo "<tr><th width='30%'></th>";
                         echo "<th class='workflow-th' colspan='2'>Date:</th>";
                         echo "<th class='workflow-th' colspan='2'>By:</th></tr>";
                     }
-                        $previousTaskType=$tasks->taskType;
+                    $previousTaskType=$tasks->taskType;
                     //Cursor Open form 
-                        //Displayer 
-                        $taskp =TaskDetails::where('doc_id', $docs->id)->where('task_id', $tasks->id)->first();
+                    //Displayer 
+                    $taskp =TaskDetails::where('doc_id', $docs->id)->where('task_id', $tasks->id)->first();
 
                     if ($taskch!=0 && $taskc->task_id==$tasks->id && $tasks->designation_id==0)
                     {   
                         echo "<tr class='current-task'>";
+
                         if ($tasks->taskType!="cheque"&&$tasks->taskType!="published"&&$tasks->taskType!="contract"&&$tasks->taskType!="meeting"&&$tasks->taskType!="rfq")
                         {
-                        echo "<td>";
-                        echo $tasks->order_id-$countadjust;
-                        echo ". ".$tasks->taskName."</td>";
+                            echo "<td>";
+                            echo $tasks->taskName."</td>";
                         }
-                        else
-                        {
-                            $countadjust=$countadjust+1;
-                        }
+                        
                     
                     //Task Forms
                     ?>
@@ -524,7 +515,6 @@
                                     <input type="submit" class="btn btn-success" value="Submit"> 
                                 </td>
                             {{Form::close()}}
-
                     @endif
                     @if($tasks->taskType == "posting")
                             {{Form::open(['url'=>'posting'], 'POST')}}
@@ -553,7 +543,6 @@
                                     <input type="submit" class="btn btn-success" value="Submit"> 
                                 </td>
                             {{Form::close()}}
-
                     @endif
                     @if($tasks->taskType == "supplier")
                             {{Form::open(['url'=>'supplier'], 'POST')}}
@@ -605,31 +594,6 @@
                                 </td>
                             {{Form::close()}}
                     @endif
-                   <!-- @if($tasks->taskType == "preparation")
-                            {{Form::open(['url'=>'preparation'], 'POST')}}
-                                <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
-                                <td class="edit-pr-input" colspan="2">
-                                    <b>Total No. of Days for BAC Preparation:</b>
-                                    <input type="number" name="noofdays"  class="form-control" maxlength="12" width="80%">
-                                </td>
-                                <td class="edit-pr-input" colspan="2">
-                                    <b>Compliance</b>
-                                    <input type="text" name="compliance"  class="form-control" maxlength="100" width="80%">
-                                </td>
-                                <td class="edit-pr-input" colspan="2">
-                                    <b>Remarks</b>
-                                    <input type="text" name="remarks"  class="form-control" maxlength="100" width="80%">
-                                </td>
-                                
-
-                                </tr>
-                                <tr class="current-task">
-                                <td colspan="4" style="border-right: none"></td>
-                                <td style="border-left: none; text-align: center;">
-                                    <input type="submit" class="btn btn-success"> 
-                                </td>
-                            {{Form::close()}}
-                    @endif-->
                     @if($tasks->taskType == "published")
                             {{Form::open(['url'=>'published'], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
@@ -661,9 +625,8 @@
                                     <input type="submit" class="btn btn-success" value="Submit"> 
                                 </td>
                             {{Form::close()}}
-
-                        @endif
-                        @if($tasks->taskType == "documents")
+                    @endif
+                    @if($tasks->taskType == "documents")
                             {{Form::open(['url'=>'documents'], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
                                     <td>
@@ -694,8 +657,8 @@
                                     <input type="submit" class="btn btn-success" value="Submit"> 
                                 </td>
                             {{Form::close()}}
-                        @endif
-                        @if($tasks->taskType == "evaluations")
+                    @endif
+                    @if($tasks->taskType == "evaluations")
                             {{Form::open(['url'=>'evaluations'], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
 
@@ -720,8 +683,8 @@
                                     <input type="submit" class="btn btn-success" value="Submit"> 
                                 </td>
                             {{Form::close()}}
-                        @endif
-                        @if($tasks->taskType == "conference")
+                    @endif
+                    @if($tasks->taskType == "conference")
                             {{Form::open(['url'=>'conference'], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
                                     <td colspan="4">
@@ -739,8 +702,8 @@
                                     <input type="submit" class="btn btn-success" value="Submit"> 
                                 </td>
                             {{Form::close()}}
-                        @endif
-                        @if($tasks->taskType == "contract")
+                    @endif
+                    @if($tasks->taskType == "contract")
                             {{Form::open(['url'=>'contractmeeting'], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
 
@@ -773,8 +736,8 @@
                                     <input type="submit" class="btn btn-success" value="Submit"> 
                                 </td>
                             {{Form::close()}}
-                        @endif
-                        @if($tasks->taskType == "meeting")
+                    @endif
+                    @if($tasks->taskType == "meeting")
                             {{Form::open(['url'=>'contractmeeting'], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
 
@@ -807,8 +770,8 @@
                                     <input type="submit" class="btn btn-success" value="Submit"> 
                                 </td>
                             {{Form::close()}}
-                        @endif
-                         @if($tasks->taskType == "rfq")
+                    @endif
+                    @if($tasks->taskType == "rfq")
                             {{Form::open(['url'=>'rfq'], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
                                     <td>
@@ -838,8 +801,7 @@
                                     <input type="submit" class="btn btn-success" value="Submit"> 
                                 </td>
                             {{Form::close()}}
-                        @endif
-
+                    @endif
                     @if($tasks->taskType == "dateby")
                             {{Form::open(['url'=>'dateby'], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
@@ -861,7 +823,7 @@
                                 </td>
                             {{Form::close()}}
                     @endif
-                     @if($tasks->taskType == "datebyremark")
+                    @if($tasks->taskType == "datebyremark")
                             {{Form::open(['url'=>'datebyremark'], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
                                 
@@ -887,22 +849,20 @@
                             {{Form::close()}}
                     @endif
                     <!--End Task Forms-->
-                        <?php
+                    <?php
                     }
                         
-                        //END Cursor Open Form
-                        
+                    //END Cursor Open Form        
                     else
                     {
                         echo "<tr>";
-                        if ($tasks->taskType!="cheque"&&$tasks->taskType!="published"&&$tasks->taskType!="contract"&&$tasks->taskType!="meeting"&&$tasks->taskType!="rfq"){
-                        echo "<td>";
-                        echo $tasks->order_id-$countadjust;
-                        echo ". ".$tasks->taskName."</td>";}
-                        else
+
+                        if ($tasks->taskType!="cheque"&&$tasks->taskType!="published"&&$tasks->taskType!="contract"&&$tasks->taskType!="meeting"&&$tasks->taskType!="rfq")
                         {
-                            $countadjust=$countadjust+1;
+                            echo "<td>";
+                            echo $tasks->taskName."</td>";
                         }
+                        
                         //Task Display
                         ?>
                         @if ($tasks->taskType=="normal")
@@ -942,7 +902,6 @@
                             ?>
                             </td>
                         @endif
-
                         @if($tasks->taskType=="certification")
                             <td colspan="2">
                                 <input type="radio" name="displayradio" value="yes" 
@@ -957,7 +916,6 @@
                                 {{$taskp->custom2;}}
                             </td>
                         @endif
-
                         @if($tasks->taskType=="posting")
                             <td colspan="2">
                                 <b>Reference No. : </b>          
@@ -983,7 +941,7 @@
                                 </td>     
                         @endif
                         @if($tasks->taskType=="cheque")
-                        <td class="edit-pr-input" colspan="2">
+                                <td class="edit-pr-input" colspan="2">
                                     <b>CHEQUE AMT:</b>
                                     {{$taskp->custom1}}
                                 </td>
@@ -1072,7 +1030,7 @@
                                     {{$taskp->custom3}}
                                     </td>
                         @endif
-                         @if($tasks->taskType=="meeting")
+                        @if($tasks->taskType=="meeting")
                                     <td>
                                     <b>{{$tasks->taskName}}</b>
                                     <?php 
@@ -1111,8 +1069,7 @@
                                     {{$taskp->custom3}}
                                     </td>
                         @endif
-                        @if($tasks->taskType=="dateby")
-                            
+                        @if($tasks->taskType=="dateby") 
                             <td colspan="2">
                             <?php 
                                 $date = new DateTime($taskp->dateFinished);
@@ -1137,14 +1094,9 @@
                                 $datef = $date->format('m/d/y');
                             ?>
                             </td>
-                           
-                        
-                        
                         @endif
-                         @if($tasks->taskType=="datebyremark")
-                            
-
-                            <td >
+                        @if($tasks->taskType=="datebyremark")
+                           <td >
                             <?php 
                                 $date = new DateTime($taskp->dateFinished);
                                 $datef = $date->format('m/d/y');
@@ -1175,40 +1127,74 @@
                             ?>
                             </td>
                         @endif
-                        
-                        @if($tasks->taskType == "preparation")
-                                <td class="edit-pr-input" colspan="2">
-                                    <b>Total No. of Days for BAC Preparation:</b>
-                                    {{$taskp->custom1}}
-                                </td>
-                                <td class="edit-pr-input" colspan="2">
-                                    <b>Compliance</b>
-                                    {{$taskp->custom2}}
-                                </td>
-                                <td class="edit-pr-input" colspan="2">
-                                    <b>Remarks</b>
-                                    {{$taskp->custom3}}
-                                </td>
-                        @endif
-                    
+
                         <?php 
                         //End Task Display
-                                $sectiondays=$sectiondays+$taskp->daysOfAction;
-                                $prdays=$prdays+$taskp->daysOfAction;
+                        $sectiondays=$sectiondays+$taskp->daysOfAction;
+                        $prdays=$prdays+$taskp->daysOfAction;
 
                         
                     }   
                         echo "</tr>";
                 }
-                    echo "<tr>
+            //Addon Display
+                    $otherc=OtherDetails::where('section_id', $sections->id)->count();
+
+                    if($otherc!=0)
+                    {
+                        $otherd= OtherDetails::where('section_id', $sections->id)->get();
+                        foreach ($otherd as $otherdetails) 
+                        {
+                            if($otherdetails->label=="Total Days for BAC Documents Preparation"||$otherdetails->label=="Compliance")
+                            {
+
+                            echo "<tr><td width='30%'>".$otherdetails->label."</td>";
+                            $valuesc=Values::where('otherDetails_id', $otherdetails->id)->where('purchase_request_id', $purchaseToEdit->id)->count();
+                            $values=Values::where('otherDetails_id', $otherdetails->id)->where('purchase_request_id', $purchaseToEdit->id)->first();    
+                             ?>
+                            @if ($valuesc==0) 
+                                {{Form::open(['url'=>'insertaddon'], 'POST')}}
+                                    <input type="hidden" name="otherDetails_id" value="{{$otherdetails->id}}">
+                                    <input type="hidden" name="purchase_request_id" value="{{$purchaseToEdit->id}}">
+                                    <td colspan="3"><input name ="value" type="text" class="form-control"></td>
+                                    <td align="center"><button class ="btn btn-primary">Save</button></td>
+                                {{Form::close()}}
+                            @else 
+                                <td width='48.5%' colspan='3'>{{$values->value}}</td>
+
+                                {{Form::open(['url'=>'editaddon', 'POST'])}}
+                                    
+                                    <input type='hidden' name='values_id' value="{{$values->id}}">
+                                    <td colspan='2' align='center'>
+                                        <button class ='btn btn-default'>Edit</button>
+                                    </td>
+                
+                                {{Form::close()}}
+                                </tr>
+                            @endif
+                    <?php
+                           
+                            }   
+                        
+                        }
+                    //End of Addon Display
+
+                    }
+
+                    ?>
+
+                    @if($workflow->workFlowName!="Contract Bidding")
+                    
+                    <tr>
                             <td>TOTAL NO. OF DAYS</td>
                             <td></td>
                             <td></td>
-                            <td>".$sectiondays."</td>
+                            <td>{{$sectiondays}}</td>
                             <td></td>
-                        </tr>";
-                    echo "</table></div></div>";
-            
+                    </tr>
+                    </table></div></div>
+                    @endif
+                    <?php
                 }
                 echo "<div class='panel panel-success'><div class='panel-body'>
                         <table border='1' class='proc-details'>
@@ -1219,7 +1205,7 @@
                         </table>
                     </div></div>"; 
             ?>
-            <!-- Section 1  -->
+
         </div>
     </div>
 @stop
