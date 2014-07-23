@@ -250,8 +250,6 @@
                     //Displayer 
                     $taskp =TaskDetails::where('doc_id', $docs->id)->where('task_id', $tasks->id)->first();
 
-                   
-                        
                  
                     if(1==1)
                     {

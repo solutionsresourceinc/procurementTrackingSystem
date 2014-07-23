@@ -657,7 +657,7 @@
                                 </td>
                             {{Form::close()}}
                     @endif
-                    @if($tasks->taskType == "evaluations")
+                    @if($tasks->taskType == "evaluation")
                             {{Form::open(['url'=>'evaluations'], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
 
@@ -995,7 +995,7 @@
                                     {{$taskp->custom3}}
                                     </td>
                         @endif
-                        @if($tasks->taskType=="evaluations")
+                        @if($tasks->taskType=="evaluation")
                                     <td>
                                     {{$taskp->custom1}}
                                     </td>
