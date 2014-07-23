@@ -15,10 +15,10 @@ class CreateReportsTable extends Migration {
 		Schema::create('reports', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->integer('purchaseNo')->unsigned();
-			$table->dateTime('pRequestDateReceived');
-			$table->dateTime('pOrderDateReceived');
-			$table->dateTime('chequeDateReceived');
+			$table->date('date');
+			$table->integer('pRequestCount');
+			$table->integer('pOrderCount');
+			$table->integer('chequeCount');
 
 		});
 	}
