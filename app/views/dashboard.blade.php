@@ -16,8 +16,16 @@
 
     <?php
         $purchaseRequest = Purchase::all();
-        $POCount = Reports::where('pOrderDateReceived', '!=' , '0000-00-00')->count();
-        $chequeCount = Reports::where('chequeDateReceived', '!=' , '0000-00-00')->count();
+        $prCount = 0;
+        $POCount = 0;
+        $chequeCount = 0;
+
+        $reports = Reports::all();
+        foreach ($reports as $report) 
+        {
+            $POCount = $POCount + $report->pOrderCount;
+            $chequeCount = $chequeCount + $report->chequeCount;
+        }
     ?>
 
     <!-- Prints total number of purchase requests received -->
