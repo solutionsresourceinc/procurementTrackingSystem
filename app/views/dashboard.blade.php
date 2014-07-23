@@ -20,17 +20,26 @@
         {
     ?>
 
-    <div class="col-lg-3">
-        <div class="panel panel-default">
+    <?php
+        $purchaseRequest = Purchase::all();
+        $POCount = Reports::where('pOrderDateReceived', '!=' , '0000-00-00')->count();
+        $chequeCount = Reports::where('chequeDateReceived', '!=' , '0000-00-00')->count();
+    ?>
+
+    <div class="col-md-4">
+        <div class="panel panel-success">
             <div class="panel-heading">
                 <div class="row">
                     <div class="col-xs-6">
-                        <i class="fa fa-check fa-5x"></i>
+                        <div>
+                        <i class="fa fa-file-text-o" style="margin: 10px 5px; font-size: 3.7em;"></i>
+                    </div>
                     </div>
                     <div class="col-xs-6 text-right">
-                        <p class="announcement-heading">12</p>
-                        <p class="announcement-text">To-Do Items</p>
+
+                        <p class="announcement-heading">{{ $purchaseRequest->count(); }}</p>
                     </div>
+                    <p class="announcement-text">Purchase Requests</p>
                 </div>
             </div>
             <!--a href="#">
@@ -48,39 +57,39 @@
         </div>
     </div>
 
-    <div class="col-lg-3">
-        <div class="panel panel-default">
+    <div class="col-md-4">
+        <div class="panel panel-warning">
             <div class="panel-heading">
                 <div class="row">
                     <div class="col-xs-6">
-                        <i class="fa fa-check fa-5x"></i>
+                        <i class="glyphicon glyphicon-list-alt fa-3x" style="margin: 10px 5px"></i>
                     </div>
                     <div class="col-xs-6 text-right">
-                        <p class="announcement-heading">12</p>
-                        <p class="announcement-text">To-Do Items</p>
+                        <p class="announcement-heading">{{ $POCount }}</p>
                     </div>
+                    <p class="announcement-text">Purchase Orders</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="col-lg-3">
-        <div class="panel panel-default">
+    <div class="col-md-4">
+        <div class="panel panel-info">
             <div class="panel-heading">
                 <div class="row">
                     <div class="col-xs-6">
-                        <i class="fa fa-check fa-5x"></i>
+                        <i class="fa fa-credit-card" style="margin: 10px 5px; font-size: 3.5em;"></i>
                     </div>
                     <div class="col-xs-6 text-right">
-                        <p class="announcement-heading">12</p>
-                        <p class="announcement-text">To-Do Items</p>
+                        <p class="announcement-heading">{{ $chequeCount }}</p>
                     </div>
+                    <p class="announcement-text">Cheques</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="col-lg-3">
+    <!--div class="col-lg-3">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <div class="row">
@@ -94,12 +103,12 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div-->
 
     <div class="col-md-12" style="margin-top: 10px;">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <span style="font-size: 18px;">Latest Purchase Requests<a href="{{ URL::to('purchaseRequest/create') }}" class="btn btn-sm btn-info" style="float: right; padding: 3px 10px;">Create New</a></span>
+                <span style="font-size: 18px;">Latest Purchase Requests<a href="{{ URL::to('purchaseRequest/create') }}" class="btn btn-sm btn-primary" style="float: right; padding: 3px 10px;">Create New</a></span>
             </div>
             <div class="panel-body">
                 <table class="table">
