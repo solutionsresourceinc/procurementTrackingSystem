@@ -209,7 +209,7 @@
 						<div class="form-group col-md-6" id="template">
 							{{ Form::label('dateTime', 'Date Received *', array('class' => 'create-label')) }}
 							<div class="input-group date form_datetime col-md-12" data-date="{{ date('Y-m-d') }}T{{ date('H:i:s') }}Z" data-date-format="dd MM yyyy - HH:ii p" data-link-field="dtp_input2">
-								<input id="disabled_datetimeDateRec" onchange="fix_formatDateRec()" class="form-control" size="16" type="text" value="{{{ if(Input::old('dateReceived')) }}}" readonly>
+								<input id="disabled_datetimeDateRec" onchange="fix_formatDateRec()" class="form-control" size="16" type="text" value="{{{ Input::old('dateReceived') }}}" readonly>
 								<span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
 								<span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
 							</div>
