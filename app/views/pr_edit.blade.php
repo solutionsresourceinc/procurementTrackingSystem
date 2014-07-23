@@ -74,8 +74,7 @@
                 <div class="alert alert-danger"> {{ Session::get('errorchecklist') }}</div> 
             @endif
 
-            {{Session::forget('errorchecklist')}}
-            {{Session::forget('successchecklist')}}
+            
             
             @if(Session::get('successlabel'))
                 <div class="alert alert-success"> {{ Session::get('successlabel') }}</div> 
@@ -84,10 +83,6 @@
             @if(Session::get('errorlabel'))
                 <div class="alert alert-danger"> {{ Session::get('errorlabel') }}</div> 
             @endif
-
-            {{Session::forget('errorlabel')}}
-            {{Session::forget('successlabel')}}
-
 
             <div class="form-group">
                 <?php
@@ -471,7 +466,7 @@
                             {{Form::open(['url'=>'checklistedit'], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
                                 <td class="edit-pr-input">
-                                    <input type ="text" name="assignee" placeholder="Enter name" class="form-control" width="100%">
+                                    <input type ="text" name="assignee" placeholder="Enter name" class="form-control" width="100%" maxlength="100">
                                 </td>
                                 <td class="edit-pr-input"> 
                                     <?php 
@@ -481,7 +476,7 @@
                                     <span class="add-on"><i class="icon-th"></i></span>
                                 </td>
                                 <td class="edit-pr-input">
-                                    <input type="number" name="daysOfAction" class="form-control"  min="0" value="1" width="100%">
+                                    <input type="number" name="daysOfAction" class="form-control"  min="0" value="1" width="100%" maxlength="12">
                                 </td>
                                 <td class="edit-pr-input">
                                     <input type="text" name="remarks"  class="form-control" maxlength="255" width="100%">
@@ -505,7 +500,7 @@
                                 
                                 <td class="edit-pr-input" colspan="2">
                                 <b>By: </b>
-                                    <input type="text" name="by"  placeholder="Enter name" class="form-control" maxlength="100" width="80%">
+                                    <input type="text" name="by"  placeholder="Enter name" class="form-control" maxlength="100" width="80%" maxlength="100">
                                 </td>
 
                                 </tr>
@@ -521,7 +516,7 @@
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
                                 <td class="edit-pr-input">
                                     <b>Reference No. : </b>
-                                    <input type="text" name="referenceno"  class="form-control" maxlength="100" width="80%">
+                                    <input type="text" name="referenceno"  class="form-control" maxlength="100" width="80%" maxlength="100">
                                 </td>
                                 <td class="edit-pr-input"> 
                                     <b>Date: </b>
@@ -533,7 +528,7 @@
                                 </td>
                                 <td class="edit-pr-input" colspan="3">
                                     <b>By: </b>
-                                    <input type="text" name="by"  placeholder="Enter name" class="form-control" maxlength="100" width="80%">
+                                    <input type="text" name="by"  placeholder="Enter name" class="form-control" maxlength="100" width="80%" maxlength="100">
                                 </td>
 
                                 </tr>
@@ -548,7 +543,7 @@
                             {{Form::open(['url'=>'supplier'], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
                                 <td class="edit-pr-input" colspan="2">
-                                    <input type="text" name="supplier"  class="form-control" maxlength="100" width="80%">
+                                    <input type="text" name="supplier"  class="form-control" maxlength="100" width="80%" >
                                 </td>
                                 
                                 <td class="edit-pr-input" colspan="2">
@@ -603,7 +598,7 @@
                                     <?php 
                                     $today = date("m/d/y");
                                     ?>
-                                    <input class="datepicker" size="16" type="text" name="datepublished" class="form-control" value="{{$today}}" width="100%">
+                                    <input class="datepicker" size="16" type="text" name="datepublished" class="form-control" value="{{$today}}" width="100%" >
                                     <span class="add-on"><i class="icon-th"></i></span>
                                     </td>
                                     <td>
@@ -754,7 +749,7 @@
                                     <b>No. of Days Accomplished</b>
                                     </td>
                                     <td class="edit-pr-input">  
-                                    <input type="number" name="noofdays"  class="form-control" maxlength="100" width="80%">
+                                    <input type="number" name="noofdays"  class="form-control" maxlength="12" width="80%">
                                     </td>
                                     <td>
                                     <b>Minutes of Meeting</b>
@@ -776,7 +771,7 @@
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
                                     <td>
                                     <b>{{$tasks->taskName}}</b>
-                                    <input type="number" name="noofsuppliers"  class="form-control" maxlength="100" width="80%">
+                                    <input type="number" name="noofsuppliers"  class="form-control" maxlength="12" width="80%">
                                     </td>
                                     <td>
                                     <b>Date of RFQ</b> (Within PGEPS 7 Days)
@@ -809,11 +804,11 @@
                                     <?php 
                                     $today = date("m/d/y");
                                     ?>
-                                    <input class="datepicker" size="16" type="text" name="dateFinished" class="form-control" value="{{$today}}" width="100%">
+                                    <input class="datepicker" size="16" type="text" name="dateFinished" class="form-control" value="{{$today}}" width="100%" >
                                     <span class="add-on"><i class="icon-th"></i></span>
                                 </td>
                                 <td class="edit-pr-input" colspan="2">
-                                    <input type ="text" name="assignee" placeholder="Enter name" class="form-control" width="100%">
+                                    <input type ="text" name="assignee" placeholder="Enter name" class="form-control" width="100%" maxlength="100">
                                 </td>
                                 </tr>
                                 <tr class="current-task">
@@ -835,7 +830,7 @@
                                     <span class="add-on"><i class="icon-th"></i></span>
                                 </td>
                                 <td class="edit-pr-input">
-                                    <input type ="text" name="assignee" placeholder="Enter name" class="form-control" width="100%">
+                                    <input type ="text" name="assignee" placeholder="Enter name" class="form-control" width="100%" maxlength="100">
                                 </td>
                                 <td class="edit-pr-input" colspan="2">
                                     <input type="text" name="remarks"  class="form-control" maxlength="255" width="100%">
@@ -1156,7 +1151,7 @@
                                 {{Form::open(['url'=>'insertaddon'], 'POST')}}
                                     <input type="hidden" name="otherDetails_id" value="{{$otherdetails->id}}">
                                     <input type="hidden" name="purchase_request_id" value="{{$purchaseToEdit->id}}">
-                                    <td colspan="3"><input name ="value" type="text" class="form-control"></td>
+                                    <td colspan="3"><input name ="value" type="text" class="form-control" maxlength="100"></td>
                                     <td align="center"><button class ="btn btn-primary">Save</button></td>
                                 {{Form::close()}}
                             @else 
@@ -1183,8 +1178,7 @@
 
                     ?>
 
-                    @if($workflow->workFlowName!="Contract Bidding")
-                    
+                    @if($workflow->workFlowName!="Direct Contracting")
                     <tr>
                             <td>TOTAL NO. OF DAYS</td>
                             <td></td>
@@ -1192,8 +1186,9 @@
                             <td>{{$sectiondays}}</td>
                             <td></td>
                     </tr>
-                    </table></div></div>
                     @endif
+                    </table></div></div>
+                    
                     <?php
                 }
                 echo "<div class='panel panel-success'><div class='panel-body'>
@@ -1208,6 +1203,11 @@
 
         </div>
     </div>
+
+            {{Session::forget('errorlabel')}}
+            {{Session::forget('successlabel')}}
+            {{Session::forget('errorchecklist')}}
+            {{Session::forget('successchecklist')}}
 @stop
 
 
