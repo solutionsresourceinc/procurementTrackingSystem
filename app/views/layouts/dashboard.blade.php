@@ -92,16 +92,7 @@
                                             
                                             else if (Entrust::hasRole('Procurement Personnel'))
                                             {    
-                                                $useroffice=Auth::user()->office_id;
-                                                $req= User::find($cpurchases->requisitioner);
-                                                $docget=Document::where('pr_id', $cpurchases->id)->first();
-                                                $taskcon = TaskDetails::where('doc_id',$docget->id)->where('assignee_id',$cuser)->count();
-                      
-                                                if($taskcon!=0)      
-                                                    $result=$result+1;
-                                                else if($useroffice==$req->office_id) 
-                                                    $result=$result+1;
-                                                else if($cpurchases->created_by==$cuser)   
+                                                 
                                                     $result=$result+1;
                                             }
                                             else if(Entrust::hasRole('Requisitioner'))
@@ -141,16 +132,7 @@
                                                     $result=$result+1; 
                                                 else if (Entrust::hasRole('Procurement Personnel'))
                                                 {    
-                                                    $useroffice=Auth::user()->office_id;
-                                                    $req= User::find($cpurchases->requisitioner);
-                                                    $docget=Document::where('pr_id', $cpurchases->id)->first();
-                                                    $taskcon = TaskDetails::where('doc_id',$docget->id)->where('assignee_id',$cuser)->count();
-                      
-                                                    if($taskcon!=0)
-                                                        $result=$result+1;
-                                                    else if($useroffice==$req->office_id) 
-                                                        $result=$result+1;
-                                                    else if($cpurchases->created_by==$cuser)   
+                                                     
                                                         $result=$result+1;
                                                 }
                                                 else if(Entrust::hasRole('Requisitioner'))
@@ -193,18 +175,7 @@
                                             }
                                             else if (Entrust::hasRole('Procurement Personnel'))
                                             {    
-                                                $useroffice=Auth::user()->office_id;
-                                                $req= User::find($cpurchases->requisitioner);
-                                                $docget=Document::where('pr_id', $cpurchases->id)->first();
-                                                $taskcon = TaskDetails::where('doc_id',$docget->id)->where('assignee_id',$cuser)->count();
-                      
-                                                if($taskcon!=0)
-                                                {
-                                                    $result=$result+1;
-                                                }
-                                                else if($useroffice==$req->office_id) 
-                                                    $result=$result+1;
-                                                else if($cpurchases->created_by==$cuser)   
+                                                
                                                     $result=$result+1;
                                             }
                                             else if(Entrust::hasRole('Requisitioner'))
@@ -242,16 +213,7 @@
                                                 $result=$result+1; 
                                             else if (Entrust::hasRole('Procurement Personnel'))
                                             {    
-                                                $useroffice=Auth::user()->office_id;
-                                                $req= User::find($cpurchases->requisitioner);
-                                                $docget=Document::where('pr_id', $cpurchases->id)->first();
-                                                $taskcon = TaskDetails::where('doc_id',$docget->id)->where('assignee_id',$cuser)->count();
-                      
-                                                if($taskcon!=0)
-                                                    $result=$result+1;
-                                                else if($useroffice==$req->office_id) 
-                                                    $result=$result+1;
-                                                else if($cpurchases->created_by==$cuser)   
+                                                
                                                     $result=$result+1;
                                             }
                                             else if(Entrust::hasRole('Requisitioner'))

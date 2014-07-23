@@ -87,20 +87,9 @@
                       <?php 
                       //Office restriction
                     if (Entrust::hasRole('Administrator'))
-                      {}
-                    else if(Entrust::hasRole('Procurement Personnel')){
-                            
-                            $useroffice=Auth::user()->office_id;
-                            $maker= User::find( $request->requisitioner);
-                            $docget=Document::where('pr_id', $request->id)->first();
-                            $taskd = TaskDetails::where('doc_id',$docget->id)->where('assignee_id',$userx)->count();
-                            if($taskd!=0)
-                                {}
-                            else if ($userx==$request->created_by)
-                                {}
-                            else if ($useroffice!=$maker->office_id)
-                                continue;
-                    }
+                    {}
+                    else if(Entrust::hasRole('Procurement Personnel'))
+                    {}
                     else
                         {
                         $useroffice=Auth::user()->office_id;
