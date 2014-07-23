@@ -66,30 +66,7 @@ class PurchaseRequestController extends Controller
 
 		if($purchase_save)
 		{
-			// Insert data to reports table
-
 			
-			$date_received = Input::get( 'dateReceived' );
-			$date_received = substr($date_received, 0, strrpos($date_received, ' '));
-
-			$reports = Reports::whereDate($date_received)->first();
-
-			if($reports == null)
-			{
-				$reports = new Reports;
-				$reports->date = $date_received;
-				$reports->pRequestCount = 1;
-
-
-			}
-			else
-			{
-				$reports->pRequestCount = $reports->pRequestCount + 1;
-			}
-			
-
-			$reports->save();
-
 			$document->pr_id = $purchase->id;
 			$document->work_id = Input::get('hide_modeOfProcurement');
 			$document_save = $document->save();
@@ -288,6 +265,7 @@ class PurchaseRequestController extends Controller
 		            {
 		                $errors = $validator->errors();
 		                Session::put('imgerror','Invalid file.');
+
 		            }
 
         		}
@@ -298,7 +276,12 @@ class PurchaseRequestController extends Controller
 					
 					Session::forget('imgsuccess');
 					//Image Error Return
-
+					$purchase->delete();
+					
+					$task_details= TaskDetails::where('doc_id', $document->id)->delete();
+					$document->delete();
+					$message = "Failed to create purchase request.";
+					$count= Count::where('doc_id', $document->id)->delete();
 					// Set Main Error
 					$message = "Failed to save purchase request.";
 					Session::put('main_error', $message );
@@ -358,10 +341,54 @@ class PurchaseRequestController extends Controller
 						$message->to($email, $fname)->subject('Tarlac Procurement Tracking System: New Purchase Request Created');
 					}); 
 				
-					$notice = "Purchase request created successfully. ";	
+					$notice = "Purchase request created successfully. ";
+					// Insert data to reports table
+					$date_received = Input::get( 'dateReceived' );
+					$date_received = substr($date_received, 0, strrpos($date_received, ' '));
+
+					$reports = Reports::whereDate($date_received)->first();
+
+					if($reports == null)
+					{
+						$reports = new Reports;
+						$reports->date = $date_received;
+						$reports->pRequestCount = 1;
+
+
+					}
+					else
+					{
+						$reports->pRequestCount = $reports->pRequestCount + 1;
+					}
+					
+
+					$reports->save();
+					//End Reports	
 				}
 				else
 				{
+										// Insert data to reports table
+					$date_received = Input::get( 'dateReceived' );
+					$date_received = substr($date_received, 0, strrpos($date_received, ' '));
+
+					$reports = Reports::whereDate($date_received)->first();
+
+					if($reports == null)
+					{
+						$reports = new Reports;
+						$reports->date = $date_received;
+						$reports->pRequestCount = 1;
+
+
+					}
+					else
+					{
+						$reports->pRequestCount = $reports->pRequestCount + 1;
+					}
+					
+
+					$reports->save();
+					//End Reports	
 			        $notice = "Purchase request created successfully. Email notice was not sent. ";
 			    }
 
@@ -439,6 +466,8 @@ class PurchaseRequestController extends Controller
 			{
 				Session::put('error_modeOfProcurement', 'required' );
 			}
+
+			
 
 			return Redirect::back()->withInput();
 
