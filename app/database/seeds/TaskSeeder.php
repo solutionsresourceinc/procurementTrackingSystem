@@ -1057,6 +1057,16 @@ class TaskSeeder extends Seeder {
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
+
+        $task = new Task;
+        $task->wf_id = '5';
+        $task->section_id = '2';
+        $task->taskName = 'BAC Documents';
+        $task->taskType = 'preparation';
+        $task->maxDuration = '3';
+        $task->order_id = $orderID++;
+        $task->description = 'This is a task description';
+        $task->save();
         
         // WORKFLOW 5 | SECTION 3
         $orderID = 1; // controller for order_id
@@ -1164,6 +1174,8 @@ class TaskSeeder extends Seeder {
         $task->description = 'This is a task description';
         $task->save();
 
+        //Seeding this causes an error in edit 
+    /*
         $task = new Task;
         $task->wf_id = '5';
         $task->section_id = '4';
@@ -1173,5 +1185,20 @@ class TaskSeeder extends Seeder {
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
+
+        OtherDetails::create([
+            'id'        => '1',
+            'label'    => 'No. of Days Allowed',
+            'section_id' => '17',
+        ]);
+        OtherDetails::create([
+            'id'        => '2',
+            'label'    => 'Amount',
+            'section_id' => '18',
+        ]);
+
+    */
+    //
     }
+
 }

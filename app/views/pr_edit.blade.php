@@ -389,6 +389,7 @@
                     if($otherc!=0){
                         $otherd= OtherDetails::where('section_id', $sections->id)->get();
                         foreach ($otherd as $otherdetails) {
+
                             echo "<tr><td width='30%'>".$otherdetails->label."</td>";
                             $valuesc=Values::where('otherDetails_id', $otherdetails->id)->where('purchase_request_id', $purchaseToEdit->id)->count();
                             $values=Values::where('otherDetails_id', $otherdetails->id)->where('purchase_request_id', $purchaseToEdit->id)->first();    
@@ -604,6 +605,31 @@
                                 </td>
                             {{Form::close()}}
                     @endif
+                   <!-- @if($tasks->taskType == "preparation")
+                            {{Form::open(['url'=>'preparation'], 'POST')}}
+                                <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
+                                <td class="edit-pr-input" colspan="2">
+                                    <b>Total No. of Days for BAC Preparation:</b>
+                                    <input type="number" name="noofdays"  class="form-control" maxlength="12" width="80%">
+                                </td>
+                                <td class="edit-pr-input" colspan="2">
+                                    <b>Compliance</b>
+                                    <input type="text" name="compliance"  class="form-control" maxlength="100" width="80%">
+                                </td>
+                                <td class="edit-pr-input" colspan="2">
+                                    <b>Remarks</b>
+                                    <input type="text" name="remarks"  class="form-control" maxlength="100" width="80%">
+                                </td>
+                                
+
+                                </tr>
+                                <tr class="current-task">
+                                <td colspan="4" style="border-right: none"></td>
+                                <td style="border-left: none; text-align: center;">
+                                    <input type="submit" class="btn btn-success"> 
+                                </td>
+                            {{Form::close()}}
+                    @endif-->
                     @if($tasks->taskType == "published")
                             {{Form::open(['url'=>'published'], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
@@ -871,11 +897,11 @@
                         echo "<tr>";
                         if ($tasks->taskType!="cheque"&&$tasks->taskType!="published"&&$tasks->taskType!="contract"&&$tasks->taskType!="meeting"&&$tasks->taskType!="rfq"){
                         echo "<td>";
-                    echo $tasks->order_id-$countadjust;
-                    echo ". ".$tasks->taskName."</td>";}
+                        echo $tasks->order_id-$countadjust;
+                        echo ". ".$tasks->taskName."</td>";}
                         else
                         {
-                        $countadjust=$countadjust+1;
+                            $countadjust=$countadjust+1;
                         }
                         //Task Display
                         ?>
@@ -1087,9 +1113,10 @@
                         @endif
                         @if($tasks->taskType=="dateby")
                             
-
                             <td colspan="2">
                             <?php 
+                                $date = new DateTime($taskp->dateFinished);
+                                $datef = $date->format('m/d/y');
                                 if($taskp->dateFinished!="0000-00-00 00:00:00") 
                                     echo $datef; 
                             ?>
@@ -1119,6 +1146,8 @@
 
                             <td >
                             <?php 
+                                $date = new DateTime($taskp->dateFinished);
+                                $datef = $date->format('m/d/y');
                                 if($taskp->dateFinished!="0000-00-00 00:00:00") 
                                     echo $datef; 
                             ?>
@@ -1145,9 +1174,23 @@
                                 echo $dremarks; 
                             ?>
                             </td>
-                        
-                        
                         @endif
+                        
+                        @if($tasks->taskType == "preparation")
+                                <td class="edit-pr-input" colspan="2">
+                                    <b>Total No. of Days for BAC Preparation:</b>
+                                    {{$taskp->custom1}}
+                                </td>
+                                <td class="edit-pr-input" colspan="2">
+                                    <b>Compliance</b>
+                                    {{$taskp->custom2}}
+                                </td>
+                                <td class="edit-pr-input" colspan="2">
+                                    <b>Remarks</b>
+                                    {{$taskp->custom3}}
+                                </td>
+                        @endif
+                    
                         <?php 
                         //End Task Display
                                 $sectiondays=$sectiondays+$taskp->daysOfAction;
