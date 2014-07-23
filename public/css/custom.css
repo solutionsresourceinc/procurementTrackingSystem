@@ -415,6 +415,15 @@ th.today{
 	cursor: pointer;
 }
 
+.announcement-text{
+	text-align: right;
+	margin-right: 15px !important;
+}
+
+.summary-icons{
+	margin: 8px 5px;
+}
+
 @media all and (max-width: 1065px){
 	.accept-button{
 		margin: 8px 25px;
