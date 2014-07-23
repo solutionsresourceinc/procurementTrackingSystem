@@ -499,7 +499,7 @@
                                 </td>
                                 
                                 <td class="edit-pr-input" colspan="2">
-                                <b>By: </b>
+                                By: 
                                     <input type="text" name="by"  placeholder="Enter name" class="form-control" maxlength="100" width="80%" maxlength="100">
                                 </td>
 
@@ -515,11 +515,11 @@
                             {{Form::open(['url'=>'posting'], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
                                 <td class="edit-pr-input">
-                                    <b>Reference No. : </b>
+                                    Reference No. : 
                                     <input type="text" name="referenceno"  class="form-control" maxlength="100" width="80%" maxlength="100">
                                 </td>
                                 <td class="edit-pr-input"> 
-                                    <b>Date: </b>
+                                    Date: 
                                     <?php 
                                     $today = date("m/d/y");
                                     ?>
@@ -527,7 +527,7 @@
                                     <span class="add-on"><i class="icon-th"></i></span>
                                 </td>
                                 <td class="edit-pr-input" colspan="3">
-                                    <b>By: </b>
+                                    By: 
                                     <input type="text" name="by"  placeholder="Enter name" class="form-control" maxlength="100" width="80%" maxlength="100">
                                 </td>
 
@@ -547,7 +547,7 @@
                                 </td>
                                 
                                 <td class="edit-pr-input" colspan="2">
-                                    <b>Amount: </b>
+                                    Amount: 
                                     <input type="decimal" name="amount"  class="form-control" maxlength="12" width="80%">
                                 </td>
 
@@ -564,15 +564,15 @@
                             {{Form::open(['url'=>'cheque'], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
                                 <td class="edit-pr-input" colspan="2">
-                                    <b>CHEQUE AMT:</b>
+                                    CHEQUE AMT:
                                     <input type="decimal" name="amt"  class="form-control" maxlength="12" width="80%">
                                 </td>
                                 <td class="edit-pr-input" colspan="2">
-                                    <b>CHEQUE NUM:</b>
+                                    CHEQUE NUM:
                                     <input type="decimal" name="num"  class="form-control" maxlength="12" width="80%">
                                 </td>
                                 <td class="edit-pr-input" colspan="2">
-                                    <b>CHEQUE DATE:</b>
+                                    CHEQUE DATE:
                                     <?php 
                                     $today = date("m/d/y");
                                     ?>
@@ -593,7 +593,7 @@
                             {{Form::open(['url'=>'published'], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
                                     <td>
-                                    <b>{{$tasks->taskName}}</b>
+                                    {{$tasks->taskName}}
                                     <br>
                                     <?php 
                                     $today = date("m/d/y");
@@ -602,13 +602,13 @@
                                     <span class="add-on"><i class="icon-th"></i></span>
                                     </td>
                                     <td>
-                                    <b>End Date</b>
+                                    End Date
                                     <br>
                                     <input class="datepicker" size="16" type="text" name="enddate" class="form-control" value="{{$today}}" width="100%">
                                     <span class="add-on"><i class="icon-th"></i></span>
                                     </td>
                                     <td >
-                                    <b>Posted By</b>
+                                    Posted By
                                     </td>
                                     <td class="edit-pr-input" colspan="2">  
                                     <input type="text" name="by"  placeholder="Enter name" class="form-control" maxlength="100" width="80%">
@@ -625,7 +625,7 @@
                             {{Form::open(['url'=>'documents'], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
                                     <td>
-                                    <b>{{$tasks->taskName}}</b>
+                                    {{$tasks->taskName}}
                                     <br>
                                     <?php 
                                     $today = date("m/d/y");
@@ -634,13 +634,13 @@
                                     <span class="add-on"><i class="icon-th"></i></span>
                                     </td>
                                     <td>
-                                    <b>Date of Bidding</b>
+                                    Date of Bidding
                                     <br>
                                     <input class="datepicker" size="16" type="text" name="biddingdate" class="form-control" value="{{$today}}" width="100%">
                                     <span class="add-on"><i class="icon-th"></i></span>
                                     </td>
                                     <td >
-                                    <b>Checked By</b>
+                                    Checked By
                                     </td>
                                     <td class="edit-pr-input" colspan="2">  
                                     <input type="text" name="by"  class="form-control" maxlength="100" width="80%">
@@ -666,7 +666,7 @@
                                     </td>
                                     
                                     <td >
-                                    <b>No. of Days Accomplished</b>
+                                    No. of Days Accomplished
                                     </td>
                                     <td class="edit-pr-input" colspan="3">  
                                     <input type="number" name="noofdays"  class="form-control" maxlength="100" width="80%">
@@ -703,7 +703,7 @@
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
 
                                     <td>
-                                        <b>{{$tasks->taskName}}</b>
+                                        {{$tasks->taskName}}
                                     <?php 
                                     $today = date("m/d/y");
                                     ?>
@@ -712,13 +712,13 @@
                                     </td>
                                     
                                     <td >
-                                    <b>No. of Days Accomplished</b>
+                                    No. of Days Accomplished
                                     </td>
                                     <td class="edit-pr-input">  
                                     <input type="number" name="noofdays"  class="form-control" maxlength="100" width="80%">
                                     </td>
                                     <td>
-                                    <b>Contract Agreement</b>
+                                    Contract Agreement
                                     </td>
                                     <td class="edit-pr-input" colspan="2">  
                                     <input type="text" name="contractmeeting"  class="form-control" maxlength="100" width="80%">
@@ -737,7 +737,7 @@
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
 
                                     <td>
-                                        <b>{{$tasks->taskName}}</b>
+                                        {{$tasks->taskName}}
                                     <?php 
                                     $today = date("m/d/y");
                                     ?>
@@ -746,13 +746,13 @@
                                     </td>
                                     
                                     <td >
-                                    <b>No. of Days Accomplished</b>
+                                    No. of Days Accomplished
                                     </td>
                                     <td class="edit-pr-input">  
                                     <input type="number" name="noofdays"  class="form-control" maxlength="12" width="80%">
                                     </td>
                                     <td>
-                                    <b>Minutes of Meeting</b>
+                                    Minutes of Meeting
                                     </td>
                                     <td class="edit-pr-input" colspan="2">  
                                     <input type="text" name="contractmeeting"  class="form-control" maxlength="100" width="80%">
@@ -770,11 +770,11 @@
                             {{Form::open(['url'=>'rfq'], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
                                     <td>
-                                    <b>{{$tasks->taskName}}</b>
+                                    {{$tasks->taskName}}
                                     <input type="number" name="noofsuppliers"  class="form-control" maxlength="12" width="80%">
                                     </td>
                                     <td>
-                                    <b>Date of RFQ</b> (Within PGEPS 7 Days)
+                                    Date of RFQ (Within PGEPS 7 Days)
                                     </td>
                                     <?php 
                                     $today = date("m/d/y");
@@ -784,7 +784,7 @@
                                     <span class="add-on"><i class="icon-th"></i></span>
                                     </td>
                                     <td>
-                                    <b>By</b>
+                                    By
                                     </td>
                                     <td class="edit-pr-input" colspan="2">  
                                     <input type="text" name="by"  class="form-control" maxlength="100" width="80%">
@@ -907,21 +907,21 @@
                                 disabled> No
                             </td>
                             <td colspan="2">
-                                <b>By: </b>          
+                                By:         
                                 {{$taskp->custom2;}}
                             </td>
                         @endif
                         @if($tasks->taskType=="posting")
                             <td colspan="2">
-                                <b>Reference No. : </b>          
+                                Reference No. :          
                                 {{$taskp->custom1;}}
                             </td>
                              <td>
-                                <b>Date: </b>          
+                                Date:           
                                 {{$taskp->custom2;}}
                             </td>
                             <td>
-                                <b>By: </b>          
+                                By:          
                                 {{$taskp->custom3;}}
                             </td>
                         @endif
@@ -931,38 +931,38 @@
                                 </td>
                                 
                                 <td class="edit-pr-input" colspan="2">
-                                    <b>Amount: </b>
+                                    Amount: 
                                     {{$taskp->custom2}}
                                 </td>     
                         @endif
                         @if($tasks->taskType=="cheque")
                                 <td class="edit-pr-input" colspan="2">
-                                    <b>CHEQUE AMT:</b>
+                                    CHEQUE AMT:
                                     {{$taskp->custom1}}
                                 </td>
                                 <td class="edit-pr-input" colspan="2">
-                                    <b>CHEQUE NUM:</b>
+                                    CHEQUE NUM:
                                     {{$taskp->custom2}}
                                 </td>
                                 <td class="edit-pr-input" colspan="2">
-                                    <b>CHEQUE DATE:</b>
+                                    CHEQUE DATE:
                                     {{$taskp->custom3}}
                                 </td>
                         @endif
                         @if($tasks->taskType=="published")
                                     <td>
-                                    <b>{{$tasks->taskName}}</b>
+                                    {{$tasks->taskName}}
                                     <br>
                                     {{$taskp->custom1}}
                                     <span class="add-on"><i class="icon-th"></i></span>
                                     </td>
                                     <td>
-                                    <b>End Date</b>
+                                    End Date
                                     <br>
                                     {{$taskp->custom2}}
                                     </td>
                                     <td >
-                                    <b>Posted By</b>
+                                    Posted By
                                     </td>
                                     <td class="edit-pr-input" colspan="2">  
                                     {{$taskp->custom3}}
@@ -970,18 +970,18 @@
                         @endif
                         @if($tasks->taskType=="documents")
                                     <td>
-                                    <b>{{$tasks->taskName}}</b>
+                                    {{$tasks->taskName}}
                                     <br>
                                     {{$taskp->custom1}}
                                     <span class="add-on"><i class="icon-th"></i></span>
                                     </td>
                                     <td>
-                                    <b>Date of Bidding</b>
+                                    Date of Bidding
                                     <br>
                                     {{$taskp->custom2}}
                                     </td>
                                     <td >
-                                    <b>Checked By</b>
+                                    Checked By
                                     </td>
                                     <td class="edit-pr-input" colspan="2">  
                                     {{$taskp->custom3}}
@@ -993,7 +993,7 @@
                                     </td>
                                     
                                     <td >
-                                    <b>No. of Days Accomplished</b>
+                                    No. of Days Accomplished
                                     </td>
                                     <td class="edit-pr-input" colspan="3">  
                                     {{$taskp->custom2}}
@@ -1006,20 +1006,20 @@
                         @endif
                         @if($tasks->taskType=="contract")
                                     <td>
-                                    <b>{{$tasks->taskName}}</b>
+                                    {{$tasks->taskName}}
                                     <?php 
                                     $today = date("m/d/y");
                                     ?>
                                     {{$taskp->custom1}}
                                     </td>
                                     <td >
-                                    <b>No. of Days Accomplished</b>
+                                    No. of Days Accomplished
                                     </td>
                                     <td class="edit-pr-input">  
                                     {{$taskp->custom2}}
                                     </td>
                                     <td>
-                                    <b>Contract Agreement</b>
+                                    Contract Agreement
                                     </td>
                                     <td class="edit-pr-input" colspan="2">  
                                     {{$taskp->custom3}}
@@ -1027,20 +1027,20 @@
                         @endif
                         @if($tasks->taskType=="meeting")
                                     <td>
-                                    <b>{{$tasks->taskName}}</b>
+                                    {{$tasks->taskName}}
                                     <?php 
                                     $today = date("m/d/y");
                                     ?>
                                     {{$taskp->custom1}}
                                     </td>
                                     <td >
-                                    <b>No. of Days Accomplished</b>
+                                    No. of Days Accomplished
                                     </td>
                                     <td class="edit-pr-input">  
                                     {{$taskp->custom2}}
                                     </td>
                                     <td>
-                                    <b>Minutes of Meeting</b>
+                                    Minutes of Meeting
                                     </td>
                                     <td class="edit-pr-input" colspan="2">  
                                     {{$taskp->custom3}}
@@ -1048,17 +1048,16 @@
                         @endif
                         @if($tasks->taskType=="rfq")
                                     <td>
-                                    <b>{{$tasks->taskName}}</b>
-                                    {{$taskp->custom1}}
+                                    {{$tasks->taskName}} {{$taskp->custom1}}
                                     </td>
                                     <td>
-                                    <b>Date of RFQ</b> (Within PGEPS 7 Days)
+                                    Date of RFQ (Within PGEPS 7 Days)
                                     </td>
                                     <td>
                                     {{$taskp->custom2}}
                                     </td>
                                     <td>
-                                    <b>By</b>
+                                    By
                                     </td>
                                     <td class="edit-pr-input" colspan="2">  
                                     {{$taskp->custom3}}
