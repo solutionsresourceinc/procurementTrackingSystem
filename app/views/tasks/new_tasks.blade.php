@@ -14,10 +14,10 @@
                 // Get all task in the assigned to that designation
                 $task_row = Task::whereDesignationId($designation->designation_id)->where('designation_id','!=', '0')->get();
             ?>
- 
+            
             @foreach($task_row as $task) 
                 <!-- Get all task details with id = task->id -->
-                <?php 
+                <?php
                     $taskDetails_row = TaskDetails::whereTaskId($task->id)->whereStatus("New")->whereAssigneeId(0)->paginate(10); 
                     $show_pagination = 1;
 
@@ -52,10 +52,11 @@
         @endforeach
 
         <div>
-            @if($designation_row)
-                <center> {{ $taskDetails_row->links(); }} </center>
+           
+            @if(Session::get('$taskDetails_row'))
+                <center>{{ $taskDetails_row->links(); }}</center>
+                
              @endif
-
         </div>
     </div>
 @stop    

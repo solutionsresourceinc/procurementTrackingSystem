@@ -60,19 +60,73 @@ class UserTableSeeder extends Seeder {
         $user->confirmed = 1;
         $user->office_id = 2;
         $user->save();
-/*
+
+        // ACCOUNTS FOR TESTING PURPOSES
+        $controlId=4;
+
         $user = new User;
-        $user->id = '4';
-        $user->username = 'arben1';
-        $user->firstname = 'Arben';
-        $user->lastname = 'Hombre' ;
-        $user->email = 'arben@gmail.com';
-        $user->password = 'arben1';
-        $user->password_confirmation = 'arben1';
+        $user->id = $controlId++;
+        $user->username = 'edsample';
+        $user->firstname = 'Ed';
+        $user->lastname = 'Sample' ;
+        $user->email = 'edsample@gmail.com';
+        $user->password = 'edsample';
+        $user->password_confirmation = 'edsample';
         $user->confirmation_code = 'ok';
         $user->confirmed = 1;
-        $user->office_id = 2;
+        $user->office_id = 1;
         $user->save();
-        */
+
+        $user = new User;
+        $user->id = $controlId++;
+        $user->username = 'peachysample';
+        $user->firstname = 'Peachy';
+        $user->lastname = 'Sample';
+        $user->email = 'peachysample@gmail.com';
+        $user->password = 'peachysample';
+        $user->password_confirmation = 'peachysample';
+        $user->confirmation_code = 'ok';
+        $user->confirmed = 1;
+        $user->office_id = 1;
+        $user->save();
+
+        $user = new User;
+        $user->id = $controlId++;
+        $user->username = 'gensample';
+        $user->firstname = 'Gen';
+        $user->lastname = 'Sample' ;
+        $user->email = 'gensample@gmail.com';
+        $user->password = 'gensample';
+        $user->password_confirmation = 'gensample';
+        $user->confirmation_code = 'ok';
+        $user->confirmed = 1;
+        $user->office_id = 1;
+        $user->save();
+
+        $user = new User;
+        $user->id = $controlId++;
+        $user->username = 'jhosample';
+        $user->firstname = 'Jho';
+        $user->lastname = 'Sample' ;
+        $user->email = 'jhosample@gmail.com';
+        $user->password = 'jhosample';
+        $user->password_confirmation = 'jhosample';
+        $user->confirmation_code = 'ok';
+        $user->confirmed = 1;
+        $user->office_id = 1;
+        $user->save();
+
+        $user = new User;
+        $user->id = $controlId++;
+        $user->username = 'jdcruz';
+        $user->firstname = 'Juan';
+        $user->lastname = 'Dela Cruz' ;
+        $user->email = 'jdcruzx@gmail.com';
+        $user->password = 'jdcruz';
+        $user->password_confirmation = 'jdcruz';
+        $user->confirmation_code = 'ok';
+        $user->confirmed = 1;
+        $user->office_id = 4;
+        $user->save();
     }
 }
