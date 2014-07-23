@@ -480,7 +480,7 @@
                             {{Form::open(['url'=>'checklistedit'], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
                                 <td class="edit-pr-input">
-                                    <input type ="text" name="assignee" placeholder="Enter name here" class="form-control" width="100%">
+                                    <input type ="text" name="assignee" placeholder="Enter name" class="form-control" width="100%">
                                 </td>
                                 <td class="edit-pr-input"> 
                                     <?php 
@@ -499,7 +499,7 @@
                                 <tr class="current-task">
                                 <td colspan="4" style="border-right: none"></td>
                                 <td style="border-left: none; text-align: center;">
-                                    <input type="submit" class="btn btn-success"> 
+                                    <input type="submit" class="btn btn-success" value="Submit"> 
                                 </td>
                             {{Form::close()}}
                     @endif
@@ -508,20 +508,20 @@
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
                                
                                 <td class="edit-pr-input" colspan="2">
-                                    <input type="radio" name="radio" value="yes" />Yes<br />
-                                    <input type="radio" name="radio" value="no" />No<br />
+                                    <input type="radio" name="radio" value="yes" />&nbsp;&nbsp;Yes &nbsp;&nbsp;
+                                    <input type="radio" name="radio" value="no" />&nbsp;&nbsp;No<br />
                                 </td>
                                 
                                 <td class="edit-pr-input" colspan="2">
                                 <b>By: </b>
-                                    <input type="text" name="by"  placeholder="Enter name here" class="form-control" maxlength="255" width="80%">
+                                    <input type="text" name="by"  placeholder="Enter name" class="form-control" maxlength="255" width="80%">
                                 </td>
 
                                 </tr>
                                 <tr class="current-task">
                                 <td colspan="4" style="border-right: none"></td>
                                 <td style="border-left: none; text-align: center;">
-                                    <input type="submit" class="btn btn-success"> 
+                                    <input type="submit" class="btn btn-success" value="Submit"> 
                                 </td>
                             {{Form::close()}}
 
@@ -543,14 +543,14 @@
                                 </td>
                                 <td class="edit-pr-input" colspan="3">
                                     <b>By: </b>
-                                    <input type="text" name="by"  placeholder="Enter name here" class="form-control" maxlength="100" width="80%">
+                                    <input type="text" name="by"  placeholder="Enter name" class="form-control" maxlength="100" width="80%">
                                 </td>
 
                                 </tr>
                                 <tr class="current-task">
                                 <td colspan="4" style="border-right: none"></td>
                                 <td style="border-left: none; text-align: center;">
-                                    <input type="submit" class="btn btn-success"> 
+                                    <input type="submit" class="btn btn-success" value="Submit"> 
                                 </td>
                             {{Form::close()}}
 
@@ -571,7 +571,7 @@
                                 <tr class="current-task">
                                 <td colspan="4" style="border-right: none"></td>
                                 <td style="border-left: none; text-align: center;">
-                                    <input type="submit" class="btn btn-success"> 
+                                    <input type="submit" class="btn btn-success" value="Submit"> 
                                 </td>
                             {{Form::close()}}
                     @endif
@@ -601,7 +601,7 @@
                                 <tr class="current-task">
                                 <td colspan="4" style="border-right: none"></td>
                                 <td style="border-left: none; text-align: center;">
-                                    <input type="submit" class="btn btn-success"> 
+                                    <input type="submit" class="btn btn-success" value="Submit"> 
                                 </td>
                             {{Form::close()}}
                     @endif
@@ -652,13 +652,13 @@
                                     <b>Posted By</b>
                                     </td>
                                     <td class="edit-pr-input" colspan="2">  
-                                    <input type="text" name="by"  placeholder="Enter name here" class="form-control" maxlength="100" width="80%">
+                                    <input type="text" name="by"  placeholder="Enter name" class="form-control" maxlength="100" width="80%">
                                     </td>
                                 </tr>
                                 <tr class="current-task">
                                 <td colspan="4" style="border-right: none"></td>
                                 <td style="border-left: none; text-align: center;">
-                                    <input type="submit" class="btn btn-success"> 
+                                    <input type="submit" class="btn btn-success" value="Submit"> 
                                 </td>
                             {{Form::close()}}
 
@@ -691,7 +691,7 @@
                                 <tr class="current-task">
                                 <td colspan="4" style="border-right: none"></td>
                                 <td style="border-left: none; text-align: center;">
-                                    <input type="submit" class="btn btn-success"> 
+                                    <input type="submit" class="btn btn-success" value="Submit"> 
                                 </td>
                             {{Form::close()}}
                         @endif
@@ -717,7 +717,7 @@
                                 <tr class="current-task">
                                 <td colspan="4" style="border-right: none"></td>
                                 <td style="border-left: none; text-align: center;">
-                                    <input type="submit" class="btn btn-success"> 
+                                    <input type="submit" class="btn btn-success" value="Submit"> 
                                 </td>
                             {{Form::close()}}
                         @endif
@@ -736,7 +736,7 @@
                                 <tr class="current-task">
                                 <td colspan="4" style="border-right: none"></td>
                                 <td style="border-left: none; text-align: center;">
-                                    <input type="submit" class="btn btn-success"> 
+                                    <input type="submit" class="btn btn-success" value="Submit"> 
                                 </td>
                             {{Form::close()}}
                         @endif
@@ -770,7 +770,7 @@
                                 <tr class="current-task">
                                 <td colspan="4" style="border-right: none"></td>
                                 <td style="border-left: none; text-align: center;">
-                                    <input type="submit" class="btn btn-success"> 
+                                    <input type="submit" class="btn btn-success" value="Submit"> 
                                 </td>
                             {{Form::close()}}
                         @endif
@@ -804,7 +804,7 @@
                                 <tr class="current-task">
                                 <td colspan="4" style="border-right: none"></td>
                                 <td style="border-left: none; text-align: center;">
-                                    <input type="submit" class="btn btn-success"> 
+                                    <input type="submit" class="btn btn-success" value="Submit"> 
                                 </td>
                             {{Form::close()}}
                         @endif
@@ -835,7 +835,7 @@
                                 <tr class="current-task">
                                 <td colspan="4" style="border-right: none"></td>
                                 <td style="border-left: none; text-align: center;">
-                                    <input type="submit" class="btn btn-success"> 
+                                    <input type="submit" class="btn btn-success" value="Submit"> 
                                 </td>
                             {{Form::close()}}
                         @endif
@@ -851,13 +851,13 @@
                                     <span class="add-on"><i class="icon-th"></i></span>
                                 </td>
                                 <td class="edit-pr-input" colspan="2">
-                                    <input type ="text" name="assignee" placeholder="Enter name here" class="form-control" width="100%">
+                                    <input type ="text" name="assignee" placeholder="Enter name" class="form-control" width="100%">
                                 </td>
                                 </tr>
                                 <tr class="current-task">
                                 <td colspan="4" style="border-right: none"></td>
                                 <td style="border-left: none; text-align: center;">
-                                    <input type="submit" class="btn btn-success"> 
+                                    <input type="submit" class="btn btn-success" value="Submit"> 
                                 </td>
                             {{Form::close()}}
                     @endif
@@ -873,7 +873,7 @@
                                     <span class="add-on"><i class="icon-th"></i></span>
                                 </td>
                                 <td class="edit-pr-input">
-                                    <input type ="text" name="assignee" placeholder="Enter name here" class="form-control" width="100%">
+                                    <input type ="text" name="assignee" placeholder="Enter name" class="form-control" width="100%">
                                 </td>
                                 <td class="edit-pr-input" colspan="2">
                                     <input type="text" name="remarks"  class="form-control" maxlength="255" width="100%">
@@ -882,7 +882,7 @@
                                 <tr class="current-task">
                                 <td colspan="4" style="border-right: none"></td>
                                 <td style="border-left: none; text-align: center;">
-                                    <input type="submit" class="btn btn-success"> 
+                                    <input type="submit" class="btn btn-success" value="Submit"> 
                                 </td>
                             {{Form::close()}}
                     @endif
@@ -947,7 +947,7 @@
                             <td colspan="2">
                                 <input type="radio" name="displayradio" value="yes" 
                                 <?php if($taskp->custom1=="yes") echo " checked";?> 
-                                disabled > Yes
+                                disabled > Yes 
                                 <input type="radio" name ="displayradio" value="no" 
                                 <?php if($taskp->custom1=="no") echo " checked";?>
                                 disabled> No

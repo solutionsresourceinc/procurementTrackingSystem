@@ -1,12 +1,6 @@
 @extends('layouts.dashboard')
 
 @section('content')
-
-    <!--CODE REVIEW:
-        - use laravel for conditions
-    -->
-
-	<!-- Creates the form -->
     <h1 class="page-header">Dashboard</h1>
 
     <?php 
@@ -20,86 +14,71 @@
         {
     ?>
 
-    <div class="col-lg-3">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <div class="row">
-                    <div class="col-xs-6">
-                        <i class="fa fa-check fa-5x"></i>
-                    </div>
-                    <div class="col-xs-6 text-right">
-                        <p class="announcement-heading">12</p>
-                        <p class="announcement-text">To-Do Items</p>
-                    </div>
-                </div>
-            </div>
-            <!--a href="#">
-                <div class="panel-footer announcement-bottom">
-                    <div class="row">
-                        <div class="col-xs-6">
-                            Total No. of PR Received
-                        </div>
-                        <div class="col-xs-6 text-right">
-                            <i class="fa fa-arrow-circle-right"></i>
-                        </div>
-                    </div>
-                </div>
-            </a-->
-        </div>
-    </div>
+    <?php
+        $purchaseRequest = Purchase::all();
+        $POCount = Reports::where('pOrderDateReceived', '!=' , '0000-00-00')->count();
+        $chequeCount = Reports::where('chequeDateReceived', '!=' , '0000-00-00')->count();
+    ?>
 
-    <div class="col-lg-3">
-        <div class="panel panel-default">
+    <!-- Prints total number of purchase requests received -->
+    <div class="col-md-4">
+        <div class="panel panel-success">
             <div class="panel-heading">
                 <div class="row">
                     <div class="col-xs-6">
-                        <i class="fa fa-check fa-5x"></i>
+                        <div>
+                        <i class="fa fa-file-text-o" style="margin: 10px 5px; font-size: 3.7em;"></i>
+                    </div>
                     </div>
                     <div class="col-xs-6 text-right">
-                        <p class="announcement-heading">12</p>
-                        <p class="announcement-text">To-Do Items</p>
+
+                        <p class="announcement-heading">{{ $purchaseRequest->count(); }}</p>
                     </div>
+                    <p class="announcement-text">@if($purchaseRequest->count() == 1) Purchase Request @else Purchase Requests @endif</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="col-lg-3">
-        <div class="panel panel-default">
+    <!-- Prints total number of purchase orders received -->
+    <div class="col-md-4">
+        <div class="panel panel-warning">
             <div class="panel-heading">
                 <div class="row">
                     <div class="col-xs-6">
-                        <i class="fa fa-check fa-5x"></i>
+                        <i class="glyphicon glyphicon-list-alt fa-3x" style="margin: 10px 5px"></i>
                     </div>
                     <div class="col-xs-6 text-right">
-                        <p class="announcement-heading">12</p>
-                        <p class="announcement-text">To-Do Items</p>
+                        <p class="announcement-heading">{{ $POCount }}</p>
                     </div>
+                    <p class="announcement-text">@if($POCount == 1) Purchase Order @else Purchase Orders @endif</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="col-lg-3">
-        <div class="panel panel-default">
+    <!-- Prints total number of cheques received -->
+    <div class="col-md-4">
+        <div class="panel panel-info">
             <div class="panel-heading">
                 <div class="row">
                     <div class="col-xs-6">
-                        <i class="fa fa-check fa-5x"></i>
+                        <i class="fa fa-credit-card" style="margin: 10px 5px; font-size: 3.5em;"></i>
                     </div>
                     <div class="col-xs-6 text-right">
-                        <p class="announcement-heading">12</p>
-                        <p class="announcement-text">To-Do Items</p>
+                        <p class="announcement-heading">{{ $chequeCount }}</p>
                     </div>
+                    <p class="announcement-text">@if($chequeCount == 1) Cheque @else Cheques @endif</p>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Table of latest purchase requests -->
     <div class="col-md-12" style="margin-top: 10px;">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <span style="font-size: 18px;">Latest Purchase Requests<a href="{{ URL::to('purchaseRequest/create') }}" class="btn btn-sm btn-info" style="float: right; padding: 3px 10px;">Create New</a></span>
+                <span style="font-size: 18px;">Latest Purchase Requests<a href="{{ URL::to('purchaseRequest/create') }}" class="btn btn-sm btn-primary" style="float: right; padding: 3px 10px;">Create New</a></span>
             </div>
             <div class="panel-body">
                 <table class="table">
