@@ -420,7 +420,11 @@
                   
                 foreach ($task as $tasks) 
                 {
-                        $taskp =TaskDetails::where('doc_id', $docs->id)->where('task_id', $tasks->id)->first();
+                    
+
+                    $taskp =TaskDetails::where('doc_id', $docs->id)->where('task_id', $tasks->id)->first();
+                    if($taskp->status=="Lock")
+                        continue;
 
                     if ($previousTaskType!="normal"&&$tasks->taskType=="normal")
                     {
@@ -450,6 +454,8 @@
 
                     if ($taskch!=0 && $taskc->task_id==$tasks->id && $tasks->designation_id==0)
                     {   
+                       
+
                         echo "<tr class='current-task'>";
 
                         if ($tasks->taskType!="cheque"&&$tasks->taskType!="published"&&$tasks->taskType!="contract"&&$tasks->taskType!="meeting"&&$tasks->taskType!="rfq")
@@ -850,6 +856,7 @@
                     //END Cursor Open Form        
                     else
                     {
+                        
                         echo "<tr>";
 
                         if ($tasks->taskType!="cheque"&&$tasks->taskType!="published"&&$tasks->taskType!="contract"&&$tasks->taskType!="meeting"&&$tasks->taskType!="rfq")
@@ -859,7 +866,10 @@
                         }
                         
                         //Task Display
+                        
+                      
                         ?>
+
                         @if ($tasks->taskType=="normal")
                             <td>
                                 <?php
@@ -1051,7 +1061,7 @@
                                     {{$tasks->taskName}} {{$taskp->custom1}}
                                     </td>
                                     <td>
-                                    Date of RFQ (Within PGEPS 7 Days)
+                                    Date of RF (Within PGEPS 7 Days)
                                     </td>
                                     <td>
                                     {{$taskp->custom2}}

@@ -540,7 +540,7 @@ class TaskSeeder extends Seeder {
         $task = new Task;
         $task->wf_id = '3';
         $task->section_id = '2';
-        $task->taskName = 'ADVERTISMENT';
+        $task->taskName = 'ADVERTISEMENT';
         $task->taskType = 'conference';
         $task->maxDuration = '3';
         $task->order_id = $orderID++;
