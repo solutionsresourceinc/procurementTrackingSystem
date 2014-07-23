@@ -26,6 +26,10 @@
 
 
 @section('content')
+	<?php 
+		date_default_timezone_set("Asia/Manila");
+		$date_today = date('Y-m-d H:i:s');
+	?>
 
 	<!-- Modal Div -->
 	<div class="modal fade" id="description" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
@@ -124,7 +128,7 @@
 
 
 						<div class="col-md-4">
-							{{ Form::label('projectType', 'Project Type', array('class' => 'create-label')) }}
+							{{ Form::label('projectType', 'Project Type *', array('class' => 'create-label')) }}
 							<select name="projectType" class="form-control" id="projectType">
 								<option value="">None</option>
 								<option value="Goods/Services" <?php if( Input::old('projectType') == "Goods/Services" ) echo "selected" ?>>Goods/Services</option>
@@ -209,11 +213,11 @@
 						<div class="form-group col-md-6" id="template">
 							{{ Form::label('dateTime', 'Date Received *', array('class' => 'create-label')) }}
 							<div class="input-group date form_datetime col-md-12" data-date="{{ date('Y-m-d') }}T{{ date('H:i:s') }}Z" data-date-format="dd MM yyyy - HH:ii p" data-link-field="dtp_input2">
-								<input id="disabled_datetimeDateRec" onchange="fix_formatDateRec()" class="form-control" size="16" type="text" value="{{{ Input::old('dateReceived') }}}" readonly>
+								<input id="disabled_datetimeDateRec" onchange="fix_formatDateRec()" class="form-control" size="16" type="text" value="<?php  if(Input::old("dateReceived")) { echo Input::old("dateReceived"); } else { echo $date_today; } ?>" readonly>
 								<span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
 								<span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
 							</div>
-							<input type="hidden" id="dtp_input2" name="dateReceived" value="{{{ Input::old('dateReceived') }}}" />
+							<input type="hidden" id="dtp_input2" name="dateReceived" value="<?php  if(Input::old("dateReceived")) { echo Input::old("dateReceived"); } else { echo $date_today; } ?>" />
 							@if (Session::get('error_dateReceived'))
 								<font color="red"><i>{{ Session::get('error_dateReceived') }}</i></font>
 							@endif
