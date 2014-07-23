@@ -86,7 +86,7 @@ class TaskSeeder extends Seeder {
         $task = new Task;
         $task->wf_id = '1';
         $task->section_id = '2';
-        $task->taskName = 'ABSTRACT OF QUOTES';
+        $task->taskName = 'ABSTRACT OF QUOTATION';
         $task->taskType = 'normal';
         $task->maxDuration = '3';
         $task->order_id = $orderID++;
