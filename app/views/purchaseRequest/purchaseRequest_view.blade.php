@@ -146,93 +146,129 @@
 		</div>
 	</div>
 
-	<!-- START CHECKLIST SECTION -->
-	<?php 
-		$docs= Document::where('pr_id', $purchase->id)->first();
+	<!-- Section 1  -->
+            <?php 
+            //Cursor Component
+                //Count Cursor
+                $id=$purchase->id;
+                $docs=DB::table('document')->where('pr_id', '=',$id )->first();
+                $workflow=DB::table('workflow')->get();
+                $taskch= TaskDetails::where('doc_id', $docs->id)->where('status', 'New')->orWhere('status', 'Active')->count(); 
+                //Get Cursor Value
+                $taskc= TaskDetails::where('doc_id', $docs->id)->where('status', 'New')->orWhere('status', 'Active')->first(); 
+                
+                //Queries
+                $workflow= Workflow::find($docs->work_id);
+                $section= Section::where('workflow_id', $workflow->id)->orderBy('section_order_id','ASC')->get();
+                $taskd= TaskDetails::where('doc_id', $docs->id)->orderBy('id', 'ASC')->get();
+                
+                $sectioncheck=0;
+                $prdays=0;
+      
+                foreach($section as $sections)
+                {
+                    $sectiondays=0;
+                    $task= Task::where('section_id', $sections->section_order_id)->where('wf_id', $workflow->id)->orderBy('order_id', 'ASC')->get();
+                    echo "<div class='panel panel-success'><div class='panel-heading'><h3 class='panel-title'>".$sections->section_order_id.". ".$sections->sectionName."</h3></div>";
+                 
+                    echo "<div class='panel-body'>";
+                    echo "<table border='1' class='workflow-table'>";
 
-		//Cursor Component
-		$taskc= TaskDetails::where('doc_id', $docs->id)->where('status', 'New')->orWhere('status', 'Active')->first(); 
-		$workflow= Workflow::find($docs->work_id);
-		$section= Section::where('workflow_id', $workflow->id)->orderBy('section_order_id','ASC')->get();
+                    //Addon Display
+                    $otherc=OtherDetails::where('section_id', $sections->id)->count();
 
-		$taskd= TaskDetails::where('doc_id', $docs->id)->orderBy('id', 'ASC')->get();
-		$sectioncheck=0;
-		$prdays=0;
-		foreach ($section as $sections) 
-		{ 
-			$sectiondays=0;
-
-			$task= Task::where('section_id', $sections->section_order_id)->where('wf_id', $workflow->id)->orderBy('order_id', 'ASC')->get();
-			echo "<div class='panel panel-success'><div class='panel-heading'>
-			<h3 class='panel-title'>".$sections->section_order_id.". ".$sections->sectionName."</h3>
-			</div>";
-			echo "<div class='panel-body'>";
-			echo "<table border='1' class='workflow-table'>";
-		
-	           //Addon Display
-			$otherc=OtherDetails::where('section_id', $sections->id)->count();
-			if($otherc!=0)
-			{
-				echo "<tr><th  class='workflow-th'>Label</th><th colspan='4'  class='workflow-th'>Input</th></tr>";
-
-				$otherd= OtherDetails::where('section_id', $sections->id)->get();
-				foreach ($otherd as $otherdetails) 
-				{
-					echo "<tr><td>".$otherdetails->label."</td>";
-					$valuesc=Values::where('otherDetails_id', $otherdetails->id)->where('purchase_request_id', $purchase->id)->count();
-					$values=Values::where('otherDetails_id', $otherdetails->id)->where('purchase_request_id', $purchase->id)->first();    
-					if ($valuesc==0) 
-					{
-						?>
-						<td colspan="4"></td>
-						<?php
-					}
-					else {
-						echo "<td colspan='4'>".$values->value."</td>";
-						?>
-
-						<?php
-					}
-					echo "</tr>";
-				}
-			} //End Addon Display 
-
-			 $previousTaskType="0";
-                    foreach ($task as $tasks) 
+                    if($otherc!=0)
                     {
+                        $otherd= OtherDetails::where('section_id', $sections->id)->get();
+                        foreach ($otherd as $otherdetails) 
+                        {
+                            if($otherdetails->label!="Total Days for BAC Documents Preparation"&&$otherdetails->label!="Compliance")
+                            {
+
+                            echo "<tr><td width='30%'>".$otherdetails->label."</td>";
+                            $valuesc=Values::where('otherDetails_id', $otherdetails->id)->where('purchase_request_id', $purchaseToEdit->id)->count();
+                            $values=Values::where('otherDetails_id', $otherdetails->id)->where('purchase_request_id', $purchaseToEdit->id)->first();  
+                             ?>  
+                            @if ($valuesc==0) 
+                                {{Form::open(['url'=>'insertaddon'], 'POST')}}
+                                    <input type="hidden" name="otherDetails_id" value="{{$otherdetails->id}}">
+                                    <input type="hidden" name="purchase_request_id" value="{{$purchaseToEdit->id}}">
+                                    <td colspan="3"><input name ="value" type="text" class="form-control"></td>
+                                    <td align="center"><button class ="btn btn-primary">Save</button></td>
+                                {{Form::close()}}
+                            @else 
+                                <td width='48.5%' colspan='3'>{{$values->value}}</td>
+                    
+                                {{Form::open(['url'=>'editaddon', 'POST'])}}
+                                    <input type='hidden' name='values_id' value="{{$values->id}}">
+                                    <td colspan='2' align='center'>
+                                        <button class ='btn btn-default'>Edit</button>
+                                    </td>
+                                {{Form::close()}}
+                            @endif
+                   
+                        
+                            </tr>
+                             <?php
+                            }
+                        }   
+                    }
+                    //End of Addon Display
+                    $previousTaskType="0";
+                  
+                foreach ($task as $tasks) 
+                {
                     
 
-                    if ($previousTaskType!="normal"&&$tasks->taskType=="normal"){
+                    $taskp =TaskDetails::where('doc_id', $docs->id)->where('task_id', $tasks->id)->first();
+                    if($taskp->status=="Lock")
+                        continue;
+
+                    if ($previousTaskType!="normal"&&$tasks->taskType=="normal")
+                    {
                         echo "<tr><th width='30%'></th>";
                         echo "<th class='workflow-th' width='18%'>By:</th>";
                         echo "<th class='workflow-th' width='18%'>Date:</th>";
                         echo "<th class='workflow-th' width='12.5%'>Days of Action</th>";
                         echo "<th class='workflow-th'>Remarks</th></tr>";
                     }
-                    if ($previousTaskType!="datebyremark"&&$tasks->taskType=="datebyremark"){
+                    if ($previousTaskType!="datebyremark"&&$tasks->taskType=="datebyremark")
+                    {
                         echo "<tr><th width='30%'></th>";
                         echo "<th class='workflow-th' >Date:</th>";
                         echo "<th class='workflow-th' >By:</th>";
                         echo "<th class='workflow-th' colspan='2'>Remarks</th></tr>";
                     }
-
-                    if ($previousTaskType!="dateby"&&$tasks->taskType=="dateby"){
+                    if ($previousTaskType!="dateby"&&$tasks->taskType=="dateby")
+                    {
                         echo "<tr><th width='30%'></th>";
                         echo "<th class='workflow-th' colspan='2'>Date:</th>";
                         echo "<th class='workflow-th' colspan='2'>By:</th></tr>";
                     }
-                        $previousTaskType=$tasks->taskType;
-					    //Displayer 
-				$taskpc =TaskDetails::where('doc_id', $docs->id)->where('task_id', $tasks->id)->count();
-				if ($taskpc==0)
-					continue;
-				$taskp =TaskDetails::where('doc_id', $docs->id)->where('task_id', $tasks->id)->first();
+                    $previousTaskType=$tasks->taskType;
 
-				echo "<tr>";
+                    //Displayer 
+                    $taskp =TaskDetails::where('doc_id', $docs->id)->where('task_id', $tasks->id)->first();
+
+                   
+                        
+                 
+                    if(1==1)
+                    {
+                        
+                        echo "<tr>";
+
                         if ($tasks->taskType!="cheque"&&$tasks->taskType!="published"&&$tasks->taskType!="contract"&&$tasks->taskType!="meeting"&&$tasks->taskType!="rfq")
-                        echo "<td>".$tasks->order_id.". ".$tasks->taskName."</td>";
+                        {
+                            echo "<td>";
+                            echo $tasks->taskName."</td>";
+                        }
+                        
                         //Task Display
+                        
+                      
                         ?>
+
                         @if ($tasks->taskType=="normal")
                             <td>
                                 <?php
@@ -270,33 +306,31 @@
                             ?>
                             </td>
                         @endif
-
                         @if($tasks->taskType=="certification")
                             <td colspan="2">
                                 <input type="radio" name="displayradio" value="yes" 
                                 <?php if($taskp->custom1=="yes") echo " checked";?> 
-                                disabled > Yes
+                                disabled > Yes 
                                 <input type="radio" name ="displayradio" value="no" 
                                 <?php if($taskp->custom1=="no") echo " checked";?>
                                 disabled> No
                             </td>
                             <td colspan="2">
-                                <b>By: </b>          
+                                By:         
                                 {{$taskp->custom2;}}
                             </td>
                         @endif
-
                         @if($tasks->taskType=="posting")
                             <td colspan="2">
-                                <b>Reference No. : </b>          
+                                Reference No. :          
                                 {{$taskp->custom1;}}
                             </td>
                              <td>
-                                <b>Date: </b>          
+                                Date:           
                                 {{$taskp->custom2;}}
                             </td>
                             <td>
-                                <b>By: </b>          
+                                By:          
                                 {{$taskp->custom3;}}
                             </td>
                         @endif
@@ -306,38 +340,38 @@
                                 </td>
                                 
                                 <td class="edit-pr-input" colspan="2">
-                                    <b>Amount: </b>
+                                    Amount: 
                                     {{$taskp->custom2}}
                                 </td>     
                         @endif
                         @if($tasks->taskType=="cheque")
-                        <td class="edit-pr-input" colspan="2">
-                                    <b>Cheque Amt:</b>
+                                <td class="edit-pr-input" colspan="2">
+                                    CHEQUE AMT:
                                     {{$taskp->custom1}}
                                 </td>
                                 <td class="edit-pr-input" colspan="2">
-                                    <b>Cheque Num:</b>
+                                    CHEQUE NUM:
                                     {{$taskp->custom2}}
                                 </td>
                                 <td class="edit-pr-input" colspan="2">
-                                    <b>Cheque Date:</b>
+                                    CHEQUE DATE:
                                     {{$taskp->custom3}}
                                 </td>
                         @endif
                         @if($tasks->taskType=="published")
                                     <td>
-                                    <b>{{$tasks->taskName}}</b>
+                                    {{$tasks->taskName}}
                                     <br>
                                     {{$taskp->custom1}}
                                     <span class="add-on"><i class="icon-th"></i></span>
                                     </td>
                                     <td>
-                                    <b>End Date</b>
+                                    End Date
                                     <br>
                                     {{$taskp->custom2}}
                                     </td>
                                     <td >
-                                    <b>Posted By</b>
+                                    Posted By
                                     </td>
                                     <td class="edit-pr-input" colspan="2">  
                                     {{$taskp->custom3}}
@@ -345,18 +379,18 @@
                         @endif
                         @if($tasks->taskType=="documents")
                                     <td>
-                                    <b>{{$tasks->taskName}}</b>
+                                    {{$tasks->taskName}}
                                     <br>
                                     {{$taskp->custom1}}
                                     <span class="add-on"><i class="icon-th"></i></span>
                                     </td>
                                     <td>
-                                    <b>Date of Bidding</b>
+                                    Date of Bidding
                                     <br>
                                     {{$taskp->custom2}}
                                     </td>
                                     <td >
-                                    <b>Checked By</b>
+                                    Checked By
                                     </td>
                                     <td class="edit-pr-input" colspan="2">  
                                     {{$taskp->custom3}}
@@ -366,8 +400,9 @@
                                     <td>
                                     {{$taskp->custom1}}
                                     </td>
+                                    
                                     <td >
-                                    <b>No. of Days Accomplished</b>
+                                    No. of Days Accomplished
                                     </td>
                                     <td class="edit-pr-input" colspan="3">  
                                     {{$taskp->custom2}}
@@ -380,41 +415,41 @@
                         @endif
                         @if($tasks->taskType=="contract")
                                     <td>
-                                    <b>{{$tasks->taskName}}</b>
+                                    {{$tasks->taskName}}
                                     <?php 
                                     $today = date("m/d/y");
                                     ?>
                                     {{$taskp->custom1}}
                                     </td>
                                     <td >
-                                    <b>No. of Days Accomplished</b>
+                                    No. of Days Accomplished
                                     </td>
                                     <td class="edit-pr-input">  
                                     {{$taskp->custom2}}
                                     </td>
                                     <td>
-                                    <b>Contract Agreement</b>
+                                    Contract Agreement
                                     </td>
                                     <td class="edit-pr-input" colspan="2">  
                                     {{$taskp->custom3}}
                                     </td>
                         @endif
-                         @if($tasks->taskType=="meeting")
+                        @if($tasks->taskType=="meeting")
                                     <td>
-                                    <b>{{$tasks->taskName}}</b>
+                                    {{$tasks->taskName}}
                                     <?php 
                                     $today = date("m/d/y");
                                     ?>
                                     {{$taskp->custom1}}
                                     </td>
                                     <td >
-                                    <b>No. of Days Accomplished</b>
+                                    No. of Days Accomplished
                                     </td>
                                     <td class="edit-pr-input">  
                                     {{$taskp->custom2}}
                                     </td>
                                     <td>
-                                    <b>Minutes of Meeting</b>
+                                    Minutes of Meeting
                                     </td>
                                     <td class="edit-pr-input" colspan="2">  
                                     {{$taskp->custom3}}
@@ -422,28 +457,26 @@
                         @endif
                         @if($tasks->taskType=="rfq")
                                     <td>
-                                    <b>{{$tasks->taskName}}</b>
-                                    <br>
-                                    {{$taskp->custom1}}
+                                    {{$tasks->taskName}} {{$taskp->custom1}}
                                     </td>
                                     <td>
-                                    <b>Date of RFQ</b> (Within PGEPS 7 Days)
+                                    Date of RF (Within PGEPS 7 Days)
                                     </td>
                                     <td>
                                     {{$taskp->custom2}}
                                     </td>
                                     <td>
-                                    <b>By</b>
+                                    By
                                     </td>
                                     <td class="edit-pr-input" colspan="2">  
                                     {{$taskp->custom3}}
                                     </td>
                         @endif
-                        @if($tasks->taskType=="dateby")
-                            
-
+                        @if($tasks->taskType=="dateby") 
                             <td colspan="2">
                             <?php 
+                                $date = new DateTime($taskp->dateFinished);
+                                $datef = $date->format('m/d/y');
                                 if($taskp->dateFinished!="0000-00-00 00:00:00") 
                                     echo $datef; 
                             ?>
@@ -464,15 +497,12 @@
                                 $datef = $date->format('m/d/y');
                             ?>
                             </td>
-                           
-                        
-                        
                         @endif
-                         @if($tasks->taskType=="datebyremark")
-                            
-
-                            <td >
+                        @if($tasks->taskType=="datebyremark")
+                           <td >
                             <?php 
+                                $date = new DateTime($taskp->dateFinished);
+                                $datef = $date->format('m/d/y');
                                 if($taskp->dateFinished!="0000-00-00 00:00:00") 
                                     echo $datef; 
                             ?>
@@ -499,34 +529,86 @@
                                 echo $dremarks; 
                             ?>
                             </td>
-                        
-                        
                         @endif
+
                         <?php 
                         //End Task Display
-                                $sectiondays=$sectiondays+$taskp->daysOfAction;
-                                $prdays=$prdays+$taskp->daysOfAction;
-			}
+                        $sectiondays=$sectiondays+$taskp->daysOfAction;
+                        $prdays=$prdays+$taskp->daysOfAction;
 
-			echo "<tr><td>TOTAL NO. OF DAYS</td><td></td><td></td><td>".$sectiondays."</td><td></td></tr>";
-			$prdays=$prdays+$sectiondays;
-			echo "</table></div></div>";
-		}
+                        
+                    }   
+                        echo "</tr>";
+                }
+            //Addon Display
+                    $otherc=OtherDetails::where('section_id', $sections->id)->count();
 
-	echo 
-		"<div class='panel panel-success'>
-			<div class='panel-body'>
-				<table border='1' class='proc-details'>
-					<tr>
-						<td width='55%'><h4>TOTAL NO. OF DAYS FROM PR TO PAYMENT: </h4></td>
-						<td><h4 style='margin-left: 50px;'>".$prdays."</h4></td>
-					</tr>
-				</table>
-			</div>
-		</div>";   
-	?>
-	<!--/div-->
-	<!-- END CHECKLIST SECTION -->
+                    if($otherc!=0)
+                    {
+                        $otherd= OtherDetails::where('section_id', $sections->id)->get();
+                        foreach ($otherd as $otherdetails) 
+                        {
+                            if($otherdetails->label=="Total Days for BAC Documents Preparation"||$otherdetails->label=="Compliance")
+                            {
+
+                            echo "<tr><td width='30%'>".$otherdetails->label."</td>";
+                            $valuesc=Values::where('otherDetails_id', $otherdetails->id)->where('purchase_request_id', $purchaseToEdit->id)->count();
+                            $values=Values::where('otherDetails_id', $otherdetails->id)->where('purchase_request_id', $purchaseToEdit->id)->first();    
+                             ?>
+                            @if ($valuesc==0) 
+                                {{Form::open(['url'=>'insertaddon'], 'POST')}}
+                                    <input type="hidden" name="otherDetails_id" value="{{$otherdetails->id}}">
+                                    <input type="hidden" name="purchase_request_id" value="{{$purchaseToEdit->id}}">
+                                    <td colspan="3"><input name ="value" type="text" class="form-control" maxlength="100"></td>
+                                    <td align="center"><button class ="btn btn-primary">Save</button></td>
+                                {{Form::close()}}
+                            @else 
+                                <td width='48.5%' colspan='3'>{{$values->value}}</td>
+
+                                {{Form::open(['url'=>'editaddon', 'POST'])}}
+                                    
+                                    <input type='hidden' name='values_id' value="{{$values->id}}">
+                                    <td colspan='2' align='center'>
+                                        <button class ='btn btn-default'>Edit</button>
+                                    </td>
+                
+                                {{Form::close()}}
+                                </tr>
+                            @endif
+                    <?php
+                           
+                            }   
+                        
+                        }
+                    //End of Addon Display
+
+                    }
+
+                    ?>
+
+                    @if($workflow->workFlowName!="Direct Contracting")
+                    <tr>
+                            <td>TOTAL NO. OF DAYS</td>
+                            <td></td>
+                            <td></td>
+                            <td>{{$sectiondays}}</td>
+                            <td></td>
+                    </tr>
+                    @endif
+                    </table></div></div>
+                    
+                    <?php
+                }
+                echo "<div class='panel panel-success'><div class='panel-body'>
+                        <table border='1' class='proc-details'>
+                            <tr>
+                                <td width='66%'><h4 style='margin-left: 10px'>TOTAL NO. OF DAYS FROM PR TO PAYMENT: </h4></td>
+                                <td><h4 style='margin-left: 50px;'>".$prdays."</h4></td>
+                            </tr>
+                        </table>
+                    </div></div>"; 
+            //end section
+            ?>
 	
 	<?php
 		function data_uri($image, $mime) 

@@ -505,7 +505,6 @@
                                 </td>
                                 
                                 <td class="edit-pr-input" colspan="2">
-                                By: 
                                     <input type="text" name="by"  placeholder="Enter name" class="form-control" maxlength="100" width="80%" maxlength="100">
                                 </td>
 
@@ -549,12 +548,11 @@
                             {{Form::open(['url'=>'supplier'], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
                                 <td class="edit-pr-input" colspan="2">
-                                    <input type="text" name="supplier"  class="form-control" maxlength="100" width="80%" >
+                                    <input type="text" name="supplier"  class="form-control" maxlength="100" width="80%" placeholder="Enter supplier">
                                 </td>
                                 
                                 <td class="edit-pr-input" colspan="2">
-                                    Amount: 
-                                    <input type="decimal" name="amount"  class="form-control" maxlength="12" width="80%">
+                                    <input type="decimal" name="amount"  class="form-control" maxlength="12" width="80%" placeholder="Enter amount">
                                 </td>
 
                                 </tr>
@@ -570,19 +568,19 @@
                             {{Form::open(['url'=>'cheque'], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
                                 <td class="edit-pr-input" colspan="2">
-                                    CHEQUE AMT:
-                                    <input type="decimal" name="amt"  class="form-control" maxlength="12" width="80%">
+                    
+                                    <input type="decimal" name="amt"  class="form-control" maxlength="12" width="80%" placeholder="Enter cheque amount">
                                 </td>
                                 <td class="edit-pr-input" colspan="2">
-                                    CHEQUE NUM:
-                                    <input type="decimal" name="num"  class="form-control" maxlength="12" width="80%">
+                                    
+                                    <input type="decimal" name="num"  class="form-control" maxlength="12" width="80%" placeholder="Enter cheque number">
                                 </td>
                                 <td class="edit-pr-input" colspan="2">
-                                    CHEQUE DATE:
+                               
                                     <?php 
                                     $today = date("m/d/y");
                                     ?>
-                                    <input class="datepicker" size="16" type="text" name="date" class="form-control" value="{{$today}}" width="100%">
+                                    <input class="datepicker" size="16" type="text" name="date" class="form-control" value="{{$today}}" width="100%" placeholder="Enter cheque date">
                                     <span class="add-on"><i class="icon-th"></i></span>
                                 </td>
                                 
@@ -648,8 +646,8 @@
                                     <td >
                                     Checked By
                                     </td>
-                                    <td class="edit-pr-input" colspan="2">  
-                                    <input type="text" name="by"  class="form-control" maxlength="100" width="80%">
+                                    <td class="edit-pr-input" colspan="2" >  
+                                    <input type="text" name="by"  class="form-control" maxlength="100" width="80%" placeholder="Enter name">
                                     </td>
                                 </tr>
                                 <tr class="current-task">
@@ -675,7 +673,7 @@
                                     No. of Days Accomplished
                                     </td>
                                     <td class="edit-pr-input" colspan="3">  
-                                    <input type="number" name="noofdays"  class="form-control" maxlength="100" width="80%">
+                                    <input type="number" name="noofdays"  class="form-control" maxlength="100" width="80%" placeholder="Enter no. of days">
                                     </td>
                                 </tr>
                                 <tr class="current-task">
@@ -721,13 +719,13 @@
                                     No. of Days Accomplished
                                     </td>
                                     <td class="edit-pr-input">  
-                                    <input type="number" name="noofdays"  class="form-control" maxlength="100" width="80%">
+                                    <input type="number" name="noofdays"  class="form-control" maxlength="100" width="80%" placeholder="Enter no. of days accomplished">
                                     </td>
                                     <td>
                                     Contract Agreement
                                     </td>
                                     <td class="edit-pr-input" colspan="2">  
-                                    <input type="text" name="contractmeeting"  class="form-control" maxlength="100" width="80%">
+                                    <input type="text" name="contractmeeting"  class="form-control" maxlength="100" width="80%" placeholder="Enter contract agreement">
                                     </td>
 
                                 </tr>
@@ -755,13 +753,13 @@
                                     No. of Days Accomplished
                                     </td>
                                     <td class="edit-pr-input">  
-                                    <input type="number" name="noofdays"  class="form-control" maxlength="12" width="80%">
+                                    <input type="number" name="noofdays"  class="form-control" maxlength="12" width="80%" placeholder="Enter no. of days accomplished">
                                     </td>
                                     <td>
                                     Minutes of Meeting
                                     </td>
                                     <td class="edit-pr-input" colspan="2">  
-                                    <input type="text" name="contractmeeting"  class="form-control" maxlength="100" width="80%">
+                                    <input type="text" name="contractmeeting"  class="form-control" maxlength="100" width="80%" placeholder="Enter minutes of meeting">
                                     </td>
 
                                 </tr>
@@ -777,7 +775,7 @@
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
                                     <td>
                                     {{$tasks->taskName}}
-                                    <input type="number" name="noofsuppliers"  class="form-control" maxlength="12" width="80%">
+                                    <input type="number" name="noofsuppliers"  class="form-control" maxlength="12" width="80%" placeholder="Enter no. of suppliers">
                                     </td>
                                     <td>
                                     Date of RFQ (Within PGEPS 7 Days)
@@ -793,7 +791,7 @@
                                     By
                                     </td>
                                     <td class="edit-pr-input" colspan="2">  
-                                    <input type="text" name="by"  class="form-control" maxlength="100" width="80%">
+                                    <input type="text" name="by"  class="form-control" maxlength="100" width="80%" placeholder="Enter name">
                                     </td>
                                 </tr>
                                 <tr class="current-task">
@@ -814,7 +812,7 @@
                                     <span class="add-on"><i class="icon-th"></i></span>
                                 </td>
                                 <td class="edit-pr-input" colspan="2">
-                                    <input type ="text" name="assignee" placeholder="Enter name" class="form-control" width="100%" maxlength="100">
+                                    <input type ="text" name="assignee" placeholder="Enter name" class="form-control" width="100%" maxlength="100" placeholder="Enter name">
                                 </td>
                                 </tr>
                                 <tr class="current-task">
@@ -836,7 +834,7 @@
                                     <span class="add-on"><i class="icon-th"></i></span>
                                 </td>
                                 <td class="edit-pr-input">
-                                    <input type ="text" name="assignee" placeholder="Enter name" class="form-control" width="100%" maxlength="100">
+                                    <input type ="text" name="assignee" placeholder="Enter name" class="form-control" width="100%" maxlength="100" placeholder="Enter name">
                                 </td>
                                 <td class="edit-pr-input" colspan="2">
                                     <input type="text" name="remarks"  class="form-control" maxlength="255" width="100%">
