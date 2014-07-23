@@ -498,7 +498,7 @@
                                 <tr class="current-task">
                                 <td colspan="4" style="border-right: none"></td>
                                 <td style="border-left: none; text-align: center;">
-                                    <input type="submit" class="btn btn-success"> 
+                                    <input type="submit" class="btn btn-success" value="Submit"> 
                                 </td>
                             {{Form::close()}}
                     @endif
@@ -520,7 +520,7 @@
                                 <tr class="current-task">
                                 <td colspan="4" style="border-right: none"></td>
                                 <td style="border-left: none; text-align: center;">
-                                    <input type="submit" class="btn btn-success"> 
+                                    <input type="submit" class="btn btn-success" value="Submit"> 
                                 </td>
                             {{Form::close()}}
 
@@ -549,7 +549,7 @@
                                 <tr class="current-task">
                                 <td colspan="4" style="border-right: none"></td>
                                 <td style="border-left: none; text-align: center;">
-                                    <input type="submit" class="btn btn-success"> 
+                                    <input type="submit" class="btn btn-success" value="Submit"> 
                                 </td>
                             {{Form::close()}}
 
@@ -570,7 +570,7 @@
                                 <tr class="current-task">
                                 <td colspan="4" style="border-right: none"></td>
                                 <td style="border-left: none; text-align: center;">
-                                    <input type="submit" class="btn btn-success"> 
+                                    <input type="submit" class="btn btn-success" value="Submit"> 
                                 </td>
                             {{Form::close()}}
                     @endif
@@ -600,7 +600,7 @@
                                 <tr class="current-task">
                                 <td colspan="4" style="border-right: none"></td>
                                 <td style="border-left: none; text-align: center;">
-                                    <input type="submit" class="btn btn-success"> 
+                                    <input type="submit" class="btn btn-success" value="Submit"> 
                                 </td>
                             {{Form::close()}}
                     @endif
@@ -632,7 +632,7 @@
                                 <tr class="current-task">
                                 <td colspan="4" style="border-right: none"></td>
                                 <td style="border-left: none; text-align: center;">
-                                    <input type="submit" class="btn btn-success"> 
+                                    <input type="submit" class="btn btn-success" value="Submit"> 
                                 </td>
                             {{Form::close()}}
 
@@ -665,7 +665,7 @@
                                 <tr class="current-task">
                                 <td colspan="4" style="border-right: none"></td>
                                 <td style="border-left: none; text-align: center;">
-                                    <input type="submit" class="btn btn-success"> 
+                                    <input type="submit" class="btn btn-success" value="Submit"> 
                                 </td>
                             {{Form::close()}}
                         @endif
@@ -691,7 +691,7 @@
                                 <tr class="current-task">
                                 <td colspan="4" style="border-right: none"></td>
                                 <td style="border-left: none; text-align: center;">
-                                    <input type="submit" class="btn btn-success"> 
+                                    <input type="submit" class="btn btn-success" value="Submit"> 
                                 </td>
                             {{Form::close()}}
                         @endif
@@ -710,7 +710,7 @@
                                 <tr class="current-task">
                                 <td colspan="4" style="border-right: none"></td>
                                 <td style="border-left: none; text-align: center;">
-                                    <input type="submit" class="btn btn-success"> 
+                                    <input type="submit" class="btn btn-success" value="Submit"> 
                                 </td>
                             {{Form::close()}}
                         @endif
@@ -744,7 +744,7 @@
                                 <tr class="current-task">
                                 <td colspan="4" style="border-right: none"></td>
                                 <td style="border-left: none; text-align: center;">
-                                    <input type="submit" class="btn btn-success"> 
+                                    <input type="submit" class="btn btn-success" value="Submit"> 
                                 </td>
                             {{Form::close()}}
                         @endif
@@ -778,7 +778,7 @@
                                 <tr class="current-task">
                                 <td colspan="4" style="border-right: none"></td>
                                 <td style="border-left: none; text-align: center;">
-                                    <input type="submit" class="btn btn-success"> 
+                                    <input type="submit" class="btn btn-success" value="Submit"> 
                                 </td>
                             {{Form::close()}}
                         @endif
@@ -809,7 +809,7 @@
                                 <tr class="current-task">
                                 <td colspan="4" style="border-right: none"></td>
                                 <td style="border-left: none; text-align: center;">
-                                    <input type="submit" class="btn btn-success"> 
+                                    <input type="submit" class="btn btn-success" value="Submit"> 
                                 </td>
                             {{Form::close()}}
                         @endif
@@ -831,7 +831,7 @@
                                 <tr class="current-task">
                                 <td colspan="4" style="border-right: none"></td>
                                 <td style="border-left: none; text-align: center;">
-                                    <input type="submit" class="btn btn-success"> 
+                                    <input type="submit" class="btn btn-success" value="Submit"> 
                                 </td>
                             {{Form::close()}}
                     @endif
@@ -856,7 +856,7 @@
                                 <tr class="current-task">
                                 <td colspan="4" style="border-right: none"></td>
                                 <td style="border-left: none; text-align: center;">
-                                    <input type="submit" class="btn btn-success"> 
+                                    <input type="submit" class="btn btn-success" value="Submit"> 
                                 </td>
                             {{Form::close()}}
                     @endif
