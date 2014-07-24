@@ -266,10 +266,16 @@
 	                        </p>
 						</td>
 					</tr>	
-				@elseif($task->taskType=='contract')
+				@elseif($task->taskType=='contract' || $task->taskType=='meeting')
 					<tr> 
 						<td width="50%">
-							<span style="font-weight: bold">Notice of Award Date: </span><br/>
+							<span style="font-weight: bold">
+								@if($task->taskType=='contract') 
+									Notice of Award Date: 
+								@else 
+									Notice to Proceed
+								@endif
+							</span><br/>
 							<p>
 								<?php 
                                 $today = date("m/d/y");
@@ -281,9 +287,15 @@
 							<p>
 								<input type="number" name="noofdays"  class="form-control" maxlength="100" width="80%" placeholder="Enter no. of days accomplished" style="margin-top: 10px;">
 	                        </p>
-	                        <span style="font-weight: bold">Contract Agreement: </span><br/>
+	                        <span style="font-weight: bold">
+	                        	@if($task->taskType=='contract') 
+	                        		Contract Agreement: 
+	                        	@else
+	                        		Minutes of Meeting:
+	                        	@endif
+	                        </span><br/>
 							<p>
-								<input type="text" name="contractmeeting"  class="form-control" maxlength="100" width="80%" placeholder="Enter contract agreement" style="margin-top: 10px;">
+								<input type="text" name="contractmeeting"  class="form-control" maxlength="100" width="80%" placeholder="@if($task->taskType=='contract') Enter contract agreement @else Enter minutes of meeting @endif" style="margin-top: 10px;">
 	                        </p>
 						</td>
 					</tr>	
@@ -294,7 +306,7 @@
 					<tr>
 						<td>
 							@if($task->taskType!='certification' && $task->taskType!='posting' && $task->taskType!='supplier' && $task->taskType!='cheque' && $task->taskType!='conference'
-							 && $task->taskType!='published' && $task->taskType!='documents' && $task->taskType!='evaluation' && $task->taskType!='contract')
+							 && $task->taskType!='published' && $task->taskType!='documents' && $task->taskType!='evaluation' && $task->taskType!='contract' && $task->taskType!='meeting')
 								@if($taskd->status!="New")
 								<p style="font-weight: bold">Remarks: </p>
 								<?php 
