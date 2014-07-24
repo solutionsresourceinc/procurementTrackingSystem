@@ -185,11 +185,42 @@
 					<tr> 
 						<td>
 							<span style="font-weight: bold">Conference Date: </span><br/>
-							<?php 
-                            $today = date("m/d/y");
-                            ?>
-                            <input class="datepicker" size="16" type="text" name="date" class="form-control" value="{{$today}}" width="100%">
-                            <span class="add-on"><i class="icon-th"></i></span>
+							<p>
+								<?php 
+	                            $today = date("m/d/y");
+	                            ?>
+	                            <input class="datepicker" size="16" type="text" name="date" class="form-control" value="{{$today}}" width="100%">
+	                            <span class="add-on"><i class="icon-th"></i></span>
+	                        </p>
+						</td>
+					</tr>	
+				@elseif($task->taskType=='published')
+					<tr> 
+						<td width="50%">
+							<span style="font-weight: bold">Date Published: </span><br/>
+							<p>
+								<?php 
+	                            $today = date("m/d/y");
+	                            ?>
+	                            <input class="datepicker" size="16" type="text" name="datepublished" class="form-control" value="{{$today}}" width="100%" >
+	                            <span class="add-on"><i class="icon-th"></i></span>
+	                        </p>
+							<span style="font-weight: bold">End Date: </span><br/>
+							<p>
+								<?php 
+	                            $today = date("m/d/y");
+	                            ?>
+	                            <input class="datepicker" size="16" type="text" name="datepublished" class="form-control" value="{{$today}}" width="100%" >
+	                            <span class="add-on"><i class="icon-th"></i></span>
+	                        </p>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<span style="font-weight: bold">Posted By: </span><br/>
+							<p>
+								<input type="text" name="by"  placeholder="Enter name" class="form-control" maxlength="100" width="80%">
+	                        </p>
 						</td>
 					</tr>	
 				@endif
@@ -197,7 +228,8 @@
 				
 					<tr>
 						<td>
-							@if($task->taskType!='certification' && $task->taskType!='posting' && $task->taskType!='supplier' && $task->taskType!='cheque' && $task->taskType!='conference')
+							@if($task->taskType!='certification' && $task->taskType!='posting' && $task->taskType!='supplier' && $task->taskType!='cheque' && $task->taskType!='conference'
+							 && $task->taskType!='published')
 								@if($taskd->status!="New")
 								<p style="font-weight: bold">Remarks: </p>
 								<?php 
