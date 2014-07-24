@@ -6,6 +6,7 @@ use Illuminate\Auth\Reminders\RemindableTrait;
 use Illuminate\Auth\Reminders\RemindableInterface;
 use Zizaco\Confide\ConfideUser;
 use Zizaco\Entrust\HasRole;
+use LaravelBook\Ardent\Ardent;
 class User extends ConfideUser implements UserInterface, RemindableInterface {
 
 	use UserTrait, RemindableTrait;
@@ -32,5 +33,20 @@ class User extends ConfideUser implements UserInterface, RemindableInterface {
 	public function taskDetails()
 	{
   		return $this->hasMany('TaskDetails');
+	}
+
+	public function getRememberToken()
+	{
+	    return $this->remember_token;
+	}
+
+	public function setRememberToken($value)
+	{
+	    $this->remember_token = $value;
+	}
+
+	public function getRememberTokenName()
+	{
+	    return 'remember_token';
 	}
 }
