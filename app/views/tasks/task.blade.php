@@ -189,7 +189,7 @@
 								<?php 
 	                            $today = date("m/d/y");
 	                            ?>
-	                            <input class="datepicker" size="16" type="text" name="date" class="form-control" value="{{$today}}" width="100%">
+	                            <input class="datepicker" size="16" type="text" name="date" class="form-control" value="{{$today}}" width="100%"  style="margin-top: 10px;">
 	                            <span class="add-on"><i class="icon-th"></i></span>
 	                        </p>
 						</td>
@@ -202,7 +202,7 @@
 								<?php 
 	                            $today = date("m/d/y");
 	                            ?>
-	                            <input class="datepicker" size="16" type="text" name="datepublished" class="form-control" value="{{$today}}" width="100%" >
+	                            <input class="datepicker" size="16" type="text" name="datepublished" class="form-control" value="{{$today}}" width="100%"  style="margin-top: 10px;">
 	                            <span class="add-on"><i class="icon-th"></i></span>
 	                        </p>
 							<span style="font-weight: bold">End Date: </span><br/>
@@ -210,7 +210,7 @@
 								<?php 
 	                            $today = date("m/d/y");
 	                            ?>
-	                            <input class="datepicker" size="16" type="text" name="datepublished" class="form-control" value="{{$today}}" width="100%" >
+	                            <input class="datepicker" size="16" type="text" name="datepublished" class="form-control" value="{{$today}}" width="100%"  style="margin-top: 10px;">
 	                            <span class="add-on"><i class="icon-th"></i></span>
 	                        </p>
 						</td>
@@ -219,17 +219,70 @@
 						<td>
 							<span style="font-weight: bold">Posted By: </span><br/>
 							<p>
-								<input type="text" name="by"  placeholder="Enter name" class="form-control" maxlength="100" width="80%">
+								<input type="text" name="by"  placeholder="Enter name" class="form-control" maxlength="100" width="80%"  style="margin-top: 10px;">
+	                        </p>
+						</td>
+					</tr>	
+				@elseif($task->taskType=='documents')
+					<tr> 
+						<td width="50%">
+							<span style="font-weight: bold">Eligibility Documents: </span><br/>
+							<p>
+								<?php 
+	                            $today = date("m/d/y");
+                                ?>
+                                <input class="datepicker" size="16" type="text" name="date" class="form-control" value="{{$today}}" width="100%" style="margin-top: 10px;">
+                                <span class="add-on"><i class="icon-th"></i></span>
+	                        </p>
+							<span style="font-weight: bold">Date of Bidding: </span><br/>
+							<p>
+								<input class="datepicker" size="16" type="text" name="biddingdate" class="form-control" value="{{$today}}" width="100%" style="margin-top: 10px;">
+								<span class="add-on"><i class="icon-th"></i></span>
+	                        </p>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<span style="font-weight: bold">Checked By: </span><br/>
+							<p>
+								<input type="text" name="by"  class="form-control" maxlength="100" width="80%" placeholder="Enter name" style="margin-top: 10px;">
+	                        </p>
+						</td>
+					</tr>	
+				@elseif($task->taskType=='evaluation')
+					<tr> 
+						<td width="50%">
+							<span style="font-weight: bold">Eligibility Documents: </span><br/>
+							<p>
+								<?php 
+	                            $today = date("m/d/y");
+                                ?>
+                                <input class="datepicker" size="16" type="text" name="date" class="form-control" value="{{$today}}" width="100%" style="margin-top: 10px;">
+                                <span class="add-on"><i class="icon-th"></i></span>
+	                        </p>
+							<span style="font-weight: bold">Date of Bidding: </span><br/>
+							<p>
+								<input class="datepicker" size="16" type="text" name="biddingdate" class="form-control" value="{{$today}}" width="100%" style="margin-top: 10px;">
+								<span class="add-on"><i class="icon-th"></i></span>
+	                        </p>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<span style="font-weight: bold">Checked By: </span><br/>
+							<p>
+								<input type="text" name="by"  class="form-control" maxlength="100" width="80%" placeholder="Enter name" style="margin-top: 10px;">
 	                        </p>
 						</td>
 					</tr>	
 				@endif
+
 				
 				
 					<tr>
 						<td>
 							@if($task->taskType!='certification' && $task->taskType!='posting' && $task->taskType!='supplier' && $task->taskType!='cheque' && $task->taskType!='conference'
-							 && $task->taskType!='published')
+							 && $task->taskType!='published' && $task->taskType!='documents')
 								@if($taskd->status!="New")
 								<p style="font-weight: bold">Remarks: </p>
 								<?php 
