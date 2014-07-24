@@ -1,6 +1,12 @@
 @extends('layouts.dashboard')
 
 @section('header')
+	{{ HTML::style('date_picker/bootstrap-datetimepicker.min.css')}}
+    {{ HTML::script('date_picker/bootstrap-datetimepicker.js') }}
+    {{ HTML::script('date_picker/bootstrap-datetimepicker.fr.js') }}
+    {{ HTML::style('css/datepicker.css')}}
+    {{ HTML::script('js/bootstrap-datepicker.js') }}
+
 	{{ HTML::script('js/bootstrap.file-input.js') }} 
 	<script type="text/javascript">
 		function codeAddress() 
@@ -128,7 +134,7 @@
 	                        </p>
 					
 						</td>
-					<tr>
+					</tr>
 				@elseif($task->taskType=='posting')
 					<tr> 
 						<td>
@@ -138,7 +144,7 @@
 	                        </p>
 					
 						</td>
-					<tr>
+					</tr>
 				@elseif($task->taskType=='supplier')
 					<tr> 
 						<td>
@@ -153,13 +159,34 @@
 								<input type="decimal" name="amount"  class="form-control" maxlength="12" width="80%" placeholder="Enter amount" style="margin-top: 10px;">
 	                        </p>
 						</td>
-					<tr>
+					</tr>
+				@elseif($task->taskType=='cheque')
+					<tr> 
+						<td>
+							<span style="font-weight: bold">Cheque Amount: </span><br/>
+							<p>
+								<input type="decimal" name="amt"  class="form-control" maxlength="12" width="80%" placeholder="Enter cheque amount" style="margin-top: 10px;">
+	                        </p>
+							<span style="font-weight: bold">Cheque Number: </span><br/>
+							<p>
+								<input type="decimal" name="amount"  class="form-control" maxlength="12" width="80%" placeholder="Enter amount" style="margin-top: 10px;">
+	                        </p>
+							<span style="font-weight: bold">Cheque Date: </span><br/>
+							<p>
+								<?php 
+                                $today = date("m/d/y");
+                                ?>
+                                <input class="datepicker" size="16" type="text" name="date" class="form-control" value="{{$today}}" width="100%" placeholder="Enter cheque date">
+                                <span class="add-on"><i class="icon-th"></i></span>
+	                        </p>
+						</td>
+					</tr>	
 				@endif
 				
 				
 					<tr>
 						<td>
-							@if($task->taskType!='certification' && $task->taskType!='posting' && $task->taskType!='supplier')
+							@if($task->taskType!='certification' && $task->taskType!='posting' && $task->taskType!='supplier' && $task->taskType!='cheque')
 								@if($taskd->status!="New")
 								<p style="font-weight: bold">Remarks: </p>
 								<?php 
@@ -256,33 +283,91 @@
 	</div>
 @stop
 
-	@section('footer')
-
-
+@section('footer')
 	<script type="text/javascript">
-	$('input[type=file]').bootstrapFileInput();
-	    $('.file-inputs').bootstrapFileInput();
-		function isNumberKey(evt)
-		{
-			var charCode = (evt.which) ? evt.which : event.keyCode
-			if(charCode == 44 || charCode == 46)
+		$('input[type=file]').bootstrapFileInput();
+		    $('.file-inputs').bootstrapFileInput();
+			function isNumberKey(evt)
+			{
+				var charCode = (evt.which) ? evt.which : event.keyCode
+				if(charCode == 44 || charCode == 46)
+					return true;
+
+				if (charCode > 31 && (charCode < 48 || charCode > 57))
+					return false;
+
 				return true;
+			}
+		function show(){
+			if(document.layers) document.layers['formr'].visibility="show";
+			if(document.getElementById) document.getElementById("formr").style.visibility="visible";
+			if(document.all) document.all.formr.style.visibility="visible";
 
-			if (charCode > 31 && (charCode < 48 || charCode > 57))
-				return false;
-
-			return true;
+			if(document.layers) document.layers['remarkd'].visibility="hide";
+			if(document.getElementById) document.getElementById("remarkd").style.visibility="hidden";
+			if(document.all) document.all.remarkd.style.visibility="hidden";
 		}
-	function show(){
-		if(document.layers) document.layers['formr'].visibility="show";
-		if(document.getElementById) document.getElementById("formr").style.visibility="visible";
-		if(document.all) document.all.formr.style.visibility="visible";
+	</script>
 
-		if(document.layers) document.layers['remarkd'].visibility="hide";
-		if(document.getElementById) document.getElementById("remarkd").style.visibility="hidden";
-		if(document.all) document.all.remarkd.style.visibility="hidden";
+	<!-- Script for date and time picker -->
+    <script type="text/javascript">
+	    $('.form_datetime').datetimepicker({
+	            //language:  'fr',
+	            weekStart: 1,
+	            todayBtn:  1,
+	            autoclose: 1,
+	            todayHighlight: 1,
+	            startView: 2,
+	            forceParse: 0,
+	            showMeridian: 1
+	        });
+	    $('.form_date').datetimepicker({
+	        language:  'fr',
+	        weekStart: 1,
+	        todayBtn:  1,
+	        autoclose: 1,
+	        todayHighlight: 1,
+	        startView: 2,
+	        minView: 2,
+	        forceParse: 0
+	    });
+	    $('.form_time').datetimepicker({
+	        language:  'fr',
+	        weekStart: 1,
+	        todayBtn:  1,
+	        autoclose: 1,
+	        todayHighlight: 1,
+	        startView: 1,
+	        minView: 0,
+	        maxView: 1,
+	        forceParse: 0
+	    });
 
+	    function fix_formatDateRec()
+	    {
+	        document.getElementById('disabled_datetimeDateRec').value = document.getElementById('dtp_input2').value;
+	         
+	    }
 
-	}</script>
-	@stop
+	    function fix_format()
+	    {
+	        document.getElementById('disabled_datetime').value = document.getElementById('dtp_input1').value;
+	    }
+
+		function fix_format2()
+		{
+		    var counter = 0;
+		    while(counter != 100)
+		    {
+		        counter++;
+		        var name = "disabled_datetime2" + counter;
+		        var name2 = "dtp_input2" + counter;
+		        document.getElementById(name).value =
+		        document.getElementById(name2).value;
+		    }
+		}
+
+		$('.datepicker').datepicker();
+    </script>
+@stop
 
