@@ -1,6 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('header')
+	{{ HTML::script('js/bootstrap.file-input.js') }} 
 	<script type="text/javascript">
 		function codeAddress() 
 		{
@@ -117,6 +118,18 @@
 					}
 				?>
 
+				@if($task->taskType=='certification')
+					<tr> 
+						<td>
+							<span style="font-weight: bold">PPMP Certification: </span><br/>
+							<p>
+								<input type="radio" name="radio" value="yes" />&nbsp;&nbsp;Yes &nbsp;&nbsp;
+	                            <input type="radio" name="radio" value="no" />&nbsp;&nbsp;No<br />
+	                        </p>
+					
+						</td>
+					<tr>
+				@endif
 				
 					<tr>
 						<td>
@@ -218,6 +231,19 @@
 
 
 	<script type="text/javascript">
+	$('input[type=file]').bootstrapFileInput();
+	    $('.file-inputs').bootstrapFileInput();
+		function isNumberKey(evt)
+		{
+			var charCode = (evt.which) ? evt.which : event.keyCode
+			if(charCode == 44 || charCode == 46)
+				return true;
+
+			if (charCode > 31 && (charCode < 48 || charCode > 57))
+				return false;
+
+			return true;
+		}
 	function show(){
 		if(document.layers) document.layers['formr'].visibility="show";
 		if(document.getElementById) document.getElementById("formr").style.visibility="visible";
