@@ -134,7 +134,9 @@
 
 				<tr>
 					<td class="proc-headers" width="20%"><h5>SOURCE OF FUNDS</h5></td>
-					<td class="proc-data" colspan="3">{{ $purchase->sourceOfFund }}</td>
+					<td class="proc-data">{{ $purchase->sourceOfFund }}</td>
+                    <td class="proc-headers" width="20%"><h5>PROJECT TYPE</h5></td>
+                    <td class="proc-data">{{ $purchase->projectType }}</td>
 				</tr>
 
 				<tr>
