@@ -16,12 +16,12 @@
          
             <div class="form-group">
                 <label for="username">{{{ Lang::get('confide::confide.username') }}}</label>
-                <input class="form-control"  type="text" name="username" id="username" value="{{ $user->username }}" disabled>
+                <input class="form-control"  type="text" name="username" id="username" value="{{ $user->username }}" disabled maxlength="255">
             </div>
 
             <div class="form-group">
                 <label for="firstname">First Name *</label>
-                <input class="form-control"  type="test" name="firstname" id="firstname" value="<?php if(NULL!=Input::old('firstname')){echo Input::old('firstname');}else{echo $user->firstname;}?>">
+                <input class="form-control"  type="test" name="firstname" id="firstname" value="<?php if(NULL!=Input::old('firstname')){echo Input::old('firstname');}else{echo $user->firstname;}?>" maxlength="255">
                 @if ( Session::get('firstname_error') )
                     <small><font color="red">{{ Session::get('firstname_error'); }} </font></small>
                 @endif
@@ -29,7 +29,7 @@
 
             <div class="form-group">
                 <label for="lastname">Last Name *</label>
-                <input class="form-control" type="text" name="lastname" id="lastname" value="<?php if(NULL!=Input::old('lastname')){echo Input::old('lastname');}else{echo $user->lastname;}?>">
+                <input class="form-control" type="text" name="lastname" id="lastname" value="<?php if(NULL!=Input::old('lastname')){echo Input::old('lastname');}else{echo $user->lastname;}?>" maxlength="255">
                 @if ( Session::get('lastname_error') )
                     <small><font color="red">{{ Session::get('lastname_error'); }} </font> </small>
                 @endif
@@ -37,7 +37,7 @@
 
             <div class="form-group">
                 <label for="email">Email *</label>
-                <input class="form-control"  type="text" name="email" id="email" value="<?php if(NULL!=Input::old('email')){echo Input::old('email');}else{echo $user->email;}?>">
+                <input class="form-control"  type="text" name="email" id="email" value="<?php if(NULL!=Input::old('email')){echo Input::old('email');}else{echo $user->email;}?>" maxlength="255">
                 @if ( Session::get('email_error') )
                     <small><font color="red">{{ Session::get('email_error'); }}   </font> </small>
                 @endif
@@ -45,7 +45,7 @@
 
             <div class="form-group">
                 <label for="password">Password </label>
-                <input class="form-control" type="password" name="password" id="password">
+                <input class="form-control" type="password" name="password" id="password" maxlength="255">
                 @if ( Session::get('password_error') )
                     <small><font color="red">{{ Session::get('password_error'); }}  </font> </small>
                 @endif
@@ -53,7 +53,7 @@
 
             <div class="form-group">
                 <label for="password_confirmation">Confirm Password </label>
-                <input class="form-control"  type="password" name="password_confirmation" id="password_confirmation">
+                <input class="form-control"  type="password" name="password_confirmation" id="password_confirmation" maxlength="255">
             </div>
 
             <div class="form-group">
