@@ -99,7 +99,7 @@
                 </thead>
 
                 <?php
-                    $requests =  DB::table('purchase_request')->orderBy('created_at', 'DESC')->take(5)->get();
+                    $requests =  DB::table('purchase_request')->where('requisitioner', $id)->orderBy('created_at', 'DESC')->take(5)->get();
                 ?>
 
                 <tbody>
