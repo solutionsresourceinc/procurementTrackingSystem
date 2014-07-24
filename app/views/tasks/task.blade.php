@@ -181,12 +181,23 @@
 	                        </p>
 						</td>
 					</tr>	
+				@elseif($task->taskType=='conference')
+					<tr> 
+						<td>
+							<span style="font-weight: bold">Conference Date: </span><br/>
+							<?php 
+                            $today = date("m/d/y");
+                            ?>
+                            <input class="datepicker" size="16" type="text" name="date" class="form-control" value="{{$today}}" width="100%">
+                            <span class="add-on"><i class="icon-th"></i></span>
+						</td>
+					</tr>	
 				@endif
 				
 				
 					<tr>
 						<td>
-							@if($task->taskType!='certification' && $task->taskType!='posting' && $task->taskType!='supplier' && $task->taskType!='cheque')
+							@if($task->taskType!='certification' && $task->taskType!='posting' && $task->taskType!='supplier' && $task->taskType!='cheque' && $task->taskType!='conference')
 								@if($taskd->status!="New")
 								<p style="font-weight: bold">Remarks: </p>
 								<?php 
