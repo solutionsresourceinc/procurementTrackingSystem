@@ -129,6 +129,16 @@
 					
 						</td>
 					<tr>
+				@elseif($task->taskType=='posting')
+					<tr> 
+						<td>
+							<span style="font-weight: bold">Reference Number: </span><br/>
+							<p>
+								<input type="text" name="referenceno"  class="form-control" maxlength="100" width="80%" maxlength="100" style="margin-top: 10px;">
+	                        </p>
+					
+						</td>
+					<tr>
 				@endif
 				
 					<tr>
