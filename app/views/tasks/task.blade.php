@@ -134,51 +134,69 @@
 						<td>
 							<span style="font-weight: bold">Reference Number: </span><br/>
 							<p>
-								<input type="text" name="referenceno"  class="form-control" maxlength="100" width="80%" maxlength="100" style="margin-top: 10px;">
+								<input type="text" name="referenceno"  class="form-control" maxlength="100" width="80%" maxlength="100" style="margin-top: 10px;" placeholder="Enter Reference Number">
 	                        </p>
 					
 						</td>
 					<tr>
+				@elseif($task->taskType=='supplier')
+					<tr> 
+						<td>
+							<span style="font-weight: bold">Supplier: </span><br/>
+							<p>
+								<input type="text" name="supplier"  class="form-control" maxlength="100" width="80%" placeholder="Enter supplier" style="margin-top: 10px;">
+	                        </p>
+						</td>
+						<td>
+							<span style="font-weight: bold">Amount: </span><br/>
+							<p>
+								<input type="decimal" name="amount"  class="form-control" maxlength="12" width="80%" placeholder="Enter amount" style="margin-top: 10px;">
+	                        </p>
+						</td>
+					<tr>
 				@endif
+				
 				
 					<tr>
 						<td>
-							@if($taskd->status!="New")
-							<p style="font-weight: bold">Remarks: </p>
-							<?php 
+							@if($task->taskType!='certification' && $task->taskType!='posting' && $task->taskType!='supplier')
+								@if($taskd->status!="New")
+								<p style="font-weight: bold">Remarks: </p>
+								<?php 
 
-								if (Session::get('errorremark'))
-									echo  "<div class='alert alert-danger'>".Session::get('errorremark')."</div>";
-								if (Session::get('successremark'))
-									echo  "<div class='alert alert-success'>".Session::get('successremark')."</div>";
-								Session::forget('errorremark');
-								Session::forget('successremark');
-								?>
+									if (Session::get('errorremark'))
+										echo  "<div class='alert alert-danger'>".Session::get('errorremark')."</div>";
+									if (Session::get('successremark'))
+										echo  "<div class='alert alert-success'>".Session::get('successremark')."</div>";
+									Session::forget('errorremark');
+									Session::forget('successremark');
+									?>
 
-								<div id="remarkd" onclick="show()">
-									<p>
-										<?php
-											echo $taskd->remarks;
-											if ($taskd->remarks==NULL)
-											{
-											?>
-												No remark.
+									<div id="remarkd" onclick="show()">
+										<p>
 											<?php
-											}
-										?>
-									</p>
-								</div>
-								<div id ="formr">
-									{{ Form::open(['url'=>'remarks'], 'POST') }}
-									{{ Form::textarea('remarks','', array('class'=>'form-control', 'rows'=>'3', 'maxlength'=>'255', 'style'=>'resize:vertical')) }}
-									<input type ="hidden" name="taskdetails_id" value="{{$taskd->id}}">
-									<div class='pull-right'>
-										{{ link_to( 'task/active', 'Cancel', array('class'=>'btn btn-sm btn-default remarks-btn') ) }}
-										{{ Form::submit('Submit',array('class'=>'btn btn-sm btn-success remarks-btn')) }}
+												echo $taskd->remarks;
+												if ($taskd->remarks==NULL)
+												{
+												?>
+													No remark.
+												<?php
+												}
+											?>
+										</p>
 									</div>
-									{{ Form::close() }}
-								</div>
+									<div id ="formr">
+										{{ Form::open(['url'=>'remarks'], 'POST') }}
+										{{ Form::textarea('remarks','', array('class'=>'form-control', 'rows'=>'3', 'maxlength'=>'255', 'style'=>'resize:vertical')) }}
+										<input type ="hidden" name="taskdetails_id" value="{{$taskd->id}}">
+										<div class='pull-right'>
+											{{ link_to( 'task/active', 'Cancel', array('class'=>'btn btn-sm btn-default remarks-btn') ) }}
+											{{ Form::submit('Submit',array('class'=>'btn btn-sm btn-success remarks-btn')) }}
+										</div>
+										{{ Form::close() }}
+									</div>
 
+								@endif
 							@endif
 								<hr class="clear" />
 								<?php 
@@ -198,6 +216,7 @@
 
 						</td>
 					</tr>
+					
 						
 			</table>
 
