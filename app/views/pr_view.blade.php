@@ -75,7 +75,11 @@
             $date_today =date('Y-m-d H:i:s');
             $requests = new Purchase;
             $userx=Auth::user()->id;
-            $requests = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('status', '=', 'Active')->paginate(10); 
+
+            if(Entrust::hasRole('Requisitioner'))
+                $requests = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('status', '=', 'Active')->where('requisitioner', $userx)->paginate(10); 
+            else
+                $requests = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('status', '=', 'Active')->paginate(10); 
             //End Query Restrictions
         ?>
 
@@ -217,7 +221,11 @@
             $date_today =date('Y-m-d H:i:s');
             $requests = new Purchase;
             $userx=Auth::user()->id;
-            $requests = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('status', '=', 'Active')->get(); 
+
+            if(Entrust::hasRole('Requisitioner'))
+                $requests = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('status', '=', 'Active')->where('requisitioner', $userx)->get(); 
+            else
+                $requests = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('status', '=', 'Active')->get(); 
             //End Query Restrictions
         ?>
 
