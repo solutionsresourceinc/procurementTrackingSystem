@@ -6,12 +6,6 @@
     <?php 
         $id=Auth::User()->id;
         $role= DB::table('assigned_roles')->where('user_id',$id)->first();
-        if ($role->role_id==1)
-        {
-
-        }
-        else
-        {
     ?>
 
     <?php
@@ -28,6 +22,7 @@
         }
     ?>
 
+    @if($role->role_id!=1)
     <!-- Prints total number of purchase requests received -->
     <div class="col-md-4">
         <div class="panel panel-success">
@@ -81,12 +76,17 @@
             </div>
         </div>
     </div>
+    @endif
 
     <!-- Table of latest purchase requests -->
     <div class="col-md-12" style="margin-top: 10px;">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <span style="font-size: 18px;">Latest Purchase Requests<a href="{{ URL::to('purchaseRequest/create') }}" class="btn btn-sm btn-primary" style="float: right; padding: 3px 10px;">Create New</a></span>
+                <span style="font-size: 18px;">Latest Purchase Requests
+                    @if($role->role_id!=1) 
+                        <a href="{{ URL::to('purchaseRequest/create') }}" class="btn btn-sm btn-primary" style="float: right; padding: 3px 10px;">Create New</a>
+                    @endif
+                </span>
             </div>
             <div class="panel-body">
                 <table class="table">
@@ -107,7 +107,13 @@
                         @foreach ($requests as $request)
                             <tr>
                             <td width="10%">{{ $request->controlNo }}</td>
-                            <td width="30%"><a data-toggle="tooltip" data-placement="top" class="purpose" href="{{ URL::to('purchaseRequest/vieweach/'. $request->id) }}" title="View Project Details">{{ $request->projectPurpose; }}</a></td>
+                            <td width="30%">
+                                @if($role->role_id!=1) 
+                                    <a data-toggle="tooltip" data-placement="top" class="purpose" href="{{ URL::to('purchaseRequest/vieweach/'. $request->id) }}" title="View Project Details">
+                                    @endif
+                                        {{ $request->projectPurpose; }}
+                                @if($role->role_id!=1)</a>@endif
+                            </td>
                             <?php 
                                 $doc = new Purchase; 
                                 $doc = DB::table('document')->where('pr_id', $request->id)->get(); 
@@ -127,7 +133,4 @@
             </div>
         </div>  
     </div>
-    <?php
-        }
-    ?>
 @stop
