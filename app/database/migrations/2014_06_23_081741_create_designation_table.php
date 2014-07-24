@@ -15,7 +15,7 @@ class CreateDesignationTable extends Migration {
 		Schema::create('designation', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->string('designation', 255);
+			$table->string('designation', 100);
 			
 		});
 	}
