@@ -111,202 +111,202 @@
 								</td>
 							</tr>
 						@endif
+				
+
+					@if($task->taskType=='certification')
+						<tr> 
+							<td>
+								<span style="font-weight: bold">PPMP Certification: </span><br/>
+								<p>
+									<input type="radio" name="radio" value="yes" />&nbsp;&nbsp;Yes &nbsp;&nbsp;
+		                            <input type="radio" name="radio" value="no" />&nbsp;&nbsp;No<br />
+		                        </p>
+						
+							</td>
+						</tr>
+					@elseif($task->taskType=='posting')
+						<tr> 
+							<td>
+								<span style="font-weight: bold">Reference Number: </span><br/>
+								<p>
+									<input type="text" name="referenceno"  class="form-control" maxlength="100" width="80%" maxlength="100" style="margin-top: 10px;" placeholder="Enter Reference Number">
+		                        </p>
+						
+							</td>
+						</tr>
+					@elseif($task->taskType=='supplier')
+						<tr> 
+							<td>
+								<span style="font-weight: bold">Supplier: </span><br/>
+								<p>
+									<input type="text" name="supplier"  class="form-control" maxlength="100" width="80%" placeholder="Enter supplier" style="margin-top: 10px;">
+		                        </p>
+								<span style="font-weight: bold">Amount: </span><br/>
+								<p>
+									<input type="decimal" name="amount"  class="form-control" maxlength="12" width="80%" placeholder="Enter amount" style="margin-top: 10px;">
+		                        </p>
+							</td>
+						</tr>
+					@elseif($task->taskType=='cheque')
+						<tr> 
+							<td>
+								<span style="font-weight: bold">Cheque Amount: </span><br/>
+								<p>
+									<input type="decimal" name="amt"  class="form-control" maxlength="12" width="80%" placeholder="Enter cheque amount" style="margin-top: 10px;">
+		                        </p>
+								<span style="font-weight: bold">Cheque Number: </span><br/>
+								<p>
+									<input type="decimal" name="amount"  class="form-control" maxlength="12" width="80%" placeholder="Enter amount" style="margin-top: 10px;">
+		                        </p>
+								<span style="font-weight: bold">Cheque Date: </span><br/>
+								<p>
+									<?php 
+	                                $today = date("m/d/y");
+	                                ?>
+	                                <input class="datepicker" size="16" type="text" name="date" class="form-control" value="{{$today}}" width="100%" placeholder="Enter cheque date">
+	                                <span class="add-on"><i class="icon-th"></i></span>
+		                        </p>
+							</td>
+						</tr>	
+					@elseif($task->taskType=='conference')
+						<tr> 
+							<td>
+								<span style="font-weight: bold">Conference Date: </span><br/>
+								<p>
+									<?php 
+		                            $today = date("m/d/y");
+		                            ?>
+		                            <input class="datepicker" size="16" type="text" name="date" class="form-control" value="{{$today}}" width="100%"  style="margin-top: 10px;">
+		                            <span class="add-on"><i class="icon-th"></i></span>
+		                        </p>
+							</td>
+						</tr>	
+					@elseif($task->taskType=='published')
+						<tr> 
+							<td width="50%">
+								<span style="font-weight: bold">Date Published: </span><br/>
+								<p>
+									<?php 
+		                            $today = date("m/d/y");
+		                            ?>
+		                            <input class="datepicker" size="16" type="text" name="datepublished" class="form-control" value="{{$today}}" width="100%"  style="margin-top: 10px;">
+		                            <span class="add-on"><i class="icon-th"></i></span>
+		                        </p>
+								<span style="font-weight: bold">End Date: </span><br/>
+								<p>
+									<?php 
+		                            $today = date("m/d/y");
+		                            ?>
+		                            <input class="datepicker" size="16" type="text" name="datepublished" class="form-control" value="{{$today}}" width="100%"  style="margin-top: 10px;">
+		                            <span class="add-on"><i class="icon-th"></i></span>
+		                        </p>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<span style="font-weight: bold">Posted By: </span><br/>
+								<p>
+									<input type="text" name="by"  placeholder="Enter name" class="form-control" maxlength="100" width="80%"  style="margin-top: 10px;">
+		                        </p>
+							</td>
+						</tr>	
+					@elseif($task->taskType=='documents')
+						<tr> 
+							<td width="50%">
+								<span style="font-weight: bold">Eligibility Documents: </span><br/>
+								<p>
+									<?php 
+		                            $today = date("m/d/y");
+	                                ?>
+	                                <input class="datepicker" size="16" type="text" name="date" class="form-control" value="{{$today}}" width="100%" style="margin-top: 10px;">
+	                                <span class="add-on"><i class="icon-th"></i></span>
+		                        </p>
+								<span style="font-weight: bold">Date of Bidding: </span><br/>
+								<p>
+									<input class="datepicker" size="16" type="text" name="biddingdate" class="form-control" value="{{$today}}" width="100%" style="margin-top: 10px;">
+									<span class="add-on"><i class="icon-th"></i></span>
+		                        </p>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<span style="font-weight: bold">Checked By: </span><br/>
+								<p>
+									<input type="text" name="by"  class="form-control" maxlength="100" width="80%" placeholder="Enter name" style="margin-top: 10px;">
+		                        </p>
+							</td>
+						</tr>	
+					@elseif($task->taskType=='evaluation')
+						<tr> 
+							<td width="50%">
+								<span style="font-weight: bold">Date: </span><br/>
+								<p>
+									<?php 
+		                            $today = date("m/d/y");
+	                                ?>
+	                                <input class="datepicker" size="16" type="text" name="date" class="form-control" value="{{$today}}" width="100%" style="margin-top: 10px;">
+	                                <span class="add-on"><i class="icon-th"></i></span>
+		                        </p>
+								<span style="font-weight: bold">No. of Days Accomplished: </span><br/>
+								<p>
+									<input type="number" name="noofdays"  class="form-control" maxlength="100" width="80%" placeholder="Enter no. of days" style="margin-top: 10px;">
+		                        </p>
+							</td>
+						</tr>	
+					@elseif($task->taskType=='contract' || $task->taskType=='meeting')
+						<tr> 
+							<td width="50%">
+								<span style="font-weight: bold">
+									@if($task->taskType=='contract') 
+										Notice of Award Date: 
+									@else 
+										Notice to Proceed
+									@endif
+								</span><br/>
+								<p>
+									<?php 
+	                                $today = date("m/d/y");
+	                                ?>
+	                                <input class="datepicker" size="16" type="text" name="date" class="form-control" value="{{$today}}" width="100%" style="margin-top: 10px;">
+	                                <span class="add-on"><i class="icon-th"></i></span>
+		                        </p>
+								<span style="font-weight: bold">No. of Days Accomplished: </span><br/>
+								<p>
+									<input type="number" name="noofdays"  class="form-control" maxlength="100" width="80%" placeholder="Enter no. of days accomplished" style="margin-top: 10px;">
+		                        </p>
+		                        <span style="font-weight: bold">
+		                        	@if($task->taskType=='contract') 
+		                        		Contract Agreement: 
+		                        	@else
+		                        		Minutes of Meeting:
+		                        	@endif
+		                        </span><br/>
+								<p>
+									<input type="text" name="contractmeeting"  class="form-control" maxlength="100" width="80%" placeholder="@if($task->taskType=='contract') Enter contract agreement @else Enter minutes of meeting @endif" style="margin-top: 10px;">
+		                        </p>
+							</td>
+						</tr>	
+					@endif
+
 				<?php } else { ?>
 
-					<tr>
-						<td>
-							<span style="font-weight: bold">Max Duration: </span><br/>
-							{{ $task->maxDuration }}
-						</td>
-					</tr>
+				<tr>
+					<td>
+						<span style="font-weight: bold">Max Duration: </span><br/>
+						{{ $task->maxDuration }}
+					</td>
+				</tr>
 
 				<?php 
 					}
 				?>
-
-				@if($task->taskType=='certification')
-					<tr> 
-						<td>
-							<span style="font-weight: bold">PPMP Certification: </span><br/>
-							<p>
-								<input type="radio" name="radio" value="yes" />&nbsp;&nbsp;Yes &nbsp;&nbsp;
-	                            <input type="radio" name="radio" value="no" />&nbsp;&nbsp;No<br />
-	                        </p>
-					
-						</td>
-					</tr>
-				@elseif($task->taskType=='posting')
-					<tr> 
-						<td>
-							<span style="font-weight: bold">Reference Number: </span><br/>
-							<p>
-								<input type="text" name="referenceno"  class="form-control" maxlength="100" width="80%" maxlength="100" style="margin-top: 10px;" placeholder="Enter Reference Number">
-	                        </p>
-					
-						</td>
-					</tr>
-				@elseif($task->taskType=='supplier')
-					<tr> 
-						<td>
-							<span style="font-weight: bold">Supplier: </span><br/>
-							<p>
-								<input type="text" name="supplier"  class="form-control" maxlength="100" width="80%" placeholder="Enter supplier" style="margin-top: 10px;">
-	                        </p>
-						</td>
-						<td>
-							<span style="font-weight: bold">Amount: </span><br/>
-							<p>
-								<input type="decimal" name="amount"  class="form-control" maxlength="12" width="80%" placeholder="Enter amount" style="margin-top: 10px;">
-	                        </p>
-						</td>
-					</tr>
-				@elseif($task->taskType=='cheque')
-					<tr> 
-						<td>
-							<span style="font-weight: bold">Cheque Amount: </span><br/>
-							<p>
-								<input type="decimal" name="amt"  class="form-control" maxlength="12" width="80%" placeholder="Enter cheque amount" style="margin-top: 10px;">
-	                        </p>
-							<span style="font-weight: bold">Cheque Number: </span><br/>
-							<p>
-								<input type="decimal" name="amount"  class="form-control" maxlength="12" width="80%" placeholder="Enter amount" style="margin-top: 10px;">
-	                        </p>
-							<span style="font-weight: bold">Cheque Date: </span><br/>
-							<p>
-								<?php 
-                                $today = date("m/d/y");
-                                ?>
-                                <input class="datepicker" size="16" type="text" name="date" class="form-control" value="{{$today}}" width="100%" placeholder="Enter cheque date">
-                                <span class="add-on"><i class="icon-th"></i></span>
-	                        </p>
-						</td>
-					</tr>	
-				@elseif($task->taskType=='conference')
-					<tr> 
-						<td>
-							<span style="font-weight: bold">Conference Date: </span><br/>
-							<p>
-								<?php 
-	                            $today = date("m/d/y");
-	                            ?>
-	                            <input class="datepicker" size="16" type="text" name="date" class="form-control" value="{{$today}}" width="100%"  style="margin-top: 10px;">
-	                            <span class="add-on"><i class="icon-th"></i></span>
-	                        </p>
-						</td>
-					</tr>	
-				@elseif($task->taskType=='published')
-					<tr> 
-						<td width="50%">
-							<span style="font-weight: bold">Date Published: </span><br/>
-							<p>
-								<?php 
-	                            $today = date("m/d/y");
-	                            ?>
-	                            <input class="datepicker" size="16" type="text" name="datepublished" class="form-control" value="{{$today}}" width="100%"  style="margin-top: 10px;">
-	                            <span class="add-on"><i class="icon-th"></i></span>
-	                        </p>
-							<span style="font-weight: bold">End Date: </span><br/>
-							<p>
-								<?php 
-	                            $today = date("m/d/y");
-	                            ?>
-	                            <input class="datepicker" size="16" type="text" name="datepublished" class="form-control" value="{{$today}}" width="100%"  style="margin-top: 10px;">
-	                            <span class="add-on"><i class="icon-th"></i></span>
-	                        </p>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<span style="font-weight: bold">Posted By: </span><br/>
-							<p>
-								<input type="text" name="by"  placeholder="Enter name" class="form-control" maxlength="100" width="80%"  style="margin-top: 10px;">
-	                        </p>
-						</td>
-					</tr>	
-				@elseif($task->taskType=='documents')
-					<tr> 
-						<td width="50%">
-							<span style="font-weight: bold">Eligibility Documents: </span><br/>
-							<p>
-								<?php 
-	                            $today = date("m/d/y");
-                                ?>
-                                <input class="datepicker" size="16" type="text" name="date" class="form-control" value="{{$today}}" width="100%" style="margin-top: 10px;">
-                                <span class="add-on"><i class="icon-th"></i></span>
-	                        </p>
-							<span style="font-weight: bold">Date of Bidding: </span><br/>
-							<p>
-								<input class="datepicker" size="16" type="text" name="biddingdate" class="form-control" value="{{$today}}" width="100%" style="margin-top: 10px;">
-								<span class="add-on"><i class="icon-th"></i></span>
-	                        </p>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<span style="font-weight: bold">Checked By: </span><br/>
-							<p>
-								<input type="text" name="by"  class="form-control" maxlength="100" width="80%" placeholder="Enter name" style="margin-top: 10px;">
-	                        </p>
-						</td>
-					</tr>	
-				@elseif($task->taskType=='evaluation')
-					<tr> 
-						<td width="50%">
-							<span style="font-weight: bold">Date: </span><br/>
-							<p>
-								<?php 
-	                            $today = date("m/d/y");
-                                ?>
-                                <input class="datepicker" size="16" type="text" name="date" class="form-control" value="{{$today}}" width="100%" style="margin-top: 10px;">
-                                <span class="add-on"><i class="icon-th"></i></span>
-	                        </p>
-							<span style="font-weight: bold">No. of Days Accomplished: </span><br/>
-							<p>
-								<input type="number" name="noofdays"  class="form-control" maxlength="100" width="80%" placeholder="Enter no. of days" style="margin-top: 10px;">
-	                        </p>
-						</td>
-					</tr>	
-				@elseif($task->taskType=='contract' || $task->taskType=='meeting')
-					<tr> 
-						<td width="50%">
-							<span style="font-weight: bold">
-								@if($task->taskType=='contract') 
-									Notice of Award Date: 
-								@else 
-									Notice to Proceed
-								@endif
-							</span><br/>
-							<p>
-								<?php 
-                                $today = date("m/d/y");
-                                ?>
-                                <input class="datepicker" size="16" type="text" name="date" class="form-control" value="{{$today}}" width="100%" style="margin-top: 10px;">
-                                <span class="add-on"><i class="icon-th"></i></span>
-	                        </p>
-							<span style="font-weight: bold">No. of Days Accomplished: </span><br/>
-							<p>
-								<input type="number" name="noofdays"  class="form-control" maxlength="100" width="80%" placeholder="Enter no. of days accomplished" style="margin-top: 10px;">
-	                        </p>
-	                        <span style="font-weight: bold">
-	                        	@if($task->taskType=='contract') 
-	                        		Contract Agreement: 
-	                        	@else
-	                        		Minutes of Meeting:
-	                        	@endif
-	                        </span><br/>
-							<p>
-								<input type="text" name="contractmeeting"  class="form-control" maxlength="100" width="80%" placeholder="@if($task->taskType=='contract') Enter contract agreement @else Enter minutes of meeting @endif" style="margin-top: 10px;">
-	                        </p>
-						</td>
-					</tr>	
-				@endif
-
 				
 				
 					<tr>
 						<td>
-							@if($task->taskType!='certification' && $task->taskType!='posting' && $task->taskType!='supplier' && $task->taskType!='cheque' && $task->taskType!='conference'
-							 && $task->taskType!='published' && $task->taskType!='documents' && $task->taskType!='evaluation' && $task->taskType!='contract' && $task->taskType!='meeting')
+							<?php /*@if($task->taskType!='certification' && $task->taskType!='posting' && $task->taskType!='supplier' && $task->taskType!='cheque' && $task->taskType!='conference'
+							 && $task->taskType!='published' && $task->taskType!='documents' && $task->taskType!='evaluation' && $task->taskType!='contract' && $task->taskType!='meeting') */?>
+							@if($task->taskType=='normal')
 								@if($taskd->status!="New")
 								<p style="font-weight: bold">Remarks: </p>
 								<?php 
