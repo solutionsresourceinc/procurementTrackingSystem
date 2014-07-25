@@ -214,7 +214,6 @@
 							{{ Form::label('dateTime', 'Date Received *', array('class' => 'create-label')) }}
 							<div class="input-group date form_datetime col-md-12" data-date="{{ date('Y-m-d') }}T{{ date('H:i:s') }}Z" data-date-format="dd MM yyyy - HH:ii p" data-link-field="dtp_input2">
 								<input id="disabled_datetimeDateRec" onchange="fix_formatDateRec()" class="form-control" size="16" type="text" value="<?php  if(Input::old("dateReceived")) { echo Input::old("dateReceived"); } else { echo $date_today; } ?>" readonly>
-								<span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
 								<span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
 							</div>
 							<input type="hidden" id="dtp_input2" name="dateReceived" value="<?php  if(Input::old("dateReceived")) { echo Input::old("dateReceived"); } else { echo $date_today; } ?>" />
@@ -228,7 +227,6 @@
 							{{ Form::label('dateTime', 'Date Requested ', array('class' => 'create-label')) }}
 							<div class="input-group date form_datetime col-md-12" data-date="{{ date('Y-m-d') }}T{{ date('H:i:s') }}Z" data-date-format="dd MM yyyy - HH:ii p" data-link-field="dtp_input1">
 								<input id="disabled_datetime" onchange="fix_format()" class="form-control" size="16" type="text" value="{{{ Input::old('dateRequested') }}}" readonly>
-								<span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
 								<span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
 							</div>
 							<input type="hidden" id="dtp_input1" name="dateRequested" value="{{{ Input::old('dateRequested') }}}" />
