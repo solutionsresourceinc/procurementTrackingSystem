@@ -23,7 +23,6 @@
 
 
 @section('content')
-    {{ Session::put('goToChecklist', 'true' ); }}
 
     <?php
         
@@ -345,6 +344,7 @@
                 {{Session::forget('error_dateRequested');}}
                 {{Session::forget('error_modeOfProcurement');}}
                 {{Session::forget('imgerror'); }}
+
     
             </div>
         </div>  
@@ -478,8 +478,9 @@
                                     <?php 
                                     $today = date("m/d/y");
                                     ?>
-                                    <input class="datepicker" size="16" type="text" name="dateFinished" class="form-control" value="{{$today}}" width="100%">
-                                    <span class="add-on"><i class="icon-th"></i></span>
+                                    <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
+                                        <input type="text" class="form-control" name="dateFinished" id="dateFinished" style="text-align: center; width:100%" value="{{$today}}"/>
+                                    </div>
                                 </td>
                                 <td class="edit-pr-input">
                                     <input type="number" name="daysOfAction" class="form-control"  min="0" value="1" width="100%" maxlength="12">
@@ -528,8 +529,9 @@
                                     <?php 
                                     $today = date("m/d/y");
                                     ?>
-                                    <input class="datepicker" size="16" type="text" name="date" class="form-control" value="{{$today}}" width="100%">
-                                    <span class="add-on"><i class="icon-th"></i></span>
+                                    <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
+                                        <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" value="{{$today}}"/>
+                                    </div>
                                 </td>
                                 <td class="edit-pr-input" colspan="3">
                                     By: 
@@ -580,8 +582,9 @@
                                     <?php 
                                     $today = date("m/d/y");
                                     ?>
-                                    <input class="datepicker" size="16" type="text" name="date" class="form-control" value="{{$today}}" width="100%" placeholder="Enter cheque date">
-                                    <span class="add-on"><i class="icon-th"></i></span>
+                                    <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
+                                        <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" value="{{$today}}"/>
+                                    </div>
                                 </td>
                                 
 
@@ -602,14 +605,16 @@
                                     <?php 
                                     $today = date("m/d/y");
                                     ?>
-                                    <input class="datepicker" size="16" type="text" name="datepublished" class="form-control" value="{{$today}}" width="100%" >
-                                    <span class="add-on"><i class="icon-th"></i></span>
+                                    <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
+                                        <input type="text" class="form-control" name="datepublished" id="datepublished" style="text-align: center; width:100%"value="{{$today}}" />
+                                    </div>
                                     </td>
                                     <td>
                                     End Date
                                     <br>
-                                    <input class="datepicker" size="16" type="text" name="enddate" class="form-control" value="{{$today}}" width="100%">
-                                    <span class="add-on"><i class="icon-th"></i></span>
+                                    <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
+                                        <input type="text" class="form-control" name="enddate" id="enddate" style="text-align: center; width:100%" value="{{$today}}" />
+                                    </div>
                                     </td>
                                     <td >
                                     Posted By
@@ -634,14 +639,16 @@
                                     <?php 
                                     $today = date("m/d/y");
                                     ?>
-                                    <input class="datepicker" size="16" type="text" name="date" class="form-control" value="{{$today}}" width="100%">
-                                    <span class="add-on"><i class="icon-th"></i></span>
+                                    <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
+                                        <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" value="{{$today}}"/>
+                                    </div>
                                     </td>
                                     <td>
                                     Date of Bidding
                                     <br>
-                                    <input class="datepicker" size="16" type="text" name="biddingdate" class="form-control" value="{{$today}}" width="100%">
-                                    <span class="add-on"><i class="icon-th"></i></span>
+                                    <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
+                                        <input type="text" class="form-control" name="biddingdate" id="biddingdate" style="text-align: center; width:100%" value="{{$today}}"/>
+                                    </div>
                                     </td>
                                     <td >
                                     Checked By
@@ -665,8 +672,9 @@
                                     <?php 
                                     $today = date("m/d/y");
                                     ?>
-                                    <input class="datepicker" size="16" type="text" name="date" class="form-control" value="{{$today}}" width="100%">
-                                    <span class="add-on"><i class="icon-th"></i></span>
+                                    <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
+                                        <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" value="{{$today}}"/>
+                                    </div>
                                     </td>
                                     
                                     <td >
@@ -690,8 +698,9 @@
                                     <?php 
                                     $today = date("m/d/y");
                                     ?>
-                                    <input class="datepicker" size="16" type="text" name="date" class="form-control" value="{{$today}}" width="100%">
-                                    <span class="add-on"><i class="icon-th"></i></span>
+                                    <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
+                                        <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" value="{{$today}}"/>
+                                    </div>
                                     </td>
                                   
                                 </tr>
@@ -711,8 +720,9 @@
                                     <?php 
                                     $today = date("m/d/y");
                                     ?>
-                                    <input class="datepicker" size="16" type="text" name="date" class="form-control" value="{{$today}}" width="100%">
-                                    <span class="add-on"><i class="icon-th"></i></span>
+                                    <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
+                                        <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" value="{{$today}}"/>
+                                    </div>
                                     </td>
                                     
                                     <td >
@@ -745,8 +755,9 @@
                                     <?php 
                                     $today = date("m/d/y");
                                     ?>
-                                    <input class="datepicker" size="16" type="text" name="date" class="form-control" value="{{$today}}" width="100%">
-                                    <span class="add-on"><i class="icon-th"></i></span>
+                                    <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
+                                        <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" value="{{$today}}"/>
+                                    </div>
                                     </td>
                                     
                                     <td >
@@ -784,8 +795,9 @@
                                     $today = date("m/d/y");
                                     ?>
                                     <td>
-                                    <input class="datepicker" size="16" type="text" name="date" class="form-control" value="{{$today}}" width="100%">
-                                    <span class="add-on"><i class="icon-th"></i></span>
+                                    <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
+                                        <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" value="{{$today}}"/>
+                                    </div>
                                     </td>
                                     <td>
                                     By
@@ -808,8 +820,9 @@
                                     <?php 
                                     $today = date("m/d/y");
                                     ?>
-                                    <input class="datepicker" size="16" type="text" name="dateFinished" class="form-control" value="{{$today}}" width="100%" >
-                                    <span class="add-on"><i class="icon-th"></i></span>
+                                    <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
+                                        <input type="text" class="form-control" name="dateFinished" id="dateFinished" style="text-align: center; width:100%" value="{{$today}}"/>
+                                    </div>
                                 </td>
                                 <td class="edit-pr-input" colspan="2">
                                     <input type ="text" name="assignee" placeholder="Enter name" class="form-control" width="100%" maxlength="100" placeholder="Enter name">
@@ -830,8 +843,9 @@
                                     <?php 
                                     $today = date("m/d/y");
                                     ?>
-                                    <input class="datepicker" size="16" type="text" name="dateFinished" class="form-control" value="{{$today}}" width="100%">
-                                    <span class="add-on"><i class="icon-th"></i></span>
+                                    <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
+                                        <input type="text" class="form-control" name="dateFinished" id="dateFinished" style="text-align: center; width:100%" value="{{$today}}"/>
+                                    </div>
                                 </td>
                                 <td class="edit-pr-input">
                                     <input type ="text" name="assignee" placeholder="Enter name" class="form-control" width="100%" maxlength="100" placeholder="Enter name">
@@ -1215,6 +1229,7 @@
             {{Session::forget('successlabel')}}
             {{Session::forget('errorchecklist')}}
             {{Session::forget('successchecklist')}}
+            {{Session::forget('goToChecklist')}}
 @stop
 
 
@@ -1325,23 +1340,31 @@
         document.getElementById('disabled_datetime').value = document.getElementById('dtp_input1').value;
     }
 
-function fix_format2()
-{
-    var counter = 0;
-    while(counter != 100)
+    function fix_format2()
     {
-        counter++;
-        var name = "disabled_datetime2" + counter;
-        var name2 = "dtp_input2" + counter;
-        document.getElementById(name).value =
-        document.getElementById(name2).value;
+        var counter = 0;
+        while(counter != 100)
+        {
+            counter++;
+            var name = "disabled_datetime2" + counter;
+            var name2 = "dtp_input2" + counter;
+            document.getElementById(name).value =
+            document.getElementById(name2).value;
+        }
     }
 
+    $('.datepicker').datepicker();
 
-}
+</script>
 
-$('.datepicker').datepicker();
-
-    </script>
+<script type="text/javascript">
+    // When the document is ready
+    $(document).ready(function () {
+            
+        $('.input-daterange').datepicker({
+            todayBtn: "linked"
+        });
+    });
+</script>
 
 @stop
