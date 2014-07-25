@@ -88,12 +88,12 @@
 
 						<div class="col-md-3">
 							{{ Form::label('otherType', 'Other Type', array('class' => 'create-label')) }}
-							<select name="otherType" class="form-control" onchange="change_OtherType(this.value)">
+							<select name="otherType" id="otherType" class="form-control" onchange="change_OtherType(this.value)">
 								<option value="">None</option>
-								<option value="shopping">Shopping</option>
-								<option value="fuel">Fuel</option>
-								<option value="pakyaw">Pakyaw</option>
-								<option value="Direct Contracting">Direct Contracting</option>
+								<option value="shopping" <?php if(Input::old('otherType') == 'shopping') echo 'selected'; ?> >Shopping</option>
+								<option value="fuel" <?php if(Input::old('otherType') == 'fuel') echo 'selected'; ?>>Fuel</option>
+								<option value="pakyaw" <?php if(Input::old('otherType') == 'pakyaw') echo 'selected'; ?>>Pakyaw</option>
+								<option value="Direct Contracting" <?php if(Input::old('otherType') == 'Direct Contracting') echo 'selected'; ?>>Direct Contracting</option>
 							</select>
 							<p> </p>
 						</div>
@@ -376,22 +376,6 @@
 
 			newamount =	amount; 
 
-			/* 
-			if (newamount<50000)
-				document.getElementById("modeOfProcurement").selectedIndex = 1;
-			else if (newamount>=50000 )
-			{
-				if (newamount<=500000)
-					document.getElementById("modeOfProcurement").selectedIndex = 2;
-
-				else if (newamount>500000)
-					document.getElementById("modeOfProcurement").selectedIndex = 3;
-
-			}
-			else
-				document.getElementById("modeOfProcurement").selectedIndex = 0; 
-			*/
-
 			if (newamount >= 0 && newamount < 50000)
 				document.getElementById("modeOfProcurement").selectedIndex = 1;
 			else if(newamount >= 50000 && newamount < 500000)
@@ -468,6 +452,8 @@
 			if(value == "pakyaw")
 			{
 				document.getElementById('projectType').disabled = true;
+				document.getElementById('projectType').selectedIndex = 0;
+
 				window.last_selected = document.getElementById('modeOfProcurement').selectedIndex 
 				document.getElementById('modeOfProcurement').selectedIndex = 4;
 				document.getElementById('modeOfProcurement').onchange = 4;
@@ -478,6 +464,7 @@
 			else if(value == "Direct Contracting")
 			{
 				document.getElementById('projectType').disabled = false;
+				document.getElementById('projectType').disabled = false;
 				window.last_selected = document.getElementById('modeOfProcurement').selectedIndex 
 				document.getElementById('modeOfProcurement').selectedIndex = 5;
 				document.getElementById('modeOfProcurement').onchange = 5;
@@ -487,6 +474,7 @@
 			}
 			else
 			{
+				document.getElementById('projectType').disabled = false;
 				var amount = document.getElementById('num').value;
 				amount = amount.split(',').join('');
 				//amount = amount.split('.').join('');
@@ -556,6 +544,21 @@
 			document.getElementById('hide_modeOfProcurement').value = document.getElementById('modeOfProcurement').value;
 			
 		}
+	</script>
+
+	<script type="text/javascript">
+	    // When the document is ready
+	    $(document).ready(function () 
+	    {
+	       var otherType = document.getElementById('otherType').value;
+	       //alert(otherType);
+
+	       if(otherType == 'pakyaw')
+	       {
+
+	       		document.getElementById('projectType').disabled = true;
+	       }
+	    });
 	</script>
 
 	<!-- js for chained dropdown -->
