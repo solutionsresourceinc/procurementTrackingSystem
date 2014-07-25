@@ -23,7 +23,6 @@
 
 
 @section('content')
-    {{ Session::put('goToChecklist', 'true' ); }}
 
     <?php
         
@@ -66,13 +65,7 @@
             @endif
 
 
-            @if(Session::get('successchecklist'))
-                <div class="alert alert-success"> {{ Session::get('successchecklist') }}</div> 
-            @endif
-
-            @if(Session::get('errorchecklist'))
-                <div class="alert alert-danger"> {{ Session::get('errorchecklist') }}</div> 
-            @endif
+            
 
             
             
@@ -345,6 +338,7 @@
                 {{Session::forget('error_dateRequested');}}
                 {{Session::forget('error_modeOfProcurement');}}
                 {{Session::forget('imgerror'); }}
+
     
             </div>
         </div>  
@@ -1215,6 +1209,7 @@
             {{Session::forget('successlabel')}}
             {{Session::forget('errorchecklist')}}
             {{Session::forget('successchecklist')}}
+            {{Session::forget('goToChecklist')}}
 @stop
 
 

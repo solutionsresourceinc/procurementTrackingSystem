@@ -367,7 +367,7 @@ class PurchaseRequestController extends Controller
 				}
 				else
 				{
-										// Insert data to reports table
+					// Insert data to reports table
 					$date_received = Input::get( 'dateReceived' );
 					$date_received = substr($date_received, 0, strrpos($date_received, ' '));
 
@@ -843,6 +843,9 @@ foreach ($users as $user)
 
 public function checklistedit()
 {
+
+Session::put('goToChecklist', 'true' ); 
+
 //Initializations	
 $taskdetails_id= Input::get('taskdetails_id');
 $assignee=strip_tags(Input::get('assignee'));
@@ -946,6 +949,7 @@ return Redirect::back();
 
 public function insertaddon(){
 //Initialization
+Session::put('goToChecklist', 'true' ); 
 $otherDetails_id= Input::get('otherDetails_id');
 $purchase_request_id= Input::get('purchase_request_id');
 $value= strip_tags(Input::get('value'));
@@ -970,6 +974,7 @@ else
 
 public function editaddon()
 {
+	Session::put('goToChecklist', 'true' ); 
 	$values_id= Input::get('values_id');
     $insertvalue= Values::find($values_id);
     $insertvalue->delete();   
@@ -998,6 +1003,7 @@ public function delimage()
 //Other Tasks Functions
 public function certification()
 {
+Session::put('goToChecklist', 'true' ); 
 //Initializations
 $radio=Input::get('radio');
 $by=Input::get('by');
@@ -1065,6 +1071,7 @@ return Redirect::back();
 
 public function posting()
 {
+Session::put('goToChecklist', 'true' ); 
 //Initializations
 $date=Input::get('date');
 $referenceno=Input::get('referenceno');
@@ -1138,6 +1145,7 @@ return Redirect::back();
 
 public function supplier()
 {
+Session::put('goToChecklist', 'true' ); 
 //Initializations
 $supplier=Input::get('supplier');
 $amount=Input::get('amount');
@@ -1212,6 +1220,7 @@ return Redirect::back();
 
 public function cheque()
 {
+Session::put('goToChecklist', 'true' ); 
 //Initializations
 $amt=Input::get('amt');
 $num=Input::get('num');
@@ -1311,6 +1320,7 @@ return Redirect::back();
 
 public function published()
 {
+Session::put('goToChecklist', 'true' ); 
 //Initializations
 $datepublished=Input::get('datepublished');
 $enddate=Input::get('enddate');
@@ -1381,6 +1391,7 @@ return Redirect::back();
 
 public function documents()
 {
+Session::put('goToChecklist', 'true' ); 
 //Initializations
 $date=Input::get('date');
 $biddingdate=Input::get('biddingdate');
@@ -1453,6 +1464,7 @@ return Redirect::back();
 
 public function evaluations()
 {
+Session::put('goToChecklist', 'true' ); 
 //Initializations
 $date=Input::get('date');
 $noofdays=Input::get('noofdays');
@@ -1523,6 +1535,7 @@ return Redirect::back();
 
 public function conference()
 {
+Session::put('goToChecklist', 'true' ); 
 //Initializations
 
 $date=Input::get('date');
@@ -1592,6 +1605,7 @@ return Redirect::back();
 
 public function contractmeeting()
 {
+Session::put('goToChecklist', 'true' ); 
 //Initializations
 $date=Input::get('date');
 $noofdays=Input::get('noofdays');
@@ -1664,6 +1678,7 @@ return Redirect::back();
 
 public function rfq()
 {
+Session::put('goToChecklist', 'true' ); 
 //Initializations
 $noofsuppliers=Input::get('noofsuppliers');
 $date=Input::get('date');
@@ -1737,6 +1752,7 @@ return Redirect::back();
 
 public function datebyremark()
 {
+Session::put('goToChecklist', 'true' ); 
 //Initializations	
 $taskdetails_id= Input::get('taskdetails_id');
 $assignee=strip_tags(Input::get('assignee'));
@@ -1816,6 +1832,7 @@ return Redirect::back();
 
 public function dateby()
 {
+Session::put('goToChecklist', 'true' ); 
 //Initializations	
 $taskdetails_id= Input::get('taskdetails_id');
 $assignee=strip_tags(Input::get('assignee'));
