@@ -1,10 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('header')
-    <!-- CSS and JS for Dropdown Search
-        {{ HTML::script('drop_search/bootstrap-select.js')}}
-        {{ HTML::style('drop_search/bootstrap-select.css')}}
-    -->
+
     {{ HTML::style('date_picker/bootstrap-datetimepicker.min.css')}}
     {{ HTML::script('date_picker/bootstrap-datetimepicker.js') }}
     {{ HTML::script('date_picker/bootstrap-datetimepicker.fr.js') }}
@@ -27,9 +24,9 @@
     <?php
         
     //Initialization for page query
-        $pass=0; //Use in role restriction.
-        $purchaseToEdit=Purchase::find($id);
-        $user_id=Auth::User()->id;
+    $pass=0; //Use in role restriction.
+    $purchaseToEdit=Purchase::find($id);
+    $user_id=Auth::User()->id;
     
     //Retain Inputte Values
 
@@ -1257,7 +1254,7 @@
             <p>Are you sure you want to submit edit?</p>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">Cancel</button>
             <button type="button" class="btn btn-success" id="confirm" value="Submit">Submit</button>
           </div>
         </div>
@@ -1265,7 +1262,6 @@
     </div>
     <!-- CODES FOR MODAL END -->
 @stop
-
 
 @section('footer')
     <script type="text/javascript">
