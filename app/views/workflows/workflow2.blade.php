@@ -81,7 +81,7 @@
 						<?php $designations = DB::table('designation')->get();	?>
 						<form class="form ajax" action="/workflow/submit/{{$section->id}}" data-replace="#insert_{{$section->id}}" method="post" role="form" class="form-inline">
 							<select name ="designa" class = "form-control mode2 edit-text" style="width:100%">
-								<option value="0" selected>None                                 </option>
+								<option value="0" selected id="none">None                                 </option>
 								@foreach ($designations as $designation)
 								<option value="{{$designation->id}}">{{$designation->designation}}</option>
 								@endforeach
@@ -182,7 +182,7 @@
 							<?php  $designations = DB::table('designation')->get();	 ?>
 							<form class="form ajax" action="/workflow/submit/{{$section->id}}" data-replace="#insert_{{$section->id}}" method="post" role="form" class="form-inline">
 								<select name ="designa" class = "form-control mode2 edit-text" style="width:100%">
-									<option value=0>None                                 </option>
+									<option value=0 id="none">None                                 </option>
 									@foreach ($designations as $designation)
 									<option value="{{$designation->id}}">{{$designation->designation}}</option>
 									@endforeach
@@ -281,7 +281,7 @@
 						<?php $designations = DB::table('designation')->get(); ?>
 						<form class="form ajax" action="/workflow/submit/{{$section->id}}" data-replace="#insert_{{$section->id}}" method="post" role="form" class="form-inline">
 							<select name ="designa" class = "form-control mode2 edit-text" style="width:100%">
-								<option value=0>None                                 </option>
+								<option value=0 id="none">None                                 </option>
 								@foreach ($designations as $designation)
 								<option value="{{$designation->id}}">{{$designation->designation}}</option>
 								@endforeach
@@ -382,7 +382,7 @@
 							<?php  $designations = DB::table('designation')->get();	 ?>
 							<form class="form ajax" action="/workflow/submit/{{$section->id}}" data-replace="#insert_{{$section->id}}" method="post" role="form" class="form-inline">
 								<select name ="designa" class = "form-control mode2 edit-text" style="width:100%">
-									<option value=0>None                                 </option>
+									<option value=0 id="none">None                                 </option>
 									@foreach ($designations as $designation)
 									<option value="{{$designation->id}}">{{$designation->designation}}</option>
 									@endforeach

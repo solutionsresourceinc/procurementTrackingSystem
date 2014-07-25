@@ -116,6 +116,9 @@
                         textfield.attr({"placeholder": text, "value": text}).show().focus();
                         $(this).closest("tr").find(".mode1").hide();
                         $(this).closest("tr").find(".mode2").show();
+                        var a = $(this).closest("tr").find("#none").attr('selected',true);
+                        //alert(a);
+                       // document.getElementById('designa').selectedIndex = 0;
                     });
 
                     $(".save-edit").on("click", function(event) {
@@ -139,4 +142,5 @@
 
 
 </script>
+
 @stop
