@@ -75,9 +75,10 @@
             $date_today =date('Y-m-d H:i:s');
             $requests = new Purchase;
             $userx=Auth::user()->id;
+            $useroffice=Auth::user()->office_id;
 
             if(Entrust::hasRole('Requisitioner'))
-                $requests = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('status', '=', 'Active')->where('requisitioner', $userx)->paginate(10); 
+                $requests = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('status', '=', 'Active')->where('office', $useroffice)->paginate(10); 
             else
                 $requests = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('status', '=', 'Active')->paginate(10); 
             //End Query Restrictions
@@ -89,19 +90,7 @@
 
                     <tr id="content"
                       <?php 
-                      //Office restriction
-                    if (Entrust::hasRole('Administrator'))
-                    {}
-                    else if(Entrust::hasRole('Procurement Personnel'))
-                    {}
-                    else
-                        {
-                        $useroffice=Auth::user()->office_id;
-                        $maker= User::find( $request->requisitioner);
-                            if ($useroffice!=$maker->office_id)
-                                continue;
-                        }
-                //End Office restriction
+                     
                         $doc = new Document; $doc = DB::table('document')->where('pr_id', $request->id)->first();  
                         $doc_id= $doc->id;
                     $userx= Auth::User()->id;
@@ -114,7 +103,16 @@
                     ?>
                         >
                         <td width="10%">{{ $request->controlNo; }}</td>
-                        <td width="27%">{{ $request->projectPurpose; }}</td>
+                        <td width="27%">
+
+                        @if(Entrust::hasRole('Administrator')||Entrust::hasRole('Procurement Personnel'))
+                            <a data-toggle="tooltip" data-placement="top" class="purpose" href="{{ URL::to('purchaseRequest/vieweach/'. $request->id) }}" title="View Project Details">
+                            {{ $request->projectPurpose; }}
+                            </a>
+                        @else
+                        {{ $request->projectPurpose; }}
+                        @endif
+                        </td>
                         <?php 
                             $doc = new Purchase; 
                             $doc = DB::table('document')->where('pr_id', $request->id)->get(); 
@@ -168,11 +166,13 @@
                             </td>
                         @endif
                         @if(Entrust::hasRole('Requisitioner'))
+
+                            
                             <td width="10%">
                             <?php
                             $showcancel=0;
                            
-                        
+                            $maker= User::find( $request->requisitioner);
 
                             if($userx!=$maker->id)
                                 $showcancel=1;
@@ -223,7 +223,7 @@
             $userx=Auth::user()->id;
 
             if(Entrust::hasRole('Requisitioner'))
-                $requests = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('status', '=', 'Active')->where('requisitioner', $userx)->get(); 
+                $requests = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('status', '=', 'Active')->where('office', $useroffice)->get(); 
             else
                 $requests = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('status', '=', 'Active')->get(); 
             //End Query Restrictions
@@ -235,32 +235,10 @@
 
                     <tr 
                       <?php 
-                      //Office restriction
-                    if (Entrust::hasRole('Administrator'))
-                      {}
-                    else if(Entrust::hasRole('Procurement Personnel')){
-                            
-                            $useroffice=Auth::user()->office_id;
-                            $maker= User::find( $request->requisitioner);
-                            $docget=Document::where('pr_id', $request->id)->first();
-                            $taskd = TaskDetails::where('doc_id',$docget->id)->where('assignee_id',$userx)->count();
-                            if($taskd!=0)
-                                {}
-                            else if ($userx==$request->created_by)
-                                {}
-                            else if ($useroffice!=$maker->office_id)
-                                continue;
-                    }
-                    else
-                        {
                         $useroffice=Auth::user()->office_id;
-                        $maker= User::find( $request->requisitioner);
-                            if ($useroffice!=$maker->office_id)
-                                continue;
-                        }
-                //End Office restriction
-                        $doc = new Document; $doc = DB::table('document')->where('pr_id', $request->id)->first();  
-                        $doc_id= $doc->id;
+                  
+                    $doc = new Document; $doc = DB::table('document')->where('pr_id', $request->id)->first();  
+                    $doc_id= $doc->id;
                     $userx= Auth::User()->id;
                     $counter=0;
                     $counter=Count::where('user_id', $userx)->where('doc_id', $doc_id)->count();
@@ -271,7 +249,17 @@
                     ?>
                         >
                         <td width="10%">{{ $request->controlNo; }}</td>
-                        <td width="30%"><a data-toggle="tooltip" data-placement="top" class="purpose" href="{{ URL::to('purchaseRequest/vieweach/'. $request->id) }}" title="View Project Details">{{ $request->projectPurpose; }}</a></td>
+                        <td width="30%">
+                            
+                        @if(Entrust::hasRole('Administrator')||Entrust::hasRole('Procurement Personnel'))
+                            <a data-toggle="tooltip" data-placement="top" class="purpose" href="{{ URL::to('purchaseRequest/vieweach/'. $request->id) }}" title="View Project Details">
+                            {{ $request->projectPurpose; }}
+                            </a>
+                        @else
+                        {{ $request->projectPurpose; }}
+                        @endif
+
+                        </td>
                         <?php 
                             $doc = new Purchase; 
                             $doc = DB::table('document')->where('pr_id', $request->id)->get(); 
@@ -325,10 +313,12 @@
                             </td>
                         @endif
                         @if(Entrust::hasRole('Requisitioner'))
+
+                        
                             <td width="10%">
                             <?php
                             $showcancel=0;
-                           
+                            $maker= User::find( $request->requisitioner);
                         
 
                             if($userx!=$maker->id)

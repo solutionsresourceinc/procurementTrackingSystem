@@ -192,21 +192,10 @@
                             $values=Values::where('otherDetails_id', $otherdetails->id)->where('purchase_request_id', $purchase->id)->first();  
                              ?>  
                             @if ($valuesc==0) 
-                                {{Form::open(['url'=>'insertaddon'], 'POST')}}
-                                    <input type="hidden" name="otherDetails_id" value="{{$otherdetails->id}}">
-                                    <input type="hidden" name="purchase_request_id" value="{{$purchase->id}}">
-                                    <td width='48%' colspan="3"><input name ="value" type="text" class="form-control"></td>
-                                    <td align="center"><button class ="btn btn-primary">Save</button></td>
-                                {{Form::close()}}
+                                <?php continue; ?>
                             @else 
                                 <td width='48%' colspan='3'>{{$values->value}}</td>
                     
-                                {{Form::open(['url'=>'editaddon', 'POST'])}}
-                                    <input type='hidden' name='values_id' value="{{$values->id}}">
-                                    <td align='center'>
-                                        <button class ='btn btn-default'>Edit</button>
-                                    </td>
-                                {{Form::close()}}
                             @endif
                    
                         
@@ -220,8 +209,9 @@
                   
                 foreach ($task as $tasks) 
                 {
-                    
-
+                    $taskcount =TaskDetails::where('doc_id', $docs->id)->where('task_id', $tasks->id)->count();
+                    if($taskcount==0)
+                        continue;
                     $taskp =TaskDetails::where('doc_id', $docs->id)->where('task_id', $tasks->id)->first();
                     if($taskp->status=="Lock")
                         continue;
@@ -636,23 +626,11 @@
                             $values=Values::where('otherDetails_id', $otherdetails->id)->where('purchase_request_id', $purchase->id)->first();    
                              ?>
                             @if ($valuesc==0) 
-                                {{Form::open(['url'=>'insertaddon'], 'POST')}}
-                                    <input type="hidden" name="otherDetails_id" value="{{$otherdetails->id}}">
-                                    <input type="hidden" name="purchase_request_id" value="{{$purchase->id}}">
-                                    <td  width='48%' colspan="3"><input name ="value" type="text" class="form-control" maxlength="100"></td>
-                                    <td align="center"><button class ="btn btn-primary">Save</button></td>
-                                {{Form::close()}}
+                                <?php continue; ?>
                             @else 
                                 <td width='48%' colspan='3'>{{$values->value}}</td>
 
-                                {{Form::open(['url'=>'editaddon', 'POST'])}}
-                                    
-                                    <input type='hidden' name='values_id' value="{{$values->id}}">
-                                    <td align='center'>
-                                        <button class ='btn btn-default'>Edit</button>
-                                    </td>
-                
-                                {{Form::close()}}
+                                
                                 </tr>
                             @endif
                     <?php

@@ -2,40 +2,47 @@
 
 @section('content')
 
+<!--CODE REVIEW:
+    - remove comments
+    - variables must be descriptive
+-->
+
 <h1 class="pull-left">List of Closed Purchase Requests</h1>
     
    
 
     <hr class="clear" />
-    <div id="pr_form">
-        <form action="submitForm/" id="new_form" method="post" id="confirm">
-    </div>
+<div id="pr_form">
+    <form action="submitForm/" id="new_form" method="post" id="confirm">
+</div>
 
-        <div class="modal fade" id="confirmDelete" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">Cancel Purchase Request</h4>
-                    </div>
-                    <div class="modal-body">
-                        <p>Reason for cancelling purchase request:</p>
-                        <textarea id="reason" class="form-control" rows="3" maxlength="255", style="resize:vertical"></textarea>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-success" onClick="submitForm()">Submit</button>
-                        
-                    </div>
+<div class="modal fade" id="confirmDelete" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
                 
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Cancel Purchase Request</h4>
                 </div>
+                <div class="modal-body">
+                    <p>Reason for cancelling purchase request:</p>
+                    <textarea id="reason" class="form-control" rows="3" maxlength="255", style="resize:vertical"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-success" onClick="submitForm()">Submit</button>
+                    
+                </div>
+            
             </div>
         </div>
-    </form>
+    </div>
+</form>
 
-    @if(Session::get('notice'))
-        <div class="alert alert-success"> {{ Session::get('notice') }}</div> 
-    @endif
+ 
+@if(Session::get('notice'))
+    <div class="alert alert-success"> {{ Session::get('notice') }}</div> 
+@endif
     
     <!-- START OF SEARCH BOX -->
     <div align="center" class="col-md-8"></div>   
@@ -55,60 +62,64 @@
                 <th>Mode</th>
                 <th style="text-align: center">Amount</th>
                 <th>Date Received</th>
-              </tr>
+               
+            </tr>
         </thead>
 
         <?php
            //Query Restrictions
             $date_today =date('Y-m-d H:i:s');
             $requests = new Purchase;
-           
-            $user_selected=Auth::user()->id;
+            $userx=Auth::user()->id;
+            $useroffice=Auth::user()->office_id;
+
             if(Entrust::hasRole('Requisitioner'))
-                $requests = DB::table('purchase_request')->where('status', '=', 'Closed')->where('requisitioner',$user_selected)->paginate(10);
+                $requests = DB::table('purchase_request')->where('status', '=', 'Closed')->where('office', $useroffice)->paginate(10); 
             else
-                $requests = DB::table('purchase_request')->where('status', '=', 'Closed')->paginate(10);
+                $requests = DB::table('purchase_request')->where('status', '=', 'Closed')->paginate(10); 
             //End Query Restrictions
         ?>
 
-        <tbody class="searchable">
+        <tbody>
             @if(count($requests))
                 @foreach ($requests as $request)
-                    <tr
-                    <?php 
-                        //Office restriction
-                        if (Entrust::hasRole('Administrator')){}
-                        else if(Entrust::hasRole('Procurement Personnel')){}
-                        else
-                            {
-                                $useroffice=Auth::user()->office_id;
-                                $maker= User::find( $request->requisitioner);
-                                if ($useroffice!=$maker->office_id)
-                                    continue;
-                            }
-                        //End Office restriction
+
+                    <tr id="content"
+                      <?php 
+                     
                         $doc = new Document; $doc = DB::table('document')->where('pr_id', $request->id)->first();  
                         $doc_id= $doc->id;
-                        $user_selected= Auth::User()->id;
-                        $counter=0;
-                        $counter=Count::where('user_id', $user_selected)->where('doc_id', $doc_id)->count();
-                        if ($counter!=0){
-                            echo "class ='success'";
-                        }
+                    $userx= Auth::User()->id;
+                    $counter=0;
+                    $counter=Count::where('user_id', $userx)->where('doc_id', $doc_id)->count();
+                    if ($counter!=0){
+                        echo "class ='success'";
+                    }
 
                     ?>
                         >
                         <td width="10%">{{ $request->controlNo; }}</td>
-                        <td width="30%">{{ $request->projectPurpose; }}</td>
+                        <td width="27%">
+
+                        @if(Entrust::hasRole('Administrator')||Entrust::hasRole('Procurement Personnel'))
+                            <a data-toggle="tooltip" data-placement="top" class="purpose" href="{{ URL::to('purchaseRequest/vieweach/'. $request->id) }}" title="View Project Details">
+                            {{ $request->projectPurpose; }}
+                            </a>
+                        @else
+                        {{ $request->projectPurpose; }}
+                        @endif
+                        </td>
                         <?php 
-                            $docs = new Purchase; 
-                            $docs = DB::table('document')->where('pr_id', $request->id)->get(); 
+                            $doc = new Purchase; 
+                            $doc = DB::table('document')->where('pr_id', $request->id)->get(); 
                         ?>
                         <td width="18%">
-                            @foreach ($docs as $doc) {{ Workflow::find($doc->work_id)->workFlowName; }} @endforeach
+                            @foreach ($doc as $docs) {{ Workflow::find($docs->work_id)->workFlowName; }} @endforeach
                         </td>
-                        <td width="17%" style="text-align: center">P{{{ $request->amount }}}</td>
-                        <td width="15%">{{ $request->dateReceived; }}</td>
+                        <td width="12%" style="text-align: center">P{{{ $request->amount }}}</td>
+                        <td width="20%">{{ $request->dateReceived; }}</td>
+
+                       
                    </tr>
                 @endforeach
             @else
@@ -120,12 +131,13 @@
             @endif
         </tbody>
     </table>  
+ 
 <div id="pages" align="center">
     <center> {{ $requests->links(); }} </center>
 </div>
 
 <div id="searchTable">
-    <table id="table_id2" class="table table-striped display " style="display:none">
+    <table id="table_id2" class="table table-striped display" style="display:none">
         <thead>
             <tr>
                 <th>Control No.</th>
@@ -133,66 +145,65 @@
                 <th>Mode</th>
                 <th style="text-align: center">Amount</th>
                 <th>Date Received</th>
-              </tr>
+            
+            </tr>
         </thead>
 
         <?php
            //Query Restrictions
             $date_today =date('Y-m-d H:i:s');
             $requests = new Purchase;
-           
-            $user_selected=Auth::user()->id;
-              $requests = DB::table('purchase_request')->where('status', '=', 'Closed')->get(); 
+            $userx=Auth::user()->id;
+
+            if(Entrust::hasRole('Requisitioner'))
+                $requests = DB::table('purchase_request')->where('status', '=', 'Closed')->where('office', $useroffice)->get(); 
+            else
+                $requests = DB::table('purchase_request')->where('status', '=', 'Closed')->get(); 
             //End Query Restrictions
         ?>
 
         <tbody class="searchable">
             @if(count($requests))
                 @foreach ($requests as $request)
-                    <tr
-                    <?php 
-                        //Office restriction
-                        if (Entrust::hasRole('Administrator')){}
-                        else if(Entrust::hasRole('Procurement Personnel')){
-                            $useroffice=Auth::user()->office_id;
-                            $maker= User::find( $request->requisitioner);
-                            $docget=Document::where('pr_id', $request->id)->first();
-                            $taskd = TaskDetails::where('doc_id',$docget->id)->where('assignee_id',$user_selected)->count();
-                            if($taskd!=0){}
-                            else if ($user_selected==$request->created_by){}
-                            else if ($useroffice!=$maker->office_id)
-                                continue;
-                        }
-                        else
-                            {
-                                $useroffice=Auth::user()->office_id;
-                                $maker= User::find( $request->requisitioner);
-                                if ($useroffice!=$maker->office_id)
-                                    continue;
-                            }
-                        //End Office restriction
-                        $doc = new Document; $doc = DB::table('document')->where('pr_id', $request->id)->first();  
-                        $doc_id= $doc->id;
-                        $user_selected= Auth::User()->id;
-                        $counter=0;
-                        $counter=Count::where('user_id', $user_selected)->where('doc_id', $doc_id)->count();
-                        if ($counter!=0){
-                            echo "class ='success'";
-                        }
+
+                    <tr 
+                      <?php 
+                        $useroffice=Auth::user()->office_id;
+                  
+                    $doc = new Document; $doc = DB::table('document')->where('pr_id', $request->id)->first();  
+                    $doc_id= $doc->id;
+                    $userx= Auth::User()->id;
+                    $counter=0;
+                    $counter=Count::where('user_id', $userx)->where('doc_id', $doc_id)->count();
+                    if ($counter!=0){
+                        echo "class ='success'";
+                    }
 
                     ?>
                         >
                         <td width="10%">{{ $request->controlNo; }}</td>
-                        <td width="30%"><a data-toggle="tooltip" data-placement="top" class="purpose" href="{{ URL::to('purchaseRequest/vieweach/'. $request->id) }}" title="View Project Details">{{ $request->projectPurpose; }}</a></td>
+                        <td width="30%">
+                            
+                        @if(Entrust::hasRole('Administrator')||Entrust::hasRole('Procurement Personnel'))
+                            <a data-toggle="tooltip" data-placement="top" class="purpose" href="{{ URL::to('purchaseRequest/vieweach/'. $request->id) }}" title="View Project Details">
+                            {{ $request->projectPurpose; }}
+                            </a>
+                        @else
+                        {{ $request->projectPurpose; }}
+                        @endif
+
+                        </td>
                         <?php 
-                            $docs = new Purchase; 
-                            $docs = DB::table('document')->where('pr_id', $request->id)->get(); 
+                            $doc = new Purchase; 
+                            $doc = DB::table('document')->where('pr_id', $request->id)->get(); 
                         ?>
                         <td width="18%">
-                            @foreach ($docs as $doc) {{ Workflow::find($doc->work_id)->workFlowName; }} @endforeach
+                            @foreach ($doc as $docs) {{ Workflow::find($docs->work_id)->workFlowName; }} @endforeach
                         </td>
                         <td width="17%" style="text-align: center">P{{{ $request->amount }}}</td>
                         <td width="15%">{{ $request->dateReceived; }}</td>
+
+                        
                    </tr>
                 @endforeach
             @endif
@@ -289,10 +300,11 @@
             //alert(reason);
             document.getElementById("form").submit();
         }
+        
     </script>
-    
-    <!--CODE REVIEW: remove unnecessary codes-->
-    {{ Session::forget('main_error'); }}
-    {{ Session::forget('imgsuccess'); }}
-    {{ Session::forget('imgerror'); }}
+
+{{ Session::forget('main_error'); }}
+{{ Session::forget('imgsuccess'); }}
+{{ Session::forget('imgerror'); }}
+
 @stop

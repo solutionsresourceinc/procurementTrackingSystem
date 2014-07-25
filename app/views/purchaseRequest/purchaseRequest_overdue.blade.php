@@ -2,41 +2,51 @@
 
 @section('content')
 
-    <h1 class="pull-left">List of Overdue Purchase Requests</h1>
+<!--CODE REVIEW:
+    - remove comments
+    - variables must be descriptive
+-->
+
+<h1 class="pull-left">List of Overdue Purchase Requests</h1>
     
-   
+    @if ( Entrust::hasRole('Administrator') || Entrust::hasRole('Procurement Personnel'))
+      <div class="pull-right options">
+          <a href="{{ URL::to('purchaseRequest/create') }}" class="btn btn-success">Create New</a>
+      </div>
+    @endif
 
     <hr class="clear" />
-    <div id="pr_form">
-        <form action="submitForm/" id="new_form" method="post" id="confirm">
-    </div>
+<div id="pr_form">
+    <form action="submitForm/" id="new_form" method="post" id="confirm">
+</div>
 
-        <div class="modal fade" id="confirmDelete" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">Cancel Purchase Request</h4>
-                    </div>
-                    <div class="modal-body">
-                        <p>Reason for cancelling purchase request:</p>
-                        <textarea id="reason" class="form-control" rows="3" maxlength="255", style="resize:vertical"></textarea>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-success" onClick="submitForm()">Submit</button>
-                        
-                    </div>
+<div class="modal fade" id="confirmDelete" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
                 
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Cancel Purchase Request</h4>
                 </div>
+                <div class="modal-body">
+                    <p>Reason for cancelling purchase request:</p>
+                    <textarea id="reason" class="form-control" rows="3" maxlength="255", style="resize:vertical"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-success" onClick="submitForm()">Submit</button>
+                    
+                </div>
+            
             </div>
         </div>
-    </form>
+    </div>
+</form>
 
-    @if(Session::get('notice'))
-        <div class="alert alert-success"> {{ Session::get('notice') }}</div> 
-    @endif
+ 
+@if(Session::get('notice'))
+    <div class="alert alert-success"> {{ Session::get('notice') }}</div> 
+@endif
     
     <!-- START OF SEARCH BOX -->
     <div align="center" class="col-md-8"></div>   
@@ -57,65 +67,65 @@
                 <th style="text-align: center">Amount</th>
                 <th>Date Received</th>
                 <th>Action</th>
-              </tr>
+            </tr>
         </thead>
 
         <?php
            //Query Restrictions
             $date_today =date('Y-m-d H:i:s');
             $requests = new Purchase;
-            $user_selected=Auth::user()->id;
-            
+            $userx=Auth::user()->id;
+            $useroffice=Auth::user()->office_id;
+
             if(Entrust::hasRole('Requisitioner'))
-                $requests = DB::table('purchase_request')->where('dueDate','<=',$date_today)->where('status', '=', 'Active')->where('requisitioner',$user_selected)->paginate(10); 
-            else    
+                $requests = DB::table('purchase_request')->where('dueDate','<=',$date_today)->where('status', '=', 'Active')->where('office', $useroffice)->paginate(10); 
+            else
                 $requests = DB::table('purchase_request')->where('dueDate','<=',$date_today)->where('status', '=', 'Active')->paginate(10); 
             //End Query Restrictions
         ?>
 
-        <tbody class="searchable">
+        <tbody>
             @if(count($requests))
                 @foreach ($requests as $request)
-                    <tr
-                    <?php 
-                        //Office restriction
-                        if (Entrust::hasRole('Administrator')){}
-                        else if(Entrust::hasRole('Procurement Personnel')){}
-                        else
-                        {
-                            $useroffice=Auth::user()->office_id;
-                            $maker= User::find( $request->requisitioner);
-                            if ($useroffice!=$maker->office_id)
-                                continue;
-                        }
-                        //End Office restriction
 
+                    <tr id="content"
+                      <?php 
+                     
                         $doc = new Document; $doc = DB::table('document')->where('pr_id', $request->id)->first();  
                         $doc_id= $doc->id;
-                        $user_selected= Auth::User()->id;
-                        $counter=0;
-                        $counter=Count::where('user_id', $user_selected)->where('doc_id', $doc_id)->count();
-                        if ($counter!=0)
-                        {
-                            echo "class ='success'";
-                        }
+                    $userx= Auth::User()->id;
+                    $counter=0;
+                    $counter=Count::where('user_id', $userx)->where('doc_id', $doc_id)->count();
+                    if ($counter!=0){
+                        echo "class ='success'";
+                    }
+
                     ?>
                         >
                         <td width="10%">{{ $request->controlNo; }}</td>
-                        <td width="30%">{{ $request->projectPurpose; }}</td>
+                        <td width="27%">
+
+                        @if(Entrust::hasRole('Administrator')||Entrust::hasRole('Procurement Personnel'))
+                            <a data-toggle="tooltip" data-placement="top" class="purpose" href="{{ URL::to('purchaseRequest/vieweach/'. $request->id) }}" title="View Project Details">
+                            {{ $request->projectPurpose; }}
+                            </a>
+                        @else
+                        {{ $request->projectPurpose; }}
+                        @endif
+                        </td>
                         <?php 
-                            $docs = new Purchase; 
-                            $docs = DB::table('document')->where('pr_id', $request->id)->get(); 
+                            $doc = new Purchase; 
+                            $doc = DB::table('document')->where('pr_id', $request->id)->get(); 
                         ?>
                         <td width="18%">
-                            @foreach ($docs as $doc) {{ Workflow::find($doc->work_id)->workFlowName; }} @endforeach
+                            @foreach ($doc as $docs) {{ Workflow::find($docs->work_id)->workFlowName; }} @endforeach
                         </td>
-                        <td width="17%" style="text-align: center">P{{{ $request->amount }}}</td>
-                        <td width="15%">{{ $request->dateReceived; }}</td>
+                        <td width="12%" style="text-align: center">P{{{ $request->amount }}}</td>
+                        <td width="20%">{{ $request->dateReceived; }}</td>
 
                         @if(Entrust::hasRole('Administrator') )
                         
-                            <td width="10%">
+                            <td width="13%">
                                 <a data-toggle="tooltip" data-placement="top" class='iframe btn btn-success' href='edit/{{$request->id}}' title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
                                 <form method="POST" action="delete" id="myForm_{{ $request->id }}" name="myForm" style="display: -webkit-inline-box;">
                                    <input type="hidden" name="del_pr" value="{{ $request->id }}">
@@ -128,75 +138,73 @@
                      
                             <td width="10%">
                             <?php
-                                $docget=Document::where('pr_id', $request->id)->first();
-                                $taskd = TaskDetails::where('doc_id',$docget->id)->where('assignee_id',$user_selected)->count();
-                                $showcancel=0;
-                         
-                                if($taskd!=0){
-                            ?><a data-toggle="tooltip" data-placement="top" class='iframe btn btn-success' href='edit/{{$request->id}}' title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
-                              
-                            <?php
-                                    $showcancel=1;
-                                }
-                                else if($user_selected==$request->created_by){
-                            ?><a data-toggle="tooltip" data-placement="top" class='iframe btn btn-success' href='edit/{{$request->id}}' title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
+         
+                            $showcancel=0;
+
+                           
+                         if($userx==$request->created_by){
+                                ?><a data-toggle="tooltip" data-placement="top" class='iframe btn btn-success' href='edit/{{$request->id}}' title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
+                               
+
                             
-                            <?php
-                                    $showcancel=1;
-                                }
-                                else if($user_selected==$request->requisitioner){
-                                
-                                    $showcancel=1;
-                                }
+                             <?php
+                              $showcancel=1;
+                         }
+                            else if($userx==$request->requisitioner){
+                            
+                                $showcancel=1;
+                            }
               
-                                if($showcancel==1){
-                            ?>
+                            if($showcancel==1)
+                            {?>
                                 <form method="POST" action="delete" id="myForm_{{ $request->id }}" name="myForm" style="display: -webkit-inline-box;">
                                    <input type="hidden" name="del_pr" value="{{ $request->id }}">
                                    <center> <a href="changeForm/{{ $request->id }}" class="btn ajax btn-danger" data-method="post" data-replace="#pr_form" data-toggle="modal" data-target="#confirmDelete" data-toggle="tooltip" title="Cancel"><span class="glyphicon glyphicon-remove"></span></a></center>
                                </form>
-                            <?php
-                                } 
-                            ?>
+                      <?php } 
+                      ?>
                             </td>
                         @endif
                         @if(Entrust::hasRole('Requisitioner'))
-                            <td width="10%">
-                                <?php
-                                    $showcancel=0;
-                                    if($reqrestrict==1)
-                                    {
-                                        if($user_selected!=$maker->id)
-                                            $showcancel=1;
-                                    }
 
-                                    if($showcancel==0)
-                                    {
-                                ?>
+                            
+                            <td width="10%">
+                            <?php
+                            $showcancel=0;
+                           
+                            $maker= User::find( $request->requisitioner);
+
+                            if($userx!=$maker->id)
+                                $showcancel=1;
+                        
+
+                            if($showcancel==0)
+                            {?>
                                 <form method="POST" action="delete" id="myForm_{{ $request->id }}" name="myForm" style="display: -webkit-inline-box;">
                                    <input type="hidden" name="del_pr" value="{{ $request->id }}">
                                    <center> <a href="changeForm/{{ $request->id }}" class="btn ajax btn-danger" data-method="post" data-replace="#pr_form" data-toggle="modal" data-target="#confirmDelete" data-toggle="tooltip" title="Cancel"><span class="glyphicon glyphicon-remove"></span></a></center>
-                                </form>
-                                <?php } ?>
+                               </form>
+                             <?php } ?>
                             </td> 
                         @endif
                    </tr>
                 @endforeach
             @else
                 <tr>
-                    <td colspan="<?php if(Entrust::hasRole('Administrator')) echo "6"; else echo "5";?>">
+                    <td colspan="<?php if(Entrust::hasRole('Administrator') ) echo "6"; else echo "5";?>">
                         <span class="error-view">No data available.</span>
                     </td>
                 </tr>
             @endif
         </tbody>
     </table>  
-    <div id="pages" align="center">
-       <center> {{ $requests->links(); }} </center>
-    </div>
+ 
+<div id="pages" align="center">
+    <center> {{ $requests->links(); }} </center>
+</div>
 
-    <div id="searchTable">
-        <table id="table_id2" class="table table-striped display "  style="display:none">
+<div id="searchTable">
+    <table id="table_id2" class="table table-striped display" style="display:none">
         <thead>
             <tr>
                 <th>Control No.</th>
@@ -205,64 +213,59 @@
                 <th style="text-align: center">Amount</th>
                 <th>Date Received</th>
                 <th>Action</th>
-              </tr>
+            </tr>
         </thead>
 
         <?php
            //Query Restrictions
             $date_today =date('Y-m-d H:i:s');
             $requests = new Purchase;
-            $user_selected=Auth::user()->id;
-            $requests = DB::table('purchase_request')->where('dueDate','<=',$date_today)->where('status', '=', 'Active')->get(); 
+            $userx=Auth::user()->id;
+
+            if(Entrust::hasRole('Requisitioner'))
+                $requests = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('status', '=', 'Active')->where('office', $useroffice)->get(); 
+            else
+                $requests = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('status', '=', 'Active')->get(); 
             //End Query Restrictions
         ?>
 
         <tbody class="searchable">
             @if(count($requests))
                 @foreach ($requests as $request)
-                    <tr
-                    <?php 
-                        //Office restriction
-                        if (Entrust::hasRole('Administrator')){}
-                        else if(Entrust::hasRole('Procurement Personnel')){   
-                            $useroffice=Auth::user()->office_id;
-                            $maker= User::find( $request->requisitioner);
-                            $docget=Document::where('pr_id', $request->id)->first();
-                            $taskd = TaskDetails::where('doc_id',$docget->id)->where('assignee_id',$user_selected)->count();
-                            if($taskd!=0){}
-                            else if ($user_selected==$request->created_by)
-                            {}
-                            else if ($useroffice!=$maker->office_id)
-                                continue;
-                        }
-                        else
-                        {
-                            $useroffice=Auth::user()->office_id;
-                            $maker= User::find( $request->requisitioner);
-                            if ($useroffice!=$maker->office_id)
-                                continue;
-                        }
-                        //End Office restriction
 
-                        $doc = new Document; $doc = DB::table('document')->where('pr_id', $request->id)->first();  
-                        $doc_id= $doc->id;
-                        $user_selected= Auth::User()->id;
-                        $counter=0;
-                        $counter=Count::where('user_id', $user_selected)->where('doc_id', $doc_id)->count();
-                        if ($counter!=0)
-                        {
-                            echo "class ='success'";
-                        }
+                    <tr 
+                      <?php 
+                        $useroffice=Auth::user()->office_id;
+                  
+                    $doc = new Document; $doc = DB::table('document')->where('pr_id', $request->id)->first();  
+                    $doc_id= $doc->id;
+                    $userx= Auth::User()->id;
+                    $counter=0;
+                    $counter=Count::where('user_id', $userx)->where('doc_id', $doc_id)->count();
+                    if ($counter!=0){
+                        echo "class ='success'";
+                    }
+
                     ?>
                         >
                         <td width="10%">{{ $request->controlNo; }}</td>
-                        <td width="30%"><a data-toggle="tooltip" data-placement="top" class="purpose" href="{{ URL::to('purchaseRequest/vieweach/'. $request->id) }}" title="View Project Details">{{ $request->projectPurpose; }}</a></td>
+                        <td width="30%">
+                            
+                        @if(Entrust::hasRole('Administrator')||Entrust::hasRole('Procurement Personnel'))
+                            <a data-toggle="tooltip" data-placement="top" class="purpose" href="{{ URL::to('purchaseRequest/vieweach/'. $request->id) }}" title="View Project Details">
+                            {{ $request->projectPurpose; }}
+                            </a>
+                        @else
+                        {{ $request->projectPurpose; }}
+                        @endif
+
+                        </td>
                         <?php 
-                            $docs = new Purchase; 
-                            $docs = DB::table('document')->where('pr_id', $request->id)->get(); 
+                            $doc = new Purchase; 
+                            $doc = DB::table('document')->where('pr_id', $request->id)->get(); 
                         ?>
                         <td width="18%">
-                            @foreach ($docs as $doc) {{ Workflow::find($doc->work_id)->workFlowName; }} @endforeach
+                            @foreach ($doc as $docs) {{ Workflow::find($docs->work_id)->workFlowName; }} @endforeach
                         </td>
                         <td width="17%" style="text-align: center">P{{{ $request->amount }}}</td>
                         <td width="15%">{{ $request->dateReceived; }}</td>
@@ -282,56 +285,53 @@
                      
                             <td width="10%">
                             <?php
-                                $docget=Document::where('pr_id', $request->id)->first();
-                                $taskd = TaskDetails::where('doc_id',$docget->id)->where('assignee_id',$user_selected)->count();
-                                $showcancel=0;
-                         
-                                if($taskd!=0){
-                            ?><a data-toggle="tooltip" data-placement="top" class='iframe btn btn-success' href='edit/{{$request->id}}' title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
-                              
-                            <?php
-                                    $showcancel=1;
-                                }
-                                else if($user_selected==$request->created_by){
-                            ?><a data-toggle="tooltip" data-placement="top" class='iframe btn btn-success' href='edit/{{$request->id}}' title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
+         
+                            $showcancel=0;
+
+                           
+                         if($userx==$request->created_by){
+                                ?><a data-toggle="tooltip" data-placement="top" class='iframe btn btn-success' href='edit/{{$request->id}}' title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
+                               
+
                             
-                            <?php
-                                    $showcancel=1;
-                                }
-                                else if($user_selected==$request->requisitioner){
-                                
-                                    $showcancel=1;
-                                }
+                             <?php
+                              $showcancel=1;
+                         }
+                            else if($userx==$request->requisitioner){
+                            
+                                $showcancel=1;
+                            }
               
-                                if($showcancel==1){
-                            ?>
+                            if($showcancel==1)
+                            {?>
                                 <form method="POST" action="delete" id="myForm_{{ $request->id }}" name="myForm" style="display: -webkit-inline-box;">
                                    <input type="hidden" name="del_pr" value="{{ $request->id }}">
                                    <center> <a href="changeForm/{{ $request->id }}" class="btn ajax btn-danger" data-method="post" data-replace="#pr_form" data-toggle="modal" data-target="#confirmDelete" data-toggle="tooltip" title="Cancel"><span class="glyphicon glyphicon-remove"></span></a></center>
                                </form>
-                            <?php
-                                } 
-                            ?>
+                      <?php } 
+                      ?>
                             </td>
                         @endif
                         @if(Entrust::hasRole('Requisitioner'))
-                            <td width="10%">
-                                <?php
-                                    $showcancel=0;
-                                    if($reqrestrict==1)
-                                    {
-                                        if($user_selected!=$maker->id)
-                                            $showcancel=1;
-                                    }
 
-                                    if($showcancel==0)
-                                    {
-                                ?>
+                        
+                            <td width="10%">
+                            <?php
+                            $showcancel=0;
+                            $maker= User::find( $request->requisitioner);
+                        
+
+                            if($userx!=$maker->id)
+                                $showcancel=1;
+                        
+
+                            if($showcancel==0)
+                            {?>
                                 <form method="POST" action="delete" id="myForm_{{ $request->id }}" name="myForm" style="display: -webkit-inline-box;">
                                    <input type="hidden" name="del_pr" value="{{ $request->id }}">
                                    <center> <a href="changeForm/{{ $request->id }}" class="btn ajax btn-danger" data-method="post" data-replace="#pr_form" data-toggle="modal" data-target="#confirmDelete" data-toggle="tooltip" title="Cancel"><span class="glyphicon glyphicon-remove"></span></a></center>
-                                </form>
-                                <?php } ?>
+                               </form>
+                             <?php } ?>
                             </td> 
                         @endif
                    </tr>
@@ -339,7 +339,7 @@
             @endif
         </tbody>
     </table>
-    </div>
+</div>
 
 <div class="row" id="table_id3" style="display:none">
     <span class="error-view">No data available.</span>
@@ -412,23 +412,29 @@
         });
 
         $('#confirmDelete').find('.modal-footer #confirm').on('click', function(){
+            //$(this).data('form').submit();
             var name = "myForm_" + window.my_id; 
             document.getElementById(name).submit();
+            //alert(name);
         });
         function hello(pass_id)
         {
             window.my_id = pass_id;
+           // alert(window.my_id);
         }
 
         function submitForm()
         {
             var reason = document.getElementById('reason').value;
             document.getElementById('hide_reason').value = reason;
+            //alert(reason);
             document.getElementById("form").submit();
         }
+        
     </script>
 
-    {{ Session::forget('main_error'); }}
-    {{ Session::forget('imgsuccess'); }}
-    {{ Session::forget('imgerror'); }}
+{{ Session::forget('main_error'); }}
+{{ Session::forget('imgsuccess'); }}
+{{ Session::forget('imgerror'); }}
+
 @stop
