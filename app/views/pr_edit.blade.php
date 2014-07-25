@@ -469,7 +469,8 @@
                     ?>
 
                     @if($tasks->taskType == "normal")
-                            {{Form::open(['url'=>'checklistedit'], 'POST')}}
+                            <?php $myForm = 'myForm_' . $taskc->id; ?>
+                            {{Form::open(['url'=>'checklistedit', 'id' => $myForm], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
                                 <td class="edit-pr-input">
                                     <input type ="text" name="assignee" placeholder="Enter name" class="form-control" width="100%" maxlength="100">
@@ -492,12 +493,13 @@
                                 <tr class="current-task">
                                 <td colspan="4" style="border-right: none"></td>
                                 <td style="border-left: none; text-align: center;">
-                                    <input type="submit" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif> 
+                                    <input type="button" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"> 
                                 </td>
                             {{Form::close()}}
                     @endif
                     @if($tasks->taskType == "certification")
-                            {{Form::open(['url'=>'certification'], 'POST')}}
+                            <?php $myForm = 'myForm_' . $taskc->id; ?>
+                            {{Form::open(['url'=>'certification', 'id' => $myForm], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
                                
                                 <td class="edit-pr-input" colspan="2">
@@ -513,12 +515,13 @@
                                 <tr class="current-task">
                                 <td colspan="4" style="border-right: none"></td>
                                 <td style="border-left: none; text-align: center;">
-                                    <input type="submit" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif> 
+                                    <input type="button" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"> 
                                 </td>
                             {{Form::close()}}
                     @endif
                     @if($tasks->taskType == "posting")
-                            {{Form::open(['url'=>'posting'], 'POST')}}
+                    <?php $myForm = 'myForm_' . $taskc->id; ?>
+                            {{Form::open(['url'=>'posting', 'id' => $myForm], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
                                 <td class="edit-pr-input">
                                     Reference No. : 
@@ -542,12 +545,13 @@
                                 <tr class="current-task">
                                 <td colspan="4" style="border-right: none"></td>
                                 <td style="border-left: none; text-align: center;">
-                                    <input type="submit" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif> 
+                                    <input type="button" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"> 
                                 </td>
                             {{Form::close()}}
                     @endif
                     @if($tasks->taskType == "supplier")
-                            {{Form::open(['url'=>'supplier'], 'POST')}}
+                            <?php $myForm = 'myForm_' . $taskc->id; ?>
+                            {{Form::open(['url'=>'supplier', 'id' => $myForm], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
                                 <td class="edit-pr-input" colspan="2">
                                     <input type="text" name="supplier"  class="form-control" maxlength="100" width="80%" placeholder="Enter supplier">
@@ -561,13 +565,13 @@
                                 <tr class="current-task">
                                 <td colspan="4" style="border-right: none"></td>
                                 <td style="border-left: none; text-align: center;">
-                                    <input type="submit" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif> 
+                                    <input type="button" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"> 
                                 </td>
                             {{Form::close()}}
                     @endif
                     @if($tasks->taskType == "cheque")
-                            
-                            {{Form::open(['url'=>'cheque'], 'POST')}}
+                            <?php $myForm = 'myForm_' . $taskc->id; ?>
+                            {{Form::open(['url'=>'cheque', 'id' => $myForm], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
                                 <td class="edit-pr-input" colspan="2">
                     
@@ -592,12 +596,13 @@
                                 <tr class="current-task">
                                 <td colspan="4" style="border-right: none"></td>
                                 <td style="border-left: none; text-align: center;">
-                                    <input type="submit" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif> 
+                                    <input type="button" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"> 
                                 </td>
                             {{Form::close()}}
                     @endif
                     @if($tasks->taskType == "published")
-                            {{Form::open(['url'=>'published'], 'POST')}}
+                            <?php $myForm = 'myForm_' . $taskc->id; ?>
+                            {{Form::open(['url'=>'published', 'id' => $myForm], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
                                     <td>
                                     {{$tasks->taskName}}
@@ -626,12 +631,14 @@
                                 <tr class="current-task">
                                 <td colspan="4" style="border-right: none"></td>
                                 <td style="border-left: none; text-align: center;">
-                                    <input type="submit" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif> 
+                                    <input type="button" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"
+                                    > 
                                 </td>
                             {{Form::close()}}
                     @endif
                     @if($tasks->taskType == "documents")
-                            {{Form::open(['url'=>'documents'], 'POST')}}
+                            <?php $myForm = 'myForm_' . $taskc->id; ?>
+                            {{Form::open(['url'=>'documents', 'id' => $myForm], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
                                     <td>
                                     {{$tasks->taskName}}
@@ -660,12 +667,13 @@
                                 <tr class="current-task">
                                 <td colspan="4" style="border-right: none"></td>
                                 <td style="border-left: none; text-align: center;">
-                                    <input type="submit" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif> 
+                                    <input type="button" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"> 
                                 </td>
                             {{Form::close()}}
                     @endif
                     @if($tasks->taskType == "evaluation")
-                            {{Form::open(['url'=>'evaluations'], 'POST')}}
+                            <?php $myForm = 'myForm_' . $taskc->id; ?>
+                            {{Form::open(['url'=>'evaluations', 'id' => $myForm], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
 
                                     <td>
@@ -687,12 +695,13 @@
                                 <tr class="current-task">
                                 <td colspan="4" style="border-right: none"></td>
                                 <td style="border-left: none; text-align: center;">
-                                    <input type="submit" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif> 
+                                    <input type="button" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"> 
                                 </td>
                             {{Form::close()}}
                     @endif
                     @if($tasks->taskType == "conference")
-                            {{Form::open(['url'=>'conference'], 'POST')}}
+                            <?php $myForm = 'myForm_' . $taskc->id; ?>
+                            {{Form::open(['url'=>'conference', 'id' => $myForm], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
                                     <td colspan="4">
                                     <?php 
@@ -707,12 +716,13 @@
                                 <tr class="current-task">
                                 <td colspan="4" style="border-right: none"></td>
                                 <td style="border-left: none; text-align: center;">
-                                    <input type="submit" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif> 
+                                    <input type="button" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"> 
                                 </td>
                             {{Form::close()}}
                     @endif
                     @if($tasks->taskType == "contract")
-                            {{Form::open(['url'=>'contractmeeting'], 'POST')}}
+                            <?php $myForm = 'myForm_' . $taskc->id; ?>
+                            {{Form::open(['url'=>'contractmeeting', 'id' => $myForm], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
 
                                     <td>
@@ -742,12 +752,13 @@
                                 <tr class="current-task">
                                 <td colspan="4" style="border-right: none"></td>
                                 <td style="border-left: none; text-align: center;">
-                                    <input type="submit" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif> 
+                                    <input type="button" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"> 
                                 </td>
                             {{Form::close()}}
                     @endif
                     @if($tasks->taskType == "meeting")
-                            {{Form::open(['url'=>'contractmeeting'], 'POST')}}
+                            <?php $myForm = 'myForm_' . $taskc->id; ?>
+                            {{Form::open(['url'=>'contractmeeting', 'id' => $myForm], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
 
                                     <td>
@@ -777,12 +788,13 @@
                                 <tr class="current-task">
                                 <td colspan="4" style="border-right: none"></td>
                                 <td style="border-left: none; text-align: center;">
-                                    <input type="submit" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif> 
+                                    <input type="button" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"> 
                                 </td>
                             {{Form::close()}}
                     @endif
                     @if($tasks->taskType == "rfq")
-                            {{Form::open(['url'=>'rfq'], 'POST')}}
+                            <?php $myForm = 'myForm_' . $taskc->id; ?>
+                            {{Form::open(['url'=>'rfq', 'id' => $myForm], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
                                     <td>
                                     {{$tasks->taskName}}
@@ -809,12 +821,13 @@
                                 <tr class="current-task">
                                 <td colspan="4" style="border-right: none"></td>
                                 <td style="border-left: none; text-align: center;">
-                                    <input type="submit" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif> 
+                                    <input type="button" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"> 
                                 </td>
                             {{Form::close()}}
                     @endif
                     @if($tasks->taskType == "dateby")
-                            {{Form::open(['url'=>'dateby'], 'POST')}}
+                            <?php $myForm = 'myForm_' . $taskc->id; ?>
+                            {{Form::open(['url'=>'dateby', 'id' => $myForm], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
                                 <td class="edit-pr-input" colspan="2"> 
                                     <?php 
@@ -831,12 +844,13 @@
                                 <tr class="current-task">
                                 <td colspan="4" style="border-right: none"></td>
                                 <td style="border-left: none; text-align: center;">
-                                    <input type="submit" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif> 
+                                    <input type="button" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"> 
                                 </td>
                             {{Form::close()}}
                     @endif
                     @if($tasks->taskType == "datebyremark")
-                            {{Form::open(['url'=>'datebyremark'], 'POST')}}
+                            <?php $myForm = 'myForm_' . $taskc->id; ?>
+                            {{Form::open(['url'=>'datebyremark', 'id' => $myForm], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
                                 
                                 <td class="edit-pr-input"> 
@@ -857,7 +871,7 @@
                                 <tr class="current-task">
                                 <td colspan="4" style="border-right: none"></td>
                                 <td style="border-left: none; text-align: center;">
-                                    <input type="submit" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif> 
+                                    <input type="button" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"> 
                                 </td>
                             {{Form::close()}}
                     @endif
@@ -1230,11 +1244,46 @@
             {{Session::forget('errorchecklist')}}
             {{Session::forget('successchecklist')}}
             {{Session::forget('goToChecklist')}}
+
+    <!-- CODES FOR MODAL -->
+    <div class="modal fade" id="confirmDelete" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Confirm Submission</h4>
+          </div>
+          <div class="modal-body">
+            <p>Are you sure you want to submit edit?</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-success" id="confirm">Edit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- CODES FOR MODAL END -->
 @stop
 
 
 @section('footer')
     <script type="text/javascript">
+
+    // JS CODE FOR MODAL START
+         $('#confirmDelete').find('.modal-footer #confirm').on('click', function(){
+             //$(this).data('form').submit();
+              var name = "myForm_" + window.my_id; 
+             // alert(name);
+              document.getElementById(name).submit();
+          });
+          function hello(pass_id)
+          {
+              window.my_id = pass_id;
+             // alert(window.my_id);
+          }
+    // JS CODE FOR MODAL END
+
     $('input[type=file]').bootstrapFileInput();
     $('.file-inputs').bootstrapFileInput();
     function numberWithCommas(amount) 
