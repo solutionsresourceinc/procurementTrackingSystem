@@ -1351,8 +1351,6 @@
             document.getElementById(name).value =
             document.getElementById(name2).value;
         }
-
-
     }
 
     $('.datepicker').datepicker();
