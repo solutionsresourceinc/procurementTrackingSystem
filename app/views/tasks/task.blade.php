@@ -350,7 +350,7 @@
 						</tr>
 						{{Form::close()}}	
 					@elseif($task->taskType=='evaluation')
-						{{Form::open(['url'=>'evaluation'], 'POST')}}
+						{{Form::open(['url'=>'evaluations'], 'POST')}}
 						<?php
 						 $assign_user=User::find(Auth::user()->id);
                          $name=$assign_user->lastname.", ".$assign_user->firstname;
