@@ -96,6 +96,12 @@
 					{
 						$date_today =date('Y-m-d H:i:s');
 				?>
+						{{Form::open(['url'=>'checklistedit'], 'POST')}}
+						<?php
+						 $assign_user=User::find(Auth::user()->id);
+                         $name=$assign_user->lastname.", ".$assign_user->firstname;
+						?>
+						<input type="hidden" name ="by" value= "{{$name}}">
 						@if( $date_today > $taskd->dueDate )
 							<tr>
 								<td>
@@ -111,9 +117,11 @@
 								</td>
 							</tr>
 						@endif
+						{{Form::close()}}
 				
 
 					@if($task->taskType=='certification')
+						{{Form::open(['url'=>'certification'], 'POST')}}
 						<tr> 
 							<td>
 								<span style="font-weight: bold">PPMP Certification: </span><br/>
@@ -124,7 +132,9 @@
 						
 							</td>
 						</tr>
+						{{Form::close()}}
 					@elseif($task->taskType=='posting')
+						{{Form::open(['url'=>'posting'], 'POST')}}
 						<tr> 
 							<td>
 								<span style="font-weight: bold">Reference Number: </span><br/>
@@ -134,7 +144,9 @@
 						
 							</td>
 						</tr>
+						{{Form::close()}}
 					@elseif($task->taskType=='supplier')
+						{{Form::open(['url'=>'supplier'], 'POST')}}
 						<tr> 
 							<td>
 								<span style="font-weight: bold">Supplier: </span><br/>
@@ -147,7 +159,9 @@
 		                        </p>
 							</td>
 						</tr>
+						{{Form::close}}
 					@elseif($task->taskType=='cheque')
+						{{Form::open(['url'=>'cheque'], 'POST')}}
 						<tr> 
 							<td>
 								<span style="font-weight: bold">Cheque Amount: </span><br/>
@@ -167,8 +181,10 @@
 	                                <span class="add-on"><i class="icon-th"></i></span>
 		                        </p>
 							</td>
-						</tr>	
+						</tr>
+						{{Form::close()}}	
 					@elseif($task->taskType=='conference')
+						{{Form::open(['url'=>'conference'], 'POST')}}
 						<tr> 
 							<td>
 								<span style="font-weight: bold">Conference Date: </span><br/>
@@ -180,8 +196,10 @@
 		                            <span class="add-on"><i class="icon-th"></i></span>
 		                        </p>
 							</td>
-						</tr>	
+						</tr>
+						{{Form::close()}}	
 					@elseif($task->taskType=='published')
+						{{Form::open(['url'=>'published'], 'POST')}}
 						<tr> 
 							<td width="50%">
 								<span style="font-weight: bold">Date Published: </span><br/>
@@ -210,7 +228,9 @@
 		                        </p>
 							</td>
 						</tr>	
+						{{Form::close()}}
 					@elseif($task->taskType=='documents')
+						{{Form::open(['url'=>'documents'], 'POST')}}
 						<tr> 
 							<td width="50%">
 								<span style="font-weight: bold">Eligibility Documents: </span><br/>
@@ -235,8 +255,10 @@
 									<input type="text" name="by"  class="form-control" maxlength="100" width="80%" placeholder="Enter name" style="margin-top: 10px;">
 		                        </p>
 							</td>
-						</tr>	
+						</tr>
+						{{Form::close()}}	
 					@elseif($task->taskType=='evaluation')
+						{{Form::open(['url'=>'evaluation'], 'POST')}}
 						<tr> 
 							<td width="50%">
 								<span style="font-weight: bold">Date: </span><br/>
@@ -253,7 +275,9 @@
 		                        </p>
 							</td>
 						</tr>	
+						{{Form::close()}}
 					@elseif($task->taskType=='contract' || $task->taskType=='meeting')
+						{{Form::open(['url'=>'contractmeeting'], 'POST')}}
 						<tr> 
 							<td width="50%">
 								<span style="font-weight: bold">
@@ -285,7 +309,8 @@
 									<input type="text" name="contractmeeting"  class="form-control" maxlength="100" width="80%" placeholder="@if($task->taskType=='contract') Enter contract agreement @else Enter minutes of meeting @endif" style="margin-top: 10px;">
 		                        </p>
 							</td>
-						</tr>	
+						</tr>
+						{{Form::close()}}	
 					@endif
 
 				<?php } else { ?>

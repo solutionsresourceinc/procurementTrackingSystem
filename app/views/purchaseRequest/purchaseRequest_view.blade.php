@@ -188,13 +188,13 @@
                             {
 
                             echo "<tr><td width='30%'>".$otherdetails->label."</td>";
-                            $valuesc=Values::where('otherDetails_id', $otherdetails->id)->where('purchase_request_id', $purchaseToEdit->id)->count();
-                            $values=Values::where('otherDetails_id', $otherdetails->id)->where('purchase_request_id', $purchaseToEdit->id)->first();  
+                            $valuesc=Values::where('otherDetails_id', $otherdetails->id)->where('purchase_request_id', $purchase->id)->count();
+                            $values=Values::where('otherDetails_id', $otherdetails->id)->where('purchase_request_id', $purchase->id)->first();  
                              ?>  
                             @if ($valuesc==0) 
                                 {{Form::open(['url'=>'insertaddon'], 'POST')}}
                                     <input type="hidden" name="otherDetails_id" value="{{$otherdetails->id}}">
-                                    <input type="hidden" name="purchase_request_id" value="{{$purchaseToEdit->id}}">
+                                    <input type="hidden" name="purchase_request_id" value="{{$purchase->id}}">
                                     <td colspan="3"><input name ="value" type="text" class="form-control"></td>
                                     <td align="center"><button class ="btn btn-primary">Save</button></td>
                                 {{Form::close()}}
@@ -552,13 +552,13 @@
                             {
 
                             echo "<tr><td width='30%'>".$otherdetails->label."</td>";
-                            $valuesc=Values::where('otherDetails_id', $otherdetails->id)->where('purchase_request_id', $purchaseToEdit->id)->count();
-                            $values=Values::where('otherDetails_id', $otherdetails->id)->where('purchase_request_id', $purchaseToEdit->id)->first();    
+                            $valuesc=Values::where('otherDetails_id', $otherdetails->id)->where('purchase_request_id', $purchase->id)->count();
+                            $values=Values::where('otherDetails_id', $otherdetails->id)->where('purchase_request_id', $purchase->id)->first();    
                              ?>
                             @if ($valuesc==0) 
                                 {{Form::open(['url'=>'insertaddon'], 'POST')}}
                                     <input type="hidden" name="otherDetails_id" value="{{$otherdetails->id}}">
-                                    <input type="hidden" name="purchase_request_id" value="{{$purchaseToEdit->id}}">
+                                    <input type="hidden" name="purchase_request_id" value="{{$purchase->id}}">
                                     <td colspan="3"><input name ="value" type="text" class="form-control" maxlength="100"></td>
                                     <td align="center"><button class ="btn btn-primary">Save</button></td>
                                 {{Form::close()}}
