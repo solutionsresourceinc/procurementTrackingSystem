@@ -195,15 +195,15 @@
                                 {{Form::open(['url'=>'insertaddon'], 'POST')}}
                                     <input type="hidden" name="otherDetails_id" value="{{$otherdetails->id}}">
                                     <input type="hidden" name="purchase_request_id" value="{{$purchase->id}}">
-                                    <td colspan="3"><input name ="value" type="text" class="form-control"></td>
+                                    <td width='48%' colspan="3"><input name ="value" type="text" class="form-control"></td>
                                     <td align="center"><button class ="btn btn-primary">Save</button></td>
                                 {{Form::close()}}
                             @else 
-                                <td width='48.5%' colspan='3'>{{$values->value}}</td>
+                                <td width='48%' colspan='3'>{{$values->value}}</td>
                     
                                 {{Form::open(['url'=>'editaddon', 'POST'])}}
                                     <input type='hidden' name='values_id' value="{{$values->id}}">
-                                    <td colspan='2' align='center'>
+                                    <td align='center'>
                                         <button class ='btn btn-default'>Edit</button>
                                     </td>
                                 {{Form::close()}}
@@ -346,15 +346,15 @@
                         @endif
                         @if($tasks->taskType=="cheque")
                                 <td class="edit-pr-input" colspan="2">
-                                    CHEQUE AMT:
+                                    Cheque Amount:&nbsp;&nbsp;&nbsp;
                                     {{$taskp->custom1}}
                                 </td>
                                 <td class="edit-pr-input" colspan="2">
-                                    CHEQUE NUM:
+                                    Cheque Number:&nbsp;&nbsp;&nbsp;
                                     {{$taskp->custom2}}
                                 </td>
                                 <td class="edit-pr-input" colspan="2">
-                                    CHEQUE DATE:
+                                    Cheque Date:&nbsp;&nbsp;&nbsp;
                                     {{$taskp->custom3}}
                                 </td>
                         @endif
@@ -522,7 +522,21 @@
                                     </td-->
                         @endif
                         @if($tasks->taskType=="rfq")
+                                    <td> </td>
+                                    <th class='workflow-th'>Supplier:</th>
+                                    <th class='workflow-th' colspan="2">Date of RF (Within PGEPS 7 Days):</th>
+                                    <th class='workflow-th'>By:</th>
+                                </tr>
+                                <tr>
+                                    <td>{{$tasks->taskName}}</td>
                                     <td>
+                                        {{$taskp->custom1}}
+                                    </td>
+                                    <td colspan="2">
+                                    {{$taskp->custom2}}
+                                    </td>
+                                    <td class="edit-pr-input"> {{$taskp->custom2}}</td>
+                                    <!--td>
                                     {{$tasks->taskName}} {{$taskp->custom1}}
                                     </td>
                                     <td>
@@ -536,7 +550,7 @@
                                     </td>
                                     <td class="edit-pr-input" colspan="2">  
                                     {{$taskp->custom3}}
-                                    </td>
+                                    </td-->
                         @endif
                         @if($tasks->taskType=="dateby") 
                             <td colspan="2">
@@ -625,16 +639,16 @@
                                 {{Form::open(['url'=>'insertaddon'], 'POST')}}
                                     <input type="hidden" name="otherDetails_id" value="{{$otherdetails->id}}">
                                     <input type="hidden" name="purchase_request_id" value="{{$purchase->id}}">
-                                    <td colspan="3"><input name ="value" type="text" class="form-control" maxlength="100"></td>
+                                    <td  width='48%' colspan="3"><input name ="value" type="text" class="form-control" maxlength="100"></td>
                                     <td align="center"><button class ="btn btn-primary">Save</button></td>
                                 {{Form::close()}}
                             @else 
-                                <td width='48.5%' colspan='3'>{{$values->value}}</td>
+                                <td width='48%' colspan='3'>{{$values->value}}</td>
 
                                 {{Form::open(['url'=>'editaddon', 'POST'])}}
                                     
                                     <input type='hidden' name='values_id' value="{{$values->id}}">
-                                    <td colspan='2' align='center'>
+                                    <td align='center'>
                                         <button class ='btn btn-default'>Edit</button>
                                     </td>
                 
