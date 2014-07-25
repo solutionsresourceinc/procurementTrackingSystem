@@ -21,6 +21,8 @@
 
 @section('content')
 
+
+
     <?php
         
     //Initialization for page query
@@ -60,16 +62,6 @@
             @if(Session::get('main_error'))
                 <div class="alert alert-danger"> {{ Session::get('main_error') }}</div> 
             @endif
-
-
-            @if(Session::get('successchecklist'))
-                <div class="alert alert-success"> {{ Session::get('successchecklist') }}</div> 
-            @endif
-
-            @if(Session::get('errorchecklist'))
-                <div class="alert alert-danger"> {{ Session::get('errorchecklist') }}</div> 
-            @endif
-
             
             
             @if(Session::get('successlabel'))
@@ -451,8 +443,24 @@
 
                     if ($taskch!=0 && $taskc->task_id==$tasks->id && $tasks->designation_id==0)
                     {   
-                       
-
+                        ?>
+                        
+                                @if(Session::get('successchecklist'))
+                                 <tr>
+                                    <td colspan="5">
+                                    <div class="alert alert-success"> {{ Session::get('successchecklist') }}</div> 
+                                    <td>
+                                <tr>
+                                @endif
+                                @if(Session::get('errorchecklist'))
+                                <tr>
+                                    <td colspan="3">
+                                    <div class="alert alert-danger"> {{ Session::get('errorchecklist') }}</div> 
+                                    <td>
+                                <tr>
+                                @endif
+                         
+                        <?php
                         echo "<tr class='current-task'>";
 
                         if ($tasks->taskType!="cheque"&&$tasks->taskType!="published"&&$tasks->taskType!="contract"&&$tasks->taskType!="meeting"&&$tasks->taskType!="rfq")
@@ -490,6 +498,7 @@
                                 <tr class="current-task">
                                 <td colspan="4" style="border-right: none"></td>
                                 <td style="border-left: none; text-align: center;">
+                                
                                     <input type="button" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"> 
                                 </td>
                             {{Form::close()}}
@@ -512,6 +521,7 @@
                                 <tr class="current-task">
                                 <td colspan="4" style="border-right: none"></td>
                                 <td style="border-left: none; text-align: center;">
+                                                                
                                     <input type="button" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"> 
                                 </td>
                             {{Form::close()}}
@@ -542,6 +552,7 @@
                                 <tr class="current-task">
                                 <td colspan="4" style="border-right: none"></td>
                                 <td style="border-left: none; text-align: center;">
+                                
                                     <input type="button" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"> 
                                 </td>
                             {{Form::close()}}
@@ -562,6 +573,7 @@
                                 <tr class="current-task">
                                 <td colspan="4" style="border-right: none"></td>
                                 <td style="border-left: none; text-align: center;">
+                                
                                     <input type="button" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"> 
                                 </td>
                             {{Form::close()}}
@@ -593,6 +605,7 @@
                                 <tr class="current-task">
                                 <td colspan="4" style="border-right: none"></td>
                                 <td style="border-left: none; text-align: center;">
+                                
                                     <input type="button" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"> 
                                 </td>
                             {{Form::close()}}
@@ -628,6 +641,7 @@
                                 <tr class="current-task">
                                 <td colspan="4" style="border-right: none"></td>
                                 <td style="border-left: none; text-align: center;">
+                                
                                     <input type="button" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"
                                     > 
                                 </td>
@@ -664,6 +678,7 @@
                                 <tr class="current-task">
                                 <td colspan="4" style="border-right: none"></td>
                                 <td style="border-left: none; text-align: center;">
+                                
                                     <input type="button" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"> 
                                 </td>
                             {{Form::close()}}
@@ -692,6 +707,7 @@
                                 <tr class="current-task">
                                 <td colspan="4" style="border-right: none"></td>
                                 <td style="border-left: none; text-align: center;">
+                                
                                     <input type="button" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"> 
                                 </td>
                             {{Form::close()}}
@@ -713,6 +729,7 @@
                                 <tr class="current-task">
                                 <td colspan="4" style="border-right: none"></td>
                                 <td style="border-left: none; text-align: center;">
+                                                                    
                                     <input type="button" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"> 
                                 </td>
                             {{Form::close()}}
@@ -749,6 +766,7 @@
                                 <tr class="current-task">
                                 <td colspan="4" style="border-right: none"></td>
                                 <td style="border-left: none; text-align: center;">
+                                
                                     <input type="button" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"> 
                                 </td>
                             {{Form::close()}}
@@ -785,6 +803,7 @@
                                 <tr class="current-task">
                                 <td colspan="4" style="border-right: none"></td>
                                 <td style="border-left: none; text-align: center;">
+                                
                                     <input type="button" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"> 
                                 </td>
                             {{Form::close()}}
@@ -818,6 +837,7 @@
                                 <tr class="current-task">
                                 <td colspan="4" style="border-right: none"></td>
                                 <td style="border-left: none; text-align: center;">
+                                
                                     <input type="button" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"> 
                                 </td>
                             {{Form::close()}}
@@ -841,6 +861,7 @@
                                 <tr class="current-task">
                                 <td colspan="4" style="border-right: none"></td>
                                 <td style="border-left: none; text-align: center;">
+                                
                                     <input type="button" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"> 
                                 </td>
                             {{Form::close()}}
@@ -868,6 +889,7 @@
                                 <tr class="current-task">
                                 <td colspan="4" style="border-right: none"></td>
                                 <td style="border-left: none; text-align: center;">
+                                
                                     <input type="button" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"> 
                                 </td>
                             {{Form::close()}}
@@ -1264,6 +1286,7 @@
 @stop
 
 @section('footer')
+              
     <script type="text/javascript">
 
     // JS CODE FOR MODAL START

@@ -49,8 +49,19 @@ class TaskController extends Controller {
 		$tasknext=TaskDetails::find($taskdetails_id+1);
 		if ($tasknext->doc_id==$taskd->doc_id)
 		{
-			$tasknext->status="New";
-			$tasknext->save();
+		//Project Type Filter
+		$counter=1;
+		$tasknext=TaskDetails::find($taskdetails_id+$counter);
+	
+		while($tasknext->status=="Lock")
+		{
+			$counter=$counter+1;
+			$tasknext=TaskDetails::find($taskdetails_id+$counter);
+		}
+	
+		$tasknext->status="New";
+		$tasknext->save();
+		//End Project Type Filter
 		}
 		else
 		{

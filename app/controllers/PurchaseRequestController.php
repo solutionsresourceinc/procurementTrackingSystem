@@ -927,8 +927,19 @@ if (($check==3||$remarks==" ")&&$assignee!=NULL)
 
 	if ($tasknextc!=0)
 	{
+		//Project Type Filter
+		$counter=1;
+		$tasknext=TaskDetails::find($taskdetails_id+$counter);
+	
+		while($tasknext->status=="Lock")
+		{
+			$counter=$counter+1;
+			$tasknext=TaskDetails::find($taskdetails_id+$counter);
+		}
+	
 		$tasknext->status="New";
 		$tasknext->save();
+		//End Project Type Filter
 	}
 	else
 	{
