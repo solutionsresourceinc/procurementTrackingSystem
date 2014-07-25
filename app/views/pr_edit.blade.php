@@ -23,10 +23,6 @@
 
 
 @section('content')
-    {{ Session::put('goToChecklist', 'true' ); }}
-    <?php 
-                                    echo  date("m/d/y");
-                                    ?>
 
     <?php
         
@@ -139,7 +135,7 @@
                 <div class="row">
                     <div class="col-md-8">
                         {{ Form::label('projectPurpose', 'Project/Purpose *', array('class' => 'create-label')) }}
-                        {{ Form::text('projectPurpose',$valprojectPurpose, array('class'=>'form-control')) }}
+                        {{ Form::text('projectPurpose',$valprojectPurpose, array('class'=>'form-control','maxlength'=>'255')) }}
 
                         @if (Session::get('error_projectPurpose'))
                             <font color="red"><i>{{ Session::get('error_projectPurpose') }}</i></font>
@@ -157,7 +153,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         {{ Form::label('sourceOfFund', 'Source of Fund *', array('class' => 'create-label')) }}
-                        {{ Form::text('sourceOfFund',$valsourceOfFund, array('class'=>'form-control')) }}
+                        {{ Form::text('sourceOfFund',$valsourceOfFund, array('class'=>'form-control','maxlength'=>'255')) }}
                         @if (Session::get('error_sourceOfFund'))
                             <font color="red"><i>{{ Session::get('error_sourceOfFund') }}</i></font>
                         @endif
@@ -348,6 +344,7 @@
                 {{Session::forget('error_dateRequested');}}
                 {{Session::forget('error_modeOfProcurement');}}
                 {{Session::forget('imgerror'); }}
+
     
             </div>
         </div>  
@@ -1232,6 +1229,7 @@
             {{Session::forget('successlabel')}}
             {{Session::forget('errorchecklist')}}
             {{Session::forget('successchecklist')}}
+            {{Session::forget('goToChecklist')}}
 @stop
 
 

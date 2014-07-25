@@ -32,7 +32,7 @@
 	<div id="designation-create-form" class="well div-form">
 	    {{ Form::open(['route'=>'designation.store'], 'POST', array('role' => 'form')) }}
 	    	<div class="col-md-8">
-		    	{{ Form::text('designationName', null, array('class' => 'form-control', 'placeholder' => 'Designation Name')) }}
+		    	{{ Form::text('designationName', null, array('class' => 'form-control', 'placeholder' => 'Designation Name','maxlength'=>'100')) }}
 		    </div>
 		    <div class="col-md-3">
 		    	{{ Form::submit('Add', array('class' => 'btn btn-success btn-block')) }}
@@ -67,7 +67,7 @@
 				    				</span>
 				    			</div>
 			    				<form class="form ajax" action="designation/{{$designation->id}}/edit" method="post" role="form" class="form-inline">
-			    					<input type = "text" name = "dsgntn-name" class = "edit-text form-control mode2"/>
+			    					<input type = "text" name = "dsgntn-name" class = "edit-text form-control mode2" maxlength="100" />
 								{{ Form::close() }}
 			    			</td>
 			    			<td class="col-md-4">

@@ -23,7 +23,7 @@
     <div id="office-create-form" class="well div-form">
     	{{ Form::open(['route'=>'offices.store'], 'POST', array('role' => 'form')) }}
 	    	<div class="col-md-8">
-		    	{{ Form::text('officeName', null, array('class' => 'form-control', 'placeholder' => 'Office Name')) }}
+		    	{{ Form::text('officeName', null, array('class' => 'form-control', 'placeholder' => 'Office Name','maxlength'=>'100')) }}
 		    </div>
 		    <div class="col-md-3">
 		    	{{ Form::submit('Add', array('class' => 'btn btn-success btn-block create-btn')) }}
@@ -58,7 +58,7 @@
 				    				</span>
 			    				</div>
 			    				<form class="form ajax" action="offices/{{$office->id}}/edit" method="post" role="form" class="form-inline">
-									<input type = "text" name = "ofcname" class = "edit-text form-control mode2"/>
+									<input type = "text" name = "ofcname" class = "edit-text form-control mode2" maxlength="100" />
 								{{ Form::close() }}
 			    			</td>
 			    			<td class="col-md-4">

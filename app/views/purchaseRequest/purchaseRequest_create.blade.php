@@ -119,7 +119,7 @@
 					<div class="row">
 						<div class="col-md-8">
 							{{ Form::label('projectPurpose', 'Project/Purpose *', array('class' => 'create-label')) }}
-							{{ Form::text('projectPurpose','', array('class'=>'form-control', 'placeholder' => 'Enter project/purpose')) }}
+							{{ Form::text('projectPurpose','', array('class'=>'form-control', 'placeholder' => 'Enter project/purpose','maxlength'=>'255')) }}
 
 						@if (Session::get('error_projectPurpose'))
 							<font color="red"><i>{{ Session::get('error_projectPurpose') }}</i></font>
@@ -149,7 +149,7 @@
 					<div class="row">
 						<div class="col-md-6">
 							{{ Form::label('sourceOfFund', 'Source of Fund *', array('class' => 'create-label')) }}
-							{{ Form::text('sourceOfFund','', array('class'=>'form-control', 'placeholder'=>'Enter source')) }}
+							{{ Form::text('sourceOfFund','', array('class'=>'form-control', 'placeholder'=>'Enter source','maxlength'=>'255')) }}
 
 						@if (Session::get('error_sourceOfFund'))
 							<font color="red"><i>{{ Session::get('error_sourceOfFund') }}</i></font>

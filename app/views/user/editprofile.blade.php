@@ -40,7 +40,7 @@
 
             <div class="form-group">
                 <label for="email">Email *</label>
-                <input class="form-control"  type="text" name="email" id="email" value="<?php if(NULL!=Input::old('email')){echo Input::old('email');} else{echo $user->email;}?>">
+                <input class="form-control"  type="text" name="email" id="email" value="<?php if(NULL!=Input::old('email')){echo Input::old('email');} else{echo $user->email;}?>" maxlength="255">
                 
                 @if ( Session::get('email_error') )
                     <small><font color="red">{{ Session::get('email_error'); }}   </font> </small>
@@ -49,7 +49,7 @@
 
             <div class="form-group">
                 <label for="password">Password </label>
-                <input class="form-control" type="password" name="password" id="password"  >
+                <input class="form-control" type="password" name="password" id="password" maxlength="255" >
                 
                 @if ( Session::get('password_error') )
                     <small><font color="red">{{ Session::get('password_error'); }}  </font> </small>
@@ -58,7 +58,7 @@
 
             <div class="form-group">
                 <label for="password_confirmation">Confirm Password </label>
-                <input class="form-control"  type="password" name="password_confirmation" id="password_confirmation"  >
+                <input class="form-control"  type="password" name="password_confirmation" id="password_confirmation"  maxlength="255">
             </div>
 
             <div class="form-group">

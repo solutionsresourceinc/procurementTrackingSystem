@@ -15,7 +15,7 @@
 
             <div class="form-group">
                 <label for="username">Username *</label>
-                <input class="form-control"  type="text" name="username" id="username" value="{{{ Input::old('username') }}}" >
+                <input class="form-control"  type="text" name="username" id="username" value="{{{ Input::old('username') }}}" maxlength="255">
 
                 @if ( Session::get('username_error') )
                          <small><font color="red"> {{ Session::get('username_error'); }}   </font></small>
@@ -24,7 +24,7 @@
 
             <div class="form-group">
                 <label for="firstname">First Name *</label>
-                <input class="form-control"  type="test" name="firstname" id="firstname" value="{{{ Input::old('firstname') }}}" >
+                <input class="form-control"  type="test" name="firstname" id="firstname" value="{{{ Input::old('firstname') }}}" maxlength="255">
                 
                 @if ( Session::get('firstname_error') )
                     <small><font color="red"> {{ Session::get('firstname_error'); }}   </font></small>
@@ -33,7 +33,7 @@
 
             <div class="form-group">
                 <label for="lastname">Last Name *</label>
-                <input class="form-control" type="text" name="lastname" id="lastname" value="{{{ Input::old('lastname') }}}" >
+                <input class="form-control" type="text" name="lastname" id="lastname" value="{{{ Input::old('lastname') }}}" maxlength="255">
                 
                 @if ( Session::get('lastname_error') )
                     <small><font color="red">{{ Session::get('lastname_error'); }}</font></small>
@@ -42,7 +42,7 @@
 
             <div class="form-group">
                 <label for="email">Email *</label>
-                <input class="form-control"  type="text" name="email" id="email" value="{{{ Input::old('email') }}}" >
+                <input class="form-control"  type="text" name="email" id="email" value="{{{ Input::old('email') }}}" maxlength="255">
                 @if ( Session::get('email_error') )
                     <small><font color="red">{{ Session::get('email_error'); }}   </font> </small>
                  @endif
@@ -50,7 +50,7 @@
 
             <div class="form-group">
                 <label for="password">Password *</label>
-                <input class="form-control" type="password" name="password" id="password" >
+                <input class="form-control" type="password" name="password" id="password" maxlength="255">
                 @if ( Session::get('password_error') )
                     <small><font color="red">{{ Session::get('password_error'); }} </font></small>
                 @endif
@@ -58,7 +58,7 @@
 
             <div class="form-group">
                 <label for="password_confirmation">Confirm Password *</label>
-                <input class="form-control"  type="password" name="password_confirmation" id="password_confirmation" >
+                <input class="form-control"  type="password" name="password_confirmation" id="password_confirmation" maxlength="255">
             </div>
 
             <div class="form-group">
