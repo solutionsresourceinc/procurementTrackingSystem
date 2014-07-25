@@ -554,7 +554,7 @@
                                 </td>
                                 
                                 <td class="edit-pr-input" colspan="2">
-                                    <input type="decimal" name="amount"  class="form-control" maxlength="12" width="80%" placeholder="Enter amount">
+                                    <input type="decimal" name="amount"  id="amount" class="form-control" maxlength="12" width="80%" placeholder="Enter amount" onkeypress="return isNumberKey(event)" onchange="checklist_changeAmount(this.id,this.value)">
                                 </td>
 
                                 </tr>
@@ -571,7 +571,7 @@
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
                                 <td class="edit-pr-input" colspan="2">
                     
-                                    <input type="decimal" name="amt"  class="form-control" maxlength="12" width="80%" placeholder="Enter cheque amount">
+                                    <input type="decimal" name="amt"  id="amt" class="form-control" maxlength="12" width="80%" placeholder="Enter cheque amount" onkeypress="return isNumberKey(event)" onchange="checklist_changeAmount(this.id,this.value)">
                                 </td>
                                 <td class="edit-pr-input" colspan="2">
                                     
@@ -1365,6 +1365,65 @@
             todayBtn: "linked"
         });
     });
+</script>
+
+<script>
+    function checklist_changeAmount(id,amount)
+    {
+       amount = amount.replace(',',''); 
+        var its_a_number = amount.match(/^[0-9,.]+$/i);
+        if (its_a_number != null)
+        {
+            decimal_amount = parseFloat(amount).toFixed(2);
+            if(decimal_amount == 0 || decimal_amount == "0.00")
+            {
+                document.getElementById(id).value = "0.00";
+                window.old_amount = 0.00; 
+            }
+            else
+            {
+                var parts = decimal_amount.toString().split(".");
+                parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                parts =  parts.join(".");
+                if(parts == "NaN")
+                {
+                    document.getElementById(id).value = "0.00";
+                    window.old_amount = 0.00; 
+                }
+                else
+                {
+                    document.getElementById(id).value = parts;
+                    window.old_amount = parts;
+                }
+                     
+            }
+        }
+        else if(!window.old_amount)
+        {
+            document.getElementById(id).value = "0.00";
+            window.old_amount = 0.00; 
+            amount = 0;
+        }
+        else
+        {
+            document.getElementById(id).value = window.old_amount;
+            amount = 0;
+        }
+
+    }
+
+    function isNumberKey(evt)
+    {
+         var charCode = (evt.which) ? evt.which : event.keyCode
+        if(charCode == 44 || charCode == 46)
+             return true;
+
+        if (charCode > 31 && (charCode < 48 || charCode > 57))
+             return false;
+
+        return true;
+    }
+
 </script>
 
 @stop
