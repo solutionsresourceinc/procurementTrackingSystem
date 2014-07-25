@@ -234,7 +234,6 @@
                                 echo Input::old('dateReceived');
                             else
                                 echo $purchaseToEdit->dateReceived; ?>" readonly>
-                            <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
                             <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
                         </div>
                         
@@ -257,7 +256,6 @@
                                 echo Input::old('dateRequested');
                             else
                                 echo $purchaseToEdit->dateRequested; ?>" readonly>
-                            <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
                             <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
                         </div>
                         
