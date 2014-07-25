@@ -65,7 +65,11 @@
             $date_today =date('Y-m-d H:i:s');
             $requests = new Purchase;
             $user_selected=Auth::user()->id;
-            $requests = DB::table('purchase_request')->where('dueDate','<=',$date_today)->where('status', '=', 'Active')->paginate(10); 
+            
+            if(Entrust::hasRole('Requisitioner'))
+                $requests = DB::table('purchase_request')->where('dueDate','<=',$date_today)->where('status', '=', 'Active')->where('requisitioner',$user_selected)->paginate(10); 
+            else    
+                $requests = DB::table('purchase_request')->where('dueDate','<=',$date_today)->where('status', '=', 'Active')->paginate(10); 
             //End Query Restrictions
         ?>
 
@@ -98,7 +102,7 @@
                     ?>
                         >
                         <td width="10%">{{ $request->controlNo; }}</td>
-                        <td width="30%"><a data-toggle="tooltip" data-placement="top" class="purpose" href="{{ URL::to('purchaseRequest/vieweach/'. $request->id) }}" title="View Project Details">{{ $request->projectPurpose; }}</a></td>
+                        <td width="30%">{{ $request->projectPurpose; }}</td>
                         <?php 
                             $docs = new Purchase; 
                             $docs = DB::table('document')->where('pr_id', $request->id)->get(); 

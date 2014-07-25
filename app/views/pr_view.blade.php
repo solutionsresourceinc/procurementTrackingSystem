@@ -114,7 +114,7 @@
                     ?>
                         >
                         <td width="10%">{{ $request->controlNo; }}</td>
-                        <td width="27%"><a data-toggle="tooltip" data-placement="top" class="purpose" href="{{ URL::to('purchaseRequest/vieweach/'. $request->id) }}" title="View Project Details">{{ $request->projectPurpose; }}</a></td>
+                        <td width="27%">{{ $request->projectPurpose; }}</td>
                         <?php 
                             $doc = new Purchase; 
                             $doc = DB::table('document')->where('pr_id', $request->id)->get(); 

@@ -326,20 +326,20 @@ class PurchaseRequestController extends Controller
 					Session::forget('doc_id');
 				}
 
-		    	$connected = @fsockopen("www.google.com", 80);  //website, port  (try 80 or 443)
-		 
+		    	// $connected = @fsockopen("www.google.com", 80);  //website, port  (try 80 or 443)
+		    	$connected = false;
 		   		if ($connected)
 		   		{
-					$sendee = DB::table('users')->where('id',$purchase->requisitioner)->first();
-					$email = $sendee->email;
-					$fname = $sendee->firstname;
+					// $sendee = DB::table('users')->where('id',$purchase->requisitioner)->first();
+					// $email = $sendee->email;
+					// $fname = $sendee->firstname;
 
-					$data = [ 'id' => $purchase->id ];
-					Mail::send('emails.template', $data, function($message) use($email, $fname)
-					{
-						$message->from('procurementTrackingSystem@tarlac.com', 'Procurement Tracking System Tarlac');
-						$message->to($email, $fname)->subject('Tarlac Procurement Tracking System: New Purchase Request Created');
-					}); 
+					// $data = [ 'id' => $purchase->id ];
+					// Mail::send('emails.template', $data, function($message) use($email, $fname)
+					// {
+					// 	$message->from('procurementTrackingSystem@tarlac.com', 'Procurement Tracking System Tarlac');
+					// 	$message->to($email, $fname)->subject('Tarlac Procurement Tracking System: New Purchase Request Created');
+					// }); 
 				
 					$notice = "Purchase request created successfully. ";
 					// Insert data to reports table
