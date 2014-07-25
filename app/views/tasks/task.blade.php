@@ -453,6 +453,14 @@
 		
 							@if($task->taskType=='normal')
 								@if($taskd->status!="New")
+									{{ Form::open(['url'=>'done'], 'POST') }}
+									<input type ="hidden" name="task_id" value="{{$task->id}}">
+									<input type ="hidden" name="doc_id" value="{{$doc->id}}">
+									<input type ="hidden" name="pr_id" value="{{$purchase->id}}">
+									<input type ="hidden" name="taskdetails_id" value="{{$taskd->id}}">
+									{{ Form::submit('Done',array('class'=>'btn btn-sm btn-success')) }}
+									{{ Form::close() }}
+									<br>
 								<p style="font-weight: bold">Remarks: </p>
 								<?php 
 
@@ -489,6 +497,125 @@
 									</div>
 
 								@endif
+
+							@endif
+							@if($task->taskType=='dateby')
+								@if($taskd->status!="New")
+									{{ Form::open(['url'=>'done'], 'POST') }}
+									<?php
+									
+									$birth = new DateTime($taskd->dateReceived); 
+									$today = new DateTime(); 
+									$diff = $birth->diff($today); 
+									$aDays= $diff->format('%d');
+									
+									$converteddate = $today->format('m/d/y');
+
+						 			$assign_user=User::find(Auth::user()->id);
+                         			$name=$assign_user->lastname.", ".$assign_user->firstname;
+									?>
+									<input type="hidden" name ="assignee" value= "{{$name}}">
+									<input type ="hidden" name="dateFinished" value="{{$converteddate}}">
+									<input type ="hidden" name="taskdetails_id" value="{{$taskd->id}}">
+									{{ Form::submit('Done',array('class'=>'btn btn-sm btn-success')) }}
+									{{ Form::close() }}
+									<br>
+								<p style="font-weight: bold">Remarks: </p>
+								<?php 
+
+									if (Session::get('errorremark'))
+										echo  "<div class='alert alert-danger'>".Session::get('errorremark')."</div>";
+									if (Session::get('successremark'))
+										echo  "<div class='alert alert-success'>".Session::get('successremark')."</div>";
+									Session::forget('errorremark');
+									Session::forget('successremark');
+									?>
+
+									<div id="remarkd" onclick="show()">
+										<p>
+											<?php
+												echo $taskd->remarks;
+												if ($taskd->remarks==NULL)
+												{
+												?>
+													No remark.
+												<?php
+												}
+											?>
+										</p>
+									</div>
+									<div id ="formr">
+										{{ Form::open(['url'=>'remarks'], 'POST') }}
+										{{ Form::textarea('remarks','', array('class'=>'form-control', 'rows'=>'3', 'maxlength'=>'255', 'style'=>'resize:vertical')) }}
+										<input type ="hidden" name="taskdetails_id" value="{{$taskd->id}}">
+										<div class='pull-right'>
+											{{ link_to( 'task/active', 'Cancel', array('class'=>'btn btn-sm btn-default remarks-btn') ) }}
+											{{ Form::submit('Submit',array('class'=>'btn btn-sm btn-success remarks-btn')) }}
+										</div>
+										{{ Form::close() }}
+									</div>
+
+								@endif
+
+							@endif
+							@if($task->taskType=='datebyremark')
+								@if($taskd->status!="New")
+									{{ Form::open(['url'=>'done'], 'POST') }}
+									<?php
+									
+									$birth = new DateTime($taskd->dateReceived); 
+									$today = new DateTime(); 
+									$diff = $birth->diff($today); 
+									$aDays= $diff->format('%d');
+									
+									$converteddate = $today->format('m/d/y');
+
+						 			$assign_user=User::find(Auth::user()->id);
+                         			$name=$assign_user->lastname.", ".$assign_user->firstname;
+									?>
+									<input type="hidden" name ="assignee" value= "{{$name}}">
+									<input type ="hidden" name="dateFinished" value="{{$converteddate}}">
+									<input type ="hidden" name="taskdetails_id" value="{{$taskd->id}}">
+									{{ Form::submit('Done',array('class'=>'btn btn-sm btn-success')) }}
+									{{ Form::close() }}
+									<br>
+								<p style="font-weight: bold">Remarks: </p>
+								<?php 
+
+									if (Session::get('errorremark'))
+										echo  "<div class='alert alert-danger'>".Session::get('errorremark')."</div>";
+									if (Session::get('successremark'))
+										echo  "<div class='alert alert-success'>".Session::get('successremark')."</div>";
+									Session::forget('errorremark');
+									Session::forget('successremark');
+									?>
+
+									<div id="remarkd" onclick="show()">
+										<p>
+											<?php
+												echo $taskd->remarks;
+												if ($taskd->remarks==NULL)
+												{
+												?>
+													No remark.
+												<?php
+												}
+											?>
+										</p>
+									</div>
+									<div id ="formr">
+										{{ Form::open(['url'=>'remarks'], 'POST') }}
+										{{ Form::textarea('remarks','', array('class'=>'form-control', 'rows'=>'3', 'maxlength'=>'255', 'style'=>'resize:vertical')) }}
+										<input type ="hidden" name="taskdetails_id" value="{{$taskd->id}}">
+										<div class='pull-right'>
+											{{ link_to( 'task/active', 'Cancel', array('class'=>'btn btn-sm btn-default remarks-btn') ) }}
+											{{ Form::submit('Submit',array('class'=>'btn btn-sm btn-success remarks-btn')) }}
+										</div>
+										{{ Form::close() }}
+									</div>
+
+								@endif
+
 							@endif
 								<hr class="clear" />
 								<?php 

@@ -1840,7 +1840,6 @@ $assignee=strip_tags(Input::get('assignee'));
 $mydate=Input::get('dateFinished');
 $timestamp = strtotime($mydate);
 $dateFinished= date("Y-m-d H:i:s", $timestamp);
-
 $check=0;
 
 //Validation Process
