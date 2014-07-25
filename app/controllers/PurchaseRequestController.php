@@ -1003,6 +1003,7 @@ public function delimage()
 //Other Tasks Functions
 public function certification()
 {
+
 Session::put('goToChecklist', 'true' ); 
 //Initializations
 $radio=Input::get('radio');
@@ -1011,7 +1012,7 @@ $taskdetails_id=Input::get('taskdetails_id');
 $check=0;
 
 //Validation Process
-if(ctype_alpha(str_replace(array(' ', '-', '.'),'',$by)))
+if(ctype_alpha(str_replace(array(' ', '-', '.', ','),'',$by)))
         $check=$check+1;
 
 if ($check==1)
@@ -1082,7 +1083,7 @@ $check=0;
 //Validation Process
 
          
-if(ctype_alpha(str_replace(array(' ', '-', '.'),'',$by)))
+if(ctype_alpha(str_replace(array(' ', '-', '.', ','),'',$by)))
         $check=$check+1;
 if(ctype_alnum(str_replace(array(' ', '-', '.'),'',$referenceno)))
         $check=$check+1;
@@ -1329,7 +1330,7 @@ $taskdetails_id=Input::get('taskdetails_id');
 $check=0;
 
 //Validation Process
-if(ctype_alnum(str_replace(array(' ', '-', '.'),'',$by)))
+if(ctype_alnum(str_replace(array(' ', '-', '.', ','),'',$by)))
         $check=$check+1;
 
 
@@ -1400,7 +1401,7 @@ $taskdetails_id=Input::get('taskdetails_id');
 $check=0;
 
 //Validation Process
-if(ctype_alnum(str_replace(array(' ', '-', '.'),'',$by)))
+if(ctype_alnum(str_replace(array(' ', '-', '.', ','),'',$by)))
         $check=$check+1;
 
 
@@ -1689,7 +1690,7 @@ $taskdetails_id=Input::get('taskdetails_id');
 $check=0;
 
 //Validation Process
-if(ctype_alnum(str_replace(array(' ', '-', '.'),'',$by)))
+if(ctype_alnum(str_replace(array(' ', '-', '.', ','),'',$by)))
         $check=$check+1;
 if(ctype_digit($noofsuppliers))
         $check=$check+1;

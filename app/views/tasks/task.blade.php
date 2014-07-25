@@ -6,7 +6,6 @@
     {{ HTML::script('date_picker/bootstrap-datetimepicker.fr.js') }}
     {{ HTML::style('css/datepicker.css')}}
     {{ HTML::script('js/bootstrap-datepicker.js') }}
-
 	{{ HTML::script('js/bootstrap.file-input.js') }} 
 	<script type="text/javascript">
 		function codeAddress() 
@@ -42,7 +41,10 @@
 	<div class="pull-right options">
 		<a href="{{ URL::previous() }}" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left"></span> Back</a>
 	</div>
+	<!--Trigger to Change Routing-->
+	{{Session::put('changeroute','change')}}
 
+	<!--End Trigger to Change Routing-->
 	<?php
 		$taskdetails_id=Session::get('taskdetails_id');
 		Session::forget('taskdetails_id');
@@ -90,13 +92,29 @@
 				
 					</td>
 				<tr>
+			@if(Session::get('successchecklist'))
+                <div class="alert alert-success"> {{ Session::get('successchecklist') }}</div> 
+            @endif
+
+            @if(Session::get('errorchecklist'))
+                <div class="alert alert-danger"> {{ Session::get('errorchecklist') }}</div> 
+            @endif
+
+            {{Session::forget('successchecklist');}}
+            {{Session::forget('errorchecklist');}}
 
 				<?php
-					if ($taskd->status!="New")
+					if ($taskd->status=="Done")
 					{
+						Redirect::to('task/active');
+					}
+
+					if ($taskd->status=="Active")
+					{
+
 						$date_today =date('Y-m-d H:i:s');
 				?>
-						{{Form::open(['url'=>'checklistedit'], 'POST')}}
+						
 						<?php
 						 $assign_user=User::find(Auth::user()->id);
                          $name=$assign_user->lastname.", ".$assign_user->firstname;
@@ -117,11 +135,16 @@
 								</td>
 							</tr>
 						@endif
-						{{Form::close()}}
+		
 				
 
 					@if($task->taskType=='certification')
 						{{Form::open(['url'=>'certification'], 'POST')}}
+						<?php
+						 $assign_user=User::find(Auth::user()->id);
+                         $name=$assign_user->lastname.", ".$assign_user->firstname;
+						?>
+						<input type="hidden" name ="by" value= "{{$name}}">
 						<tr> 
 							<td>
 								<span style="font-weight: bold">PPMP Certification: </span><br/>
@@ -132,9 +155,21 @@
 						
 							</td>
 						</tr>
+						<tr>
+							<td>
+						<input type ="hidden" name="taskdetails_id" value="{{$taskd->id}}">
+						<input type="submit" class="btn btn-sm btn-success" value="Done">
+						<!--{{ Form::submit('Done',array('class'=>'btn btn-sm btn-success')) }}-->			
+							</td>
+						</tr>
 						{{Form::close()}}
 					@elseif($task->taskType=='posting')
 						{{Form::open(['url'=>'posting'], 'POST')}}
+						<?php
+						 $assign_user=User::find(Auth::user()->id);
+                         $name=$assign_user->lastname.", ".$assign_user->firstname;
+						?>
+						<input type="hidden" name ="by" value= "{{$name}}">
 						<tr> 
 							<td>
 								<span style="font-weight: bold">Reference Number: </span><br/>
@@ -144,9 +179,21 @@
 						
 							</td>
 						</tr>
+						<tr>
+							<td>
+						<input type ="hidden" name="taskdetails_id" value="{{$taskd->id}}">
+						{{ Form::submit('Done',array('class'=>'btn btn-sm btn-success')) }}			
+							</td>
+						</tr>
 						{{Form::close()}}
 					@elseif($task->taskType=='supplier')
 						{{Form::open(['url'=>'supplier'], 'POST')}}
+						<?php
+						 $assign_user=User::find(Auth::user()->id);
+                         $name=$assign_user->lastname.", ".$assign_user->firstname;
+						?>
+						<input type="hidden" name ="by" value= "{{$name}}">
+
 						<tr> 
 							<td>
 								<span style="font-weight: bold">Supplier: </span><br/>
@@ -159,9 +206,20 @@
 		                        </p>
 							</td>
 						</tr>
+						<tr>
+							<td>
+						<input type ="hidden" name="taskdetails_id" value="{{$taskd->id}}">
+						{{ Form::submit('Done',array('class'=>'btn btn-sm btn-success')) }}			
+							</td>
+						</tr>
 						{{Form::close}}
 					@elseif($task->taskType=='cheque')
 						{{Form::open(['url'=>'cheque'], 'POST')}}
+						<?php
+						 $assign_user=User::find(Auth::user()->id);
+                         $name=$assign_user->lastname.", ".$assign_user->firstname;
+						?>
+						<input type="hidden" name ="by" value= "{{$name}}">
 						<tr> 
 							<td>
 								<span style="font-weight: bold">Cheque Amount: </span><br/>
@@ -182,6 +240,12 @@
 		                        </p>
 							</td>
 						</tr>
+						<tr>
+							<td>
+						<input type ="hidden" name="taskdetails_id" value="{{$taskd->id}}">
+						{{ Form::submit('Done',array('class'=>'btn btn-sm btn-success')) }}			
+							</td>
+						</tr>
 						{{Form::close()}}	
 					@elseif($task->taskType=='conference')
 						{{Form::open(['url'=>'conference'], 'POST')}}
@@ -197,9 +261,20 @@
 		                        </p>
 							</td>
 						</tr>
+						<tr>
+							<td>
+						<input type ="hidden" name="taskdetails_id" value="{{$taskd->id}}">
+						{{ Form::submit('Done',array('class'=>'btn btn-sm btn-success')) }}			
+							</td>
+						</tr>
 						{{Form::close()}}	
 					@elseif($task->taskType=='published')
 						{{Form::open(['url'=>'published'], 'POST')}}
+						<?php
+						 $assign_user=User::find(Auth::user()->id);
+                         $name=$assign_user->lastname.", ".$assign_user->firstname;
+						?>
+						<input type="hidden" name ="by" value= "{{$name}}">
 						<tr> 
 							<td width="50%">
 								<span style="font-weight: bold">Date Published: </span><br/>
@@ -227,10 +302,21 @@
 									<input type="text" name="by"  placeholder="Enter name" class="form-control" maxlength="100" width="80%"  style="margin-top: 10px;">
 		                        </p>
 							</td>
+						</tr>
+						<tr>
+							<td>
+						<input type ="hidden" name="taskdetails_id" value="{{$taskd->id}}">
+						{{ Form::submit('Done',array('class'=>'btn btn-sm btn-success')) }}			
+							</td>
 						</tr>	
 						{{Form::close()}}
 					@elseif($task->taskType=='documents')
 						{{Form::open(['url'=>'documents'], 'POST')}}
+						<?php
+						 $assign_user=User::find(Auth::user()->id);
+                         $name=$assign_user->lastname.", ".$assign_user->firstname;
+						?>
+						<input type="hidden" name ="by" value= "{{$name}}">
 						<tr> 
 							<td width="50%">
 								<span style="font-weight: bold">Eligibility Documents: </span><br/>
@@ -256,9 +342,20 @@
 		                        </p>
 							</td>
 						</tr>
+						<tr>
+							<td>
+						<input type ="hidden" name="taskdetails_id" value="{{$taskd->id}}">
+						{{ Form::submit('Done',array('class'=>'btn btn-sm btn-success')) }}			
+							</td>
+						</tr>
 						{{Form::close()}}	
 					@elseif($task->taskType=='evaluation')
 						{{Form::open(['url'=>'evaluation'], 'POST')}}
+						<?php
+						 $assign_user=User::find(Auth::user()->id);
+                         $name=$assign_user->lastname.", ".$assign_user->firstname;
+						?>
+						<input type="hidden" name ="by" value= "{{$name}}">
 						<tr> 
 							<td width="50%">
 								<span style="font-weight: bold">Date: </span><br/>
@@ -274,10 +371,21 @@
 									<input type="number" name="noofdays"  class="form-control" maxlength="100" width="80%" placeholder="Enter no. of days" style="margin-top: 10px;">
 		                        </p>
 							</td>
+						</tr>
+						<tr>
+							<td>
+						<input type ="hidden" name="taskdetails_id" value="{{$taskd->id}}">
+						{{ Form::submit('Done',array('class'=>'btn btn-sm btn-success')) }}			
+							</td>
 						</tr>	
 						{{Form::close()}}
 					@elseif($task->taskType=='contract' || $task->taskType=='meeting')
 						{{Form::open(['url'=>'contractmeeting'], 'POST')}}
+						<?php
+						 $assign_user=User::find(Auth::user()->id);
+                         $name=$assign_user->lastname.", ".$assign_user->firstname;
+						?>
+						<input type="hidden" name ="by" value= "{{$name}}">
 						<tr> 
 							<td width="50%">
 								<span style="font-weight: bold">
@@ -310,10 +418,20 @@
 		                        </p>
 							</td>
 						</tr>
+						<tr>
+							<td>
+						<input type ="hidden" name="taskdetails_id" value="{{$taskd->id}}">
+						{{ Form::submit('Done',array('class'=>'btn btn-sm btn-success')) }}			
+							</td>
+						</tr>
 						{{Form::close()}}	
 					@endif
 
-				<?php } else { ?>
+				<?php } 
+
+				else 
+				{ 
+				?>
 
 				<tr>
 					<td>
@@ -331,6 +449,8 @@
 						<td>
 							<?php /*@if($task->taskType!='certification' && $task->taskType!='posting' && $task->taskType!='supplier' && $task->taskType!='cheque' && $task->taskType!='conference'
 							 && $task->taskType!='published' && $task->taskType!='documents' && $task->taskType!='evaluation' && $task->taskType!='contract' && $task->taskType!='meeting') */?>
+
+		
 							@if($task->taskType=='normal')
 								@if($taskd->status!="New")
 								<p style="font-weight: bold">Remarks: </p>
@@ -373,17 +493,19 @@
 								<hr class="clear" />
 								<?php 
 
+								/*
 								if ($taskd->status=="Active"){
 									?>
 									{{ Form::open(['url'=>'done'], 'POST') }}
-									<input type ="hidden" name="taskdetails_id" value="{{$taskd->id}}">
 									<input type ="hidden" name="task_id" value="{{$task->id}}">
 									<input type ="hidden" name="doc_id" value="{{$doc->id}}">
 									<input type ="hidden" name="pr_id" value="{{$purchase->id}}">
+									<input type ="hidden" name="taskdetails_id" value="{{$taskd->id}}">
 									{{ Form::submit('Done',array('class'=>'btn btn-sm btn-success')) }}
 									{{ Form::close() }}
 									<?php
 								}
+								*/
 							?>	
 
 						</td>
