@@ -1061,7 +1061,7 @@ class TaskSeeder extends Seeder {
         $task = new Task;
         $task->wf_id = '5';
         $task->section_id = '2';
-        $task->taskName = 'BAC Documents';
+        $task->taskName = 'NOTICE OF AWARD DATE (PGO)';
         $task->taskType = 'preparation';
         $task->maxDuration = '3';
         $task->order_id = $orderID++;
