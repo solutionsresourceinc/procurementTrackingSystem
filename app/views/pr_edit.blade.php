@@ -109,7 +109,13 @@
                         @endif
                       
                     </div>
-                    <div class="col-md-6">
+
+                    <div class="col-md-3">
+                        {{ Form::label('otherType', 'Other Type', array('class' => 'create-label')) }}
+                        <input type="text" disabled value="{{ $purchaseToEdit->otherType }}" class="form-control">
+                    </div>
+
+                    <div class="col-md-3">
                         <?php 
                             $cn = 0;
                             $purchase = Purchase::orderBy('controlNo', 'ASC')->get();
