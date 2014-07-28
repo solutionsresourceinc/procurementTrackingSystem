@@ -14,7 +14,18 @@
     
     <!--End Image Display-->
     {{ HTML::script('js/jquery.chained.min.js') }} 
-    {{ HTML::script('js/bootstrap.file-input.js') }} 
+    {{ HTML::script('js/bootstrap.file-input.js') }}
+
+    <script type="text/javascript">
+        function stopRKey(evt) { 
+        var evt = (evt) ? evt : ((event) ? event : null); 
+        var node = (evt.target) ? evt.target : ((evt.srcElement) ? evt.srcElement : null); 
+        if ((evt.keyCode == 13) && (node.type=="text"))  {return false;} 
+        } 
+
+        document.onkeypress = stopRKey; 
+    </script>
+
 @stop
 
 
@@ -1274,14 +1285,14 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title">Confirm Submission</h4>
+            <h4 class="modal-title"><b>Confirm Submission</b></h4>
           </div>
           <div class="modal-body">
             <p>Are you sure you want to submit edit?</p>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">Cancel</button>
-            <button type="submit" class="btn btn-success" id="confirm" value="Submit">Submit</button>
+            <button type="button" class="btn btn-success" id="confirmModal" value="Submit">Submit</button>
           </div>
         </div>
       </div>
@@ -1292,27 +1303,28 @@
 @section('footer')
               
     <script type="text/javascript">
-
     // JS CODE FOR MODAL START
-         $('#confirmDelete').find('.modal-footer #confirm').on('click', function(){
-             //$(this).data('form').submit();
-              var name = "myForm_" + window.my_id; 
-             // alert(name);
-              document.getElementById(name).submit();
-          });
-          function hello(pass_id)
-          {
-              window.my_id = pass_id;
-             // alert(window.my_id);
-          }
+        
+        $('#confirmDelete').find('.modal-footer #confirmModal').on('click', function()
+        {
+            var name = "myForm_" + window.my_id; 
+            document.getElementById(name).submit();
+        });
 
-          ///////////////
+        function hello(pass_id)
+        {
+            window.my_id = pass_id;
+        }
 
-          $(document).keypress(function(e){
+        ///////////////
+        $('#confirmDelete').on('shown.bs.modal', function () {
+            $(document).keypress(function(e){
                 if (e.which == 13){
-                    $("#confirm").click();
+                    $("#confirmModal").click();
                 }
             });
+        });
+        // alert($('#myModal').hasClass('in'));
     // JS CODE FOR MODAL END
 
     $('input[type=file]').bootstrapFileInput();

@@ -14,10 +14,10 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title">Disable User Account</h4>
+				<h4 class="modal-title"><b>Disable User Account</b></h4>
 			</div>
 			<div class="modal-body">
-				<p>Are you sure you want to this user account?</p>
+				<p>Are you sure you want to disable this user account?</p>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
@@ -32,7 +32,7 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title">Activate User</h4>
+				<h4 class="modal-title"><b>Activate User</b></h4>
 			</div>
 			<div class="modal-body">
 				<p>Are you sure you want to activate user account?</p>
@@ -118,14 +118,14 @@
 							<form method="POST" action="delete" id="myForm_{{ $user->id }}" name="myForm" style="display: -webkit-inline-box;">
 								<input type="hidden" name="hide" value="{{ $user->id }}">
 								<center>
-									<button class="iframe btn btn-warning" type="button" data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $user->id }})"  data-title="Disable" data-message="Are you sure you want to disable account?"><span class="glyphicon glyphicon-ban-circle"></span></button>
+									<button class="iframe btn btn-warning" type="button" data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $user->id }})"><span class="glyphicon glyphicon-ban-circle"></span></button>
 								</center>
 							</form>
 						@else
 							<form method="POST" action="activate" id="myForm_{{ $user->id }}" name="myForm" style="display: -webkit-inline-box;">
 								<input type="hidden" name="hide" value="{{ $user->id }}">
 								<center>
-									<button class="iframe btn btn-primary" type="button" data-toggle="modal" data-target="#confirmActivate" onclick="hello( {{ $user->id }})"  data-title="Activate" data-message="Are you sure you want to activate account?"><span class="glyphicon glyphicon-ok"></span></button>
+									<button class="iframe btn btn-primary" type="button" data-toggle="modal" data-target="#confirmActivate" onclick="hello( {{ $user->id }})"><span class="glyphicon glyphicon-ok"></span></button>
 								</center>
 							</form>
 						@endif

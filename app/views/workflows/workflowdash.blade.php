@@ -39,7 +39,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Description</h4>
+                    <h4 class="modal-title"><b>Description</b></h4>
                 </div>
                 <center>
                     <div class="modal-body" id="description_body">
