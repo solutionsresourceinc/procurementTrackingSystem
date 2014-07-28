@@ -487,7 +487,12 @@
 									</div>
 									<div id ="formr">
 										{{ Form::open(['url'=>'remarks'], 'POST') }}
+										@if($taskd->remarks==NULL)
 										{{ Form::textarea('remarks','', array('class'=>'form-control', 'rows'=>'3', 'maxlength'=>'255', 'style'=>'resize:vertical')) }}
+										@else
+										{{ Form::textarea('remarks',$taskd->remarks, array('class'=>'form-control', 'rows'=>'3', 'maxlength'=>'255', 'style'=>'resize:vertical' )) }}
+										
+										@endif
 										<input type ="hidden" name="taskdetails_id" value="{{$taskd->id}}">
 										<div class='pull-right'>
 											{{ link_to( 'task/active', 'Cancel', array('class'=>'btn btn-sm btn-default remarks-btn') ) }}
