@@ -105,7 +105,7 @@ class TaskController extends Controller {
 	{
 	 	$id= Input::get('taskdetails_id');
 	 	$remarks =Input::get('remarks');
-	   	if(ctype_alnum(str_replace(str_split(' \\/:*?".,|'),'',$remarks)))
+	   	if(ctype_alnum(str_replace(str_split(' \\/:*?".,|-'),'',$remarks)))
 	    {
 			$taskd=TaskDetails::find($id);
 			$taskd->remarks=$remarks;
