@@ -870,7 +870,7 @@ if(ctype_digit($daysOfAction))
 		$check=$check+1;
 }
 
-if (($check==3||$remarks==" ")&&$assignee!=NULL)
+if (($check==3||($remarks==" "&&$check==2))&&$assignee!=NULL)
 {
 
 
@@ -1784,7 +1784,7 @@ if(ctype_alpha(str_replace(array(' ', '-', '.', ',', 'ñ', 'Ñ'),'',$assignee)))
         $check=$check+1;
          
 
-if (($check==2||$remarks==" ")&&$assignee!=NULL)
+if (($check==2||($remarks==" "&&$check==1))&&$assignee!=NULL)
 {
 	$taskd= TaskDetails::find($taskdetails_id);
 	$docs=Document::find($taskd->doc_id);
