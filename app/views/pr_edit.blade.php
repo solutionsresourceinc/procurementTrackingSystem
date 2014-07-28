@@ -1281,7 +1281,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">Cancel</button>
-            <button type="button" class="btn btn-success" id="confirm" value="Submit">Submit</button>
+            <button type="submit" class="btn btn-success" id="confirm" value="Submit">Submit</button>
           </div>
         </div>
       </div>
@@ -1305,6 +1305,14 @@
               window.my_id = pass_id;
              // alert(window.my_id);
           }
+
+          ///////////////
+
+          $(document).keypress(function(e){
+                if (e.which == 13){
+                    $("#confirm").click();
+                }
+            });
     // JS CODE FOR MODAL END
 
     $('input[type=file]').bootstrapFileInput();
