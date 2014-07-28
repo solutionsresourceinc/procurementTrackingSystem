@@ -462,16 +462,16 @@
                         
                                 @if(Session::get('successchecklist'))
                                  <tr>
-                                    <td colspan="5">
+                                 <br>
                                     <div class="alert alert-success"> {{ Session::get('successchecklist') }}</div> 
-                                    <td>
+                                  
                                 <tr>
                                 @endif
                                 @if(Session::get('errorchecklist'))
                                 <tr>
-                                    <td colspan="3">
+                                <br>
                                     <div class="alert alert-danger"> {{ Session::get('errorchecklist') }}</div> 
-                                    <td>
+                                    
                                 <tr>
                                 @endif
                          
@@ -996,11 +996,11 @@
                             </td>
                         @endif
                         @if($tasks->taskType == "supplier")
-                                <td class="edit-pr-input" colspan="2">
+                                <td class="edit-pr-input" colspan="2" width="20%">
                                     {{$taskp->custom1}}
                                 </td>
                                 
-                                <td class="edit-pr-input" colspan="2">
+                                <td class="edit-pr-input" colspan="2" width="20%">
                                     Amount: 
                                     {{$taskp->custom2}}
                                 </td>     

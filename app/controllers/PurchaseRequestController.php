@@ -147,7 +147,7 @@ class PurchaseRequestController extends Controller
 								}
 							}				
 						}
-						elseif($new_purchase->projectType=="Consulting Service")
+						elseif($new_purchase->projectType=="Consulting Services")
 						{
 							if(($amount>1000000))
 							{
