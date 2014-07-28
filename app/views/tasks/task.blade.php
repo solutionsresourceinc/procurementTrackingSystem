@@ -136,7 +136,7 @@
 							</tr>
 						@endif
 		
-				
+							<?php echo  $task->taskType; ?>
 
 					@if($task->taskType=='certification')
 						{{Form::open(['url'=>'certification'], 'POST')}}
@@ -159,7 +159,7 @@
 							<td>
 						<input type ="hidden" name="taskdetails_id" value="{{$taskd->id}}">
 						<input type="submit" class="btn btn-sm btn-success" value="Done">
-						<!--{{ Form::submit('Done',array('class'=>'btn btn-sm btn-success')) }}-->			
+					
 							</td>
 						</tr>
 						{{Form::close()}}

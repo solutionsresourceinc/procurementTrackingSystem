@@ -392,7 +392,6 @@
                     document.getElementById('table_id3').style.display = 'none';
                 }
                 
-
             }
             
         });

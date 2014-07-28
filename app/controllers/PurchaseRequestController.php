@@ -132,7 +132,7 @@ class PurchaseRequestController extends Controller
 						}
 						elseif($new_purchase->projectType=="Infrastructure")
 						{
-							if($task->taskName=="PRE-PROCUREMENT CONFERENCE"||$task->taskName=="ADVERTISMENT")
+							if($task->taskName=="PRE-PROCUREMENT CONFERENCE"||$task->taskName=="ADVERTISEMENT")
 							{
 								if(($amount>5000000))
 								{
@@ -1018,12 +1018,12 @@ public function certification()
 Session::put('goToChecklist', 'true' ); 
 //Initializations
 $radio=Input::get('radio');
-$by=Input::get('by');
+$by=strip_tags(Input::get('by'));
 $taskdetails_id=Input::get('taskdetails_id');
 $check=0;
 
 //Validation Process
-if(ctype_alpha(str_replace(array(' ', '-', '.', ','),'',$by)))
+if(ctype_alpha(str_replace(array(' ', '-', '.', ',', 'ñ', 'Ñ'),'',$by)))
         $check=$check+1;
 
 if ($check==1)
@@ -1086,8 +1086,8 @@ public function posting()
 Session::put('goToChecklist', 'true' ); 
 //Initializations
 $date=Input::get('date');
-$referenceno=Input::get('referenceno');
-$by=Input::get('by');
+$referenceno=strip_tags(Input::get('referenceno'));
+$by=strip_tags(Input::get('by'));
 $taskdetails_id=Input::get('taskdetails_id');
 $check=0;
 
