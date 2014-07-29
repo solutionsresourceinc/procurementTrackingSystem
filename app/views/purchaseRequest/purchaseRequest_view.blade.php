@@ -110,18 +110,18 @@
 					</td>
 
 					<td colspan="1" width="30%">
-						<span class="bac-ctrl-no">BAC CTRL. NO.:</span><br/>
+						<span class="bac-ctrl-no"><strong>BAC CTRL. NO.:</strong></span><br/>
 						<h4 align="center" class="ctrl-no">{{ $purchase->controlNo }}</h4>
 					</td>
 				</tr>
 
 				<tr>
-					<td class="proc-headers" width="20%"><h5>REQUISITIONER</h5></td>
+					<td class="proc-headers" width="20%"><h5><strong>Requisitioner<strong></h5></td>
 					<td class="proc-data">
 						<?php $user = User::find($purchase->requisitioner) ?>
 						{{ $user->lastname . ", " . $user->firstname }}
 					</td>
-                    <td class="proc-data">OFFICE</td>
+                    <td class="proc-data"><strong>Office<strong></td>
                     <td class="proc-data">
                         <?php $office = Office::find($purchase->office) ?>
                         {{ $office->officeName }}
@@ -131,23 +131,23 @@
 				</tr>
 
 				<tr>
-					<td class="proc-headers"><h5>PROJECT / PURPOSE</h5></td>
+					<td class="proc-headers"><h5><strong>Project / Purpose</strong></h5></td>
                     <td class="proc-data">{{ $purchase->projectPurpose }}</td>
-                    <td class="proc-headers"><h5>PROJECT TYPE</h5></td>
+                    <td class="proc-headers"><h5><strong>Project Type</strong></h5></td>
                     <td class="proc-data">{{ $purchase->projectType }}</td>
 				</tr>
 
 				<tr>
-                    <td class="proc-data">DATE REQUESTED</td>
+                    <td class="proc-data"><strong>Date Requested</strong></td>
                     <td class="proc-data">{{ $purchase->dateRequested }}</td>
-                    <td class="proc-data">DATE RECEIVED</td>
+                    <td class="proc-data"><strong>Date Received</strong></td>
                     <td class="proc-data">{{ $purchase->dateReceived }}</td>                    
 				</tr>
 
 				<tr>
-					<td class="proc-headers"><h5>ABC AMOUNT</h5></td>
+					<td class="proc-headers"><h5><strong>ABC Amount</strong></h5></td>
 					<td class="proc-data">{{ $purchase->amount }}</td>
-                    <td class="proc-headers"><h5>SOURCE OF FUNDS</h5></td>
+                    <td class="proc-headers"><h5><strong>Source Of Funds</strong></h5></td>
                     <td class="proc-data">{{ $purchase->sourceOfFund }}</td>
 				</tr>
 
