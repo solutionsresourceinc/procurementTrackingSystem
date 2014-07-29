@@ -61,7 +61,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/">{{ HTML::image('img/logo-nav-abbrev.png', 'Tarlac Procurement Tracking System', array('id' => '')) }}</a>
+                <a class="navbar-brand" href="/">{{ HTML::image('img/logo-nav2.png', 'Tarlac Procurement Tracking System', array('id' => '')) }}</a>
             </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
