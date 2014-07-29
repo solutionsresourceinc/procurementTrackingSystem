@@ -248,7 +248,7 @@
                         
                         echo "<tr>";
 
-                        if ($tasks->taskType!="cheque"&&$tasks->taskType!="published"&&$tasks->taskType!="contract"&&$tasks->taskType!="meeting"&&$tasks->taskType!="rfq"&&$tasks->taskType!="documents"&&$tasks->taskType!="evaluation")
+                        if ($tasks->taskType!="cheque"&&$tasks->taskType!="published"&&$tasks->taskType!="contract"&&$tasks->taskType!="meeting"&&$tasks->taskType!="rfq"&&$tasks->taskType!="documents"&&$tasks->taskType!="evaluation"&&$tasks->taskType!="preparation")
                         {
                             echo "<td width='30%'>";
                             echo $tasks->taskName."</td>";
@@ -350,7 +350,7 @@
                         @endif
                         @if($tasks->taskType=="published")
                                     <td> </td>
-                                    <th class='workflow-th' width="18%">Date Publised:</th>
+                                    <th class='workflow-th' width="18%">Date Published:</th>
                                     <th class='workflow-th' width="18%">End Date:</th>
                                     <th class='workflow-th' colspan="2">Posted By:</th>
                                 </tr>
@@ -514,18 +514,18 @@
                         @if($tasks->taskType=="rfq")
                                     <td> </td>
                                     <th class='workflow-th'>Supplier:</th>
-                                    <th class='workflow-th' colspan="2">Date of RF (Within PGEPS 7 Days):</th>
-                                    <th class='workflow-th'>By:</th>
+                                    <th class='workflow-th'>Date of RF (Within PGEPS 7 Days):</th>
+                                    <th class='workflow-th' colspan="2">By:</th>
                                 </tr>
                                 <tr>
                                     <td>{{$tasks->taskName}}</td>
                                     <td>
                                         {{$taskp->custom1}}
                                     </td>
-                                    <td colspan="2">
+                                    <td>
                                     {{$taskp->custom2}}
                                     </td>
-                                    <td class="edit-pr-input"> {{$taskp->custom2}}</td>
+                                    <td  colspan="2" class="edit-pr-input"> {{$taskp->custom3}}</td>
                                     <!--td>
                                     {{$tasks->taskName}} {{$taskp->custom1}}
                                     </td>
@@ -616,6 +616,7 @@
                     if($otherc!=0)
                     {
                         $otherd= OtherDetails::where('section_id', $sections->id)->get();
+                        
                         foreach ($otherd as $otherdetails) 
                         {
                             if($otherdetails->label=="Total Days for BAC Documents Preparation"||$otherdetails->label=="Compliance")
@@ -626,6 +627,7 @@
                             $values=Values::where('otherDetails_id', $otherdetails->id)->where('purchase_request_id', $purchase->id)->first();    
                              ?>
                             @if ($valuesc==0) 
+                                <td colspan='3'> </td>
                                 <?php continue; ?>
                             @else 
                                 <td width='48%' colspan='3'>{{$values->value}}</td>
