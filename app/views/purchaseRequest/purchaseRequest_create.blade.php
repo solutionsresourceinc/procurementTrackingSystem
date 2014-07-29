@@ -111,7 +111,7 @@
 							?>
 
 							{{ Form::label('dispCN', 'Control No.', array('class' => 'create-label')) }}
-							<input type="text"  name="dispCN"  class="form-control" value="{{$cn}}"disabled>
+							<input type="text"  name="dispCN"  class="form-control" value="<?php echo str_pad($cn, 5, '0', STR_PAD_LEFT); ?>"disabled>
 							<input type="hidden" name="controlNo" value="<?php echo $cn; ?>">
 						</div>
 					</div>

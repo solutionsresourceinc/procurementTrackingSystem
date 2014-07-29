@@ -49,4 +49,5 @@ class Purchase extends Ardent implements UserInterface, RemindableInterface {
 	{
 		return $this->belongsTo('Office');
 	}
+
 }
