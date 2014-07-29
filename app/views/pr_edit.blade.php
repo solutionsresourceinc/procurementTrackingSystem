@@ -691,7 +691,31 @@
                             <?php $myForm = 'myForm_' . $taskc->id; ?>
                             {{Form::open(['url'=>'documents', 'id' => $myForm], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
+                                    <td> </td>
+                                    <th class='workflow-th'>Eligibility Documents:</th>
+                                    <th class='workflow-th'>Date of Bidding:</th>
+                                    <th class='workflow-th' colspan="2">Checked By:</th>
+                                </tr>
+                                <tr class="@if($taskch!=0 && $taskc->task_id==$tasks->id && $tasks->designation_id==0) current-task @endif">
+                                    <td>{{$tasks->taskName}}</td>
                                     <td>
+                                        <?php 
+                                        $today = date("m/d/y");
+                                        ?>
+                                        <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
+                                            <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" value="{{$today}}"/>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
+                                            <input type="text" class="form-control" name="biddingdate" id="biddingdate" style="text-align: center; width:100%" value="{{$today}}"/>
+                                        </div>
+                                    </td>
+                                    <td class="edit-pr-input" colspan="2" >  
+                                        <input type="text" name="by"  class="form-control" maxlength="100" width="80%" placeholder="Enter name">
+                                    </td>
+
+                                    <!--td>
                                     {{$tasks->taskName}}
                                     <br>
                                     <?php 
@@ -713,7 +737,7 @@
                                     </td>
                                     <td class="edit-pr-input" colspan="2" >  
                                     <input type="text" name="by"  class="form-control" maxlength="100" width="80%" placeholder="Enter name">
-                                    </td>
+                                    </td-->
                                 </tr>
                                 <tr class="current-task">
                                 <td colspan="4" style="border-right: none"></td>
@@ -794,8 +818,26 @@
                             <?php $myForm = 'myForm_' . $taskc->id; ?>
                             {{Form::open(['url'=>'contractmeeting', 'id' => $myForm], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
-
+                                    <td> </td>
+                                    <th class='workflow-th'>Date:</th>
+                                    <th class='workflow-th'>No. of Days Accomplished:</th>
+                                    <th class='workflow-th' colspan="2">Contract Agreement:</th>
+                                </tr>
+                                <tr class="@if($taskch!=0 && $taskc->task_id==$tasks->id && $tasks->designation_id==0) current-task @endif">
+                                    <td>{{$tasks->taskName}}</td>
                                     <td>
+                                        <?php 
+                                        $today = date("m/d/y");
+                                        ?>
+                                        <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
+                                            <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" value="{{$today}}"/>
+                                        </div>
+                                    </td>
+                                    <td><input type="number" name="noofdays"  class="form-control" maxlength="100" width="80%" placeholder="Enter no. of days accomplished"></td>
+                                    <td class="edit-pr-input" colspan="2">  
+                                        <input type="text" name="contractmeeting"  class="form-control" maxlength="100" width="80%" placeholder="Enter contract agreement">
+                                    </td>
+                                    <!--td>
                                         {{$tasks->taskName}}
                                     <?php 
                                     $today = date("m/d/y");
@@ -816,7 +858,7 @@
                                     </td>
                                     <td class="edit-pr-input" colspan="2">  
                                     <input type="text" name="contractmeeting"  class="form-control" maxlength="100" width="80%" placeholder="Enter contract agreement">
-                                    </td>
+                                    </td-->
 
                                 </tr>
                                 <tr class="current-task">
@@ -831,8 +873,28 @@
                             <?php $myForm = 'myForm_' . $taskc->id; ?>
                             {{Form::open(['url'=>'contractmeeting', 'id' => $myForm], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
-
+                                    <td> </td>
+                                    <th class='workflow-th'>Date:</th>
+                                    <th class='workflow-th'>No. of Days Accomplished:</th>
+                                    <th class='workflow-th' colspan="2">Minutes of Bidding:</th>
+                                </tr>
+                                <tr class="@if($taskch!=0 && $taskc->task_id==$tasks->id && $tasks->designation_id==0) current-task @endif">
+                                    <td>{{$tasks->taskName}}</td>
                                     <td>
+                                        <?php 
+                                        $today = date("m/d/y");
+                                        ?>
+                                        <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
+                                            <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" value="{{$today}}"/>
+                                        </div>
+                                    </td>
+                                    <td class="edit-pr-input">  
+                                        <input type="number" name="noofdays"  class="form-control" maxlength="12" width="80%" placeholder="Enter no. of days accomplished">
+                                    </td>
+                                    <td class="edit-pr-input" colspan="2">  
+                                        <input type="text" name="contractmeeting"  class="form-control" maxlength="100" width="80%" placeholder="Enter minutes of meeting">
+                                    </td>
+                                    <!--td>
                                         {{$tasks->taskName}}
                                     <?php 
                                     $today = date("m/d/y");
@@ -853,7 +915,7 @@
                                     </td>
                                     <td class="edit-pr-input" colspan="2">  
                                     <input type="text" name="contractmeeting"  class="form-control" maxlength="100" width="80%" placeholder="Enter minutes of meeting">
-                                    </td>
+                                    </td-->
 
                                 </tr>
                                 <tr class="current-task">
@@ -979,7 +1041,8 @@
                         
                         echo "<tr>";
 
-                        if ($tasks->taskType!="cheque"&&$tasks->taskType!="published"&&$tasks->taskType!="contract"&&$tasks->taskType!="meeting"&&$tasks->taskType!="rfq")
+                        //if ($tasks->taskType!="cheque"&&$tasks->taskType!="published"&&$tasks->taskType!="contract"&&$tasks->taskType!="meeting"&&$tasks->taskType!="rfq"&&$tasks->taskType!="evaluation")
+                        if($tasks->taskType!="cheque"&&$tasks->taskType!="published"&&$tasks->taskType!="contract"&&$tasks->taskType!="meeting"&&$tasks->taskType!="rfq"&&$tasks->taskType!="documents"&&$tasks->taskType!="evaluation"&&$tasks->taskType!="preparation")
                         {
                             echo "<td>";
                             echo $tasks->taskName."</td>";
@@ -1095,7 +1158,20 @@
                                     <td class="edit-pr-input" colspan="2">{{$taskp->custom3}}</td>
                         @endif
                         @if($tasks->taskType=="documents")
+                                    <td> </td>
+                                    <th class='workflow-th'>Eligibility Documents:</th>
+                                    <th class='workflow-th'>Date of Bidding:</th>
+                                    <th class='workflow-th' colspan="2">Checked By:</th>
+                                </tr>
+                                <tr>
+                                    <td>{{$tasks->taskName}}</td>
                                     <td>
+                                        {{$taskp->custom1}}
+                                        <span class="add-on"><i class="icon-th"></i></span>
+                                    </td>
+                                    <td>{{$taskp->custom2}}</td>
+                                    <td class="edit-pr-input" colspan="2">{{$taskp->custom3}}</td>
+                                    <!--td>
                                     {{$tasks->taskName}}
                                     <br>
                                     {{$taskp->custom1}}
@@ -1111,7 +1187,7 @@
                                     </td>
                                     <td class="edit-pr-input" colspan="2">  
                                     {{$taskp->custom3}}
-                                    </td>
+                                    </td-->
                         @endif
                         @if($tasks->taskType=="evaluation")
                                     <td> </td>
@@ -1141,7 +1217,26 @@
                                     </td>
                         @endif
                         @if($tasks->taskType=="contract")
+                                    <td> </td>
+                                    <th class='workflow-th'>Date:</th>
+                                    <th class='workflow-th'>No. of Days Accomplished:</th>
+                                    <th class='workflow-th' colspan="2">Contract Agreement:</th>
+                                </tr>
+                                <tr>
+                                    <td>{{$tasks->taskName}}</td>
                                     <td>
+                                        <?php 
+                                        $today = date("m/d/y");
+                                        ?>
+                                        {{$taskp->custom1}}
+                                    </td>
+                                    <td class="edit-pr-input">  
+                                        {{$taskp->custom2}}
+                                    </td>
+                                    <td class="edit-pr-input" colspan="2">  
+                                        {{$taskp->custom3}}
+                                    </td>
+                                    <!--td>
                                     {{$tasks->taskName}}
                                     <?php 
                                     $today = date("m/d/y");
@@ -1159,10 +1254,29 @@
                                     </td>
                                     <td class="edit-pr-input" colspan="2">  
                                     {{$taskp->custom3}}
-                                    </td>
+                                    </td-->
                         @endif
                         @if($tasks->taskType=="meeting")
+                                    <td> </td>
+                                    <th class='workflow-th'>Date:</th>
+                                    <th class='workflow-th'>No. of Days Accomplished:</th>
+                                    <th class='workflow-th' colspan="2">Minutes of Bidding:</th>
+                                </tr>
+                                <tr>
+                                    <td>{{$tasks->taskName}}</td>
                                     <td>
+                                        <?php 
+                                        $today = date("m/d/y");
+                                        ?>
+                                        {{$taskp->custom1}}
+                                    </td>
+                                    <td class="edit-pr-input">  
+                                        {{$taskp->custom2}}
+                                    </td>
+                                    <td class="edit-pr-input" colspan="2">  
+                                        {{$taskp->custom3}}
+                                    </td>
+                                    <!--td>
                                     {{$tasks->taskName}}
                                     <?php 
                                     $today = date("m/d/y");
@@ -1180,7 +1294,7 @@
                                     </td>
                                     <td class="edit-pr-input" colspan="2">  
                                     {{$taskp->custom3}}
-                                    </td>
+                                    </td-->
                         @endif
                         @if($tasks->taskType=="rfq")
                                     <td> </td>
