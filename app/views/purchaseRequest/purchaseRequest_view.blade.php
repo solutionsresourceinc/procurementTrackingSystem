@@ -199,6 +199,7 @@
                             $values=Values::where('otherDetails_id', $otherdetails->id)->where('purchase_request_id', $purchase->id)->first();  
                              ?>  
                             @if ($valuesc==0) 
+                                <td colspan="3"> </td>
                                 <?php continue; ?>
                             @else 
                                 <td width='48%' colspan='3'>{{$values->value}}</td>
@@ -337,21 +338,21 @@
                                 </td>
                                 
                                 <td class="edit-pr-input" colspan="2">
-                                    Amount: 
+                                    AMOUNT: 
                                     {{$taskp->custom2}}
                                 </td>     
                         @endif
                         @if($tasks->taskType=="cheque")
                                 <td class="edit-pr-input" colspan="2">
-                                    Cheque Amount:&nbsp;&nbsp;&nbsp;
+                                    CHEQUE AMOUNT:&nbsp;&nbsp;&nbsp;
                                     {{$taskp->custom1}}
                                 </td>
                                 <td class="edit-pr-input" colspan="2">
-                                    Cheque Number:&nbsp;&nbsp;&nbsp;
+                                    CHEQUE NUMBER:&nbsp;&nbsp;&nbsp;
                                     {{$taskp->custom2}}
                                 </td>
                                 <td class="edit-pr-input" colspan="2">
-                                    Cheque Date:&nbsp;&nbsp;&nbsp;
+                                    CHEQUE DATE:&nbsp;&nbsp;&nbsp;
                                     {{$taskp->custom3}}
                                 </td>
                         @endif
