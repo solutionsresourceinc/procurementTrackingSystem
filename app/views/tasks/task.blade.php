@@ -87,8 +87,16 @@
 
 				<tr> 
 					<td>
-						<span style="font-weight: bold">Purchase Request ID-Name: </span><br/>
-						<p><a href="{{ URL::to('purchaseRequest/vieweach/'.$purchase->id) }}" ><?php echo $purchase->id."-".$purchase->projectPurpose; ?> </a></p>
+						<span style="font-weight: bold">Control. : </span><br/>
+						<p><a href="{{ URL::to('purchaseRequest/vieweach/'.$purchase->id) }}" ><?php echo str_pad($purchase->controlNo, 5, '0', STR_PAD_LEFT); ?></a></p>
+				
+					</td>
+				<tr>
+
+				<tr> 
+					<td>
+						<span style="font-weight: bold">Project/Purpose: </span><br/>
+						<p><a href="{{ URL::to('purchaseRequest/vieweach/'.$purchase->id) }}" ><?php echo $purchase->projectPurpose; ?> </a></p>
 				
 					</td>
 				<tr>
