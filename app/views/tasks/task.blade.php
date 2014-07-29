@@ -32,19 +32,6 @@
 
 @section('content')
 
-	<!--CODE REVIEW:
-        - fix code indention
-    -->
-
-	<h2 class="pull-left">Task Details</h2>
-
-	<div class="pull-right options">
-		<a href="{{ URL::previous() }}" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left"></span> Back</a>
-	</div>
-	<!--Trigger to Change Routing-->
-	{{Session::put('changeroute','change')}}
-
-	<!--End Trigger to Change Routing-->
 	<?php
 		$taskdetails_id=Session::get('taskdetails_id');
 		Session::forget('taskdetails_id');
@@ -52,7 +39,27 @@
 		$task= Task::find($taskd->task_id);
 		$doc= Document::find($taskd->doc_id);
 		$purchase = Purchase::find($doc->pr_id);
+		$date_today = $date_today = date('Y-m-d H:i:s');
 	?>
+
+	{{Session::put('backTo',"task/$taskdetails_id");}}
+
+	<h2 class="pull-left">Task Details</h2>
+
+	<div class="pull-right options">
+
+		@if($taskd->status == "Active" && $taskd->dueDate > $date_today)
+			<a href="{{ URL::to('task/active') }}" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left"></span> Back</a>
+		@elseif($taskd->status == "New")
+			<a href="{{ URL::to('task/new') }}" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left"></span> Back</a>
+		@else
+			<a href="{{ URL::to('task/overdue') }}" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left"></span> Back</a>
+		@endif
+	</div>
+	<!--Trigger to Change Routing-->
+	{{Session::put('changeroute','change')}}
+
+	<!--End Trigger to Change Routing-->
 
 	<hr class="clear" />
 

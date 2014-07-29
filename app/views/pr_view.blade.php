@@ -1,6 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('content')
+{{Session::put('backTo','purchaseRequest/view');}}
 
 <h1 class="pull-left">List of Active Purchase Requests</h1>
     

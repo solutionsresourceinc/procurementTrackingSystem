@@ -309,7 +309,7 @@
 
             <div><br/>
                 {{ Form::submit('Save',array('class'=>'btn btn-success')) }}
-                {{ link_to( 'purchaseRequest/view', 'Cancel', array('class'=>'btn btn-default') ) }}
+                <a href="{{ URL::previous() }}" class="btn btn-default">Cancel</a>
             </div>
             
             {{ Form::close() }} 

@@ -148,6 +148,18 @@ Route::post('workflow/replace/{id}', function($id)
 
 Route::post('summary/changeDate', 'AjaxController@SummarySubmit');
 
+Route::get('back', function()
+{
+	$destination = Session::get('backTo');
+	
+	if(!Session::get('backTo'))
+		return redirect::to('dashboard');
+	else
+		return redirect::to($destination);
+	
+	//return $destination ;
+});
+
 /*Route::post('summary/changeDate', function()
 {
 	$start = Input::get('start');

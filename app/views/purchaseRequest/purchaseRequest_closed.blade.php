@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('content')
-
+{{Session::put('backTo','purchaseRequest/closed');}}
 
 <h1 class="pull-left">List of Closed Purchase Requests</h1>
     
