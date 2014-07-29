@@ -17,6 +17,7 @@
 			if(document.layers) document.layers['formr'].visibility="hide";
 			if(document.getElementById) document.getElementById("formr").style.visibility="hidden";
 			if(document.all) document.all.formr.style.visibility="hidden";
+			
 		}
 		window.onload = codeAddress;
 	</script>
