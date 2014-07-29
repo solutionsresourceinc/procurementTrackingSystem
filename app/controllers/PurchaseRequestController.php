@@ -1916,12 +1916,5 @@ return Redirect::back();
 
 }
 
-public function back()
-{
-	$destionation = Session::get('backTo');
-	return Redirect::to("$destionation");
-}
-
-
 
 }

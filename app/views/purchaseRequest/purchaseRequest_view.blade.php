@@ -83,7 +83,7 @@
 		}
 	?>
 
-		<button type="button" class="btn btn-default no-print" onclick="window.location.href='../../purchaseRequest/back'">
+		<button type="button" class="btn btn-default no-print" onclick="window.location.href='{{ URL::previous() }}'">
 			<span class="glyphicon glyphicon-step-backward"></span>&nbsp;Back
 		</button>
 		

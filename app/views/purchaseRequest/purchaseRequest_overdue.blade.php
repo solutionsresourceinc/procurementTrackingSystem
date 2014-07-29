@@ -2,7 +2,6 @@
 
 @section('content')
 
-{{ Session::put('backTo','purchaseRequest/overdue'); }}
 
 <h1 class="pull-left">List of Overdue Purchase Requests</h1>
     

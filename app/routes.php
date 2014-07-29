@@ -51,7 +51,6 @@ Route::get('purchaseRequest/create', 'PurchaseRequestController@create');
 Route::get('purchaseRequest/edit','PurchaseRequestController@edit');
 Route::get( 'purchaseRequest/vieweach/{id}', 'PurchaseRequestController@vieweach');
 Route::get( 'purchaseRequest/closed', 'PurchaseRequestController@viewClosed');
-Route::get( 'purchaseRequest/back', 'PurchaseRequestController@back');
 Route::get( 'purchaseRequest/overdue', 'PurchaseRequestController@viewOverdue');
 Route::get( 'purchaseRequest/cancelled', 'PurchaseRequestController@viewCancelled');
 Route::get('/summary', 'PurchaseRequestController@viewSummary');

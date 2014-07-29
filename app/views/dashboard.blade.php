@@ -84,7 +84,6 @@
             <div class="panel-heading">
                 <span style="font-size: 18px;">Latest Purchase Requests
                     @if($role->role_id!=1) 
-                        {{ Session::put('backTo','dashboard'); }}
                         <a href="{{ URL::to('purchaseRequest/create') }}" class="btn btn-sm btn-primary" style="float: right; padding: 3px 10px;">Create New</a>
                     @endif
                 </span>
