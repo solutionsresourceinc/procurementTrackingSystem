@@ -1916,6 +1916,15 @@ return Redirect::back();
 
 }
 
+public function back()
+{
+	if(Session::get('backTo') == "PRLIST")
+		return Redirect::to('purchaseRequest/view');
+	else
+		return Redirect::to('dashboard');
+
+}
+
 
 
 }

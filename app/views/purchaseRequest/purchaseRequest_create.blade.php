@@ -287,8 +287,7 @@
 
 					<div><br>
 						{{ Form::submit('Create Purchase Request',array('class'=>'btn btn-success')) }}
-						{{ link_to( 'purchaseRequest/view', 'Cancel', array('class'=>'btn btn-default') ) }}
-
+						{{ link_to( 'purchaseRequest/back', 'Cancel', array('class'=>'btn btn-default') ) }}
 					</div>
 				</div>
 			</div>	
