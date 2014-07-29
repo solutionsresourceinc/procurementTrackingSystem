@@ -53,7 +53,11 @@
         Session::put('page',$page);
 
 
-        $countPR = Purchase::where('status', '=', 'Cancelled')->where('office', $useroffice)->count();
+        if(Entrust::hasRole('Requisitioner'))
+            $countPR = DB::table('purchase_request')->where('status', '=', 'Cancelled')->where('office', $useroffice)->count(); 
+        else
+            $countPR = DB::table('purchase_request')->where('status', '=', 'Cancelled')->count(); 
+
         echo "<input type='hidden' id='countPR' value='$countPR'>";
         $start = $page;
 
