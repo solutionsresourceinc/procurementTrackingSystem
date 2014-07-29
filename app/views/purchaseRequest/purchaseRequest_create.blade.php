@@ -130,7 +130,7 @@
 						<div class="col-md-4">
 							{{ Form::label('projectType', 'Project Type *', array('class' => 'create-label')) }}
 							<select name="projectType" class="form-control" id="projectType">
-								<option value="">None</option>
+								<option value="">Please select</option>
 								<option value="Goods/Services" <?php if( Input::old('projectType') == "Goods/Services" ) echo "selected" ?>>Goods/Services</option>
 								<option value="Infrastructure" <?php if( Input::old('projectType') == "Infrastructure" ) echo "selected" ?>>Infrastructure</option>
 								<option value="Consulting Services" <?php if( Input::old('projectType') == "Consulting Services" ) echo "selected" ?>>Consulting Services</option>
