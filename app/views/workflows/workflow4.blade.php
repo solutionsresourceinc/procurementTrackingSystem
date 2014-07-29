@@ -40,7 +40,7 @@
 				?>
 				@foreach ($addedtasks as $addedtask)
 					<tr>
-						<td colspan="2">{{$addedtask->label}}</td>
+						<td colspan="3">{{$addedtask->label}}</td>
 						<td>
 							<form method="POST" action="deladdtask"  id="myForm_{{ $addedtask->id }}" name="myForm" style="display: -webkit-inline-box;">
 								<input type="hidden" name="id" value="<?php echo $addedtask->id ?>">
@@ -54,6 +54,7 @@
 			<!-- Displays the defined tasks of the workflow -->
 			<tr>
 				<th class="workflow-th" width="25%">TASK</th>
+				<th class="workflow-th" width="10%">NO. OF DAYS</th>
 				<th class="workflow-th" width="45%">DESIGNATION ASSIGNED</th>
 				<th class="workflow-th" width="25%">ACTION</th>
 			</tr>
@@ -66,6 +67,7 @@
 
 					<tr>
 						<td>{{{ $section->taskName }}}</td>
+						<td>{{{ $section->maxDuration }}}</td>
 
 						<td> 
 							<?php  $designations = DB::table('designation')->where('id', $designation_id)->get();?>	
@@ -140,7 +142,7 @@
 				?>
 				@foreach ($addedtasks as $addedtask)
 					<tr>
-						<td colspan="2">{{$addedtask->label}}</td>
+						<td colspan="3">{{$addedtask->label}}</td>
 						<td>
 							<form method="POST" action="deladdtask"  id="myForm_{{ $addedtask->id }}" name="myForm" style="display: -webkit-inline-box;">
 								<input type="hidden" name="id" value="<?php echo $addedtask->id ?>">
@@ -154,6 +156,7 @@
 			<!-- Displays the defined tasks of the workflow -->
 			<tr>
 				<th class="workflow-th" width="25%">TASK</th>
+				<th class="workflow-th" width="10%">NO. OF DAYS</th>
 				<th class="workflow-th" width="45%">DESIGNATION ASSIGNED</th>
 				<th class="workflow-th" width="25%">ACTION</th>
 			</tr>
@@ -164,6 +167,7 @@
 					<?php $designation_id=$section->designation_id; ?>
 					<tr> 
 						<td> {{{ $section->taskName }}} </td>
+						<td>{{{ $section->maxDuration }}}</td>
 						<td> 
 							<?php $designations = DB::table('designation')->where('id', $designation_id)->get(); ?>
 							@if($designation_id!=0)
@@ -239,7 +243,7 @@
 				?>
 				@foreach ($addedtasks as $addedtask)
 					<tr>
-						<td colspan="2">{{$addedtask->label}}</td>
+						<td colspan="3">{{$addedtask->label}}</td>
 						<td>
 							<form method="POST" action="deladdtask"  id="myForm_{{ $addedtask->id }}" name="myForm" style="display: -webkit-inline-box;">
 								<input type="hidden" name="id" value="<?php echo $addedtask->id ?>">
@@ -253,6 +257,7 @@
 			<!-- Displays the defined tasks of the workflow -->
 			<tr>
 				<th class="workflow-th" width="25%">TASK</th>
+				<th class="workflow-th" width="10%">NO. OF DAYS</th>
 				<th class="workflow-th" width="45%">DESIGNATION ASSIGNED</th>
 				<th class="workflow-th" width="25%">ACTION</th>
 			</tr>
@@ -263,6 +268,7 @@
 					<?php  $designation_id=$section->designation_id; ?>
 					<tr>
 						<td> {{{ $section->taskName }}} </td>
+						<td>{{{ $section->maxDuration }}}</td>
 						<td>
 
 							<?php $designations = DB::table('designation')->where('id', $designation_id)->get();	?>

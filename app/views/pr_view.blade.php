@@ -102,7 +102,7 @@
 
                     ?>
                         >
-                        <td width="10%">{{ $request->controlNo; }}</td>
+                        <td width="10%"><?php echo str_pad($request->controlNo, 5, '0', STR_PAD_LEFT); ?></td>
                         <td width="27%">
 
                         @if(Entrust::hasRole('Administrator')||Entrust::hasRole('Procurement Personnel'))
@@ -248,7 +248,7 @@
 
                     ?>
                         >
-                        <td width="10%">{{ $request->controlNo; }}</td>
+                        <td width="10%"> <?php echo str_pad($request->controlNo, 5, '0', STR_PAD_LEFT); ?></td>
                         <td width="30%">
                             
                         @if(Entrust::hasRole('Administrator')||Entrust::hasRole('Procurement Personnel'))

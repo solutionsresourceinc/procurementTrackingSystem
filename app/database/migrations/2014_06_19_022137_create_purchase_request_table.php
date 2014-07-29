@@ -30,7 +30,13 @@ class CreatePurchaseRequestTable extends Migration {
 			$table->string('otherType', 255);
 			$table->integer('created_by')->unsigned();
 			$table->timestamps();
+
+			//DB::unprepared("ALTER TABLE  purchase_request CHANGE  controlNo  controlNo INT( 5 ) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT");
+			//DB::query("ALTER TABLE 'purchase_request' ADD 'haha' VARCHAR(60) ");
+			//DB::statement('ALTER TABLE MyTable ADD MyColumn INT UNSIGNED ZEROFILL NOT NULL');
 		});
+
+		DB::unprepared("ALTER TABLE  purchase_request CHANGE  controlNo  controlNo INT( 5 ) ZEROFILL");
 	}
 
 	/**
