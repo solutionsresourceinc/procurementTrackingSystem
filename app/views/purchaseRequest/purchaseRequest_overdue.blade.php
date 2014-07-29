@@ -2,20 +2,11 @@
 
 @section('content')
 
-<!--CODE REVIEW:
-    - remove comments
-    - variables must be descriptive
--->
+{{ Session::put('backTo','purchaseRequest/overdue'); }}
 
 <h1 class="pull-left">List of Overdue Purchase Requests</h1>
     
-    @if ( Entrust::hasRole('Administrator') || Entrust::hasRole('Procurement Personnel'))
-      <div class="pull-right options">
-          <a href="{{ URL::to('purchaseRequest/create') }}" class="btn btn-success">Create New</a>
-      </div>
-    @endif
-
-    <hr class="clear" />
+<hr class="clear" />
 <div id="pr_form">
     <form action="submitForm/" id="new_form" method="post" id="confirm">
 </div>

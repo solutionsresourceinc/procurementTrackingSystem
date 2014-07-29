@@ -83,7 +83,7 @@
 		}
 	?>
 
-		<button type="button" class="btn btn-default no-print" onclick="window.location.href='../../purchaseRequest/view'">
+		<button type="button" class="btn btn-default no-print" onclick="window.location.href='../../purchaseRequest/back'">
 			<span class="glyphicon glyphicon-step-backward"></span>&nbsp;Back
 		</button>
 		

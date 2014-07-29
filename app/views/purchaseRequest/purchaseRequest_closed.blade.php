@@ -2,10 +2,7 @@
 
 @section('content')
 
-<!--CODE REVIEW:
-    - remove comments
-    - variables must be descriptive
--->
+{{ Session::put('backTo','purchaseRequest/closed'); }}
 
 <h1 class="pull-left">List of Closed Purchase Requests</h1>
     
