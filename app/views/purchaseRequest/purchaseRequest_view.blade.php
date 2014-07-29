@@ -121,27 +121,34 @@
 						<?php $user = User::find($purchase->requisitioner) ?>
 						{{ $user->lastname . ", " . $user->firstname }}
 					</td>
-                    <td class="proc-data">DATE REQUESTED</td>
-                    <td class="proc-data">{{ $purchase->dateRequested }}</td>
+                    <td class="proc-data">OFFICE</td>
+                    <td class="proc-data">
+                        <?php $office = Office::find($purchase->office) ?>
+                        {{ $office->officeName }}
+                    </td>
+                    <!--td class="proc-data">DATE REQUESTED</td>
+                    <td class="proc-data">{{ $purchase->dateRequested }}</td-->
 				</tr>
 
 				<tr>
-					<td class="proc-headers" width="20%"><h5>PROJECT / PURPOSE</h5></td>
+					<td class="proc-headers"><h5>PROJECT / PURPOSE</h5></td>
                     <td class="proc-data">{{ $purchase->projectPurpose }}</td>
-                    <td class="proc-data">DATE RECEIVED</td>
-					<td class="proc-data">{{ $purchase->dateReceived }}</td>
-				</tr>
-
-				<tr>
-					<td class="proc-headers" width="20%"><h5>SOURCE OF FUNDS</h5></td>
-					<td class="proc-data">{{ $purchase->sourceOfFund }}</td>
-                    <td class="proc-headers" width="20%"><h5>PROJECT TYPE</h5></td>
+                    <td class="proc-headers"><h5>PROJECT TYPE</h5></td>
                     <td class="proc-data">{{ $purchase->projectType }}</td>
 				</tr>
 
 				<tr>
-					<td class="proc-headers" width="20%"><h5>ABC AMOUNT</h5></td>
-					<td class="proc-data" colspan="3">{{ $purchase->amount }}</td>
+                    <td class="proc-data">DATE REQUESTED</td>
+                    <td class="proc-data">{{ $purchase->dateRequested }}</td>
+                    <td class="proc-data">DATE RECEIVED</td>
+                    <td class="proc-data">{{ $purchase->dateReceived }}</td>                    
+				</tr>
+
+				<tr>
+					<td class="proc-headers"><h5>ABC AMOUNT</h5></td>
+					<td class="proc-data">{{ $purchase->amount }}</td>
+                    <td class="proc-headers"><h5>SOURCE OF FUNDS</h5></td>
+                    <td class="proc-data">{{ $purchase->sourceOfFund }}</td>
 				</tr>
 
 			</table>
