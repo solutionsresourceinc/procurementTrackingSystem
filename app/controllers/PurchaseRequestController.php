@@ -389,7 +389,7 @@ class PurchaseRequestController extends Controller
 
 					$reports->save();
 					//End Reports	
-			        $notice = "Purchase request created successfully. Email notice was not sent. ";
+			        $notice = "Purchase request created successfully. Email notice was not sent to the requisitioner. ";
 			    }
 
 													  

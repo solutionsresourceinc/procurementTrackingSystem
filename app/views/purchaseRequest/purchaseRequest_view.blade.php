@@ -110,38 +110,45 @@
 					</td>
 
 					<td colspan="1" width="30%">
-						<span class="bac-ctrl-no">BAC CTRL. NO.:</span><br/>
+						<span class="bac-ctrl-no"><strong>BAC CTRL. NO.:</strong></span><br/>
 						<h4 align="center" class="ctrl-no">{{ $purchase->controlNo }}</h4>
 					</td>
 				</tr>
 
 				<tr>
-					<td class="proc-headers" width="20%"><h5>REQUISITIONER</h5></td>
+					<td class="proc-headers" width="20%"><h5><strong>Requisitioner<strong></h5></td>
 					<td class="proc-data">
 						<?php $user = User::find($purchase->requisitioner) ?>
 						{{ $user->lastname . ", " . $user->firstname }}
 					</td>
-                    <td class="proc-data">DATE REQUESTED</td>
-                    <td class="proc-data">{{ $purchase->dateRequested }}</td>
+                    <td class="proc-data"><strong>Office<strong></td>
+                    <td class="proc-data">
+                        <?php $office = Office::find($purchase->office) ?>
+                        {{ $office->officeName }}
+                    </td>
+                    <!--td class="proc-data">DATE REQUESTED</td>
+                    <td class="proc-data">{{ $purchase->dateRequested }}</td-->
 				</tr>
 
 				<tr>
-					<td class="proc-headers" width="20%"><h5>PROJECT / PURPOSE</h5></td>
+					<td class="proc-headers"><h5><strong>Project / Purpose</strong></h5></td>
                     <td class="proc-data">{{ $purchase->projectPurpose }}</td>
-                    <td class="proc-data">DATE RECEIVED</td>
-					<td class="proc-data">{{ $purchase->dateReceived }}</td>
-				</tr>
-
-				<tr>
-					<td class="proc-headers" width="20%"><h5>SOURCE OF FUNDS</h5></td>
-					<td class="proc-data">{{ $purchase->sourceOfFund }}</td>
-                    <td class="proc-headers" width="20%"><h5>PROJECT TYPE</h5></td>
+                    <td class="proc-headers"><h5><strong>Project Type</strong></h5></td>
                     <td class="proc-data">{{ $purchase->projectType }}</td>
 				</tr>
 
 				<tr>
-					<td class="proc-headers" width="20%"><h5>ABC AMOUNT</h5></td>
-					<td class="proc-data" colspan="3">{{ $purchase->amount }}</td>
+                    <td class="proc-data"><strong>Date Requested</strong></td>
+                    <td class="proc-data">{{ $purchase->dateRequested }}</td>
+                    <td class="proc-data"><strong>Date Received</strong></td>
+                    <td class="proc-data">{{ $purchase->dateReceived }}</td>                    
+				</tr>
+
+				<tr>
+					<td class="proc-headers"><h5><strong>ABC Amount</strong></h5></td>
+					<td class="proc-data">{{ $purchase->amount }}</td>
+                    <td class="proc-headers"><h5><strong>Source Of Funds</strong></h5></td>
+                    <td class="proc-data">{{ $purchase->sourceOfFund }}</td>
 				</tr>
 
 			</table>
@@ -192,6 +199,7 @@
                             $values=Values::where('otherDetails_id', $otherdetails->id)->where('purchase_request_id', $purchase->id)->first();  
                              ?>  
                             @if ($valuesc==0) 
+                                <td colspan="3"> </td>
                                 <?php continue; ?>
                             @else 
                                 <td width='48%' colspan='3'>{{$values->value}}</td>
@@ -248,7 +256,7 @@
                         
                         echo "<tr>";
 
-                        if ($tasks->taskType!="cheque"&&$tasks->taskType!="published"&&$tasks->taskType!="contract"&&$tasks->taskType!="meeting"&&$tasks->taskType!="rfq"&&$tasks->taskType!="documents"&&$tasks->taskType!="evaluation")
+                        if ($tasks->taskType!="cheque"&&$tasks->taskType!="published"&&$tasks->taskType!="contract"&&$tasks->taskType!="meeting"&&$tasks->taskType!="rfq"&&$tasks->taskType!="documents"&&$tasks->taskType!="evaluation"&&$tasks->taskType!="preparation")
                         {
                             echo "<td width='30%'>";
                             echo $tasks->taskName."</td>";
@@ -330,27 +338,27 @@
                                 </td>
                                 
                                 <td class="edit-pr-input" colspan="2">
-                                    Amount: 
+                                    AMOUNT: 
                                     {{$taskp->custom2}}
                                 </td>     
                         @endif
                         @if($tasks->taskType=="cheque")
                                 <td class="edit-pr-input" colspan="2">
-                                    Cheque Amount:&nbsp;&nbsp;&nbsp;
+                                    CHEQUE AMOUNT:&nbsp;&nbsp;&nbsp;
                                     {{$taskp->custom1}}
                                 </td>
                                 <td class="edit-pr-input" colspan="2">
-                                    Cheque Number:&nbsp;&nbsp;&nbsp;
+                                    CHEQUE NUMBER:&nbsp;&nbsp;&nbsp;
                                     {{$taskp->custom2}}
                                 </td>
                                 <td class="edit-pr-input" colspan="2">
-                                    Cheque Date:&nbsp;&nbsp;&nbsp;
+                                    CHEQUE DATE:&nbsp;&nbsp;&nbsp;
                                     {{$taskp->custom3}}
                                 </td>
                         @endif
                         @if($tasks->taskType=="published")
                                     <td> </td>
-                                    <th class='workflow-th' width="18%">Date Publised:</th>
+                                    <th class='workflow-th' width="18%">Date Published:</th>
                                     <th class='workflow-th' width="18%">End Date:</th>
                                     <th class='workflow-th' colspan="2">Posted By:</th>
                                 </tr>
@@ -514,18 +522,18 @@
                         @if($tasks->taskType=="rfq")
                                     <td> </td>
                                     <th class='workflow-th'>Supplier:</th>
-                                    <th class='workflow-th' colspan="2">Date of RF (Within PGEPS 7 Days):</th>
-                                    <th class='workflow-th'>By:</th>
+                                    <th class='workflow-th'>Date of RF (Within PGEPS 7 Days):</th>
+                                    <th class='workflow-th' colspan="2">By:</th>
                                 </tr>
                                 <tr>
                                     <td>{{$tasks->taskName}}</td>
                                     <td>
                                         {{$taskp->custom1}}
                                     </td>
-                                    <td colspan="2">
+                                    <td>
                                     {{$taskp->custom2}}
                                     </td>
-                                    <td class="edit-pr-input"> {{$taskp->custom2}}</td>
+                                    <td  colspan="2" class="edit-pr-input"> {{$taskp->custom3}}</td>
                                     <!--td>
                                     {{$tasks->taskName}} {{$taskp->custom1}}
                                     </td>
@@ -616,6 +624,7 @@
                     if($otherc!=0)
                     {
                         $otherd= OtherDetails::where('section_id', $sections->id)->get();
+                        
                         foreach ($otherd as $otherdetails) 
                         {
                             if($otherdetails->label=="Total Days for BAC Documents Preparation"||$otherdetails->label=="Compliance")
@@ -626,6 +635,7 @@
                             $values=Values::where('otherDetails_id', $otherdetails->id)->where('purchase_request_id', $purchase->id)->first();    
                              ?>
                             @if ($valuesc==0) 
+                                <td colspan='3'> </td>
                                 <?php continue; ?>
                             @else 
                                 <td width='48%' colspan='3'>{{$values->value}}</td>
