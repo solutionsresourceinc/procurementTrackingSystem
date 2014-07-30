@@ -167,7 +167,7 @@ foreach(Input::file('file') as $file)
 
 
 
-		if(Input::get('otherType') == 'pakyaw')
+		if(Input::get('otherType') == 'Pakyaw')
 			$purchase->projectType = "None";
 		else
 			$purchase->projectType = Input::get('projectType');

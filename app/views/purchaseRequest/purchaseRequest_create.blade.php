@@ -529,7 +529,7 @@
 		function change_OtherType(value)
 		{
 			//alert(value);
-			if(value == "pakyaw")
+			if(value == "Pakyaw")
 			{
 				document.getElementById('projectType').disabled = true;
 				document.getElementById('projectType').selectedIndex = 0;
