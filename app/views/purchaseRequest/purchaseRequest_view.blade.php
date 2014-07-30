@@ -145,17 +145,17 @@
 				</tr>
 
 				<tr>
+                    <td class="proc-data"><strong>ABC Amount</strong></td>
+                    <td class="proc-data">{{ $purchase->amount }}</td>
                     <td class="proc-data"><strong>Date Requested</strong></td>
-                    <td class="proc-data">{{ $purchase->dateRequested }}</td>
-                    <td class="proc-data"><strong>Date Received</strong></td>
-                    <td class="proc-data">{{ $purchase->dateReceived }}</td>                    
+                    <td class="proc-data">{{ $purchase->dateRequested }}</td>                    
 				</tr>
 
 				<tr>
-					<td class="proc-headers"><h5><strong>ABC Amount</strong></h5></td>
-					<td class="proc-data">{{ $purchase->amount }}</td>
-                    <td class="proc-headers"><h5><strong>Source Of Funds</strong></h5></td>
-                    <td class="proc-data">{{ $purchase->sourceOfFund }}</td>
+					<td class="proc-headers"><h5><strong>Source Of Funds</strong></h5></td>
+					<td class="proc-data">{{ $purchase->sourceOfFund }}</td>
+                    <td class="proc-headers"><h5><strong>Date Received</strong></h5></td>
+                    <td class="proc-data">{{ $purchase->dateReceived }}</td>
 				</tr>
 
 			</table>
