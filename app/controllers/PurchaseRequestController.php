@@ -978,7 +978,10 @@ if (($check==3||($remarks==" "&&$check==2))&&$assignee!=NULL)
 	}
 }
 else
-	Session::put('errorchecklist','Invalid input.');
+	{
+		Session::put('errorchecklist','Invalid input.');
+		return Redirect::back()->withInput();
+	}
 	
 return Redirect::back();
 
@@ -1001,11 +1004,15 @@ if(ctype_alnum(str_replace(str_split(' !\\/:*?".,|'),'',$value)))
     $insertvalue->purchase_request_id=$purchase_request_id;
     $insertvalue->value=$value;
     $insertvalue->save();
+    Session::forget('retainOtherDetails');
+   	Session::forget('retainId');
     Session::put('successlabel', 'Successfully saved.');
     return Redirect::back();
 }
 else 
 {
+	Session::put('retainOtherDetails', $value);
+   	Session::put('retainId', $otherDetails_id);
     Session::put('errorlabel','Invalid input.');
 	return Redirect::back();
 }
@@ -1015,8 +1022,11 @@ else
 public function editaddon()
 {
 	Session::put('goToChecklist', 'true' ); 
+
 	$values_id= Input::get('values_id');
     $insertvalue= Values::find($values_id);
+   	Session::put('retainOtherDetails', $insertvalue->value);
+   	Session::put('retainId', $insertvalue->otherDetails_id);
     $insertvalue->delete();   
     return Redirect::back();
 }
@@ -1103,9 +1113,11 @@ if ($check==1)
 	}
 }
 else
+{
 	Session::put('errorchecklist','Invalid input.');
-	
-// return Redirect::back();
+	return Redirect::back()->withInput();
+}	
+
 $request_id = Input::get('pr_id');
 return Redirect::to("purchaseRequest/vieweach/$request_id");
 
@@ -1179,7 +1191,10 @@ if ($check==2)
 	}
 }
 else
+{
 	Session::put('errorchecklist','Invalid input.');
+	return Redirect::back()->withInput();
+}	
 	
 // return Redirect::back();
 $request_id = Input::get('pr_id');
@@ -1254,7 +1269,10 @@ if ($check==2)
 	}
 }
 else
+{
 	Session::put('errorchecklist','Invalid input.');
+	return Redirect::back()->withInput();
+}	
 	
 // return Redirect::back();
 $request_id = Input::get('pr_id');
@@ -1357,7 +1375,10 @@ if ($check==2)
 	}
 }
 else
+{
 	Session::put('errorchecklist','Invalid input.');
+	return Redirect::back()->withInput();
+}	
 	
 // return Redirect::back();
 $request_id = Input::get('pr_id');
@@ -1430,7 +1451,10 @@ if ($check==1)
 	}
 }
 else
+{
 	Session::put('errorchecklist','Invalid input.');
+	return Redirect::back()->withInput();
+}	
 	
 // return Redirect::back();
 $request_id = Input::get('pr_id');
@@ -1503,7 +1527,11 @@ if ($check==1)
 	}
 }
 else
+{
 	Session::put('errorchecklist','Invalid input.');
+	return Redirect::back()->withInput();
+}	
+
 
 // return Redirect::back();
 $request_id = Input::get('pr_id');
@@ -1576,7 +1604,10 @@ if ($check==1)
 	}
 }
 else
+{
 	Session::put('errorchecklist','Invalid input.');
+	return Redirect::back()->withInput();
+}	
 	
 // return Redirect::back();
 $request_id = Input::get('pr_id');
@@ -1644,7 +1675,10 @@ if ($check==0)
 	}
 }
 else
+{
 	Session::put('errorchecklist','Invalid input.');
+	return Redirect::back()->withInput();
+}	
 	
 // return Redirect::back();
 $request_id = Input::get('pr_id');
@@ -1722,7 +1756,10 @@ if ($check==2)
 	}
 }
 else
+{
 	Session::put('errorchecklist','Invalid input.');
+	return Redirect::back()->withInput();
+}	
 	
 // return Redirect::back();
 $request_id = Input::get('pr_id');
@@ -1796,7 +1833,10 @@ if ($check==2)
 	}
 }
 else
+{
 	Session::put('errorchecklist','Invalid input.');
+	return Redirect::back()->withInput();
+}	
 	
 // return Redirect::back();
 $request_id = Input::get('pr_id');
@@ -1877,7 +1917,10 @@ if (($check==2||($remarks==" "&&$check==1))&&$assignee!=NULL)
 	}
 }
 else
+{
 	Session::put('errorchecklist','Invalid input.');
+	return Redirect::back()->withInput();
+}	
 	
 // return Redirect::back();
 $request_id = Input::get('pr_id');
@@ -1953,7 +1996,10 @@ if (($check==1)&&$assignee!=NULL)
 	}
 }
 else
+{
 	Session::put('errorchecklist','Invalid input.');
+	return Redirect::back()->withInput();
+}	
 	
 // return Redirect::back();
 $request_id = Input::get('pr_id');

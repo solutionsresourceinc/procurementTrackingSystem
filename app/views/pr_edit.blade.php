@@ -444,7 +444,15 @@
                                 {{Form::open(['url'=>'insertaddon'], 'POST')}}
                                     <input type="hidden" name="otherDetails_id" value="{{$otherdetails->id}}">
                                     <input type="hidden" name="purchase_request_id" value="{{$purchaseToEdit->id}}">
-                                    <td colspan="3"><input name ="value" type="text" class="form-control"></td>
+                                    <td colspan="3">
+
+
+                                        <input name ="value" type="text" class="form-control" value="<?php if($otherdetails->id==Session::get("retainId"))
+                                        {
+                                            echo trim(Session::get("retainOtherDetails"));
+                                        }
+                                        
+                                            ?>"></td>
                                     <td align="center"><button class ="btn btn-primary">Save</button></td>
                                 {{Form::close()}}
                             @else 
@@ -539,21 +547,43 @@
                             {{Form::open(['url'=>'checklistedit', 'id' => $myForm], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
                                 <td class="edit-pr-input">
-                                    <input type ="text" name="assignee" placeholder="Enter name" class="form-control" width="100%" maxlength="100">
+                                    <input type ="text" name="assignee" placeholder="Enter name" class="form-control" width="100%" maxlength="100"
+                                    value="<?php
+                                    if (NULL!=Input::old('assignee'))
+                                    echo Input::old('assignee');
+                                    ?>"
+                                    >
                                 </td>
                                 <td class="edit-pr-input"> 
                                     <?php 
                                     $today = date("m/d/y");
                                     ?>
                                     <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
-                                        <input type="text" class="form-control" name="dateFinished" id="dateFinished" style="text-align: center; width:100%" value="{{$today}}"/>
+                                        <input type="text" class="form-control" name="dateFinished" id="dateFinished" style="text-align: center; width:100%" value="
+                                        <?php
+                                        if (NULL!=Input::old('dateFinished'))
+                                            echo Input::old('dateFinished');
+                                        else
+                                            $today;
+                                        ?>
+                                        "/>
                                     </div>
                                 </td>
                                 <td class="edit-pr-input">
-                                    <input type="number" name="daysOfAction" class="form-control"  min="0" value="1" width="100%" maxlength="12">
+                                    <input type="number" name="daysOfAction" class="form-control"  min="0" value="1" width="100%" maxlength="12"
+                                    value="<?php
+                                    if (NULL!=Input::old('daysOfAction'))
+                                    echo Input::old('daysOfAction');
+                                    ?>"
+                                    >
                                 </td>
                                 <td class="edit-pr-input">
-                                    <input type="text" name="remarks"  class="form-control" maxlength="255" width="100%">
+                                    <input type="text" name="remarks"  class="form-control" maxlength="255" width="100%"
+                                    value="<?php
+                                    if (NULL!=Input::old('remarks'))
+                                    echo Input::old('remarks');
+                                    ?>"
+                                    >
                                 </td>
                                 </tr>
                                 <tr class="current-task">
@@ -575,7 +605,12 @@
                                 </td>
                                 
                                 <td class="edit-pr-input" colspan="2">
-                                    <input type="text" name="by"  placeholder="Enter name" class="form-control" maxlength="100" width="80%" maxlength="100">
+                                    <input type="text" name="by"  placeholder="Enter name" class="form-control" maxlength="100" width="80%" maxlength="100"
+                                    value="<?php
+                                    if (NULL!=Input::old('by'))
+                                    echo Input::old('by');
+                                    ?>"
+                                    >
                                 </td>
 
                                 </tr>
@@ -593,7 +628,12 @@
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
                                 <td class="edit-pr-input">
                                     Reference No. : 
-                                    <input type="text" name="referenceno"  class="form-control" maxlength="100" width="80%" maxlength="100">
+                                    <input type="text" name="referenceno"  class="form-control" maxlength="100" width="80%" maxlength="100"
+                                    value="<?php
+                                    if (NULL!=Input::old('referenceno'))
+                                    echo Input::old('referenceno');
+                                    ?>"
+                                    >
                                 </td>
                                 <td class="edit-pr-input"> 
                                     Date: 
@@ -601,12 +641,25 @@
                                     $today = date("m/d/y");
                                     ?>
                                     <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
-                                        <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" value="{{$today}}"/>
+                                        <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" value="
+                                        <?php
+                                        if (NULL!=Input::old('date'))
+                                            echo Input::old('date');
+                                        else
+                                            $today;
+                                        ?>
+                                        "
+                                        />
                                     </div>
                                 </td>
                                 <td class="edit-pr-input" colspan="3">
                                     By: 
-                                    <input type="text" name="by"  placeholder="Enter name" class="form-control" maxlength="100" width="80%" maxlength="100">
+                                    <input type="text" name="by"  placeholder="Enter name" class="form-control" maxlength="100" width="80%" maxlength="100"
+                                     value="<?php
+                                    if (NULL!=Input::old('by'))
+                                    echo Input::old('by');
+                                    ?>"
+                                    >
                                 </td>
 
                                 </tr>
@@ -623,11 +676,22 @@
                             {{Form::open(['url'=>'supplier', 'id' => $myForm], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
                                 <td class="edit-pr-input" colspan="2">
-                                    <input type="text" name="supplier"  class="form-control" maxlength="100" width="80%" placeholder="Enter supplier">
+                                    <input type="text" name="supplier"  class="form-control" maxlength="100" width="80%" placeholder="Enter supplier"
+                                     value="<?php
+                                    if (NULL!=Input::old('supplier'))
+                                    echo Input::old('supplier');
+                                    ?>"
+
+                                    >
                                 </td>
                                 
                                 <td class="edit-pr-input" colspan="2">
-                                    <input type="decimal" name="amount"  id="amount" class="form-control" maxlength="12" width="80%" placeholder="Enter amount" onkeypress="return isNumberKey(event)" onchange="checklist_changeAmount(this.id,this.value)">
+                                    <input type="decimal" name="amount"  id="amount" class="form-control" maxlength="12" width="80%" placeholder="Enter amount" onkeypress="return isNumberKey(event)" onchange="checklist_changeAmount(this.id,this.value)"
+                                     value="<?php
+                                    if (NULL!=Input::old('amount'))
+                                    echo Input::old('amount');
+                                    ?>"
+                                    >
                                 </td>
 
                                 </tr>
@@ -645,11 +709,21 @@
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
                                 <td class="edit-pr-input" colspan="2">
                     
-                                    <input type="decimal" name="amt"  id="amt" class="form-control" maxlength="12" width="80%" placeholder="Enter cheque amount" onkeypress="return isNumberKey(event)" onchange="checklist_changeAmount(this.id,this.value)">
+                                    <input type="decimal" name="amt"  id="amt" class="form-control" maxlength="12" width="80%" placeholder="Enter cheque amount" onkeypress="return isNumberKey(event)" onchange="checklist_changeAmount(this.id,this.value)"
+                                     value="<?php
+                                    if (NULL!=Input::old('amt'))
+                                    echo Input::old('amt');
+                                    ?>"
+                                    >
                                 </td>
                                 <td class="edit-pr-input" colspan="2">
                                     
-                                    <input type="decimal" name="num"  class="form-control" maxlength="12" width="80%" placeholder="Enter cheque number">
+                                    <input type="decimal" name="num"  class="form-control" maxlength="12" width="80%" placeholder="Enter cheque number"
+                                     value="<?php
+                                    if (NULL!=Input::old('num'))
+                                    echo Input::old('num');
+                                    ?>"
+                                    >
                                 </td>
                                 <td class="edit-pr-input" colspan="2">
                                
@@ -657,7 +731,14 @@
                                     $today = date("m/d/y");
                                     ?>
                                     <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
-                                        <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" value="{{$today}}"/>
+                                        <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" value="
+                                        <?php
+                                        if (NULL!=Input::old('date'))
+                                            echo Input::old('date');
+                                        else
+                                            $today;
+                                        ?>
+                                        "/>
                                     </div>
                                 </td>
                                 
@@ -687,40 +768,44 @@
                                         $today = date("m/d/y");
                                         ?>
                                         <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
-                                            <input type="text" class="form-control" name="datepublished" id="datepublished" style="text-align: center; width:100%"value="{{$today}}" />
+                                            <input type="text" class="form-control" name="datepublished" id="datepublished" style="text-align: center; width:100%"
+                                            value="
+                                        <?php
+                                        if (NULL!=Input::old('datepublished'))
+                                            echo Input::old('datepublished');
+                                        else
+                                            $today;
+                                        ?>
+                                        "
+                                             />
                                         </div>
                                     </td>
                                     <td>
                                         <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
-                                            <input type="text" class="form-control" name="enddate" id="enddate" style="text-align: center; width:100%" value="{{$today}}" />
+                                            <input type="text" class="form-control" name="enddate" id="enddate" style="text-align: center; width:100%" 
+                                            value="
+                                        <?php
+                                        if (NULL!=Input::old('enddate'))
+                                            echo Input::old('enddate');
+                                        else
+                                            $today;
+                                        ?>
+                                        "
+                                             />
                                         </div>
                                     </td>
                                     <td class="edit-pr-input" colspan="2">  
-                                        <input type="text" name="by"  placeholder="Enter name" class="form-control" maxlength="100" width="80%">
+                                        <input type="text" name="by"  placeholder="Enter name" class="form-control" maxlength="100" width="80%"
+                                        value="
+                                        <?php
+                                        if (NULL!=Input::old('by'))
+                                            echo Input::old('by');
+                                       
+                                        ?>
+                                        "
+                                        >
                                     </td>
-                                    <!--td>
-                                    {{$tasks->taskName}}
-                                    <br>
-                                    <?php 
-                                    $today = date("m/d/y");
-                                    ?>
-                                    <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
-                                        <input type="text" class="form-control" name="datepublished" id="datepublished" style="text-align: center; width:100%"value="{{$today}}" />
-                                    </div>
-                                    </td>
-                                    <td>
-                                    End Date
-                                    <br>
-                                    <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
-                                        <input type="text" class="form-control" name="enddate" id="enddate" style="text-align: center; width:100%" value="{{$today}}" />
-                                    </div>
-                                    </td>
-                                    <td >
-                                    Posted By
-                                    </td>
-                                    <td class="edit-pr-input" colspan="2">  
-                                    <input type="text" name="by"  placeholder="Enter name" class="form-control" maxlength="100" width="80%">
-                                    </td-->
+                          
                                 </tr>
                                 <tr class="current-task">
                                 <td colspan="4" style="border-right: none"></td>
@@ -747,41 +832,45 @@
                                         $today = date("m/d/y");
                                         ?>
                                         <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
-                                            <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" value="{{$today}}"/>
+                                            <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" 
+                                            value="
+                                        <?php
+                                        if (NULL!=Input::old('date'))
+                                            echo Input::old('date');
+                                        else
+                                            $today;
+                                        ?>
+                                        "
+                                            />
                                         </div>
                                     </td>
                                     <td>
                                         <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
-                                            <input type="text" class="form-control" name="biddingdate" id="biddingdate" style="text-align: center; width:100%" value="{{$today}}"/>
+                                            <input type="text" class="form-control" name="biddingdate" id="biddingdate" style="text-align: center; width:100%" 
+                                            value="
+                                        <?php
+                                        if (NULL!=Input::old('biddingdate'))
+                                            echo Input::old('biddingdate');
+                                        else
+                                            $today;
+                                        ?>
+                                        "
+                                            />
                                         </div>
                                     </td>
                                     <td class="edit-pr-input" colspan="2" >  
-                                        <input type="text" name="by"  class="form-control" maxlength="100" width="80%" placeholder="Enter name">
+                                        <input type="text" name="by"  class="form-control" maxlength="100" width="80%" placeholder="Enter name"
+                                        value="
+                                        <?php
+                                        if (NULL!=Input::old('by'))
+                                            echo Input::old('by');
+                                        
+                                        ?>
+                                        "
+                                        >
                                     </td>
 
-                                    <!--td>
-                                    {{$tasks->taskName}}
-                                    <br>
-                                    <?php 
-                                    $today = date("m/d/y");
-                                    ?>
-                                    <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
-                                        <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" value="{{$today}}"/>
-                                    </div>
-                                    </td>
-                                    <td>
-                                    Date of Bidding
-                                    <br>
-                                    <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
-                                        <input type="text" class="form-control" name="biddingdate" id="biddingdate" style="text-align: center; width:100%" value="{{$today}}"/>
-                                    </div>
-                                    </td>
-                                    <td >
-                                    Checked By
-                                    </td>
-                                    <td class="edit-pr-input" colspan="2" >  
-                                    <input type="text" name="by"  class="form-control" maxlength="100" width="80%" placeholder="Enter name">
-                                    </td-->
+                                   
                                 </tr>
                                 <tr class="current-task">
                                 <td colspan="4" style="border-right: none"></td>
@@ -806,27 +895,29 @@
                                         $today = date("m/d/y");
                                         ?>
                                         <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
-                                            <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" value="{{$today}}"/>
+                                            <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" value="
+                                        <?php
+                                        if (NULL!=Input::old('date'))
+                                            echo Input::old('date');
+                                        else
+                                            $today;
+                                        ?>
+                                        "
+                                        />
                                         </div>
                                     </td>
                                     <td class="edit-pr-input" colspan="2">  
-                                        <input type="number" name="noofdays"  class="form-control" maxlength="100" width="80%" placeholder="Enter no. of days">
+                                        <input type="number" name="noofdays"  class="form-control" maxlength="100" width="80%" placeholder="Enter no. of days"
+                                        value="
+                                        <?php
+                                        if (NULL!=Input::old('noofdays'))
+                                            echo Input::old('noofdays');
+                                       
+                                        ?>
+                                        "
+                                        >
                                     </td>   
-                                    <!--td>
-                                    <?php 
-                                    $today = date("m/d/y");
-                                    ?>
-                                    <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
-                                        <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" value="{{$today}}"/>
-                                    </div>
-                                    </td>
-                                    
-                                    <td >
-                                    No. of Days Accomplished
-                                    </td>
-                                    <td class="edit-pr-input" colspan="3">  
-                                    <input type="number" name="noofdays"  class="form-control" maxlength="100" width="80%" placeholder="Enter no. of days">
-                                    </td-->
+                 
                                 </tr>
                                 <tr class="current-task">
                                 <td colspan="4" style="border-right: none"></td>
@@ -845,7 +936,16 @@
                                     $today = date("m/d/y");
                                     ?>
                                     <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
-                                        <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" value="{{$today}}"/>
+                                        <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" 
+                                        value="
+                                        <?php
+                                        if (NULL!=Input::old('date'))
+                                            echo Input::old('date');
+                                        else
+                                            $today;
+                                        ?>
+                                        "
+                                        />
                                     </div>
                                     </td>
                                   
@@ -874,35 +974,37 @@
                                         $today = date("m/d/y");
                                         ?>
                                         <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
-                                            <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" value="{{$today}}"/>
+                                            <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" value="
+                                        <?php
+                                        if (NULL!=Input::old('date'))
+                                            echo Input::old('date');
+                                        else
+                                            $today;
+                                        ?>
+                                        "/>
                                         </div>
                                     </td>
-                                    <td><input type="number" name="noofdays"  class="form-control" maxlength="100" width="80%" placeholder="Enter no. of days accomplished"></td>
+                                    <td><input type="number" name="noofdays"  class="form-control" maxlength="100" width="80%" placeholder="Enter no. of days accomplished"
+                                        value="
+                                        <?php
+                                        if (NULL!=Input::old('noofdays'))
+                                            echo Input::old('noofdays');
+                                     
+                                        ?>
+                                        "
+                                        ></td>
                                     <td class="edit-pr-input" colspan="2">  
-                                        <input type="text" name="contractmeeting"  class="form-control" maxlength="100" width="80%" placeholder="Enter contract agreement">
-                                    </td>
-                                    <!--td>
-                                        {{$tasks->taskName}}
-                                    <?php 
-                                    $today = date("m/d/y");
-                                    ?>
-                                    <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
-                                        <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" value="{{$today}}"/>
-                                    </div>
+                                        <input type="text" name="contractmeeting"  class="form-control" maxlength="100" width="80%" placeholder="Enter contract agreement"
+                                        value="
+                                        <?php
+                                        if (NULL!=Input::old('contractmeeting'))
+                                            echo Input::old('contractmeeting');
+                                        
+                                        ?>
+                                        "
+                                        >
                                     </td>
                                     
-                                    <td >
-                                    No. of Days Accomplished
-                                    </td>
-                                    <td class="edit-pr-input">  
-                                    <input type="number" name="noofdays"  class="form-control" maxlength="100" width="80%" placeholder="Enter no. of days accomplished">
-                                    </td>
-                                    <td>
-                                    Contract Agreement
-                                    </td>
-                                    <td class="edit-pr-input" colspan="2">  
-                                    <input type="text" name="contractmeeting"  class="form-control" maxlength="100" width="80%" placeholder="Enter contract agreement">
-                                    </td-->
 
                                 </tr>
                                 <tr class="current-task">
@@ -929,38 +1031,43 @@
                                         $today = date("m/d/y");
                                         ?>
                                         <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
-                                            <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" value="{{$today}}"/>
+                                            <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" 
+                                            value="
+                                        <?php
+                                        if (NULL!=Input::old('date'))
+                                            echo Input::old('date');
+                                        else
+                                            $today;
+                                        ?>
+                                        "
+                                            />
                                         </div>
                                     </td>
                                     <td class="edit-pr-input">  
-                                        <input type="number" name="noofdays"  class="form-control" maxlength="12" width="80%" placeholder="Enter no. of days accomplished">
+                                        <input type="number" name="noofdays"  class="form-control" maxlength="12" width="80%" placeholder="Enter no. of days accomplished"
+                                        value="
+                                        <?php
+                                        if (NULL!=Input::old('noofdays'))
+                                            echo Input::old('noofdays');
+                                        
+                                            
+                                        ?>
+                                        "
+                                        >
                                     </td>
                                     <td class="edit-pr-input" colspan="2">  
-                                        <input type="text" name="contractmeeting"  class="form-control" maxlength="100" width="80%" placeholder="Enter minutes of meeting">
+                                        <input type="text" name="contractmeeting"  class="form-control" maxlength="100" width="80%" placeholder="Enter minutes of meeting"
+                                        value="
+                                        <?php
+                                        if (NULL!=Input::old('contractmeeting'))
+                                            echo Input::old('contractmeeting');
+                                        
+                                            
+                                        ?>
+                                        "
+                                        >
                                     </td>
-                                    <!--td>
-                                        {{$tasks->taskName}}
-                                    <?php 
-                                    $today = date("m/d/y");
-                                    ?>
-                                    <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
-                                        <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" value="{{$today}}"/>
-                                    </div>
-                                    </td>
-                                    
-                                    <td >
-                                    No. of Days Accomplished
-                                    </td>
-                                    <td class="edit-pr-input">  
-                                    <input type="number" name="noofdays"  class="form-control" maxlength="12" width="80%" placeholder="Enter no. of days accomplished">
-                                    </td>
-                                    <td>
-                                    Minutes of Meeting
-                                    </td>
-                                    <td class="edit-pr-input" colspan="2">  
-                                    <input type="text" name="contractmeeting"  class="form-control" maxlength="100" width="80%" placeholder="Enter minutes of meeting">
-                                    </td-->
-
+                          
                                 </tr>
                                 <tr class="current-task">
                                 <td colspan="4" style="border-right: none"></td>
@@ -981,39 +1088,43 @@
                                 </tr>
                                 <tr class="@if($taskch!=0 && $taskc->task_id==$tasks->id && $tasks->designation_id==0) current-task @endif">
                                     <td>{{$tasks->taskName}}</td>
-                                    <td><input type="number" name="noofsuppliers"  class="form-control" maxlength="12" width="80%" placeholder="Enter no. of suppliers"></td>
+                                    <td><input type="number" name="noofsuppliers"  class="form-control" maxlength="12" width="80%" placeholder="Enter no. of suppliers"
+                                        value="
+                                        <?php
+                                        if (NULL!=Input::old('noofsuppliers'))
+                                            echo Input::old('noofsuppliers');
+                                       
+                                        ?>
+                                        "
+                                        ></td>
                                     <td>
                                         <?php 
                                         $today = date("m/d/y");
                                         ?>
                                         <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
-                                            <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" value="{{$today}}"/>
+                                            <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" value="
+                                        <?php
+                                        if (NULL!=Input::old('date'))
+                                            echo Input::old('date');
+                                        else
+                                            $today;
+                                        ?>
+                                        "
+                                        />
                                         </div>
                                     </td>
                                     <td class="edit-pr-input" colspan="2">  
-                                        <input type="text" name="by"  class="form-control" maxlength="100" width="80%" placeholder="Enter name">
+                                        <input type="text" name="by"  class="form-control" maxlength="100" width="80%" placeholder="Enter name"
+                                        value="
+                                        <?php
+                                        if (NULL!=Input::old('by'))
+                                            echo Input::old('by');
+                                        
+                                        
+                                        ?>
+                                        ">
                                     </td>
-                                    <!--td>
-                                    {{$tasks->taskName}}
-                                    <input type="number" name="noofsuppliers"  class="form-control" maxlength="12" width="80%" placeholder="Enter no. of suppliers">
-                                    </td>
-                                    <td>
-                                    Date of RFQ (Within PGEPS 7 Days)
-                                    </td>
-                                    <?php 
-                                    $today = date("m/d/y");
-                                    ?>
-                                    <td>
-                                    <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
-                                        <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" value="{{$today}}"/>
-                                    </div>
-                                    </td>
-                                    <td>
-                                    By
-                                    </td>
-                                    <td class="edit-pr-input" colspan="2">  
-                                    <input type="text" name="by"  class="form-control" maxlength="100" width="80%" placeholder="Enter name">
-                                    </td-->
+                                  
                                 </tr>
                                 <tr class="current-task">
                                 <td colspan="4" style="border-right: none"></td>
@@ -1032,11 +1143,29 @@
                                     $today = date("m/d/y");
                                     ?>
                                     <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
-                                        <input type="text" class="form-control" name="dateFinished" id="dateFinished" style="text-align: center; width:100%" value="{{$today}}"/>
+                                        <input type="text" class="form-control" name="dateFinished" id="dateFinished" style="text-align: center; width:100%" 
+                                        value="
+                                        <?php
+                                        if (NULL!=Input::old('date'))
+                                            echo Input::old('date');
+                                        else
+                                            $today;
+                                        ?>
+                                        "
+                                        />
                                     </div>
                                 </td>
                                 <td class="edit-pr-input" colspan="2">
-                                    <input type ="text" name="assignee" placeholder="Enter name" class="form-control" width="100%" maxlength="100" placeholder="Enter name">
+                                    <input type ="text" name="assignee" placeholder="Enter name" class="form-control" width="100%" maxlength="100" 
+                                    placeholder="Enter name"
+                                    value="
+                                        <?php
+                                        if (NULL!=Input::old('assignee'))
+                                            echo Input::old('assignee');
+                                       
+                                        ?>
+                                        "
+                                    >
                                 </td>
                                 </tr>
                                 <tr class="current-task">
@@ -1057,14 +1186,39 @@
                                     $today = date("m/d/y");
                                     ?>
                                     <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
-                                        <input type="text" class="form-control" name="dateFinished" id="dateFinished" style="text-align: center; width:100%" value="{{$today}}"/>
+                                        <input type="text" class="form-control" name="dateFinished" id="dateFinished" style="text-align: center; width:100%" 
+                                        value="
+                                        <?php
+                                        if (NULL!=Input::old('dateFinished'))
+                                            echo Input::old('dateFinished');
+                                        else
+                                            $today;
+                                        ?>
+                                        "
+                                        />
                                     </div>
                                 </td>
                                 <td class="edit-pr-input">
-                                    <input type ="text" name="assignee" placeholder="Enter name" class="form-control" width="100%" maxlength="100" placeholder="Enter name">
+                                    <input type ="text" name="assignee" placeholder="Enter name" class="form-control" width="100%" maxlength="100" placeholder="Enter name"
+                                    value="
+                                        <?php
+                                        if (NULL!=Input::old('assignee'))
+                                            echo Input::old('assignee');
+                    
+                                        ?>
+                                        "
+                                    >
                                 </td>
                                 <td class="edit-pr-input" colspan="2">
-                                    <input type="text" name="remarks"  class="form-control" maxlength="255" width="100%">
+                                    <input type="text" name="remarks"  class="form-control" maxlength="255" width="100%"
+                                    value="
+                                        <?php
+                                        if (NULL!=Input::old('remarks'))
+                                            echo Input::old('remarks');
+                                        
+                                        ?>
+                                        "
+                                    >
                                 </td>
                                 </tr>
                                 <tr class="current-task">
@@ -1085,7 +1239,7 @@
                         
                         echo "<tr>";
 
-                        //if ($tasks->taskType!="cheque"&&$tasks->taskType!="published"&&$tasks->taskType!="contract"&&$tasks->taskType!="meeting"&&$tasks->taskType!="rfq"&&$tasks->taskType!="evaluation")
+            
                         if($tasks->taskType!="cheque"&&$tasks->taskType!="published"&&$tasks->taskType!="contract"&&$tasks->taskType!="meeting"&&$tasks->taskType!="rfq"&&$tasks->taskType!="documents"&&$tasks->taskType!="evaluation"&&$tasks->taskType!="preparation")
                         {
                             echo "<td>";
