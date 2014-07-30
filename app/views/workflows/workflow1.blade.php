@@ -22,7 +22,7 @@
 		<div id="office-create-form" class="well div-form">
 	    	{{ Form::open(['url'=>'addtask'], 'POST', array('role' => 'form')) }}
 		    	<div class="col-md-8">
-			    	{{ Form::text('label', null, array('class' => 'form-control', 'placeholder' => 'Task Name','maxlength'=>'45')) }}
+			    	{{ Form::text('label', null, array('class' => 'form-control', 'placeholder' => 'Enter field label here','maxlength'=>'45')) }}
 			    		    <input type ="hidden" name="section_id" value="{{$sectionName->id}}">
 			    </div>
 		
@@ -123,7 +123,7 @@
 		<div id="office-create-form" class="well div-form">
 	    	{{ Form::open(['url'=>'addtask'], 'POST', array('role' => 'form')) }}
 		    	<div class="col-md-8">
-			    	{{ Form::text('label', null, array('class' => 'form-control', 'placeholder' => 'Task Name','maxlength'=>'45')) }}
+			    	{{ Form::text('label', null, array('class' => 'form-control', 'placeholder' => 'Enter field label here','maxlength'=>'45')) }}
 			    		    <input type ="hidden" name="section_id" value="{{$sectionName->id}}">
 			    </div>
 		
@@ -221,7 +221,7 @@
 		<div id="office-create-form" class="well div-form">
 		    	{{ Form::open(['url'=>'addtask'], 'POST', array('role' => 'form')) }}
 			    	<div class="col-md-8">
-				    	{{ Form::text('label', null, array('class' => 'form-control', 'placeholder' => 'Task Name','maxlength'=>'45')) }}
+				    	{{ Form::text('label', null, array('class' => 'form-control', 'placeholder' => 'Enter field label here','maxlength'=>'45')) }}
 				    		    <input type ="hidden" name="section_id" value="{{$sectionName->id}}">
 				    </div>
 			
@@ -318,7 +318,7 @@
 		<div id="office-create-form" class="well div-form">
 		    	{{ Form::open(['url'=>'addtask'], 'POST', array('role' => 'form')) }}
 			    	<div class="col-md-8">
-				    	{{ Form::text('label', null, array('class' => 'form-control', 'placeholder' => 'Task Name','maxlength'=>'45')) }}
+				    	{{ Form::text('label', null, array('class' => 'form-control', 'placeholder' => 'Enter field label here','maxlength'=>'45')) }}
 				    		    <input type ="hidden" name="section_id" value="{{$sectionName->id}}">
 				    </div>
 			
