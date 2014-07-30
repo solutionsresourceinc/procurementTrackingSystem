@@ -87,6 +87,9 @@
                 <?php
                         $docs=DB::table('document')->where('pr_id', '=',$id )->first();
                         $workflow=DB::table('workflow')->get();
+                        
+                        $luser=Auth::user()->id;
+                        $count= Count::where('doc_id','=', $docs->id)->where('user_id','=', $luser )->delete();
                     ?>
                 <div class="row">
                     <div class="col-md-6">
