@@ -396,11 +396,11 @@
                                 {{Form::open(['url'=>'insertaddon'], 'POST')}}
                                     <input type="hidden" name="otherDetails_id" value="{{$otherdetails->id}}">
                                     <input type="hidden" name="purchase_request_id" value="{{$purchaseToEdit->id}}">
-                                    <td colspan="2"><input name ="value" type="text" class="form-control"></td>
+                                    <td colspan="3"><input name ="value" type="text" class="form-control"></td>
                                     <td align="center"><button class ="btn btn-primary">Save</button></td>
                                 {{Form::close()}}
                             @else 
-                                <td width='48.5%' colspan='2'>{{$values->value}}</td>
+                                <td width='48.5%' colspan='3'>{{$values->value}}</td>
                     
                                 {{Form::open(['url'=>'editaddon', 'POST'])}}
                                     <input type='hidden' name='values_id' value="{{$values->id}}">
