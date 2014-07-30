@@ -664,10 +664,10 @@
                     @if($workflow->workFlowName!="Direct Contracting")
                     <tr>
                             <td>TOTAL NO. OF DAYS</td>
+                            <!-- <td></td>
                             <td></td>
-                            <td></td>
-                            <td width="12.5%">{{$sectiondays}}</td>
-                            <td></td>
+                            <td></td> -->
+                            <td width="12.5%" colspan="4"><center>{{$sectiondays}}</center></td>
                     </tr>
                     @endif
                     </table></div></div>
