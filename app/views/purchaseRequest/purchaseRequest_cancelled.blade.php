@@ -189,7 +189,7 @@
 
 
                         </td>
-                        <td width="12%" style="text-align: center">P{{{ $request->amount }}}</td>
+                        <td width="12%" style="text-align: center">{{{ $request->amount }}}</td>
                         <td width="20%">{{ $request->dateReceived; }}</td>
 
                        
