@@ -107,10 +107,6 @@
                                 </option>
                             @endforeach
                         </select>
-                        @if (Session::get('m6'))
-                            <font color="red"><i>The mode of procurement is required field</i></font>
-                        @endif
-                      
                     </div>
 
                     <div class="col-md-3">
