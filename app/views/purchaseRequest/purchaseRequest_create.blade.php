@@ -266,6 +266,7 @@
            
 
                 <?php
+                error_reporting(0);
                  $attachmentc = DB::table('attachments')->where('doc_id', $doc_id)->count();
                  if ($attachmentc!=0)
          

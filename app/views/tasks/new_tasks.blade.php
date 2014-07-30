@@ -18,8 +18,7 @@
             @foreach($task_row as $task) 
                 <!-- Get all task details with id = task->id -->
                 <?php
-                    $taskDetails_row = TaskDetails::whereTaskId($task->id)->whereStatus("New")->whereAssigneeId(0)->paginate(9); 
-                    Session::put('taskDetails_row','true');
+                    $taskDetails_row = TaskDetails::whereTaskId($task->id)->whereStatus("New")->whereAssigneeId(0)->paginate(10); 
                     $show_pagination = 1;
 
                     $workflow_id = $task->wf_id;
@@ -57,8 +56,9 @@
 
         <div>
            
-            @if(Session::get('taskDetails_row'))
-                {{ $taskDetails_row->links(); }} 
+            @if(Session::get('$taskDetails_row'))
+                <center>{{ $taskDetails_row->links(); }}</center>
+                
              @endif
         </div>
     </div>
