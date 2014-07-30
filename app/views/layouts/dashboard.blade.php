@@ -45,6 +45,14 @@
         top: calc(50% - 200px) !important;
         overflow: hidden;
         }
+
+        @media print /*FOR PRINT LAYOUT*/
+        {    
+            .no-print, .no-print *
+            {
+                display: none !important;
+            }
+        }
         </style>
     </head>
     <body>
@@ -342,7 +350,7 @@
 
 
     <br/>
-    <div class="container" style="width: 100%">
+    <div class="container no-print" style="width: 100%">
         <p class="text-muted" style="text-align: center; font-size: 11px;">Developed by 
             <a href="http://solutionsresource.com/" title="Solutions Resource Inc. - Web Design and Development Seattle Wa, Mobile Apps, Internet and Social Media Marketing">
             Solutions Resource, Inc.</a><br/>
