@@ -97,7 +97,7 @@
     <div align="left" class="col-md-4" id="noOfResult">{{ $displayResult }} </div>   
     <div align="center" class="col-md-4"></div>   
     <div align="center" class="col-md-4">   
-        <input type="text" class="form-control filter" placeholder="Enter Seach Keywords"> 
+        <input type="text" class="form-control filter" placeholder="Enter search keywords"> 
     </div>
     <br/>
     <br/>
@@ -191,7 +191,7 @@
 
 
                         </td>
-                        <td width="12%" style="text-align: center">P{{{ $request->amount }}}</td>
+                        <td width="12%" style="text-align: center">{{{ $request->amount }}}</td>
                         <td width="20%">{{ $request->dateReceived; }}</td>
 
                        

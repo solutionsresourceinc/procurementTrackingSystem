@@ -116,7 +116,11 @@
 
                     <div class="col-md-3">
                         {{ Form::label('otherType', 'Other Type', array('class' => 'create-label')) }}
-                        <input type="text" disabled value="{{ $purchaseToEdit->otherType }}" class="form-control">
+                        @if($purchaseToEdit->otherType == ' ' || $purchaseToEdit->otherType == null)
+                            <input type="text" disabled value="None" class="form-control">
+                        @else
+                            <input type="text" disabled value="{{ $purchaseToEdit->otherType }}" class="form-control">
+                        @endif
                     </div>
 
                     <div class="col-md-3">

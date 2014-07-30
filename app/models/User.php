@@ -13,7 +13,7 @@ class User extends ConfideUser implements UserInterface, RemindableInterface {
 	use HasRole;
 
 	protected $table = 'users';
-
+	public $timestamps = true;
 	public $fillable = ['username','firstname','lastname','email','password','confirmation_code',
 						'confirmed','created_at','updated_at','office_id'];
 

@@ -5,23 +5,91 @@ class TaskController extends Controller {
 	public function newTask()
 	{
 		$user_id = Auth::user()->id;
-		$user_designations = UserHasDesignation::whereUsersId($user_id)->get();
+		$user_designations = UserHasDesignation::whereUsersId($user_id)->where('designation_id','!=','0')->get();
 
-		return View::make('tasks.new_tasks')->with('user_designations',$user_designations);
+		$userDesignations = "";
+		$counter = 1;
+
+		foreach ($user_designations as $designation) 
+		{
+			if($counter == 1)
+				$userDesignations = $userDesignations . "$designation->designation_id";
+			else
+				$userDesignations = $userDesignations . ",$designation->designation_id";
+			$counter++;
+		}
+
+		$task_row = Task::whereDesignationId($designation->designation_id)->where('designation_id','!=', '0')->get();
+		$task_row  = DB::select("select * from tasks where designation_id in ( $userDesignations )");
+
+		$taskIds = array();
+		$counter = 1;
+		foreach($task_row as $task)
+		{
+			array_push($taskIds, $task->id);
+		}
+
+		return View::make('tasks.new_tasks')->with('taskIds',$taskIds);
 	}
 
 	public function active()
 	{
 		$user_id = Auth::user()->id;
-		$user_designations = UserHasDesignation::whereUsersId($user_id)->get();
-		return View::make('tasks.active_tasks')->with('user_designations',$user_designations);
+		$user_designations = UserHasDesignation::whereUsersId($user_id)->where('designation_id','!=','0')->get();
+
+		$userDesignations = "";
+		$counter = 1;
+
+		foreach ($user_designations as $designation) 
+		{
+			if($counter == 1)
+				$userDesignations = $userDesignations . "$designation->designation_id";
+			else
+				$userDesignations = $userDesignations . ",$designation->designation_id";
+			$counter++;
+		}
+
+		$task_row = Task::whereDesignationId($designation->designation_id)->where('designation_id','!=', '0')->get();
+		$task_row  = DB::select("select * from tasks where designation_id in ( $userDesignations )");
+
+		$taskIds = array();
+		$counter = 1;
+		foreach($task_row as $task)
+		{
+			array_push($taskIds, $task->id);
+		}
+
+		return View::make('tasks.active_tasks')->with('taskIds',$taskIds);
 	}
 
 	public function overdue()
 	{
 		$user_id = Auth::user()->id;
-		$user_designations = UserHasDesignation::whereUsersId($user_id)->get();
-		return View::make('tasks.overdue_tasks')->with('user_designations',$user_designations);
+		$user_designations = UserHasDesignation::whereUsersId($user_id)->where('designation_id','!=','0')->get();
+
+		$userDesignations = "";
+		$counter = 1;
+
+		foreach ($user_designations as $designation) 
+		{
+			if($counter == 1)
+				$userDesignations = $userDesignations . "$designation->designation_id";
+			else
+				$userDesignations = $userDesignations . ",$designation->designation_id";
+			$counter++;
+		}
+
+		$task_row = Task::whereDesignationId($designation->designation_id)->where('designation_id','!=', '0')->get();
+		$task_row  = DB::select("select * from tasks where designation_id in ( $userDesignations )");
+
+		$taskIds = array();
+		$counter = 1;
+		foreach($task_row as $task)
+		{
+			array_push($taskIds, $task->id);
+		}
+
+		return View::make('tasks.overdue_tasks')->with('taskIds',$taskIds);
 	}
 
 	public function done()
