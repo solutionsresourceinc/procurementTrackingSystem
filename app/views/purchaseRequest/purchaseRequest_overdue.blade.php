@@ -1,21 +1,11 @@
 @extends('layouts.dashboard')
 
 @section('content')
-
-<!--CODE REVIEW:
-    - remove comments
-    - variables must be descriptive
--->
+{{Session::put('backTo','purchaseRequest/overdue');}}
 
 <h1 class="pull-left">List of Overdue Purchase Requests</h1>
     
-    @if ( Entrust::hasRole('Administrator') || Entrust::hasRole('Procurement Personnel'))
-      <div class="pull-right options">
-          <a href="{{ URL::to('purchaseRequest/create') }}" class="btn btn-success">Create New</a>
-      </div>
-    @endif
-
-    <hr class="clear" />
+<hr class="clear" />
 <div id="pr_form">
     <form action="submitForm/" id="new_form" method="post" id="confirm">
 </div>
@@ -47,9 +37,62 @@
 @if(Session::get('notice'))
     <div class="alert alert-success"> {{ Session::get('notice') }}</div> 
 @endif
+
+ <?php 
+        error_reporting(0);
+        $date_today =date('Y-m-d H:i:s');
+        $useroffice=Auth::user()->office_id;
+
+        $page = $_REQUEST["page"]; 
+        Session::put('page',$page);
+
+        if(Entrust::hasRole('Requisitioner'))
+            $countPR = DB::table('purchase_request')->where('dueDate','<=',$date_today)->where('status', '=', 'Active')->where('office', $useroffice)->count(); 
+        else
+             $countPR = DB::table('purchase_request')->where('dueDate','<=',$date_today)->where('status', '=', 'Active')->count(); 
+
+        echo "<input type='hidden' id='countPR' value='$countPR'>";
+        $start = $page;
+
+        if(!Session::get('page') || $page == 1)
+        {
+            if($countPR <= 10)
+                $displayResult = "$countPR of $countPR";
+            else
+                $displayResult = "10 of $countPR";
+        }
+        else
+        {
+            $lastPR = 10 * $page;
+            $firstPR = $lastPR - 9;
+
+           
+            if($first >=  $countPR)
+            {
+                 $displayResult = "$firstPR - $lastPR of $countPR";
+            }
+            else
+            {
+                $remainingPR = $countPR - $firstPR;
+                $lastPR = $firstPR + $remainingPR;
+                $lastPR2 = $page * 10;
+
+                if($remainingPR == 0)
+                    $displayResult = "$firstPR of $countPR";
+                else if($remainingPR >= 10)
+                    $displayResult = "$firstPR - $lastPR2 of $countPR"; 
+                else
+                    $displayResult = "$firstPR - $lastPR of $countPR";
+            }
+        }
+
+
+
+    ?>
     
     <!-- START OF SEARCH BOX -->
-    <div align="center" class="col-md-8"></div>   
+    <div align="left" class="col-md-4" id="noOfResult">{{ $displayResult }} </div>   
+    <div align="center" class="col-md-4"></div>   
     <div align="center" class="col-md-4">   
         <input type="text" class="form-control filter" placeholder="Enter Seach Keywords"> 
     </div>
@@ -363,9 +406,46 @@
                     return rex.test($(this).text());
                 }).show();
                 document.getElementById('table_id').style.display = 'table';
-                document.getElementById('pages').style.display = 'table';
+                document.getElementById('pages').style.display = 'block';
                 document.getElementById('table_id2').style.display = 'none';
                 document.getElementById('table_id3').style.display = 'none';
+
+                 // No of Result
+                var page = getQueryVariable('page');
+                var countPR = document.getElementById('countPR').value;
+
+                if(page == 'false'|| page == 1)
+                {
+                    if(countPR <= 10)
+                        var displayResult = countPR + ' of ' + countPR;
+                    else
+                        var displayResult = "10 of " + countPR;
+                }
+                else
+                {
+                    var lastPR = 10 * page;
+                    var firstPR = lastPR - 9;
+                   
+                    if(firstPR >=  countPR)
+                    {
+                         displayResult = firstPR + " - " + lastPR + " of " + countPR;
+                    }
+                    else
+                    {
+                        var remainingPR = countPR - firstPR;
+                        lastPR = firstPR + remainingPR;
+                        var lastPR2 = page * 10;
+
+                        if(remainingPR == 0)
+                            var displayResult = firstPR + " of " + countPR;
+                        else if(remainingPR >= 10)
+                            var displayResult = firstPR + " - " + lastPR2 + " of " + countPR; 
+                        else
+                            var displayResult = firstPR + " - " + lastPR + " of " + countPR;
+                    }
+                }
+
+                document.getElementById('noOfResult').innerHTML = displayResult;
 
             }
             else
@@ -391,6 +471,9 @@
                     document.getElementById('table_id2').style.display = 'table';
                     document.getElementById('table_id3').style.display = 'none';
                 }
+
+                var noOfSearched = rowNum - 1; 
+                document.getElementById('noOfResult').innerHTML =  noOfSearched+ " result(s) ";
                 
 
             }
@@ -430,6 +513,18 @@
             //alert(reason);
             document.getElementById("form").submit();
         }
+
+        function getQueryVariable(variable)
+        {
+               var query = window.location.search.substring(1);
+               var vars = query.split("&");
+               for (var i=0;i<vars.length;i++) {
+                       var pair = vars[i].split("=");
+                       if(pair[0] == variable){return pair[1];}
+               }
+               return(1);
+        }
+        
         
     </script>
 

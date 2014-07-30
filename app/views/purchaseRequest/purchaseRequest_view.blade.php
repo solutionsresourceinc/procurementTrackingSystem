@@ -83,7 +83,7 @@
 		}
 	?>
 
-		<button type="button" class="btn btn-default no-print" onclick="window.location.href='../../purchaseRequest/view'">
+		<button type="button" class="btn btn-default no-print" onclick="window.location.href='{{ URL::to('back') }}'">
 			<span class="glyphicon glyphicon-step-backward"></span>&nbsp;Back
 		</button>
 		
@@ -101,7 +101,14 @@
 				<tr>
 					<td class="proc-headers" colspan="3"><h4 style="line-height: 25px;">
 						<?php $workName = DB::table('workflow')->where('id',$wfName->work_id)->first(); ?>
-						{{{ strtoupper($workName->workFlowName) }}}
+
+                        @if($purchase->otherType != "")
+                            <?php $workflowNameWithOtherType = $workName->workFlowName . " - " . $purchase->otherType; ?> 
+                        @else
+                            <?php $workflowNameWithOtherType = $workName->workFlowName ?> 
+                        @endif
+
+                        {{{ strtoupper($workflowNameWithOtherType) }}}
 
 						<span class="no-print label {{($purchase->status == 'New') ? 'label-primary' : (($purchase->status == 'Active') ? 'label-success' : (($purchase->status == 'Overdue') ? 'label-danger' : 'label-default'))}}">
 							{{ $purchase->status; }}
@@ -111,7 +118,7 @@
 
 					<td colspan="1" width="30%">
 						<span class="bac-ctrl-no"><strong>BAC CTRL. NO.:</strong></span><br/>
-						<h4 align="center" class="ctrl-no">{{ $purchase->controlNo }}</h4>
+						<h4 align="center" class="ctrl-no"><?php echo str_pad($purchase->controlNo, 5, '0', STR_PAD_LEFT); ?></h4>
 					</td>
 				</tr>
 
