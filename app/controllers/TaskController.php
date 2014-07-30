@@ -5,7 +5,7 @@ class TaskController extends Controller {
 	public function newTask()
 	{
 		$user_id = Auth::user()->id;
-		$user_designations = UserHasDesignation::whereUsersId($user_id)->where('designation_id','!=','0')->get();
+		$user_designations = UserHasDesignation::whereUsersId($user_id)->get();
 
 		$userDesignations = "";
 		$counter = 1;
@@ -35,7 +35,7 @@ class TaskController extends Controller {
 	public function active()
 	{
 		$user_id = Auth::user()->id;
-		$user_designations = UserHasDesignation::whereUsersId($user_id)->where('designation_id','!=','0')->get();
+		$user_designations = UserHasDesignation::whereUsersId($user_id)->get();
 
 		$userDesignations = "";
 		$counter = 1;
@@ -65,7 +65,7 @@ class TaskController extends Controller {
 	public function overdue()
 	{
 		$user_id = Auth::user()->id;
-		$user_designations = UserHasDesignation::whereUsersId($user_id)->where('designation_id','!=','0')->get();
+		$user_designations = UserHasDesignation::whereUsersId($user_id)->get();
 
 		$userDesignations = "";
 		$counter = 1;
