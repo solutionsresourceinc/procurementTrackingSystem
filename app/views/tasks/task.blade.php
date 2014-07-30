@@ -96,7 +96,6 @@ if($taskd->status=="New")
 <td>
 <span style="font-weight: bold">Control No. : </span><br/>
 <p><?php echo str_pad($purchase->controlNo, 5, '0', STR_PAD_LEFT); ?></p>
-<p><a href="{{ URL::to('purchaseRequest/vieweach/'.$purchase->taskdetails_id) }}" ><?php echo str_pad($purchase->controlNo, 5, '0', STR_PAD_LEFT); ?></a></p>
 
 </td>
 <tr>

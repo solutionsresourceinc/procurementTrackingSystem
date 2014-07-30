@@ -133,8 +133,7 @@
                         <?php $office = Office::find($purchase->office) ?>
                         {{ $office->officeName }}
                     </td>
-                    <!--td class="proc-data">DATE REQUESTED</td>
-                    <td class="proc-data">{{ $purchase->dateRequested }}</td-->
+       
 				</tr>
 
 				<tr>
