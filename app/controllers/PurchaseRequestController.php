@@ -26,157 +26,11 @@ class PurchaseRequestController extends Controller
 	public function create_submit()
 	{
 
-		$cno=Input::get('controlNo');
-		$cnp= Purchase::where('controlNo', $cno )->count();
-		
-		if ($cnp!=0)
-			return Redirect::back();
-		
+//Image Upload
 
-		$control_no = Input::get('controlNo');
-		$controlNo_purchase = Purchase::where('controlNo', $control_no )->count();
+$puchase=Purchase::orderby('id', 'DESC')->first();
 
-		if ($controlNo_purchase != 0 )
-			return Redirect::back();
-
-
-		$purchase = new Purchase;
-		$document = new Document;
-		$purchase->projectPurpose = strip_tags(Input::get( 'projectPurpose' ));
-		$purchase->sourceOfFund = strip_tags(Input::get( 'sourceOfFund' ));
-		$purchase->amount = Input::get( 'amount' );
-		$purchase->office = Input::get( 'office' );
-		$purchase->requisitioner = Input::get( 'requisitioner' );
-		$purchase->dateRequested = Input::get( 'dateRequested' );
-		$purchase->dateReceived = Input::get( 'dateReceived' );
-		$purchase->controlNo = Input::get('controlNo');
-		$purchase->status = 'Active';
-		$purchase->otherType = Input::get('otherType');
-
-		if(Input::get('otherType') == 'pakyaw')
-			$purchase->projectType = "None";
-		else
-			$purchase->projectType = Input::get('projectType');
-
-		// Set creator id
-		$user_id = Auth::user()->id;
-		$purchase->created_by = $user_id;
-
-		$purchase_save = $purchase->save();
-
-		if($purchase_save)
-		{
-			
-			$document->pr_id = $purchase->id;
-			$document->work_id = Input::get('hide_modeOfProcurement');
-			$document_save = $document->save();
-
-			if($document_save)
-			{
-				$doc_id= $document->id;
-				$workflow=Workflow::find($document->work_id);
-				$section=Section::where('workflow_id',$document->work_id)->orderBy('section_order_id', 'ASC')->get();
-				$firstnew=0;
-
-				// Set due date;
-				$new_purchase = Purchase::find($purchase->id);
-				$workflow_id = Input::get('hide_modeOfProcurement');
-				$workflow = Workflow::find($workflow_id);
-				$addToDate = $workflow->totalDays;
-				date_default_timezone_set("Asia/Manila");
-				$dueDate = date('Y-m-d H:i:s', strtotime("+$addToDate days" ));
-				$new_purchase->dueDate = $dueDate;
-				$new_purchase->save();
-
-
-				$tasks = Task::where('wf_id', $document->work_id)->orderBy('section_id', 'ASC')->orderBy('order_id', 'ASC')->get();
-
-
-				
-				foreach ($tasks as $task) 
-				{
-					$task_details = New TaskDetails;
-					$task_details->task_id = $task->id;
-					$stringamount=$new_purchase->amount;
-					$stringamount=str_replace(str_split(','), '', $stringamount);
-					$amount = (float)$stringamount;
-
-					if($firstnew == 0)
-					 	$task_details->status = "New";
-				 	else
-				 		$task_details->status = "Pending";
-				 	//Project Type 
-				 	if($task->taskName=="PRE-PROCUREMENT CONFERENCE"||$task->taskName=="ADVERTISEMENT"||$task->taskName=="PRE-BID CONFERENCE")
-				 	{
-				 		
-				 		$task_details->status="Lock";
-
-				 		if($new_purchase->projectType=="Goods/Services")
-						{
-							if($task->taskName=="PRE-PROCUREMENT CONFERENCE"||$task->taskName=="ADVERTISEMENT")
-							{
-								if(($amount>2000000))
-								{
-				
-								$task_details->status="Pending";
-				
-								}
-							}
-							else if($task->taskName=="PRE-BID CONFERENCE")				
-							{
-								if(($amount>1000000))
-								{
-								$task_details->status="Pending";
-								}
-							}
-						}
-						elseif($new_purchase->projectType=="Infrastructure")
-						{
-							if($task->taskName=="PRE-PROCUREMENT CONFERENCE"||$task->taskName=="ADVERTISEMENT")
-							{
-								if(($amount>5000000))
-								{
-								$task_details->status="Pending";
-								}
-							}
-							else if($task->taskName=="PRE-BID CONFERENCE")
-							{
-								if(($amount>1000000))
-								{
-								$task_details->status="Pending";
-								}
-							}				
-						}
-						elseif($new_purchase->projectType=="Consulting Services")
-						{
-							if(($amount>1000000))
-							{
-							$task_details->status="Pending";
-							}
-						}
-
-				 	}
-				 	//End Project Type
-
-						$firstnew=1;
-						$task_details->doc_id = $document->id;
-						$task_details->save();
-
-				}
-
-				$users = User::all();
-				foreach($users as $user)
-				{
-					$count = new Count;
-					$count->user_id = $user->id;
-					$count->doc_id = $doc_id;
-					$count->save();
-				}
-
-
-				//Image Upload
-
-				foreach(Input::file('file') as $file)
+foreach(Input::file('file') as $file)
 				{
 
             		$rules = array(
@@ -309,8 +163,164 @@ class PurchaseRequestController extends Controller
 
 
 					return Redirect::back()->withInput();
-				} //End Image Upload
+				} 
 
+
+//End Image Upload
+		$cno=Input::get('controlNo');
+		$cnp= Purchase::where('controlNo', $cno )->count();
+
+
+		if ($cnp!=0)
+			return Redirect::back();
+		
+
+		$control_no = Input::get('controlNo');
+		$controlNo_purchase = Purchase::where('controlNo', $control_no )->count();
+
+		if ($controlNo_purchase != 0 )
+			return Redirect::back();
+
+
+		$purchase = new Purchase;
+		$document = new Document;
+		$purchase->projectPurpose = strip_tags(Input::get( 'projectPurpose' ));
+		$purchase->sourceOfFund = strip_tags(Input::get( 'sourceOfFund' ));
+		$purchase->amount = Input::get( 'amount' );
+		$purchase->office = Input::get( 'office' );
+		$purchase->requisitioner = Input::get( 'requisitioner' );
+		$purchase->dateRequested = Input::get( 'dateRequested' );
+		$purchase->dateReceived = Input::get( 'dateReceived' );
+		$purchase->controlNo = Input::get('controlNo');
+		$purchase->status = 'Active';
+		$purchase->otherType = Input::get('otherType');
+
+
+
+		if(Input::get('otherType') == 'pakyaw')
+			$purchase->projectType = "None";
+		else
+			$purchase->projectType = Input::get('projectType');
+
+		// Set creator id
+		$user_id = Auth::user()->id;
+		$purchase->created_by = $user_id;
+
+		$purchase_save = $purchase->save();
+
+		if($purchase_save)
+		{
+			
+			$document->pr_id = $purchase->id;
+			$document->work_id = Input::get('hide_modeOfProcurement');
+			$document_save = $document->save();
+
+			if($document_save)
+			{
+				$doc_id= $document->id;
+				$workflow=Workflow::find($document->work_id);
+				$section=Section::where('workflow_id',$document->work_id)->orderBy('section_order_id', 'ASC')->get();
+				$firstnew=0;
+
+				// Set due date;
+				$new_purchase = Purchase::find($purchase->id);
+				$workflow_id = Input::get('hide_modeOfProcurement');
+				$workflow = Workflow::find($workflow_id);
+				$addToDate = $workflow->totalDays;
+				date_default_timezone_set("Asia/Manila");
+				$dueDate = date('Y-m-d H:i:s', strtotime("+$addToDate days" ));
+				$new_purchase->dueDate = $dueDate;
+				$new_purchase->save();
+
+
+				$tasks = Task::where('wf_id', $document->work_id)->orderBy('section_id', 'ASC')->orderBy('order_id', 'ASC')->get();
+
+
+				
+				foreach ($tasks as $task) 
+				{
+					$task_details = New TaskDetails;
+					$task_details->task_id = $task->id;
+					$stringamount=$new_purchase->amount;
+					$stringamount=str_replace(str_split(','), '', $stringamount);
+					$amount = (float)$stringamount;
+
+					if($firstnew == 0)
+					 	$task_details->status = "New";
+				 	else
+				 		$task_details->status = "Pending";
+				 	//Project Type 
+				 	if($task->taskName=="PRE-PROCUREMENT CONFERENCE"||$task->taskName=="ADVERTISEMENT"||$task->taskName=="PRE-BID CONFERENCE")
+				 	{
+				 		
+				 		$task_details->status="Lock";
+
+				 		if($new_purchase->projectType=="Goods/Services")
+						{
+							if($task->taskName=="PRE-PROCUREMENT CONFERENCE"||$task->taskName=="ADVERTISEMENT")
+							{
+								if(($amount>2000000))
+								{
+				
+								$task_details->status="Pending";
+				
+								}
+							}
+							else if($task->taskName=="PRE-BID CONFERENCE")				
+							{
+								if(($amount>1000000))
+								{
+								$task_details->status="Pending";
+								}
+							}
+						}
+						elseif($new_purchase->projectType=="Infrastructure")
+						{
+							if($task->taskName=="PRE-PROCUREMENT CONFERENCE"||$task->taskName=="ADVERTISEMENT")
+							{
+								if(($amount>5000000))
+								{
+								$task_details->status="Pending";
+								}
+							}
+							else if($task->taskName=="PRE-BID CONFERENCE")
+							{
+								if(($amount>1000000))
+								{
+								$task_details->status="Pending";
+								}
+							}				
+						}
+						elseif($new_purchase->projectType=="Consulting Services")
+						{
+							if(($amount>1000000))
+							{
+							$task_details->status="Pending";
+							}
+						}
+
+				 	}
+				 	//End Project Type
+
+						$firstnew=1;
+						$task_details->doc_id = $document->id;
+						$task_details->save();
+
+				}
+
+				$users = User::all();
+				foreach($users as $user)
+				{
+					$count = new Count;
+					$count->user_id = $user->id;
+					$count->doc_id = $doc_id;
+					$count->save();
+				}
+
+
+				
+
+				
 				$pr_id = Session::get('pr_id');
 
 
@@ -389,7 +399,7 @@ class PurchaseRequestController extends Controller
 
 					$reports->save();
 					//End Reports	
-			        $notice = "Purchase request created successfully. Email notice was not sent to the requisitioner. ";
+			        $notice = "Purchase request created successfully. Email notice was not sent. ";
 			    }
 
 													  
