@@ -152,7 +152,7 @@ $assign_user=User::find(Auth::user()->id);
 </tr>
 @endif
 
-<?php echo  $task->taskType; ?>
+
 
 @if($task->taskType=='certification')
 {{Form::open(['url'=>'certification'], 'POST')}}
@@ -472,8 +472,6 @@ else
 
 <tr>
 <td>
-<?php /*@if($task->taskType!='certification' && $task->taskType!='posting' && $task->taskType!='supplier' && $task->taskType!='cheque' && $task->taskType!='conference'
-&& $task->taskType!='published' && $task->taskType!='documents' && $task->taskType!='evaluation' && $task->taskType!='contract' && $task->taskType!='meeting') */?>
 
 
 @if($task->taskType=='normal')
