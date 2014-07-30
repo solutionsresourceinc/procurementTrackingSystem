@@ -291,9 +291,9 @@
             $userx=Auth::user()->id;
 
             if(Entrust::hasRole('Requisitioner'))
-                $requests = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('status', '=', 'Active')->where('office', $useroffice)->get(); 
+                $requests = DB::table('purchase_request')->where('dueDate','<=',$date_today)->where('status', '=', 'Active')->where('office', $useroffice)->get(); 
             else
-                $requests = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('status', '=', 'Active')->get(); 
+                $requests = DB::table('purchase_request')->where('dueDate','<=',$date_today)->where('status', '=', 'Active')->get(); 
             //End Query Restrictions
         ?>
 

@@ -26,9 +26,121 @@ class PurchaseRequestController extends Controller
 	public function create_submit()
 	{
 
+//Image Upload
+		$purchasecheck=Purchase::orderby('id', 'DESC')->count();
+if($purchasecheck!=0){
+$purchase=Purchase::orderby('id', 'DESC')->first();
+$docs=Document::orderby('id', 'DESC')->first();
+$pr_id=$purchase->id+1;
+$doc_id=$docs->id+1;
+}
+else
+{
+$pr_id=1;
+$doc_id=1;
+}
+foreach(Input::file('file') as $file)
+				{
+
+            		$rules = array(
+                		'file' => 'required|mimes:png,gif,jpeg,jpg|max:900000000000000000000'
+                	);
+
+	            	$validator = \Validator::make(array('file'=> $file), $rules);
+	            	$destine = public_path()."/uploads";
+	           		if($validator->passes())
+	           		{
+		                $ext = $file->guessClientExtension(); // (Based on mime type)
+		                $ext = $file->getClientOriginalExtension(); // (Based on filename)
+		                $filename = $file->getClientOriginalName();
+	             
+						$archivo = value(function() use ($file)
+						{
+		        			$filename = str_random(10) . '.' . $file->getClientOriginalExtension();
+		        			return strtolower($filename);
+	   					});
+
+						$archivo = value(function() use ($file)
+						{
+							$date = date('m-d-Y-h-i-s', time());
+						    $filename = $date."-". $file->getClientOriginalName();
+						    return strtolower($filename);
+						});
+
+
+		                $attach = new Attachments;
+		                $attach->doc_id=$doc_id;
+						$attach->data = $archivo;
+						$attach->save();
+
+						$filename = $doc_id."_".$attach->id;
+		                $file->move($destine, $archivo);
+		  
+		   				$target_folder = $destine; 
+		   				$upload_image = $target_folder."/".$archivo;
+
+		   				$thumbnail = $target_folder."/resize".$archivo;
+		        		$actual = $target_folder."/".$archivo;
+
+				      	// THUMBNAIL SIZE
+				        list($width, $height) = getimagesize($upload_image);
+
+				        $newwidth = $width; 
+				        $newheight = $height;
+				        while ( $newheight > 525) 
+				        {
+				        	$newheight=$newheight*0.8;
+				        	$newwidth=$newwidth*0.8;
+						}
+
+	    				$source=$upload_image;
+	    				$ext  = strtolower($ext);
+						$thumb = imagecreatetruecolor($newwidth, $newheight);
+						if ($ext=="jpg"||$ext=="jpeg")
+						    $source = imagecreatefromjpeg($upload_image);
+						elseif ($ext=="png")
+						 	$source = imagecreatefrompng($upload_image);
+						elseif ($ext=="gif")
+						 	$source = imagecreatefromgif($upload_image);
+						else
+        					continue;	      
+
+						       	// RESIZE 
+						    imagecopyresized($thumb, $source, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
+						        // MAKE NEW FILES
+						if ($ext=="jpg"||$ext=="jpeg")
+						 	imagejpeg($thumb, $thumbnail, 100);
+						elseif ($ext=="png")
+						 	imagepng($thumb, $thumbnail, 9);
+						elseif($ext=="gif")
+						 	imagegif($thumb, $thumbnail, 100);
+						 else
+						 	echo "An invalid image";
+
+						unlink($actual);
+				        // FILE RENAMES
+				        rename($thumbnail, $actual);
+
+
+	           
+	            	}
+		            else
+		            {
+		                $errors = $validator->errors();
+		                Session::put('imgerror','Invalid file.');
+
+		            }
+
+        		}
+
+		       
+//End Image Upload
+
+
 		$cno=Input::get('controlNo');
 		$cnp= Purchase::where('controlNo', $cno )->count();
-		
+
+
 		if ($cnp!=0)
 			return Redirect::back();
 		
@@ -53,6 +165,8 @@ class PurchaseRequestController extends Controller
 		$purchase->status = 'Active';
 		$purchase->otherType = Input::get('otherType');
 
+
+
 		if(Input::get('otherType') == 'pakyaw')
 			$purchase->projectType = "None";
 		else
@@ -64,7 +178,7 @@ class PurchaseRequestController extends Controller
 
 		$purchase_save = $purchase->save();
 
-		if($purchase_save)
+		if($purchase_save&&(Session::get('imgerror')==NULL||!Input::hasfile('file')))
 		{
 			
 			$document->pr_id = $purchase->id;
@@ -174,143 +288,9 @@ class PurchaseRequestController extends Controller
 				}
 
 
-				//Image Upload
+				
 
-				foreach(Input::file('file') as $file)
-				{
-
-            		$rules = array(
-                		'file' => 'required|mimes:png,gif,jpeg,jpg|max:900000000000000000000'
-                	);
-
-	            	$validator = \Validator::make(array('file'=> $file), $rules);
-	            	$destine = public_path()."/uploads";
-	           		if($validator->passes())
-	           		{
-		                $ext = $file->guessClientExtension(); // (Based on mime type)
-		                $ext = $file->getClientOriginalExtension(); // (Based on filename)
-		                $filename = $file->getClientOriginalName();
-	             
-						$archivo = value(function() use ($file)
-						{
-		        			$filename = str_random(10) . '.' . $file->getClientOriginalExtension();
-		        			return strtolower($filename);
-	   					});
-
-						$archivo = value(function() use ($file)
-						{
-							$date = date('m-d-Y-h-i-s', time());
-						    $filename = $date."-". $file->getClientOriginalName();
-						    return strtolower($filename);
-						});
-
-
-		                $attach = new Attachments;
-		                $attach->doc_id=$doc_id;
-						$attach->data = $archivo;
-						$attach->save();
-
-						$filename = $doc_id."_".$attach->id;
-		                $file->move($destine, $archivo);
-		  
-		   				$target_folder = $destine; 
-		   				$upload_image = $target_folder."/".$archivo;
-
-		   				$thumbnail = $target_folder."/resize".$archivo;
-		        		$actual = $target_folder."/".$archivo;
-
-				      	// THUMBNAIL SIZE
-				        list($width, $height) = getimagesize($upload_image);
-
-				        $newwidth = $width; 
-				        $newheight = $height;
-				        while ( $newheight > 525) 
-				        {
-				        	$newheight=$newheight*0.8;
-				        	$newwidth=$newwidth*0.8;
-						}
-
-	    				$source=$upload_image;
-	    				$ext  = strtolower($ext);
-						$thumb = imagecreatetruecolor($newwidth, $newheight);
-						if ($ext=="jpg"||$ext=="jpeg")
-						    $source = imagecreatefromjpeg($upload_image);
-						elseif ($ext=="png")
-						 	$source = imagecreatefrompng($upload_image);
-						elseif ($ext=="gif")
-						 	$source = imagecreatefromgif($upload_image);
-						else
-        					continue;	      
-
-						       	// RESIZE 
-						    imagecopyresized($thumb, $source, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
-						        // MAKE NEW FILES
-						if ($ext=="jpg"||$ext=="jpeg")
-						 	imagejpeg($thumb, $thumbnail, 100);
-						elseif ($ext=="png")
-						 	imagepng($thumb, $thumbnail, 9);
-						elseif($ext=="gif")
-						 	imagegif($thumb, $thumbnail, 100);
-						 else
-						 	echo "An invalid image";
-
-						unlink($actual);
-				        // FILE RENAMES
-				        rename($thumbnail, $actual);
-
-
-	           
-	            	}
-		            else
-		            {
-		                $errors = $validator->errors();
-		                Session::put('imgerror','Invalid file.');
-
-		            }
-
-        		}
-
-		        Session::put('imgsuccess','Files uploaded.');
-				if (Session::get('imgerror')&&Input::hasfile('file'))
-				{
-					
-					Session::forget('imgsuccess');
-					//Image Error Return
-					$purchase->delete();
-					
-					$task_details= TaskDetails::where('doc_id', $document->id)->delete();
-					$document->delete();
-					$message = "Failed to create purchase request.";
-					$count= Count::where('doc_id', $document->id)->delete();
-					// Set Main Error
-					$message = "Failed to save purchase request.";
-					Session::put('main_error', $message );
-
-					// Get Other Error Messages
-					$error_projectPurpose = $purchase->validationErrors->first('projectPurpose');
-					$error_projectType = $purchase->validationErrors->first('projectType');
-					$error_sourceOfFund = $purchase->validationErrors->first('sourceOfFund');
-					$error_amount = $purchase->validationErrors->first('amount');
-					$error_office = $purchase->validationErrors->first('office');
-					$error_requisitioner = $purchase->validationErrors->first('requisitioner');
-					$error_dateRequested = $purchase->validationErrors->first('dateRequested');
-					$error_dateReceived = $purchase->validationErrors->first('dateReceived');
-
-					// Inserting Error Message To a Session
-					Session::put('error_projectPurpose', $error_projectPurpose );
-					Session::put('error_sourceOfFund', $error_sourceOfFund );
-					Session::put('error_amount', $error_amount );
-					Session::put('error_office', $error_office );
-					Session::put('error_requisitioner', $error_requisitioner );
-					Session::put('error_dateRequested', $error_dateRequested );
-					Session::put('error_dateReceived', $error_dateReceived );
-					Session::put('error_projectType', $error_projectType );
-
-
-
-					return Redirect::back()->withInput();
-				} //End Image Upload
-
+				
 				$pr_id = Session::get('pr_id');
 
 
@@ -388,7 +368,7 @@ class PurchaseRequestController extends Controller
 
 					$reports->save();
 					//End Reports	
-			        $notice = "Purchase request created successfully. Email notice was not sent to the requisitioner. ";
+			        $notice = "Purchase request created successfully. Email notice was not sent. ";
 			    }
 
 													  
@@ -398,10 +378,15 @@ class PurchaseRequestController extends Controller
 				$workflow = Workflow::all();
 
 				return Redirect::to('purchaseRequest/view');
+				 Session::put('imgsuccess','Files uploaded.');
+				
+
+
 			} 
 			else
 			{
-				$purchase->delete();
+
+				
 				$message = "Failed to create purchase request.";
 				Session::put('main_error', $message );
 
@@ -430,6 +415,10 @@ class PurchaseRequestController extends Controller
 				{
 					Session::put('m6', 'required' );
 				}
+
+				 Session::put('imgsuccess','Files uploaded.');
+				
+
 
 				return Redirect::back()->withInput();
 			} 
@@ -465,6 +454,51 @@ class PurchaseRequestController extends Controller
 			{
 				Session::put('error_modeOfProcurement', 'required' );
 			}
+
+			if (Session::get('imgerror')&&Input::hasfile('file'))
+			{
+				$failedpurchasecount=Purchase::where('id', $purchase->id)->count();
+				if ($failedpurchasecount!=0){
+				$failedpurchase=Purchase::find($purchase->id);
+				$failedpurchase->delete();}
+
+					
+					Session::forget('imgsuccess');
+					//Image Error Return
+					
+					
+					$task_details= TaskDetails::where('doc_id', $document->id)->delete();
+					$document->delete();
+					$message = "Failed to create purchase request.";
+			
+					// Set Main Error
+					$message = "Failed to save purchase request.";
+					Session::put('main_error', $message );
+
+					// Get Other Error Messages
+					$error_projectPurpose = $purchase->validationErrors->first('projectPurpose');
+					$error_projectType = $purchase->validationErrors->first('projectType');
+					$error_sourceOfFund = $purchase->validationErrors->first('sourceOfFund');
+					$error_amount = $purchase->validationErrors->first('amount');
+					$error_office = $purchase->validationErrors->first('office');
+					$error_requisitioner = $purchase->validationErrors->first('requisitioner');
+					$error_dateRequested = $purchase->validationErrors->first('dateRequested');
+					$error_dateReceived = $purchase->validationErrors->first('dateReceived');
+
+					// Inserting Error Message To a Session
+					Session::put('error_projectPurpose', $error_projectPurpose );
+					Session::put('error_sourceOfFund', $error_sourceOfFund );
+					Session::put('error_amount', $error_amount );
+					Session::put('error_office', $error_office );
+					Session::put('error_requisitioner', $error_requisitioner );
+					Session::put('error_dateRequested', $error_dateRequested );
+					Session::put('error_dateReceived', $error_dateReceived );
+					Session::put('error_projectType', $error_projectType );
+
+
+
+					
+			} 
 
 			
 
