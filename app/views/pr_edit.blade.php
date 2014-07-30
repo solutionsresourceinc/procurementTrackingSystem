@@ -107,10 +107,6 @@
                                 </option>
                             @endforeach
                         </select>
-                        @if (Session::get('m6'))
-                            <font color="red"><i>The mode of procurement is required field</i></font>
-                        @endif
-                      
                     </div>
 
                     <div class="col-md-3">
@@ -1445,10 +1441,10 @@
                     @if($workflow->workFlowName!="Direct Contracting")
                     <tr>
                             <td>TOTAL NO. OF DAYS</td>
+                            <!-- <td></td>
                             <td></td>
-                            <td></td>
-                            <td>{{$sectiondays}}</td>
-                            <td></td>
+                            <td></td> -->
+                            <td colspan="4"><center>{{$sectiondays}}</center></td>
                     </tr>
                     @endif
                     </table></div></div>

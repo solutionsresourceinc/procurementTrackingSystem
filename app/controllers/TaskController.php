@@ -69,7 +69,9 @@ class TaskController extends Controller {
 			$purchase->status="Closed";
 			$purchase->save();
 		}
-		return Redirect::to('task/active');
+		// return Redirect::to('task/active');
+		$request_id = Input::get('pr_id');
+		return Redirect::to("purchaseRequest/vieweach/$request_id");
 	}
 
 	public function viewTask()

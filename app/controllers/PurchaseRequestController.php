@@ -307,7 +307,6 @@ foreach(Input::file('file') as $file)
 				}
 
 		    	$connected = @fsockopen("www.google.com", 80);  //website, port  (try 80 or 443)
-		    	$connected = false;
 		   		if ($connected)
 		   		{
 					$sendee = DB::table('users')->where('id',$purchase->requisitioner)->first();
@@ -1110,7 +1109,9 @@ if ($check==1)
 else
 	Session::put('errorchecklist','Invalid input.');
 	
-return Redirect::back();
+// return Redirect::back();
+$request_id = Input::get('pr_id');
+return Redirect::to("purchaseRequest/vieweach/$request_id");
 
 }
 
@@ -1184,7 +1185,9 @@ if ($check==2)
 else
 	Session::put('errorchecklist','Invalid input.');
 	
-return Redirect::back();
+// return Redirect::back();
+$request_id = Input::get('pr_id');
+return Redirect::to("purchaseRequest/vieweach/$request_id");
 
 }
 
@@ -1257,8 +1260,9 @@ if ($check==2)
 else
 	Session::put('errorchecklist','Invalid input.');
 	
-return Redirect::back();
-
+// return Redirect::back();
+$request_id = Input::get('pr_id');
+return Redirect::to("purchaseRequest/vieweach/$request_id");
 }
 
 
@@ -1359,8 +1363,9 @@ if ($check==2)
 else
 	Session::put('errorchecklist','Invalid input.');
 	
-return Redirect::back();
-
+// return Redirect::back();
+$request_id = Input::get('pr_id');
+return Redirect::to("purchaseRequest/vieweach/$request_id");
 }
 
 
@@ -1431,7 +1436,9 @@ if ($check==1)
 else
 	Session::put('errorchecklist','Invalid input.');
 	
-return Redirect::back();
+// return Redirect::back();
+$request_id = Input::get('pr_id');
+return Redirect::to("purchaseRequest/vieweach/$request_id");
 
 }
 
@@ -1501,9 +1508,10 @@ if ($check==1)
 }
 else
 	Session::put('errorchecklist','Invalid input.');
-	
-return Redirect::back();
 
+// return Redirect::back();
+$request_id = Input::get('pr_id');
+return Redirect::to("purchaseRequest/vieweach/$request_id");
 }
 
 
@@ -1574,8 +1582,9 @@ if ($check==1)
 else
 	Session::put('errorchecklist','Invalid input.');
 	
-return Redirect::back();
-
+// return Redirect::back();
+$request_id = Input::get('pr_id');
+return Redirect::to("purchaseRequest/vieweach/$request_id");
 }
 
 
@@ -1641,8 +1650,9 @@ if ($check==0)
 else
 	Session::put('errorchecklist','Invalid input.');
 	
-return Redirect::back();
-
+// return Redirect::back();
+$request_id = Input::get('pr_id');
+return Redirect::to("purchaseRequest/vieweach/$request_id");
 }
 
 
@@ -1718,8 +1728,9 @@ if ($check==2)
 else
 	Session::put('errorchecklist','Invalid input.');
 	
-return Redirect::back();
-
+// return Redirect::back();
+$request_id = Input::get('pr_id');
+return Redirect::to("purchaseRequest/vieweach/$request_id");
 }
 
 public function rfq()
@@ -1791,8 +1802,9 @@ if ($check==2)
 else
 	Session::put('errorchecklist','Invalid input.');
 	
-return Redirect::back();
-
+// return Redirect::back();
+$request_id = Input::get('pr_id');
+return Redirect::to("purchaseRequest/vieweach/$request_id");
 }
 
 
@@ -1871,8 +1883,9 @@ if (($check==2||($remarks==" "&&$check==1))&&$assignee!=NULL)
 else
 	Session::put('errorchecklist','Invalid input.');
 	
-return Redirect::back();
-
+// return Redirect::back();
+$request_id = Input::get('pr_id');
+return Redirect::to("purchaseRequest/vieweach/$request_id");
 }
 
 
@@ -1946,8 +1959,9 @@ if (($check==1)&&$assignee!=NULL)
 else
 	Session::put('errorchecklist','Invalid input.');
 	
-return Redirect::back();
-
+// return Redirect::back();
+$request_id = Input::get('pr_id');
+return Redirect::to("purchaseRequest/vieweach/$request_id");
 }
 
 
