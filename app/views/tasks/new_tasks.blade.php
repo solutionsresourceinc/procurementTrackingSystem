@@ -55,7 +55,9 @@
         @endforeach
 
         <div>
-           
+               {{Session::forget('imgerror');}}
+                   {{Session::forget('imgsuccess');}}
+
             @if(Session::get('$taskDetails_row'))
                 <center>{{ $taskDetails_row->links(); }}</center>
                 

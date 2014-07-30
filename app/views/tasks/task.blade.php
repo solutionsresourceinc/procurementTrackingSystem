@@ -656,6 +656,9 @@ No remark.
 
 <br/>
 <br/>
+@if ($taskd->status=="Active")
+
+
 <!--Upload Image-->
 {{ Form::open(array('url' => 'taskimage', 'files' => true), 'POST') }}
 <label class="create-label">Related files:</label>
@@ -745,6 +748,7 @@ No remark.
        
                  <?php $count+=1;  ?>
                 @endforeach
+@endif
 <br/>
 </div>
 </div>

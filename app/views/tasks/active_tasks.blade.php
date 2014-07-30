@@ -3,6 +3,8 @@
 @section('content')
     <h1 class="page-header">Active Tasks</h1>
     <div class="list-group">
+    {{Session::forget('imgerror');}}
+                   {{Session::forget('imgsuccess');}}
 
         @foreach($user_designations as $designation)
         
