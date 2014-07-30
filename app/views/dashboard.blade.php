@@ -79,10 +79,11 @@
     @endif
 
     <!-- Table of latest purchase requests -->
+    <!-- changed to Newly Updated Purchase Request -->
     <div class="col-md-12" style="margin-top: 10px;">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <span style="font-size: 18px;">Latest Purchase Requests
+                <span style="font-size: 18px;">Latest Update
                     @if($role->role_id!=1) 
                         <a href="{{ URL::to('purchaseRequest/create') }}" class="btn btn-sm btn-primary" style="float: right; padding: 3px 10px;">Create New</a>
                     @endif
@@ -99,7 +100,10 @@
                 </thead>
 
                 <?php
-                    $requests =  DB::table('purchase_request')->where('requisitioner', $id)->orderBy('created_at', 'DESC')->take(5)->get();
+                    if(Entrust::hasRole('Requisitioner'))
+                        $requests =  DB::table('purchase_request')->where('requisitioner', $id)->orderBy('created_at', 'DESC')->take(5)->get();
+                    else
+                        $requests =  DB::table('purchase_request')->orderBy('created_at', 'DESC')->take(5)->get();
                 ?>
 
                 <tbody>
