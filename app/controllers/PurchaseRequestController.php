@@ -458,9 +458,11 @@ foreach(Input::file('file') as $file)
 
 			if (Session::get('imgerror')&&Input::hasfile('file'))
 			{
-				
+				$failedpurchasecount=Purchase::where('id', $purchase->id)->count();
+				if ($failedpurchasecount!=0){
 				$failedpurchase=Purchase::find($purchase->id);
-				$failedpurchase->delete();
+				$failedpurchase->delete();}
+
 					
 					Session::forget('imgsuccess');
 					//Image Error Return

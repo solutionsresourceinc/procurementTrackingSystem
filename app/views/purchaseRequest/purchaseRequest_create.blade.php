@@ -242,6 +242,61 @@
 					<label class="create-label">Related files:</label>
 					<div class="panel panel-default fc-div">
 						<div class="panel-body" style="padding: 5px 20px;">
+					<!--Image Module-->
+            				<?php
+								$id = 0;
+								$purchase = Purchase::orderBy('id', 'ASC')->get(); 
+							?>
+
+							@foreach ($purchase as $purchases) 
+								<?php	$id = $purchases->id; ?>
+							@endforeach
+
+							<?php
+								$doc_id = 0;
+								$document = Document::orderBy('id', 'ASC')->get();
+							?>
+
+							@foreach ($document as $docs) 
+								<?php	$doc_id = $docs->id; ?>
+							@endforeach
+
+							<?php $doc_id = $doc_id+1; ?>
+
+           
+
+                <?php
+                 $attachmentc = DB::table('attachments')->where('doc_id', $doc_id)->count();
+                 if ($attachmentc!=0)
+         
+                    $attachments = DB::table('attachments')->where('doc_id', $doc_id)->get();  
+                    $srclink="uploads\\";
+                ?>
+                <br>
+                <table>
+                
+                <?php $count = 1; ?>
+                @foreach ($attachments as $attachment) 
+                <tr>  
+                	<td>  
+                        <a href="{{asset('uploads/'.$attachment->data)}}" data-lightbox="roadtrip">
+                        {{$attachment->data}}
+                        </a>
+                    </td>
+                    <td>
+                    &nbsp;
+                    </td>
+                    <td>
+                   
+                            <input type="hidden" name="hide" value="{{$attachment->id}}">
+                      	<button type="button" onclick="delimage({{$count}})" ><span class="glyphicon glyphicon-trash"></span></button>
+      
+                        <?php $count+=1; ?>
+                    </td>
+                 </tr>
+                @endforeach
+            	</table>
+            <!-- End Image Module-->
 							@if(Session::get('imgsuccess'))
 								<div class="alert alert-success"> {{ Session::get('imgsuccess') }}</div> 
 							@endif
@@ -293,25 +348,29 @@
 				 <!--  
             Image Module
             -->
-            <div id="img-section">
+            <div >
 
                 <?php
                  $attachmentc = DB::table('attachments')->where('doc_id', $doc_id)->count();
                  if ($attachmentc!=0)
-                    echo "<h3>"."Related Files Uploaded"."</h3>";
+                 
                     $attachments = DB::table('attachments')->where('doc_id', $doc_id)->get();  
                     $srclink="uploads\\";
                 ?>
+        
+                <?php $count=1; ?>
                 @foreach ($attachments as $attachment) 
-                    <div class="image-container">
-                        <a href="{{asset('uploads/'.$attachment->data)}}" data-lightbox="roadtrip">
-                        <img class="img-thumbnail" src="{{asset('uploads/'.$attachment->data)}}" style="width: 100px; height: 100px;" /></a>
-                        {{ Form::open(array('method' => 'post', 'url' => 'delimage')) }}
+        
+           
+                     
+                        {{ Form::open(array('method' => 'post', 'url' => 'delimage', 'id'=>"form_$count")) }}
                             <input type="hidden" name="hide" value="{{$attachment->id}}">
-                            <button class="star-button"><img src="{{asset('img/Delete_Icon.png')}}"></button>
                         {{Form::close()}}
-                    </div>
+             
+       
+                 <?php $count+=1;  ?>
                 @endforeach
+ 
             <!-- End Image Module-->
 			</div>	
 		</div>		
@@ -522,6 +581,12 @@
 	</script>
 
 	<script>
+		function delimage(value)
+		{
+			//alert('form_'+value);
+			var formname= "form_"+value;
+			document.getElementById(formname).submit();
+		}
 		function numberWithCommas2(amount) 
 		{
 			amount = amount.replace(',','');	

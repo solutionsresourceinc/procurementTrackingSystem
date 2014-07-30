@@ -32,6 +32,19 @@
 
 @section('content')
 
+	<!--CODE REVIEW:
+        - fix code indention
+    -->
+
+	<h2 class="pull-left">Task Details</h2>
+
+	<div class="pull-right options">
+		<a href="{{ URL::previous() }}" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left"></span> Back</a>
+	</div>
+	<!--Trigger to Change Routing-->
+	{{Session::put('changeroute','change')}}
+
+	<!--End Trigger to Change Routing-->
 	<?php
 		$taskdetails_id=Session::get('taskdetails_id');
 		Session::forget('taskdetails_id');
@@ -39,27 +52,7 @@
 		$task= Task::find($taskd->task_id);
 		$doc= Document::find($taskd->doc_id);
 		$purchase = Purchase::find($doc->pr_id);
-		$date_today = $date_today = date('Y-m-d H:i:s');
 	?>
-
-	{{Session::put('backTo',"task/$taskdetails_id");}}
-
-	<h2 class="pull-left">Task Details</h2>
-
-	<div class="pull-right options">
-
-		@if($taskd->status == "Active" && $taskd->dueDate > $date_today)
-			<a href="{{ URL::to('task/active') }}" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left"></span> Back</a>
-		@elseif($taskd->status == "New")
-			<a href="{{ URL::to('task/new') }}" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left"></span> Back</a>
-		@else
-			<a href="{{ URL::to('task/overdue') }}" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left"></span> Back</a>
-		@endif
-	</div>
-	<!--Trigger to Change Routing-->
-	{{Session::put('changeroute','change')}}
-
-	<!--End Trigger to Change Routing-->
 
 	<hr class="clear" />
 
@@ -94,16 +87,8 @@
 
 				<tr> 
 					<td>
-						<span style="font-weight: bold">Control No. : </span><br/>
-						<p><a href="{{ URL::to('purchaseRequest/vieweach/'.$purchase->id) }}" ><?php echo str_pad($purchase->controlNo, 5, '0', STR_PAD_LEFT); ?></a></p>
-				
-					</td>
-				<tr>
-
-				<tr> 
-					<td>
-						<span style="font-weight: bold">Project/Purpose: </span><br/>
-						<p><a href="{{ URL::to('purchaseRequest/vieweach/'.$purchase->id) }}" ><?php echo $purchase->projectPurpose; ?> </a></p>
+						<span style="font-weight: bold">Purchase Request ID-Name: </span><br/>
+						<p><a href="{{ URL::to('purchaseRequest/vieweach/'.$purchase->id) }}" ><?php echo $purchase->id."-".$purchase->projectPurpose; ?> </a></p>
 				
 					</td>
 				<tr>
@@ -194,6 +179,7 @@
 						
 							</td>
 						</tr>
+						
 						<tr>
 							<td>
 						<input type ="hidden" name="taskdetails_id" value="{{$taskd->id}}">
