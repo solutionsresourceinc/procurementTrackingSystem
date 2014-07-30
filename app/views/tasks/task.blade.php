@@ -95,7 +95,7 @@
 				<tr> 
 					<td>
 						<span style="font-weight: bold">Control No. : </span><br/>
-						<p><a href="{{ URL::to('purchaseRequest/vieweach/'.$purchase->id) }}" ><?php echo str_pad($purchase->controlNo, 5, '0', STR_PAD_LEFT); ?></a></p>
+						<p><?php echo str_pad($purchase->controlNo, 5, '0', STR_PAD_LEFT); ?></p>
 				
 					</td>
 				<tr>
@@ -134,6 +134,7 @@
 						 $assign_user=User::find(Auth::user()->id);
                          $name=$assign_user->lastname.", ".$assign_user->firstname;
 						?>
+
 						<input type="hidden" name ="by" value= "{{$name}}">
 						@if( $date_today > $taskd->dueDate )
 							<tr>
@@ -510,7 +511,7 @@
 										@endif
 										<input type ="hidden" name="taskdetails_id" value="{{$taskd->id}}">
 										<div class='pull-right'>
-											{{ link_to( 'task/active', 'Cancel', array('class'=>'btn btn-sm btn-default remarks-btn') ) }}
+											<input type="button"  onclick="hideRemarks()"  value="Cancel" class='btn btn-sm btn-default remarks-btn' />
 											{{ Form::submit('Submit',array('class'=>'btn btn-sm btn-success remarks-btn')) }}
 										</div>
 										{{ Form::close() }}
@@ -569,7 +570,7 @@
 										{{ Form::textarea('remarks','', array('class'=>'form-control', 'rows'=>'3', 'maxlength'=>'255', 'style'=>'resize:vertical')) }}
 										<input type ="hidden" name="taskdetails_id" value="{{$taskd->id}}">
 										<div class='pull-right'>
-											{{ link_to( 'task/active', 'Cancel', array('class'=>'btn btn-sm btn-default remarks-btn') ) }}
+											<input type="button" onclick="hideRemarks()" value="Cancel" class='btn btn-sm btn-default remarks-btn' />
 											{{ Form::submit('Submit',array('class'=>'btn btn-sm btn-success remarks-btn')) }}
 										</div>
 										{{ Form::close() }}
@@ -614,7 +615,7 @@
 										<p>
 											<?php
 												echo $taskd->remarks;
-												if ($taskd->remarks==NULL)
+												if ($taskd->remarks== NULL || $taskd->remarks ==  " ")
 												{
 												?>
 													No remark.
@@ -628,7 +629,7 @@
 										{{ Form::textarea('remarks','', array('class'=>'form-control', 'rows'=>'3', 'maxlength'=>'255', 'style'=>'resize:vertical')) }}
 										<input type ="hidden" name="taskdetails_id" value="{{$taskd->id}}">
 										<div class='pull-right'>
-											{{ link_to( 'task/active', 'Cancel', array('class'=>'btn btn-sm btn-default remarks-btn') ) }}
+											<input type="button" onclick="hideRemarks()" value="Cancel" class='btn btn-sm btn-default remarks-btn' />
 											{{ Form::submit('Submit',array('class'=>'btn btn-sm btn-success remarks-btn')) }}
 										</div>
 										{{ Form::close() }}
@@ -638,23 +639,6 @@
 
 							@endif
 								<hr class="clear" />
-								<?php 
-
-								/*
-								if ($taskd->status=="Active"){
-									?>
-									{{ Form::open(['url'=>'done'], 'POST') }}
-									<input type ="hidden" name="task_id" value="{{$task->id}}">
-									<input type ="hidden" name="doc_id" value="{{$doc->id}}">
-									<input type ="hidden" name="pr_id" value="{{$purchase->id}}">
-									<input type ="hidden" name="taskdetails_id" value="{{$taskd->id}}">
-									{{ Form::submit('Done',array('class'=>'btn btn-sm btn-success')) }}
-									{{ Form::close() }}
-									<?php
-								}
-								*/
-							?>	
-
 						</td>
 					</tr>
 					
@@ -779,6 +763,17 @@
 		        document.getElementById(name).value =
 		        document.getElementById(name2).value;
 		    }
+		}
+
+		function hideRemarks()
+		{
+			if(document.layers) document.layers['formr'].visibility="hide";
+			if(document.getElementById) document.getElementById("formr").style.visibility="hidden";
+			if(document.all) document.all.formr.style.visibility="hidden";
+
+			if(document.layers) document.layers['remarkd'].visibility="show";
+			if(document.getElementById) document.getElementById("remarkd").style.visibility="visible";
+			if(document.all) document.all.remarkd.style.visibility="visible";
 		}
 
 		$('.datepicker').datepicker();
