@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('header')
-
+<!---->
     {{ HTML::style('date_picker/bootstrap-datetimepicker.min.css')}}
     {{ HTML::script('date_picker/bootstrap-datetimepicker.js') }}
     {{ HTML::script('date_picker/bootstrap-datetimepicker.fr.js') }}
@@ -1203,6 +1203,12 @@
                                     $today = date("m/d/y");
                                     ?>
                                     <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
+
+
+
+
+
+
                                         <input type="text" class="form-control" name="dateFinished" id="dateFinished" style="text-align: center; width:100%" 
                                         value="
                                         <?php
