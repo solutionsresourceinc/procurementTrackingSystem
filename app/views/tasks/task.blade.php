@@ -185,8 +185,15 @@ $assign_user=User::find(Auth::user()->id);
 <?php
 $assign_user=User::find(Auth::user()->id);
                         $name=$assign_user->lastname.", ".$assign_user->firstname;
+$birth = new DateTime($taskd->dateReceived); 
+$today = new DateTime(); 
+$diff = $birth->diff($today); 
+$aDays= $diff->format('%d');
+
+$converteddate = $today->format('m/d/y');
 ?>
 <input type="hidden" name ="by" value= "{{$name}}">
+<input type="hidden" name="date" value="{{$converteddate}}">
 <tr> 
 <td>
 <span style="font-weight: bold">Reference Number: </span><br/>
