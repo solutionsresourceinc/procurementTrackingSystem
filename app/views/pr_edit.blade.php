@@ -550,6 +550,7 @@
                             <?php $myForm = 'myForm_' . $taskc->id; ?>
                             {{Form::open(['url'=>'checklistedit', 'id' => $myForm], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
+                                 <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
                                 <td class="edit-pr-input">
                                     <input type ="text" name="assignee" placeholder="Enter name" class="form-control" width="100%" maxlength="100"
                                     value="<?php
@@ -630,6 +631,7 @@
                     <?php $myForm = 'myForm_' . $taskc->id; ?>
                             {{Form::open(['url'=>'posting', 'id' => $myForm], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
+                                 <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
                                 <td class="edit-pr-input">
                                     Reference No. : 
                                     <input type="text" name="referenceno"  class="form-control" maxlength="100" width="80%" maxlength="100"
@@ -679,6 +681,7 @@
                             <?php $myForm = 'myForm_' . $taskc->id; ?>
                             {{Form::open(['url'=>'supplier', 'id' => $myForm], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
+                                 <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
                                 <td class="edit-pr-input" colspan="2">
                                     <input type="text" name="supplier"  class="form-control" maxlength="100" width="80%" placeholder="Enter supplier"
                                      value="<?php
@@ -711,6 +714,7 @@
                             <?php $myForm = 'myForm_' . $taskc->id; ?>
                             {{Form::open(['url'=>'cheque', 'id' => $myForm], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
+                                 <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
                                 <td class="edit-pr-input" colspan="2">
                     
                                     <input type="decimal" name="amt"  id="amt" class="form-control" maxlength="12" width="80%" placeholder="Enter cheque amount" onkeypress="return isNumberKey(event)" onchange="checklist_changeAmount(this.id,this.value)"
@@ -760,6 +764,7 @@
                             <?php $myForm = 'myForm_' . $taskc->id; ?>
                             {{Form::open(['url'=>'published', 'id' => $myForm], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
+                                 <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
                                     <td> </td>
                                     <th class='workflow-th' width="18%">Date Published:</th>
                                     <th class='workflow-th' width="18%">End Date:</th>
@@ -824,6 +829,7 @@
                             <?php $myForm = 'myForm_' . $taskc->id; ?>
                             {{Form::open(['url'=>'documents', 'id' => $myForm], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
+                                 <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
                                     <td> </td>
                                     <th class='workflow-th'>Eligibility Documents:</th>
                                     <th class='workflow-th'>Date of Bidding:</th>
@@ -888,6 +894,7 @@
                             <?php $myForm = 'myForm_' . $taskc->id; ?>
                             {{Form::open(['url'=>'evaluations', 'id' => $myForm], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
+                                 <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
                                     <td> </td>
                                     <th class='workflow-th' colspan="2">Date:</th>
                                     <th class='workflow-th' colspan="2">No. Of Days Accomplished:</th>
@@ -935,6 +942,7 @@
                             <?php $myForm = 'myForm_' . $taskc->id; ?>
                             {{Form::open(['url'=>'conference', 'id' => $myForm], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
+                                 <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
                                     <td colspan="4">
                                     <?php 
                                     $today = date("m/d/y");
@@ -966,6 +974,7 @@
                             <?php $myForm = 'myForm_' . $taskc->id; ?>
                             {{Form::open(['url'=>'contractmeeting', 'id' => $myForm], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
+                                 <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
                                     <td> </td>
                                     <th class='workflow-th'>Date:</th>
                                     <th class='workflow-th'>No. of Days Accomplished:</th>
@@ -1023,6 +1032,7 @@
                             <?php $myForm = 'myForm_' . $taskc->id; ?>
                             {{Form::open(['url'=>'contractmeeting', 'id' => $myForm], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
+                                 <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
                                     <td> </td>
                                     <th class='workflow-th'>Date:</th>
                                     <th class='workflow-th'>No. of Days Accomplished:</th>
@@ -1085,6 +1095,7 @@
                             <?php $myForm = 'myForm_' . $taskc->id; ?>
                             {{Form::open(['url'=>'rfq', 'id' => $myForm], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
+                                 <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
                                     <td> </td>
                                     <th class='workflow-th'>No. of Suppliers:</th>
                                     <th class='workflow-th'>Date of RF (Within PGEPS 7 Days):</th>
@@ -1142,6 +1153,7 @@
                             <?php $myForm = 'myForm_' . $taskc->id; ?>
                             {{Form::open(['url'=>'dateby', 'id' => $myForm], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
+                                 <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
                                 <td class="edit-pr-input" colspan="2"> 
                                     <?php 
                                     $today = date("m/d/y");
@@ -1184,6 +1196,7 @@
                             <?php $myForm = 'myForm_' . $taskc->id; ?>
                             {{Form::open(['url'=>'datebyremark', 'id' => $myForm], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
+                                 <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
                                 
                                 <td class="edit-pr-input"> 
                                     <?php 
