@@ -500,7 +500,7 @@
 										<p>
 											<?php
 												echo $taskd->remarks;
-												if ($taskd->remarks==NULL)
+												if ($taskd->remarks==NULL || $taskd->remarks==' ' )
 												{
 												?>
 													No remark.
@@ -564,7 +564,7 @@
 										<p>
 											<?php
 												echo $taskd->remarks;
-												if ($taskd->remarks==NULL)
+												if ($taskd->remarks==NULL || $taskd->remarks==' ')
 												{
 												?>
 													No remark.
@@ -623,7 +623,7 @@
 										<p>
 											<?php
 												echo $taskd->remarks;
-												if ($taskd->remarks==NULL)
+												if ($taskd->remarks==NULL || $taskd->remarks==' ')
 												{
 												?>
 													No remark.
