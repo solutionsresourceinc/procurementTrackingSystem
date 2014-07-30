@@ -282,7 +282,7 @@
                                     $dassignee=chunk_split($taskp->assignee, 20, "<br>");
                                     echo $dassignee;
                                 }
-                                else if($taskp->assignee_id!=0)
+                                else if($taskp->assignee_id!=0 && $taskp->status=='Done')
                                 {
                                     $assign_user=User::find($taskp->assignee_id);
                                     echo $assign_user->lastname.", ".$assign_user->firstname;
@@ -305,9 +305,12 @@
                             ?>
                             </td>
                             <td>
-                            <?php 
-                                $dremarks=chunk_split($taskp->remarks, 20, "<br>");
-                                echo $dremarks; 
+                            <?php
+                                if($taskp->status == 'Done')
+                                {   
+                                    $dremarks=chunk_split($taskp->remarks, 20, "<br>");
+                                    echo $dremarks;
+                                }
                             ?>
                             </td>
                         @endif
@@ -573,7 +576,7 @@
                                     $dassignee=chunk_split($taskp->assignee, 20, "<br>");
                                     echo $dassignee;
                                 }
-                                else if($taskp->assignee_id!=0)
+                                else if($taskp->assignee_id!=0 && $taskp->status=='Done')
                                 {
                                     $assign_user=User::find($taskp->assignee_id);
                                     echo $assign_user->lastname.", ".$assign_user->firstname;
@@ -599,7 +602,7 @@
                                     $dassignee=chunk_split($taskp->assignee, 20, "<br>");
                                     echo $dassignee;
                                 }
-                                else if($taskp->assignee_id!=0)
+                                else if($taskp->assignee_id!=0 && $taskp->status=='Done')
                                 {
                                     $assign_user=User::find($taskp->assignee_id);
                                     echo $assign_user->lastname.", ".$assign_user->firstname;
@@ -610,8 +613,11 @@
                             </td>
                             <td colspan="2">
                             <?php 
-                                $dremarks=chunk_split($taskp->remarks, 20, "<br>");
-                                echo $dremarks; 
+                                if($taskp->status == 'Done')
+                                {   
+                                    $dremarks=chunk_split($taskp->remarks, 20, "<br>");
+                                    echo $dremarks;
+                                }
                             ?>
                             </td>
                         @endif
