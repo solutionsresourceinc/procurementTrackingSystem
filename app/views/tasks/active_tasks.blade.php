@@ -3,6 +3,8 @@
 @section('content')
     <h1 class="page-header">Overdue Tasks</h1>
     <div class="list-group">
+    {{Session::forget('imgerror');}}
+                   {{Session::forget('imgsuccess');}}
 
         <!-- Get all task details with id = task->id -->
         <?php

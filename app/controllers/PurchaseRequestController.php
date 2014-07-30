@@ -167,7 +167,7 @@ foreach(Input::file('file') as $file)
 
 
 
-		if(Input::get('otherType') == 'pakyaw')
+		if(Input::get('otherType') == 'Pakyaw')
 			$purchase->projectType = "None";
 		else
 			$purchase->projectType = Input::get('projectType');
@@ -294,17 +294,14 @@ foreach(Input::file('file') as $file)
 				$pr_id = Session::get('pr_id');
 
 
-				if (Session::get('doc_id'))
-				{
-					$doc_id =Session::get('doc_id');
+					
 					DB::table('attachments')
 						->where('doc_id', $doc_id)
 						->update(array( 'saved' => 1));
 
 					DB::table('attachments')->where('saved', '=', 0)->delete();
-					DB::table('document')->where('pr_id', '=',$pr_id )->where('id','!=',$doc_id)->delete();
-					Session::forget('doc_id');
-				}
+				Session::forget('doc_id');
+				
 
 		    	$connected = @fsockopen("www.google.com", 80);  //website, port  (try 80 or 443)
 		   		if ($connected)
@@ -783,18 +780,17 @@ if($purchase_save)
 
 		$pr_id= Session::get('pr_id');
 
-		if (Session::get('doc_id'))
-		{
-			$doc_id =Session::get('doc_id');
+		
+		
 			DB::table('attachments')->where('doc_id', $doc_id)->update(array( 'saved' => 1));
 			DB::table('attachments')->where('saved', '=', 0)->delete();
-			DB::table('document')->where('pr_id', '=',$pr_id )->where('id','!=',$doc_id)->delete();
 			Session::forget('doc_id');
-		}
+		
 
 		$notice = "Purchase request saved successfully. ";										  
 		Session::put('notice', $notice);
-
+		
+	
 		return Redirect::to("purchaseRequest/vieweach/$id");
 	}
 		

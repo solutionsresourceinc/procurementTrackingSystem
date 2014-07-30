@@ -96,7 +96,6 @@ if($taskd->status=="New")
 <td>
 <span style="font-weight: bold">Control No. : </span><br/>
 <p><?php echo str_pad($purchase->controlNo, 5, '0', STR_PAD_LEFT); ?></p>
-<p><a href="{{ URL::to('purchaseRequest/vieweach/'.$purchase->taskdetails_id) }}" ><?php echo str_pad($purchase->controlNo, 5, '0', STR_PAD_LEFT); ?></a></p>
 
 </td>
 <tr>
@@ -153,7 +152,7 @@ $assign_user=User::find(Auth::user()->id);
 </tr>
 @endif
 
-<?php echo  $task->taskType; ?>
+
 
 @if($task->taskType=='certification')
 {{Form::open(['url'=>'certification'], 'POST')}}
@@ -186,8 +185,15 @@ $assign_user=User::find(Auth::user()->id);
 <?php
 $assign_user=User::find(Auth::user()->id);
                         $name=$assign_user->lastname.", ".$assign_user->firstname;
+$birth = new DateTime($taskd->dateReceived); 
+$today = new DateTime(); 
+$diff = $birth->diff($today); 
+$aDays= $diff->format('%d');
+
+$converteddate = $today->format('m/d/y');
 ?>
 <input type="hidden" name ="by" value= "{{$name}}">
+<input type="hidden" name="date" value="{{$converteddate}}">
 <tr> 
 <td>
 <span style="font-weight: bold">Reference Number: </span><br/>
@@ -232,7 +238,7 @@ $assign_user=User::find(Auth::user()->id);
 {{ Form::submit('Done',array('class'=>'btn btn-sm btn-success')) }}	
 </td>
 </tr>
-{{Form::close}}
+{{Form::close()}}
 @elseif($task->taskType=='cheque')
 {{Form::open(['url'=>'cheque'], 'POST')}}
 <?php
@@ -473,8 +479,6 @@ else
 
 <tr>
 <td>
-<?php /*@if($task->taskType!='certification' && $task->taskType!='posting' && $task->taskType!='supplier' && $task->taskType!='cheque' && $task->taskType!='conference'
-&& $task->taskType!='published' && $task->taskType!='documents' && $task->taskType!='evaluation' && $task->taskType!='contract' && $task->taskType!='meeting') */?>
 
 
 @if($task->taskType=='normal')
@@ -657,13 +661,56 @@ No remark.
 
 <br/>
 <br/>
+@if ($taskd->status=="Active")
+
+
 <!--Upload Image-->
 {{ Form::open(array('url' => 'taskimage', 'files' => true), 'POST') }}
 <label class="create-label">Related files:</label>
            <div class="panel panel-default fc-div">
                <div class="panel-body" style="padding: 5px 20px;">
-                   <br/>
+               
+                     <!--Image Module-->
+                 <?php
+                        
+                        $doc_id= $doc->id;
+                    ?>
+           
 
+                <?php
+                error_reporting(0);
+                 $attachmentc = DB::table('attachments')->where('doc_id', $doc_id)->count();
+                 if ($attachmentc!=0)
+         
+                    $attachments = DB::table('attachments')->where('doc_id', $doc_id)->get();  
+                    $srclink="uploads\\";
+                ?>
+                <br>
+                <table>
+                
+                <?php $count = 1; ?>
+                @foreach ($attachments as $attachment) 
+                <tr>  
+                    <td>  
+                        <a href="{{asset('uploads/'.$attachment->data)}}" data-lightbox="roadtrip">
+                        {{$attachment->data}}
+                        </a>
+                    </td>
+                    <td>
+                    &nbsp;
+                    </td>
+                    <td>
+                   
+                            <input type="hidden" name="hide" value="{{$attachment->id}}">
+                        <button type="button" onclick="delimage({{$count}})" ><span class="glyphicon glyphicon-trash"></span></button>
+      
+                        <?php $count+=1; ?>
+                    </td>
+                 </tr>
+                @endforeach
+                </table>
+            <!-- End Image Module-->
+          
                    @if(Session::get('imgsuccess'))
                        <div class="alert alert-success"> {{ Session::get('imgsuccess') }}</div> 
                    @endif
@@ -671,7 +718,7 @@ No remark.
                    @if(Session::get('imgerror'))
                        <div class="alert alert-danger"> {{ Session::get('imgerror') }}</div> 
                    @endif
-
+                   <br>
                    <input name="file[]" type="file"  multiple title="Select image to attach" data-filename-placement="inside"/>
                    <input name="doc_id" type="hidden" value="{{ $doc->id }}">
                    
@@ -682,10 +729,31 @@ No remark.
                    {{Session::forget('imgsuccess');}}
 
               {{ Form::submit('Save',array('class'=>'btn btn-success')) }}
-               </div>
+            
            </div>
            {{Form::close()}}
            <!--End Upload Image-->
+           <?php
+                 $attachmentc = DB::table('attachments')->where('doc_id', $doc_id)->count();
+                 if ($attachmentc!=0)
+                 
+                    $attachments = DB::table('attachments')->where('doc_id', $doc_id)->get();  
+                    $srclink="uploads\\";
+                ?>
+        
+                <?php $count=1; ?>
+                @foreach ($attachments as $attachment) 
+        
+           
+                     
+                        {{ Form::open(array('method' => 'post', 'url' => 'delimage', 'id'=>"form_$count")) }}
+                            <input type="hidden" name="hide" value="{{$attachment->id}}">
+                        {{Form::close()}}
+             
+       
+                 <?php $count+=1;  ?>
+                @endforeach
+@endif
 <br/>
 </div>
 </div>
@@ -787,5 +855,11 @@ if(document.all) document.all.remarkd.style.visibility="visible";
 }
 
 $('.datepicker').datepicker();
+function delimage(value)
+    {
+      //alert('form_'+value);
+      var formname= "form_"+value;
+      document.getElementById(formname).submit();
+    }
    </script>
 @stop

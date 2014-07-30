@@ -282,6 +282,7 @@ class TaskController extends Controller {
 		        $attach = new Attachments;
 		        $attach->doc_id=$doc_id;
 				$attach->data = $archivo;
+				$attach->saved=1;
 				$attach->save();
 				$filename = $doc_id."_".$attach->id;
 		        $file->move($destine, $archivo);

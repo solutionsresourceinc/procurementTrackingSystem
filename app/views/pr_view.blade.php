@@ -443,7 +443,17 @@
     <span class="error-view">No data available.</span>
 </div>
 
-    {{ Session::forget('notice'); }}
+                {{Session::forget('notice'); }}
+                {{Session::forget('main_error'); }}
+                {{Session::forget('imgerror'); }}
+                {{Session::forget('imgsuccess'); }}
+                {{Session::forget('error_projectPurpose');}}
+                {{Session::forget('error_sourceOfFund');}}
+                {{Session::forget('error_office');}}
+                {{Session::forget('error_requisitioner');}}
+                {{Session::forget('error_dateRequested');}}
+                {{Session::forget('error_modeOfProcurement');}}
+                {{Session::forget('imgerror'); }}
 @stop
 
 @section('footer')

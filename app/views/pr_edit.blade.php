@@ -47,6 +47,8 @@
             $valprojectPurpose=Input::old('projectPurpose');
             $valsourceOfFund=Input::old('sourceOfFund');
             $valamount=Input::old('amount'); 
+            $valprojectType=$purchaseToEdit->projectType;
+
         }
         else
         {
@@ -87,6 +89,9 @@
                 <?php
                         $docs=DB::table('document')->where('pr_id', '=',$id )->first();
                         $workflow=DB::table('workflow')->get();
+                        
+                        $luser=Auth::user()->id;
+                        $count= Count::where('doc_id','=', $docs->id)->where('user_id','=', $luser )->delete();
                     ?>
                 <div class="row">
                     <div class="col-md-6">
@@ -111,7 +116,11 @@
 
                     <div class="col-md-3">
                         {{ Form::label('otherType', 'Other Type', array('class' => 'create-label')) }}
-                        <input type="text" disabled value="{{ $purchaseToEdit->otherType }}" class="form-control">
+                        @if($purchaseToEdit->otherType == ' ' || $purchaseToEdit->otherType == null)
+                            <input type="text" disabled value="None" class="form-control">
+                        @else
+                            <input type="text" disabled value="{{ $purchaseToEdit->otherType }}" class="form-control">
+                        @endif
                     </div>
 
                     <div class="col-md-3">
@@ -282,8 +291,47 @@
             <label class="create-label">Related files:</label>
             <div class="panel panel-default fc-div">
                 <div class="panel-body" style="padding: 5px 20px;">
-                    <br/>
+            
+                <!--Image Module-->
+                 <?php
+                        $document = Document::where('pr_id', $purchaseToEdit->id)->first();
+                        $doc_id= $document->id;
+                    ?>
+           
 
+                <?php
+                error_reporting(0);
+                 $attachmentc = DB::table('attachments')->where('doc_id', $doc_id)->count();
+                 if ($attachmentc!=0)
+         
+                    $attachments = DB::table('attachments')->where('doc_id', $doc_id)->get();  
+                    $srclink="uploads\\";
+                ?>
+                <br>
+                <table>
+                
+                <?php $count = 1; ?>
+                @foreach ($attachments as $attachment) 
+                <tr>  
+                    <td>  
+                        <a href="{{asset('uploads/'.$attachment->data)}}" data-lightbox="roadtrip">
+                        {{$attachment->data}}
+                        </a>
+                    </td>
+                    <td>
+                    &nbsp;
+                    </td>
+                    <td>
+                   
+                            <input type="hidden" name="hide" value="{{$attachment->id}}">
+                        <button type="button" onclick="delimage({{$count}})" ><span class="glyphicon glyphicon-trash"></span></button>
+      
+                        <?php $count+=1; ?>
+                    </td>
+                 </tr>
+                @endforeach
+                </table>
+            <!-- End Image Module-->
                     @if(Session::get('imgsuccess'))
                         <div class="alert alert-success"> {{ Session::get('imgsuccess') }}</div> 
                     @endif
@@ -291,11 +339,8 @@
                     @if(Session::get('imgerror'))
                         <div class="alert alert-danger"> {{ Session::get('imgerror') }}</div> 
                     @endif
-
-                    <?php
-                        $document = Document::where('pr_id', $purchaseToEdit->id)->first();
-                        $doc_id= $document->id;
-                    ?>
+                    <br>
+                   
                     <input name="file[]" type="file"  multiple title="Select image to attach" data-filename-placement="inside"/>
                     <input name="doc_id" type="hidden" value="{{ $doc_id }}">
                     <br>
@@ -304,39 +349,46 @@
             </div>
 
             <div><br/>
+                <br>
                 {{ Form::submit('Save',array('class'=>'btn btn-success')) }}
                 <a href="{{ URL::previous() }}" class="btn btn-default">Cancel</a>
             </div>
             
             {{ Form::close() }} 
-
-
-            <!--  
+     <!--  
             Image Module
             -->
-            <div id="img-section">
+            <div >
 
                 <?php
                  $attachmentc = DB::table('attachments')->where('doc_id', $doc_id)->count();
                  if ($attachmentc!=0)
-                    echo "<h3>"."Attachments"."</h3>";
+                 
                     $attachments = DB::table('attachments')->where('doc_id', $doc_id)->get();  
                     $srclink="uploads\\";
                 ?>
+        
+                <?php $count=1; ?>
                 @foreach ($attachments as $attachment) 
-                    <div class="image-container">
-                        <a href="{{asset('uploads/'.$attachment->data)}}" data-lightbox="roadtrip">
-                        <img class="img-thumbnail" src="{{asset('uploads/'.$attachment->data)}}" style="width: 100px; height: 100px;" /></a>
-                        {{ Form::open(array('method' => 'post', 'url' => 'delimage')) }}
+        
+           
+                     
+                        {{ Form::open(array('method' => 'post', 'url' => 'delimage', 'id'=>"form_$count")) }}
                             <input type="hidden" name="hide" value="{{$attachment->id}}">
-                            <button class="star-button"><img src="{{asset('img/Delete_Icon.png')}}"></button>
                         {{Form::close()}}
-                    </div>
+             
+       
+                 <?php $count+=1;  ?>
                 @endforeach
+ 
             <!-- End Image Module-->
+
+           
 
                 {{Session::forget('notice'); }}
                 {{Session::forget('main_error'); }}
+                {{Session::forget('imgerror'); }}
+                {{Session::forget('imgsuccess'); }}
                 {{Session::forget('error_projectPurpose');}}
                 {{Session::forget('error_sourceOfFund');}}
                 {{Session::forget('error_office');}}
@@ -1706,7 +1758,12 @@
 
         return true;
     }
-
+function delimage(value)
+        {
+            //alert('form_'+value);
+            var formname= "form_"+value;
+            document.getElementById(formname).submit();
+        }
 </script>
 
 @stop
