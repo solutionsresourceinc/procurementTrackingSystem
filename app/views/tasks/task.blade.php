@@ -661,29 +661,47 @@ No remark.
 <label class="create-label">Related files:</label>
            <div class="panel panel-default fc-div">
                <div class="panel-body" style="padding: 5px 20px;">
-                   <br/>
-                    <!--  
-            Image Module
-            -->
-            <div id="img-section">
+               
+                     <!--Image Module-->
+                 <?php
+                        
+                        $doc_id= $doc->id;
+                    ?>
+           
 
                 <?php
+                error_reporting(0);
                  $attachmentc = DB::table('attachments')->where('doc_id', $doc_id)->count();
                  if ($attachmentc!=0)
-                    echo "<h3>"."Attachments"."</h3>";
+         
                     $attachments = DB::table('attachments')->where('doc_id', $doc_id)->get();  
                     $srclink="uploads\\";
                 ?>
+                <br>
+                <table>
+                
+                <?php $count = 1; ?>
                 @foreach ($attachments as $attachment) 
-                    <div class="image-container">
+                <tr>  
+                    <td>  
                         <a href="{{asset('uploads/'.$attachment->data)}}" data-lightbox="roadtrip">
-                        <img class="img-thumbnail" src="{{asset('uploads/'.$attachment->data)}}" style="width: 100px; height: 100px;" /></a>
-                        {{ Form::open(array('method' => 'post', 'url' => 'delimage')) }}
+                        {{$attachment->data}}
+                        </a>
+                    </td>
+                    <td>
+                    &nbsp;
+                    </td>
+                    <td>
+                   
                             <input type="hidden" name="hide" value="{{$attachment->id}}">
-                            <button class="star-button"><img src="{{asset('img/Delete_Icon.png')}}"></button>
-                        {{Form::close()}}
-                    </div>
+                        <button type="button" onclick="delimage({{$count}})" ><span class="glyphicon glyphicon-trash"></span></button>
+      
+                        <?php $count+=1; ?>
+                    </td>
+                 </tr>
                 @endforeach
+                </table>
+            <!-- End Image Module-->
             <!-- End Image Module-->
                    @if(Session::get('imgsuccess'))
                        <div class="alert alert-success"> {{ Session::get('imgsuccess') }}</div> 
@@ -692,7 +710,7 @@ No remark.
                    @if(Session::get('imgerror'))
                        <div class="alert alert-danger"> {{ Session::get('imgerror') }}</div> 
                    @endif
-
+                   <br>
                    <input name="file[]" type="file"  multiple title="Select image to attach" data-filename-placement="inside"/>
                    <input name="doc_id" type="hidden" value="{{ $doc->id }}">
                    
@@ -703,10 +721,30 @@ No remark.
                    {{Session::forget('imgsuccess');}}
 
               {{ Form::submit('Save',array('class'=>'btn btn-success')) }}
-               </div>
+            
            </div>
            {{Form::close()}}
            <!--End Upload Image-->
+           <?php
+                 $attachmentc = DB::table('attachments')->where('doc_id', $doc_id)->count();
+                 if ($attachmentc!=0)
+                 
+                    $attachments = DB::table('attachments')->where('doc_id', $doc_id)->get();  
+                    $srclink="uploads\\";
+                ?>
+        
+                <?php $count=1; ?>
+                @foreach ($attachments as $attachment) 
+        
+           
+                     
+                        {{ Form::open(array('method' => 'post', 'url' => 'delimage', 'id'=>"form_$count")) }}
+                            <input type="hidden" name="hide" value="{{$attachment->id}}">
+                        {{Form::close()}}
+             
+       
+                 <?php $count+=1;  ?>
+                @endforeach
 <br/>
 </div>
 </div>
