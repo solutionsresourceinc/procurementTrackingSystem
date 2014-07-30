@@ -27,9 +27,18 @@ class PurchaseRequestController extends Controller
 	{
 
 //Image Upload
-
-$puchase=Purchase::orderby('id', 'DESC')->first();
-
+		$purchasecheck=Purchase::orderby('id', 'DESC')->count();
+if($purchasecheck!=0){
+$purchase=Purchase::orderby('id', 'DESC')->first();
+$docs=Document::orderby('id', 'DESC')->first();
+$pr_id=$purchase->id+1;
+$doc_id=$docs->id+1;
+}
+else
+{
+$pr_id=1;
+$doc_id=1;
+}
 foreach(Input::file('file') as $file)
 				{
 
@@ -124,49 +133,10 @@ foreach(Input::file('file') as $file)
 
         		}
 
-		        Session::put('imgsuccess','Files uploaded.');
-				if (Session::get('imgerror')&&Input::hasfile('file'))
-				{
-					
-					Session::forget('imgsuccess');
-					//Image Error Return
-					$purchase->delete();
-					
-					$task_details= TaskDetails::where('doc_id', $document->id)->delete();
-					$document->delete();
-					$message = "Failed to create purchase request.";
-					$count= Count::where('doc_id', $document->id)->delete();
-					// Set Main Error
-					$message = "Failed to save purchase request.";
-					Session::put('main_error', $message );
-
-					// Get Other Error Messages
-					$error_projectPurpose = $purchase->validationErrors->first('projectPurpose');
-					$error_projectType = $purchase->validationErrors->first('projectType');
-					$error_sourceOfFund = $purchase->validationErrors->first('sourceOfFund');
-					$error_amount = $purchase->validationErrors->first('amount');
-					$error_office = $purchase->validationErrors->first('office');
-					$error_requisitioner = $purchase->validationErrors->first('requisitioner');
-					$error_dateRequested = $purchase->validationErrors->first('dateRequested');
-					$error_dateReceived = $purchase->validationErrors->first('dateReceived');
-
-					// Inserting Error Message To a Session
-					Session::put('error_projectPurpose', $error_projectPurpose );
-					Session::put('error_sourceOfFund', $error_sourceOfFund );
-					Session::put('error_amount', $error_amount );
-					Session::put('error_office', $error_office );
-					Session::put('error_requisitioner', $error_requisitioner );
-					Session::put('error_dateRequested', $error_dateRequested );
-					Session::put('error_dateReceived', $error_dateReceived );
-					Session::put('error_projectType', $error_projectType );
-
-
-
-					return Redirect::back()->withInput();
-				} 
-
-
+		       
 //End Image Upload
+
+
 		$cno=Input::get('controlNo');
 		$cnp= Purchase::where('controlNo', $cno )->count();
 
@@ -208,7 +178,7 @@ foreach(Input::file('file') as $file)
 
 		$purchase_save = $purchase->save();
 
-		if($purchase_save)
+		if($purchase_save&&(Session::get('imgerror')==NULL||!Input::hasfile('file')))
 		{
 			
 			$document->pr_id = $purchase->id;
@@ -409,10 +379,15 @@ foreach(Input::file('file') as $file)
 				$workflow = Workflow::all();
 
 				return Redirect::to('purchaseRequest/view');
+				 Session::put('imgsuccess','Files uploaded.');
+				
+
+
 			} 
 			else
 			{
-				$purchase->delete();
+
+				
 				$message = "Failed to create purchase request.";
 				Session::put('main_error', $message );
 
@@ -441,6 +416,10 @@ foreach(Input::file('file') as $file)
 				{
 					Session::put('m6', 'required' );
 				}
+
+				 Session::put('imgsuccess','Files uploaded.');
+				
+
 
 				return Redirect::back()->withInput();
 			} 
@@ -476,6 +455,49 @@ foreach(Input::file('file') as $file)
 			{
 				Session::put('error_modeOfProcurement', 'required' );
 			}
+
+			if (Session::get('imgerror')&&Input::hasfile('file'))
+			{
+				
+				$failedpurchase=Purchase::find($purchase->id);
+				$failedpurchase->delete();
+					
+					Session::forget('imgsuccess');
+					//Image Error Return
+					
+					
+					$task_details= TaskDetails::where('doc_id', $document->id)->delete();
+					$document->delete();
+					$message = "Failed to create purchase request.";
+			
+					// Set Main Error
+					$message = "Failed to save purchase request.";
+					Session::put('main_error', $message );
+
+					// Get Other Error Messages
+					$error_projectPurpose = $purchase->validationErrors->first('projectPurpose');
+					$error_projectType = $purchase->validationErrors->first('projectType');
+					$error_sourceOfFund = $purchase->validationErrors->first('sourceOfFund');
+					$error_amount = $purchase->validationErrors->first('amount');
+					$error_office = $purchase->validationErrors->first('office');
+					$error_requisitioner = $purchase->validationErrors->first('requisitioner');
+					$error_dateRequested = $purchase->validationErrors->first('dateRequested');
+					$error_dateReceived = $purchase->validationErrors->first('dateReceived');
+
+					// Inserting Error Message To a Session
+					Session::put('error_projectPurpose', $error_projectPurpose );
+					Session::put('error_sourceOfFund', $error_sourceOfFund );
+					Session::put('error_amount', $error_amount );
+					Session::put('error_office', $error_office );
+					Session::put('error_requisitioner', $error_requisitioner );
+					Session::put('error_dateRequested', $error_dateRequested );
+					Session::put('error_dateReceived', $error_dateReceived );
+					Session::put('error_projectType', $error_projectType );
+
+
+
+					
+			} 
 
 			
 
