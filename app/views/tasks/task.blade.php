@@ -231,7 +231,7 @@ $assign_user=User::find(Auth::user()->id);
 {{ Form::submit('Done',array('class'=>'btn btn-sm btn-success')) }}	
 </td>
 </tr>
-{{Form::close}}
+{{Form::close()}}
 @elseif($task->taskType=='cheque')
 {{Form::open(['url'=>'cheque'], 'POST')}}
 <?php
@@ -702,7 +702,7 @@ No remark.
                 @endforeach
                 </table>
             <!-- End Image Module-->
-            <!-- End Image Module-->
+          
                    @if(Session::get('imgsuccess'))
                        <div class="alert alert-success"> {{ Session::get('imgsuccess') }}</div> 
                    @endif

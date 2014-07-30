@@ -794,7 +794,14 @@ if($purchase_save)
 
 		$notice = "Purchase request saved successfully. ";										  
 		Session::put('notice', $notice);
-
+		
+		$saveattachments= Attachments::where('doc_id',$doc_id)->get();
+		foreach ($saveattachments as $saveattachment) {
+			$saveattachment->saved=1;
+			$saveattachment->save();
+		}
+		$deleteattachments= Attachments::where('saved','0')->delete();
+		
 		return Redirect::to("purchaseRequest/vieweach/$id");
 	}
 		
