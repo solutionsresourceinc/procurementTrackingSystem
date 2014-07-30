@@ -161,8 +161,33 @@
                             $doc = new Purchase; 
                             $doc = DB::table('document')->where('pr_id', $request->id)->get(); 
                         ?>
-                        <td width="18%">
-                            @foreach ($doc as $docs) {{ Workflow::find($docs->work_id)->workFlowName; }} @endforeach
+                         <td width="18%">
+                            @foreach ($doc as $docs) 
+                                <?php  
+                                    $workflow = Workflow::find($docs->work_id)->workFlowName; 
+                                    if($workflow == "Small Value Procurement (Below P50,000)")
+                                    {
+                                        echo "SVP (Below P50,000)";
+
+                                    }
+                                    else if($workflow == "Small Value Procurement (Above P50,000 Below P500,000)")
+                                    {
+                                        echo "SVP (Above P50,000 Below P500,000)";
+                                    }
+                                    else
+                                    {
+                                        echo $workflow = Workflow::find($docs->work_id)->workFlowName;
+                                    }
+
+                                    if($request->otherType != "")
+                                    {
+                                            echo "<br> <i>$request->otherType</i>";
+                                    }
+                                ?>
+
+                            @endforeach
+
+
                         </td>
                         <td width="12%" style="text-align: center">P{{{ $request->amount }}}</td>
                         <td width="20%">{{ $request->dateReceived; }}</td>
@@ -245,8 +270,33 @@
                             $doc = new Purchase; 
                             $doc = DB::table('document')->where('pr_id', $request->id)->get(); 
                         ?>
-                        <td width="18%">
-                            @foreach ($doc as $docs) {{ Workflow::find($docs->work_id)->workFlowName; }} @endforeach
+                         <td width="18%">
+                            @foreach ($doc as $docs) 
+                                <?php  
+                                    $workflow = Workflow::find($docs->work_id)->workFlowName; 
+                                    if($workflow == "Small Value Procurement (Below P50,000)")
+                                    {
+                                        echo "SVP (Below P50,000)";
+
+                                    }
+                                    else if($workflow == "Small Value Procurement (Above P50,000 Below P500,000)")
+                                    {
+                                        echo "SVP (Above P50,000 Below P500,000)";
+                                    }
+                                    else
+                                    {
+                                        echo $workflow = Workflow::find($docs->work_id)->workFlowName;
+                                    }
+
+                                    if($request->otherType != "")
+                                    {
+                                            echo "<br> <i>$request->otherType</i>";
+                                    }
+                                ?>
+
+                            @endforeach
+
+
                         </td>
                         <td width="17%" style="text-align: center">P{{{ $request->amount }}}</td>
                         <td width="15%">{{ $request->dateReceived; }}</td>

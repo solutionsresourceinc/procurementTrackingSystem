@@ -90,9 +90,9 @@
 							{{ Form::label('otherType', 'Other Type', array('class' => 'create-label')) }}
 							<select name="otherType" id="otherType" class="form-control" onchange="change_OtherType(this.value)">
 								<option value="">None</option>
-								<option value="shopping" <?php if(Input::old('otherType') == 'shopping') echo 'selected'; ?> >Shopping</option>
-								<option value="fuel" <?php if(Input::old('otherType') == 'fuel') echo 'selected'; ?>>Fuel</option>
-								<option value="pakyaw" <?php if(Input::old('otherType') == 'pakyaw') echo 'selected'; ?>>Pakyaw</option>
+								<option value="Shopping" <?php if(Input::old('otherType') == 'Shopping') echo 'selected'; ?> >Shopping</option>
+								<option value="Fuel" <?php if(Input::old('otherType') == 'Fuel') echo 'selected'; ?>>Fuel</option>
+								<option value="Pakyaw" <?php if(Input::old('otherType') == 'Pakyaw') echo 'selected'; ?>>Pakyaw</option>
 								<option value="Direct Contracting" <?php if(Input::old('otherType') == 'Direct Contracting') echo 'selected'; ?>>Direct Contracting</option>
 							</select>
 							<p> </p>
