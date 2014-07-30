@@ -95,7 +95,7 @@
 				<tr> 
 					<td>
 						<span style="font-weight: bold">Control No. : </span><br/>
-						<p><a href="{{ URL::to('purchaseRequest/vieweach/'.$purchase->id) }}" ><?php echo str_pad($purchase->controlNo, 5, '0', STR_PAD_LEFT); ?></a></p>
+						<p><a href="{{ URL::to('purchaseRequest/vieweach/'.$purchase->taskdetails_id) }}" ><?php echo str_pad($purchase->controlNo, 5, '0', STR_PAD_LEFT); ?></a></p>
 				
 					</td>
 				<tr>
@@ -173,6 +173,7 @@
 						<tr>
 							<td>
 						<input type ="hidden" name="taskdetails_id" value="{{$taskd->id}}">
+						<input type ="hidden" name="pr_id" value="{{$purchase->id}}">
 						<input type="submit" class="btn btn-sm btn-success" value="Done">
 					
 							</td>
@@ -197,6 +198,7 @@
 						<tr>
 							<td>
 						<input type ="hidden" name="taskdetails_id" value="{{$taskd->id}}">
+						<input type ="hidden" name="pr_id" value="{{$purchase->id}}">
 						{{ Form::submit('Done',array('class'=>'btn btn-sm btn-success')) }}			
 							</td>
 						</tr>
@@ -224,6 +226,7 @@
 						<tr>
 							<td>
 						<input type ="hidden" name="taskdetails_id" value="{{$taskd->id}}">
+						<input type ="hidden" name="pr_id" value="{{$purchase->id}}">
 						{{ Form::submit('Done',array('class'=>'btn btn-sm btn-success')) }}			
 							</td>
 						</tr>
@@ -258,6 +261,7 @@
 						<tr>
 							<td>
 						<input type ="hidden" name="taskdetails_id" value="{{$taskd->id}}">
+						<input type ="hidden" name="pr_id" value="{{$purchase->id}}">
 						{{ Form::submit('Done',array('class'=>'btn btn-sm btn-success')) }}			
 							</td>
 						</tr>
@@ -279,6 +283,7 @@
 						<tr>
 							<td>
 						<input type ="hidden" name="taskdetails_id" value="{{$taskd->id}}">
+						<input type ="hidden" name="pr_id" value="{{$purchase->id}}">
 						{{ Form::submit('Done',array('class'=>'btn btn-sm btn-success')) }}			
 							</td>
 						</tr>
@@ -321,6 +326,7 @@
 						<tr>
 							<td>
 						<input type ="hidden" name="taskdetails_id" value="{{$taskd->id}}">
+						<input type ="hidden" name="pr_id" value="{{$purchase->id}}">
 						{{ Form::submit('Done',array('class'=>'btn btn-sm btn-success')) }}			
 							</td>
 						</tr>	
@@ -360,6 +366,7 @@
 						<tr>
 							<td>
 						<input type ="hidden" name="taskdetails_id" value="{{$taskd->id}}">
+						<input type ="hidden" name="pr_id" value="{{$purchase->id}}">
 						{{ Form::submit('Done',array('class'=>'btn btn-sm btn-success')) }}			
 							</td>
 						</tr>
@@ -390,6 +397,7 @@
 						<tr>
 							<td>
 						<input type ="hidden" name="taskdetails_id" value="{{$taskd->id}}">
+						<input type ="hidden" name="pr_id" value="{{$purchase->id}}">
 						{{ Form::submit('Done',array('class'=>'btn btn-sm btn-success')) }}			
 							</td>
 						</tr>	
@@ -436,6 +444,7 @@
 						<tr>
 							<td>
 						<input type ="hidden" name="taskdetails_id" value="{{$taskd->id}}">
+						<input type ="hidden" name="pr_id" value="{{$purchase->id}}">
 						{{ Form::submit('Done',array('class'=>'btn btn-sm btn-success')) }}			
 							</td>
 						</tr>
