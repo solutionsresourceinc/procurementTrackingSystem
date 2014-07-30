@@ -14,7 +14,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '1';
         $task->taskName = 'PPMP CERTIFICATION';
         $task->taskType = 'certification';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -24,7 +24,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '1';
         $task->taskName = 'GSD';
         $task->taskType = 'normal';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -34,7 +34,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '1';
         $task->taskName = 'BUDGET / ACTG';
         $task->taskType = 'normal';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -44,7 +44,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '1';
         $task->taskName = 'PA';
         $task->taskType = 'normal';;
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -54,7 +54,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '1';
         $task->taskName = 'PGO';
         $task->taskType = 'normal';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -64,7 +64,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '1';
         $task->taskName = 'GSD';
         $task->taskType = 'normal';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -78,7 +78,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '2';
         $task->taskName = '3 RFQ/CANVASS';
         $task->taskType = 'normal';
-        $task->maxDuration = '3';
+        $task->maxDuration = '1';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -88,7 +88,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '2';
         $task->taskName = 'ABSTRACT OF QUOTATION';
         $task->taskType = 'normal';
-        $task->maxDuration = '3';
+        $task->maxDuration = '6';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -101,7 +101,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '3';
         $task->taskName = 'LCRB / HRB / SUPPLIER';
         $task->taskType = 'supplier';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -111,7 +111,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '3';
         $task->taskName = 'GSD';
         $task->taskType = 'normal';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -121,7 +121,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '3';
         $task->taskName = 'ACTG';
         $task->taskType = 'normal';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -131,7 +131,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '3';
         $task->taskName = 'PA';
         $task->taskType = 'normal';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -141,7 +141,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '3';
         $task->taskName = 'PGO';
         $task->taskType = 'normal';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -151,7 +151,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '3';
         $task->taskName = 'BAC (DELIVERY)';
         $task->taskType = 'normal';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -164,7 +164,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '4';
         $task->taskName = 'CHEQUE';
         $task->taskType = 'cheque';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -174,7 +174,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '4';
         $task->taskName = 'BUDGET';
         $task->taskType = 'normal';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -184,7 +184,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '4';
         $task->taskName = 'ACCOUNTING';
         $task->taskType = 'normal';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -194,7 +194,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '4';
         $task->taskName = 'TREASURY';
         $task->taskType = 'normal';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -204,7 +204,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '4';
         $task->taskName = 'PA';
         $task->taskType = 'normal';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -214,7 +214,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '4';
         $task->taskName = 'PGO';
         $task->taskType = 'normal';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -227,7 +227,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '1';
         $task->taskName = 'PPMP CERTIFICATION';
         $task->taskType = 'certification';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -237,7 +237,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '1';
         $task->taskName = 'GSD';
         $task->taskType = 'normal';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -247,7 +247,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '1';
         $task->taskName = 'BUDGET / ACTG';
         $task->taskType = 'normal';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -257,7 +257,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '1';
         $task->taskName = 'PA';
         $task->taskType = 'normal';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -267,7 +267,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '1';
         $task->taskName = 'PGO';
         $task->taskType = 'normal';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -277,7 +277,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '1';
         $task->taskName = 'GSD';
         $task->taskType = 'normal';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -290,7 +290,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '2';
         $task->taskName = 'PGEPS POSTING';
         $task->taskType = 'posting';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -300,7 +300,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '2';
         $task->taskName = '3 RFQ/CANVASS';
         $task->taskType = 'normal';
-        $task->maxDuration = '3';
+        $task->maxDuration = '1';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -310,7 +310,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '2';
         $task->taskName = 'ABSTRACT OF QUOTATION';
         $task->taskType = 'normal';
-        $task->maxDuration = '3';
+        $task->maxDuration = '6';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -343,7 +343,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '3';
         $task->taskName = 'LCRB / HRB / SUPPLIER';
         $task->taskType = 'supplier';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -353,7 +353,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '3';
         $task->taskName = 'GSD';
         $task->taskType = 'normal';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -363,7 +363,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '3';
         $task->taskName = 'ACTG';
         $task->taskType = 'normal';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -373,7 +373,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '3';
         $task->taskName = 'PA';
         $task->taskType = 'normal';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -383,7 +383,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '3';
         $task->taskName = 'PGO';
         $task->taskType = 'normal';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -393,7 +393,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '3';
         $task->taskName = 'BAC (DELIVERY)';
         $task->taskType = 'normal';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -406,7 +406,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '4';
         $task->taskName = 'CHEQUE';
         $task->taskType = 'cheque';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -416,7 +416,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '4';
         $task->taskName = 'BUDGET';
         $task->taskType = 'normal';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -426,7 +426,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '4';
         $task->taskName = 'ACCOUNTING';
         $task->taskType = 'normal';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -436,7 +436,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '4';
         $task->taskName = 'TREASURY';
         $task->taskType = 'normal';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -446,7 +446,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '4';
         $task->taskName = 'PA';
         $task->taskType = 'normal';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -456,7 +456,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '4';
         $task->taskName = 'PGO';
         $task->taskType = 'normal';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -469,7 +469,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '1';
         $task->taskName = 'GSD';
         $task->taskType = 'normal';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -479,7 +479,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '1';
         $task->taskName = 'BUDGET / ACTG';
         $task->taskType = 'normal';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -489,7 +489,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '1';
         $task->taskName = 'P.A. OFFICE';
         $task->taskType = 'normal';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -499,7 +499,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '1';
         $task->taskName = 'PGO';
         $task->taskType = 'normal';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -509,7 +509,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '1';
         $task->taskName = 'GSD RELEASE';
         $task->taskType = 'normal';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -522,7 +522,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '2';
         $task->taskName = 'PRE-PROCUREMENT CONFERENCE';
         $task->taskType = 'conference';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -532,7 +532,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '2';
         $task->taskName = 'PHILGEPS DATE PUBLISHED';
         $task->taskType = 'published';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -542,7 +542,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '2';
         $task->taskName = 'ADVERTISEMENT';
         $task->taskType = 'conference';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -552,7 +552,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '2';
         $task->taskName = 'PRE-BID CONFERENCE';
         $task->taskType = 'conference';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -562,7 +562,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '2';
         $task->taskName = 'ITB DATE PUBLISHED';
         $task->taskType = 'published';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -572,7 +572,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '2';
         $task->taskName = 'ELIGIBILITY DOCUMENTS';
         $task->taskType = 'documents';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -582,7 +582,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '2';
         $task->taskName = 'TWG EVALUATION DATE';
         $task->taskType = 'evaluation';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -592,7 +592,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '2';
         $task->taskName = 'AOB DATE (AFTER TWG EVALUATION)';
         $task->taskType = 'evaluation';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -622,7 +622,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '2';
         $task->taskName = 'NOTICE TO PROCEED';
         $task->taskType = 'meeting';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -632,7 +632,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '2';
         $task->taskName = 'PHILGEPS AWARD PUBLISHED';
         $task->taskType = 'published';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -645,7 +645,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '3';
         $task->taskName = 'LCRB / HRB / SUPPLIER';
         $task->taskType = 'supplier';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = '1';
         $task->description = 'This is a task description';
         $task->save();
@@ -655,7 +655,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '3';
         $task->taskName = 'GSD';
         $task->taskType = 'normal';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -665,7 +665,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '3';
         $task->taskName = 'ACTG';
         $task->taskType = 'normal';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -675,7 +675,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '3';
         $task->taskName = 'P.A.';
         $task->taskType = 'normal';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -685,7 +685,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '3';
         $task->taskName = 'PGO';
         $task->taskType = 'normal';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -695,7 +695,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '3';
         $task->taskName = 'BAC (DELIVERY)';
         $task->taskType = 'normal';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -708,7 +708,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '4';
         $task->taskName = 'BUDGET';
         $task->taskType = 'normal';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -718,7 +718,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '4';
         $task->taskName = 'ACCOUNTING';
         $task->taskType = 'normal';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -728,7 +728,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '4';
         $task->taskName = 'TREASURY';
         $task->taskType = 'normal';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -738,7 +738,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '4';
         $task->taskName = 'P.A.';
         $task->taskType = 'normal';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -748,7 +748,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '4';
         $task->taskName = 'PGO';
         $task->taskType = 'normal';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -758,7 +758,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '4';
         $task->taskName = 'CHECK RELEASED';
         $task->taskType = 'normal';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -771,7 +771,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '1';
         $task->taskName = 'DATE OF P.R.';
         $task->taskType = 'normal';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -781,7 +781,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '1';
         $task->taskName = 'RECEIVED GSD';
         $task->taskType = 'normal';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -791,7 +791,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '1';
         $task->taskName = 'BUDGET/ACCTNG';
         $task->taskType = 'normal';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -801,7 +801,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '1';
         $task->taskName = 'P.A. OFFICE';
         $task->taskType = 'normal';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -811,7 +811,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '1';
         $task->taskName = 'PGO';
         $task->taskType = 'normal';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -824,7 +824,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '2';
         $task->taskName = 'LABOR PROPOSAL DATE';
         $task->taskType = 'conference';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -844,7 +844,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '2';
         $task->taskName = 'NOTICE TO PROCEED DATE';
         $task->taskType = 'conference';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -854,7 +854,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '2';
         $task->taskName = 'PAKYAW CONTRACT DATE';
         $task->taskType = 'conference';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -864,7 +864,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '2';
         $task->taskName = 'ACCOMPLISHMENT REPORT DATE';
         $task->taskType = 'conference';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -877,7 +877,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '3';
         $task->taskName = 'BUDGET';
         $task->taskType = 'normal';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -887,7 +887,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '3';
         $task->taskName = 'ACCOUNTING';
         $task->taskType = 'normal';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -897,7 +897,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '3';
         $task->taskName = 'TREASURY';
         $task->taskType = 'normal';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -907,7 +907,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '3';
         $task->taskName = 'P.A. OFFICE';
         $task->taskType = 'normal';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -917,7 +917,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '3';
         $task->taskName = 'PGO';
         $task->taskType = 'normal';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -927,7 +927,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '3';
         $task->taskName = 'ACCOUNTING';
         $task->taskType = 'normal';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -937,7 +937,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '3';
         $task->taskName = 'CHECK RELEASED';
         $task->taskType = 'normal';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -950,7 +950,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '1';
         $task->taskName = 'DATE OF P.R.';
         $task->taskType = 'datebyremark';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -960,7 +960,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '1';
         $task->taskName = 'RECEIVED GSD';
         $task->taskType = 'datebyremark';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -970,7 +970,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '1';
         $task->taskName = 'BUDGET / ACCTNG';
         $task->taskType = 'datebyremark';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -980,7 +980,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '1';
         $task->taskName = 'P.A. OFFICE';
         $task->taskType = 'datebyremark';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -990,7 +990,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '1';
         $task->taskName = 'PGO';
         $task->taskType = 'datebyremark';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -1003,7 +1003,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '2';
         $task->taskName = 'PHILGEPS DATE PUBLISHED';
         $task->taskType = 'published';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -1013,7 +1013,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '2';
         $task->taskName = 'RFQ NO. OF SUPPLIERS';
         $task->taskType = 'rfq';
-        $task->maxDuration = '3';
+        $task->maxDuration = '1';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -1023,7 +1023,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '2';
         $task->taskName = 'CERTIFICATION OF EMERGENCY';
         $task->taskType = 'dateby';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -1033,7 +1033,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '2';
         $task->taskName = 'CERTIFICATE OF EXCLUSIVE DISTRIBUTOR, MANUFACTURER';
         $task->taskType = 'dateby';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -1066,7 +1066,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '3';
         $task->taskName = 'RECEIVED GSD';
         $task->taskType = 'dateby';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -1076,7 +1076,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '3';
         $task->taskName = 'ACCOUNTING OFFICE';
         $task->taskType = 'dateby';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -1086,7 +1086,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '3';
         $task->taskName = 'P.A. OFFICE';
         $task->taskType = 'dateby';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -1096,7 +1096,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '3';
         $task->taskName = 'GOVERNORS OFFICE';
         $task->taskType = 'dateby';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -1109,7 +1109,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '4';
         $task->taskName = 'BUDGET';
         $task->taskType = 'datebyremark';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -1119,7 +1119,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '4';
         $task->taskName = 'ACCOUNTING';
         $task->taskType = 'datebyremark';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -1129,7 +1129,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '4';
         $task->taskName = 'TREASURY';
         $task->taskType = 'datebyremark';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -1139,7 +1139,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '4';
         $task->taskName = 'P.A. OFFICE';
         $task->taskType = 'datebyremark';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -1149,7 +1149,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '4';
         $task->taskName = 'PGO';
         $task->taskType = 'datebyremark';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -1159,7 +1159,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '4';
         $task->taskName = 'ACCOUNTING';
         $task->taskType = 'datebyremark';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -1169,7 +1169,7 @@ class TaskSeeder extends Seeder {
         $task->section_id = '4';
         $task->taskName = 'CHECK RELEASED';
         $task->taskType = 'datebyremark';
-        $task->maxDuration = '3';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
