@@ -95,7 +95,7 @@
     <div align="left" class="col-md-4" id="noOfResult">{{ $displayResult }} </div>   
     <div align="center" class="col-md-4"></div>   
     <div align="center" class="col-md-4">   
-        <input type="text" class="form-control filter" placeholder="Enter Seach Keywords"> 
+        <input type="text" class="form-control filter" placeholder="Enter search keywords"> 
     </div>
     <br/>
     <br/>
