@@ -47,6 +47,8 @@
             $valprojectPurpose=Input::old('projectPurpose');
             $valsourceOfFund=Input::old('sourceOfFund');
             $valamount=Input::old('amount'); 
+            $valprojectType=$purchaseToEdit->projectType;
+
         }
         else
         {
@@ -340,6 +342,8 @@
 
                 {{Session::forget('notice'); }}
                 {{Session::forget('main_error'); }}
+                {{Session::forget('imgerror'); }}
+                {{Session::forget('imgsuccess'); }}
                 {{Session::forget('error_projectPurpose');}}
                 {{Session::forget('error_sourceOfFund');}}
                 {{Session::forget('error_office');}}
