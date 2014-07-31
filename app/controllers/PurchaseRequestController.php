@@ -144,8 +144,11 @@ class PurchaseRequestController extends Controller
 		// Get latest control number
 		$cn = 0;
 		$purchase_controlNo = Purchase::orderBy('ControlNo', 'DESC')->first();
-		$cn = $purchase_controlNo->controlNo;
-		$cn = $cn + 1;
+		if(!$purchase_controlNo == NuLL)
+		{
+			$cn = $purchase_controlNo->controlNo;
+		}
+		$cn += 1;
 		$purchase->controlNo = $cn;
 
 

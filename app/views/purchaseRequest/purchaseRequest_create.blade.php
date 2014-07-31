@@ -104,7 +104,11 @@
 							<?php 
 								$cn = 0;
 								$purchase_controlNo = Purchase::orderBy('ControlNo', 'DESC')->first();
-								$cn = $purchase_controlNo->controlNo;
+								if(!$purchase_controlNo == NuLL)
+								{
+									$cn = $purchase_controlNo->controlNo;
+									
+								}
 								$cn += 1;
 							?>
 
