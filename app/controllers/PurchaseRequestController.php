@@ -956,13 +956,15 @@ DB::table('purchase_request')->where('id',$id)->update(array('updated_at' => $up
 	
 		$tasknext->status="New";
 		$tasknext->save();
-		//End Project Type Filter
+		//End Project Type Filter/
 	}
 	else
 	{
 		$purchase= Purchase::find($docs->pr_id);
 		$purchase->status="Closed";
 		$purchase->save();
+		$request_id = Input::get('pr_id');
+		return Redirect::to("purchaseRequest/vieweach/$request_id");
 	}
 }
 else
@@ -1991,7 +1993,7 @@ if (($check==1)&&$assignee!=NULL)
 {
 	$taskd= TaskDetails::find($taskdetails_id);
 	$docs=Document::find($taskd->doc_id);
-	
+
 $id=$docs->pr_id;
 	$delcount= Count::where('doc_id', $docs->id)->delete();
 	$userx= User::get();
