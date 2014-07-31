@@ -1,13 +1,5 @@
 <?php
 
-/*
-	CODE REVIEW:
-		- fix indention
-		- remove unnecessary comments
-		- remove unnecessary functions
-		- make variable names more descriptive
-		- abbreviate long variable names, but insert comment to describe
-*/
 
 class PurchaseRequestController extends Controller 
 {
@@ -477,19 +469,233 @@ class PurchaseRequestController extends Controller
 					Session::put('error_dateRequested', $error_dateRequested );
 					Session::put('error_dateReceived', $error_dateReceived );
 					Session::put('error_projectType', $error_projectType );
-
-
-
 					
 			} 
-
-			
 
 			return Redirect::back()->withInput();
 
 		} 
 }
 
+public function autoupload()
+{
+
+	//Image Upload
+		$purchasecheck=Purchase::orderby('id', 'DESC')->count();
+		if($purchasecheck!=0)
+		{
+			$purchase=Purchase::orderby('id', 'DESC')->first();
+			$docs=Document::orderby('id', 'DESC')->first();
+			$pr_id=$purchase->id+1;
+			$doc_id=$docs->id+1;
+		}
+		else
+		{
+			$pr_id=1;
+			$doc_id=1;
+		}
+
+		foreach(Input::file('file') as $file)
+		{
+			$rules = array(
+                'file' => 'required|mimes:png,gif,jpeg,jpg|max:900000000000000000000'
+            );
+
+	        $validator = \Validator::make(array('file'=> $file), $rules);
+	        $destine = public_path()."/uploads";
+	        if($validator->passes())
+	        {
+		        $ext = $file->guessClientExtension(); // (Based on mime type)
+		        $ext = $file->getClientOriginalExtension(); // (Based on filename)
+		        $filename = $file->getClientOriginalName();
+	             
+				$archivo = value(function() use ($file)
+				{
+		        	$filename = str_random(10) . '.' . $file->getClientOriginalExtension();
+		        	return strtolower($filename);
+	   			});
+
+				$archivo = value(function() use ($file)
+				{
+					$date = date('m-d-Y-h-i-s', time());
+					$filename = $date."-". $file->getClientOriginalName();
+					return strtolower($filename);
+				});
+
+		        $attach = new Attachments;
+		        $attach->doc_id=$doc_id;
+				$attach->data = $archivo;
+				$attach->save();
+
+				$filename = $doc_id."_".$attach->id;
+		        $file->move($destine, $archivo);
+		  
+		   		$target_folder = $destine; 
+		   		$upload_image = $target_folder."/".$archivo;
+
+		   		$thumbnail = $target_folder."/resize".$archivo;
+		        $actual = $target_folder."/".$archivo;
+
+				// THUMBNAIL SIZE
+				list($width, $height) = getimagesize($upload_image);
+
+				$newwidth = $width; 
+				$newheight = $height;
+				while ( $newheight > 525) 
+				{
+				    $newheight=$newheight*0.8;
+				    $newwidth=$newwidth*0.8;
+				}
+
+	    		$source=$upload_image;
+	    		$ext  = strtolower($ext);
+				$thumb = imagecreatetruecolor($newwidth, $newheight);
+				if ($ext=="jpg"||$ext=="jpeg")
+						  $source = imagecreatefromjpeg($upload_image);
+				elseif ($ext=="png")
+						$source = imagecreatefrompng($upload_image);
+				elseif ($ext=="gif")
+						$source = imagecreatefromgif($upload_image);
+				else
+        			continue;	      
+
+				// RESIZE 
+					imagecopyresized($thumb, $source, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
+				// MAKE NEW FILES
+				if ($ext=="jpg"||$ext=="jpeg")
+					imagejpeg($thumb, $thumbnail, 100);
+				elseif ($ext=="png")
+					imagepng($thumb, $thumbnail, 9);
+				elseif($ext=="gif")
+					imagegif($thumb, $thumbnail, 100);
+				else
+					echo "An invalid image";
+
+				unlink($actual);
+				// FILE RENAMES
+				rename($thumbnail, $actual);
+			}
+		    else
+		    {
+		  
+		        Session::put('imgerror','Invalid file.');
+		    }
+		} //End Image Upload
+
+
+		return redirect::back()->withInput();
+
+}
+public function autouploadsaved()
+{
+
+	//Image Upload
+		$purchasecheck=Purchase::orderby('id', 'DESC')->count();
+		if($purchasecheck!=0)
+		{
+			$purchase=Purchase::orderby('id', 'DESC')->first();
+			$docs=Document::orderby('id', 'DESC')->first();
+			$pr_id=$purchase->id+1;
+			$doc_id=$docs->id+1;
+		}
+		else
+		{
+			$pr_id=1;
+			$doc_id=1;
+		}
+
+		foreach(Input::file('file') as $file)
+		{
+			$rules = array(
+                'file' => 'required|mimes:png,gif,jpeg,jpg|max:900000000000000000000'
+            );
+
+	        $validator = \Validator::make(array('file'=> $file), $rules);
+	        $destine = public_path()."/uploads";
+	        if($validator->passes())
+	        {
+		        $ext = $file->guessClientExtension(); // (Based on mime type)
+		        $ext = $file->getClientOriginalExtension(); // (Based on filename)
+		        $filename = $file->getClientOriginalName();
+	             
+				$archivo = value(function() use ($file)
+				{
+		        	$filename = str_random(10) . '.' . $file->getClientOriginalExtension();
+		        	return strtolower($filename);
+	   			});
+
+				$archivo = value(function() use ($file)
+				{
+					$date = date('m-d-Y-h-i-s', time());
+					$filename = $date."-". $file->getClientOriginalName();
+					return strtolower($filename);
+				});
+
+		        $attach = new Attachments;
+		        $attach->doc_id=$doc_id;
+				$attach->data = $archivo;
+				$attach->saved = 1;
+				$attach->save();
+
+				$filename = $doc_id."_".$attach->id;
+		        $file->move($destine, $archivo);
+		  
+		   		$target_folder = $destine; 
+		   		$upload_image = $target_folder."/".$archivo;
+
+		   		$thumbnail = $target_folder."/resize".$archivo;
+		        $actual = $target_folder."/".$archivo;
+
+				// THUMBNAIL SIZE
+				list($width, $height) = getimagesize($upload_image);
+
+				$newwidth = $width; 
+				$newheight = $height;
+				while ( $newheight > 525) 
+				{
+				    $newheight=$newheight*0.8;
+				    $newwidth=$newwidth*0.8;
+				}
+
+	    		$source=$upload_image;
+	    		$ext  = strtolower($ext);
+				$thumb = imagecreatetruecolor($newwidth, $newheight);
+				if ($ext=="jpg"||$ext=="jpeg")
+						  $source = imagecreatefromjpeg($upload_image);
+				elseif ($ext=="png")
+						$source = imagecreatefrompng($upload_image);
+				elseif ($ext=="gif")
+						$source = imagecreatefromgif($upload_image);
+				else
+        			continue;	      
+
+				// RESIZE 
+					imagecopyresized($thumb, $source, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
+				// MAKE NEW FILES
+				if ($ext=="jpg"||$ext=="jpeg")
+					imagejpeg($thumb, $thumbnail, 100);
+				elseif ($ext=="png")
+					imagepng($thumb, $thumbnail, 9);
+				elseif($ext=="gif")
+					imagegif($thumb, $thumbnail, 100);
+				else
+					echo "An invalid image";
+
+				unlink($actual);
+				// FILE RENAMES
+				rename($thumbnail, $actual);
+			}
+		    else
+		    {
+		  
+		        Session::put('imgerror','Invalid file.');
+		    }
+		} //End Image Upload
+
+
+		return redirect::back()->withInput();
+
+}
 public function edit()
 {
 	$user_id=Auth::user()->id;

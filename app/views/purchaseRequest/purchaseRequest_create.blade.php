@@ -54,7 +54,7 @@
 
 	<h1 class="page-header">Create New Purchase Request</h1>
 	<div class="form-create fc-div">
-		{{ Form::open(array('url' => 'newcreate','files' => true), 'POST') }}
+		{{ Form::open(array('action' => '/newcreate','files' => true, 'id'=>'createform'), 'POST') }}
 		<div class="row">
 			<div>	
 				@if(Session::get('notice'))
@@ -331,7 +331,7 @@
 
 							{{ Form::open(array('url' => 'addimage', 'files' => true)) }}
 
-							<input name="file[]" type="file"  multiple title="Select images to attach" data-filename-placement="inside"/>
+							<input name="file[]" type="file"  multiple title="Select images to attach" onchange="autoupload('createform')"/>
 							<input name="doc_id" type="hidden" value="{{ $doc_id }}">
 
 							<br>
@@ -585,8 +585,18 @@
 	<script>
 		function delimage(value)
 		{
-			//alert('form_'+value);
+
 			var formname= "form_"+value;
+			document.getElementById(formname).submit();
+
+		}
+		function autoupload(value)
+		{
+			var formname= "createform";
+			var text= "/autoupload";
+	
+
+			$("#createform").attr('action', text); 
 			document.getElementById(formname).submit();
 		}
 		function numberWithCommas2(amount) 

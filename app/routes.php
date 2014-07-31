@@ -127,7 +127,11 @@ Route::get('task/{id}', [ 'uses' => 'TaskController@taskpagecall']);
 
 
 //---------- Image Module Components
-Route::post('newcreate', ['uses' => 'purchaseRequestController@create_submit']);
+Route::post('newcreate', ['uses' => 'purchaseRequestController@create_submit', 'as'=>'/newcreate']);
+
+Route::post('autoupload', ['uses' => 'purchaseRequestController@autoupload', 'as'=>'/autoupload']);
+Route::post('autouploadsaved', ['uses' => 'purchaseRequestController@autouploadsaved', 'as'=>'/autouploadsaved']);
+
 Route::post('newedit', ['uses' => 'purchaseRequestController@edit_submit']);
 Route::post('addimage', ['uses' => 'purchaseRequestController@addimage']);
 Route::post('delimage', ['uses'=> 'purchaseRequestController@delimage']);
