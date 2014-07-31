@@ -892,7 +892,7 @@ if (($check==3||($remarks==" "&&$check==2))&&$assignee!=NULL)
 	$taskd= TaskDetails::find($taskdetails_id);
 	$docs=Document::find($taskd->doc_id);
 
-
+$id=$docs->pr_id;
 	//PO Section Check
 	$taskcurrent=Task::find($taskd->task_id);
 	if($taskcurrent->taskName=="BAC (DELIVERY)"||$taskcurrent->taskName=="Governor's Office")
@@ -939,7 +939,9 @@ if (($check==3||($remarks==" "&&$check==2))&&$assignee!=NULL)
 	$taskd->save();
 	$tasknext=TaskDetails::find($taskdetails_id+1);
 	$tasknextc=TaskDetails::where('id', $taskdetails_id+1)->where('doc_id', $docs->pr_id)->count();
-
+date_default_timezone_set("Asia/Manila");
+$upDate = date('Y-m-d H:i:s');
+DB::table('purchase')->where('id',$id)->update(array('updated_at' => $upDate));
 	if ($tasknextc!=0)
 	{
 		//Project Type Filter
@@ -1055,6 +1057,8 @@ if ($check==1)
 {
 	$taskd= TaskDetails::find($taskdetails_id);
 	$docs=Document::find($taskd->doc_id);
+
+$id=$docs->pr_id;
 	$delcount= Count::where('doc_id', $docs->id)->delete();
 	$userx= User::get();
 	foreach($userx as $userv)
@@ -1074,7 +1078,9 @@ if ($check==1)
 	$taskd->save();
 	$tasknext=TaskDetails::find($taskdetails_id+1);
 	$tasknextc=TaskDetails::where('id', $taskdetails_id+1)->where('doc_id', $docs->pr_id)->count();
-
+date_default_timezone_set("Asia/Manila");
+$upDate = date('Y-m-d H:i:s');
+DB::table('purchase')->where('id',$id)->update(array('updated_at' => $upDate));
 	if ($tasknextc!=0)
 	{
 		//Project Type Filter
@@ -1133,6 +1139,8 @@ if ($check==2)
 {
 	$taskd= TaskDetails::find($taskdetails_id);
 	$docs=Document::find($taskd->doc_id);
+
+$id=$docs->pr_id;
 	$delcount= Count::where('doc_id', $docs->id)->delete();
 	$userx= User::get();
 	foreach($userx as $userv)
@@ -1153,7 +1161,9 @@ if ($check==2)
 	$taskd->save();
 	$tasknext=TaskDetails::find($taskdetails_id+1);
 	$tasknextc=TaskDetails::where('id', $taskdetails_id+1)->where('doc_id', $docs->pr_id)->count();
-
+date_default_timezone_set("Asia/Manila");
+$upDate = date('Y-m-d H:i:s');
+DB::table('purchase')->where('id',$id)->update(array('updated_at' => $upDate));
 	if ($tasknextc!=0)
 	{
 		//Project Type Filter
@@ -1210,6 +1220,8 @@ if ($check==2)
 {
 	$taskd= TaskDetails::find($taskdetails_id);
 	$docs=Document::find($taskd->doc_id);
+
+$id=$docs->pr_id;
 	$delcount= Count::where('doc_id', $docs->id)->delete();
 	$userx= User::get();
 	foreach($userx as $userv)
@@ -1229,7 +1241,9 @@ if ($check==2)
 	$taskd->save();
 	$tasknext=TaskDetails::find($taskdetails_id+1);
 	$tasknextc=TaskDetails::where('id', $taskdetails_id+1)->where('doc_id', $docs->pr_id)->count();
-
+date_default_timezone_set("Asia/Manila");
+$upDate = date('Y-m-d H:i:s');
+DB::table('purchase')->where('id',$id)->update(array('updated_at' => $upDate));
 	if ($tasknextc!=0)
 	{
 
@@ -1293,6 +1307,7 @@ if ($check==2)
 	$taskd= TaskDetails::find($taskdetails_id);
 	$docs=Document::find($taskd->doc_id);
 
+$id=$docs->pr_id;
 	//Cheque
 
 	$timestamp = strtotime($date);
@@ -1339,7 +1354,9 @@ if ($check==2)
 	$taskd->save();
 	$tasknext=TaskDetails::find($taskdetails_id+1);
 	$tasknextc=TaskDetails::where('id', $taskdetails_id+1)->where('doc_id', $docs->pr_id)->count();
-
+date_default_timezone_set("Asia/Manila");
+$upDate = date('Y-m-d H:i:s');
+DB::table('purchase')->where('id',$id)->update(array('updated_at' => $upDate));
 	if ($tasknextc!=0)
 	{
 		//Project Type Filter
@@ -1395,6 +1412,8 @@ if ($check==1)
 {
 	$taskd= TaskDetails::find($taskdetails_id);
 	$docs=Document::find($taskd->doc_id);
+
+$id=$docs->pr_id;
 	$delcount= Count::where('doc_id', $docs->id)->delete();
 	$userx= User::get();
 	foreach($userx as $userv)
@@ -1416,7 +1435,9 @@ if ($check==1)
 	$taskd->save();
 	$tasknext=TaskDetails::find($taskdetails_id+1);
 	$tasknextc=TaskDetails::where('id', $taskdetails_id+1)->where('doc_id', $docs->pr_id)->count();
-
+date_default_timezone_set("Asia/Manila");
+$upDate = date('Y-m-d H:i:s');
+DB::table('purchase')->where('id',$id)->update(array('updated_at' => $upDate));
 	if ($tasknextc!=0)
 	{
 		//Project Type Filter
@@ -1472,6 +1493,8 @@ if ($check==1)
 {
 	$taskd= TaskDetails::find($taskdetails_id);
 	$docs=Document::find($taskd->doc_id);
+
+$id=$docs->pr_id;
 	$delcount= Count::where('doc_id', $docs->id)->delete();
 	$userx= User::get();
 	foreach($userx as $userv)
@@ -1493,7 +1516,9 @@ if ($check==1)
 	$taskd->save();
 	$tasknext=TaskDetails::find($taskdetails_id+1);
 	$tasknextc=TaskDetails::where('id', $taskdetails_id+1)->where('doc_id', $docs->pr_id)->count();
-
+date_default_timezone_set("Asia/Manila");
+$upDate = date('Y-m-d H:i:s');
+DB::table('purchase')->where('id',$id)->update(array('updated_at' => $upDate));
 	if ($tasknextc!=0)
 	{
 		//Project Type Filter
@@ -1549,6 +1574,8 @@ if ($check==1)
 {
 	$taskd= TaskDetails::find($taskdetails_id);
 	$docs=Document::find($taskd->doc_id);
+
+$id=$docs->pr_id;
 	$delcount= Count::where('doc_id', $docs->id)->delete();
 	$userx= User::get();
 	foreach($userx as $userv)
@@ -1570,7 +1597,9 @@ if ($check==1)
 	$taskd->save();
 	$tasknext=TaskDetails::find($taskdetails_id+1);
 	$tasknextc=TaskDetails::where('id', $taskdetails_id+1)->where('doc_id', $docs->pr_id)->count();
-
+date_default_timezone_set("Asia/Manila");
+$upDate = date('Y-m-d H:i:s');
+DB::table('purchase')->where('id',$id)->update(array('updated_at' => $upDate));
 	if ($tasknextc!=0)
 	{
 		//Project Type Filter
@@ -1623,6 +1652,8 @@ if ($check==0)
 {
 	$taskd= TaskDetails::find($taskdetails_id);
 	$docs=Document::find($taskd->doc_id);
+
+$id=$docs->pr_id;
 	$delcount= Count::where('doc_id', $docs->id)->delete();
 	$userx= User::get();
 	foreach($userx as $userv)
@@ -1641,7 +1672,9 @@ if ($check==0)
 	$taskd->save();
 	$tasknext=TaskDetails::find($taskdetails_id+1);
 	$tasknextc=TaskDetails::where('id', $taskdetails_id+1)->where('doc_id', $docs->pr_id)->count();
-
+date_default_timezone_set("Asia/Manila");
+$upDate = date('Y-m-d H:i:s');
+DB::table('purchase')->where('id',$id)->update(array('updated_at' => $upDate));
 	if ($tasknextc!=0)
 	{
 		//Project Type Filter
@@ -1701,6 +1734,8 @@ if ($check==2)
 {
 	$taskd= TaskDetails::find($taskdetails_id);
 	$docs=Document::find($taskd->doc_id);
+
+$id=$docs->pr_id;
 	$delcount= Count::where('doc_id', $docs->id)->delete();
 	$userx= User::get();
 	foreach($userx as $userv)
@@ -1722,7 +1757,9 @@ if ($check==2)
 	$taskd->save();
 	$tasknext=TaskDetails::find($taskdetails_id+1);
 	$tasknextc=TaskDetails::where('id', $taskdetails_id+1)->where('doc_id', $docs->pr_id)->count();
-
+date_default_timezone_set("Asia/Manila");
+$upDate = date('Y-m-d H:i:s');
+DB::table('purchase')->where('id',$id)->update(array('updated_at' => $upDate));
 	if ($tasknextc!=0)
 	{
 		//Project Type Filter
@@ -1780,6 +1817,8 @@ if ($check==2)
 {
 	$taskd= TaskDetails::find($taskdetails_id);
 	$docs=Document::find($taskd->doc_id);
+
+$id=$docs->pr_id;
 	$delcount= Count::where('doc_id', $docs->id)->delete();
 	$userx= User::get();
 	foreach($userx as $userv)
@@ -1800,7 +1839,9 @@ if ($check==2)
 	$taskd->save();
 	$tasknext=TaskDetails::find($taskdetails_id+1);
 	$tasknextc=TaskDetails::where('id', $taskdetails_id+1)->where('doc_id', $docs->pr_id)->count();
-
+date_default_timezone_set("Asia/Manila");
+$upDate = date('Y-m-d H:i:s');
+DB::table('purchase')->where('id',$id)->update(array('updated_at' => $upDate));
 	if ($tasknextc!=0)
 	{
 		//Project Type Filter
@@ -1863,6 +1904,8 @@ if (($check==2||($remarks==" "&&$check==1))&&$assignee!=NULL)
 {
 	$taskd= TaskDetails::find($taskdetails_id);
 	$docs=Document::find($taskd->doc_id);
+
+$id=$docs->pr_id;
 	$delcount= Count::where('doc_id', $docs->id)->delete();
 	$userx= User::get();
 	foreach($userx as $userv)
@@ -1885,7 +1928,9 @@ if (($check==2||($remarks==" "&&$check==1))&&$assignee!=NULL)
 	$taskd->save();
 	$tasknext=TaskDetails::find($taskdetails_id+1);
 	$tasknextc=TaskDetails::where('id', $taskdetails_id+1)->where('doc_id', $docs->pr_id)->count();
-
+	date_default_timezone_set("Asia/Manila");
+$upDate = date('Y-m-d H:i:s');
+DB::table('purchase')->where('id',$id)->update(array('updated_at' => $upDate));
 	if ($tasknextc!=0)
 	{
 		//Project Type Filter
@@ -1946,6 +1991,8 @@ if (($check==1)&&$assignee!=NULL)
 {
 	$taskd= TaskDetails::find($taskdetails_id);
 	$docs=Document::find($taskd->doc_id);
+	
+$id=$docs->pr_id;
 	$delcount= Count::where('doc_id', $docs->id)->delete();
 	$userx= User::get();
 	foreach($userx as $userv)
@@ -1965,7 +2012,9 @@ if (($check==1)&&$assignee!=NULL)
 	$taskd->save();
 	$tasknext=TaskDetails::find($taskdetails_id+1);
 	$tasknextc=TaskDetails::where('id', $taskdetails_id+1)->where('doc_id', $docs->pr_id)->count();
-
+	date_default_timezone_set("Asia/Manila");
+	$upDate = date('Y-m-d H:i:s');
+	DB::table('purchase')->where('id',$id)->update(array('updated_at' => $upDate));
 	if ($tasknextc!=0)
 	{
 		//Project Type Filter
@@ -1980,6 +2029,7 @@ if (($check==1)&&$assignee!=NULL)
 	
 		$tasknext->status="New";
 		$tasknext->save();
+
 		//End Project Type Filter
 	}
 	else

@@ -98,6 +98,8 @@ class TaskController extends Controller {
 		$taskd= TaskDetails::find($taskdetails_id);
 		$taskd->status="Done";
 		$docs=Document::find($taskd->doc_id);
+
+		$id=$docs->pr_id;
 		$delcount= Count::where('doc_id', $docs->id)->delete();
 		$users = User::get();
 		foreach($users as $user)
@@ -114,6 +116,9 @@ class TaskController extends Controller {
 		$taskd->daysOfAction=$aDays;
 		$taskd->dateFinished=$today;
 		$taskd->save();
+			date_default_timezone_set("Asia/Manila");
+	$upDate = date('Y-m-d H:i:s');
+	DB::table('purchase')->where('id',$id)->update(array('updated_at' => $upDate));
 		$tasknext=TaskDetails::find($taskdetails_id+1);
 		if ($tasknext->doc_id==$taskd->doc_id)
 		{
