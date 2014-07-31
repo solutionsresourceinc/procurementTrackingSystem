@@ -132,7 +132,7 @@ Route::post('newcreate', ['uses' => 'purchaseRequestController@create_submit', '
 Route::post('autoupload', ['uses' => 'purchaseRequestController@autoupload', 'as'=>'/autoupload']);
 Route::post('autouploadsaved', ['uses' => 'purchaseRequestController@autouploadsaved', 'as'=>'/autouploadsaved']);
 
-Route::post('newedit', ['uses' => 'purchaseRequestController@edit_submit']);
+Route::post('newedit', ['uses' => 'purchaseRequestController@edit_submit', 'as'=>'/newedit']);
 Route::post('addimage', ['uses' => 'purchaseRequestController@addimage']);
 Route::post('delimage', ['uses'=> 'purchaseRequestController@delimage']);
 
