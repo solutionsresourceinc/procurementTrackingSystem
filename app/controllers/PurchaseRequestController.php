@@ -1110,6 +1110,8 @@ if ($check==1)
 		$purchase= Purchase::find($docs->pr_id);
 		$purchase->status="Closed";
 		$purchase->save();
+		$request_id = Input::get('pr_id');
+		return Redirect::to("purchaseRequest/vieweach/$request_id");
 	}
 }
 else
@@ -1118,8 +1120,7 @@ else
 	return Redirect::back()->withInput();
 }	
 
-$request_id = Input::get('pr_id');
-return Redirect::to("purchaseRequest/vieweach/$request_id");
+return Redirect::back();
 
 }
 
@@ -1188,6 +1189,8 @@ if ($check==2)
 		$purchase= Purchase::find($docs->pr_id);
 		$purchase->status="Closed";
 		$purchase->save();
+		$request_id = Input::get('pr_id');
+		return Redirect::to("purchaseRequest/vieweach/$request_id");
 	}
 }
 else
@@ -1196,9 +1199,8 @@ else
 	return Redirect::back()->withInput();
 }	
 	
-// return Redirect::back();
-$request_id = Input::get('pr_id');
-return Redirect::to("purchaseRequest/vieweach/$request_id");
+return Redirect::back();
+
 
 }
 

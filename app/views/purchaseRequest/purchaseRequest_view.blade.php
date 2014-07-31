@@ -55,7 +55,7 @@
 		$cuser=Auth::User()->id;
 		if (Entrust::hasRole('Administrator'))
 		{
-			if($purchase->status!="Cancelled")
+			if($purchase->status!="Cancelled"&&$purchase->status!="Closed")
 			{
 	?>
 				<a href="../edit/{{$purchase->id}}" class="btn btn-success no-print">
@@ -69,7 +69,7 @@
 		{
 			if($purchase->created_by==$cuser)
 			{
-				if($purchase->status!="Cancelled")
+				if($purchase->status!="Cancelled"&&$purchase->status!="Closed")
 				{
 	?>
 					<a href="../edit/{{$purchase->id}}" class="btn btn-success no-print">
