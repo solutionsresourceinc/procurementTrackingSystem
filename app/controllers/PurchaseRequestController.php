@@ -941,7 +941,7 @@ $id=$docs->pr_id;
 	$tasknextc=TaskDetails::where('id', $taskdetails_id+1)->where('doc_id', $docs->pr_id)->count();
 date_default_timezone_set("Asia/Manila");
 $upDate = date('Y-m-d H:i:s');
-DB::table('purchase')->where('id',$id)->update(array('updated_at' => $upDate));
+DB::table('purchase_request')->where('id',$id)->update(array('updated_at' => $upDate));
 	if ($tasknextc!=0)
 	{
 		//Project Type Filter
@@ -1080,7 +1080,7 @@ $id=$docs->pr_id;
 	$tasknextc=TaskDetails::where('id', $taskdetails_id+1)->where('doc_id', $docs->pr_id)->count();
 date_default_timezone_set("Asia/Manila");
 $upDate = date('Y-m-d H:i:s');
-DB::table('purchase')->where('id',$id)->update(array('updated_at' => $upDate));
+DB::table('purchase_request')->where('id',$id)->update(array('updated_at' => $upDate));
 	if ($tasknextc!=0)
 	{
 		//Project Type Filter
@@ -1163,7 +1163,7 @@ $id=$docs->pr_id;
 	$tasknextc=TaskDetails::where('id', $taskdetails_id+1)->where('doc_id', $docs->pr_id)->count();
 date_default_timezone_set("Asia/Manila");
 $upDate = date('Y-m-d H:i:s');
-DB::table('purchase')->where('id',$id)->update(array('updated_at' => $upDate));
+DB::table('purchase_request')->where('id',$id)->update(array('updated_at' => $upDate));
 	if ($tasknextc!=0)
 	{
 		//Project Type Filter
@@ -1243,7 +1243,7 @@ $id=$docs->pr_id;
 	$tasknextc=TaskDetails::where('id', $taskdetails_id+1)->where('doc_id', $docs->pr_id)->count();
 date_default_timezone_set("Asia/Manila");
 $upDate = date('Y-m-d H:i:s');
-DB::table('purchase')->where('id',$id)->update(array('updated_at' => $upDate));
+DB::table('purchase_request')->where('id',$id)->update(array('updated_at' => $upDate));
 	if ($tasknextc!=0)
 	{
 
@@ -1356,7 +1356,7 @@ $id=$docs->pr_id;
 	$tasknextc=TaskDetails::where('id', $taskdetails_id+1)->where('doc_id', $docs->pr_id)->count();
 date_default_timezone_set("Asia/Manila");
 $upDate = date('Y-m-d H:i:s');
-DB::table('purchase')->where('id',$id)->update(array('updated_at' => $upDate));
+DB::table('purchase_request')->where('id',$id)->update(array('updated_at' => $upDate));
 	if ($tasknextc!=0)
 	{
 		//Project Type Filter
@@ -1437,7 +1437,7 @@ $id=$docs->pr_id;
 	$tasknextc=TaskDetails::where('id', $taskdetails_id+1)->where('doc_id', $docs->pr_id)->count();
 date_default_timezone_set("Asia/Manila");
 $upDate = date('Y-m-d H:i:s');
-DB::table('purchase')->where('id',$id)->update(array('updated_at' => $upDate));
+DB::table('purchase_request')->where('id',$id)->update(array('updated_at' => $upDate));
 	if ($tasknextc!=0)
 	{
 		//Project Type Filter
@@ -1518,7 +1518,7 @@ $id=$docs->pr_id;
 	$tasknextc=TaskDetails::where('id', $taskdetails_id+1)->where('doc_id', $docs->pr_id)->count();
 date_default_timezone_set("Asia/Manila");
 $upDate = date('Y-m-d H:i:s');
-DB::table('purchase')->where('id',$id)->update(array('updated_at' => $upDate));
+DB::table('purchase_request')->where('id',$id)->update(array('updated_at' => $upDate));
 	if ($tasknextc!=0)
 	{
 		//Project Type Filter
@@ -1599,7 +1599,7 @@ $id=$docs->pr_id;
 	$tasknextc=TaskDetails::where('id', $taskdetails_id+1)->where('doc_id', $docs->pr_id)->count();
 date_default_timezone_set("Asia/Manila");
 $upDate = date('Y-m-d H:i:s');
-DB::table('purchase')->where('id',$id)->update(array('updated_at' => $upDate));
+DB::table('purchase_request')->where('id',$id)->update(array('updated_at' => $upDate));
 	if ($tasknextc!=0)
 	{
 		//Project Type Filter
@@ -1674,7 +1674,7 @@ $id=$docs->pr_id;
 	$tasknextc=TaskDetails::where('id', $taskdetails_id+1)->where('doc_id', $docs->pr_id)->count();
 date_default_timezone_set("Asia/Manila");
 $upDate = date('Y-m-d H:i:s');
-DB::table('purchase')->where('id',$id)->update(array('updated_at' => $upDate));
+DB::table('purchase_request')->where('id',$id)->update(array('updated_at' => $upDate));
 	if ($tasknextc!=0)
 	{
 		//Project Type Filter
@@ -1759,7 +1759,7 @@ $id=$docs->pr_id;
 	$tasknextc=TaskDetails::where('id', $taskdetails_id+1)->where('doc_id', $docs->pr_id)->count();
 date_default_timezone_set("Asia/Manila");
 $upDate = date('Y-m-d H:i:s');
-DB::table('purchase')->where('id',$id)->update(array('updated_at' => $upDate));
+DB::table('purchase_request')->where('id',$id)->update(array('updated_at' => $upDate));
 	if ($tasknextc!=0)
 	{
 		//Project Type Filter
@@ -1841,7 +1841,7 @@ $id=$docs->pr_id;
 	$tasknextc=TaskDetails::where('id', $taskdetails_id+1)->where('doc_id', $docs->pr_id)->count();
 date_default_timezone_set("Asia/Manila");
 $upDate = date('Y-m-d H:i:s');
-DB::table('purchase')->where('id',$id)->update(array('updated_at' => $upDate));
+DB::table('purchase_request')->where('id',$id)->update(array('updated_at' => $upDate));
 	if ($tasknextc!=0)
 	{
 		//Project Type Filter
@@ -1930,7 +1930,7 @@ $id=$docs->pr_id;
 	$tasknextc=TaskDetails::where('id', $taskdetails_id+1)->where('doc_id', $docs->pr_id)->count();
 	date_default_timezone_set("Asia/Manila");
 $upDate = date('Y-m-d H:i:s');
-DB::table('purchase')->where('id',$id)->update(array('updated_at' => $upDate));
+DB::table('purchase_request')->where('id',$id)->update(array('updated_at' => $upDate));
 	if ($tasknextc!=0)
 	{
 		//Project Type Filter
@@ -2014,7 +2014,7 @@ $id=$docs->pr_id;
 	$tasknextc=TaskDetails::where('id', $taskdetails_id+1)->where('doc_id', $docs->pr_id)->count();
 	date_default_timezone_set("Asia/Manila");
 	$upDate = date('Y-m-d H:i:s');
-	DB::table('purchase')->where('id',$id)->update(array('updated_at' => $upDate));
+	DB::table('purchase_request')->where('id',$id)->update(array('updated_at' => $upDate));
 	if ($tasknextc!=0)
 	{
 		//Project Type Filter

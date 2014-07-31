@@ -118,7 +118,7 @@ class TaskController extends Controller {
 		$taskd->save();
 			date_default_timezone_set("Asia/Manila");
 	$upDate = date('Y-m-d H:i:s');
-	DB::table('purchase')->where('id',$id)->update(array('updated_at' => $upDate));
+	DB::table('purchase_request')->where('id',$id)->update(array('updated_at' => $upDate));
 		$tasknext=TaskDetails::find($taskdetails_id+1);
 		if ($tasknext->doc_id==$taskd->doc_id)
 		{
