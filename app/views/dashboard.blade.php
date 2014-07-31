@@ -101,9 +101,9 @@
 
                 <?php
                     if(Entrust::hasRole('Requisitioner'))
-                        $requests =  DB::table('purchase_request')->where('requisitioner', $id)->orderBy('created_at', 'DESC')->take(5)->get();
+                        $requests =  DB::table('purchase_request')->where('requisitioner', $id)->orderBy('updated_at', 'DESC')->take(5)->get();
                     else
-                        $requests =  DB::table('purchase_request')->orderBy('created_at', 'DESC')->take(5)->get();
+                        $requests =  DB::table('purchase_request')->orderBy('updated_at', 'DESC')->take(5)->get();
                 ?>
 
                 <tbody>
@@ -148,7 +148,7 @@
                                  @endforeach
                             </td>
                             <td width="15%"><span class="label {{($request->status == 'New') ? 'label-primary' : (($request->status == 'Active') ? 'label-success' : (($request->status == 'Overdue') ? 'label-danger' : 'label-default'))}}">{{ $request->status; }}</span></td>
-                            <td width="15%">P{{{ $request->amount }}}</td>
+                            <td width="15%">{{{ $request->amount }}}</td>
                             </tr>
                         @endforeach
                     @else
