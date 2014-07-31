@@ -12,22 +12,35 @@ class TaskController extends Controller {
 
 		foreach ($user_designations as $designation) 
 		{
+			
 			if($counter == 1)
-				$userDesignations = $userDesignations . "$designation->designation_id";
+			{
+				if($designation->designation_id == 0)
+				{
+					$userDesignations = $userDesignations . "-1";
+				}
+				else
+				{
+					$userDesignations = $userDesignations . "$designation->designation_id";
+				}	
+			}
 			else
+			{
 				$userDesignations = $userDesignations . ",$designation->designation_id";
+			}
 			$counter++;
 		}
 
-		$task_row = Task::whereDesignationId($designation->designation_id)->where('designation_id','!=', '0')->get();
 		$task_row  = DB::select("select * from tasks where designation_id in ( $userDesignations )");
 
-		$taskIds = array();
+		$taskIds = array("-1");
 		$counter = 1;
+
 		foreach($task_row as $task)
 		{
 			array_push($taskIds, $task->id);
 		}
+
 
 		return View::make('tasks.new_tasks')->with('taskIds',$taskIds);
 	}
@@ -42,18 +55,30 @@ class TaskController extends Controller {
 
 		foreach ($user_designations as $designation) 
 		{
+			
 			if($counter == 1)
-				$userDesignations = $userDesignations . "$designation->designation_id";
+			{
+				if($designation->designation_id == 0)
+				{
+					$userDesignations = $userDesignations . "-1";
+				}
+				else
+				{
+					$userDesignations = $userDesignations . "$designation->designation_id";
+				}	
+			}
 			else
+			{
 				$userDesignations = $userDesignations . ",$designation->designation_id";
+			}
 			$counter++;
 		}
 
-		$task_row = Task::whereDesignationId($designation->designation_id)->where('designation_id','!=', '0')->get();
 		$task_row  = DB::select("select * from tasks where designation_id in ( $userDesignations )");
 
-		$taskIds = array();
+		$taskIds = array("-1");
 		$counter = 1;
+
 		foreach($task_row as $task)
 		{
 			array_push($taskIds, $task->id);
@@ -72,22 +97,35 @@ class TaskController extends Controller {
 
 		foreach ($user_designations as $designation) 
 		{
+			
 			if($counter == 1)
-				$userDesignations = $userDesignations . "$designation->designation_id";
+			{
+				if($designation->designation_id == 0)
+				{
+					$userDesignations = $userDesignations . "-1";
+				}
+				else
+				{
+					$userDesignations = $userDesignations . "$designation->designation_id";
+				}	
+			}
 			else
+			{
 				$userDesignations = $userDesignations . ",$designation->designation_id";
+			}
 			$counter++;
 		}
 
-		$task_row = Task::whereDesignationId($designation->designation_id)->where('designation_id','!=', '0')->get();
 		$task_row  = DB::select("select * from tasks where designation_id in ( $userDesignations )");
 
-		$taskIds = array();
+		$taskIds = array("-1");
 		$counter = 1;
+
 		foreach($task_row as $task)
 		{
 			array_push($taskIds, $task->id);
 		}
+
 
 		return View::make('tasks.overdue_tasks')->with('taskIds',$taskIds);
 	}
