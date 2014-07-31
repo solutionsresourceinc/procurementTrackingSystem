@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('content')
-    <h1 class="page-header">Overdue Tasks</h1>
+    <h1 class="page-header">Active Tasks</h1>
     <div class="list-group">
     {{Session::forget('imgerror');}}
                    {{Session::forget('imgsuccess');}}
