@@ -103,11 +103,12 @@
 						<div class="col-md-3">
 							<?php 
 								$cn = 0;
-								$purchase = Purchase::orderBy('ControlNo', 'ASC')->get();
-								foreach ($purchase as $pur) {
-									$cn = $pur->controlNo;
+								$purchase_controlNo = Purchase::orderBy('ControlNo', 'DESC')->first();
+								if(!$purchase_controlNo == NuLL)
+								{
+									$cn = $purchase_controlNo->controlNo;
 								}
-								$cn =$cn+1;
+								$cn += 1;
 							?>
 
 							{{ Form::label('dispCN', 'Control No.', array('class' => 'create-label')) }}
