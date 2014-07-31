@@ -76,7 +76,7 @@ if($taskd->status=="New")
 ?>	
 {{ Form::open(['route'=>'accept_task']) }}
 {{ Form::hidden('hide_taskid',$taskdetails_id) }}
-{{Form::submit('Accept Task', ['class' => 'btn btn-sm btn-primary accept-button', 'style' => 'margin-bottom: 10px'])}}     
+{{ Form::submit('Accept Task', ['class' => 'btn btn-sm btn-primary accept-button', 'style' => 'margin-bottom: 10px'])}}     
 {{ Form::close() }}
 <?php
 }
@@ -483,12 +483,11 @@ else
 
 @if($task->taskType=='normal')
 @if($taskd->status!="New")
-{{ Form::open(['url'=>'done'], 'POST') }}
+{{ Form::open(array('method' => 'post', 'url' => 'done', 'id'=>"taskform"))}}
 <input type ="hidden" name="task_id" value="{{$task->id}}">
 <input type ="hidden" name="doc_id" value="{{$doc->id}}">
 <input type ="hidden" name="pr_id" value="{{$purchase->id}}">
 <input type ="hidden" name="taskdetails_id" value="{{$taskd->id}}">
-{{ Form::submit('Done',array('class'=>'btn btn-sm btn-success')) }}
 {{ Form::close() }}
 <br>
 <p style="font-weight: bold">Remarks: </p>
@@ -515,28 +514,37 @@ No remark.
 ?>
 </p>
 </div>
+<br>
+<button type="button" class="btn btn-success " onclick="doneauto('taskform')" id="hidebtn">Done</button>
+
 <div id ="formr">
 {{ Form::open(['url'=>'remarks'], 'POST') }}
 @if($taskd->remarks==NULL)
-{{ Form::textarea('remarks','', array('class'=>'form-control', 'rows'=>'3', 'maxlength'=>'255', 'style'=>'resize:vertical')) }}
+{{ Form::textarea('remarks','', array('class'=>'form-control', 'rows'=>'3', 'maxlength'=>'255', 'style'=>'resize:vertical', 'id'=>'taskform')) }}
 @else
-{{ Form::textarea('remarks',$taskd->remarks, array('class'=>'form-control', 'rows'=>'3', 'maxlength'=>'255', 'style'=>'resize:vertical' )) }}
+{{ Form::textarea('remarks',$taskd->remarks, array('class'=>'form-control', 'rows'=>'3', 'maxlength'=>'255', 'style'=>'resize:vertical', 'id'=>'taskform' )) }}
 
 @endif
 <input type ="hidden" name="taskdetails_id" value="{{$taskd->id}}">
-<div class='pull-right'>
-<input type="button"  onclick="hideRemarks()"  value="Cancel" class='btn btn-sm btn-default remarks-btn' />
-{{ Form::submit('Submit',array('class'=>'btn btn-sm btn-success remarks-btn')) }}
-</div>
+<br>
+<input type="button"  onclick="hideRemarks()"  value="Cancel" class='btn btn-default' />
+&nbsp;
+{{ Form::submit('Save',array('class'=>'btn btn-warning')) }}
+&nbsp;
+<button type="button" class="btn btn-success " onclick="doneauto()" >Done</button>
 {{ Form::close() }}
 </div>
+<br>
+&nbsp;
+
+
 
 @endif
 
 @endif
 @if($task->taskType=='dateby')
 @if($taskd->status!="New")
-{{ Form::open(['url'=>'done'], 'POST') }}
+{{ Form::open(array('method' => 'post', 'url' => 'done', 'id'=>"taskform")) }}
 <?php
 
 $birth = new DateTime($taskd->dateReceived); 
@@ -579,23 +587,36 @@ No remark.
 ?>
 </p>
 </div>
+<br>
+<button type="button" class="btn btn-success " onclick="doneauto('taskform')" id="hidebtn">Done</button>
+
 <div id ="formr">
 {{ Form::open(['url'=>'remarks'], 'POST') }}
-{{ Form::textarea('remarks','', array('class'=>'form-control', 'rows'=>'3', 'maxlength'=>'255', 'style'=>'resize:vertical')) }}
+@if($taskd->remarks==NULL)
+{{ Form::textarea('remarks','', array('class'=>'form-control', 'rows'=>'3', 'maxlength'=>'255', 'style'=>'resize:vertical', 'id'=>'taskform')) }}
+@else
+{{ Form::textarea('remarks',$taskd->remarks, array('class'=>'form-control', 'rows'=>'3', 'maxlength'=>'255', 'style'=>'resize:vertical', 'id'=>'taskform' )) }}
+
+@endif
 <input type ="hidden" name="taskdetails_id" value="{{$taskd->id}}">
-<div class='pull-right'>
-<input type="button" onclick="hideRemarks()" value="Cancel" class='btn btn-sm btn-default remarks-btn' />
-{{ Form::submit('Submit',array('class'=>'btn btn-sm btn-success remarks-btn')) }}
-</div>
+<br>
+<input type="button"  onclick="hideRemarks()"  value="Cancel" class='btn btn-default' />
+&nbsp;
+{{ Form::submit('Save',array('class'=>'btn btn-warning')) }}
+&nbsp;
+<button type="button" class="btn btn-success " onclick="doneauto()" >Done</button>
 {{ Form::close() }}
 </div>
+<br>
+&nbsp;
+
 
 @endif
 
 @endif
 @if($task->taskType=='datebyremark')
 @if($taskd->status!="New")
-{{ Form::open(['url'=>'done'], 'POST') }}
+{{ Form::open(array('method' => 'post', 'url' => 'done', 'id'=>"taskform")) }}
 <?php
 
 $birth = new DateTime($taskd->dateReceived); 
@@ -638,16 +659,29 @@ No remark.
 ?>
 </p>
 </div>
+<br>
+<button type="button" class="btn btn-success " onclick="doneauto('taskform')" id="hidebtn">Done</button>
+
 <div id ="formr">
 {{ Form::open(['url'=>'remarks'], 'POST') }}
-{{ Form::textarea('remarks','', array('class'=>'form-control', 'rows'=>'3', 'maxlength'=>'255', 'style'=>'resize:vertical')) }}
+@if($taskd->remarks==NULL)
+{{ Form::textarea('remarks','', array('class'=>'form-control', 'rows'=>'3', 'maxlength'=>'255', 'style'=>'resize:vertical', 'id'=>'taskform')) }}
+@else
+{{ Form::textarea('remarks',$taskd->remarks, array('class'=>'form-control', 'rows'=>'3', 'maxlength'=>'255', 'style'=>'resize:vertical', 'id'=>'taskform' )) }}
+
+@endif
 <input type ="hidden" name="taskdetails_id" value="{{$taskd->id}}">
-<div class='pull-right'>
-<input type="button" onclick="hideRemarks()" value="Cancel" class='btn btn-sm btn-default remarks-btn' />
-{{ Form::submit('Submit',array('class'=>'btn btn-sm btn-success remarks-btn')) }}
-</div>
+<br>
+<input type="button"  onclick="hideRemarks()"  value="Cancel" class='btn btn-default' />
+&nbsp;
+{{ Form::submit('Save',array('class'=>'btn btn-warning')) }}
+&nbsp;
+<button type="button" class="btn btn-success " onclick="doneauto()" >Done</button>
 {{ Form::close() }}
 </div>
+<br>
+&nbsp;
+
 
 @endif
 
@@ -764,7 +798,7 @@ No remark.
 $('input[type=file]').bootstrapFileInput();
    $('.file-inputs').bootstrapFileInput();
 function isNumberKey(evt)
-{
+{s
 var charCode = (evt.which) ? evt.which : event.keyCode
 if(charCode == 44 || charCode == 46)
 return true;
@@ -775,6 +809,9 @@ return false;
 return true;
 }
 function show(){
+  
+  document.getElementById("hidebtn").style.visibility="hidden";
+
 if(document.layers) document.layers['formr'].visibility="show";
 if(document.getElementById) document.getElementById("formr").style.visibility="visible";
 if(document.all) document.all.formr.style.visibility="visible";
@@ -845,6 +882,7 @@ function fix_format2()
 
 function hideRemarks()
 {
+   document.getElementById("hidebtn").style.visibility="visible";
 if(document.layers) document.layers['formr'].visibility="hide";
 if(document.getElementById) document.getElementById("formr").style.visibility="hidden";
 if(document.all) document.all.formr.style.visibility="hidden";
@@ -859,6 +897,12 @@ function delimage(value)
     {
       //alert('form_'+value);
       var formname= "form_"+value;
+      document.getElementById(formname).submit();
+    }
+function doneauto()
+    {
+      //alert('form_'+value);
+      var formname= "taskform";
       document.getElementById(formname).submit();
     }
    </script>
