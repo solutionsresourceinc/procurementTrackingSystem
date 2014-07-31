@@ -593,10 +593,11 @@ public function autouploadsaved()
 		$purchasecheck=Purchase::orderby('id', 'DESC')->count();
 		if($purchasecheck!=0)
 		{
-			$purchase=Purchase::orderby('id', 'DESC')->first();
-			$docs=Document::orderby('id', 'DESC')->first();
-			$pr_id=$purchase->id+1;
-			$doc_id=$docs->id+1;
+
+			$purchase=Purchase::orderby('id', 'DESC')->find(Input::get('id'));
+			$docs=Document::orderby('id', 'DESC')->where('pr_id', $purchase->id)->first();
+			$pr_id=$purchase->id;
+			$doc_id=$docs->id;
 		}
 		else
 		{

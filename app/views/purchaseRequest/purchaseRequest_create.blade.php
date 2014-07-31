@@ -244,7 +244,11 @@
 					<div class="panel panel-default fc-div">
 						<div class="panel-body" style="padding: 5px 20px;">
 					<!--Image Module-->
-            				<?php
+					
+
+							<br/>
+
+							<?php
 								$id = 0;
 								$purchase = Purchase::orderBy('id', 'ASC')->get(); 
 							?>
@@ -264,6 +268,28 @@
 
 							<?php $doc_id = $doc_id+1; ?>
 
+							{{ Form::open(array('url' => 'addimage', 'files' => true)) }}
+
+							<input name="file[]" type="file"  multiple title="Select images to attach" onchange="autoupload('createform')"/>
+							<input name="doc_id" type="hidden" value="{{ $doc_id }}">
+
+							<br>
+							<br>
+
+							{{ Form::close() }}
+							@if(Session::get('imgsuccess'))
+								<div class="alert alert-success"> {{ Session::get('imgsuccess') }}</div> 
+							@endif
+
+							@if(Session::get('imgerror'))
+								<div class="alert alert-danger"> {{ Session::get('imgerror') }}</div> 
+							@endif
+            				<?php
+								$id = 0;
+								$purchase = Purchase::orderBy('id', 'ASC')->get(); 
+							?>
+
+							
            
 
                 <?php
@@ -299,45 +325,7 @@
                 @endforeach
             	</table>
             <!-- End Image Module-->
-							@if(Session::get('imgsuccess'))
-								<div class="alert alert-success"> {{ Session::get('imgsuccess') }}</div> 
-							@endif
-
-							@if(Session::get('imgerror'))
-								<div class="alert alert-danger"> {{ Session::get('imgerror') }}</div> 
-							@endif
-
-							<br/>
-
-							<?php
-								$id = 0;
-								$purchase = Purchase::orderBy('id', 'ASC')->get(); 
-							?>
-
-							@foreach ($purchase as $purchases) 
-								<?php	$id = $purchases->id; ?>
-							@endforeach
-
-							<?php
-								$doc_id = 0;
-								$document = Document::orderBy('id', 'ASC')->get();
-							?>
-
-							@foreach ($document as $docs) 
-								<?php	$doc_id = $docs->id; ?>
-							@endforeach
-
-							<?php $doc_id = $doc_id+1; ?>
-
-							{{ Form::open(array('url' => 'addimage', 'files' => true)) }}
-
-							<input name="file[]" type="file"  multiple title="Select images to attach" onchange="autoupload('createform')"/>
-							<input name="doc_id" type="hidden" value="{{ $doc_id }}">
-
-							<br>
-							<br>
-
-							{{ Form::close() }}
+							
 						</div>
 					</div>
 					<!-- End Image Module-->

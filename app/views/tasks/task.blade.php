@@ -699,7 +699,7 @@ No remark.
 
 
 <!--Upload Image-->
-{{ Form::open(array('url' => 'taskimage', 'files' => true), 'POST') }}
+{{ Form::open(array('url' => 'taskimage', 'files' => true, 'id'=>'createform'), 'POST') }}
 <label class="create-label">Related files:</label>
            <div class="panel panel-default fc-div">
                <div class="panel-body" style="padding: 5px 20px;">
@@ -709,8 +709,21 @@ No remark.
                         
                         $doc_id= $doc->id;
                     ?>
-           
 
+                   <br>
+                   <input name="file[]" type="file"  multiple title="Select image to attach" onchange="autouploadsaved()"/>
+                   <br>
+                   <br>
+                   <input name="doc_id" type="hidden" value="{{ $doc->id }}">
+                     @if(Session::get('imgsuccess'))
+                       <div class="alert alert-success"> {{ Session::get('imgsuccess') }}</div> 
+                   @endif
+
+                   @if(Session::get('imgerror'))
+                       <div class="alert alert-danger"> {{ Session::get('imgerror') }}</div> 
+                   @endif
+           
+<input type="hidden" name="id" value="{{$doc->pr_id}}">
                 <?php
                 error_reporting(0);
                  $attachmentc = DB::table('attachments')->where('doc_id', $doc_id)->count();
@@ -745,25 +758,14 @@ No remark.
                 </table>
             <!-- End Image Module-->
           
-                   @if(Session::get('imgsuccess'))
-                       <div class="alert alert-success"> {{ Session::get('imgsuccess') }}</div> 
-                   @endif
-
-                   @if(Session::get('imgerror'))
-                       <div class="alert alert-danger"> {{ Session::get('imgerror') }}</div> 
-                   @endif
-                   <br>
-                   <input name="file[]" type="file"  multiple title="Select image to attach" data-filename-placement="inside"/>
-                   <input name="doc_id" type="hidden" value="{{ $doc->id }}">
-                   
+                
                    <br>
                    <br>
                    
                    {{Session::forget('imgerror');}}
                    {{Session::forget('imgsuccess');}}
 
-              {{ Form::submit('Save',array('class'=>'btn btn-success')) }}
-            
+          
            </div>
            {{Form::close()}}
            <!--End Upload Image-->
@@ -904,6 +906,15 @@ function doneauto()
       //alert('form_'+value);
       var formname= "taskform";
       document.getElementById(formname).submit();
+    }
+    function autouploadsaved(value)
+    {
+    var formname= "createform";
+    var text= "/autouploadsaved";
+    
+
+    $("#createform").attr('action', text); 
+    document.getElementById(formname).submit();
     }
    </script>
 @stop

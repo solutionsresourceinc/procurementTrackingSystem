@@ -64,7 +64,7 @@
 
     <div class="form-create fc-div">
 
-        {{ Form::open(array('url' => 'newedit', 'files' => true), 'POST') }}
+        {{ Form::open(array('action' => '/newedit','files' => true, 'id'=>'createform'), 'POST') }}
 
             <input type="hidden" name ="id" value={{$id}}>
 
@@ -297,8 +297,18 @@
                         $document = Document::where('pr_id', $purchaseToEdit->id)->first();
                         $doc_id= $document->id;
                     ?>
-           
+                
+                    <input name="file[]" type="file"  multiple title="Select image to attach" onchange="autouploadsaved('createform')"/>
+                    <input name="doc_id" type="hidden" value="{{ $doc_id }}">
+@if(Session::get('imgsuccess'))
+                        <div class="alert alert-success"> {{ Session::get('imgsuccess') }}</div> 
+                    @endif
 
+                    @if(Session::get('imgerror'))
+                        <div class="alert alert-danger"> {{ Session::get('imgerror') }}</div> 
+                    @endif
+                    <br>
+                   
                 <?php
                 error_reporting(0);
                  $attachmentc = DB::table('attachments')->where('doc_id', $doc_id)->count();
@@ -332,17 +342,7 @@
                 @endforeach
                 </table>
             <!-- End Image Module-->
-                    @if(Session::get('imgsuccess'))
-                        <div class="alert alert-success"> {{ Session::get('imgsuccess') }}</div> 
-                    @endif
-
-                    @if(Session::get('imgerror'))
-                        <div class="alert alert-danger"> {{ Session::get('imgerror') }}</div> 
-                    @endif
-                    <br>
                    
-                    <input name="file[]" type="file"  multiple title="Select image to attach" data-filename-placement="inside"/>
-                    <input name="doc_id" type="hidden" value="{{ $doc_id }}">
                     <br>
                     <br>
                 </div>
@@ -1828,6 +1828,15 @@
 </script>
 
 <script>
+function autouploadsaved(value)
+    {
+    var formname= "createform";
+    var text= "/autouploadsaved";
+    
+
+    $("#createform").attr('action', text); 
+    document.getElementById(formname).submit();
+    }
     function checklist_changeAmount(id,amount)
     {
        amount = amount.replace(',',''); 
