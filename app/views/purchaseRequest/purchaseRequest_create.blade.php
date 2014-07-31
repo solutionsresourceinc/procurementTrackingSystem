@@ -107,7 +107,6 @@
 								if(!$purchase_controlNo == NuLL)
 								{
 									$cn = $purchase_controlNo->controlNo;
-									
 								}
 								$cn += 1;
 							?>
