@@ -3,21 +3,12 @@ class RoleSeeder extends Seeder {
 
     public function run()
     {
-        Role::truncate();
+        DB::delete('delete from roles');
         
-        Role::create([
-            'id'        => '1',
-            'name'    => 'Requisitioner',
-        ]);
+        DB::insert('insert into roles (name) values (?)', array('Requisitioner'));
+        DB::insert('insert into roles (name) values (?)', array('Procurement Personnel'));
+        DB::insert('insert into roles (name) values (?)', array('Administrator'));
 
-        Role::create([
-            'id'        => '2',
-            'name'    => 'Procurement Personnel',
-        ]);
 
-        Role::create([
-            'id'        => '3',
-            'name'    => 'Administrator',
-        ]);
     }
 }
