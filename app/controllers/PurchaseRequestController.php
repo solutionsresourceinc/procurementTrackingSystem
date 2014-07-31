@@ -26,130 +26,107 @@ class PurchaseRequestController extends Controller
 	public function create_submit()
 	{
 
-//Image Upload
+		//Image Upload
 		$purchasecheck=Purchase::orderby('id', 'DESC')->count();
-if($purchasecheck!=0){
-$purchase=Purchase::orderby('id', 'DESC')->first();
-$docs=Document::orderby('id', 'DESC')->first();
-$pr_id=$purchase->id+1;
-$doc_id=$docs->id+1;
-}
-else
-{
-$pr_id=1;
-$doc_id=1;
-}
-foreach(Input::file('file') as $file)
-				{
+		if($purchasecheck!=0)
+		{
+			$purchase=Purchase::orderby('id', 'DESC')->first();
+			$docs=Document::orderby('id', 'DESC')->first();
+			$pr_id=$purchase->id+1;
+			$doc_id=$docs->id+1;
+		}
+		else
+		{
+			$pr_id=1;
+			$doc_id=1;
+		}
 
-            		$rules = array(
-                		'file' => 'required|mimes:png,gif,jpeg,jpg|max:900000000000000000000'
-                	);
+		foreach(Input::file('file') as $file)
+		{
+			$rules = array(
+                'file' => 'required|mimes:png,gif,jpeg,jpg|max:900000000000000000000'
+            );
 
-	            	$validator = \Validator::make(array('file'=> $file), $rules);
-	            	$destine = public_path()."/uploads";
-	           		if($validator->passes())
-	           		{
-		                $ext = $file->guessClientExtension(); // (Based on mime type)
-		                $ext = $file->getClientOriginalExtension(); // (Based on filename)
-		                $filename = $file->getClientOriginalName();
+	        $validator = \Validator::make(array('file'=> $file), $rules);
+	        $destine = public_path()."/uploads";
+	        if($validator->passes())
+	        {
+		        $ext = $file->guessClientExtension(); // (Based on mime type)
+		        $ext = $file->getClientOriginalExtension(); // (Based on filename)
+		        $filename = $file->getClientOriginalName();
 	             
-						$archivo = value(function() use ($file)
-						{
-		        			$filename = str_random(10) . '.' . $file->getClientOriginalExtension();
-		        			return strtolower($filename);
-	   					});
+				$archivo = value(function() use ($file)
+				{
+		        	$filename = str_random(10) . '.' . $file->getClientOriginalExtension();
+		        	return strtolower($filename);
+	   			});
 
-						$archivo = value(function() use ($file)
-						{
-							$date = date('m-d-Y-h-i-s', time());
-						    $filename = $date."-". $file->getClientOriginalName();
-						    return strtolower($filename);
-						});
+				$archivo = value(function() use ($file)
+				{
+					$date = date('m-d-Y-h-i-s', time());
+					$filename = $date."-". $file->getClientOriginalName();
+					return strtolower($filename);
+				});
 
+		        $attach = new Attachments;
+		        $attach->doc_id=$doc_id;
+				$attach->data = $archivo;
+				$attach->save();
 
-		                $attach = new Attachments;
-		                $attach->doc_id=$doc_id;
-						$attach->data = $archivo;
-						$attach->save();
-
-						$filename = $doc_id."_".$attach->id;
-		                $file->move($destine, $archivo);
+				$filename = $doc_id."_".$attach->id;
+		        $file->move($destine, $archivo);
 		  
-		   				$target_folder = $destine; 
-		   				$upload_image = $target_folder."/".$archivo;
+		   		$target_folder = $destine; 
+		   		$upload_image = $target_folder."/".$archivo;
 
-		   				$thumbnail = $target_folder."/resize".$archivo;
-		        		$actual = $target_folder."/".$archivo;
+		   		$thumbnail = $target_folder."/resize".$archivo;
+		        $actual = $target_folder."/".$archivo;
 
-				      	// THUMBNAIL SIZE
-				        list($width, $height) = getimagesize($upload_image);
+				// THUMBNAIL SIZE
+				list($width, $height) = getimagesize($upload_image);
 
-				        $newwidth = $width; 
-				        $newheight = $height;
-				        while ( $newheight > 525) 
-				        {
-				        	$newheight=$newheight*0.8;
-				        	$newwidth=$newwidth*0.8;
-						}
+				$newwidth = $width; 
+				$newheight = $height;
+				while ( $newheight > 525) 
+				{
+				    $newheight=$newheight*0.8;
+				    $newwidth=$newwidth*0.8;
+				}
 
-	    				$source=$upload_image;
-	    				$ext  = strtolower($ext);
-						$thumb = imagecreatetruecolor($newwidth, $newheight);
-						if ($ext=="jpg"||$ext=="jpeg")
-						    $source = imagecreatefromjpeg($upload_image);
-						elseif ($ext=="png")
-						 	$source = imagecreatefrompng($upload_image);
-						elseif ($ext=="gif")
-						 	$source = imagecreatefromgif($upload_image);
-						else
-        					continue;	      
+	    		$source=$upload_image;
+	    		$ext  = strtolower($ext);
+				$thumb = imagecreatetruecolor($newwidth, $newheight);
+				if ($ext=="jpg"||$ext=="jpeg")
+						  $source = imagecreatefromjpeg($upload_image);
+				elseif ($ext=="png")
+						$source = imagecreatefrompng($upload_image);
+				elseif ($ext=="gif")
+						$source = imagecreatefromgif($upload_image);
+				else
+        			continue;	      
 
-						       	// RESIZE 
-						    imagecopyresized($thumb, $source, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
-						        // MAKE NEW FILES
-						if ($ext=="jpg"||$ext=="jpeg")
-						 	imagejpeg($thumb, $thumbnail, 100);
-						elseif ($ext=="png")
-						 	imagepng($thumb, $thumbnail, 9);
-						elseif($ext=="gif")
-						 	imagegif($thumb, $thumbnail, 100);
-						 else
-						 	echo "An invalid image";
+				// RESIZE 
+					imagecopyresized($thumb, $source, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
+				// MAKE NEW FILES
+				if ($ext=="jpg"||$ext=="jpeg")
+					imagejpeg($thumb, $thumbnail, 100);
+				elseif ($ext=="png")
+					imagepng($thumb, $thumbnail, 9);
+				elseif($ext=="gif")
+					imagegif($thumb, $thumbnail, 100);
+				else
+					echo "An invalid image";
 
-						unlink($actual);
-				        // FILE RENAMES
-				        rename($thumbnail, $actual);
-
-
-	           
-	            	}
-		            else
-		            {
-		                $errors = $validator->errors();
-		                Session::put('imgerror','Invalid file.');
-
-		            }
-
-        		}
-
-		       
-//End Image Upload
-
-
-		$cno=Input::get('controlNo');
-		$cnp= Purchase::where('controlNo', $cno )->count();
-
-
-		if ($cnp!=0)
-			return Redirect::back();
-		
-
-		$control_no = Input::get('controlNo');
-		$controlNo_purchase = Purchase::where('controlNo', $control_no )->count();
-
-		if ($controlNo_purchase != 0 )
-			return Redirect::back();
+				unlink($actual);
+				// FILE RENAMES
+				rename($thumbnail, $actual);
+			}
+		    else
+		    {
+		        $errors = $validator->errors();
+		        Session::put('imgerror','Invalid file.');
+		    }
+		} //End Image Upload
 
 
 		$purchase = new Purchase;
@@ -161,10 +138,15 @@ foreach(Input::file('file') as $file)
 		$purchase->requisitioner = Input::get( 'requisitioner' );
 		$purchase->dateRequested = Input::get( 'dateRequested' );
 		$purchase->dateReceived = Input::get( 'dateReceived' );
-		$purchase->controlNo = Input::get('controlNo');
 		$purchase->status = 'Active';
 		$purchase->otherType = Input::get('otherType');
 
+		// Get latest control number
+		$cn = 0;
+		$purchase_controlNo = Purchase::orderBy('ControlNo', 'DESC')->first();
+		$cn = $purchase_controlNo->controlNo;
+		$cn = $cn + 1;
+		$purchase->controlNo = $cn;
 
 
 		if(Input::get('otherType') == 'Pakyaw')
@@ -303,8 +285,9 @@ foreach(Input::file('file') as $file)
 				Session::forget('doc_id');
 				
 
-		    	$connected = @fsockopen("www.google.com", 80);  //website, port  (try 80 or 443)
-		   		if ($connected)
+		    	$connected = true;
+		    	// $connected = @fsockopen("www.google.com", 80);  //website, port  (try 80 or 443)
+		   		if (!$connected)
 		   		{
 					$sendee = DB::table('users')->where('id',$purchase->requisitioner)->first();
 					$email = $sendee->email;
