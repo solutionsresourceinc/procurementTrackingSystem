@@ -52,6 +52,8 @@ $date_today = $date_today = date('Y-m-d H:i:s');
 <a href="{{ URL::to('task/active') }}" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left"></span> Back</a>
 @elseif($taskd->status == "New")
 <a href="{{ URL::to('task/new') }}" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left"></span> Back</a>
+@elseif($taskd->status == "Closed")
+<a href="{{ URL::to('task/active') }}" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left"></span> Back</a>
 @else
 <a href="{{ URL::to('task/overdue') }}" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left"></span> Back</a>
 @endif
