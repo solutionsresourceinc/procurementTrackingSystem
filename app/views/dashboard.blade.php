@@ -110,7 +110,7 @@
                     @if(count($requests))
                         @foreach ($requests as $request)
                             <tr>
-                            <td width="10%">{{ $request->controlNo }}</td>
+                            <td width="10%"> <?php echo str_pad($request->controlNo, 5, '0', STR_PAD_LEFT); ?></td>
                             <td width="30%">
                                 @if($role->role_id!=1) 
                                     <a data-toggle="tooltip" data-placement="top" class="purpose" href="{{ URL::to('purchaseRequest/vieweach/'. $request->id) }}" title="View Project Details">
