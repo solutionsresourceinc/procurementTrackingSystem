@@ -110,7 +110,7 @@
                     @if(count($requests))
                         @foreach ($requests as $request)
                             <tr>
-                            <td width="10%">{{ $request->controlNo }}</td>
+                            <td width="10%"> <?php echo str_pad($request->controlNo, 5, '0', STR_PAD_LEFT); ?></td>
                             <td width="30%">
                                 @if($role->role_id!=1) 
                                     <a data-toggle="tooltip" data-placement="top" class="purpose" href="{{ URL::to('purchaseRequest/vieweach/'. $request->id) }}" title="View Project Details">
@@ -123,7 +123,29 @@
                                 $doc = DB::table('document')->where('pr_id', $request->id)->get(); 
                             ?>
                             <td width="30%">
-                                @foreach ($doc as $docs) {{ Workflow::find($docs->work_id)->workFlowName; }} @endforeach
+                                @foreach ($doc as $docs) 
+                                    <?php  
+                                    $workflow = Workflow::find($docs->work_id)->workFlowName; 
+                                    if($workflow == "Small Value Procurement (Below P50,000)")
+                                    {
+                                        echo "SVP (Below P50,000)";
+
+                                    }
+                                    else if($workflow == "Small Value Procurement (Above P50,000 Below P500,000)")
+                                    {
+                                        echo "SVP (Above P50,000 Below P500,000)";
+                                    }
+                                    else
+                                    {
+                                        echo $workflow = Workflow::find($docs->work_id)->workFlowName;
+                                    }
+
+                                    if($request->otherType != "")
+                                    {
+                                            echo "<br> <i>$request->otherType</i>";
+                                    }
+                                ?>
+                                 @endforeach
                             </td>
                             <td width="15%"><span class="label {{($request->status == 'New') ? 'label-primary' : (($request->status == 'Active') ? 'label-success' : (($request->status == 'Overdue') ? 'label-danger' : 'label-default'))}}">{{ $request->status; }}</span></td>
                             <td width="15%">{{{ $request->amount }}}</td>
