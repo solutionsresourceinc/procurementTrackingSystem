@@ -278,7 +278,10 @@ class PurchaseRequestController extends Controller
 
 					DB::table('attachments')->where('saved', '=', 0)->delete();
 				Session::forget('doc_id');
-				
+				if(!Input::hasfile('file'))
+				{
+					Session::forget('imgerror');
+				}
 
 		    	$connected = true;
 		    	// $connected = @fsockopen("www.google.com", 80);  //website, port  (try 80 or 443)
@@ -342,6 +345,7 @@ class PurchaseRequestController extends Controller
 					
 
 					$reports->save();
+
 					//End Reports	
 			        $notice = "Purchase request created successfully. Email notice was not sent. ";
 			    }
@@ -404,7 +408,10 @@ class PurchaseRequestController extends Controller
 			$message = "Failed to create purchase request.";
 			Session::put('main_error', $message );
 
-
+	if(!Input::hasfile('file'))
+				{
+					Session::forget('imgerror');
+				}
 			// Get Other Error Messages
 			$error_projectPurpose = $purchase->validationErrors->first('projectPurpose');
 			$error_projectType = $purchase->validationErrors->first('projectType');
