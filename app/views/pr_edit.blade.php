@@ -1421,16 +1421,11 @@
                                         {{$taskp->custom1}}
                                     </td>
                                     <td class="edit-pr-input" colspan="2"> {{$taskp->custom2}}</td>
-                                    <!--td>
-                                    {{$taskp->custom1}}
-                                    </td>
-                                    
-                                    <td >
-                                    No. of Days Accomplished
-                                    </td>
-                                    <td class="edit-pr-input" colspan="3">  
-                                    {{$taskp->custom2}}
-                                    </td-->
+                                    <?php
+                                    $sectiondays=$sectiondays+$taskp->custom2;
+                                    $prdays=$prdays+$taskp->custom2;
+                                    ?>
+
                         @endif
                         @if($tasks->taskType=="conference")
                                     <td colspan="4">
@@ -1453,29 +1448,15 @@
                                     </td>
                                     <td class="edit-pr-input">  
                                         {{$taskp->custom2}}
+                                    <?php
+                                    $sectiondays=$sectiondays+$taskp->custom2;
+                                    $prdays=$prdays+$taskp->custom2;
+                                    ?>
                                     </td>
                                     <td class="edit-pr-input" colspan="2">  
                                         {{$taskp->custom3}}
                                     </td>
-                                    <!--td>
-                                    {{$tasks->taskName}}
-                                    <?php 
-                                    $today = date("m/d/y");
-                                    ?>
-                                    {{$taskp->custom1}}
-                                    </td>
-                                    <td >
-                                    No. of Days Accomplished
-                                    </td>
-                                    <td class="edit-pr-input">  
-                                    {{$taskp->custom2}}
-                                    </td>
-                                    <td>
-                                    Contract Agreement
-                                    </td>
-                                    <td class="edit-pr-input" colspan="2">  
-                                    {{$taskp->custom3}}
-                                    </td-->
+
                         @endif
                         @if($tasks->taskType=="meeting")
                                     <td> </td>
@@ -1493,29 +1474,15 @@
                                     </td>
                                     <td class="edit-pr-input">  
                                         {{$taskp->custom2}}
+                                    <?php
+                                    $sectiondays=$sectiondays+$taskp->custom2;
+                                    $prdays=$prdays+$taskp->custom2;
+                                    ?>
                                     </td>
                                     <td class="edit-pr-input" colspan="2">  
                                         {{$taskp->custom3}}
                                     </td>
-                                    <!--td>
-                                    {{$tasks->taskName}}
-                                    <?php 
-                                    $today = date("m/d/y");
-                                    ?>
-                                    {{$taskp->custom1}}
-                                    </td>
-                                    <td >
-                                    No. of Days Accomplished
-                                    </td>
-                                    <td class="edit-pr-input">  
-                                    {{$taskp->custom2}}
-                                    </td>
-                                    <td>
-                                    Minutes of Meeting
-                                    </td>
-                                    <td class="edit-pr-input" colspan="2">  
-                                    {{$taskp->custom3}}
-                                    </td-->
+
                         @endif
                         @if($tasks->taskType=="rfq")
                                     <td> </td>
@@ -1532,21 +1499,6 @@
                                         {{$taskp->custom2}}
                                     </td>
                                     <td class="edit-pr-input" colspan="2"> {{$taskp->custom2}}</td>
-                                    <!--td>
-                                    {{$tasks->taskName}} {{$taskp->custom1}}
-                                    </td>
-                                    <td>
-                                    Date of RF (Within PGEPS 7 Days)
-                                    </td>
-                                    <td>
-                                    {{$taskp->custom2}}
-                                    </td>
-                                    <td>
-                                    By
-                                    </td>
-                                    <td class="edit-pr-input" colspan="2">  
-                                    {{$taskp->custom3}}
-                                    </td-->
                         @endif
                         @if($tasks->taskType=="dateby") 
                             <td colspan="2">
