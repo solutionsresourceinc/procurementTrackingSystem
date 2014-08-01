@@ -1,9 +1,15 @@
 @extends('layouts.dashboard')
 
 @section('content')
-{{Session::put('backTo','purchaseRequest/cancelled');}}
+{{Session::put('backTo','purchaseRequest/view');}}
 
-<h1 class="pull-left">List of Cancelled Purchase Requests</h1>
+<h1 class="pull-left">List of Active Purchase Requests</h1>
+    
+    @if ( Entrust::hasRole('Administrator') || Entrust::hasRole('Procurement Personnel'))
+      <div class="pull-right options">
+            <a href="{{ URL::to('purchaseRequest/create') }}" class="btn btn-success">Create New</a>
+      </div>
+    @endif
 
     <hr class="clear" />
 <div id="pr_form">
@@ -16,7 +22,7 @@
                 
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Cancel Purchase Request</h4>
+                    <h4 class="modal-title"><b>Cancel Purchase Request</b></h4>
                 </div>
                 <div class="modal-body">
                     <p>Reason for cancelling purchase request:</p>
@@ -32,77 +38,38 @@
         </div>
     </div>
 </form>
-
- 
 @if(Session::get('notice'))
     <div class="alert alert-success"> {{ Session::get('notice') }}</div> 
 @endif
-
- <?php 
-        error_reporting(0);
-        $date_today =date('Y-m-d H:i:s');
-        $useroffice=Auth::user()->office_id;
-
-        $page = $_REQUEST["page"]; 
-        Session::put('page',$page);
-
-
-        if(Entrust::hasRole('Requisitioner'))
-            $countPR = DB::table('purchase_request')->where('status', '=', 'Cancelled')->where('office', $useroffice)->count(); 
-        else
-            $countPR = DB::table('purchase_request')->where('status', '=', 'Cancelled')->count(); 
-
-        echo "<input type='hidden' id='countPR' value='$countPR'>";
-        $start = $page;
-
-        if(!Session::get('page') || $page == 1)
-        {
-            if($countPR <= 10)
-                $displayResult = "$countPR of $countPR";
-            else
-                $displayResult = "10 of $countPR";
-        }
-        else
-        {
-            $lastPR = 10 * $page;
-            $firstPR = $lastPR - 9;
-
-           
-            if($first >=  $countPR)
-            {
-                 $displayResult = "$firstPR - $lastPR of $countPR";
-            }
-            else
-            {
-                $remainingPR = $countPR - $firstPR;
-                $lastPR = $firstPR + $remainingPR;
-                $lastPR2 = $page * 10;
-
-                if($remainingPR == 0)
-                    $displayResult = "$firstPR of $countPR";
-                else if($remainingPR >= 10)
-                    $displayResult = "$firstPR - $lastPR2 of $countPR"; 
-                else
-                    $displayResult = "$firstPR - $lastPR of $countPR";
-            }
-        }
-
-
-
-    ?>
     
     <!-- START OF SEARCH BOX -->
-    <div align="left" class="col-md-4" id="noOfResult">{{ $displayResult }} </div>   
-    <div align="center" class="col-md-4"></div>   
-    <div align="center" class="col-md-4">   
-        <input type="text" class="form-control filter" placeholder="Enter search keywords"> 
-    </div>
+    <form method="POST" action="">
+        <div align="left" class="col-md-6" id="noOfResult"></div>   
+        <div class="col-md-3" style="">
+            <select id="searchBy" name="searchBy" class="form-control" onchange="changeSearch(this.value)">
+                <option value="0" <?php if($searchBy == '0'){ echo "selected";} ?> >Search by</option>
+                <option value="controlNo" <?php if($searchBy == 'controlNo'){ echo "selected";} ?> >Control No.</option>
+                <option value="projectPurpose" <?php if($searchBy == 'projectPurpose'){ echo "selected";} ?> >Project/Purpose</option>
+                <option value="1" <?php if($searchBy == '1'){ echo "selected";} ?> >Mode-SVP Below 50k</option>
+                <option value="2" <?php if($searchBy == '2'){ echo "selected";} ?> >Mode-SVP Above 50k Below 499k</option>
+                <option value="3" <?php if($searchBy == '3'){ echo "selected";} ?> >Mode-Bidding</option>
+                <option value="4" <?php if($searchBy == '4'){ echo "selected";} ?> >Mode-Pakyaw</option>
+                <option value="5" <?php if($searchBy == '5'){ echo "selected";} ?> >Mode-Direct Contracting</option>
+                <option value="amount" <?php if($searchBy == 'amount'){ echo "selected";} ?>>Amount</option>
+                <option value="dateReceived" <?php if($searchBy == 'dateReceived'){ echo "selected";} ?>>Date Received</option>
+            </select>
+        </div>   
+        <div class="input-group">
+          <div class="input-group-btn">
+            <button type="submit" class="btn btn-default" name="searchButton" id="searchButton"><span class="glyphicon glyphicon-search"></span></button>
+          </div>
+          <input id="searchTerm" name="searchTerm" type="text" class="form-control" placeholder="Enter search keywords">
+        </div>
     <br/>
-    <br/>
-    <br/>
+    </form>    
     <!-- END OF SEARCH BOX -->
-
-    <table id="table_id" class="table table-striped display ">
+    
+    <table class="table table-striped display">
         <thead>
             <tr>
                 <th>Control No.</th>
@@ -110,219 +77,142 @@
                 <th>Mode</th>
                 <th style="text-align: center">Amount</th>
                 <th>Date Received</th>
-               
+                @if(!Entrust::hasRole('Requisitioner'))
+                    <th>Action</th>
+                @endif
             </tr>
         </thead>
-
-        <?php
-           //Query Restrictions
-            $date_today =date('Y-m-d H:i:s');
-            $requests = new Purchase;
-            $userx=Auth::user()->id;
-            $useroffice=Auth::user()->office_id;
-
-            if(Entrust::hasRole('Requisitioner'))
-                $requests = DB::table('purchase_request')->where('status', '=', 'Cancelled')->where('office', $useroffice)->paginate(10); 
-            else
-                $requests = DB::table('purchase_request')->where('status', '=', 'Cancelled')->paginate(10); 
-            //End Query Restrictions
-        ?>
-
         <tbody>
-            @if(count($requests))
-                @foreach ($requests as $request)
-
-                    <tr id="content"
-                      <?php 
-                     
-                        $doc = new Document; $doc = DB::table('document')->where('pr_id', $request->id)->first();  
-                        $doc_id= $doc->id;
-                    $userx= Auth::User()->id;
-                    $counter=0;
-                    $counter=Count::where('user_id', $userx)->where('doc_id', $doc_id)->count();
-                    if ($counter!=0){
-                        echo "class ='success'";
-                    }
-
-                    ?>
-                        >
-                        <td width="10%"><?php echo str_pad($request->controlNo, 5, '0', STR_PAD_LEFT); ?></td>
-                        <td width="27%">
-
-                        @if(Entrust::hasRole('Administrator')||Entrust::hasRole('Procurement Personnel'))
-                            <a data-toggle="tooltip" data-placement="top" class="purpose" href="{{ URL::to('purchaseRequest/vieweach/'. $request->id) }}" title="View Project Details">
-                            {{ $request->projectPurpose; }}
-                            </a>
-                        @else
-                        {{ $request->projectPurpose; }}
-                        @endif
-                        </td>
-                        <?php 
-                            $doc = new Purchase; 
-                            $doc = DB::table('document')->where('pr_id', $request->id)->get(); 
-                        ?>
-                         <td width="18%">
-                            @foreach ($doc as $docs) 
-                                <?php  
-                                    $workflow = Workflow::find($docs->work_id)->workFlowName; 
-                                    if($workflow == "Small Value Procurement (Below P50,000)")
-                                    {
-                                        echo "SVP (Below P50,000)";
-
-                                    }
-                                    else if($workflow == "Small Value Procurement (Above P50,000 Below P500,000)")
-                                    {
-                                        echo "SVP (Above P50,000 Below P500,000)";
-                                    }
-                                    else
-                                    {
-                                        echo $workflow = Workflow::find($docs->work_id)->workFlowName;
-                                    }
-
-                                    if($request->otherType != "")
-                                    {
-                                            echo "<br> <i>$request->otherType</i>";
-                                    }
-                                ?>
-
-                            @endforeach
-
-
-                        </td>
-                        <td width="12%" style="text-align: center">{{{ $request->amount }}}</td>
-                        <td width="20%">{{ $request->dateReceived; }}</td>
-
-                       
-                   </tr>
-                @endforeach
-            @else
-                <tr>
-                    <td colspan="<?php if(Entrust::hasRole('Administrator') ) echo "6"; else echo "5";?>">
-                        <span class="error-view">No data available.</span>
-                    </td>
-                </tr>
-            @endif
-        </tbody>
-    </table>  
- 
-<div id="pages" align="center">
-    <center> {{ $requests->links(); }} </center>
-</div>
-
-<div id="searchTable">
-    <table id="table_id2" class="table table-striped display" style="display:none">
-        <thead>
-            <tr>
-                <th>Control No.</th>
-                <th>Project/Purpose</th>
-                <th>Mode</th>
-                <th style="text-align: center">Amount</th>
-                <th>Date Received</th>
-            
-            </tr>
-        </thead>
-
-        <?php
-           //Query Restrictions
-            $date_today =date('Y-m-d H:i:s');
-            $requests = new Purchase;
-            $userx=Auth::user()->id;
-
-            if(Entrust::hasRole('Requisitioner'))
-                $requests = DB::table('purchase_request')->where('status', '=', 'Cancelled')->where('office', $useroffice)->get(); 
-            else
-                $requests = DB::table('purchase_request')->where('status', '=', 'Cancelled')->get(); 
-            //End Query Restrictions
-        ?>
-
-        <tbody class="searchable">
-            @if(count($requests))
-                @foreach ($requests as $request)
-
-                    <tr 
-                      <?php 
+            @foreach($requests as $request)
+                <tr id="content"
+                    <?php
                         $useroffice=Auth::user()->office_id;
-                  
-                    $doc = new Document; $doc = DB::table('document')->where('pr_id', $request->id)->first();  
-                    $doc_id= $doc->id;
-                    $userx= Auth::User()->id;
-                    $counter=0;
-                    $counter=Count::where('user_id', $userx)->where('doc_id', $doc_id)->count();
-                    if ($counter!=0){
-                        echo "class ='success'";
-                    }
-
+                        $doc = new Document; 
+                        $doc = DB::table('document')->where('pr_id', $request->id)->first();  
+                        $doc_id= $doc->id;
+                        $userx= Auth::User()->id;
+                        $counter=0;
+                        $counter=Count::where('user_id', $userx)->where('doc_id', $doc_id)->count();
+                        
+                        if ($counter!=0)
+                            echo "class ='success'";
                     ?>
-                        >
-                        <td width="10%"><?php echo str_pad($request->controlNo, 5, '0', STR_PAD_LEFT); ?></td>
-                        <td width="30%">
-                            
+                >
+                    <td width="10%"><?php echo str_pad($request->controlNo, 5, '0', STR_PAD_LEFT); ?></td>
+                    <td width="27%">
                         @if(Entrust::hasRole('Administrator')||Entrust::hasRole('Procurement Personnel'))
                             <a data-toggle="tooltip" data-placement="top" class="purpose" href="{{ URL::to('purchaseRequest/vieweach/'. $request->id) }}" title="View Project Details">
-                            {{ $request->projectPurpose; }}
+                                {{ $request->projectPurpose; }}
                             </a>
                         @else
-                        {{ $request->projectPurpose; }}
+                            {{ $request->projectPurpose; }}
                         @endif
-
-                        </td>
-                        <?php 
-                            $doc = new Purchase; 
-                            $doc = DB::table('document')->where('pr_id', $request->id)->get(); 
-                        ?>
-                         <td width="18%">
-                            @foreach ($doc as $docs) 
-                                <?php  
-                                    $workflow = Workflow::find($docs->work_id)->workFlowName; 
-                                    if($workflow == "Small Value Procurement (Below P50,000)")
-                                    {
-                                        echo "SVP (Below P50,000)";
-
-                                    }
-                                    else if($workflow == "Small Value Procurement (Above P50,000 Below P500,000)")
-                                    {
-                                        echo "SVP (Above P50,000 Below P500,000)";
-                                    }
-                                    else
-                                    {
-                                        echo $workflow = Workflow::find($docs->work_id)->workFlowName;
-                                    }
-
-                                    if($request->otherType != "")
-                                    {
-                                            echo "<br> <i>$request->otherType</i>";
-                                    }
-                                ?>
-
-                            @endforeach
-
-
-                        </td>
-                        <td width="17%" style="text-align: center">P{{{ $request->amount }}}</td>
-                        <td width="15%">{{ $request->dateReceived; }}</td>
-
-                        
-                   </tr>
-                @endforeach
-            @endif
+                    </td>
+                    <?php 
+                        $doc = new Purchase; 
+                        $doc = DB::table('document')->where('pr_id', $request->id)->get(); 
+                    ?>
+                    <td width="18%">
+                        @foreach ($doc as $docs) 
+                            <?php  
+                                $workflow = Workflow::find($docs->work_id)->workFlowName; 
+                                if($workflow == "Small Value Procurement (Below P50,000)")
+                                    echo "SVP (Below P50,000)";
+                                else if($workflow == "Small Value Procurement (Above P50,000 Below P500,000)")
+                                    echo "SVP (Above P50,000 Below P500,000)";
+                                else
+                                    echo $workflow = Workflow::find($docs->work_id)->workFlowName;
+                                if($request->otherType != "")
+                                        echo "<br> <i>$request->otherType</i>";
+                            ?>
+                        @endforeach
+                    </td>
+                    <td align="right" width="12%"> {{{ $request->amount }}} </td>
+                    <td align="center" width="20%">{{{ $request->dateReceived }}}</td>
+                    @if(!Entrust::hasRole('Requisitioner'))
+                        @if(Entrust::hasRole('Procurement Personnel'))
+                            @if(Auth::user()->id == $request->created_by)
+                                <td width="13%">
+                                    <a data-toggle="tooltip" data-placement="top" class='iframe btn btn-success' href='edit/{{$request->id}}' title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
+                                    <form method="POST" action="delete" id="myForm_{{ $request->id }}" name="myForm" style="display: -webkit-inline-box;">
+                                       <input type="hidden" name="del_pr" value="{{ $request->id }}">
+                                       <center> <a href="changeForm/{{ $request->id }}" class="btn ajax btn-danger" data-method="post" data-replace="#pr_form" data-toggle="modal" data-target="#confirmDelete" data-toggle="tooltip" title="Cancel"><span class="glyphicon glyphicon-remove"></span></a></center>
+                                   </form>
+                                </td>
+                            @else
+                                <td width="13%"></td>
+                            @endif
+                        @else
+                            <td width="13%">
+                                <a data-toggle="tooltip" data-placement="top" class='iframe btn btn-success' href='edit/{{$request->id}}' title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
+                                <form method="POST" action="delete" id="myForm_{{ $request->id }}" name="myForm" style="display: -webkit-inline-box;">
+                                   <input type="hidden" name="del_pr" value="{{ $request->id }}">
+                                   <center> <a href="changeForm/{{ $request->id }}" class="btn ajax btn-danger" data-method="post" data-replace="#pr_form" data-toggle="modal" data-target="#confirmDelete" data-toggle="tooltip" title="Cancel"><span class="glyphicon glyphicon-remove"></span></a></center>
+                               </form>
+                            </td>
+                        @endif
+                    @endif
+                </tr>
+            @endforeach
         </tbody>
-    </table>
-</div>
+    <table>
+    <div id="pages" align="center">
+        @if($pageCounter != 0)
+            <center></center>
+        @else
+            <p><i>No data available</i></p>
+        @endif
+    </div>
+ 
+{{Session::forget('notice'); }}
+{{Session::forget('main_error'); }}
+{{Session::forget('imgerror'); }}
+{{Session::forget('imgsuccess'); }}
+{{Session::forget('error_projectPurpose');}}
+{{Session::forget('error_sourceOfFund');}}
+{{Session::forget('error_office');}}
+{{Session::forget('error_requisitioner');}}
+{{Session::forget('error_dateRequested');}}
+{{Session::forget('error_modeOfProcurement');}}
+{{Session::forget('imgerror'); }}
 
-<div class="row" id="table_id3" style="display:none">
-    <span class="error-view">No data available.</span>
-</div>
-
-    {{ Session::forget('notice'); }}
 @stop
 
 @section('footer')
     {{ HTML::script('js/bootstrap-ajax.js');}}
-    <script type="text/javascript">
+
+
+@stop
+ <script type="text/javascript">
         // START *code for search box
+        window.onload = function()
+        {
+            if(document.getElementById('searchBy').value == '0')
+            {
+                document.getElementById('searchTerm').disabled = true;
+                document.getElementById('searchButton').disabled = true;
+            }
+        }
+
+        function changeSearch(value)
+        {
+            if(value == '0')
+            {
+                document.getElementById('searchTerm').disabled = true;
+                document.getElementById('searchButton').disabled = true;
+            }
+            else
+            {
+                document.getElementById('searchTerm').disabled = false;
+                document.getElementById('searchButton').disabled = false;    
+            }
+        }
+
         $('input.filter').on('keyup', function() 
         {
             var rex = new RegExp($(this).val(), 'i');
+            var div_noOfResult = document.getElementById('noOfResult');
+
             if(rex == '/(?:)/i')
             {
                 document.getElementById('table_id2').style.display = 'table';
@@ -335,7 +225,7 @@
                 document.getElementById('table_id2').style.display = 'none';
                 document.getElementById('table_id3').style.display = 'none';
 
-                 // No of Result
+                // No of Result
                 var page = getQueryVariable('page');
                 var countPR = document.getElementById('countPR').value;
 
@@ -396,11 +286,9 @@
                     document.getElementById('table_id2').style.display = 'table';
                     document.getElementById('table_id3').style.display = 'none';
                 }
-
-                var noOfSearched = rowNum - 1; 
-                document.getElementById('noOfResult').innerHTML =  noOfSearched+ " result(s) ";
+                    var noOfSearched = rowNum - 1; 
+                    document.getElementById('noOfResult').innerHTML =  noOfSearched+ " result(s) ";
                 
-
             }
             
         });
@@ -450,11 +338,4 @@
                return(1);
         }
         
-        
     </script>
-
-{{ Session::forget('main_error'); }}
-{{ Session::forget('imgsuccess'); }}
-{{ Session::forget('imgerror'); }}
-
-@stop
