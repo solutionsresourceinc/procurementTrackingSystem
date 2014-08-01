@@ -59,13 +59,21 @@
                 <option value="dateReceived" <?php if($searchBy == 'dateReceived'){ echo "selected";} ?>>Date Received</option>
             </select>
         </div>   
-        <div class="input-group">
+        
+    <div class="input-group">
+      <input id="searchTerm" name="searchTerm" placeholder="Enter search keywords" type="text" class="form-control">
+      <span class="input-group-btn">
+        <button class="btn btn-primary" name="searchButton" id="searchButton" type="button">Search</button>
+      </span>
+    </div>
+        <!-- <div class="input-group">
           <div class="input-group-btn">
             <button type="submit" class="btn btn-default" name="searchButton" id="searchButton"><span class="glyphicon glyphicon-search"></span></button>
           </div>
-          <input id="searchTerm" name="searchTerm" type="text" class="form-control" placeholder="Enter search keywords">
-        </div>
-    <br/>
+          <input id="searchTerm" name="searchTerm" type="text" class="form-control" placeholder="Enter search keywords"/>
+        </div> -->
+
+            
     </form>    
     <!-- END OF SEARCH BOX -->
     
