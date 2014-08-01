@@ -564,14 +564,14 @@
                                     $today = date("m/d/y");
                                     ?>
                                     <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
-                                        <input type="text" class="form-control" name="dateFinished" id="dateFinished" style="text-align: center; width:100%" value="
+                                        <input type="text" class="form-control" name="dateFinished" id="dateFinished" style="text-align: center; width:100%"
                                         <?php
                                         if (NULL!=Input::old('dateFinished'))
-                                            echo Input::old('dateFinished');
+                                            echo "value ='" . Input::old('dateFinished') ."'";
                                         else
-                                            $today;
+                                            echo "value = '" . $today . "'";
                                         ?>
-                                        "/>
+                                        />
                                     </div>
                                 </td>
                                 <td class="edit-pr-input">
@@ -647,14 +647,14 @@
                                     $today = date("m/d/y");
                                     ?>
                                     <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
-                                        <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" value="
+                                        <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" 
                                         <?php
-                                        if (NULL!=Input::old('date'))
-                                            echo Input::old('date');
+                                        if (NULL!=Input::old('dateFinished'))
+                                            echo "value ='" . Input::old('dateFinished') ."'";
                                         else
-                                            $today;
+                                            echo "value = '" . $today . "'";
                                         ?>
-                                        "
+                                        
                                         />
                                     </div>
                                 </td>
@@ -739,14 +739,14 @@
                                     $today = date("m/d/y");
                                     ?>
                                     <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
-                                        <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" value="
+                                        <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" 
                                         <?php
-                                        if (NULL!=Input::old('date'))
-                                            echo Input::old('date');
+                                        if (NULL!=Input::old('dateFinished'))
+                                            echo "value ='" . Input::old('dateFinished') ."'";
                                         else
-                                            $today;
+                                            echo "value = '" . $today . "'";
                                         ?>
-                                        "/>
+                                        />
                                     </div>
                                 </td>
                                 
@@ -778,28 +778,28 @@
                                         ?>
                                         <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
                                             <input type="text" class="form-control" name="datepublished" id="datepublished" style="text-align: center; width:100%"
-                                            value="
+                                            
                                         <?php
-                                        if (NULL!=Input::old('datepublished'))
-                                            echo Input::old('datepublished');
+                                        if (NULL!=Input::old('dateFinished'))
+                                            echo "value ='" . Input::old('dateFinished') ."'";
                                         else
-                                            $today;
+                                            echo "value = '" . $today . "'";
                                         ?>
-                                        "
+                                        
                                              />
                                         </div>
                                     </td>
                                     <td>
                                         <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
                                             <input type="text" class="form-control" name="enddate" id="enddate" style="text-align: center; width:100%" 
-                                            value="
+                                            
                                         <?php
-                                        if (NULL!=Input::old('enddate'))
-                                            echo Input::old('enddate');
+                                        if (NULL!=Input::old('dateFinished'))
+                                            echo "value ='" . Input::old('dateFinished') ."'";
                                         else
-                                            $today;
+                                            echo "value = '" . $today . "'";
                                         ?>
-                                        "
+                                        
                                              />
                                         </div>
                                     </td>
@@ -843,28 +843,28 @@
                                         ?>
                                         <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
                                             <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" 
-                                            value="
+                                            
                                         <?php
-                                        if (NULL!=Input::old('date'))
-                                            echo Input::old('date');
+                                        if (NULL!=Input::old('dateFinished'))
+                                            echo "value ='" . Input::old('dateFinished') ."'";
                                         else
-                                            $today;
+                                            echo "value = '" . $today . "'";
                                         ?>
-                                        "
+                                        
                                             />
                                         </div>
                                     </td>
                                     <td>
                                         <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
                                             <input type="text" class="form-control" name="biddingdate" id="biddingdate" style="text-align: center; width:100%" 
-                                            value="
+                                           
                                         <?php
-                                        if (NULL!=Input::old('biddingdate'))
-                                            echo Input::old('biddingdate');
+                                        if (NULL!=Input::old('dateFinished'))
+                                            echo "value ='" . Input::old('dateFinished') ."'";
                                         else
-                                            $today;
+                                            echo "value = '" . $today . "'";
                                         ?>
-                                        "
+                                        
                                             />
                                         </div>
                                     </td>
@@ -906,14 +906,14 @@
                                         $today = date("m/d/y");
                                         ?>
                                         <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
-                                            <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" value="
+                                            <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%"
                                         <?php
-                                        if (NULL!=Input::old('date'))
-                                            echo Input::old('date');
+                                        if (NULL!=Input::old('dateFinished'))
+                                            echo "value ='" . Input::old('dateFinished') ."'";
                                         else
-                                            $today;
+                                            echo "value = '" . $today . "'";
                                         ?>
-                                        "
+                                        
                                         />
                                         </div>
                                     </td>
@@ -949,14 +949,14 @@
                                     ?>
                                     <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
                                         <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" 
-                                        value="
+                                        
                                         <?php
-                                        if (NULL!=Input::old('date'))
-                                            echo Input::old('date');
+                                        if (NULL!=Input::old('dateFinished'))
+                                            echo "value ='" . Input::old('dateFinished') ."'";
                                         else
-                                            $today;
+                                            echo "value = '" . $today . "'";
                                         ?>
-                                        "
+                                        
                                         />
                                     </div>
                                     </td>
@@ -987,14 +987,14 @@
                                         $today = date("m/d/y");
                                         ?>
                                         <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
-                                            <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" value="
+                                            <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" 
                                         <?php
-                                        if (NULL!=Input::old('date'))
-                                            echo Input::old('date');
+                                        if (NULL!=Input::old('dateFinished'))
+                                            echo "value ='" . Input::old('dateFinished') ."'";
                                         else
-                                            $today;
+                                            echo "value = '" . $today . "'";
                                         ?>
-                                        "/>
+                                        />
                                         </div>
                                     </td>
                                     <td><input type="number" name="noofdays"  class="form-control" maxlength="100" width="80%" placeholder="Enter no. of days accomplished"
@@ -1046,14 +1046,14 @@
                                         ?>
                                         <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
                                             <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" 
-                                            value="
+                                            
                                         <?php
-                                        if (NULL!=Input::old('date'))
-                                            echo Input::old('date');
+                                        if (NULL!=Input::old('dateFinished'))
+                                            echo "value ='" . Input::old('dateFinished') ."'";
                                         else
-                                            $today;
+                                            echo "value = '" . $today . "'";
                                         ?>
-                                        "
+                                        
                                             />
                                         </div>
                                     </td>
@@ -1117,14 +1117,14 @@
                                         $today = date("m/d/y");
                                         ?>
                                         <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
-                                            <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" value="
+                                            <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" 
                                         <?php
-                                        if (NULL!=Input::old('date'))
-                                            echo Input::old('date');
+                                        if (NULL!=Input::old('dateFinished'))
+                                            echo "value ='" . Input::old('dateFinished') ."'";
                                         else
-                                            $today;
+                                            echo "value = '" . $today . "'";
                                         ?>
-                                        "
+                                        
                                         />
                                         </div>
                                     </td>
@@ -1160,14 +1160,14 @@
                                     ?>
                                     <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
                                         <input type="text" class="form-control" name="dateFinished" id="dateFinished" style="text-align: center; width:100%" 
-                                        value="
+                                        
                                         <?php
-                                        if (NULL!=Input::old('date'))
-                                            echo Input::old('date');
+                                        if (NULL!=Input::old('dateFinished'))
+                                            echo "value ='" . Input::old('dateFinished') ."'";
                                         else
-                                            $today;
+                                            echo "value = '" . $today . "'";
                                         ?>
-                                        "
+                                        
                                         />
                                     </div>
                                 </td>
@@ -1204,20 +1204,15 @@
                                     ?>
                                     <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
 
-
-
-
-
-
                                         <input type="text" class="form-control" name="dateFinished" id="dateFinished" style="text-align: center; width:100%" 
-                                        value="
+                                        
                                         <?php
                                         if (NULL!=Input::old('dateFinished'))
-                                            echo Input::old('dateFinished');
+                                            echo "value ='" . Input::old('dateFinished') ."'";
                                         else
-                                            $today;
+                                            echo "value = '" . $today . "'";
                                         ?>
-                                        "
+                                        
                                         />
                                     </div>
                                 </td>
