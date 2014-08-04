@@ -918,16 +918,16 @@
                                         </div>
                                     </td>
                                     <td class="edit-pr-input" colspan="2">  
-                                        <input type="number" name="noofdays"  class="form-control" maxlength="100" width="80%" placeholder="Enter no. of days"
-                                        value="
+                                        <input type="number" name="noofdays"  class="form-control" maxlength="12" width="80%" placeholder="Enter no. of days"
+                                        
                                         <?php
                                         if (NULL!=Input::old('noofdays'))
-                                            echo Input::old('noofdays');
+                                            echo "value=".Input::old('noofdays');
                                         else
-                                            echo "1";
+                                            echo "value=1";
                                        
                                         ?>
-                                        "
+                                        
                                         >
                                     </td>   
                  
@@ -1003,9 +1003,9 @@
                                         value="
                                         <?php
                                         if (NULL!=Input::old('noofdays'))
-                                            echo Input::old('noofdays');
+                                            echo "value=".Input::old('noofdays');
                                         else
-                                            echo "1";
+                                            echo "value=1";
                                      
                                         ?>
                                         "
@@ -1066,9 +1066,9 @@
                                         value="
                                         <?php
                                         if (NULL!=Input::old('noofdays'))
-                                            echo Input::old('noofdays');
+                                            echo "value=".Input::old('noofdays');
                                         else
-                                            echo "1";
+                                            echo "value=1";
                                         
                                             
                                         ?>
