@@ -553,10 +553,10 @@
                                  <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
                                 <td class="edit-pr-input">
                                     <input type ="text" name="assignee" placeholder="Enter name" class="form-control" width="100%" maxlength="100"
-                                    value="<?php
+                                    <?php
                                     if (NULL!=Input::old('assignee'))
-                                    echo Input::old('assignee');
-                                    ?>"
+                                    echo "value='".Input::old('assignee')."'";
+                                    ?>
                                     >
                                 </td>
                                 <td class="edit-pr-input"> 
@@ -576,10 +576,10 @@
                                 </td>
                                 <td class="edit-pr-input">
                                     <input type="number" name="daysOfAction" class="form-control"  min="0" value="1" width="100%" maxlength="12"
-                                    value="<?php
+                                    <?php
                                     if (NULL!=Input::old('daysOfAction'))
-                                    echo Input::old('daysOfAction');
-                                    ?>"
+                                    echo "value='".Input::old('daysOfAction')."'";
+                                    ?>
                                     >
                                 </td>
                                 <td class="edit-pr-input">
@@ -1276,7 +1276,7 @@
                         ?>
 
                         @if ($tasks->taskType=="normal")
-                            <td>
+                            <td align="center">
                                 <?php
                                 if($taskp->assignee!=NULL)
                                 { 
@@ -1293,19 +1293,19 @@
                             ?>
                             </td>
 
-                            <td >
+                            <td align="center">
                             <?php 
                                 if($taskp->dateFinished!="0000-00-00 00:00:00") 
                                     echo $datef; 
                             ?>
                             </td>
-                            <td>
+                            <td align="center">
                             <?php 
                                 if($taskp->dateFinished!="0000-00-00 00:00:00") 
                                     echo $taskp->daysOfAction; 
                             ?>
                             </td>
-                            <td>
+                            <td align="center">
                             <?php 
                                 $dremarks=chunk_split($taskp->remarks, 20, "<br>");
                                 echo $dremarks; 
@@ -1313,7 +1313,7 @@
                             </td>
                         @endif
                         @if($tasks->taskType=="certification")
-                            <td colspan="2">
+                            <td colspan="2" align="center">
                                 <input type="radio" name="displayradio" value="yes" 
                                 <?php if($taskp->custom1=="yes") echo " checked";?> 
                                 disabled > Yes 
@@ -1321,45 +1321,45 @@
                                 <?php if($taskp->custom1=="no") echo " checked";?>
                                 disabled> No
                             </td>
-                            <td colspan="2">
+                            <td colspan="2" align="center">
                                 By:         
                                 {{$taskp->custom2;}}
                             </td>
                         @endif
                         @if($tasks->taskType=="posting")
-                            <td colspan="2">
+                            <td colspan="2" align="center">
                                 Reference No. :          
                                 {{$taskp->custom1;}}
                             </td>
-                             <td>
+                             <td align="center">
                                 Date:           
                                 {{$taskp->custom2;}}
                             </td>
-                            <td>
+                            <td align="center">
                                 By:          
                                 {{$taskp->custom3;}}
                             </td>
                         @endif
                         @if($tasks->taskType == "supplier")
-                                <td class="edit-pr-input" colspan="2" width="20%">
+                                <td class="edit-pr-input" colspan="2" width="20%" align="center">
                                     {{$taskp->custom1}}
                                 </td>
                                 
-                                <td class="edit-pr-input" colspan="2" width="20%">
+                                <td class="edit-pr-input" colspan="2" width="20%" align="center">
                                     Amount: 
                                     {{$taskp->custom2}}
                                 </td>     
                         @endif
                         @if($tasks->taskType=="cheque")
-                                <td class="edit-pr-input" colspan="2">
+                                <td class="edit-pr-input" colspan="2" align="center">
                                     CHEQUE AMT:
                                     {{$taskp->custom1}}
                                 </td>
-                                <td class="edit-pr-input" colspan="2">
+                                <td class="edit-pr-input" colspan="2" align="center">
                                     CHEQUE NUM:
                                     {{$taskp->custom2}}
                                 </td>
-                                <td class="edit-pr-input" colspan="2">
+                                <td class="edit-pr-input" colspan="2" align="center">
                                     CHEQUE DATE:
                                     {{$taskp->custom3}}
                                 </td>
@@ -1371,13 +1371,13 @@
                                     <th class='workflow-th' colspan="2">Posted By:</th>
                                 </tr>
                                 <tr>
-                                    <td>{{$tasks->taskName}}</td>
-                                    <td>
+                                    <td align="center">{{$tasks->taskName}}</td>
+                                    <td align="center">
                                         {{$taskp->custom1}}
                                         <span class="add-on"><i class="icon-th"></i></span>
                                     </td>
-                                    <td>{{$taskp->custom2}}</td>
-                                    <td class="edit-pr-input" colspan="2">{{$taskp->custom3}}</td>
+                                    <td align="center">{{$taskp->custom2}}</td>
+                                    <td class="edit-pr-input" colspan="2" align="center">{{$taskp->custom3}}</td>
                         @endif
                         @if($tasks->taskType=="documents")
                                     <td> </td>
@@ -1386,30 +1386,14 @@
                                     <th class='workflow-th' colspan="2">Checked By:</th>
                                 </tr>
                                 <tr>
-                                    <td>{{$tasks->taskName}}</td>
-                                    <td>
+                                    <td align="center">{{$tasks->taskName}}</td>
+                                    <td align="center">
                                         {{$taskp->custom1}}
                                         <span class="add-on"><i class="icon-th"></i></span>
                                     </td>
-                                    <td>{{$taskp->custom2}}</td>
-                                    <td class="edit-pr-input" colspan="2">{{$taskp->custom3}}</td>
-                                    <!--td>
-                                    {{$tasks->taskName}}
-                                    <br>
-                                    {{$taskp->custom1}}
-                                    <span class="add-on"><i class="icon-th"></i></span>
-                                    </td>
-                                    <td>
-                                    Date of Bidding
-                                    <br>
-                                    {{$taskp->custom2}}
-                                    </td>
-                                    <td >
-                                    Checked By
-                                    </td>
-                                    <td class="edit-pr-input" colspan="2">  
-                                    {{$taskp->custom3}}
-                                    </td-->
+                                    <td align="center">{{$taskp->custom2}}</td>
+                                    <td class="edit-pr-input" colspan="2" align="center">{{$taskp->custom3}}</td>
+                                
                         @endif
                         @if($tasks->taskType=="evaluation")
                                     <td> </td>
@@ -1417,11 +1401,11 @@
                                     <th class='workflow-th' colspan="2">No. Of Days Accomplished:</th>
                                 </tr>
                                 <tr>
-                                    <td>{{$tasks->taskName}}</td>
-                                    <td colspan="2">
+                                    <td align="center">{{$tasks->taskName}}</td>
+                                    <td colspan="2" align="center">
                                         {{$taskp->custom1}}
-                                    </td>
-                                    <td class="edit-pr-input" colspan="2"> {{$taskp->custom2}}</td>
+                                    </td align="center">
+                                    <td class="edit-pr-input" colspan="2" align="center"> {{$taskp->custom2}}</td>
                                     <?php
                                     $sectiondays=$sectiondays+$taskp->custom2;
                                     $prdays=$prdays+$taskp->custom2;
@@ -1429,7 +1413,7 @@
 
                         @endif
                         @if($tasks->taskType=="conference")
-                                    <td colspan="4">
+                                    <td colspan="4" align="center">
                                     {{$taskp->custom1}}
                                     </td>
                         @endif
@@ -1440,21 +1424,21 @@
                                     <th class='workflow-th' colspan="2">Contract Agreement:</th>
                                 </tr>
                                 <tr>
-                                    <td>{{$tasks->taskName}}</td>
-                                    <td>
+                                    <td align="center">{{$tasks->taskName}}</td>
+                                    <td align="center">
                                         <?php 
                                         $today = date("m/d/y");
                                         ?>
                                         {{$taskp->custom1}}
                                     </td>
-                                    <td class="edit-pr-input">  
+                                    <td class="edit-pr-input" align="center">  
                                         {{$taskp->custom2}}
                                     <?php
                                     $sectiondays=$sectiondays+$taskp->custom2;
                                     $prdays=$prdays+$taskp->custom2;
                                     ?>
                                     </td>
-                                    <td class="edit-pr-input" colspan="2">  
+                                    <td class="edit-pr-input" colspan="2" align="center">  
                                         {{$taskp->custom3}}
                                     </td>
 
@@ -1466,43 +1450,43 @@
                                     <th class='workflow-th' colspan="2">Minutes of Bidding:</th>
                                 </tr>
                                 <tr>
-                                    <td>{{$tasks->taskName}}</td>
-                                    <td>
+                                    <td align="center">{{$tasks->taskName}}</td>
+                                    <td align="center">
                                         <?php 
                                         $today = date("m/d/y");
                                         ?>
                                         {{$taskp->custom1}}
                                     </td>
-                                    <td class="edit-pr-input">  
+                                    <td class="edit-pr-input" align="center">  
                                         {{$taskp->custom2}}
                                     <?php
                                     $sectiondays=$sectiondays+$taskp->custom2;
                                     $prdays=$prdays+$taskp->custom2;
                                     ?>
                                     </td>
-                                    <td class="edit-pr-input" colspan="2">  
+                                    <td class="edit-pr-input" colspan="2" align="center">  
                                         {{$taskp->custom3}}
                                     </td>
 
                         @endif
                         @if($tasks->taskType=="rfq")
-                                    <td> </td>
+                                    <td > </td>
                                     <th class='workflow-th'>No. of Supplier:</th>
                                     <th class='workflow-th'>Date of RF (Within PGEPS 7 Days):</th>
                                     <th class='workflow-th' colspan="2">By:</th>
                                 </tr>
                                 <tr>
-                                    <td>{{$tasks->taskName}}</td>
-                                    <td>
+                                    <td align="center">{{$tasks->taskName}}</td>
+                                    <td align="center">
                                         {{$taskp->custom1}}
                                     </td>
-                                    <td>
+                                    <td align="center">
                                         {{$taskp->custom2}}
                                     </td>
-                                    <td class="edit-pr-input" colspan="2"> {{$taskp->custom2}}</td>
+                                    <td class="edit-pr-input" colspan="2" align="center"> {{$taskp->custom2}}</td>
                         @endif
                         @if($tasks->taskType=="dateby") 
-                            <td colspan="2">
+                            <td colspan="2" align="center">
                             <?php 
                                 $date = new DateTime($taskp->dateFinished);
                                 $datef = $date->format('m/d/y');
@@ -1510,7 +1494,7 @@
                                     echo $datef; 
                             ?>
                             </td>
-                            <td colspan="2">
+                            <td colspan="2" align="center">
                                 <?php
                                 if($taskp->assignee!=NULL)
                                 { 
@@ -1528,7 +1512,7 @@
                             </td>
                         @endif
                         @if($tasks->taskType=="datebyremark")
-                           <td >
+                           <td align="center">
                             <?php 
                                 $date = new DateTime($taskp->dateFinished);
                                 $datef = $date->format('m/d/y');
@@ -1536,7 +1520,7 @@
                                     echo $datef; 
                             ?>
                             </td>
-                            <td>
+                            <td align="center">
                                 <?php
                                 if($taskp->assignee!=NULL)
                                 { 
@@ -1552,7 +1536,7 @@
                                 $datef = $date->format('m/d/y');
                             ?>
                             </td>
-                            <td colspan="2">
+                            <td colspan="2" align="center">
                             <?php 
                                 $dremarks=chunk_split($taskp->remarks, 20, "<br>");
                                 echo $dremarks; 
@@ -1589,7 +1573,7 @@
                                 {{Form::open(['url'=>'insertaddon'], 'POST')}}
                                     <input type="hidden" name="otherDetails_id" value="{{$otherdetails->id}}">
                                     <input type="hidden" name="purchase_request_id" value="{{$purchaseToEdit->id}}">
-                                    <td colspan="3"><input name ="value" type="text" class="form-control" maxlength="100"></td>
+                                    <td colspan="3" ><input name ="value" type="text" class="form-control" maxlength="100"></td>
                                     <td align="center"><button class ="btn btn-primary">Save</button></td>
                                 {{Form::close()}}
                             @else 
