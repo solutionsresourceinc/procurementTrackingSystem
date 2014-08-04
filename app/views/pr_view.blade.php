@@ -5,7 +5,7 @@
 @section('content')
 {{Session::put('backTo','purchaseRequest/view');}}
 
-<h1 class="pull-left">List of Active Purchase Requests</h1>
+<h1 class="pull-left"> {{{ $pageName }}} </h1>
     
     @if ( Entrust::hasRole('Administrator') || Entrust::hasRole('Procurement Personnel'))
       <div class="pull-right options">
@@ -65,7 +65,7 @@
     <div class="input-group" id="searchBox">
       <input id="searchTerm" name="searchTerm" placeholder="Enter search keywords" type="text" class="form-control">
       <span class="input-group-btn">
-        <button class="btn btn-primary" name="searchButton" id="searchButton" type="button">Search</button>
+        <button class="btn btn-primary" name="searchButton" id="searchButton" type="submit">Search</button>
       </span>
     </div>
 
