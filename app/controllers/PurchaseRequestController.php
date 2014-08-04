@@ -19,7 +19,16 @@ class PurchaseRequestController extends Controller
 				
 				return View::make('pr_view')->with('requests',$requests)->with('searchBy',$searchBy)->with('pageCounter',$pageCounter)->with('pageName' ,$pageName);
 			}
-			else if($searchBy == 'controlNo' || $searchBy == 'projectPurpose' || $searchBy == 'amount' || $searchBy == 'dateReceived')
+			else if($searchBy == 'dateReceived')
+			{
+				$start = Input::get('start');
+				$end = Input::get('end');
+				$pageCounter = DB::table('purchase_request')->where('dateRequested', '>=', $start)->where('dateRequested', '<=', $end)->where('status', '=', 'Active')->where('requisitioner', '=', Auth::user()->id)->count();
+				$requests = DB::table('purchase_request')->where('dateRequested', '>=', $start)->where('dateRequested', '<=', $end)->where('status', '=', 'Active')->where('requisitioner', '=', Auth::user()->id)->paginate(10);
+				
+				return View::make('pr_view')->with('requests',$requests)->with('searchBy',$searchBy)->with('pageCounter',$pageCounter)->with('pageName' ,$pageName);
+			}
+			else if($searchBy == 'controlNo' || $searchBy == 'projectPurpose' || $searchBy == 'amount')
 			{
 				$searchTerm = Input::get('searchTerm');
 				if($searchBy == 'amount')
@@ -51,7 +60,16 @@ class PurchaseRequestController extends Controller
 				
 				return View::make('pr_view')->with('requests',$requests)->with('searchBy',$searchBy)->with('pageCounter',$pageCounter)->with('pageName' ,$pageName);
 			}
-			else if($searchBy == 'controlNo' || $searchBy == 'projectPurpose' || $searchBy == 'amount' || $searchBy == 'dateReceived')
+			else if($searchBy == 'dateReceived')
+			{
+				$start = Input::get('start');
+				$end = Input::get('end');
+				$pageCounter = DB::table('purchase_request')->where('dateRequested', '>=', $start)->where('dateRequested', '<=', $end)->where('status', '=', 'Active')->count();
+				$requests = DB::table('purchase_request')->where('dateRequested', '>=', $start)->where('dateRequested', '<=', $end)->where('status', '=', 'Active')->paginate(10);
+				
+				return View::make('pr_view')->with('requests',$requests)->with('searchBy',$searchBy)->with('pageCounter',$pageCounter)->with('pageName' ,$pageName);
+			}
+			else if($searchBy == 'controlNo' || $searchBy == 'projectPurpose' || $searchBy == 'amount')
 			{
 				$searchTerm = Input::get('searchTerm');
 				if($searchBy == 'amount')
@@ -92,7 +110,16 @@ class PurchaseRequestController extends Controller
 				
 				return View::make('pr_view')->with('requests',$requests)->with('searchBy',$searchBy)->with('pageCounter',$pageCounter)->with('pageName' ,$pageName);
 			}
-			else if($searchBy == 'controlNo' || $searchBy == 'projectPurpose' || $searchBy == 'amount' || $searchBy == 'dateReceived')
+			else if($searchBy == 'dateReceived')
+			{
+				$start = Input::get('start');
+				$end = Input::get('end');
+				$pageCounter = DB::table('purchase_request')->where('dateRequested', '>=', $start)->where('dateRequested', '<=', $end)->where('status', '=', 'Closed')->where('requisitioner', '=', Auth::user()->id)->count();
+				$requests = DB::table('purchase_request')->where('dateRequested', '>=', $start)->where('dateRequested', '<=', $end)->where('status', '=', 'Closed')->where('requisitioner', '=', Auth::user()->id)->paginate(10);
+				
+				return View::make('pr_view')->with('requests',$requests)->with('searchBy',$searchBy)->with('pageCounter',$pageCounter)->with('pageName' ,$pageName);
+			}
+			else if($searchBy == 'controlNo' || $searchBy == 'projectPurpose' || $searchBy == 'amount')
 			{
 				$searchTerm = Input::get('searchTerm');
 				if($searchBy == 'amount')
@@ -123,7 +150,16 @@ class PurchaseRequestController extends Controller
 				
 				return View::make('pr_view')->with('requests',$requests)->with('searchBy',$searchBy)->with('pageCounter',$pageCounter)->with('pageName' ,$pageName);
 			}
-			else if($searchBy == 'controlNo' || $searchBy == 'projectPurpose' || $searchBy == 'amount' || $searchBy == 'dateReceived')
+			else if($searchBy == 'dateReceived')
+			{
+				$start = Input::get('start');
+				$end = Input::get('end');
+				$pageCounter = DB::table('purchase_request')->where('dateRequested', '>=', $start)->where('dateRequested', '<=', $end)->where('status', '=', 'Closed')->count();
+				$requests = DB::table('purchase_request')->where('dateRequested', '>=', $start)->where('dateRequested', '<=', $end)->where('status', '=', 'Closed')->paginate(10);
+				
+				return View::make('pr_view')->with('requests',$requests)->with('searchBy',$searchBy)->with('pageCounter',$pageCounter)->with('pageName' ,$pageName);
+			}
+			else if($searchBy == 'controlNo' || $searchBy == 'projectPurpose' || $searchBy == 'amount')
 			{
 				$searchTerm = Input::get('searchTerm');
 				if($searchBy == 'amount')
@@ -164,7 +200,16 @@ class PurchaseRequestController extends Controller
 				
 				return View::make('pr_view')->with('requests',$requests)->with('searchBy',$searchBy)->with('pageCounter',$pageCounter)->with('pageName' ,$pageName);
 			}
-			else if($searchBy == 'controlNo' || $searchBy == 'projectPurpose' || $searchBy == 'amount' || $searchBy == 'dateReceived')
+			else if($searchBy == 'dateReceived')
+			{
+				$start = Input::get('start');
+				$end = Input::get('end');
+				$pageCounter = DB::table('purchase_request')->where('dateRequested', '>=', $start)->where('dateRequested', '<=', $end)->where('status', '=', 'Active')->where('requisitioner', '=', Auth::user()->id)->where('dueDate', '<=', $date_today)->count();
+				$requests = DB::table('purchase_request')->where('dateRequested', '>=', $start)->where('dateRequested', '<=', $end)->where('status', '=', 'Active')->where('requisitioner', '=', Auth::user()->id)->where('dueDate', '<=', $date_today)->paginate(10);
+				
+				return View::make('pr_view')->with('requests',$requests)->with('searchBy',$searchBy)->with('pageCounter',$pageCounter)->with('pageName' ,$pageName);
+			}
+			else if($searchBy == 'controlNo' || $searchBy == 'projectPurpose' || $searchBy == 'amount')
 			{
 				$searchTerm = Input::get('searchTerm');
 				if($searchBy == 'amount')
@@ -196,7 +241,16 @@ class PurchaseRequestController extends Controller
 				
 				return View::make('pr_view')->with('requests',$requests)->with('searchBy',$searchBy)->with('pageCounter',$pageCounter)->with('pageName' ,$pageName);
 			}
-			else if($searchBy == 'controlNo' || $searchBy == 'projectPurpose' || $searchBy == 'amount' || $searchBy == 'dateReceived')
+			else if($searchBy == 'dateReceived')
+			{
+				$start = Input::get('start');
+				$end = Input::get('end');
+				$pageCounter = DB::table('purchase_request')->where('dateRequested', '>=', $start)->where('dateRequested', '<=', $end)->where('status', '=', 'Active')->where('dueDate', '<=', $date_today)->count();
+				$requests = DB::table('purchase_request')->where('dateRequested', '>=', $start)->where('dateRequested', '<=', $end)->where('status', '=', 'Active')->where('dueDate', '<=', $date_today)->paginate(10);
+				
+				return View::make('pr_view')->with('requests',$requests)->with('searchBy',$searchBy)->with('pageCounter',$pageCounter)->with('pageName' ,$pageName);
+			}
+			else if($searchBy == 'controlNo' || $searchBy == 'projectPurpose' || $searchBy == 'amount')
 			{
 				$searchTerm = Input::get('searchTerm');
 				if($searchBy == 'amount')
@@ -237,7 +291,16 @@ class PurchaseRequestController extends Controller
 				
 				return View::make('pr_view')->with('requests',$requests)->with('searchBy',$searchBy)->with('pageCounter',$pageCounter)->with('pageName' ,$pageName);
 			}
-			else if($searchBy == 'controlNo' || $searchBy == 'projectPurpose' || $searchBy == 'amount' || $searchBy == 'dateReceived')
+			else if($searchBy == 'dateReceived')
+			{
+				$start = Input::get('start');
+				$end = Input::get('end');
+				$pageCounter = DB::table('purchase_request')->where('dateRequested', '>=', $start)->where('dateRequested', '<=', $end)->where('status', '=', 'Cancelled')->where('requisitioner', '=', Auth::user()->id)->count();
+				$requests = DB::table('purchase_request')->where('dateRequested', '>=', $start)->where('dateRequested', '<=', $end)->where('status', '=', 'Cancelled')->where('requisitioner', '=', Auth::user()->id)->paginate(10);
+				
+				return View::make('pr_view')->with('requests',$requests)->with('searchBy',$searchBy)->with('pageCounter',$pageCounter)->with('pageName' ,$pageName);
+			}
+			else if($searchBy == 'controlNo' || $searchBy == 'projectPurpose' || $searchBy == 'amount')
 			{
 				$searchTerm = Input::get('searchTerm');
 				if($searchBy == 'amount')
@@ -269,7 +332,16 @@ class PurchaseRequestController extends Controller
 				
 				return View::make('pr_view')->with('requests',$requests)->with('searchBy',$searchBy)->with('pageCounter',$pageCounter)->with('pageName' ,$pageName);
 			}
-			else if($searchBy == 'controlNo' || $searchBy == 'projectPurpose' || $searchBy == 'amount' || $searchBy == 'dateReceived')
+			else if($searchBy == 'dateReceived')
+			{
+				$start = Input::get('start');
+				$end = Input::get('end');
+				$pageCounter = DB::table('purchase_request')->where('dateRequested', '>=', $start)->where('dateRequested', '<=', $end)->where('status', '=', 'Cancelled')->count();
+				$requests = DB::table('purchase_request')->where('dateRequested', '>=', $start)->where('dateRequested', '<=', $end)->where('status', '=', 'Cancelled')->paginate(10);
+				
+				return View::make('pr_view')->with('requests',$requests)->with('searchBy',$searchBy)->with('pageCounter',$pageCounter)->with('pageName' ,$pageName);
+			}
+			else if($searchBy == 'controlNo' || $searchBy == 'projectPurpose' || $searchBy == 'amount')
 			{
 				$searchTerm = Input::get('searchTerm');
 				if($searchBy == 'amount')
@@ -1134,7 +1206,7 @@ public function viewClosed()
 public function viewOverdue()
 {
 	// return View::make('purchaseRequest.purchaseRequest_overdue');
-	$pageName = "List of Closed Purchase Requests";
+	$pageName = "List of Overdue Purchase Requests";
 	$date_today = date('Y-m-d H:i:s');
 	$searchBy = '0';
 	if(Entrust::hasRole('Requisitioner'))

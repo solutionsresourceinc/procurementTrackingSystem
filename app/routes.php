@@ -46,6 +46,7 @@ Route::post('offices/{id}/edit',['as' => 'offices.update', 'uses' => 'OfficeCont
 
 //---------- Purchase Request Routes
 Route::get('purchaseRequests','PurchaseRequestController@viewAll');
+Route::get('purchaseRequests','PurchaseRequestController@viewAll');
 Route::get('purchaseRequest/view','PurchaseRequestController@view');
 Route::post('purchaseRequest/view','PurchaseRequestController@search');
 Route::get('purchaseRequest/create', 'PurchaseRequestController@create');
