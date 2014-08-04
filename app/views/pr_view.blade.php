@@ -74,14 +74,20 @@
         <button class="btn btn-primary" name="searchButton" id="searchButton" type="submit">Search</button>
       </span>
     </div>
-
+    
     <div class="form-group" id="searchDate" style="display: none;">
         <div class="input-daterange input-group" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="yyyy-mm-dd">
             <input type="text" class="form-control" name="start" id="start" style="text-align: center"/>
             <span class="input-group-addon" style="vertical-align: top;height:20px">to</span>
             <input type="text" id="end" class="form-control" name="end" style="text-align: center" />
+            <span class="input-group-btn">
+                <button type="submit" class="btn btn-primary">Search</button>
+            </span>
+            <!-- <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button> -->
         </div>
     </div>
+
+    <input type="hidden" id="pageNameHidden" name="pageNameHidden" value="{{{ $pageName }}}" />
     </form> 
     <!-- END OF SEARCH BOX -->
     
