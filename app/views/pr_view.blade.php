@@ -1,5 +1,7 @@
 @extends('layouts.dashboard')
-
+@section('header')
+    {{ HTML::style('css/datepicker.css')}}
+@stop
 @section('content')
 {{Session::put('backTo','purchaseRequest/view');}}
 
@@ -60,21 +62,21 @@
             </select>
         </div>   
         
-    <div class="input-group">
+    <div class="input-group" id="searchBox">
       <input id="searchTerm" name="searchTerm" placeholder="Enter search keywords" type="text" class="form-control">
       <span class="input-group-btn">
         <button class="btn btn-primary" name="searchButton" id="searchButton" type="button">Search</button>
       </span>
     </div>
-        <!-- <div class="input-group">
-          <div class="input-group-btn">
-            <button type="submit" class="btn btn-default" name="searchButton" id="searchButton"><span class="glyphicon glyphicon-search"></span></button>
-          </div>
-          <input id="searchTerm" name="searchTerm" type="text" class="form-control" placeholder="Enter search keywords"/>
-        </div> -->
 
-            
-    </form>    
+    <div class="form-group" id="searchDate" style="display: none;">
+        <div class="input-daterange input-group" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="yyyy-mm-dd">
+            <input type="text" class="form-control" name="start" id="start" style="text-align: center"/>
+            <span class="input-group-addon" style="vertical-align: top;height:20px">to</span>
+            <input type="text" id="end" class="form-control" name="end" style="text-align: center" />
+        </div>
+    </div>
+    </form> 
     <!-- END OF SEARCH BOX -->
     
     <table class="table table-striped display">
@@ -191,10 +193,27 @@
 
 
 @stop
- <script type="text/javascript">
+<script src="js/bootstrap-datepicker.js"></script>
+    <script type="text/javascript">
+        // When the document is ready
+        $(document).ready(function () {
+            
+            $('.input-daterange').datepicker({
+                todayBtn: "linked"
+            });
+        });
+    </script>
+
+<script type="text/javascript">
         // START *code for search box
         window.onload = function()
         {
+            if(document.getElementById('searchBy').value == 'dateReceived')
+            {
+                document.getElementById('searchBox').style.display = 'none';
+                document.getElementById('searchDate').style.display = ''; 
+            }
+
             if(document.getElementById('searchBy').value == '0')
             {
                 document.getElementById('searchTerm').disabled = true;
@@ -208,11 +227,20 @@
             {
                 document.getElementById('searchTerm').disabled = true;
                 document.getElementById('searchButton').disabled = true;
+                document.getElementById('searchBox').style.display = '';
+                document.getElementById('searchDate').style.display = 'none';  
+            }
+            else if(value == 'dateReceived')
+            {
+                document.getElementById('searchBox').style.display = 'none';
+                document.getElementById('searchDate').style.display = '';  
             }
             else
             {
                 document.getElementById('searchTerm').disabled = false;
-                document.getElementById('searchButton').disabled = false;    
+                document.getElementById('searchButton').disabled = false;
+                document.getElementById('searchBox').style.display = '';
+                document.getElementById('searchDate').style.display = 'none';  
             }
         }
 
