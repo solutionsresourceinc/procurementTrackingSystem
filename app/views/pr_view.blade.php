@@ -1,6 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('header')
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js" ></script>
     {{ HTML::style('date_picker/bootstrap-datetimepicker.min.css')}}
     {{ HTML::script('date_picker/bootstrap-datetimepicker.js') }}
     {{ HTML::script('date_picker/bootstrap-datetimepicker.fr.js') }}
@@ -69,7 +70,7 @@
         </div>   
         
     <div class="input-group" id="searchBox">
-      <input id="searchTerm" name="searchTerm" placeholder="Enter search keywords" type="text" class="form-control">
+      <input onkeyup="disableButton()"id="searchTerm" name="searchTerm" placeholder="Enter search keywords" type="text" class="form-control" onchange="detectInput()">
       <span class="input-group-btn">
         <button class="btn btn-primary" name="searchButton" id="searchButton" type="submit">Search</button>
       </span>
@@ -81,11 +82,11 @@
 
     <div class="form-group" id="searchDate" style="display: none;">
         <div class="input-daterange input-group" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="yyyy-mm-dd">
-            <input type="text" class="form-control" name="start" id="start" style="text-align: center"/>
+            <input onchange="dateButton()" type="text" class="form-control" name="start" id="start" style="text-align: center"/>
             <span class="input-group-addon" style="vertical-align: top;height:20px">to</span>
-            <input type="text" id="end" class="form-control" name="end" style="text-align: center" />
+            <input onchange="dateButton()" type="text" id="end" class="form-control" name="end" style="text-align: center" />
             <span class="input-group-btn">
-                <button type="submit" class="btn btn-primary">Search</button>
+                <button type="submit" class="btn btn-primary" id="betDate" name="betDate">Search</button>
             </span>
             <!-- <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button> -->
         </div>
@@ -225,23 +226,36 @@
         // START *code for search box
         window.onload = function()
         {
+            if(document.getElementById('start').value.length == 0 || document.getElementById('end').value.length == 0)
+            {
+                document.getElementById('betDate').disabled = true;
+            }
+
+            if(document.getElementById('searchTerm').value.length == 0)
+            {
+                document.getElementById('searchButton').disabled = true;
+            }
+
             if(document.getElementById('searchBy').value == 'dateReceived')
             {
                 document.getElementById('searchBox').style.display = 'none';
                 document.getElementById('searchDate').style.display = ''; 
                 document.getElementById('allButton').style.display = 'none';
             }
-            else if(document.getElementById('searchBy').value == '0')
+            
+            if(document.getElementById('searchBy').value == '0')
             {
                 document.getElementById('searchTerm').disabled = true;
                 document.getElementById('searchButton').disabled = true;
                 document.getElementById('allButton').style.display = 'none';
             }
-            else if(document.getElementById('searchBy').value == 'all')
+            
+            if(document.getElementById('searchBy').value == 'all')
             {
-                document.getElementById('searchDate').style.display = 'none'; 
-                document.getElementById('searchTerm').style.display = 'none';
-                document.getElementById('searchButton').style.display = 'none';
+                document.getElementById('searchDate').style.display = 'none';
+                document.getElementById('searchBox').style.display = 'none'; 
+                // document.getElementById('searchTerm').style.display = 'none';
+                // document.getElementById('searchButton').style.display = 'none';
                 document.getElementById('allButton').style.display = '';
             }
             else
@@ -258,6 +272,8 @@
                 document.getElementById('searchTerm').disabled = true;
                 document.getElementById('searchButton').disabled = true;
                 document.getElementById('searchBox').style.display = '';
+                document.getElementById('searchTerm').style.display = '';
+                document.getElementById('searchButton').style.display = '';
                 document.getElementById('searchDate').style.display = 'none'; 
                 document.getElementById('allButton').style.display = 'none';
             }
@@ -285,6 +301,22 @@
                 document.getElementById('searchDate').style.display = 'none';
                 document.getElementById('allButton').style.display = 'none';  
             }
+        }
+
+        function disableButton()
+        {
+            if(document.getElementById('searchTerm').value.length != 0)
+                document.getElementById('searchButton').disabled = false;
+            else
+                document.getElementById('searchButton').disabled = true;
+        }
+
+        function dateButton()
+        {
+            if(document.getElementById('start').value.length != 0 && document.getElementById('end').value.length != 0)
+                document.getElementById('betDate').disabled = false;
+            else
+                document.getElementById('betDate').disabled = true;
         }
 
         $('input.filter').on('keyup', function() 
