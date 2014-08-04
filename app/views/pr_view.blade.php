@@ -294,7 +294,7 @@
             else
             {
                 document.getElementById('searchTerm').disabled = false;
-                document.getElementById('searchButton').disabled = false;
+                document.getElementById('searchButton').disabled = true;
                 document.getElementById('searchBox').style.display = '';
                 document.getElementById('searchTerm').style.display = '';
                 document.getElementById('searchButton').style.display = '';
