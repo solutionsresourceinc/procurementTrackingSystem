@@ -1699,6 +1699,8 @@ if(ctype_alpha(str_replace(array(' ', '-', '.', ',', 'ñ', 'Ñ'),'',$by)))
         $check=$check+1;
 if(ctype_alnum(str_replace(array(' ', '-', '.'),'',$referenceno)))
         $check=$check+1;
+   if (trim(Input::get('date'))=="01/01/70")
+   	$check=0;
 
 if ($check==2)
 {
@@ -1865,6 +1867,8 @@ if(ctype_alnum(str_replace(array(' ', '-', '.'),'',$num)))
         $check=$check+1;
 if(ctype_digit(str_replace(array(' ', ',', '.'),'',$amt)))
         $check=$check+1;
+    if (trim(Input::get('date'))=="01/01/70")
+   	$check=0;
 
 if ($check==2)
 {
@@ -2052,6 +2056,8 @@ $check=0;
 //Validation Process
 if(ctype_alnum(str_replace(array(' ', '-', '.', ',', 'ñ', 'Ñ'),'',$by)))
         $check=$check+1;
+    if (trim(Input::get('date'))=="01/01/70")
+   	$check=0;
 
 
 if ($check==1)
@@ -2133,6 +2139,8 @@ $check=0;
 //Validation Process
 if(ctype_digit($noofdays))
         $check=$check+1;
+    if (trim(Input::get('date'))=="01/01/70")
+   	$check=0;
 
 
 if ($check==1)
@@ -2209,7 +2217,8 @@ Session::put('goToChecklist', 'true' );
 $date=Input::get('date');
 $taskdetails_id=Input::get('taskdetails_id');
 $check=0;
-
+if (trim(Input::get('date'))=="01/01/70")
+   	$check=-1;
 //Validation Process
 
 
@@ -2296,7 +2305,8 @@ if(ctype_alnum(str_replace(array(' ', '-', '.'),'',$contractmeeting)))
         $check=$check+1;
 if(ctype_digit($noofdays))
         $check=$check+1;
-
+if (trim(Input::get('date'))=="01/01/70")
+   	$check=0;
 if ($check==2)
 {
 	$taskd= TaskDetails::find($taskdetails_id);
@@ -2379,6 +2389,8 @@ if(ctype_alnum(str_replace(array(' ', '-', '.', ',', 'ñ', 'Ñ'),'',$by)))
         $check=$check+1;
 if(ctype_digit($noofsuppliers))
         $check=$check+1;
+    if (trim(Input::get('date'))=="01/01/70")
+   	$check=0;
 
 if ($check==2)
 {
