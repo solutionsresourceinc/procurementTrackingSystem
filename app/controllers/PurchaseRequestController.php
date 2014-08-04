@@ -19,6 +19,10 @@ class PurchaseRequestController extends Controller
 				
 				return View::make('pr_view')->with('requests',$requests)->with('searchBy',$searchBy)->with('pageCounter',$pageCounter)->with('pageName' ,$pageName);
 			}
+			else if($searchBy == 'all')
+			{
+				return $this->view();
+			}
 			else if($searchBy == 'dateReceived')
 			{
 				$start = Input::get('start');
@@ -59,6 +63,10 @@ class PurchaseRequestController extends Controller
 				$requests = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('status', '=', 'Active')->paginate(10);
 				
 				return View::make('pr_view')->with('requests',$requests)->with('searchBy',$searchBy)->with('pageCounter',$pageCounter)->with('pageName' ,$pageName);
+			}
+			else if($searchBy == 'all')
+			{
+				return $this->view();
 			}
 			else if($searchBy == 'dateReceived')
 			{
@@ -110,6 +118,10 @@ class PurchaseRequestController extends Controller
 				
 				return View::make('pr_view')->with('requests',$requests)->with('searchBy',$searchBy)->with('pageCounter',$pageCounter)->with('pageName' ,$pageName);
 			}
+			else if($searchBy == 'all')
+			{
+				return $this->viewClosed();
+			}
 			else if($searchBy == 'dateReceived')
 			{
 				$start = Input::get('start');
@@ -149,6 +161,10 @@ class PurchaseRequestController extends Controller
 				$requests = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('status', '=', 'Closed')->paginate(10);
 				
 				return View::make('pr_view')->with('requests',$requests)->with('searchBy',$searchBy)->with('pageCounter',$pageCounter)->with('pageName' ,$pageName);
+			}
+			else if($searchBy == 'all')
+			{
+				return $this->viewClosed();
 			}
 			else if($searchBy == 'dateReceived')
 			{
@@ -200,6 +216,10 @@ class PurchaseRequestController extends Controller
 				
 				return View::make('pr_view')->with('requests',$requests)->with('searchBy',$searchBy)->with('pageCounter',$pageCounter)->with('pageName' ,$pageName);
 			}
+			else if($searchBy == 'all')
+			{
+				return $this->viewOverdue();
+			}
 			else if($searchBy == 'dateReceived')
 			{
 				$start = Input::get('start');
@@ -240,6 +260,10 @@ class PurchaseRequestController extends Controller
 				$requests = DB::table('purchase_request')->where('dueDate','<=',$date_today)->where('status', '=', 'Active')->paginate(10);
 				
 				return View::make('pr_view')->with('requests',$requests)->with('searchBy',$searchBy)->with('pageCounter',$pageCounter)->with('pageName' ,$pageName);
+			}
+			else if($searchBy == 'all')
+			{
+				return $this->viewOverdue();
 			}
 			else if($searchBy == 'dateReceived')
 			{
@@ -291,6 +315,10 @@ class PurchaseRequestController extends Controller
 				
 				return View::make('pr_view')->with('requests',$requests)->with('searchBy',$searchBy)->with('pageCounter',$pageCounter)->with('pageName' ,$pageName);
 			}
+			else if($searchBy == 'all')
+			{
+				return $this->viewCancelled();
+			}
 			else if($searchBy == 'dateReceived')
 			{
 				$start = Input::get('start');
@@ -331,6 +359,10 @@ class PurchaseRequestController extends Controller
 				$requests = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('status', '=', 'Cancelled')->paginate(10);
 				
 				return View::make('pr_view')->with('requests',$requests)->with('searchBy',$searchBy)->with('pageCounter',$pageCounter)->with('pageName' ,$pageName);
+			}
+			else if($searchBy == 'all')
+			{
+				return $this->viewCancelled();
 			}
 			else if($searchBy == 'dateReceived')
 			{

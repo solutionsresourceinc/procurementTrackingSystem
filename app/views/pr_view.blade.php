@@ -49,13 +49,13 @@
 @if(Session::get('notice'))
     <div class="alert alert-success"> {{ Session::get('notice') }}</div> 
 @endif
-    
     <!-- START OF SEARCH BOX -->
     <form method="POST" action="">
         <div align="left" class="col-md-6" id="noOfResult"></div>   
         <div class="col-md-3" style="">
             <select id="searchBy" name="searchBy" class="form-control" onchange="changeSearch(this.value)">
                 <option value="0" <?php if($searchBy == '0'){ echo "selected";} ?> >Search by</option>
+                <option value="all" <?php if($searchBy == 'all'){ echo "selected";} ?> >Display All</option>
                 <option value="controlNo" <?php if($searchBy == 'controlNo'){ echo "selected";} ?> >Control No.</option>
                 <option value="projectPurpose" <?php if($searchBy == 'projectPurpose'){ echo "selected";} ?> >Project/Purpose</option>
                 <option value="1" <?php if($searchBy == '1'){ echo "selected";} ?> >Mode-SVP Below 50k</option>
@@ -75,6 +75,10 @@
       </span>
     </div>
     
+    <div id="allButton">
+        <button class="btn btn-primary col-md-3" name="allButton" id="allButton" type="submit">Display</button>
+    </div>
+
     <div class="form-group" id="searchDate" style="display: none;">
         <div class="input-daterange input-group" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="yyyy-mm-dd">
             <input type="text" class="form-control" name="start" id="start" style="text-align: center"/>
@@ -225,12 +229,25 @@
             {
                 document.getElementById('searchBox').style.display = 'none';
                 document.getElementById('searchDate').style.display = ''; 
+                document.getElementById('allButton').style.display = 'none';
             }
-
-            if(document.getElementById('searchBy').value == '0')
+            else if(document.getElementById('searchBy').value == '0')
             {
                 document.getElementById('searchTerm').disabled = true;
                 document.getElementById('searchButton').disabled = true;
+                document.getElementById('allButton').style.display = 'none';
+            }
+            else if(document.getElementById('searchBy').value == 'all')
+            {
+                document.getElementById('searchDate').style.display = 'none'; 
+                document.getElementById('searchTerm').style.display = 'none';
+                document.getElementById('searchButton').style.display = 'none';
+                document.getElementById('allButton').style.display = '';
+            }
+            else
+            {
+                document.getElementById('searchDate').style.display = 'none';
+                document.getElementById('allButton').style.display = 'none';
             }
         }
 
@@ -241,19 +258,32 @@
                 document.getElementById('searchTerm').disabled = true;
                 document.getElementById('searchButton').disabled = true;
                 document.getElementById('searchBox').style.display = '';
+                document.getElementById('searchDate').style.display = 'none'; 
+                document.getElementById('allButton').style.display = 'none';
+            }
+            else if(value == 'all')
+            {
+                document.getElementById('allButton').style.display = '';
+                document.getElementById('searchTerm').style.display = 'none';
+                document.getElementById('searchButton').style.display = 'none';
+                document.getElementById('searchBox').style.display = 'none';
                 document.getElementById('searchDate').style.display = 'none';  
             }
             else if(value == 'dateReceived')
             {
                 document.getElementById('searchBox').style.display = 'none';
-                document.getElementById('searchDate').style.display = '';  
+                document.getElementById('searchDate').style.display = ''; 
+                document.getElementById('allButton').style.display = 'none'; 
             }
             else
             {
                 document.getElementById('searchTerm').disabled = false;
                 document.getElementById('searchButton').disabled = false;
                 document.getElementById('searchBox').style.display = '';
-                document.getElementById('searchDate').style.display = 'none';  
+                document.getElementById('searchTerm').style.display = '';
+                document.getElementById('searchButton').style.display = '';
+                document.getElementById('searchDate').style.display = 'none';
+                document.getElementById('allButton').style.display = 'none';  
             }
         }
 
