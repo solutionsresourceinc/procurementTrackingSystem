@@ -2186,6 +2186,8 @@ DB::table('purchase_request')->where('id',$id)->update(array('updated_at' => $up
 		$purchase= Purchase::find($docs->pr_id);
 		$purchase->status="Closed";
 		$purchase->save();
+		$request_id = Input::get('pr_id');
+return Redirect::to("purchaseRequest/vieweach/$request_id");
 	}
 }
 else
@@ -2194,9 +2196,8 @@ else
 	return Redirect::back()->withInput();
 }	
 	
-// return Redirect::back();
-$request_id = Input::get('pr_id');
-return Redirect::to("purchaseRequest/vieweach/$request_id");
+return Redirect::back();
+
 }
 
 
@@ -2261,6 +2262,8 @@ DB::table('purchase_request')->where('id',$id)->update(array('updated_at' => $up
 		$purchase= Purchase::find($docs->pr_id);
 		$purchase->status="Closed";
 		$purchase->save();
+		$request_id = Input::get('pr_id');
+return Redirect::to("purchaseRequest/vieweach/$request_id");
 	}
 }
 else
@@ -2269,9 +2272,8 @@ else
 	return Redirect::back()->withInput();
 }	
 	
-// return Redirect::back();
-$request_id = Input::get('pr_id');
-return Redirect::to("purchaseRequest/vieweach/$request_id");
+return Redirect::back();
+
 }
 
 
