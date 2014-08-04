@@ -1,12 +1,24 @@
 @extends('layouts.dashboard')
 
 @section('header')
-    <script src="http://code.jquery.com/jquery-1.10.1.min.js" ></script>
+    <script src="docs/js/jquery-1.2.6.min.js"></script>
     {{ HTML::style('date_picker/bootstrap-datetimepicker.min.css')}}
     {{ HTML::script('date_picker/bootstrap-datetimepicker.js') }}
     {{ HTML::script('date_picker/bootstrap-datetimepicker.fr.js') }}
     {{ HTML::style('css/datepicker.css')}}
     {{ HTML::script('js/bootstrap-datepicker.js') }}
+    <script src="js/jquery.tablesorter.min.js"></script>
+    <script src="js/jquery.tablesorter.widgets.min.js"></script>
+    <script>
+    $(function(){
+        $('table').tablesorter({
+            widgets        : ['zebra', 'columns'],
+            usNumberFormat : false,
+            sortReset      : true,
+            sortRestart    : true
+        });
+    });
+    </script>
 @stop
 
 @section('content')
@@ -43,7 +55,7 @@
                     
                 </div>
             
-            </div>
+         500k   </div>
         </div>
     </div>
 </form>
@@ -60,7 +72,7 @@
                 <option value="controlNo" <?php if($searchBy == 'controlNo'){ echo "selected";} ?> >Control No.</option>
                 <option value="projectPurpose" <?php if($searchBy == 'projectPurpose'){ echo "selected";} ?> >Project/Purpose</option>
                 <option value="1" <?php if($searchBy == '1'){ echo "selected";} ?> >Mode-SVP Below 50k</option>
-                <option value="2" <?php if($searchBy == '2'){ echo "selected";} ?> >Mode-SVP Above 50k,Below 500k</option>
+                <option value="2" <?php if($searchBy == '2'){ echo "selected";} ?> >Mode-SVP Above 50k,Below 500k500k500k</option>
                 <option value="3" <?php if($searchBy == '3'){ echo "selected";} ?> >Mode-Bidding</option>
                 <option value="4" <?php if($searchBy == '4'){ echo "selected";} ?> >Mode-Pakyaw</option>
                 <option value="5" <?php if($searchBy == '5'){ echo "selected";} ?> >Mode-Direct Contracting</option>
@@ -96,7 +108,7 @@
     </form> 
     <!-- END OF SEARCH BOX -->
     
-    <table class="table table-striped display">
+    <table class="table table-striped display tablesorter">
         <thead>
             <tr>
                 <th>Control No.</th>
@@ -294,7 +306,7 @@
             else
             {
                 document.getElementById('searchTerm').disabled = false;
-                document.getElementById('searchButton').disabled = true;
+                document.getElementById('searchButton').disabled = false;
                 document.getElementById('searchBox').style.display = '';
                 document.getElementById('searchTerm').style.display = '';
                 document.getElementById('searchButton').style.display = '';
