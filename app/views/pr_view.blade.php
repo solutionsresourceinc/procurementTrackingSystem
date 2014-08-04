@@ -1,24 +1,11 @@
 @extends('layouts.dashboard')
 
 @section('header')
-    <script src="docs/js/jquery-1.2.6.min.js"></script>
     {{ HTML::style('date_picker/bootstrap-datetimepicker.min.css')}}
     {{ HTML::script('date_picker/bootstrap-datetimepicker.js') }}
     {{ HTML::script('date_picker/bootstrap-datetimepicker.fr.js') }}
     {{ HTML::style('css/datepicker.css')}}
     {{ HTML::script('js/bootstrap-datepicker.js') }}
-    <script src="js/jquery.tablesorter.min.js"></script>
-    <script src="js/jquery.tablesorter.widgets.min.js"></script>
-    <script>
-    $(function(){
-        $('table').tablesorter({
-            widgets        : ['zebra', 'columns'],
-            usNumberFormat : false,
-            sortReset      : true,
-            sortRestart    : true
-        });
-    });
-    </script>
 @stop
 
 @section('content')
@@ -272,7 +259,7 @@
             }
             else
             {
-                document.getElementById('searchDate').style.display = 'none';
+                // document.getElementById('searchDate').style.display = 'none';
                 document.getElementById('allButton').style.display = 'none';
             }
         }
@@ -306,7 +293,7 @@
             else
             {
                 document.getElementById('searchTerm').disabled = false;
-                document.getElementById('searchButton').disabled = false;
+                document.getElementById('searchButton').disabled = true;
                 document.getElementById('searchBox').style.display = '';
                 document.getElementById('searchTerm').style.display = '';
                 document.getElementById('searchButton').style.display = '';
