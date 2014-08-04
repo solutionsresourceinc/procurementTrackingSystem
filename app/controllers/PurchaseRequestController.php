@@ -1120,7 +1120,7 @@ public function viewOverdue()
 {
 	// return View::make('purchaseRequest.purchaseRequest_overdue');
 	$pageName = "List of Closed Purchase Requests";
-	$date_today =date('Y-m-d H:i:s');
+	$date_today = date('Y-m-d H:i:s');
 	$searchBy = '0';
 	if(Entrust::hasRole('Requisitioner'))
 	{
@@ -1130,7 +1130,7 @@ public function viewOverdue()
 	}
 	else
 	{
-		$pageCounter = DB::table('purchase_re	quest')->where('dueDate','<=',$date_today)->where('status', '=', 'Active')->count();
+		$pageCounter = DB::table('purchase_request')->where('dueDate','<=',$date_today)->where('status', '=', 'Active')->count();
 		$requests = DB::table('purchase_request')->where('dueDate','<=',$date_today)->where('status', '=', 'Active')->paginate(10);
 		return View::make('pr_view')->with('requests',$requests)->with('searchBy',$searchBy)->with('pageCounter',$pageCounter)->with('pageName' ,$pageName);
 	}
