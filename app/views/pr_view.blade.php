@@ -1,7 +1,13 @@
 @extends('layouts.dashboard')
+
 @section('header')
+    {{ HTML::style('date_picker/bootstrap-datetimepicker.min.css')}}
+    {{ HTML::script('date_picker/bootstrap-datetimepicker.js') }}
+    {{ HTML::script('date_picker/bootstrap-datetimepicker.fr.js') }}
     {{ HTML::style('css/datepicker.css')}}
+    {{ HTML::script('js/bootstrap-datepicker.js') }}
 @stop
+
 @section('content')
 {{Session::put('backTo','purchaseRequest/view');}}
 
@@ -190,10 +196,7 @@
 
 @section('footer')
     {{ HTML::script('js/bootstrap-ajax.js');}}
-
-
-@stop
-<script src="js/bootstrap-datepicker.js"></script>
+    <script src="js/bootstrap-datepicker.js"></script>
     <script type="text/javascript">
         // When the document is ready
         $(document).ready(function () {
@@ -203,6 +206,10 @@
             });
         });
     </script>
+
+
+@stop
+
 
 <script type="text/javascript">
         // START *code for search box
