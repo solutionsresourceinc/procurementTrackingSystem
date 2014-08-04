@@ -197,7 +197,7 @@
     <table>
     <div id="pages" align="center">
         @if($pageCounter != 0)
-            <center></center>
+            <center>{{{ $requests->links() }}}</center>
         @else
             <p><i>No data available</i></p>
         @endif
