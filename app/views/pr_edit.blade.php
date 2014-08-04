@@ -923,6 +923,8 @@
                                         <?php
                                         if (NULL!=Input::old('noofdays'))
                                             echo Input::old('noofdays');
+                                        else
+                                            echo "1";
                                        
                                         ?>
                                         "
@@ -1002,6 +1004,8 @@
                                         <?php
                                         if (NULL!=Input::old('noofdays'))
                                             echo Input::old('noofdays');
+                                        else
+                                            echo "1";
                                      
                                         ?>
                                         "
@@ -1063,6 +1067,8 @@
                                         <?php
                                         if (NULL!=Input::old('noofdays'))
                                             echo Input::old('noofdays');
+                                        else
+                                            echo "1";
                                         
                                             
                                         ?>
