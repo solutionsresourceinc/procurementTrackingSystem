@@ -1,6 +1,5 @@
 <?php
 
-
 class PurchaseRequestController extends Controller 
 {
 	public function search()
@@ -46,10 +45,9 @@ class PurchaseRequestController extends Controller
 			}
 			else if($searchBy == 'controlNo' || $searchBy == 'projectPurpose' || $searchBy == 'amount')
 			{
-				$searchTerm = Input::get('searchTerm');
+				$searchTerm= trim(Input::get('searchTerm'));
 				if($searchBy == 'controlNo')
 					$searchTerm = str_replace(' ', '', $searchTerm);
-
 				if($searchBy == 'amount')
 					$searchTerm .= ".00";
 				$pageCounter = DB::table('purchase_request')->where('requisitioner', '=', Auth::user()->id)->where('dueDate','>',$date_today)->where('status', '=', 'Active')->where($searchBy, 'LIKE', "%$searchTerm%")->orderBy('dateReceived', 'DESC')->count();
@@ -66,7 +64,7 @@ class PurchaseRequestController extends Controller
 			}
 			else
 			{
-				$searchTerm = Input::get('searchTerm');
+				$searchTerm= trim(Input::get('searchTerm'));
 
 				$pageCounter = DB::table('purchase_request')
 				->join('document', 'purchase_request.id', '=', 'document.pr_id')->where('requisitioner', '=', Auth::user()->id)->where('document.work_id', '=', $searchBy)->where('projectPurpose', 'LIKE', "%$searchTerm%")->where('dueDate','>',$date_today)->where('status', '=', 'Active')->orderBy('dateReceived', 'DESC')->count();
@@ -113,7 +111,7 @@ class PurchaseRequestController extends Controller
 			}
 			else if($searchBy == 'controlNo' || $searchBy == 'projectPurpose' || $searchBy == 'amount')
 			{
-				$searchTerm = Input::get('searchTerm');
+				$searchTerm= trim(Input::get('searchTerm'));
 				if($searchBy == 'controlNo')
 					$searchTerm = str_replace(' ', '', $searchTerm);
 				if($searchBy == 'amount')
@@ -132,7 +130,7 @@ class PurchaseRequestController extends Controller
 			}
 			else
 			{
-				$searchTerm = Input::get('searchTerm');
+				$searchTerm= trim(Input::get('searchTerm'));
 
 				$pageCounter = DB::table('purchase_request')
 				->join('document', 'purchase_request.id', '=', 'document.pr_id')->where('document.work_id', '=', $searchBy)->where('projectPurpose', 'LIKE', "%$searchTerm%")->where('dueDate','>',$date_today)->where('status', '=', 'Active')->orderBy('dateReceived', 'DESC')->count();
@@ -188,7 +186,7 @@ class PurchaseRequestController extends Controller
 			}
 			else if($searchBy == 'controlNo' || $searchBy == 'projectPurpose' || $searchBy == 'amount')
 			{
-				$searchTerm = Input::get('searchTerm');
+				$searchTerm= trim(Input::get('searchTerm'));
 				if($searchBy == 'controlNo')
 					$searchTerm = str_replace(' ', '', $searchTerm);
 				if($searchBy == 'amount')
@@ -207,7 +205,7 @@ class PurchaseRequestController extends Controller
 			}
 			else
 			{
-				$searchTerm = Input::get('searchTerm');
+				$searchTerm= trim(Input::get('searchTerm'));
 				$pageCounter = DB::table('purchase_request')
 				->join('document', 'purchase_request.id', '=', 'document.pr_id')->where('requisitioner', '=', Auth::user()->id)->where('document.work_id', '=', $searchBy)->where('projectPurpose', 'LIKE', "%$searchTerm%")->where('dueDate','>',$date_today)->where('status', '=', 'Closed')->orderBy('dateReceived', 'DESC')->count();
 
@@ -255,7 +253,7 @@ class PurchaseRequestController extends Controller
 			{
 				if($searchBy == 'controlNo')
 					$searchTerm = str_replace(' ', '', $searchTerm);
-				$searchTerm = Input::get('searchTerm');
+				$searchTerm= trim(Input::get('searchTerm'));
 				if($searchBy == 'amount')
 					$searchTerm .= ".00";
 				$pageCounter = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('status', '=', 'Closed')->where($searchBy, 'LIKE', "%$searchTerm%")->orderBy('dateReceived', 'DESC')->count();
@@ -272,7 +270,7 @@ class PurchaseRequestController extends Controller
 			}
 			else
 			{
-				$searchTerm = Input::get('searchTerm');
+				$searchTerm= trim(Input::get('searchTerm'));
 
 				$pageCounter = DB::table('purchase_request')
 				->join('document', 'purchase_request.id', '=', 'document.pr_id')->where('document.work_id', '=', $searchBy)->where('projectPurpose', 'LIKE', "%$searchTerm%")->where('dueDate','>',$date_today)->where('status', '=', 'Closed')->orderBy('dateReceived', 'DESC')->count();
@@ -328,7 +326,7 @@ class PurchaseRequestController extends Controller
 			}
 			else if($searchBy == 'controlNo' || $searchBy == 'projectPurpose' || $searchBy == 'amount')
 			{
-				$searchTerm = Input::get('searchTerm');
+				$searchTerm= trim(Input::get('searchTerm'));
 				if($searchBy == 'controlNo')
 					$searchTerm = str_replace(' ', '', $searchTerm);
 				if($searchBy == 'amount')
@@ -347,7 +345,7 @@ class PurchaseRequestController extends Controller
 			}
 			else
 			{
-				$searchTerm = Input::get('searchTerm');
+				$searchTerm= trim(Input::get('searchTerm'));
 
 				$pageCounter = DB::table('purchase_request')
 				->join('document', 'purchase_request.id', '=', 'document.pr_id')->where('requisitioner', '=', Auth::user()->id)->where('document.work_id', '=', $searchBy)->where('projectPurpose', 'LIKE', "%$searchTerm%")->where('dueDate','<=',$date_today)->where('status', '=', 'Active')->orderBy('dateReceived', 'DESC')->orderBy('dateReceived', 'DESC')->count();
@@ -397,7 +395,7 @@ class PurchaseRequestController extends Controller
 			}
 			else if($searchBy == 'controlNo' || $searchBy == 'projectPurpose' || $searchBy == 'amount')
 			{
-				$searchTerm = Input::get('searchTerm');
+				$searchTerm= trim(Input::get('searchTerm'));
 				if($searchBy == 'controlNo')
 					$searchTerm = str_replace(' ', '', $searchTerm);
 				if($searchBy == 'amount')
@@ -416,7 +414,7 @@ class PurchaseRequestController extends Controller
 			}
 			else
 			{
-				$searchTerm = Input::get('searchTerm');
+				$searchTerm= trim(Input::get('searchTerm'));
 
 				$pageCounter = DB::table('purchase_request')
 				->join('document', 'purchase_request.id', '=', 'document.pr_id')->where('document.work_id', '=', $searchBy)->where('projectPurpose', 'LIKE', "%$searchTerm%")->where('dueDate','<=',$date_today)->where('status', '=', 'Active')->orderBy('dateReceived', 'DESC')->count();
@@ -475,7 +473,7 @@ class PurchaseRequestController extends Controller
 			}
 			else if($searchBy == 'controlNo' || $searchBy == 'projectPurpose' || $searchBy == 'amount')
 			{
-				$searchTerm = Input::get('searchTerm');
+				$searchTerm= trim(Input::get('searchTerm'));
 				if($searchBy == 'controlNo')
 					$searchTerm = str_replace(' ', '', $searchTerm);
 				if($searchBy == 'amount')
@@ -487,7 +485,7 @@ class PurchaseRequestController extends Controller
 			}
 			else if($searchBy == 'Shopping')
 			{
-				$searchTerm = Input::get('searchTerm');
+				$searchTerm= trim(Input::get('searchTerm'));
 				$pageCounter = DB::table('purchase_request')->where('requisitioner', '=', Auth::user()->id)->where('dueDate','>',$date_today)->where('status', '=', 'Cancelled')->where('projectPurpose', 'LIKE', "%$searchTerm%")->where('otherType', '=', $searchBy)->orderBy('dateReceived', 'DESC')->count();
 				$requests = DB::table('purchase_request')->where('requisitioner', '=', Auth::user()->id)->where('dueDate','>',$date_today)->where('status', '=', 'Cancelled')->where('projectPurpose', 'LIKE', "%$searchTerm%")->where('otherType', '=', $searchBy)->orderBy('dateReceived', 'DESC')->paginate(10);
 
@@ -495,7 +493,7 @@ class PurchaseRequestController extends Controller
 			}
 			else
 			{
-				$searchTerm = Input::get('searchTerm');
+				$searchTerm= trim(Input::get('searchTerm'));
 
 				$pageCounter = DB::table('purchase_request')
 				->join('document', 'purchase_request.id', '=', 'document.pr_id')->where('requisitioner', '=', Auth::user()->id)->where('document.work_id', '=', $searchBy)->where('projectPurpose', 'LIKE', "%$searchTerm%")->where('dueDate','>',$date_today)->where('status', '=', 'Cancelled')->orderBy('dateReceived', 'DESC')->count();
@@ -545,7 +543,7 @@ class PurchaseRequestController extends Controller
 			}
 			else if($searchBy == 'controlNo' || $searchBy == 'projectPurpose' || $searchBy == 'amount')
 			{
-				$searchTerm = Input::get('searchTerm');
+				$searchTerm= trim(Input::get('searchTerm'));
 				if($searchBy == 'controlNo')
 					$searchTerm = str_replace(' ', '', $searchTerm);
 				if($searchBy == 'amount')
@@ -557,7 +555,7 @@ class PurchaseRequestController extends Controller
 			}
 			else if($searchBy == 'Shopping')
 			{
-				$searchTerm = Input::get('searchTerm');
+				$searchTerm= trim(Input::get('searchTerm'));
 				$pageCounter = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('status', '=', 'Cancelled')->where('projectPurpose', 'LIKE', "%$searchTerm%")->where('otherType', '=', $searchBy)->orderBy('dateReceived', 'DESC')->count();
 				$requests = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('status', '=', 'Cancelled')->where('projectPurpose', 'LIKE', "%$searchTerm%")->where('otherType', '=', $searchBy)->orderBy('dateReceived', 'DESC')->paginate(10);
 
@@ -565,7 +563,7 @@ class PurchaseRequestController extends Controller
 			}
 			else
 			{
-				$searchTerm = Input::get('searchTerm');
+				$searchTerm= trim(Input::get('searchTerm'));
 
 				$pageCounter = DB::table('purchase_request')
 				->join('document', 'purchase_request.id', '=', 'document.pr_id')->where('document.work_id', '=', $searchBy)->where('projectPurpose', 'LIKE', "%$searchTerm%")->where('dueDate','>',$date_today)->where('status', '=', 'Cancelled')->orderBy('dateReceived', 'DESC')->count();
