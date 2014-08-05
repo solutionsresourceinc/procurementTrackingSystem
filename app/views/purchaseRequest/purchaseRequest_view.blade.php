@@ -254,6 +254,12 @@
                         echo "<th class='workflow-th' colspan='2'>Date:</th>";
                         echo "<th class='workflow-th' colspan='2'>By:</th></tr>";
                     }
+                    if ($previousTaskType!="evaluation"&&$tasks->taskType=="evaluation")
+                    {
+                        echo "<tr><th width='30%'></th>";
+                        echo "<th class='workflow-th' colspan='2'>Date:</th>";
+                        echo "<th class='workflow-th' colspan='2'>No. of Days Accomplished:</th></tr>";
+                    }
                     $previousTaskType=$tasks->taskType;
 
                     //Displayer 
@@ -417,11 +423,7 @@
                                     </td-->
                         @endif
                         @if($tasks->taskType=="evaluation")
-                                    <td> </td>
-                                    <th class='workflow-th' colspan="2">Date:</th>
-                                    <th class='workflow-th' colspan="2">No. Of Days Accomplished:</th>
-                                </tr>
-                                <tr>
+                              
                                     <td align="center">{{$tasks->taskName}}</td>
                                     <td colspan="2" align="center">
                                         {{$taskp->custom1}}
