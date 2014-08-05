@@ -64,7 +64,7 @@ class PurchaseRequestController extends Controller
 			}
 			else
 			{
-				$searchTerm= trim(Input::get('searchTerm'));
+				$searchTerm = trim(Input::get('searchTerm'));
 
 				$pageCounter = DB::table('purchase_request')
 				->join('document', 'purchase_request.id', '=', 'document.pr_id')->where('requisitioner', '=', Auth::user()->id)->where('document.work_id', '=', $searchBy)->where('projectPurpose', 'LIKE', "%$searchTerm%")->where('dueDate','>',$date_today)->where('status', '=', 'Active')->orderBy('dateReceived', 'DESC')->count();
