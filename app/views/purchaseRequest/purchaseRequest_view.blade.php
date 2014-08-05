@@ -2,7 +2,7 @@
 
 @section('header')
 {{ HTML::script('js/bootstrap.file-input.js') }} 
-    
+
 	<style type="text/css">
     td{
 
@@ -709,7 +709,7 @@
                     </td>
                     <td>
                    
-                            <input type="hidden" name="hide" value="{{$attachment->id}}">
+                        <input type="hidden" name="hide" value="{{$attachment->id}}">
                         <button type="button" onclick="delimage({{$count}})" ><span class="glyphicon glyphicon-trash"></span></button>
       
                         <?php $count+=1; ?>
