@@ -17,15 +17,35 @@ class BaseController extends Controller {
 
 	public function janisawesome()
 	{
+		function generateRandomString($length = 10) {
+	    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+	    $randomString = '';
+	    	for ($i = 0; $i < $length; $i++) {
+	        $randomString .= $characters[rand(0, strlen($characters) - 1)];
+	    	}
+	    	return $randomString;
+		}
+
+		function generateRandomAmount() 
+		{
+			$length = rand(4, 8);
+	    	$randomString = '';
+	    	for ($i = 0; $i < $length; $i++) 
+	    	{
+	        	$randomString .= rand(1,9);
+	    	}
+	    	return $randomString;
+		}
+
 		$numLoop = 1;
 		while($numLoop < 301)
 		{
-			
+			$amtControl = generateRandomAmount();
 			$purchase = new Purchase;
 			$document = new Document;
-			$purchase->projectPurpose = "Project_$numLoop";
-			$purchase->sourceOfFund = "Source_$numLoop";
-			$purchase->amount = "12,345.00";
+			$purchase->projectPurpose = generateRandomString();
+			$purchase->sourceOfFund = generateRandomString();
+			$purchase->amount = generateRandomAmount();
 			$purchase->office = "1";
 			$purchase->requisitioner = "1";
 			$purchase->dateRequested = "0000-00-00 00:00:00";
@@ -42,33 +62,32 @@ class BaseController extends Controller {
 			}
 			$cn += 1;
 			$purchase->controlNo = $cn;
-
-
 			if(Input::get('otherType') == ' ')
 				$purchase->projectType = "None";
 			else
 				$purchase->projectType = "None";
-
 			// Set creator id
 			$user_id = Auth::user()->id;
 			$purchase->created_by = $user_id;
-
 			$purchase_save = $purchase->save();
-
 			if($purchase_save)
 			{
-				
-				$document->pr_id = $purchase->id;
-				$document->work_id = "1";
-				$document_save = $document->save();
+				if($purchase->amount <= 50000)
+					$amtControl = 1;
+				else if($purchase->amount > 50000 && $purchase->amount < 500000)
+					$amtControl = 2;
+				else if($purchase->amount >= 500000)
+					$amtControl = 3;
 
+				$document->pr_id = $purchase->id;
+				$document->work_id = $amtControl;
+				$document_save = $document->save();
 				if($document_save)
 				{
 					$doc_id= $document->id;
 					$workflow=Workflow::find($document->work_id);
 					$section=Section::where('workflow_id',$document->work_id)->orderBy('section_order_id', 'ASC')->get();
 					$firstnew=0;
-
 					// Set due date;
 					$new_purchase = Purchase::find($purchase->id);
 					$workflow_id = "1";
@@ -78,12 +97,7 @@ class BaseController extends Controller {
 					$dueDate = date('Y-m-d H:i:s', strtotime("+$addToDate days" ));
 					$new_purchase->dueDate = $dueDate;
 					$new_purchase->save();
-
-
 					$tasks = Task::where('wf_id', $document->work_id)->orderBy('section_id', 'ASC')->orderBy('order_id', 'ASC')->get();
-
-
-					
 					foreach ($tasks as $task) 
 					{
 						$task_details = New TaskDetails;

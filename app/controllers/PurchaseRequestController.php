@@ -49,7 +49,10 @@ class PurchaseRequestController extends Controller
 				if($searchBy == 'controlNo')
 					$searchTerm = str_replace(' ', '', $searchTerm);
 				if($searchBy == 'amount')
+				{
+					$searchTerm = number_format($searchTerm);
 					$searchTerm .= ".00";
+				}
 				$pageCounter = DB::table('purchase_request')->where('requisitioner', '=', Auth::user()->id)->where('dueDate','>',$date_today)->where('status', '=', 'Active')->where($searchBy, 'LIKE', "%$searchTerm%")->orderBy('dateReceived', 'DESC')->count();
 				$requests = DB::table('purchase_request')->where('requisitioner', '=', Auth::user()->id)->where('dueDate','>',$date_today)->where('status', '=', 'Active')->where($searchBy, 'LIKE', "%$searchTerm%")->orderBy('dateReceived', 'DESC')->paginate(10);
 
@@ -115,7 +118,10 @@ class PurchaseRequestController extends Controller
 				if($searchBy == 'controlNo')
 					$searchTerm = str_replace(' ', '', $searchTerm);
 				if($searchBy == 'amount')
+				{
+					$searchTerm = number_format($searchTerm);
 					$searchTerm .= ".00";
+				}
 				$pageCounter = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('status', '=', 'Active')->where($searchBy, 'LIKE', "%$searchTerm%")->orderBy('dateReceived', 'DESC')->count();
 				$requests = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('status', '=', 'Active')->where($searchBy, 'LIKE', "%$searchTerm%")->orderBy('dateReceived', 'DESC')->paginate(10);
 
@@ -190,7 +196,10 @@ class PurchaseRequestController extends Controller
 				if($searchBy == 'controlNo')
 					$searchTerm = str_replace(' ', '', $searchTerm);
 				if($searchBy == 'amount')
+				{
+					$searchTerm = number_format($searchTerm);
 					$searchTerm .= ".00";
+				}
 				$pageCounter = DB::table('purchase_request')->where('requisitioner', '=', Auth::user()->id)->where('dueDate','>',$date_today)->where('status', '=', 'Closed')->where($searchBy, 'LIKE', "%$searchTerm%")->orderBy('dateReceived', 'DESC')->count();
 				$requests = DB::table('purchase_request')->where('requisitioner', '=', Auth::user()->id)->where('dueDate','>',$date_today)->where('status', '=', 'Closed')->where($searchBy, 'LIKE', "%$searchTerm%")->orderBy('dateReceived', 'DESC')->paginate(10);
 
@@ -255,7 +264,10 @@ class PurchaseRequestController extends Controller
 					$searchTerm = str_replace(' ', '', $searchTerm);
 				$searchTerm= trim(Input::get('searchTerm'));
 				if($searchBy == 'amount')
+				{
+					$searchTerm = number_format($searchTerm);
 					$searchTerm .= ".00";
+				}
 				$pageCounter = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('status', '=', 'Closed')->where($searchBy, 'LIKE', "%$searchTerm%")->orderBy('dateReceived', 'DESC')->count();
 				$requests = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('status', '=', 'Closed')->where($searchBy, 'LIKE', "%$searchTerm%")->orderBy('dateReceived', 'DESC')->paginate(10);
 
@@ -330,7 +342,10 @@ class PurchaseRequestController extends Controller
 				if($searchBy == 'controlNo')
 					$searchTerm = str_replace(' ', '', $searchTerm);
 				if($searchBy == 'amount')
+				{
+					$searchTerm = number_format($searchTerm);
 					$searchTerm .= ".00";
+				}
 				$pageCounter = DB::table('purchase_request')->where('requisitioner', '=', Auth::user()->id)->where('dueDate','<=',$date_today)->where('status', '=', 'Active')->where($searchBy, 'LIKE', "%$searchTerm%")->orderBy('dateReceived', 'DESC')->count();
 				$requests = DB::table('purchase_request')->where('requisitioner', '=', Auth::user()->id)->where('dueDate','<=',$date_today)->where('status', '=', 'Active')->where($searchBy, 'LIKE', "%$searchTerm%")->orderBy('dateReceived', 'DESC')->paginate(10);
 
@@ -399,7 +414,10 @@ class PurchaseRequestController extends Controller
 				if($searchBy == 'controlNo')
 					$searchTerm = str_replace(' ', '', $searchTerm);
 				if($searchBy == 'amount')
+				{
+					$searchTerm = number_format($searchTerm);
 					$searchTerm .= ".00";
+				}
 				$pageCounter = DB::table('purchase_request')->where('dueDate','<=',$date_today)->where('status', '=', 'Active')->where($searchBy, 'LIKE', "%$searchTerm%")->orderBy('dateReceived', 'DESC')->count();
 				$requests = DB::table('purchase_request')->where('dueDate','<=',$date_today)->where('status', '=', 'Active')->where($searchBy, 'LIKE', "%$searchTerm%")->orderBy('dateReceived', 'DESC')->paginate(10);
 
@@ -477,7 +495,10 @@ class PurchaseRequestController extends Controller
 				if($searchBy == 'controlNo')
 					$searchTerm = str_replace(' ', '', $searchTerm);
 				if($searchBy == 'amount')
+				{
+					$searchTerm = number_format($searchTerm);
 					$searchTerm .= ".00";
+				}
 				$pageCounter = DB::table('purchase_request')->where('requisitioner', '=', Auth::user()->id)->where('dueDate','>',$date_today)->where('status', '=', 'Cancelled')->where($searchBy, 'LIKE', "%$searchTerm%")->orderBy('dateReceived', 'DESC')->count();
 				$requests = DB::table('purchase_request')->where('requisitioner', '=', Auth::user()->id)->where('dueDate','>',$date_today)->where('status', '=', 'Cancelled')->where($searchBy, 'LIKE', "%$searchTerm%")->orderBy('dateReceived', 'DESC')->paginate(10);
 
@@ -547,7 +568,10 @@ class PurchaseRequestController extends Controller
 				if($searchBy == 'controlNo')
 					$searchTerm = str_replace(' ', '', $searchTerm);
 				if($searchBy == 'amount')
+				{
+					$searchTerm = number_format($searchTerm);
 					$searchTerm .= ".00";
+				}
 				$pageCounter = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('status', '=', 'Cancelled')->where($searchBy, 'LIKE', "%$searchTerm%")->orderBy('dateReceived', 'DESC')->count();
 				$requests = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('status', '=', 'Cancelled')->where($searchBy, 'LIKE', "%$searchTerm%")->orderBy('dateReceived', 'DESC')->paginate(10);
 
