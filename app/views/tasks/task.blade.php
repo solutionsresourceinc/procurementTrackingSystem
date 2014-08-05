@@ -701,6 +701,10 @@ No remark.
 
 
 <!--Upload Image-->
+<?php
+
+
+?>
 {{ Form::open(array('url' => 'taskimage', 'files' => true, 'id'=>'createform'), 'POST') }}
 <label class="create-label">Related files:</label>
            <div class="panel panel-default fc-div">
@@ -918,5 +922,7 @@ function doneauto()
     $("#createform").attr('action', text); 
     document.getElementById(formname).submit();
     }
+
+
    </script>
 @stop

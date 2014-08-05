@@ -1877,12 +1877,28 @@ function autouploadsaved(value)
 
         return true;
     }
-function delimage(value)
-        {
-            //alert('form_'+value);
-            var formname= "form_"+value;
-            document.getElementById(formname).submit();
-        }
+
+        function delimage(value)
+    {
+      //alert('form_'+value);
+      var formname= "form_"+value;
+      document.getElementById(formname).submit();
+    }
+function doneauto()
+    {
+      //alert('form_'+value);
+      var formname= "taskform";
+      document.getElementById(formname).submit();
+    }
+    function autouploadsaved(value)
+    {
+    var formname= "createform";
+    var text= "/autouploadsaved";
+    
+
+    $("#createform").attr('action', text); 
+    document.getElementById(formname).submit();
+    }
 </script>
 
 @stop

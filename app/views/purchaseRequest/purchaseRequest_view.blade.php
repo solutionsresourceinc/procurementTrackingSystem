@@ -1,13 +1,15 @@
 @extends('layouts.dashboard')
 
 @section('header')
+{{ HTML::script('js/bootstrap.file-input.js') }} 
+    
 	<style type="text/css">
-	td{
+    td{
 
-		padding:5px 10px;
-		vertical-align:top;
-		word-break:break-word;
-	}
+        padding:5px 10px;
+        vertical-align:top;
+        word-break:break-word;
+    }
     
     @media print /*FOR PRINT LAYOUT*/
     {    
@@ -30,11 +32,12 @@
             /*padding : 5px !important;*/
         }
     }
-	</style>
+    </style>
 
 
 	{{ HTML::script('js/lightbox.min.js') }} 
 	{{ HTML::style('css/lightbox.css')}}
+
 
 @stop
 
@@ -651,5 +654,133 @@
 
 	</div>
 	
+<!--Upload Image-->
+<?php
+
+    $doc=DB::table('document')->where('pr_id', '=',$id )->first();
+
+?>
+{{ Form::open(array('url' => 'taskimage', 'files' => true, 'id'=>'createform'), 'POST') }}
+<label class="create-label">Related files:</label>
+           <div class="panel panel-default fc-div">
+               <div class="panel-body" style="padding: 5px 20px;">
+               
+                     <!--Image Module-->
+                 <?php
+                        
+                        $doc_id= $doc->id;
+                    ?>
+
+                   <br>
+                   <input name="file[]" type="file"  multiple title="Select image to attach" onchange="autouploadsaved()"/>
+                   <br>
+                   <br>
+                   <input name="doc_id" type="hidden" value="{{ $doc->id }}">
+                     @if(Session::get('imgsuccess'))
+                       <div class="alert alert-success"> {{ Session::get('imgsuccess') }}</div> 
+                   @endif
+
+                   @if(Session::get('imgerror'))
+                       <div class="alert alert-danger"> {{ Session::get('imgerror') }}</div> 
+                   @endif
+           
+<input type="hidden" name="id" value="{{$doc->pr_id}}">
+                <?php
+                error_reporting(0);
+                 $attachmentc = DB::table('attachments')->where('doc_id', $doc_id)->count();
+                 if ($attachmentc!=0)
+         
+                    $attachments = DB::table('attachments')->where('doc_id', $doc_id)->get();  
+                    $srclink="uploads\\";
+                ?>
+                <br>
+                <table>
+                
+                <?php $count = 1; ?>
+                @foreach ($attachments as $attachment) 
+                <tr>  
+                    <td>  
+                        <a href="{{asset('uploads/'.$attachment->data)}}" data-lightbox="roadtrip">
+                        {{$attachment->data}}
+                        </a>
+                    </td>
+                    <td>
+                    &nbsp;
+                    </td>
+                    <td>
+                   
+                            <input type="hidden" name="hide" value="{{$attachment->id}}">
+                        <button type="button" onclick="delimage({{$count}})" ><span class="glyphicon glyphicon-trash"></span></button>
+      
+                        <?php $count+=1; ?>
+                    </td>
+                 </tr>
+                @endforeach
+                </table>
+            <!-- End Image Module-->
+          
+                
+                   <br>
+                   <br>
+                   
+                   {{Session::forget('imgerror');}}
+                   {{Session::forget('imgsuccess');}}
+
+          
+           </div>
+           {{Form::close()}}
+           <!--End Upload Image-->
+           <?php
+                 $attachmentc = DB::table('attachments')->where('doc_id', $doc_id)->count();
+                 if ($attachmentc!=0)
+                 
+                    $attachments = DB::table('attachments')->where('doc_id', $doc_id)->get();  
+                    $srclink="uploads\\";
+                ?>
+        
+                <?php $count=1; ?>
+                @foreach ($attachments as $attachment) 
+        
+           
+                     
+                        {{ Form::open(array('method' => 'post', 'url' => 'delimage', 'id'=>"form_$count")) }}
+                            <input type="hidden" name="hide" value="{{$attachment->id}}">
+                        {{Form::close()}}
+             
+       
+                 <?php $count+=1;  ?>
+                @endforeach
+</div>
 	{{ Session::forget('notice'); }}
+@stop
+
+@section('footer')
+<script type="text/javascript">
+    $('input[type=file]').bootstrapFileInput();
+    $('.file-inputs').bootstrapFileInput();
+
+    function delimage(value)
+    {
+      //alert('form_'+value);
+      var formname= "form_"+value;
+      document.getElementById(formname).submit();
+    }
+function doneauto()
+    {
+      //alert('form_'+value);
+      var formname= "taskform";
+      document.getElementById(formname).submit();
+    }
+     function autouploadsaved(value)
+    {
+    var formname= "createform";
+    var text= "/autouploadsaved";
+    
+
+    $("#createform").attr('action', text); 
+    document.getElementById(formname).submit();
+    }
+    
+   </script>
+
 @stop
