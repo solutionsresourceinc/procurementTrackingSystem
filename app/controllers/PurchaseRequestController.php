@@ -47,6 +47,9 @@ class PurchaseRequestController extends Controller
 			else if($searchBy == 'controlNo' || $searchBy == 'projectPurpose' || $searchBy == 'amount')
 			{
 				$searchTerm = Input::get('searchTerm');
+				if($searchBy == 'controlNo')
+					$searchTerm = str_replace(' ', '', $searchTerm);
+
 				if($searchBy == 'amount')
 					$searchTerm .= ".00";
 				$pageCounter = DB::table('purchase_request')->where('requisitioner', '=', Auth::user()->id)->where('dueDate','>',$date_today)->where('status', '=', 'Active')->where($searchBy, 'LIKE', "%$searchTerm%")->orderBy('dateReceived', 'DESC')->count();
@@ -111,6 +114,8 @@ class PurchaseRequestController extends Controller
 			else if($searchBy == 'controlNo' || $searchBy == 'projectPurpose' || $searchBy == 'amount')
 			{
 				$searchTerm = Input::get('searchTerm');
+				if($searchBy == 'controlNo')
+					$searchTerm = str_replace(' ', '', $searchTerm);
 				if($searchBy == 'amount')
 					$searchTerm .= ".00";
 				$pageCounter = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('status', '=', 'Active')->where($searchBy, 'LIKE', "%$searchTerm%")->orderBy('dateReceived', 'DESC')->count();
@@ -184,6 +189,8 @@ class PurchaseRequestController extends Controller
 			else if($searchBy == 'controlNo' || $searchBy == 'projectPurpose' || $searchBy == 'amount')
 			{
 				$searchTerm = Input::get('searchTerm');
+				if($searchBy == 'controlNo')
+					$searchTerm = str_replace(' ', '', $searchTerm);
 				if($searchBy == 'amount')
 					$searchTerm .= ".00";
 				$pageCounter = DB::table('purchase_request')->where('requisitioner', '=', Auth::user()->id)->where('dueDate','>',$date_today)->where('status', '=', 'Closed')->where($searchBy, 'LIKE', "%$searchTerm%")->orderBy('dateReceived', 'DESC')->count();
@@ -246,6 +253,8 @@ class PurchaseRequestController extends Controller
 			}
 			else if($searchBy == 'controlNo' || $searchBy == 'projectPurpose' || $searchBy == 'amount')
 			{
+				if($searchBy == 'controlNo')
+					$searchTerm = str_replace(' ', '', $searchTerm);
 				$searchTerm = Input::get('searchTerm');
 				if($searchBy == 'amount')
 					$searchTerm .= ".00";
@@ -320,6 +329,8 @@ class PurchaseRequestController extends Controller
 			else if($searchBy == 'controlNo' || $searchBy == 'projectPurpose' || $searchBy == 'amount')
 			{
 				$searchTerm = Input::get('searchTerm');
+				if($searchBy == 'controlNo')
+					$searchTerm = str_replace(' ', '', $searchTerm);
 				if($searchBy == 'amount')
 					$searchTerm .= ".00";
 				$pageCounter = DB::table('purchase_request')->where('requisitioner', '=', Auth::user()->id)->where('dueDate','<=',$date_today)->where('status', '=', 'Active')->where($searchBy, 'LIKE', "%$searchTerm%")->orderBy('dateReceived', 'DESC')->count();
@@ -387,6 +398,8 @@ class PurchaseRequestController extends Controller
 			else if($searchBy == 'controlNo' || $searchBy == 'projectPurpose' || $searchBy == 'amount')
 			{
 				$searchTerm = Input::get('searchTerm');
+				if($searchBy == 'controlNo')
+					$searchTerm = str_replace(' ', '', $searchTerm);
 				if($searchBy == 'amount')
 					$searchTerm .= ".00";
 				$pageCounter = DB::table('purchase_request')->where('dueDate','<=',$date_today)->where('status', '=', 'Active')->where($searchBy, 'LIKE', "%$searchTerm%")->orderBy('dateReceived', 'DESC')->count();
@@ -463,6 +476,8 @@ class PurchaseRequestController extends Controller
 			else if($searchBy == 'controlNo' || $searchBy == 'projectPurpose' || $searchBy == 'amount')
 			{
 				$searchTerm = Input::get('searchTerm');
+				if($searchBy == 'controlNo')
+					$searchTerm = str_replace(' ', '', $searchTerm);
 				if($searchBy == 'amount')
 					$searchTerm .= ".00";
 				$pageCounter = DB::table('purchase_request')->where('requisitioner', '=', Auth::user()->id)->where('dueDate','>',$date_today)->where('status', '=', 'Cancelled')->where($searchBy, 'LIKE', "%$searchTerm%")->orderBy('dateReceived', 'DESC')->count();
@@ -531,6 +546,8 @@ class PurchaseRequestController extends Controller
 			else if($searchBy == 'controlNo' || $searchBy == 'projectPurpose' || $searchBy == 'amount')
 			{
 				$searchTerm = Input::get('searchTerm');
+				if($searchBy == 'controlNo')
+					$searchTerm = str_replace(' ', '', $searchTerm);
 				if($searchBy == 'amount')
 					$searchTerm .= ".00";
 				$pageCounter = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('status', '=', 'Cancelled')->where($searchBy, 'LIKE', "%$searchTerm%")->orderBy('dateReceived', 'DESC')->count();
@@ -558,6 +575,85 @@ class PurchaseRequestController extends Controller
 
 				return View::make('pr_view')->with('requests',$requests)->with('searchBy',$searchBy)->with('pageCounter',$pageCounter)->with('pageName' ,$pageName);
 			}
+		}
+	}
+
+	public function view()
+	{
+		$pageName = "List of Active Purchase Requests";
+		$date_today =date('Y-m-d H:i:s');
+		$searchBy = '0';
+		if(Entrust::hasRole('Requisitioner'))
+		{
+			$pageCounter = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('requisitioner', Auth::user()->id)->where('status', '=', 'Active')->orderBy('dateReceived', 'DESC')->count();
+			$requests = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('requisitioner', Auth::user()->id)->where('status', '=', 'Active')->orderBy('dateReceived', 'DESC')->paginate(10);
+			return View::make('pr_view')->with('requests',$requests)->with('searchBy',$searchBy)->with('pageCounter',$pageCounter)->with('pageName' ,$pageName);
+		}
+		else
+		{
+			$pageCounter = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('status', '=', 'Active')->orderBy('dateReceived', 'DESC')->count();
+			$requests = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('status', '=', 'Active')->orderBy('dateReceived', 'DESC')->paginate(10);
+			return View::make('pr_view')->with('requests',$requests)->with('searchBy',$searchBy)->with('pageCounter',$pageCounter)->with('pageName' ,$pageName);
+		}	
+	}
+
+	public function viewClosed()
+	{
+		// return View::make('purchaseRequest.purchaseRequest_closed');
+		$pageName = "List of Closed Purchase Requests";
+		$date_today =date('Y-m-d H:i:s');
+		$searchBy = '0';
+		if(Entrust::hasRole('Requisitioner'))
+		{
+			$pageCounter = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('requisitioner', Auth::user()->id)->where('status', '=', 'Closed')->orderBy('dateReceived', 'DESC')->count();
+			$requests = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('requisitioner', Auth::user()->id)->where('status', '=', 'Closed')->orderBy('dateReceived', 'DESC')->paginate(10);
+			return View::make('pr_view')->with('requests',$requests)->with('searchBy',$searchBy)->with('pageCounter',$pageCounter)->with('pageName' ,$pageName);
+		}
+		else
+		{
+			$pageCounter = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('status', '=', 'Closed')->orderBy('dateReceived', 'DESC')->count();
+			$requests = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('status', '=', 'Closed')->orderBy('dateReceived', 'DESC')->paginate(10);
+			return View::make('pr_view')->with('requests',$requests)->with('searchBy',$searchBy)->with('pageCounter',$pageCounter)->with('pageName' ,$pageName);
+		}
+	}
+
+	public function viewOverdue()
+	{
+		// return View::make('purchaseRequest.purchaseRequest_overdue');
+		$pageName = "List of Overdue Purchase Requests";
+		$date_today = date('Y-m-d H:i:s');
+		$searchBy = '0';
+		if(Entrust::hasRole('Requisitioner'))
+		{
+			$pageCounter = DB::table('purchase_request')->where('dueDate','<=',$date_today)->where('requisitioner', Auth::user()->id)->where('status', '=', 'Active')->orderBy('dateReceived', 'DESC')->count();
+			$requests = DB::table('purchase_request')->where('dueDate','<=',$date_today)->where('requisitioner', Auth::user()->id)->where('status', '=', 'Active')->orderBy('dateReceived', 'DESC')->paginate(10);
+			return View::make('pr_view')->with('requests',$requests)->with('searchBy',$searchBy)->with('pageCounter',$pageCounter)->with('pageName' ,$pageName);
+		}
+		else
+		{
+			$pageCounter = DB::table('purchase_request')->where('dueDate','<=',$date_today)->where('status', '=', 'Active')->orderBy('dateReceived', 'DESC')->count();
+			$requests = DB::table('purchase_request')->where('dueDate','<=',$date_today)->where('status', '=', 'Active')->orderBy('dateReceived', 'DESC')->paginate(10);
+			return View::make('pr_view')->with('requests',$requests)->with('searchBy',$searchBy)->with('pageCounter',$pageCounter)->with('pageName' ,$pageName);
+		}
+	}
+
+	public function viewCancelled()
+	{
+		// return View::make('purchaseRequest.purchaseRequest_cancelled');
+		$pageName = "List of Cancelled Purchase Requests";
+		$date_today =date('Y-m-d H:i:s');
+		$searchBy = '0';
+		if(Entrust::hasRole('Requisitioner'))
+		{
+			$pageCounter = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('requisitioner', Auth::user()->id)->where('status', '=', 'Cancelled')->orderBy('dateReceived', 'DESC')->count();
+			$requests = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('requisitioner', Auth::user()->id)->where('status', '=', 'Cancelled')->orderBy('dateReceived', 'DESC')->paginate(10);
+			return View::make('pr_view')->with('requests',$requests)->with('searchBy',$searchBy)->with('pageCounter',$pageCounter)->with('pageName' ,$pageName);
+		}
+		else
+		{
+			$pageCounter = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('status', '=', 'Cancelled')->orderBy('dateReceived', 'DESC')->count();
+			$requests = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('status', '=', 'Cancelled')->orderBy('dateReceived', 'DESC')->paginate(10);
+			return View::make('pr_view')->with('requests',$requests)->with('searchBy',$searchBy)->with('pageCounter',$pageCounter)->with('pageName' ,$pageName);
 		}
 	}
 
@@ -1294,47 +1390,9 @@ public function edit()
 	return View::make('pr_edit');
 }
 
-public function view()
-{
-	$pageName = "List of Active Purchase Requests";
-	$date_today =date('Y-m-d H:i:s');
-	$searchBy = '0';
-	if(Entrust::hasRole('Requisitioner'))
-	{
-		$pageCounter = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('requisitioner', Auth::user()->id)->where('status', '=', 'Active')->orderBy('dateReceived', 'DESC')->count();
-		$requests = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('requisitioner', Auth::user()->id)->where('status', '=', 'Active')->orderBy('dateReceived', 'DESC')->paginate(10);
-		return View::make('pr_view')->with('requests',$requests)->with('searchBy',$searchBy)->with('pageCounter',$pageCounter)->with('pageName' ,$pageName);
-	}
-	else
-	{
-		$pageCounter = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('status', '=', 'Active')->orderBy('dateReceived', 'DESC')->count();
-		$requests = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('status', '=', 'Active')->orderBy('dateReceived', 'DESC')->paginate(10);
-		return View::make('pr_view')->with('requests',$requests)->with('searchBy',$searchBy)->with('pageCounter',$pageCounter)->with('pageName' ,$pageName);
-	}	
-}
-
 public function viewAll()
 {
 	return View::make('purchaseRequest.purchaseRequest_all');
-}
-public function viewCancelled()
-{
-	// return View::make('purchaseRequest.purchaseRequest_cancelled');
-	$pageName = "List of Cancelled Purchase Requests";
-	$date_today =date('Y-m-d H:i:s');
-	$searchBy = '0';
-	if(Entrust::hasRole('Requisitioner'))
-	{
-		$pageCounter = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('requisitioner', Auth::user()->id)->where('status', '=', 'Cancelled')->orderBy('dateReceived', 'DESC')->count();
-		$requests = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('requisitioner', Auth::user()->id)->where('status', '=', 'Cancelled')->orderBy('dateReceived', 'DESC')->paginate(10);
-		return View::make('pr_view')->with('requests',$requests)->with('searchBy',$searchBy)->with('pageCounter',$pageCounter)->with('pageName' ,$pageName);
-	}
-	else
-	{
-		$pageCounter = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('status', '=', 'Cancelled')->orderBy('dateReceived', 'DESC')->count();
-		$requests = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('status', '=', 'Cancelled')->orderBy('dateReceived', 'DESC')->paginate(10);
-		return View::make('pr_view')->with('requests',$requests)->with('searchBy',$searchBy)->with('pageCounter',$pageCounter)->with('pageName' ,$pageName);
-	}
 }
 
 public function vieweach($id)
@@ -1375,47 +1433,6 @@ public function vieweach($id)
 			->with('purchase', $purchase)->with('wfName',$wfName)->with('secName1',$secName1)->with('secName2',$secName2)->with('secName3',$secName3);
 		}
 	
-}
-
-
-public function viewClosed()
-{
-	// return View::make('purchaseRequest.purchaseRequest_closed');
-	$pageName = "List of Closed Purchase Requests";
-	$date_today =date('Y-m-d H:i:s');
-	$searchBy = '0';
-	if(Entrust::hasRole('Requisitioner'))
-	{
-		$pageCounter = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('requisitioner', Auth::user()->id)->where('status', '=', 'Closed')->orderBy('dateReceived', 'DESC')->count();
-		$requests = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('requisitioner', Auth::user()->id)->where('status', '=', 'Closed')->orderBy('dateReceived', 'DESC')->paginate(10);
-		return View::make('pr_view')->with('requests',$requests)->with('searchBy',$searchBy)->with('pageCounter',$pageCounter)->with('pageName' ,$pageName);
-	}
-	else
-	{
-		$pageCounter = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('status', '=', 'Closed')->orderBy('dateReceived', 'DESC')->count();
-		$requests = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('status', '=', 'Closed')->orderBy('dateReceived', 'DESC')->paginate(10);
-		return View::make('pr_view')->with('requests',$requests)->with('searchBy',$searchBy)->with('pageCounter',$pageCounter)->with('pageName' ,$pageName);
-	}
-}
-
-public function viewOverdue()
-{
-	// return View::make('purchaseRequest.purchaseRequest_overdue');
-	$pageName = "List of Overdue Purchase Requests";
-	$date_today = date('Y-m-d H:i:s');
-	$searchBy = '0';
-	if(Entrust::hasRole('Requisitioner'))
-	{
-		$pageCounter = DB::table('purchase_request')->where('dueDate','<=',$date_today)->where('requisitioner', Auth::user()->id)->where('status', '=', 'Active')->orderBy('dateReceived', 'DESC')->count();
-		$requests = DB::table('purchase_request')->where('dueDate','<=',$date_today)->where('requisitioner', Auth::user()->id)->where('status', '=', 'Active')->orderBy('dateReceived', 'DESC')->paginate(10);
-		return View::make('pr_view')->with('requests',$requests)->with('searchBy',$searchBy)->with('pageCounter',$pageCounter)->with('pageName' ,$pageName);
-	}
-	else
-	{
-		$pageCounter = DB::table('purchase_request')->where('dueDate','<=',$date_today)->where('status', '=', 'Active')->orderBy('dateReceived', 'DESC')->count();
-		$requests = DB::table('purchase_request')->where('dueDate','<=',$date_today)->where('status', '=', 'Active')->orderBy('dateReceived', 'DESC')->paginate(10);
-		return View::make('pr_view')->with('requests',$requests)->with('searchBy',$searchBy)->with('pageCounter',$pageCounter)->with('pageName' ,$pageName);
-	}
 }
 
 public function viewSummary()
