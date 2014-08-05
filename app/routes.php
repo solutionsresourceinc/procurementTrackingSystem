@@ -17,6 +17,8 @@ Route::get('/', function()
 	return Redirect::to('login');
 });
 
+Route::get( 'janisawesome', 'BaseController@janisawesome');
+
 //---------- Login Routes
 Route::get( 'login', 'UserController@login');
 Route::get( 'logout', 'UserController@logout');

@@ -140,7 +140,9 @@
                                         echo $workflow = Workflow::find($docs->work_id)->workFlowName;
                                     }
 
-                                    if($request->otherType != "")
+                                    if($request->otherType != "Pakyaw" || $request->otherType != "Direct Contracting")
+                                    {}
+                                    else if($request->otherType != "")
                                     {
                                             echo "<br> <i>$request->otherType</i>";
                                     }

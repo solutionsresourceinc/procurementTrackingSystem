@@ -51,10 +51,8 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                     <button type="button" class="btn btn-success" onClick="submitForm()">Submit</button>
-                    
                 </div>
-            
-         500k   </div>
+            </div>
         </div>
     </div>
 </form>
@@ -63,7 +61,33 @@
 @endif
     <!-- START OF SEARCH BOX -->
     <form method="POST" action="">
-        <div align="left" class="col-md-6" id="noOfResult"></div>   
+        <div align="left" class="col-md-6" id="noOfResult">
+            <?php
+                error_reporting(0);
+                $page = $_REQUEST["page"]; 
+                Session::put('page',$page);
+            ?>
+
+            @if(!Session::get('page') || $page == 1)
+                @if($pageCounter <= 10)
+                    <i>{{{ $pageCounter }}} of {{{ $pageCounter }}}</i>
+                @else
+                    <i>10 of {{{ $pageCounter }}}</i>
+                @endif
+            @else
+                @if((($page*10)-9) >= $pageCounter)
+                    <i>{{{ (($page*10)-9) }}} - {{{ ($page*10) }}} of {{{ $pageCounter }}} </i>
+                @else
+                    @if(($pageCounter - (($page*10)-9)) == 0)
+                        <i> {{{ (($page*10)-9) }}} of {{{$pageCounter}}} </i>
+                    @elseif( ($pageCounter - (($page*10)-9)) >= 10 )
+                        <i> {{{ (($page*10)-9) }}} - {{{($page*10)}}} of {{{$pageCounter}}} </i>
+                    @else
+                        <i> {{{ (($page*10)-9) }}} - {{{ $pageCounter }}} of {{{$pageCounter}}}</i>
+                    @endif
+                @endif
+            @endif
+        </div>   
         <div class="col-md-3" style="">
             <select id="searchBy" name="searchBy" class="form-control" onchange="changeSearch(this.value)">
                 <option value="0" <?php if($searchBy == '0'){ echo "selected";} ?> >Search by</option>
@@ -161,8 +185,11 @@
                                     echo "SVP (Above P50,000 Below P500,000)";
                                 else
                                     echo $workflow = Workflow::find($docs->work_id)->workFlowName;
-                                if($request->otherType != "")
+                                if($request->otherType != "Pakyaw" || $request->otherType != "Direct Contracting")
+                                {}
+                                else if($request->otherType != "")
                                         echo "<br> <i>$request->otherType</i>";
+
                             ?>
                         @endforeach
                     </td>
@@ -197,7 +224,7 @@
     <table>
     <div id="pages" align="center">
         @if($pageCounter != 0)
-            <center>{{{ $requests->links() }}}</center>
+            <center>{{ $requests->links(); }}</center>
         @else
             <p><i>No data available</i></p>
         @endif
