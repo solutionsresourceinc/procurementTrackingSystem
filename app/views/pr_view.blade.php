@@ -61,7 +61,7 @@
 @endif
     <!-- START OF SEARCH BOX -->
     <form method="POST" action="">
-        <div align="left" class="col-md-6" id="noOfResult">
+        <div align="left" class="col-md-3" id="noOfResult">
             <?php
                 error_reporting(0);
                 $page = $_REQUEST["page"]; 

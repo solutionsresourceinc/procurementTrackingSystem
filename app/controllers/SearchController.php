@@ -4,7 +4,8 @@ class SearchController extends BaseController {
 	
 	public function completeTable()
 	{
-		return View::make('purchaseRequest.purchaseRequest_completeTable');
+		$requests = DB::table('purchase_request')->get();
+		return View::make('purchaseRequest.purchaseRequest_completeTable')->with('requests',$requests);
 	}
 
 	public function search()
