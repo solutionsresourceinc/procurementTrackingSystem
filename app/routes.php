@@ -19,6 +19,9 @@ Route::get('/', function()
 
 Route::get( 'janisawesome', 'BaseController@janisawesome');
 
+//---------- Complete Table View route
+Route::get( 'purchaseRequest/completeTable', 'SearchController@completeTable');
+
 //---------- Login Routes
 Route::get( 'login', 'UserController@login');
 Route::get( 'logout', 'UserController@logout');
@@ -50,16 +53,16 @@ Route::post('offices/{id}/edit',['as' => 'offices.update', 'uses' => 'OfficeCont
 Route::get('purchaseRequests','PurchaseRequestController@viewAll');
 Route::get('purchaseRequests','PurchaseRequestController@viewAll');
 Route::get('purchaseRequest/view','PurchaseRequestController@view');
-Route::post('purchaseRequest/view','PurchaseRequestController@search');
+Route::post('purchaseRequest/view','SearchController@search');
 Route::get('purchaseRequest/create', 'PurchaseRequestController@create');
 Route::get('purchaseRequest/edit','PurchaseRequestController@edit');
 Route::get( 'purchaseRequest/vieweach/{id}', 'PurchaseRequestController@vieweach');
 Route::get( 'purchaseRequest/closed', 'PurchaseRequestController@viewClosed');
-Route::post( 'purchaseRequest/closed', 'PurchaseRequestController@searchClosed');
+Route::post( 'purchaseRequest/closed', 'SearchController@searchClosed');
 Route::get( 'purchaseRequest/overdue', 'PurchaseRequestController@viewOverdue');
-Route::post( 'purchaseRequest/overdue', 'PurchaseRequestController@searchOverdue');
+Route::post( 'purchaseRequest/overdue', 'SearchController@searchOverdue');
 Route::get( 'purchaseRequest/cancelled', 'PurchaseRequestController@viewCancelled');
-Route::post( 'purchaseRequest/cancelled', 'PurchaseRequestController@searchCancelled');
+Route::post( 'purchaseRequest/cancelled', 'SearchController@searchCancelled');
 Route::get('/summary', 'PurchaseRequestController@viewSummary');
 Route::get('/summary/store', 'PurchaseRequestController@getDateRange');
 Route::post('purchaseRequest/edit/{id}',[ 'as' => 'purchaseRequest_editsubmit', 'uses' => 'PurchaseRequestController@edit_submit']);
