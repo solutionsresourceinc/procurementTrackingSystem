@@ -3,6 +3,7 @@
 <style type="text/css">
 	th,td {
 		text-align: center;
+		font-size: 12px;
 	}
 
 	@media print /*FOR PRINT LAYOUT*/
@@ -65,7 +66,7 @@
       </span>
     </div>
 <div style="margin-top: 30px">
-	<table class="workflow-table" border="1">
+	<table class="table table-striped display" border="1">
 		<thead>
 			<th width="16.66%"> Control No </th>
 			<th width="16.66%"> Project/Purpose </th>
@@ -76,14 +77,23 @@
 		</thead>
 		<tbody>
 			@foreach($requests as $request)
-				<tr><td>{{{$request->controlNo}}}</td></tr>
-				<tr><td>{{{$request->projectPurpose}}}</td></tr>
-				<tr><td>Test</td></tr>
-				<tr><td>{{{number_format($request->amount)}}}</td></tr>
-				<tr><td>{{{$request->dateReceieved}}}</td></tr>
-				<tr><td>Test</td></tr>
+				<tr>
+					<td>{{{$request->controlNo}}}</td>
+					<td>{{{$request->projectPurpose}}}</td>
+					<td>Test</td>
+					<td>{{{number_format($request->amount)}}}</td>
+					<td>{{{$request->dateReceived}}}</td>
+					<td>Test</td>
+				</tr>
 			@endforeach
 		</tbody>
 	</table>
+</div>
+<div id="pages" align="center" class="no-print">
+    @if($pageCounter != 0)
+        <center>{{ $requests->links(); }}</center>
+    @else
+        <p><i>No data available</i></p>
+    @endif
 </div>
 @stop

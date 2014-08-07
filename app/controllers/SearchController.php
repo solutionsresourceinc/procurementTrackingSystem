@@ -4,8 +4,9 @@ class SearchController extends BaseController {
 	
 	public function completeTable()
 	{
-		$requests = DB::table('purchase_request')->get();
-		return View::make('purchaseRequest.purchaseRequest_completeTable')->with('requests',$requests);
+		$requests = DB::table('purchase_request')->paginate(30);
+		$pageCounter = DB::table('purchase_request')->count();
+		return View::make('purchaseRequest.purchaseRequest_completeTable')->with('requests',$requests)->with('pageCounter',$pageCounter);
 	}
 
 	public function search()
