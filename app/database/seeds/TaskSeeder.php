@@ -571,16 +571,6 @@ class TaskSeeder extends Seeder {
         $task = new Task;
         $task->wf_id = '3';
         $task->section_id = '1';
-        $task->taskName = 'GSD RELEASE';
-        $task->taskType = 'normal';
-        $task->maxDuration = '0';
-        $task->order_id = $orderID++;
-        $task->description = 'This is a task description';
-        $task->save();
-
-        $task = new Task;
-        $task->wf_id = '3';
-        $task->section_id = '1';
         $task->taskName = 'SIGNED BY GOV';
         $task->taskType = 'dateonly';
         $task->maxDuration = '0';
