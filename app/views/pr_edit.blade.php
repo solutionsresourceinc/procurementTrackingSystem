@@ -568,6 +568,11 @@
                                     <?php
                                     if (NULL!=Input::old('assignee'))
                                     echo "value='".Input::old('assignee')."'";
+                                    else if (Null!=$taskc->assignee)
+                                    
+                                    echo "value='".$taskc->assignee."'";
+                                
+
                                     else
                                     echo "value='".'None'."'";
                                     ?>
@@ -582,6 +587,10 @@
                                         <?php
                                         if (NULL!=Input::old('dateFinished'))
                                             echo "value ='" . Input::old('dateFinished') ."'";
+                                        else if ("0000-00-00 00:00:00"!=$taskc->dateFinished)
+                                    
+                                            echo "value='".$taskc->dateFinished."'";
+                                
                                         else
                                             echo "value = '" . $today . "'";
                                         ?>
@@ -589,19 +598,24 @@
                                     </div>
                                 </td>
                                 <td class="edit-pr-input">
-                                    <input type="number" name="daysOfAction" class="form-control"  min="0" value="1" width="100%" maxlength="12"
+                                    <input type="number" name="daysOfAction" class="form-control"  min="0"  width="100%" maxlength="12"
                                     <?php
                                     if (NULL!=Input::old('daysOfAction'))
                                     echo "value='".Input::old('daysOfAction')."'";
+                                    else if ('0'!=$taskc->daysOfAction)
+                                        echo "value='".$taskc->daysOfAction."'";
                                     ?>
                                     >
                                 </td>
                                 <td class="edit-pr-input">
                                     <input type="text" name="remarks"  class="form-control" maxlength="255" width="100%"
-                                    value="<?php
+                                    <?php
                                     if (NULL!=Input::old('remarks'))
                                     echo Input::old('remarks');
-                                    ?>"
+                                    else if (NULL!=$taskc->remarks)
+                                        echo "value='".$taskc->remarks."'";
+
+                                    ?>
                                     >
                                 </td>
                                 <td style="border-left: none; text-align: center;">
@@ -625,6 +639,8 @@
                                     value="<?php
                                     if (NULL!=Input::old('by'))
                                     echo Input::old('by');
+                                    else if (NULL!=$taskc->custom2)
+                                        echo "value='".$taskc->custom2."'";
                                     else
                                     echo 'None';
                                     ?>"
@@ -648,6 +664,8 @@
                                     value="<?php
                                     if (NULL!=Input::old('referenceno'))
                                     echo Input::old('referenceno');
+                                    else if (NULL!=$taskc->custom1)
+                                        echo "value='".$taskc->custom1."'";
                                     ?>"
                                     >
                                 </td>
@@ -661,6 +679,8 @@
                                         <?php
                                         if (NULL!=Input::old('dateFinished'))
                                             echo "value ='" . Input::old('dateFinished') ."'";
+                                        else if (NULL!=$taskc->custom2)
+                                        echo "value='".$taskc->custom2."'";
                                         else
                                             echo "value = '" . $today . "'";
                                         ?>
@@ -674,6 +694,8 @@
                                      value="<?php
                                     if (NULL!=Input::old('by'))
                                     echo Input::old('by');
+                                     else if (NULL!=$taskc->custom3)
+                                        echo "value='".$taskc->custom3."'";
                                     else
                                     echo 'None';
                                     ?>"
@@ -696,6 +718,8 @@
                                      value="<?php
                                     if (NULL!=Input::old('supplier'))
                                     echo Input::old('supplier');
+                                    else if (NULL!=$taskc->custom1)
+                                        echo "value='".$taskc->custom1."'";
                                     ?>"
 
                                     >
@@ -706,6 +730,8 @@
                                      value="<?php
                                     if (NULL!=Input::old('amount'))
                                     echo Input::old('amount');
+                                     else if (NULL!=$taskc->custom2)
+                                        echo "value='".$taskc->custom2."'";
                                     ?>"
                                     >
                                 </td>
@@ -727,6 +753,8 @@
                                      value="<?php
                                     if (NULL!=Input::old('amt'))
                                     echo Input::old('amt');
+                                     else if (NULL!=$taskc->custom1)
+                                        echo "value='".$taskc->custom1."'";
                                     ?>"
                                     >
                                 </td>
@@ -736,6 +764,8 @@
                                      value="<?php
                                     if (NULL!=Input::old('num'))
                                     echo Input::old('num');
+                                 else if (NULL!=$taskc->custom2)
+                                        echo "value='".$taskc->custom2."'";
                                     ?>"
                                     >
                                 </td>
@@ -749,6 +779,8 @@
                                         <?php
                                         if (NULL!=Input::old('dateFinished'))
                                             echo "value ='" . Input::old('dateFinished') ."'";
+                                         else if (NULL!=$taskc->custom3)
+                                        echo "value='".$taskc->custom3."'";
                                         else
                                             echo "value = '" . $today . "'";
                                         ?>
@@ -786,6 +818,8 @@
                                         <?php
                                         if (NULL!=Input::old('dateFinished'))
                                             echo "value ='" . Input::old('dateFinished') ."'";
+                                         else if (NULL!=$taskc->custom1)
+                                        echo "value='".$taskc->custom1."'";
                                         else
                                             echo "value = '" . $today . "'";
                                         ?>
@@ -800,6 +834,8 @@
                                         <?php
                                         if (NULL!=Input::old('dateFinished'))
                                             echo "value ='" . Input::old('dateFinished') ."'";
+                                         else if (NULL!=$taskc->custom2)
+                                        echo "value='".$taskc->custom2."'";
                                         else
                                             echo "value = '" . $today . "'";
                                         ?>
@@ -813,6 +849,8 @@
                                         <?php
                                         if (NULL!=Input::old('by'))
                                             echo Input::old('by');
+                                         else if (NULL!=$taskc->custom3)
+                                        echo "value='".$taskc->custom3."'";
                                         else
                                         echo 'None';
                                         ?>
@@ -845,10 +883,12 @@
                                     <td class="edit-pr-input">
                                     Reference No.:
                                     <input type="text" name="referenceno"  class="form-control" maxlength="100" width="80%" maxlength="100"
-                                    value="<?php
+                                    <?php
                                     if (NULL!=Input::old('referenceno'))
-                                    echo Input::old('referenceno');
-                                    ?>"
+                                    echo "value='".Input::old('referenceno')."'";
+                                 else if (NULL!=$taskc->custom1)
+                                        echo "value='".$taskc->custom1."'";
+                                    ?>
                                     >
                                 </td>
                                     <td>
@@ -862,6 +902,8 @@
                                         <?php
                                         if (NULL!=Input::old('dateFinished'))
                                             echo "value ='" . Input::old('dateFinished') ."'";
+                                         else if (NULL!=$taskc->custom2)
+                                        echo "value='".$taskc->custom2."'";
                                         else
                                             echo "value = '" . $today . "'";
                                         ?>
@@ -877,6 +919,8 @@
                                         <?php
                                         if (NULL!=Input::old('dateFinished'))
                                             echo "value ='" . Input::old('dateFinished') ."'";
+                                         else if (NULL!=$taskc->custom3)
+                                        echo "value='".$taskc->custom3."'";
                                         else
                                             echo "value = '" . $today . "'";
                                         ?>
@@ -891,6 +935,8 @@
                                         <?php
                                         if (NULL!=Input::old('by'))
                                             echo "value='".Input::old('by')."'";
+                                         else if (NULL!=$taskc->assignee)
+                                        echo "value='".$taskc->assignee."'";
                                         else
                                         echo "value='None'";
                                         ?>
@@ -928,6 +974,8 @@
                                         <?php
                                         if (NULL!=Input::old('dateFinished'))
                                             echo "value ='" . Input::old('dateFinished') ."'";
+                                         else if (NULL!=$taskc->custom1)
+                                        echo "value='".$taskc->custom1."'";
                                         else
                                             echo "value = '" . $today . "'";
                                         ?>
@@ -942,6 +990,8 @@
                                         <?php
                                         if (NULL!=Input::old('dateFinished'))
                                             echo "value ='" . Input::old('dateFinished') ."'";
+                                         else if (NULL!=$taskc->custom2)
+                                        echo "value='".$taskc->custom2."'";
                                         else
                                             echo "value = '" . $today . "'";
                                         ?>
@@ -955,6 +1005,8 @@
                                         <?php
                                         if (NULL!=Input::old('by'))
                                             echo Input::old('by');
+                                         else if (NULL!=$taskc->custom3)
+                                        echo "value='".$taskc->custom3."'";
                                         else
                                         echo 'None';
                                         ?>
@@ -990,6 +1042,8 @@
                                         <?php
                                         if (NULL!=Input::old('dateFinished'))
                                             echo "value ='" . Input::old('dateFinished') ."'";
+                                         else if (NULL!=$taskc->custom1)
+                                        echo "value='".$taskc->custom1."'";
                                         else
                                             echo "value = '" . $today . "'";
                                         ?>
@@ -1003,6 +1057,8 @@
                                         <?php
                                         if (NULL!=Input::old('noofdays'))
                                             echo "value=".Input::old('noofdays');
+                                         else if (NULL!=$taskc->custom2)
+                                        echo "value='".$taskc->custom2."'";
                                         else
                                             echo "value=1";
                                        
@@ -1033,6 +1089,8 @@
                                         <?php
                                         if (NULL!=Input::old('dateFinished'))
                                             echo "value ='" . Input::old('dateFinished') ."'";
+                                         else if (NULL!=$taskc->custom1)
+                                        echo "value='".$taskc->custom1."'";
                                         else
                                             echo "value = '" . $today . "'";
                                         ?>
@@ -1068,6 +1126,8 @@
                                         <?php
                                         if (NULL!=Input::old('dateFinished'))
                                             echo "value ='" . Input::old('dateFinished') ."'";
+                                         else if (NULL!=$taskc->custom1)
+                                        echo "value='".$taskc->custom1."'";
                                         else
                                             echo "value = '" . $today . "'";
                                         ?>
@@ -1079,6 +1139,8 @@
                                         <?php
                                         if (NULL!=Input::old('noofdays'))
                                             echo "value=".Input::old('noofdays');
+                                         else if (NULL!=$taskc->custom2)
+                                        echo "value='".$taskc->custom2."'";
                                         else
                                             echo "value=1";
                                      
@@ -1091,6 +1153,8 @@
                                         <?php
                                         if (NULL!=Input::old('contractmeeting'))
                                             echo Input::old('contractmeeting');
+                                         else if (NULL!=$taskc->custom3)
+                                        echo "value='".$taskc->custom3."'";
                                         
                                         ?>
                                         "
@@ -1125,6 +1189,8 @@
                                         <?php
                                         if (NULL!=Input::old('dateFinished'))
                                             echo "value ='" . Input::old('dateFinished') ."'";
+                                         else if (NULL!=$taskc->custom1)
+                                        echo "value='".$taskc->custom1."'";
                                         else
                                             echo "value = '" . $today . "'";
                                         ?>
@@ -1138,6 +1204,8 @@
                                         <?php
                                         if (NULL!=Input::old('noofdays'))
                                             echo "value=".Input::old('noofdays');
+                                         else if (NULL!=$taskc->custom2)
+                                        echo "value='".$taskc->custom2."'";
                                         else
                                             echo "value=1";
                                         
@@ -1152,6 +1220,8 @@
                                         <?php
                                         if (NULL!=Input::old('contractmeeting'))
                                             echo Input::old('contractmeeting');
+                                         else if (NULL!=$taskc->custom3)
+                                        echo "value='".$taskc->custom3."'";
                                         
                                             
                                         ?>
@@ -1183,6 +1253,8 @@
                                         <?php
                                         if (NULL!=Input::old('noofsuppliers'))
                                             echo Input::old('noofsuppliers');
+                                         else if (NULL!=$taskc->custom1)
+                                        echo "value='".$taskc->custom1."'";
                                        
                                         ?>
                                         "
@@ -1196,6 +1268,8 @@
                                         <?php
                                         if (NULL!=Input::old('dateFinished'))
                                             echo "value ='" . Input::old('dateFinished') ."'";
+                                         else if (NULL!=$taskc->custom2)
+                                        echo "value='".$taskc->custom2."'";
                                         else
                                             echo "value = '" . $today . "'";
                                         ?>
@@ -1209,6 +1283,8 @@
                                         <?php
                                         if (NULL!=Input::old('by'))
                                             echo Input::old('by');
+                                         else if (NULL!=$taskc->custom3)
+                                        echo "value='".$taskc->custom3."'";
                                         else
                                         echo 'None';
                                         
@@ -1238,6 +1314,8 @@
                                         <?php
                                         if (NULL!=Input::old('dateFinished'))
                                             echo "value ='" . Input::old('dateFinished') ."'";
+                                         else if ("0000-00-00 00:00:00"!=$taskc->dateFinished)
+                                        echo "value='".$taskc->dateFinished."'";
                                         else
                                             echo "value = '" . $today . "'";
                                         ?>
@@ -1252,6 +1330,8 @@
                                         <?php
                                         if (NULL!=Input::old('assignee'))
                                             echo "value='".Input::old('assignee')."'";
+                                         else if (NULL!=$taskc->assignee)
+                                        echo "value='".$taskc->assignee."'";
                                         else
                                             echo "value='".'None'."'";
                                         ?>
@@ -1284,6 +1364,8 @@
                                         <?php
                                         if (NULL!=Input::old('dateFinished'))
                                             echo "value ='" . Input::old('dateFinished') ."'";
+                                         else if ("0000-00-00 00:00:00"!=$taskc->dateFinished)
+                                        echo "value='".$taskc->dateFinished."'";
                                         else
                                             echo "value = '" . $today . "'";
                                         ?>
@@ -1297,6 +1379,8 @@
                                         <?php
                                         if (NULL!=Input::old('assignee'))
                                             echo "value='".Input::old('assignee')."'";
+                                         else if (NULL!=$taskc->assignee)
+                                        echo "value='".$taskc->assignee."'";
                                         else
                                         echo "value='".'None'. "'";
                                         ?>
@@ -1309,6 +1393,8 @@
                                         <?php
                                         if (NULL!=Input::old('remarks'))
                                             echo "value='".Input::old('remarks')."'";
+                                         else if (NULL!=$taskc->remarks)
+                                        echo "value='".$taskc->remarks."'";
                                         
                                         ?>
                                         
@@ -1338,6 +1424,8 @@
                                         <?php
                                         if (NULL!=Input::old('dateFinished'))
                                             echo "value ='" . Input::old('dateFinished') ."'";
+                                         else if ("0000-00-00 00:00:00"!=$taskc->dateFinished)
+                                        echo "value='".$taskc->dateFinished."'";
                                         else
                                             echo "value = '" . $today . "'";
                                         ?>
