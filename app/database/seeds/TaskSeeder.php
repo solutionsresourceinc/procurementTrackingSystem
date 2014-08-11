@@ -64,7 +64,7 @@ class TaskSeeder extends Seeder {
         $task = new Task;
         $task->wf_id = '1';
         $task->section_id = '1';
-        $task->taskName = 'Date Signed by Gov:';
+        $task->taskName = 'SIGNED BY GOV';
         $task->taskType = 'dateonly';
         $task->maxDuration = '0';
         $task->order_id = $orderID++;
@@ -163,7 +163,7 @@ class TaskSeeder extends Seeder {
         $task = new Task;
         $task->wf_id = '1';
         $task->section_id = '3';
-        $task->taskName = 'Date Signed by Gov:';
+        $task->taskName = 'SIGNED BY GOV';
         $task->taskType = 'dateonly';
         $task->maxDuration = '0';
         $task->order_id = $orderID++;
@@ -236,7 +236,17 @@ class TaskSeeder extends Seeder {
         $task = new Task;
         $task->wf_id = '1';
         $task->section_id = '4';
-        $task->taskName = 'Date Signed by Gov:';
+        $task->taskName = 'CHECK RELEASED';
+        $task->taskType = 'normal';
+        $task->maxDuration = '0';
+        $task->order_id = $orderID++;
+        $task->description = 'This is a task description';
+        $task->save();
+
+        $task = new Task;
+        $task->wf_id = '1';
+        $task->section_id = '4';
+        $task->taskName = 'SIGNED BY GOV';
         $task->taskType = 'dateonly';
         $task->maxDuration = '0';
         $task->order_id = $orderID++;
@@ -300,7 +310,7 @@ class TaskSeeder extends Seeder {
         $task = new Task;
         $task->wf_id = '2';
         $task->section_id = '1';
-        $task->taskName = 'Date Signed by Gov:';
+        $task->taskName = 'SIGNED BY GOV';
         $task->taskType = 'dateonly';
         $task->maxDuration = '0';
         $task->order_id = $orderID++;
@@ -427,7 +437,7 @@ class TaskSeeder extends Seeder {
         $task = new Task;
         $task->wf_id = '2';
         $task->section_id = '3';
-        $task->taskName = 'Date Signed by Gov:';
+        $task->taskName = 'SIGNED BY GOV';
         $task->taskType = 'dateonly';
         $task->maxDuration = '0';
         $task->order_id = $orderID++;
@@ -499,7 +509,17 @@ class TaskSeeder extends Seeder {
         $task = new Task;
         $task->wf_id = '2';
         $task->section_id = '4';
-        $task->taskName = 'Date Signed by Gov:';
+        $task->taskName = 'CHECK RELEASED';
+        $task->taskType = 'normal';
+        $task->maxDuration = '0';
+        $task->order_id = $orderID++;
+        $task->description = 'This is a task description';
+        $task->save();
+
+        $task = new Task;
+        $task->wf_id = '2';
+        $task->section_id = '4';
+        $task->taskName = 'SIGNED BY GOV';
         $task->taskType = 'dateonly';
         $task->maxDuration = '0';
         $task->order_id = $orderID++;
@@ -561,7 +581,7 @@ class TaskSeeder extends Seeder {
         $task = new Task;
         $task->wf_id = '3';
         $task->section_id = '1';
-        $task->taskName = 'Date Signed by Gov:';
+        $task->taskName = 'SIGNED BY GOV';
         $task->taskType = 'dateonly';
         $task->maxDuration = '0';
         $task->order_id = $orderID++;
@@ -758,7 +778,7 @@ class TaskSeeder extends Seeder {
         $task = new Task;
         $task->wf_id = '3';
         $task->section_id = '3';
-        $task->taskName = 'Date Signed by Gov:';
+        $task->taskName = 'SIGNED BY GOV';
         $task->taskType = 'dateonly';
         $task->maxDuration = '0';
         $task->order_id = $orderID++;
@@ -767,6 +787,16 @@ class TaskSeeder extends Seeder {
 
         //WORKFLOW 3 | SECTION 4
         $orderID = 1; // controller for order_id
+
+        $task = new Task;
+        $task->wf_id = '3';
+        $task->section_id = '4';
+        $task->taskName = 'CHEQUE';
+        $task->taskType = 'cheque';
+        $task->maxDuration = '0';
+        $task->order_id = $orderID++;
+        $task->description = 'This is a task description';
+        $task->save();
 
         $task = new Task;
         $task->wf_id = '3';
@@ -831,7 +861,7 @@ class TaskSeeder extends Seeder {
         $task = new Task;
         $task->wf_id = '3';
         $task->section_id = '4';
-        $task->taskName = 'Date Signed by Gov:';
+        $task->taskName = 'SIGNED BY GOV';
         $task->taskType = 'dateonly';
         $task->maxDuration = '0';
         $task->order_id = $orderID++;
@@ -894,7 +924,7 @@ class TaskSeeder extends Seeder {
         $task = new Task;
         $task->wf_id = '4';
         $task->section_id = '1';
-        $task->taskName = 'Date Signed by Gov:';
+        $task->taskName = 'SIGNED BY GOV';
         $task->taskType = 'dateonly';
         $task->maxDuration = '0';
         $task->order_id = $orderID++;
@@ -960,6 +990,16 @@ class TaskSeeder extends Seeder {
         $orderID = 1; // controller for order_id
 
         $task = new Task;
+        $task->wf_id = '2';
+        $task->section_id = '3';
+        $task->taskName = 'CHEQUE';
+        $task->taskType = 'cheque';
+        $task->maxDuration = '0';
+        $task->order_id = $orderID++;
+        $task->description = 'This is a task description';
+        $task->save();
+
+        $task = new Task;
         $task->wf_id = '4';
         $task->section_id = '3';
         $task->taskName = 'BUDGET';
@@ -1032,7 +1072,7 @@ class TaskSeeder extends Seeder {
         $task = new Task;
         $task->wf_id = '4';
         $task->section_id = '3';
-        $task->taskName = 'Date Signed by Gov:';
+        $task->taskName = 'SIGNED BY GOV';
         $task->taskType = 'dateonly';
         $task->maxDuration = '0';
         $task->order_id = $orderID++;
@@ -1094,7 +1134,7 @@ class TaskSeeder extends Seeder {
         $task = new Task;
         $task->wf_id = '5';
         $task->section_id = '1';
-        $task->taskName = 'Date Signed by Gov:';
+        $task->taskName = 'SIGNED BY GOV';
         $task->taskType = 'dateonly';
         $task->maxDuration = '0';
         $task->order_id = $orderID++;
@@ -1210,7 +1250,7 @@ class TaskSeeder extends Seeder {
         $task = new Task;
         $task->wf_id = '5';
         $task->section_id = '3';
-        $task->taskName = 'Date Signed by Gov:';
+        $task->taskName = 'SIGNED BY GOV';
         $task->taskType = 'dateonly';
         $task->maxDuration = '0';
         $task->order_id = $orderID++;
@@ -1219,6 +1259,16 @@ class TaskSeeder extends Seeder {
     
         // WORKFLOW 5 | SECTION 4
         $orderID = 1; // controller for order_id
+
+        $task = new Task;
+        $task->wf_id = '5';
+        $task->section_id = '4';
+        $task->taskName = 'CHEQUE';
+        $task->taskType = 'cheque';
+        $task->maxDuration = '0';
+        $task->order_id = $orderID++;
+        $task->description = 'This is a task description';
+        $task->save();
 
         $task = new Task;
         $task->wf_id = '5';
@@ -1293,7 +1343,7 @@ class TaskSeeder extends Seeder {
         $task = new Task;
         $task->wf_id = '5';
         $task->section_id = '4';
-        $task->taskName = 'Date Signed by Gov:';
+        $task->taskName = 'SIGNED BY GOV';
         $task->taskType = 'dateonly';
         $task->maxDuration = '0';
         $task->order_id = $orderID++;
