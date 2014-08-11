@@ -980,7 +980,7 @@ class TaskSeeder extends Seeder {
         $orderID = 1; // controller for order_id
 
         $task = new Task;
-        $task->wf_id = '2';
+        $task->wf_id = '4';
         $task->section_id = '3';
         $task->taskName = 'CHEQUE';
         $task->taskType = 'cheque';
