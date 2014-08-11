@@ -12,7 +12,10 @@ class Purchase extends Ardent implements UserInterface, RemindableInterface {
 	use UserTrait, RemindableTrait;
 
 	public $timestamps = true;
+	protected $table = 'purchase_request';
+
 	public static $rules = array(
+		'controlNo' => 'required|numeric',
 		'projectPurpose' => 'required',
 		'projectType' => 'required',
 		'sourceOfFund' => 'required',
@@ -21,9 +24,10 @@ class Purchase extends Ardent implements UserInterface, RemindableInterface {
 		'office' => 'required',
 		'requisitioner' => 'required',
 		'dateReceived' => 'required'
+		
 	);
 
-	protected $table = 'purchase_request';
+	
 
 	// CUSTOMIZABLE ERROR MESSAGE
 	public static $customMessages = array(

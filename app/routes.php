@@ -197,3 +197,9 @@ Route::get('back', function()
 
 		return Response::json($data);
 });*/
+
+Route::get('test', function()
+{
+	$pr = Purchase::where('controlNo','=','000066')->count();
+	return $pr;
+});
