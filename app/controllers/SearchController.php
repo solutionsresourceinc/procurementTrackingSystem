@@ -7,11 +7,13 @@ class SearchController extends BaseController {
 		// $requests = DB::table('purchase_request')->paginate(20);
 		$requests = DB::table('purchase_request')
 		->join('offices', 'purchase_request.office', '=', 'offices.id')
-		->join('document', 'purchase_request.id', '=', 'document.pr_id')->where('status', '=', 'Active')->paginate(20);
+		->join('document', 'purchase_request.id', '=', 'document.pr_id')
+		->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+		->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Active')->paginate(20);
 
 		$pageCounter = DB::table('purchase_request')
 		->join('offices', 'purchase_request.office', '=', 'offices.id')
-		->join('document', 'purchase_request.id', '=', 'document.pr_id')->where('status', '=', 'Active')->paginate(20);
+		->join('document', 'purchase_request.id', '=', 'document.pr_id')->where('purchase_request.status', '=', 'Active')->count();
 
 		return View::make('purchaseRequest.purchaseRequest_completeTable')->with('requests',$requests)->with('pageCounter',$pageCounter);
 	}

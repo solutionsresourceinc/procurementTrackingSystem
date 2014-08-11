@@ -87,7 +87,16 @@
 					<td>{{{str_pad($request->controlNo, 5, '0', STR_PAD_LEFT)}}}</td>
 					<td>{{{$request->officeName}}}</td>
 					<td>{{{$request->projectPurpose}}}</td>
-					<td>{{{$request->projectPurpose}}}</td>
+					<td>
+						@if($request->dateFinished == '0000-00-00 00:00:00')
+							----
+						@else
+						<?php
+							// $date = new \DateTime($request->dateFinished)->format('Y-m-d');
+						?>
+							{{{$request->dateFinished}}}
+						@endif
+					</td> <!-- BUDGET -->
 					<td>{{{$request->sourceOfFund}}}</td>
 					<td>{{{number_format($request->amount)}}}</td>
 					<td>Test</td>
@@ -105,8 +114,7 @@
                                     echo "SVP (Above P50,000 Below P500,000)";
                                 else
                                     echo $workflow = Workflow::find($docs->work_id)->workFlowName;
-                                if($request->otherType != "Pakyaw" || $request->otherType != "Direct Contracting")
-                                {}
+                                if($request->otherType != "Pakyaw" || $request->otherType != "Direct Contracting"){}
                                 else if($request->otherType != "")
                                         echo "<br> <i>$request->otherType</i>";
                             ?>
