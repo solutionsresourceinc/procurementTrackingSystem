@@ -212,8 +212,18 @@ class PurchaseRequestController extends Controller
 		$purchase->otherType = Input::get('otherType');
 
 		// Get latest control number
-		$purchase->controlNo = Input::get('controlNo');
 		$cn = Input::get('controlNo');
+		$checkUniqueControlNo = Purchase::where('controlNo','=',"$cn")->count();
+		if($checkUniqueControlNo != 0)
+		{
+			$purchase->controlNo = '';
+		}
+		else
+		{
+			$purchase->controlNo = Input::get('controlNo');
+		}
+		
+		
 
 
 		if(Input::get('otherType') == 'Pakyaw')
@@ -464,7 +474,7 @@ class PurchaseRequestController extends Controller
 				Session::put('error_dateReceived', $error_dateReceived );
 				Session::put('error_projectType', $error_projectType );
 				Session::put('error_controlNo', $error_controlNo );
-				$checkUniqueControlNo = Purchase::where('controlNo','=', "$cn")->count();
+				
 				if($checkUniqueControlNo != 0)
 				{
 					Session::put('error_controlNo', 'This control no. already exists. Please enter a new one.' );
@@ -515,7 +525,7 @@ class PurchaseRequestController extends Controller
 			Session::put('error_dateReceived', $error_dateReceived );
 			Session::put('error_projectType', $error_projectType );
 			Session::put('error_controlNo', $error_controlNo );
-			$checkUniqueControlNo = Purchase::where('controlNo','=',"$cn")->count();
+			
 			if($checkUniqueControlNo != 0)
 			{
 				Session::put('error_controlNo', 'This control no. already exists. Please enter a new one.' );
@@ -567,7 +577,7 @@ class PurchaseRequestController extends Controller
 					Session::put('error_dateReceived', $error_dateReceived );
 					Session::put('error_projectType', $error_projectType );
 					Session::put('error_controlNo', $error_controlNo );
-					$checkUniqueControlNo = Purchase::where('controlNo','=',"$cn")->count();
+					
 					if($checkUniqueControlNo != 0)
 					{
 						Session::put('error_controlNo', 'This control no. already exists. Please enter a new one.' );
