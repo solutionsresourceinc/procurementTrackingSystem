@@ -2,6 +2,774 @@
 
 class SearchController extends BaseController {
 
+	public function completeActiveSearch()
+	{
+		$searchBy = Input::get('searchBy');
+		$searchTerm = trim(Input::get('searchTerm'));
+		$flag = 0;
+		$supplierFlag = 0;
+		
+		if($searchBy == 'dateReceived')
+		{
+			$start = Input::get('start');
+			$end = Input::get('end');
+
+			if($start == $end)
+			{
+				$starty = (new \DateTime($start))->format('Y');
+				$startm = (new \DateTime($start))->format('m');
+				$startd = (new \DateTime($start))->format('d');
+
+				$requests = DB::table('purchase_request')
+				->join('offices', 'purchase_request.office', '=', 'offices.id')
+				->join('document', 'purchase_request.id', '=', 'document.pr_id')
+				->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+				->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where(DB::raw('YEAR(purchase_request.dateReceived)'), '=', $starty)->where(DB::raw('MONTH(purchase_request.dateReceived)'), '=', $startm)->where(DB::raw('DAY(purchase_request.dateReceived)'), '=', $startd)->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Active')->paginate(15);
+
+				$requests = DB::table('purchase_request')
+				->join('offices', 'purchase_request.office', '=', 'offices.id')
+				->join('document', 'purchase_request.id', '=', 'document.pr_id')
+				->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+				->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where(DB::raw('YEAR(purchase_request.dateReceived)'), '=', $starty)->where(DB::raw('MONTH(purchase_request.dateReceived)'), '=', $startm)->where(DB::raw('DAY(purchase_request.dateReceived)'), '=', $startd)->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Active')->count();
+			}
+			else
+			{
+				$requests = DB::table('purchase_request')
+				->join('offices', 'purchase_request.office', '=', 'offices.id')
+				->join('document', 'purchase_request.id', '=', 'document.pr_id')
+				->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+				->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->whereBetween('purchase_request.dateReceived', array($start, $end))->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Active')->paginate(15);
+
+				$pageCounter = DB::table('purchase_request')
+				->join('offices', 'purchase_request.office', '=', 'offices.id')
+				->join('document', 'purchase_request.id', '=', 'document.pr_id')
+				->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+				->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->whereBetween('purchase_request.dateReceived', array($start, $end))->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Active')->count();	
+			}
+		}
+		else if($searchBy == 'all')
+			{ return App::make('SearchController')->completeTableActive(); }
+		else if($searchBy == 'controlNo')
+		{
+			$requests = DB::table('purchase_request')
+			->join('offices', 'purchase_request.office', '=', 'offices.id')
+			->join('document', 'purchase_request.id', '=', 'document.pr_id')
+			->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+			->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('purchase_request.controlNo', 'LIKE', "%$searchTerm%")->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Active')->paginate(15);
+
+			$pageCounter = DB::table('purchase_request')
+			->join('offices', 'purchase_request.office', '=', 'offices.id')
+			->join('document', 'purchase_request.id', '=', 'document.pr_id')
+			->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+			->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('purchase_request.controlNo', 'LIKE', "%$searchTerm%")->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Active')->count();	
+		}
+		else if($searchBy == 'office')
+		{
+			$requests = DB::table('purchase_request')
+			->join('offices', 'purchase_request.office', '=', 'offices.id')
+			->join('document', 'purchase_request.id', '=', 'document.pr_id')
+			->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+			->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('offices.officeName', 'LIKE', "%$searchTerm%")->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Active')->paginate(15);
+
+			$pageCounter = DB::table('purchase_request')
+			->join('offices', 'purchase_request.office', '=', 'offices.id')
+			->join('document', 'purchase_request.id', '=', 'document.pr_id')
+			->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+			->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('offices.officeName', 'LIKE', "%$searchTerm%")->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Active')->count();	
+		}
+		else if($searchBy == 'projectPurpose' || $searchBy == 'sourceOfFund' || $searchBy == 'amount')
+		{
+			if($searchBy == 'amount')
+			{
+				$searchTerm = number_format($searchTerm);
+				$searchTerm .= ".00";
+			}
+		
+			$requests = DB::table('purchase_request')
+			->join('offices', 'purchase_request.office', '=', 'offices.id')
+			->join('document', 'purchase_request.id', '=', 'document.pr_id')
+			->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+			->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where($searchBy, 'LIKE', "%$searchTerm%")->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Active')->paginate(15);
+
+			$pageCounter = DB::table('purchase_request')
+			->join('offices', 'purchase_request.office', '=', 'offices.id')
+			->join('document', 'purchase_request.id', '=', 'document.pr_id')
+			->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+			->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where($searchBy, 'LIKE', "%$searchTerm%")->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Active')->count();	
+			// return $requests;
+		}
+		else if($searchBy == 'budgetdate')
+		{
+			$start = Input::get('start');
+			$end = Input::get('end');
+
+			if($start == $end)
+			{
+				$starty = (new \DateTime($start))->format('Y');
+				$startm = (new \DateTime($start))->format('m');
+				$startd = (new \DateTime($start))->format('d');
+
+				$requests = DB::table('purchase_request')
+				->join('offices', 'purchase_request.office', '=', 'offices.id')
+				->join('document', 'purchase_request.id', '=', 'document.pr_id')
+				->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+				->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where(DB::raw('YEAR(taskdetails.dateFinished)'), '=', $starty)->where(DB::raw('MONTH(taskdetails.dateFinished)'), '=', $startm)->where(DB::raw('DAY(taskdetails.dateFinished)'), '=', $startd)->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Active')->paginate(15);
+
+				$pageCounter = DB::table('purchase_request')
+				->join('offices', 'purchase_request.office', '=', 'offices.id')
+				->join('document', 'purchase_request.id', '=', 'document.pr_id')
+				->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+				->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where(DB::raw('YEAR(taskdetails.dateFinished)'), '=', $starty)->where(DB::raw('MONTH(taskdetails.dateFinished)'), '=', $startm)->where(DB::raw('DAY(taskdetails.dateFinished)'), '=', $startd)->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Active')->count();
+			}
+			else
+			{
+				$requests = DB::table('purchase_request')
+				->join('offices', 'purchase_request.office', '=', 'offices.id')
+				->join('document', 'purchase_request.id', '=', 'document.pr_id')
+				->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+				->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->whereBetween('taskdetails.dateFinished', array($start, $end))->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Active')->paginate(15);
+
+				$pageCounter = DB::table('purchase_request')
+				->join('offices', 'purchase_request.office', '=', 'offices.id')
+				->join('document', 'purchase_request.id', '=', 'document.pr_id')
+				->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+				->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->whereBetween('taskdetails.dateFinished', array($start, $end))->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Active')->count();	
+			}
+			$flag = 1;
+		}
+		else if($searchBy == 'dateapproved')
+		{
+			$start = Input::get('start');
+			$end = Input::get('end');
+
+			if($start == $end)
+			{
+				$starty = (new \DateTime($start))->format('Y');
+				$startm = (new \DateTime($start))->format('m');
+				$startd = (new \DateTime($start))->format('d');
+
+				$requests = DB::table('purchase_request')
+				->join('offices', 'purchase_request.office', '=', 'offices.id')
+				->join('document', 'purchase_request.id', '=', 'document.pr_id')
+				->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+				->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where(DB::raw('YEAR(taskdetails.dateFinished)'), '=', $starty)->where(DB::raw('MONTH(taskdetails.dateFinished)'), '=', $startm)->where(DB::raw('DAY(taskdetails.dateFinished)'), '=', $startd)->where('tasks.taskName', '=', 'SIGNED BY GOV')->where('purchase_request.status', '=', 'Active')->paginate(15);
+
+				$pageCounter = DB::table('purchase_request')
+				->join('offices', 'purchase_request.office', '=', 'offices.id')
+				->join('document', 'purchase_request.id', '=', 'document.pr_id')
+				->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+				->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where(DB::raw('YEAR(taskdetails.dateFinished)'), '=', $starty)->where(DB::raw('MONTH(taskdetails.dateFinished)'), '=', $startm)->where(DB::raw('DAY(taskdetails.dateFinished)'), '=', $startd)->where('tasks.taskName', '=', 'SIGNED BY GOV')->where('purchase_request.status', '=', 'Active')->count();
+			}
+			else
+			{
+				$requests = DB::table('purchase_request')
+				->join('offices', 'purchase_request.office', '=', 'offices.id')
+				->join('document', 'purchase_request.id', '=', 'document.pr_id')
+				->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+				->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->whereBetween('taskdetails.dateFinished', array($start, $end))->where('tasks.taskName', '=', 'SIGNED BY GOV')->where('purchase_request.status', '=', 'Active')->paginate(15);
+
+				$pageCounter = DB::table('purchase_request')
+				->join('offices', 'purchase_request.office', '=', 'offices.id')
+				->join('document', 'purchase_request.id', '=', 'document.pr_id')
+				->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+				->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->whereBetween('taskdetails.dateFinished', array($start, $end))->where('tasks.taskName', '=', 'SIGNED BY GOV')->where('purchase_request.status', '=', 'Active')->count();	
+			}
+			$flag = 1;
+		}
+		else if($searchBy == 'supplier')
+		{
+			$requests = DB::table('purchase_request')
+			->join('offices', 'purchase_request.office', '=', 'offices.id')
+			->join('document', 'purchase_request.id', '=', 'document.pr_id')
+			->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+			->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('tasks.taskName', '=', 'LCRB / HRB / SUPPLIER')->where('purchase_request.status', '=', 'Active')->where('taskdetails.custom1', 'LIKE', "%$searchTerm%")->paginate(15);
+
+			$pageCounter = DB::table('purchase_request')
+			->join('offices', 'purchase_request.office', '=', 'offices.id')
+			->join('document', 'purchase_request.id', '=', 'document.pr_id')
+			->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+			->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('tasks.taskName', '=', 'LCRB / HRB / SUPPLIER')->where('purchase_request.status', '=', 'Active')->where('taskdetails.custom1', 'LIKE', "%$searchTerm%")->count();
+			$supplierFlag = 1;
+		}
+		return View::make('purchaseRequest.purchaseRequest_completeTable')->with('requests',$requests)->with('pageCounter',$pageCounter)->with('searchBy', $searchBy)->with('flag', $flag)->with('supplierFlag', $supplierFlag);
+	} 
+
+	public function completeClosedSearch()
+	{
+		$searchBy = Input::get('searchBy');
+		$searchTerm = trim(Input::get('searchTerm'));
+		$flag = 0;
+		$supplierFlag = 0;
+		
+		if($searchBy == 'dateReceived')
+		{
+			$start = Input::get('start');
+			$end = Input::get('end');
+
+			if($start == $end)
+			{
+				$starty = (new \DateTime($start))->format('Y');
+				$startm = (new \DateTime($start))->format('m');
+				$startd = (new \DateTime($start))->format('d');
+
+				$requests = DB::table('purchase_request')
+				->join('offices', 'purchase_request.office', '=', 'offices.id')
+				->join('document', 'purchase_request.id', '=', 'document.pr_id')
+				->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+				->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where(DB::raw('YEAR(purchase_request.dateReceived)'), '=', $starty)->where(DB::raw('MONTH(purchase_request.dateReceived)'), '=', $startm)->where(DB::raw('DAY(purchase_request.dateReceived)'), '=', $startd)->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Closed')->paginate(15);
+
+				$requests = DB::table('purchase_request')
+				->join('offices', 'purchase_request.office', '=', 'offices.id')
+				->join('document', 'purchase_request.id', '=', 'document.pr_id')
+				->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+				->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where(DB::raw('YEAR(purchase_request.dateReceived)'), '=', $starty)->where(DB::raw('MONTH(purchase_request.dateReceived)'), '=', $startm)->where(DB::raw('DAY(purchase_request.dateReceived)'), '=', $startd)->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Closed')->count();
+			}
+			else
+			{
+				$requests = DB::table('purchase_request')
+				->join('offices', 'purchase_request.office', '=', 'offices.id')
+				->join('document', 'purchase_request.id', '=', 'document.pr_id')
+				->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+				->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->whereBetween('purchase_request.dateReceived', array($start, $end))->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Closed')->paginate(15);
+
+				$pageCounter = DB::table('purchase_request')
+				->join('offices', 'purchase_request.office', '=', 'offices.id')
+				->join('document', 'purchase_request.id', '=', 'document.pr_id')
+				->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+				->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->whereBetween('purchase_request.dateReceived', array($start, $end))->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Closed')->count();	
+			}
+		}
+		else if($searchBy == 'all')
+			{ return App::make('SearchController')->completeTableActive(); }
+		else if($searchBy == 'controlNo')
+		{
+			$requests = DB::table('purchase_request')
+			->join('offices', 'purchase_request.office', '=', 'offices.id')
+			->join('document', 'purchase_request.id', '=', 'document.pr_id')
+			->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+			->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('purchase_request.controlNo', 'LIKE', "%$searchTerm%")->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Closed')->paginate(15);
+
+			$pageCounter = DB::table('purchase_request')
+			->join('offices', 'purchase_request.office', '=', 'offices.id')
+			->join('document', 'purchase_request.id', '=', 'document.pr_id')
+			->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+			->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('purchase_request.controlNo', 'LIKE', "%$searchTerm%")->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Closed')->count();	
+		}
+		else if($searchBy == 'office')
+		{
+			$requests = DB::table('purchase_request')
+			->join('offices', 'purchase_request.office', '=', 'offices.id')
+			->join('document', 'purchase_request.id', '=', 'document.pr_id')
+			->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+			->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('offices.officeName', 'LIKE', "%$searchTerm%")->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Closed')->paginate(15);
+
+			$pageCounter = DB::table('purchase_request')
+			->join('offices', 'purchase_request.office', '=', 'offices.id')
+			->join('document', 'purchase_request.id', '=', 'document.pr_id')
+			->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+			->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('offices.officeName', 'LIKE', "%$searchTerm%")->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Closed')->count();	
+		}
+		else if($searchBy == 'projectPurpose' || $searchBy == 'sourceOfFund' || $searchBy == 'amount')
+		{
+			if($searchBy == 'amount')
+			{
+				$searchTerm = number_format($searchTerm);
+				$searchTerm .= ".00";
+			}
+		
+			$requests = DB::table('purchase_request')
+			->join('offices', 'purchase_request.office', '=', 'offices.id')
+			->join('document', 'purchase_request.id', '=', 'document.pr_id')
+			->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+			->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where($searchBy, 'LIKE', "%$searchTerm%")->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Closed')->paginate(15);
+
+			$pageCounter = DB::table('purchase_request')
+			->join('offices', 'purchase_request.office', '=', 'offices.id')
+			->join('document', 'purchase_request.id', '=', 'document.pr_id')
+			->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+			->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where($searchBy, 'LIKE', "%$searchTerm%")->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Closed')->count();	
+			// return $requests;
+		}
+		else if($searchBy == 'budgetdate')
+		{
+			$start = Input::get('start');
+			$end = Input::get('end');
+
+			if($start == $end)
+			{
+				$starty = (new \DateTime($start))->format('Y');
+				$startm = (new \DateTime($start))->format('m');
+				$startd = (new \DateTime($start))->format('d');
+
+				$requests = DB::table('purchase_request')
+				->join('offices', 'purchase_request.office', '=', 'offices.id')
+				->join('document', 'purchase_request.id', '=', 'document.pr_id')
+				->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+				->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where(DB::raw('YEAR(taskdetails.dateFinished)'), '=', $starty)->where(DB::raw('MONTH(taskdetails.dateFinished)'), '=', $startm)->where(DB::raw('DAY(taskdetails.dateFinished)'), '=', $startd)->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Closed')->paginate(15);
+
+				$pageCounter = DB::table('purchase_request')
+				->join('offices', 'purchase_request.office', '=', 'offices.id')
+				->join('document', 'purchase_request.id', '=', 'document.pr_id')
+				->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+				->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where(DB::raw('YEAR(taskdetails.dateFinished)'), '=', $starty)->where(DB::raw('MONTH(taskdetails.dateFinished)'), '=', $startm)->where(DB::raw('DAY(taskdetails.dateFinished)'), '=', $startd)->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Closed')->count();
+			}
+			else
+			{
+				$requests = DB::table('purchase_request')
+				->join('offices', 'purchase_request.office', '=', 'offices.id')
+				->join('document', 'purchase_request.id', '=', 'document.pr_id')
+				->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+				->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->whereBetween('taskdetails.dateFinished', array($start, $end))->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Closed')->paginate(15);
+
+				$pageCounter = DB::table('purchase_request')
+				->join('offices', 'purchase_request.office', '=', 'offices.id')
+				->join('document', 'purchase_request.id', '=', 'document.pr_id')
+				->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+				->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->whereBetween('taskdetails.dateFinished', array($start, $end))->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Closed')->count();	
+			}
+			$flag = 1;
+		}
+		else if($searchBy == 'dateapproved')
+		{
+			$start = Input::get('start');
+			$end = Input::get('end');
+
+			if($start == $end)
+			{
+				$starty = (new \DateTime($start))->format('Y');
+				$startm = (new \DateTime($start))->format('m');
+				$startd = (new \DateTime($start))->format('d');
+
+				$requests = DB::table('purchase_request')
+				->join('offices', 'purchase_request.office', '=', 'offices.id')
+				->join('document', 'purchase_request.id', '=', 'document.pr_id')
+				->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+				->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where(DB::raw('YEAR(taskdetails.dateFinished)'), '=', $starty)->where(DB::raw('MONTH(taskdetails.dateFinished)'), '=', $startm)->where(DB::raw('DAY(taskdetails.dateFinished)'), '=', $startd)->where('tasks.taskName', '=', 'SIGNED BY GOV')->where('purchase_request.status', '=', 'Closed')->paginate(15);
+
+				$pageCounter = DB::table('purchase_request')
+				->join('offices', 'purchase_request.office', '=', 'offices.id')
+				->join('document', 'purchase_request.id', '=', 'document.pr_id')
+				->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+				->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where(DB::raw('YEAR(taskdetails.dateFinished)'), '=', $starty)->where(DB::raw('MONTH(taskdetails.dateFinished)'), '=', $startm)->where(DB::raw('DAY(taskdetails.dateFinished)'), '=', $startd)->where('tasks.taskName', '=', 'SIGNED BY GOV')->where('purchase_request.status', '=', 'Closed')->count();
+			}
+			else
+			{
+				$requests = DB::table('purchase_request')
+				->join('offices', 'purchase_request.office', '=', 'offices.id')
+				->join('document', 'purchase_request.id', '=', 'document.pr_id')
+				->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+				->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->whereBetween('taskdetails.dateFinished', array($start, $end))->where('tasks.taskName', '=', 'SIGNED BY GOV')->where('purchase_request.status', '=', 'Closed')->paginate(15);
+
+				$pageCounter = DB::table('purchase_request')
+				->join('offices', 'purchase_request.office', '=', 'offices.id')
+				->join('document', 'purchase_request.id', '=', 'document.pr_id')
+				->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+				->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->whereBetween('taskdetails.dateFinished', array($start, $end))->where('tasks.taskName', '=', 'SIGNED BY GOV')->where('purchase_request.status', '=', 'Closed')->count();	
+			}
+			$flag = 1;
+		}
+		else if($searchBy == 'supplier')
+		{
+			$requests = DB::table('purchase_request')
+			->join('offices', 'purchase_request.office', '=', 'offices.id')
+			->join('document', 'purchase_request.id', '=', 'document.pr_id')
+			->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+			->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('tasks.taskName', '=', 'LCRB / HRB / SUPPLIER')->where('purchase_request.status', '=', 'Closed')->where('taskdetails.custom1', 'LIKE', "%$searchTerm%")->paginate(15);
+
+			$pageCounter = DB::table('purchase_request')
+			->join('offices', 'purchase_request.office', '=', 'offices.id')
+			->join('document', 'purchase_request.id', '=', 'document.pr_id')
+			->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+			->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('tasks.taskName', '=', 'LCRB / HRB / SUPPLIER')->where('purchase_request.status', '=', 'Closed')->where('taskdetails.custom1', 'LIKE', "%$searchTerm%")->count();
+			$supplierFlag = 1;
+		}
+		return View::make('purchaseRequest.purchaseRequest_completeTable')->with('requests',$requests)->with('pageCounter',$pageCounter)->with('searchBy', $searchBy)->with('flag', $flag)->with('supplierFlag', $supplierFlag);
+	} 	
+
+	public function completeCancelledSearch()
+	{
+		$searchBy = Input::get('searchBy');
+		$searchTerm = trim(Input::get('searchTerm'));
+		$flag = 0;
+		$supplierFlag = 0;
+		
+		if($searchBy == 'dateReceived')
+		{
+			$start = Input::get('start');
+			$end = Input::get('end');
+
+			if($start == $end)
+			{
+				$starty = (new \DateTime($start))->format('Y');
+				$startm = (new \DateTime($start))->format('m');
+				$startd = (new \DateTime($start))->format('d');
+
+				$requests = DB::table('purchase_request')
+				->join('offices', 'purchase_request.office', '=', 'offices.id')
+				->join('document', 'purchase_request.id', '=', 'document.pr_id')
+				->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+				->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where(DB::raw('YEAR(purchase_request.dateReceived)'), '=', $starty)->where(DB::raw('MONTH(purchase_request.dateReceived)'), '=', $startm)->where(DB::raw('DAY(purchase_request.dateReceived)'), '=', $startd)->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Cancelled')->paginate(15);
+
+				$requests = DB::table('purchase_request')
+				->join('offices', 'purchase_request.office', '=', 'offices.id')
+				->join('document', 'purchase_request.id', '=', 'document.pr_id')
+				->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+				->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where(DB::raw('YEAR(purchase_request.dateReceived)'), '=', $starty)->where(DB::raw('MONTH(purchase_request.dateReceived)'), '=', $startm)->where(DB::raw('DAY(purchase_request.dateReceived)'), '=', $startd)->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Cancelled')->count();
+			}
+			else
+			{
+				$requests = DB::table('purchase_request')
+				->join('offices', 'purchase_request.office', '=', 'offices.id')
+				->join('document', 'purchase_request.id', '=', 'document.pr_id')
+				->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+				->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->whereBetween('purchase_request.dateReceived', array($start, $end))->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Cancelled')->paginate(15);
+
+				$pageCounter = DB::table('purchase_request')
+				->join('offices', 'purchase_request.office', '=', 'offices.id')
+				->join('document', 'purchase_request.id', '=', 'document.pr_id')
+				->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+				->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->whereBetween('purchase_request.dateReceived', array($start, $end))->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Cancelled')->count();	
+			}
+		}
+		else if($searchBy == 'all')
+			{ return App::make('SearchController')->completeTableActive(); }
+		else if($searchBy == 'controlNo')
+		{
+			$requests = DB::table('purchase_request')
+			->join('offices', 'purchase_request.office', '=', 'offices.id')
+			->join('document', 'purchase_request.id', '=', 'document.pr_id')
+			->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+			->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('purchase_request.controlNo', 'LIKE', "%$searchTerm%")->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Cancelled')->paginate(15);
+
+			$pageCounter = DB::table('purchase_request')
+			->join('offices', 'purchase_request.office', '=', 'offices.id')
+			->join('document', 'purchase_request.id', '=', 'document.pr_id')
+			->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+			->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('purchase_request.controlNo', 'LIKE', "%$searchTerm%")->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Cancelled')->count();	
+		}
+		else if($searchBy == 'office')
+		{
+			$requests = DB::table('purchase_request')
+			->join('offices', 'purchase_request.office', '=', 'offices.id')
+			->join('document', 'purchase_request.id', '=', 'document.pr_id')
+			->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+			->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('offices.officeName', 'LIKE', "%$searchTerm%")->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Cancelled')->paginate(15);
+
+			$pageCounter = DB::table('purchase_request')
+			->join('offices', 'purchase_request.office', '=', 'offices.id')
+			->join('document', 'purchase_request.id', '=', 'document.pr_id')
+			->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+			->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('offices.officeName', 'LIKE', "%$searchTerm%")->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Cancelled')->count();	
+		}
+		else if($searchBy == 'projectPurpose' || $searchBy == 'sourceOfFund' || $searchBy == 'amount')
+		{
+			if($searchBy == 'amount')
+			{
+				$searchTerm = number_format($searchTerm);
+				$searchTerm .= ".00";
+			}
+		
+			$requests = DB::table('purchase_request')
+			->join('offices', 'purchase_request.office', '=', 'offices.id')
+			->join('document', 'purchase_request.id', '=', 'document.pr_id')
+			->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+			->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where($searchBy, 'LIKE', "%$searchTerm%")->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Cancelled')->paginate(15);
+
+			$pageCounter = DB::table('purchase_request')
+			->join('offices', 'purchase_request.office', '=', 'offices.id')
+			->join('document', 'purchase_request.id', '=', 'document.pr_id')
+			->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+			->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where($searchBy, 'LIKE', "%$searchTerm%")->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Cancelled')->count();	
+			// return $requests;
+		}
+		else if($searchBy == 'budgetdate')
+		{
+			$start = Input::get('start');
+			$end = Input::get('end');
+
+			if($start == $end)
+			{
+				$starty = (new \DateTime($start))->format('Y');
+				$startm = (new \DateTime($start))->format('m');
+				$startd = (new \DateTime($start))->format('d');
+
+				$requests = DB::table('purchase_request')
+				->join('offices', 'purchase_request.office', '=', 'offices.id')
+				->join('document', 'purchase_request.id', '=', 'document.pr_id')
+				->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+				->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where(DB::raw('YEAR(taskdetails.dateFinished)'), '=', $starty)->where(DB::raw('MONTH(taskdetails.dateFinished)'), '=', $startm)->where(DB::raw('DAY(taskdetails.dateFinished)'), '=', $startd)->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Cancelled')->paginate(15);
+
+				$pageCounter = DB::table('purchase_request')
+				->join('offices', 'purchase_request.office', '=', 'offices.id')
+				->join('document', 'purchase_request.id', '=', 'document.pr_id')
+				->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+				->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where(DB::raw('YEAR(taskdetails.dateFinished)'), '=', $starty)->where(DB::raw('MONTH(taskdetails.dateFinished)'), '=', $startm)->where(DB::raw('DAY(taskdetails.dateFinished)'), '=', $startd)->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Cancelled')->count();
+			}
+			else
+			{
+				$requests = DB::table('purchase_request')
+				->join('offices', 'purchase_request.office', '=', 'offices.id')
+				->join('document', 'purchase_request.id', '=', 'document.pr_id')
+				->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+				->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->whereBetween('taskdetails.dateFinished', array($start, $end))->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Cancelled')->paginate(15);
+
+				$pageCounter = DB::table('purchase_request')
+				->join('offices', 'purchase_request.office', '=', 'offices.id')
+				->join('document', 'purchase_request.id', '=', 'document.pr_id')
+				->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+				->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->whereBetween('taskdetails.dateFinished', array($start, $end))->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Cancelled')->count();	
+			}
+			$flag = 1;
+		}
+		else if($searchBy == 'dateapproved')
+		{
+			$start = Input::get('start');
+			$end = Input::get('end');
+
+			if($start == $end)
+			{
+				$starty = (new \DateTime($start))->format('Y');
+				$startm = (new \DateTime($start))->format('m');
+				$startd = (new \DateTime($start))->format('d');
+
+				$requests = DB::table('purchase_request')
+				->join('offices', 'purchase_request.office', '=', 'offices.id')
+				->join('document', 'purchase_request.id', '=', 'document.pr_id')
+				->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+				->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where(DB::raw('YEAR(taskdetails.dateFinished)'), '=', $starty)->where(DB::raw('MONTH(taskdetails.dateFinished)'), '=', $startm)->where(DB::raw('DAY(taskdetails.dateFinished)'), '=', $startd)->where('tasks.taskName', '=', 'SIGNED BY GOV')->where('purchase_request.status', '=', 'Cancelled')->paginate(15);
+
+				$pageCounter = DB::table('purchase_request')
+				->join('offices', 'purchase_request.office', '=', 'offices.id')
+				->join('document', 'purchase_request.id', '=', 'document.pr_id')
+				->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+				->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where(DB::raw('YEAR(taskdetails.dateFinished)'), '=', $starty)->where(DB::raw('MONTH(taskdetails.dateFinished)'), '=', $startm)->where(DB::raw('DAY(taskdetails.dateFinished)'), '=', $startd)->where('tasks.taskName', '=', 'SIGNED BY GOV')->where('purchase_request.status', '=', 'Cancelled')->count();
+			}
+			else
+			{
+				$requests = DB::table('purchase_request')
+				->join('offices', 'purchase_request.office', '=', 'offices.id')
+				->join('document', 'purchase_request.id', '=', 'document.pr_id')
+				->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+				->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->whereBetween('taskdetails.dateFinished', array($start, $end))->where('tasks.taskName', '=', 'SIGNED BY GOV')->where('purchase_request.status', '=', 'Cancelled')->paginate(15);
+
+				$pageCounter = DB::table('purchase_request')
+				->join('offices', 'purchase_request.office', '=', 'offices.id')
+				->join('document', 'purchase_request.id', '=', 'document.pr_id')
+				->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+				->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->whereBetween('taskdetails.dateFinished', array($start, $end))->where('tasks.taskName', '=', 'SIGNED BY GOV')->where('purchase_request.status', '=', 'Cancelled')->count();	
+			}
+			$flag = 1;
+		}
+		else if($searchBy == 'supplier')
+		{
+			$requests = DB::table('purchase_request')
+			->join('offices', 'purchase_request.office', '=', 'offices.id')
+			->join('document', 'purchase_request.id', '=', 'document.pr_id')
+			->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+			->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('tasks.taskName', '=', 'LCRB / HRB / SUPPLIER')->where('purchase_request.status', '=', 'Cancelled')->where('taskdetails.custom1', 'LIKE', "%$searchTerm%")->paginate(15);
+
+			$pageCounter = DB::table('purchase_request')
+			->join('offices', 'purchase_request.office', '=', 'offices.id')
+			->join('document', 'purchase_request.id', '=', 'document.pr_id')
+			->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+			->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('tasks.taskName', '=', 'LCRB / HRB / SUPPLIER')->where('purchase_request.status', '=', 'Cancelled')->where('taskdetails.custom1', 'LIKE', "%$searchTerm%")->count();
+			$supplierFlag = 1;
+		}
+		return View::make('purchaseRequest.purchaseRequest_completeTable')->with('requests',$requests)->with('pageCounter',$pageCounter)->with('searchBy', $searchBy)->with('flag', $flag)->with('supplierFlag', $supplierFlag);
+	} 		
+
+	public function completeOverdueSearch()
+	{
+		$searchBy = Input::get('searchBy');
+		$searchTerm = trim(Input::get('searchTerm'));
+		$flag = 0;
+		$supplierFlag = 0;
+		
+		if($searchBy == 'dateReceived')
+		{
+			$start = Input::get('start');
+			$end = Input::get('end');
+
+			if($start == $end)
+			{
+				$starty = (new \DateTime($start))->format('Y');
+				$startm = (new \DateTime($start))->format('m');
+				$startd = (new \DateTime($start))->format('d');
+
+				$requests = DB::table('purchase_request')
+				->join('offices', 'purchase_request.office', '=', 'offices.id')
+				->join('document', 'purchase_request.id', '=', 'document.pr_id')
+				->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+				->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where(DB::raw('YEAR(purchase_request.dateReceived)'), '=', $starty)->where(DB::raw('MONTH(purchase_request.dateReceived)'), '=', $startm)->where(DB::raw('DAY(purchase_request.dateReceived)'), '=', $startd)->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Active')->where('purchase_request.dueDate', '<=', date('Y-m-d H:i:s'))->paginate(15);
+
+				$requests = DB::table('purchase_request')
+				->join('offices', 'purchase_request.office', '=', 'offices.id')
+				->join('document', 'purchase_request.id', '=', 'document.pr_id')
+				->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+				->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where(DB::raw('YEAR(purchase_request.dateReceived)'), '=', $starty)->where(DB::raw('MONTH(purchase_request.dateReceived)'), '=', $startm)->where(DB::raw('DAY(purchase_request.dateReceived)'), '=', $startd)->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Active')->where('purchase_request.dueDate', '<=', date('Y-m-d H:i:s'))->count();
+			}
+			else
+			{
+				$requests = DB::table('purchase_request')
+				->join('offices', 'purchase_request.office', '=', 'offices.id')
+				->join('document', 'purchase_request.id', '=', 'document.pr_id')
+				->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+				->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->whereBetween('purchase_request.dateReceived', array($start, $end))->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Active')->where('purchase_request.dueDate', '<=', date('Y-m-d H:i:s'))->paginate(15);
+
+				$pageCounter = DB::table('purchase_request')
+				->join('offices', 'purchase_request.office', '=', 'offices.id')
+				->join('document', 'purchase_request.id', '=', 'document.pr_id')
+				->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+				->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->whereBetween('purchase_request.dateReceived', array($start, $end))->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Active')->where('purchase_request.dueDate', '<=', date('Y-m-d H:i:s'))->count();	
+			}
+		}
+		else if($searchBy == 'all')
+			{ return App::make('SearchController')->completeTableActive(); }
+		else if($searchBy == 'controlNo')
+		{
+			$requests = DB::table('purchase_request')
+			->join('offices', 'purchase_request.office', '=', 'offices.id')
+			->join('document', 'purchase_request.id', '=', 'document.pr_id')
+			->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+			->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('purchase_request.controlNo', 'LIKE', "%$searchTerm%")->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Active')->where('purchase_request.dueDate', '<=', date('Y-m-d H:i:s'))->paginate(15);
+
+			$pageCounter = DB::table('purchase_request')
+			->join('offices', 'purchase_request.office', '=', 'offices.id')
+			->join('document', 'purchase_request.id', '=', 'document.pr_id')
+			->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+			->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('purchase_request.controlNo', 'LIKE', "%$searchTerm%")->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Active')->where('purchase_request.dueDate', '<=', date('Y-m-d H:i:s'))->count();	
+		}
+		else if($searchBy == 'office')
+		{
+			$requests = DB::table('purchase_request')
+			->join('offices', 'purchase_request.office', '=', 'offices.id')
+			->join('document', 'purchase_request.id', '=', 'document.pr_id')
+			->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+			->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('offices.officeName', 'LIKE', "%$searchTerm%")->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Active')->where('purchase_request.dueDate', '<=', date('Y-m-d H:i:s'))->paginate(15);
+
+			$pageCounter = DB::table('purchase_request')
+			->join('offices', 'purchase_request.office', '=', 'offices.id')
+			->join('document', 'purchase_request.id', '=', 'document.pr_id')
+			->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+			->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('offices.officeName', 'LIKE', "%$searchTerm%")->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Active')->where('purchase_request.dueDate', '<=', date('Y-m-d H:i:s'))->count();	
+		}
+		else if($searchBy == 'projectPurpose' || $searchBy == 'sourceOfFund' || $searchBy == 'amount')
+		{
+			if($searchBy == 'amount')
+			{
+				$searchTerm = number_format($searchTerm);
+				$searchTerm .= ".00";
+			}
+		
+			$requests = DB::table('purchase_request')
+			->join('offices', 'purchase_request.office', '=', 'offices.id')
+			->join('document', 'purchase_request.id', '=', 'document.pr_id')
+			->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+			->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where($searchBy, 'LIKE', "%$searchTerm%")->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Active')->where('purchase_request.dueDate', '<=', date('Y-m-d H:i:s'))->paginate(15);
+
+			$pageCounter = DB::table('purchase_request')
+			->join('offices', 'purchase_request.office', '=', 'offices.id')
+			->join('document', 'purchase_request.id', '=', 'document.pr_id')
+			->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+			->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where($searchBy, 'LIKE', "%$searchTerm%")->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Active')->where('purchase_request.dueDate', '<=', date('Y-m-d H:i:s'))->count();	
+			// return $requests;
+		}
+		else if($searchBy == 'budgetdate')
+		{
+			$start = Input::get('start');
+			$end = Input::get('end');
+
+			if($start == $end)
+			{
+				$starty = (new \DateTime($start))->format('Y');
+				$startm = (new \DateTime($start))->format('m');
+				$startd = (new \DateTime($start))->format('d');
+
+				$requests = DB::table('purchase_request')
+				->join('offices', 'purchase_request.office', '=', 'offices.id')
+				->join('document', 'purchase_request.id', '=', 'document.pr_id')
+				->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+				->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where(DB::raw('YEAR(taskdetails.dateFinished)'), '=', $starty)->where(DB::raw('MONTH(taskdetails.dateFinished)'), '=', $startm)->where(DB::raw('DAY(taskdetails.dateFinished)'), '=', $startd)->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Active')->where('purchase_request.dueDate', '<=', date('Y-m-d H:i:s'))->paginate(15);
+
+				$pageCounter = DB::table('purchase_request')
+				->join('offices', 'purchase_request.office', '=', 'offices.id')
+				->join('document', 'purchase_request.id', '=', 'document.pr_id')
+				->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+				->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where(DB::raw('YEAR(taskdetails.dateFinished)'), '=', $starty)->where(DB::raw('MONTH(taskdetails.dateFinished)'), '=', $startm)->where(DB::raw('DAY(taskdetails.dateFinished)'), '=', $startd)->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Active')->where('purchase_request.dueDate', '<=', date('Y-m-d H:i:s'))->count();
+			}
+			else
+			{
+				$requests = DB::table('purchase_request')
+				->join('offices', 'purchase_request.office', '=', 'offices.id')
+				->join('document', 'purchase_request.id', '=', 'document.pr_id')
+				->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+				->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->whereBetween('taskdetails.dateFinished', array($start, $end))->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.dueDate', '<=', date('Y-m-d H:i:s'))->where('purchase_request.status', '=', 'Active')->paginate(15);
+
+				$pageCounter = DB::table('purchase_request')
+				->join('offices', 'purchase_request.office', '=', 'offices.id')
+				->join('document', 'purchase_request.id', '=', 'document.pr_id')
+				->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+				->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->whereBetween('taskdetails.dateFinished', array($start, $end))->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.dueDate', '<=', date('Y-m-d H:i:s'))->where('purchase_request.status', '=', 'Active')->count();	
+			}
+			$flag = 1;
+		}
+		else if($searchBy == 'dateapproved')
+		{
+			$start = Input::get('start');
+			$end = Input::get('end');
+
+			if($start == $end)
+			{
+				$starty = (new \DateTime($start))->format('Y');
+				$startm = (new \DateTime($start))->format('m');
+				$startd = (new \DateTime($start))->format('d');
+
+				$requests = DB::table('purchase_request')
+				->join('offices', 'purchase_request.office', '=', 'offices.id')
+				->join('document', 'purchase_request.id', '=', 'document.pr_id')
+				->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+				->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where(DB::raw('YEAR(taskdetails.dateFinished)'), '=', $starty)->where(DB::raw('MONTH(taskdetails.dateFinished)'), '=', $startm)->where(DB::raw('DAY(taskdetails.dateFinished)'), '=', $startd)->where('tasks.taskName', '=', 'SIGNED BY GOV')->where('purchase_request.status', '=', 'Active')->where('purchase_request.dueDate', '<=', date('Y-m-d H:i:s'))->paginate(15);
+
+				$pageCounter = DB::table('purchase_request')
+				->join('offices', 'purchase_request.office', '=', 'offices.id')
+				->join('document', 'purchase_request.id', '=', 'document.pr_id')
+				->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+				->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where(DB::raw('YEAR(taskdetails.dateFinished)'), '=', $starty)->where(DB::raw('MONTH(taskdetails.dateFinished)'), '=', $startm)->where(DB::raw('DAY(taskdetails.dateFinished)'), '=', $startd)->where('tasks.taskName', '=', 'SIGNED BY GOV')->where('purchase_request.status', '=', 'Active')->where('purchase_request.dueDate', '<=', date('Y-m-d H:i:s'))->count();
+			}
+			else
+			{
+				$requests = DB::table('purchase_request')
+				->join('offices', 'purchase_request.office', '=', 'offices.id')
+				->join('document', 'purchase_request.id', '=', 'document.pr_id')
+				->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+				->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->whereBetween('taskdetails.dateFinished', array($start, $end))->where('tasks.taskName', '=', 'SIGNED BY GOV')->where('purchase_request.status', '=', 'Active')->where('purchase_request.dueDate', '<=', date('Y-m-d H:i:s'))->paginate(15);
+
+				$pageCounter = DB::table('purchase_request')
+				->join('offices', 'purchase_request.office', '=', 'offices.id')
+				->join('document', 'purchase_request.id', '=', 'document.pr_id')
+				->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+				->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->whereBetween('taskdetails.dateFinished', array($start, $end))->where('tasks.taskName', '=', 'SIGNED BY GOV')->where('purchase_request.status', '=', 'Active')->where('purchase_request.dueDate', '<=', date('Y-m-d H:i:s'))->count();	
+			}
+			$flag = 1;
+		}
+		else if($searchBy == 'supplier')
+		{
+			$requests = DB::table('purchase_request')
+			->join('offices', 'purchase_request.office', '=', 'offices.id')
+			->join('document', 'purchase_request.id', '=', 'document.pr_id')
+			->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+			->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('tasks.taskName', '=', 'LCRB / HRB / SUPPLIER')->where('purchase_request.status', '=', 'Active')->where('taskdetails.custom1', 'LIKE', "%$searchTerm%")->where('purchase_request.dueDate', '<=', date('Y-m-d H:i:s'))->paginate(15);
+
+			$pageCounter = DB::table('purchase_request')
+			->join('offices', 'purchase_request.office', '=', 'offices.id')
+			->join('document', 'purchase_request.id', '=', 'document.pr_id')
+			->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+			->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('tasks.taskName', '=', 'LCRB / HRB / SUPPLIER')->where('purchase_request.status', '=', 'Active')->where('taskdetails.custom1', 'LIKE', "%$searchTerm%")->where('purchase_request.dueDate', '<=', date('Y-m-d H:i:s'))->count();
+			$supplierFlag = 1;
+		}
+		return View::make('purchaseRequest.purchaseRequest_completeTable')->with('requests',$requests)->with('pageCounter',$pageCounter)->with('searchBy', $searchBy)->with('flag', $flag)->with('supplierFlag', $supplierFlag);
+	} 
+
 	public function completeTableActive()
 	{
 		// $requests = DB::table('purchase_request')->paginate(20);
@@ -17,7 +785,61 @@ class SearchController extends BaseController {
 		->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
 		->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Active')->count();
 
-		return View::make('purchaseRequest.purchaseRequest_completeTable')->with('requests',$requests)->with('pageCounter',$pageCounter);
+		return View::make('purchaseRequest.purchaseRequest_completeTable')->with('requests',$requests)->with('pageCounter',$pageCounter)->with('searchBy','0');
+	}
+
+	public function completeTableClosed()
+	{
+		// $requests = DB::table('purchase_request')->paginate(20);
+		$requests = DB::table('purchase_request')
+		->join('offices', 'purchase_request.office', '=', 'offices.id')
+		->join('document', 'purchase_request.id', '=', 'document.pr_id')
+		->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+		->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Closed')->paginate(15);
+
+		$pageCounter = DB::table('purchase_request')
+		->join('offices', 'purchase_request.office', '=', 'offices.id')
+		->join('document', 'purchase_request.id', '=', 'document.pr_id')
+		->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+		->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Closed')->count();
+
+		return View::make('purchaseRequest.purchaseRequest_completeTable')->with('searchBy','0')->with('requests',$requests)->with('pageCounter',$pageCounter);
+	}
+
+	public function completeTableOverdue()
+	{
+		// $requests = DB::table('purchase_request')->paginate(20);
+		$requests = DB::table('purchase_request')
+		->join('offices', 'purchase_request.office', '=', 'offices.id')
+		->join('document', 'purchase_request.id', '=', 'document.pr_id')
+		->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+		->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.dueDate', '<=', date('Y-m-d H:i:s'))->where('purchase_request.status', '=', 'Active')->paginate(15);
+
+		$pageCounter = DB::table('purchase_request')
+		->join('offices', 'purchase_request.office', '=', 'offices.id')
+		->join('document', 'purchase_request.id', '=', 'document.pr_id')
+		->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+		->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.dueDate', '<=', date('Y-m-d H:i:s'))->where('purchase_request.status', '=', 'Active')->count();
+
+		return View::make('purchaseRequest.purchaseRequest_completeTable')->with('searchBy','0')->with('requests',$requests)->with('pageCounter',$pageCounter);
+	}
+
+	public function completeTableCancelled()
+	{
+		// $requests = DB::table('purchase_request')->paginate(20);
+		$requests = DB::table('purchase_request')
+		->join('offices', 'purchase_request.office', '=', 'offices.id')
+		->join('document', 'purchase_request.id', '=', 'document.pr_id')
+		->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+		->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Cancelled')->paginate(15);
+
+		$pageCounter = DB::table('purchase_request')
+		->join('offices', 'purchase_request.office', '=', 'offices.id')
+		->join('document', 'purchase_request.id', '=', 'document.pr_id')
+		->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+		->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Cancelled')->count();
+
+		return View::make('purchaseRequest.purchaseRequest_completeTable')->with('searchBy','0')->with('requests',$requests)->with('pageCounter',$pageCounter);
 	}
 
 	public function search()
