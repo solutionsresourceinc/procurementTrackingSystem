@@ -569,7 +569,7 @@
                                     if (NULL!=Input::old('assignee'))
                                     echo "value='".Input::old('assignee')."'";
                                     else
-                                    echo "value='".'none'."'";
+                                    echo "value='".'None'."'";
                                     ?>
                                     >
                                 </td>
@@ -626,7 +626,7 @@
                                     if (NULL!=Input::old('by'))
                                     echo Input::old('by');
                                     else
-                                    echo 'none';
+                                    echo 'None';
                                     ?>"
                                     >
                                 </td>
@@ -675,7 +675,7 @@
                                     if (NULL!=Input::old('by'))
                                     echo Input::old('by');
                                     else
-                                    echo 'none';
+                                    echo 'None';
                                     ?>"
                                     >
                                 </td>
@@ -814,7 +814,7 @@
                                         if (NULL!=Input::old('by'))
                                             echo Input::old('by');
                                         else
-                                        echo 'none';
+                                        echo 'None';
                                         ?>
                                         "
                                         >
@@ -892,7 +892,7 @@
                                         if (NULL!=Input::old('by'))
                                             echo "value='".Input::old('by')."'";
                                         else
-                                        echo "value='none'";
+                                        echo "value='None'";
                                         ?>
                                         
                                         >
@@ -956,7 +956,7 @@
                                         if (NULL!=Input::old('by'))
                                             echo Input::old('by');
                                         else
-                                        echo 'none';
+                                        echo 'None';
                                         ?>
                                         "
                                         >
@@ -1210,7 +1210,7 @@
                                         if (NULL!=Input::old('by'))
                                             echo Input::old('by');
                                         else
-                                        echo 'none';
+                                        echo 'None';
                                         
                                         ?>
                                         ">
@@ -1253,7 +1253,7 @@
                                         if (NULL!=Input::old('assignee'))
                                             echo "value='".Input::old('assignee')."'";
                                         else
-                                            echo "value='".'none'."'";
+                                            echo "value='".'None'."'";
                                         ?>
                                         
                                     >
@@ -1298,7 +1298,7 @@
                                         if (NULL!=Input::old('assignee'))
                                             echo "value='".Input::old('assignee')."'";
                                         else
-                                        echo "value='".'none'. "'";
+                                        echo "value='".'None'. "'";
                                         ?>
                                         
                                     >
