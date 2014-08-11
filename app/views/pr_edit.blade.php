@@ -561,7 +561,9 @@
                                     <input type ="text" name="assignee" placeholder="Enter name" class="form-control" width="100%" maxlength="100"
                                     <?php
                                     if (NULL!=Input::old('assignee'))
-                                    echo "value='".Input::old('assignee')."'";
+                                    echo "value='".Input::old('assignee');
+                                    else
+                                    echo "value='".'none'."'";
                                     ?>
                                     >
                                 </td>
@@ -620,6 +622,8 @@
                                     value="<?php
                                     if (NULL!=Input::old('by'))
                                     echo Input::old('by');
+                                    else
+                                    echo 'none';
                                     ?>"
                                     >
                                 </td>
@@ -670,6 +674,8 @@
                                      value="<?php
                                     if (NULL!=Input::old('by'))
                                     echo Input::old('by');
+                                    else
+                                    echo 'none';
                                     ?>"
                                     >
                                 </td>
@@ -815,7 +821,8 @@
                                         <?php
                                         if (NULL!=Input::old('by'))
                                             echo Input::old('by');
-                                       
+                                        else
+                                        echo 'none';
                                         ?>
                                         "
                                         >
@@ -880,7 +887,8 @@
                                         <?php
                                         if (NULL!=Input::old('by'))
                                             echo Input::old('by');
-                                        
+                                        else
+                                        echo 'none';
                                         ?>
                                         "
                                         >
@@ -1146,7 +1154,8 @@
                                         <?php
                                         if (NULL!=Input::old('by'))
                                             echo Input::old('by');
-                                        
+                                        else
+                                        echo 'none';
                                         
                                         ?>
                                         ">
@@ -1190,7 +1199,8 @@
                                         <?php
                                         if (NULL!=Input::old('assignee'))
                                             echo Input::old('assignee');
-                                       
+                                        else
+                                            echo 'none';
                                         ?>
                                         "
                                     >
@@ -1234,7 +1244,8 @@
                                         <?php
                                         if (NULL!=Input::old('assignee'))
                                             echo Input::old('assignee');
-                    
+                                        else
+                                        echo 'none';
                                         ?>
                                         "
                                     >
@@ -1583,10 +1594,9 @@
     
                            <td align="center">
                             <?php 
-                                $date = new DateTime($taskp->custom1);
-                                $datef = $date->format('m/d/y');
-                                if($taskp->dateFinished!="0000-00-00 00:00:00") 
-                                    echo $datef; 
+                                
+                                if($taskp->custom1!=NULL) 
+                                    echo  $taskp->custom1; 
                             ?>
                             </td>
                             

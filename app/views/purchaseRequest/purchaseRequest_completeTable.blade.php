@@ -84,25 +84,34 @@
 			@foreach($requests as $request)
 				<tr>
 					<td>
-						@if($request->dateReceived == "0000-00-00 00:00:00")
-							<font color="grey">- - -</font>
-						@else
-							{{{(new \DateTime($request->dateReceived))->format('Y-m-d')}}}
-						@endif
+						<?php $prDate = DB::table('purchase_request')->where('controlNo', '=', $request->controlNo)->first(); ?>
+						{{{(new \DateTime($prDate->dateReceived))->format('Y-m-d')}}}
 					</td>
 					<td>{{{str_pad($request->controlNo, 5, '0', STR_PAD_LEFT)}}}</td>
 					<td>{{{$request->officeName}}}</td>
 					<td>{{{$request->projectPurpose}}}</td>
 					<td>
 						@if($request->dateFinished == '0000-00-00 00:00:00')
-							<font color="grey">- - -</font>
+							<font color="grey">N/A</font>
 						@else
 							{{{(new \DateTime($request->dateFinished))->format('Y-m-d')}}}
 						@endif
-					</td> <!-- BUDGET -->
+					</td>
 					<td>{{{$request->sourceOfFund}}}</td>
 					<td>{{{number_format($request->amount)}}}</td>
-					<td>Test</td>
+					<td>
+						<?php
+							$dateApproved = DB::table('purchase_request')
+							->join('document', 'purchase_request.id', '=', 'document.pr_id')
+							->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+							->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('tasks.taskName', '=', 'Date Signed by Gov:')->where('tasks.section_id', '=', '1')->where('purchase_request.status', '=', 'Active')->where('purchase_request.controlNo', '=', $request->controlNo)->first();
+						?>
+						@if($dateApproved->custom1 == "")
+							<font color="grey">N/A</font>
+						@else
+							{{{ $dateApproved->custom1 }}}			
+						@endif
+					</td>
                     <td>
                     	<?php 
 		                    $doc = new Purchase; 
@@ -112,19 +121,35 @@
                             <?php  
                                 $workflow = Workflow::find($docs->work_id)->workFlowName; 
                                 if($workflow == "Small Value Procurement (Below P50,000)")
-                                    echo "SVP (Below P50,000)";
+                                    // echo "SVP (Below P50,000)";
+                                    echo "SVP";
                                 else if($workflow == "Small Value Procurement (Above P50,000 Below P500,000)")
-                                    echo "SVP (Above P50,000 Below P500,000)";
-                                else
-                                    echo $workflow = Workflow::find($docs->work_id)->workFlowName;
+                                    // echo "SVP (Above P50,000 Below P500,000)";
+                                    echo "SVP";
+                                else if($workflow == "Bidding (Above P500,000)")
+                                	echo "BIDDING";
+                                    // echo $workflow = Workflow::find($docs->work_id)->workFlowName;
                                 if($request->otherType != "Pakyaw" || $request->otherType != "Direct Contracting"){}
                                 else if($request->otherType != "")
                                         echo "<br> <i>$request->otherType</i>";
                             ?>
                         @endforeach
                     </td>
-					<td>{{{$request->dateReceived}}}</td>
-					<td>Test</td>
+					<td>
+						<?php
+							$supplier = DB::table('purchase_request')
+							->join('document', 'purchase_request.id', '=', 'document.pr_id')
+							->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+							->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('tasks.taskName', '=', 'LCRB / HRB / SUPPLIER')->where('purchase_request.status', '=', 'Active')->where('purchase_request.controlNo', '=', $request->controlNo)->first();
+						?>
+						@if($supplier->custom1 == "")
+							<font color="grey">N/A</font>
+						@else
+							{{{ $supplier->custom1 }}}			
+						@endif
+					</td>
+					<td>
+					</td>
 				</tr>
 			@endforeach
 		</tbody>

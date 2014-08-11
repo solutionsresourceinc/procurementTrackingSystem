@@ -1,7 +1,7 @@
 <?php
 
 class SearchController extends BaseController {
-	
+
 	public function completeTableActive()
 	{
 		// $requests = DB::table('purchase_request')->paginate(20);
