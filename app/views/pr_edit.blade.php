@@ -1454,7 +1454,7 @@
             
                         if($tasks->taskType!="cheque"&&$tasks->taskType!="published"&&$tasks->taskType!="contract"&&$tasks->taskType!="meeting"&&$tasks->taskType!="rfq"&&$tasks->taskType!="documents"&&$tasks->taskType!="evaluation"&&$tasks->taskType!="preparation")
                         {
-                            echo "<td>";
+                            echo "<td align='left'>";
                             echo $tasks->taskName."</td>";
                         }
                         
@@ -1585,7 +1585,7 @@
                                     <th class='workflow-th'>Action</th>
                                 </tr>
                                 <tr>
-                                    <td align="center">{{$tasks->taskName}}</td>
+                                    <td >{{$tasks->taskName}}</td>
                                     <td align="center">
                                         {{$taskp->custom1}}
                                         <span class="add-on"><i class="icon-th"></i></span>
@@ -1636,7 +1636,7 @@
                                     <th class='workflow-th'>Action</th>
                                 </tr>
                                 <tr>
-                                    <td align="center">{{$tasks->taskName}}</td>
+                                    <td align>{{$tasks->taskName}}</td>
                                     <td align="center">
                                         {{$taskp->custom1}}
                                         <span class="add-on"><i class="icon-th"></i></span>
@@ -1652,7 +1652,7 @@
                         @endif
                         @if($tasks->taskType=="evaluation")
                               
-                                    <td align="center">{{$tasks->taskName}}</td>
+                                    <td >{{$tasks->taskName}}</td>
                                     <td colspan="2" align="center">
                                         {{$taskp->custom1}}
                                     </td align="center">
@@ -1686,7 +1686,7 @@
                                     <th class='workflow-th'>Action</th>
                                 </tr>
                                 <tr>
-                                    <td align="center">{{$tasks->taskName}}</td>
+                                    <td>{{$tasks->taskName}}</td>
                                     <td align="center">
                                         <?php 
                                         $today = date("m/d/y");
@@ -1718,7 +1718,7 @@
                                     <th class='workflow-th'>Action</th>
                                 </tr>
                                 <tr>
-                                    <td align="center">{{$tasks->taskName}}</td>
+                                    <td>{{$tasks->taskName}}</td>
                                     <td align="center">
                                         <?php 
                                         $today = date("m/d/y");
@@ -1749,7 +1749,7 @@
                                     <th class='workflow-th'>Action</th>
                                 </tr>
                                 <tr>
-                                    <td align="center">{{$tasks->taskName}}</td>
+                                    <td >{{$tasks->taskName}}</td>
                                     <td align="center">
                                         {{$taskp->custom1}}
                                     </td>
