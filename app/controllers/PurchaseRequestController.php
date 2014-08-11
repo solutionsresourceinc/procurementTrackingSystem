@@ -1461,6 +1461,7 @@ $id=$docs->pr_id;
 	$taskd->status="Done";
 	$taskd->custom1=$referenceno;
 	$taskd->custom2=$date;
+
 	$taskd->custom3=$by;
 	$taskd->save();
 	$tasknext=TaskDetails::find($taskdetails_id+1);
@@ -1657,6 +1658,7 @@ $id=$docs->pr_id;
 	$taskd->custom1=$amt;
 	$taskd->custom2=$num;
 	$taskd->custom3=$date;
+
 	$taskd->save();
 	$tasknext=TaskDetails::find($taskdetails_id+1);
 	$tasknextc=TaskDetails::where('id', $taskdetails_id+1)->where('doc_id', $docs->pr_id)->count();
@@ -1735,7 +1737,11 @@ $id=$docs->pr_id;
 	$taskd= TaskDetails::find($taskdetails_id);
 	$taskd->status="Done";
 	$taskd->custom1=$datepublished;
+	$timestamp = strtotime($datepublished);
+	$dateFinished= date("Y-m-d H:i:s", $timestamp);
+	$taskd->dateFinished=$dateFinished;
 	$taskd->custom2=$enddate;
+
 	$taskd->custom3=$by;
 
 	$taskd->save();
@@ -1818,6 +1824,7 @@ $id=$docs->pr_id;
 	$taskd= TaskDetails::find($taskdetails_id);
 	$taskd->status="Done";
 	$taskd->custom1=$date;
+
 	$taskd->custom2=$biddingdate;
 	$taskd->custom3=$by;
 
@@ -2402,7 +2409,9 @@ if ($check==1)
 	$taskd->status="Done";
 	$taskd->custom1=$date;
 
-
+	$timestamp = strtotime($date);
+	$dateFinished= date("Y-m-d H:i:s", $timestamp);
+	$taskd->dateFinished=$dateFinished;
 	$taskd->save();
 	$tasknext=TaskDetails::find($taskdetails_id+1);
 	$tasknextc=TaskDetails::where('id', $taskdetails_id+1)->where('doc_id', $docs->pr_id)->count();
