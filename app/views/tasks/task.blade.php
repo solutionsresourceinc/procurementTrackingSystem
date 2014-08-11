@@ -182,6 +182,42 @@ $assign_user=User::find(Auth::user()->id);
 </td>
 </tr>
 {{Form::close()}}
+@if($tasks->taskType == "dateonly")
+                            <?php $myForm = 'myForm_' . $taskc->id; ?>
+                            {{Form::open(['url'=>'dateonly', 'id' => $myForm], 'POST')}}
+                                <input type="hidden" name="taskdetails_id" value="{{$taskd->id}}">
+                                 <Input type="hidden" name="pr_id" value="{{$purchase->id}}" );>
+                                
+                                <td class="edit-pr-input"> 
+                                    <?php 
+                                    $today = date("m/d/y");
+                                    ?>
+                                    <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
+
+                                        <input type="text" class="form-control" name="dateFinished" id="dateFinished" style="text-align: center; width:100%" 
+                                        
+                                        <?php
+                                        if (NULL!=Input::old('dateFinished'))
+                                            echo "value ='" . Input::old('dateFinished') ."'";
+                                        else
+                                            echo "value = '" . $today . "'";
+                                        ?>
+                                        
+                                        />
+                                    </div>
+                                </td>
+                                
+                                </tr>
+                                <tr class="current-task">
+                                <td colspan="4" style="border-right: none"></td>
+                                <td style="border-left: none; text-align: center;">
+                                
+                                    <input type="button" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"> 
+                                </td>
+                            {{Form::close()}}
+@endif
+
+
 @elseif($task->taskType=='posting')
 {{Form::open(['url'=>'posting'], 'POST')}}
 <?php
@@ -209,10 +245,11 @@ $converteddate = $today->format('m/d/y');
 <td>
 <input type ="hidden" name="taskdetails_id" value="{{$taskd->id}}">
 <input type ="hidden" name="pr_id" value="{{$purchase->id}}">
-{{ Form::submit('Done',array('class'=>'btn btn-sm btn-success')) }}	
+{{ Form::submit('Done',array('class'=>'btn btn-sm btn-success')) }} 
 </td>
 </tr>
 {{Form::close()}}
+
 @elseif($task->taskType=='supplier')
 {{Form::open(['url'=>'supplier'], 'POST')}}
 <?php
