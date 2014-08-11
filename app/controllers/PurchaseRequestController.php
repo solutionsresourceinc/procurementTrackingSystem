@@ -212,14 +212,18 @@ class PurchaseRequestController extends Controller
 		$purchase->otherType = Input::get('otherType');
 
 		// Get latest control number
-		$cn = 0;
-		$purchase_controlNo = Purchase::orderBy('ControlNo', 'DESC')->first();
-		if(!$purchase_controlNo == NuLL)
+		$cn = Input::get('controlNo');
+		$checkUniqueControlNo = Purchase::where('controlNo','=',"$cn")->count();
+		if($checkUniqueControlNo != 0)
 		{
-			$cn = $purchase_controlNo->controlNo;
+			$purchase->controlNo = '';
 		}
-		$cn += 1;
-		$purchase->controlNo = $cn;
+		else
+		{
+			$purchase->controlNo = Input::get('controlNo');
+		}
+		
+		
 
 
 		if(Input::get('otherType') == 'Pakyaw')
@@ -457,6 +461,8 @@ class PurchaseRequestController extends Controller
 				$error_requisitioner = $purchase->validationErrors->first('requisitioner');
 				$error_dateRequested = $purchase->validationErrors->first('dateRequested');
 				$error_dateReceived = $purchase->validationErrors->first('dateReceived');
+				$error_controlNo = $purchase->validationErrors->first('controlNo');
+
 
 				// Inserting Error Message To a Session
 				Session::put('error_projectPurpose', $error_projectPurpose );
@@ -467,6 +473,14 @@ class PurchaseRequestController extends Controller
 				Session::put('error_dateRequested', $error_dateRequested );
 				Session::put('error_dateReceived', $error_dateReceived );
 				Session::put('error_projectType', $error_projectType );
+				Session::put('error_controlNo', $error_controlNo );
+				
+				if($checkUniqueControlNo != 0)
+				{
+					Session::put('error_controlNo', 'This control no. already exists. Please enter a new one.' );
+				}
+
+
 
 				if(Input::get('hide_modeOfProcurement') == "")
 				{
@@ -499,6 +513,7 @@ class PurchaseRequestController extends Controller
 			$error_requisitioner = $purchase->validationErrors->first('requisitioner');
 			$error_dateRequested = $purchase->validationErrors->first('dateRequested');
 			$error_dateReceived = $purchase->validationErrors->first('dateReceived');
+			$error_controlNo = $purchase->validationErrors->first('controlNo');
 
 			// Inserting Error Message To a Session
 			Session::put('error_projectPurpose', $error_projectPurpose );
@@ -509,6 +524,12 @@ class PurchaseRequestController extends Controller
 			Session::put('error_dateRequested', $error_dateRequested );
 			Session::put('error_dateReceived', $error_dateReceived );
 			Session::put('error_projectType', $error_projectType );
+			Session::put('error_controlNo', $error_controlNo );
+			
+			if($checkUniqueControlNo != 0)
+			{
+				Session::put('error_controlNo', 'This control no. already exists. Please enter a new one.' );
+			}
 
 			if(Input::get('hide_modeOfProcurement') == "")
 			{
@@ -544,6 +565,7 @@ class PurchaseRequestController extends Controller
 					$error_requisitioner = $purchase->validationErrors->first('requisitioner');
 					$error_dateRequested = $purchase->validationErrors->first('dateRequested');
 					$error_dateReceived = $purchase->validationErrors->first('dateReceived');
+					$error_controlNo = $purchase->validationErrors->first('controlNo');
 
 					// Inserting Error Message To a Session
 					Session::put('error_projectPurpose', $error_projectPurpose );
@@ -554,6 +576,12 @@ class PurchaseRequestController extends Controller
 					Session::put('error_dateRequested', $error_dateRequested );
 					Session::put('error_dateReceived', $error_dateReceived );
 					Session::put('error_projectType', $error_projectType );
+					Session::put('error_controlNo', $error_controlNo );
+					
+					if($checkUniqueControlNo != 0)
+					{
+						Session::put('error_controlNo', 'This control no. already exists. Please enter a new one.' );
+					}
 					
 			} 
 

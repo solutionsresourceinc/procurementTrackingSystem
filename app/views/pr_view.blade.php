@@ -46,11 +46,11 @@
                 </div>
                 <div class="modal-body">
                     <p>Reason for cancelling purchase request:</p>
-                    <textarea id="reason" class="form-control" rows="3" maxlength="255", style="resize:vertical"></textarea>
+                    <textarea id="reason" class="form-control" rows="3" maxlength="255", style="resize:vertical" onkeyup="modalShowSubmit(this.value)"></textarea>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-success" onClick="submitForm()">Submit</button>
+                    <button type="button" id="modalSubmit" class="btn btn-success" onClick="submitForm()" disabled>Submit</button>
                 </div>
             </div>
         </div>
@@ -488,6 +488,19 @@
                        if(pair[0] == variable){return pair[1];}
                }
                return(1);
+        }
+
+        function modalShowSubmit(value)
+        {
+            value = value.trim();
+            if(value != "")
+            {
+                document.getElementById('modalSubmit').disabled = false ;
+            }
+            else
+            {
+                 document.getElementById('modalSubmit').disabled = true
+            }
         }
         
     </script>

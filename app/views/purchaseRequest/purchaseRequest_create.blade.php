@@ -112,8 +112,10 @@
 							?>
 
 							{{ Form::label('dispCN', 'Control No.', array('class' => 'create-label')) }}
-							<input type="text"  name="dispCN"  class="form-control" value="<?php echo str_pad($cn, 5, '0', STR_PAD_LEFT); ?>"disabled>
-							<input type="hidden" name="controlNo" value="<?php echo $cn; ?>">
+							<input type="text"  name="controlNo"  class="form-control" value="<?php if( Session::get('error_controlNo') ) { echo Input::old('controlNo'); } else { echo str_pad($cn, 5, '0', STR_PAD_LEFT); } ?>" >
+							@if (Session::get('error_controlNo') )
+							<font color="red"><i>{{ Session::get('error_controlNo') }}</i></font>
+							@endif
 						</div>
 					</div>
 
@@ -378,6 +380,7 @@
 		{{ Session::forget('error_modeOfProcurement'); }}
 		{{ Session::forget('error_dateRequested'); }}
 		{{ Session::forget('error_dateReceived'); }}
+		{{ Session::forget('error_controlNo'); }}
 		{{ Session::forget('imgsuccess'); }}
 		{{ Session::forget('imgerror'); }}
 

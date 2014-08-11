@@ -48,8 +48,8 @@ class BaseController extends Controller {
 			$purchase->amount = generateRandomAmount();
 			$purchase->office = "1";
 			$purchase->requisitioner = "1";
-			$purchase->dateRequested = "0000-00-00 00:00:00";
-			$purchase->dateReceived = "0000-00-00 00:00:00";
+			$purchase->dateRequested = date('Y-m-d H:i:s');
+			$purchase->dateReceived = date('Y-m-d H:i:s');
 			$purchase->status = 'Active';
 			$purchase->otherType = " ";
 
@@ -72,11 +72,11 @@ class BaseController extends Controller {
 			$purchase_save = $purchase->save();
 			if($purchase_save)
 			{
-				if($purchase->amount <= 50000)
+				if($purchase->amount <= "50000")
 					$amtControl = 1;
-				else if($purchase->amount > 50000 && $purchase->amount < 500000)
+				else if($purchase->amount > "50000" && $purchase->amount < "500000")
 					$amtControl = 2;
-				else if($purchase->amount >= 500000)
+				else if($purchase->amount >= "500000")
 					$amtControl = 3;
 
 				$document->pr_id = $purchase->id;
