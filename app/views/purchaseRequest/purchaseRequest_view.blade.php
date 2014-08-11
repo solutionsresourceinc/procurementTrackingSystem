@@ -550,12 +550,12 @@
                             </td>
                         @endif
                         @if($tasks->taskType=="dateonly")
+    
                            <td align="center">
                             <?php 
-                                $date = new DateTime($taskp->custom1);
-                                $datef = $date->format('m/d/y');
-                                if($taskp->dateFinished!="0000-00-00 00:00:00") 
-                                    echo $datef; 
+                                
+                                if($taskp->custom1!=NULL) 
+                                    echo  $taskp->custom1; 
                             ?>
                             </td>
                             
