@@ -117,6 +117,7 @@
 					<td>{{{$request->officeName}}}</td>
 					<td>{{{$request->projectPurpose}}}</td>
 					<td>
+                        <?php error_reporting(0); ?>
 						@if(isset($flag) && $flag == 0)
 						<?php
 							$dateApproved = DB::table('purchase_request')
@@ -162,26 +163,20 @@
 					</td>
                     <td>
                     	<?php 
-		                    $doc = new Purchase; 
-	                        $doc = DB::table('document')->where('pr_id', $request->id)->get(); 
+	                        $workName = DB::table('purchase_request')->where('controlNo', '=', $request->controlNo)
+                            ->join('document', 'purchase_request.id', '=', 'document.pr_id')->first(); 
                     	?>
-                        @foreach ($doc as $docs) 
-                            <?php  
-                                $workflow = Workflow::find($docs->work_id)->workFlowName; 
-                                if($workflow == "Small Value Procurement (Below P50,000)")
-                                    // echo "SVP (Below P50,000)";
-                                    echo "SVP";
-                                else if($workflow == "Small Value Procurement (Above P50,000 Below P500,000)")
-                                    // echo "SVP (Above P50,000 Below P500,000)";
-                                    echo "SVP";
-                                else if($workflow == "Bidding (Above P500,000)")
-                                	echo "BIDDING";
-                                    // echo $workflow = Workflow::find($docs->work_id)->workFlowName;
-                                if($request->otherType != "Pakyaw" || $request->otherType != "Direct Contracting"){}
-                                else if($request->otherType != "")
-                                        echo "<br> <i>$request->otherType</i>";
-                            ?>
-                        @endforeach
+                        @if($workName->work_id == 1)
+                            SVP
+                        @elseif($workName->work_id == 2)
+                            SVP
+                        @elseif($workName->work_id == 3)
+                            BIDDING
+                        @elseif($workName->work_id == 4)
+                            PAKYAW
+                        @elseif($workName->work_id == 5)
+                            DIRECT CONTRACTING
+                        @endif
                     </td>
 					<td> 
 						@if(isset($supplierFlag) && $supplierFlag == 1)

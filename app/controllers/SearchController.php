@@ -191,6 +191,20 @@ class SearchController extends BaseController {
 			->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('tasks.taskName', '=', 'LCRB / HRB / SUPPLIER')->where('purchase_request.status', '=', 'Active')->where('taskdetails.custom1', 'LIKE', "%$searchTerm%")->count();
 			$supplierFlag = 1;
 		}
+		else if($searchBy == '1' || $searchBy == '2' || $searchBy == '3' || $searchBy == '4' || $searchBy == '5')
+		{
+			$requests = DB::table('purchase_request')
+			->join('offices', 'purchase_request.office', '=', 'offices.id')
+			->join('document', 'purchase_request.id', '=', 'document.pr_id')
+			->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+			->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('document.work_id', '=', $searchBy)->where('purchase_request.projectPurpose', 'LIKE', "%$searchTerm%")->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Active')->paginate(15);
+
+			$pageCounter = DB::table('purchase_request')
+			->join('offices', 'purchase_request.office', '=', 'offices.id')
+			->join('document', 'purchase_request.id', '=', 'document.pr_id')
+			->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+			->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('document.work_id', '=', $searchBy)->where('purchase_request.projectPurpose', 'LIKE', "%$searchTerm%")->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Active')->count();	
+		}
 		return View::make('purchaseRequest.purchaseRequest_completeTable')->with('requests',$requests)->with('pageCounter',$pageCounter)->with('searchBy', $searchBy)->with('flag', $flag)->with('supplierFlag', $supplierFlag);
 	} 
 
