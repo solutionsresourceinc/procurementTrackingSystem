@@ -1220,7 +1220,7 @@ DB::table('purchase_request')->where('id',$id)->update(array('updated_at' => $up
 		$counter=1;
 		$tasknext=TaskDetails::find($taskdetails_id+$counter);
 	
-		while($tasknext->status=="Lock")
+		while($tasknext->status=="Lock"||$tasknext->status=="Done")
 		{
 			$counter=$counter+1;
 			$tasknext=TaskDetails::find($taskdetails_id+$counter);
@@ -1361,7 +1361,7 @@ DB::table('purchase_request')->where('id',$id)->update(array('updated_at' => $up
 		$counter=1;
 		$tasknext=TaskDetails::find($taskdetails_id+$counter);
 	
-		while($tasknext->status=="Lock")
+		while($tasknext->status=="Lock"||$tasknext->status=="Done")
 		{
 			$counter=$counter+1;
 			$tasknext=TaskDetails::find($taskdetails_id+$counter);
@@ -1446,7 +1446,7 @@ DB::table('purchase_request')->where('id',$id)->update(array('updated_at' => $up
 		$counter=1;
 		$tasknext=TaskDetails::find($taskdetails_id+$counter);
 	
-		while($tasknext->status=="Lock")
+		while($tasknext->status=="Lock"||$tasknext->status=="Done")
 		{
 			$counter=$counter+1;
 			$tasknext=TaskDetails::find($taskdetails_id+$counter);
@@ -1487,7 +1487,7 @@ $taskdetails_id=Input::get('taskdetails_id');
 $check=0;
 
 //Validation Process
-if(ctype_alnum(str_replace(array(' ', '-', '.'),'',$supplier)))
+if(ctype_alnum(str_replace(array(' ', '-', '.',"'"),'',$supplier)))
         $check=$check+1;
 if(ctype_digit(str_replace(array(' ', ',', '.'),'',$amount)))
         $check=$check+1;
@@ -1528,7 +1528,7 @@ DB::table('purchase_request')->where('id',$id)->update(array('updated_at' => $up
 		$counter=1;
 		$tasknext=TaskDetails::find($taskdetails_id+$counter);
 	
-		while($tasknext->status=="Lock")
+		while($tasknext->status=="Lock"||$tasknext->status=="Done")
 		{
 			$counter=$counter+1;
 			$tasknext=TaskDetails::find($taskdetails_id+$counter);
@@ -1641,7 +1641,7 @@ DB::table('purchase_request')->where('id',$id)->update(array('updated_at' => $up
 		$counter=1;
 		$tasknext=TaskDetails::find($taskdetails_id+$counter);
 	
-		while($tasknext->status=="Lock")
+		while($tasknext->status=="Lock"||$tasknext->status=="Done")
 		{
 			$counter=$counter+1;
 			$tasknext=TaskDetails::find($taskdetails_id+$counter);
@@ -1722,7 +1722,7 @@ DB::table('purchase_request')->where('id',$id)->update(array('updated_at' => $up
 		$counter=1;
 		$tasknext=TaskDetails::find($taskdetails_id+$counter);
 	
-		while($tasknext->status=="Lock")
+		while($tasknext->status=="Lock"||$tasknext->status=="Done")
 		{
 			$counter=$counter+1;
 			$tasknext=TaskDetails::find($taskdetails_id+$counter);
@@ -1805,7 +1805,7 @@ DB::table('purchase_request')->where('id',$id)->update(array('updated_at' => $up
 		$counter=1;
 		$tasknext=TaskDetails::find($taskdetails_id+$counter);
 	
-		while($tasknext->status=="Lock")
+		while($tasknext->status=="Lock"||$tasknext->status=="Done")
 		{
 			$counter=$counter+1;
 			$tasknext=TaskDetails::find($taskdetails_id+$counter);
@@ -1889,7 +1889,7 @@ DB::table('purchase_request')->where('id',$id)->update(array('updated_at' => $up
 		$counter=1;
 		$tasknext=TaskDetails::find($taskdetails_id+$counter);
 	
-		while($tasknext->status=="Lock")
+		while($tasknext->status=="Lock"||$tasknext->status=="Done")
 		{
 			$counter=$counter+1;
 			$tasknext=TaskDetails::find($taskdetails_id+$counter);
@@ -1966,7 +1966,7 @@ DB::table('purchase_request')->where('id',$id)->update(array('updated_at' => $up
 		$counter=1;
 		$tasknext=TaskDetails::find($taskdetails_id+$counter);
 	
-		while($tasknext->status=="Lock")
+		while($tasknext->status=="Lock"||$tasknext->status=="Done")
 		{
 			$counter=$counter+1;
 			$tasknext=TaskDetails::find($taskdetails_id+$counter);
@@ -2053,7 +2053,7 @@ DB::table('purchase_request')->where('id',$id)->update(array('updated_at' => $up
 		$counter=1;
 		$tasknext=TaskDetails::find($taskdetails_id+$counter);
 	
-		while($tasknext->status=="Lock")
+		while($tasknext->status=="Lock"||$tasknext->status=="Done")
 		{
 			$counter=$counter+1;
 			$tasknext=TaskDetails::find($taskdetails_id+$counter);
@@ -2137,7 +2137,7 @@ DB::table('purchase_request')->where('id',$id)->update(array('updated_at' => $up
 		$counter=1;
 		$tasknext=TaskDetails::find($taskdetails_id+$counter);
 	
-		while($tasknext->status=="Lock")
+		while($tasknext->status=="Lock"||$tasknext->status=="Done")
 		{
 			$counter=$counter+1;
 			$tasknext=TaskDetails::find($taskdetails_id+$counter);
@@ -2226,7 +2226,7 @@ DB::table('purchase_request')->where('id',$id)->update(array('updated_at' => $up
 		$counter=1;
 		$tasknext=TaskDetails::find($taskdetails_id+$counter);
 	
-		while($tasknext->status=="Lock")
+		while($tasknext->status=="Lock"||$tasknext->status=="Done")
 		{
 			$counter=$counter+1;
 			$tasknext=TaskDetails::find($taskdetails_id+$counter);
@@ -2310,7 +2310,7 @@ $id=$docs->pr_id;
 		$counter=1;
 		$tasknext=TaskDetails::find($taskdetails_id+$counter);
 	
-		while($tasknext->status=="Lock")
+		while($tasknext->status=="Lock"||$tasknext->status=="Done")
 		{
 			$counter=$counter+1;
 			$tasknext=TaskDetails::find($taskdetails_id+$counter);
@@ -2387,7 +2387,7 @@ DB::table('purchase_request')->where('id',$id)->update(array('updated_at' => $up
 		$counter=1;
 		$tasknext=TaskDetails::find($taskdetails_id+$counter);
 	
-		while($tasknext->status=="Lock")
+		while($tasknext->status=="Lock"||$tasknext->status=="Done")
 		{
 			$counter=$counter+1;
 			$tasknext=TaskDetails::find($taskdetails_id+$counter);
@@ -2416,6 +2416,13 @@ return Redirect::back();
 
 }
 
+public function taskedit($id)
+{
 
+	$taskd= TaskDetails::find($id);
+	$taskd->status="Edit";
+	$taskd->save();
+	return Redirect::back();
+}
 
 }

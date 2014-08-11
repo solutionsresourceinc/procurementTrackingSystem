@@ -407,9 +407,10 @@
             <?php 
             //Cursor Component
                 //Count Cursor
-                $taskch= TaskDetails::where('doc_id', $docs->id)->where('status', 'New')->orWhere('status', 'Active')->count(); 
+                $taskche= TaskDetails::where('doc_id', $docs->id)->where('status', 'Edit')->count(); 
+                $taskch= TaskDetails::where('doc_id', $docs->id)->where('status', 'Edit')->orWhere('status', 'New')->orWhere('status', 'Active')->count(); 
                 //Get Cursor Value
-                $taskc= TaskDetails::where('doc_id', $docs->id)->where('status', 'New')->orWhere('status', 'Active')->first(); 
+                $taskc= TaskDetails::where('doc_id', $docs->id)->where('status', 'Edit')->orWhere('status', 'New')->orWhere('status', 'Active')->first(); 
                 
                 //Queries
                 $workflow= Workflow::find($docs->work_id);
@@ -464,9 +465,10 @@
                     
                                 {{Form::open(['url'=>'editaddon', 'POST'])}}
                                     <input type='hidden' name='values_id' value="{{$values->id}}">
-                                    <td align='center'>
+                                    <td align='center' colspan="3">
                                         <button class ='btn btn-default'>Edit</button>
                                     </td>
+                                    
                                 {{Form::close()}}
                             @endif
                    
@@ -493,26 +495,30 @@
                         echo "<th class='workflow-th' width='18%'>By:</th>";
                         echo "<th class='workflow-th' width='18%'>Date:</th>";
                         echo "<th class='workflow-th' width='12.5%'>Days of Action</th>";
-                        echo "<th class='workflow-th'>Remarks</th></tr>";
+                        echo "<th class='workflow-th'>Remarks</th>";
+                        echo "<th class='workflow-th' colspan='2'>Action</th></tr>";
                     }
                     if ($previousTaskType!="datebyremark"&&$tasks->taskType=="datebyremark")
                     {
                         echo "<tr><th width='30%'></th>";
                         echo "<th class='workflow-th' >Date:</th>";
                         echo "<th class='workflow-th' >By:</th>";
-                        echo "<th class='workflow-th' colspan='2'>Remarks</th></tr>";
+                        echo "<th class='workflow-th' colspan='2'>Remarks</th>";
+                        echo "<th class='workflow-th' colspan='2'>Action</th></tr>";
                     }
                     if ($previousTaskType!="dateby"&&$tasks->taskType=="dateby")
                     {
                         echo "<tr><th width='30%'></th>";
                         echo "<th class='workflow-th' colspan='2'>Date:</th>";
-                        echo "<th class='workflow-th' colspan='2'>By:</th></tr>";
+                        echo "<th class='workflow-th' colspan='2'>By:</th>";
+                        echo "<th class='workflow-th' colspan='2'>Action</th></tr>";
                     }
                     if ($previousTaskType!="evaluation"&&$tasks->taskType=="evaluation")
                     {
                         echo "<tr><th width='30%'></th>";
                         echo "<th class='workflow-th' colspan='2'>Date:</th>";
-                        echo "<th class='workflow-th' colspan='2'>No. of Days Accomplished:</th></tr>";
+                        echo "<th class='workflow-th' colspan='2'>No. of Days Accomplished:</th>";
+                        echo "<th class='workflow-th' colspan='2'>Action</th></tr>";
                     }
                     $previousTaskType=$tasks->taskType;
                     //Cursor Open form 
@@ -561,7 +567,7 @@
                                     <input type ="text" name="assignee" placeholder="Enter name" class="form-control" width="100%" maxlength="100"
                                     <?php
                                     if (NULL!=Input::old('assignee'))
-                                    echo "value='".Input::old('assignee');
+                                    echo "value='".Input::old('assignee')."'";
                                     else
                                     echo "value='".'none'."'";
                                     ?>
@@ -598,9 +604,6 @@
                                     ?>"
                                     >
                                 </td>
-                                </tr>
-                                <tr class="current-task">
-                                <td colspan="4" style="border-right: none"></td>
                                 <td style="border-left: none; text-align: center;">
                                 
                                     <input type="button" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"> 
@@ -628,9 +631,6 @@
                                     >
                                 </td>
 
-                                </tr>
-                                <tr class="current-task">
-                                <td colspan="4" style="border-right: none"></td>
                                 <td style="border-left: none; text-align: center;">
                                                                 
                                     <input type="button" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"> 
@@ -680,9 +680,6 @@
                                     >
                                 </td>
 
-                                </tr>
-                                <tr class="current-task">
-                                <td colspan="4" style="border-right: none"></td>
                                 <td style="border-left: none; text-align: center;">
                                 
                                     <input type="button" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"> 
@@ -713,9 +710,6 @@
                                     >
                                 </td>
 
-                                </tr>
-                                <tr class="current-task">
-                                <td colspan="4" style="border-right: none"></td>
                                 <td style="border-left: none; text-align: center;">
                                 
                                     <input type="button" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"> 
@@ -763,10 +757,7 @@
                                 </td>
                                 
 
-                                </tr>
-                                <tr class="current-task">
-                                <td colspan="4" style="border-right: none"></td>
-                                <td style="border-left: none; text-align: center;">
+
                                 
                                     <input type="button" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"> 
                                 </td>
@@ -781,6 +772,7 @@
                                     <th class='workflow-th' width="18%">Date Published:</th>
                                     <th class='workflow-th' width="18%">End Date:</th>
                                     <th class='workflow-th' colspan="2">Posted By:</th>
+
                                 </tr>
                                 <tr class="@if($taskch!=0 && $taskc->task_id==$tasks->id && $tasks->designation_id==0) current-task @endif">
                                     <td>{{$tasks->taskName}}</td>
@@ -828,9 +820,7 @@
                                         >
                                     </td>
                           
-                                </tr>
-                                <tr class="current-task">
-                                <td colspan="4" style="border-right: none"></td>
+                                
                                 <td style="border-left: none; text-align: center;">
                                 
                                     <input type="button" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"
@@ -895,9 +885,7 @@
                                     </td>
 
                                    
-                                </tr>
-                                <tr class="current-task">
-                                <td colspan="4" style="border-right: none"></td>
+                            
                                 <td style="border-left: none; text-align: center;">
                                 
                                     <input type="button" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"> 
@@ -945,9 +933,7 @@
                                         >
                                     </td>   
                  
-                                </tr>
-                                <tr class="current-task">
-                                <td colspan="4" style="border-right: none"></td>
+                        
                                 <td style="border-left: none; text-align: center;">
                                 
                                     <input type="button" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"> 
@@ -976,10 +962,7 @@
                                         />
                                     </div>
                                     </td>
-                                  
-                                </tr>
-                                <tr class="current-task">
-                                <td colspan="4" style="border-right: none"></td>
+                               
                                 <td style="border-left: none; text-align: center;">
                                                                     
                                     <input type="button" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"> 
@@ -1035,11 +1018,7 @@
                                         "
                                         >
                                     </td>
-                                    
-
-                                </tr>
-                                <tr class="current-task">
-                                <td colspan="4" style="border-right: none"></td>
+                      
                                 <td style="border-left: none; text-align: center;">
                                 
                                     <input type="button" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"> 
@@ -1102,9 +1081,7 @@
                                         >
                                     </td>
                           
-                                </tr>
-                                <tr class="current-task">
-                                <td colspan="4" style="border-right: none"></td>
+                            
                                 <td style="border-left: none; text-align: center;">
                                 
                                     <input type="button" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"> 
@@ -1161,9 +1138,7 @@
                                         ">
                                     </td>
                                   
-                                </tr>
-                                <tr class="current-task">
-                                <td colspan="4" style="border-right: none"></td>
+                          
                                 <td style="border-left: none; text-align: center;">
                                 
                                     <input type="button" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"> 
@@ -1195,24 +1170,24 @@
                                 <td class="edit-pr-input" colspan="2">
                                     <input type ="text" name="assignee" placeholder="Enter name" class="form-control" width="100%" maxlength="100" 
                                     placeholder="Enter name"
-                                    value="
+                                    
                                         <?php
                                         if (NULL!=Input::old('assignee'))
-                                            echo Input::old('assignee');
+                                            echo "value='".Input::old('assignee')."'";
                                         else
-                                            echo 'none';
+                                            echo "value='".'none'."'";
                                         ?>
-                                        "
+                                        
                                     >
                                 </td>
-                                </tr>
-                                <tr class="current-task">
-                                <td colspan="4" style="border-right: none"></td>
-                                <td style="border-left: none; text-align: center;">
+                                 <td style="border-left: none; text-align: center;">
                                 
                                     <input type="button" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"> 
                                 </td>
                             {{Form::close()}}
+                        
+                    
+                               
                     @endif
                     @if($tasks->taskType == "datebyremark")
                             <?php $myForm = 'myForm_' . $taskc->id; ?>
@@ -1240,30 +1215,28 @@
                                 </td>
                                 <td class="edit-pr-input">
                                     <input type ="text" name="assignee" placeholder="Enter name" class="form-control" width="100%" maxlength="100" placeholder="Enter name"
-                                    value="
+                                    
                                         <?php
                                         if (NULL!=Input::old('assignee'))
-                                            echo Input::old('assignee');
+                                            echo "value='".Input::old('assignee')."'";
                                         else
-                                        echo 'none';
+                                        echo "value='".'none'. "'";
                                         ?>
-                                        "
+                                        
                                     >
                                 </td>
                                 <td class="edit-pr-input" colspan="2">
                                     <input type="text" name="remarks"  class="form-control" maxlength="255" width="100%"
-                                    value="
+                                    
                                         <?php
                                         if (NULL!=Input::old('remarks'))
-                                            echo Input::old('remarks');
+                                            echo "value='".Input::old('remarks')."'";
                                         
                                         ?>
-                                        "
+                                        
                                     >
                                 </td>
-                                </tr>
-                                <tr class="current-task">
-                                <td colspan="4" style="border-right: none"></td>
+                               
                                 <td style="border-left: none; text-align: center;">
                                 
                                     <input type="button" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"> 
@@ -1276,7 +1249,7 @@
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
                                  <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
                                 
-                                <td class="edit-pr-input"> 
+                                <td class="edit-pr-input" colspan="4"> 
                                     <?php 
                                     $today = date("m/d/y");
                                     ?>
@@ -1295,9 +1268,7 @@
                                     </div>
                                 </td>
                                 
-                                </tr>
-                                <tr class="current-task">
-                                <td colspan="4" style="border-right: none"></td>
+                      
                                 <td style="border-left: none; text-align: center;">
                                 
                                     <input type="button" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"> 
@@ -1362,6 +1333,11 @@
                                 echo $dremarks; 
                             ?>
                             </td>
+                            <td align="center">
+                                @if($taskche==0&&$taskp->status=="Done")
+                                <a class='iframe btn btn-success' href='taskedit/{{$taskp->id}}' title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
+                                @endif
+                            </td>
                         @endif
                         @if($tasks->taskType=="certification")
                             <td colspan="2" align="center">
@@ -1375,6 +1351,11 @@
                             <td colspan="2" align="center">
                                 By:         
                                 {{$taskp->custom2;}}
+                            </td>
+                            <td align="center">
+                                @if($taskche==0&&$taskp->status=="Done")
+                                <a class='iframe btn btn-success' href='taskedit/{{$taskp->id}}' title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
+                                @endif
                             </td>
                         @endif
                         @if($tasks->taskType=="posting")
@@ -1390,6 +1371,11 @@
                                 By:          
                                 {{$taskp->custom3;}}
                             </td>
+                            <td align="center">
+                                @if($taskche==0&&$taskp->status=="Done")
+                                <a class='iframe btn btn-success' href='taskedit/{{$taskp->id}}' title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
+                                @endif
+                            </td>
                         @endif
                         @if($tasks->taskType == "supplier")
                                 <td class="edit-pr-input" colspan="2" width="20%" align="center">
@@ -1399,7 +1385,12 @@
                                 <td class="edit-pr-input" colspan="2" width="20%" align="center">
                                     Amount: 
                                     {{$taskp->custom2}}
-                                </td>     
+                                </td>
+                                <td align="center">
+                                @if($taskche==0&&$taskp->status=="Done")
+                                <a class='iframe btn btn-success' href='taskedit/{{$taskp->id}}' title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
+                                @endif
+                            </td>     
                         @endif
                         @if($tasks->taskType=="cheque")
                                 <td class="edit-pr-input" colspan="2" align="center">
@@ -1414,12 +1405,18 @@
                                     CHEQUE DATE:
                                     {{$taskp->custom3}}
                                 </td>
+                                <td align="center">
+                                @if($taskche==0&&$taskp->status=="Done")
+                                <a class='iframe btn btn-success' href='taskedit/{{$taskp->id}}' title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
+                                @endif
+                            </td>
                         @endif
                         @if($tasks->taskType=="published")
                                     <td> </td>
                                     <th class='workflow-th' width="18%">Date Published:</th>
                                     <th class='workflow-th' width="18%">End Date:</th>
                                     <th class='workflow-th' colspan="2">Posted By:</th>
+                                    <th class='workflow-th'>Action</th>
                                 </tr>
                                 <tr>
                                     <td align="center">{{$tasks->taskName}}</td>
@@ -1429,12 +1426,19 @@
                                     </td>
                                     <td align="center">{{$taskp->custom2}}</td>
                                     <td class="edit-pr-input" colspan="2" align="center">{{$taskp->custom3}}</td>
+                                    <td align="center">
+                                @if($taskche==0&&$taskp->status=="Done")
+                                <a class='iframe btn btn-success' href='taskedit/{{$taskp->id}}' title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
+                                @endif
+                            </td>
+                       
                         @endif
                         @if($tasks->taskType=="documents")
                                     <td> </td>
                                     <th class='workflow-th'>Eligibility Documents:</th>
                                     <th class='workflow-th'>Date of Bidding:</th>
                                     <th class='workflow-th' colspan="2">Checked By:</th>
+                                    <th class='workflow-th'>Action</th>
                                 </tr>
                                 <tr>
                                     <td align="center">{{$tasks->taskName}}</td>
@@ -1444,6 +1448,11 @@
                                     </td>
                                     <td align="center">{{$taskp->custom2}}</td>
                                     <td class="edit-pr-input" colspan="2" align="center">{{$taskp->custom3}}</td>
+                                    <td align="center">
+                                @if($taskche==0&&$taskp->status=="Done")
+                                <a class='iframe btn btn-success' href='taskedit/{{$taskp->id}}' title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
+                                @endif
+                            </td>
                                 
                         @endif
                         @if($tasks->taskType=="evaluation")
@@ -1453,6 +1462,11 @@
                                         {{$taskp->custom1}}
                                     </td align="center">
                                     <td class="edit-pr-input" colspan="2" align="center"> {{$taskp->custom2}}</td>
+                                    <td align="center">
+                                @if($taskche==0&&$taskp->status=="Done")
+                                <a class='iframe btn btn-success' href='taskedit/{{$taskp->id}}' title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
+                                @endif
+                            </td>
                                     <?php
                                     $sectiondays=$sectiondays+$taskp->custom2;
                                     $prdays=$prdays+$taskp->custom2;
@@ -1463,12 +1477,18 @@
                                     <td colspan="4" align="center">
                                     {{$taskp->custom1}}
                                     </td>
+                                    <td align="center">
+                                @if($taskche==0&&$taskp->status=="Done")
+                                <a class='iframe btn btn-success' href='taskedit/{{$taskp->id}}' title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
+                                @endif
+                            </td>
                         @endif
                         @if($tasks->taskType=="contract")
                                     <td> </td>
                                     <th class='workflow-th'>Date:</th>
                                     <th class='workflow-th'>No. of Days Accomplished:</th>
                                     <th class='workflow-th' colspan="2">Contract Agreement:</th>
+                                    <th class='workflow-th'>Action</th>
                                 </tr>
                                 <tr>
                                     <td align="center">{{$tasks->taskName}}</td>
@@ -1488,6 +1508,11 @@
                                     <td class="edit-pr-input" colspan="2" align="center">  
                                         {{$taskp->custom3}}
                                     </td>
+                                    <td align="center">
+                                @if($taskche==0&&$taskp->status=="Done")
+                                <a class='iframe btn btn-success' href='taskedit/{{$taskp->id}}' title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
+                                @endif
+                            </td>
 
                         @endif
                         @if($tasks->taskType=="meeting")
@@ -1495,6 +1520,7 @@
                                     <th class='workflow-th'>Date:</th>
                                     <th class='workflow-th'>No. of Days Accomplished:</th>
                                     <th class='workflow-th' colspan="2">Minutes of Bidding:</th>
+                                    <th class='workflow-th'>Action</th>
                                 </tr>
                                 <tr>
                                     <td align="center">{{$tasks->taskName}}</td>
@@ -1514,13 +1540,18 @@
                                     <td class="edit-pr-input" colspan="2" align="center">  
                                         {{$taskp->custom3}}
                                     </td>
-
+                                    <td align="center">
+                                @if($taskche==0&&$taskp->status=="Done")
+                                <a class='iframe btn btn-success' href='taskedit/{{$taskp->id}}' title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
+                                @endif
+                            </td>
                         @endif
                         @if($tasks->taskType=="rfq")
                                     <td > </td>
                                     <th class='workflow-th'>No. of Supplier:</th>
                                     <th class='workflow-th'>Date of RF (Within PGEPS 7 Days):</th>
                                     <th class='workflow-th' colspan="2">By:</th>
+                                    <th class='workflow-th'>Action</th>
                                 </tr>
                                 <tr>
                                     <td align="center">{{$tasks->taskName}}</td>
@@ -1531,6 +1562,11 @@
                                         {{$taskp->custom2}}
                                     </td>
                                     <td class="edit-pr-input" colspan="2" align="center"> {{$taskp->custom2}}</td>
+                                    <td align="center">
+                                @if($taskche==0&&$taskp->status=="Done")
+                                <a class='iframe btn btn-success' href='taskedit/{{$taskp->id}}' title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
+                                @endif
+                            </td>
                         @endif
                         @if($tasks->taskType=="dateby") 
                             <td colspan="2" align="center">
@@ -1556,6 +1592,11 @@
                                 $date = new DateTime($taskp->dateFinished);
                                 $datef = $date->format('m/d/y');
                             ?>
+                            </td>
+                            <td align="center">
+                                @if($taskche==0&&$taskp->status=="Done")
+                                <a class='iframe btn btn-success' href='taskedit/{{$taskp->id}}' title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
+                                @endif
                             </td>
                         @endif
                         @if($tasks->taskType=="datebyremark")
@@ -1589,10 +1630,15 @@
                                 echo $dremarks; 
                             ?>
                             </td>
+                            <td align="center">
+                                @if($taskche==0&&$taskp->status=="Done")
+                                <a class='iframe btn btn-success' href='taskedit/{{$taskp->id}}' title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
+                                @endif
+                            </td>
                         @endif
                         @if($tasks->taskType=="dateonly")
     
-                           <td align="center">
+                           <td align="center" colspan="4">
                             <?php 
                                 
                                 if($taskp->custom1!=NULL) 
@@ -1600,7 +1646,11 @@
                             ?>
                             </td>
                             
-                            
+                            <td align="center">
+                                @if($taskche==0&&$taskp->status=="Done")
+                                <a class='iframe btn btn-success' href='taskedit/{{$taskp->id}}' title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
+                                @endif
+                            </td>
                         @endif
 
                         <?php 
@@ -1641,9 +1691,10 @@
                                 {{Form::open(['url'=>'editaddon', 'POST'])}}
                                     
                                     <input type='hidden' name='values_id' value="{{$values->id}}">
-                                    <td align='center'>
+                                    <td align='center' colspan="3">
                                         <button class ='btn btn-default'>Edit</button>
                                     </td>
+                                  
                 
                                 {{Form::close()}}
                                 </tr>
