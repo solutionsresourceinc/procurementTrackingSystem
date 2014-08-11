@@ -83,18 +83,21 @@
 		<tbody>
 			@foreach($requests as $request)
 				<tr>
-					<td>{{{$request->dateReceived}}}</td>
+					<td>
+						@if($request->dateReceived == "0000-00-00 00:00:00")
+							<font color="grey">- - -</font>
+						@else
+							{{{(new \DateTime($request->dateReceived))->format('Y-m-d')}}}
+						@endif
+					</td>
 					<td>{{{str_pad($request->controlNo, 5, '0', STR_PAD_LEFT)}}}</td>
 					<td>{{{$request->officeName}}}</td>
 					<td>{{{$request->projectPurpose}}}</td>
 					<td>
 						@if($request->dateFinished == '0000-00-00 00:00:00')
-							----
+							<font color="grey">- - -</font>
 						@else
-						<?php
-							// $date = new \DateTime($request->dateFinished)->format('Y-m-d');
-						?>
-							{{{$request->dateFinished}}}
+							{{{(new \DateTime($request->dateFinished))->format('Y-m-d')}}}
 						@endif
 					</td> <!-- BUDGET -->
 					<td>{{{$request->sourceOfFund}}}</td>

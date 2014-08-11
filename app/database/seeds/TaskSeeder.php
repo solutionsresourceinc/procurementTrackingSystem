@@ -904,7 +904,7 @@ class TaskSeeder extends Seeder {
         $task = new Task;
         $task->wf_id = '4';
         $task->section_id = '1';
-        $task->taskName = 'BUDGET/ACCTNG';
+        $task->taskName = 'BUDGET / ACTG';
         $task->taskType = 'normal';
         $task->maxDuration = '0';
         $task->order_id = $orderID++;
@@ -1112,7 +1112,7 @@ class TaskSeeder extends Seeder {
         $task = new Task;
         $task->wf_id = '5';
         $task->section_id = '1';
-        $task->taskName = 'BUDGET / ACCTNG';
+        $task->taskName = 'BUDGET / ACTG';
         $task->taskType = 'datebyremark';
         $task->maxDuration = '0';
         $task->order_id = $orderID++;
