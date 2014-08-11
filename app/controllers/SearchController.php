@@ -9,11 +9,13 @@ class SearchController extends BaseController {
 		->join('offices', 'purchase_request.office', '=', 'offices.id')
 		->join('document', 'purchase_request.id', '=', 'document.pr_id')
 		->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
-		->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Active')->paginate(20);
+		->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Active')->paginate(15);
 
 		$pageCounter = DB::table('purchase_request')
 		->join('offices', 'purchase_request.office', '=', 'offices.id')
-		->join('document', 'purchase_request.id', '=', 'document.pr_id')->where('purchase_request.status', '=', 'Active')->count();
+		->join('document', 'purchase_request.id', '=', 'document.pr_id')
+		->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+		->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Active')->count();
 
 		return View::make('purchaseRequest.purchaseRequest_completeTable')->with('requests',$requests)->with('pageCounter',$pageCounter);
 	}
