@@ -604,8 +604,8 @@ class TaskSeeder extends Seeder {
         $task = new Task;
         $task->wf_id = '3';
         $task->section_id = '2';
-        $task->taskName = 'PHILGEPS DATE PUBLISHED';
-        $task->taskType = 'published';
+        $task->taskName = 'PHILGEPS';
+        $task->taskType = 'philgeps';
         $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
@@ -1146,8 +1146,8 @@ class TaskSeeder extends Seeder {
         $task = new Task;
         $task->wf_id = '5';
         $task->section_id = '2';
-        $task->taskName = 'PHILGEPS DATE PUBLISHED';
-        $task->taskType = 'published';
+        $task->taskName = 'PHILGEPS';
+        $task->taskType = 'philgeps';
         $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';

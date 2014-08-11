@@ -335,7 +335,9 @@ $assign_user=User::find(Auth::user()->id);
 </td>
 </tr>
 {{Form::close()}}	
+
 @elseif($task->taskType=='published')
+
 {{Form::open(['url'=>'published'], 'POST')}}
 <?php
 $assign_user=User::find(Auth::user()->id);
@@ -377,6 +379,60 @@ $assign_user=User::find(Auth::user()->id);
 {{ Form::submit('Done',array('class'=>'btn btn-sm btn-success')) }}	
 </td>
 </tr>	
+{{Form::close()}}
+@elseif($task->taskType=='philgeps')
+
+{{Form::open(['url'=>'philgeps'], 'POST')}}
+<?php
+$assign_user=User::find(Auth::user()->id);
+                        $name=$assign_user->lastname.", ".$assign_user->firstname;
+?>
+<input type="hidden" name ="by" value= "{{$name}}">
+<tr> 
+
+                                <td >
+                                   <span style="font-weight: bold"> Reference No.:</span><br/>
+                                    <input type="text" name="referenceno"  class="form-control" maxlength="100" width="80%" maxlength="100"
+                                    value="<?php
+                                    if (NULL!=Input::old('referenceno'))
+                                    echo Input::old('referenceno');
+                                    ?>"
+                                    >
+                                </td>
+<td width="50%">
+<span style="font-weight: bold">Date Published: </span><br/>
+<p>
+<?php 
+                           $today = date("m/d/y");
+                           ?>
+                           <input class="datepicker" size="16" type="text" name="datepublished" class="form-control" value="{{$today}}" width="100%"  style="margin-top: 10px;">
+                           <span class="add-on"><i class="icon-th"></i></span>
+                       </p>
+<span style="font-weight: bold">End Date: </span><br/>
+<p>
+<?php 
+                           $today = date("m/d/y");
+                           ?>
+                           <input class="datepicker" size="16" type="text" name="datepublished" class="form-control" value="{{$today}}" width="100%"  style="margin-top: 10px;">
+                           <span class="add-on"><i class="icon-th"></i></span>
+                       </p>
+</td>
+</tr>
+<tr>
+<td>
+<span style="font-weight: bold">Posted By: </span><br/>
+<p>
+<input type="text" name="by"  placeholder="Enter name" class="form-control" maxlength="100" width="80%"  style="margin-top: 10px;">
+                       </p>
+</td>
+</tr>
+<tr>
+<td>
+<input type ="hidden" name="taskdetails_id" value="{{$taskd->id}}">
+<input type ="hidden" name="pr_id" value="{{$purchase->id}}">
+{{ Form::submit('Done',array('class'=>'btn btn-sm btn-success')) }} 
+</td>
+</tr> 
 {{Form::close()}}
 @elseif($task->taskType=='documents')
 {{Form::open(['url'=>'documents'], 'POST')}}

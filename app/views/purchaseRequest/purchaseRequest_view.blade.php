@@ -390,6 +390,31 @@
                                     <td class="edit-pr-input" colspan="2" align="center">{{$taskp->custom3}}</td>
                                     
                         @endif
+                         @if($tasks->taskType=="philgeps")
+                               
+                                </tr>
+                                <tr>
+                                   
+                                    <td>
+                                        Reference No.:<br>
+                                        <center>{{$taskp->custom1}}</center>
+                                        <span class="add-on"><i class="icon-th"></i></span>
+                                    </td>
+                                    <td >
+                                        Date Published:<br>
+                                        <center>{{$taskp->custom2}}</center>
+                                        </td>
+                                    <td class="edit-pr-input" >
+                                        End Date:<br>
+                                        <center>{{$taskp->custom3}}</center>
+                                        </td>
+                                    <td colspan="2" >
+                                        Posted By:<br>
+                                        <center>{{$taskp->assignee}}</center>
+                                        </td>
+                                   
+                       
+                        @endif
                         @if($tasks->taskType=="documents")
                                     <td> </td>
                                     <th class='workflow-th'>Eligibility Documents:</th>

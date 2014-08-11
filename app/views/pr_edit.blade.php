@@ -402,7 +402,7 @@
         </div>  
        
         <br>
-        <div style="width: 85%;margin: auto;">
+        <div style="width:100%;margin: auto;">
             <!-- Section 1  -->
             <?php 
             //Cursor Component
@@ -817,6 +817,84 @@
                                         echo 'none';
                                         ?>
                                         "
+                                        >
+                                    </td>
+                          
+                                
+                                <td style="border-left: none; text-align: center;">
+                                
+                                    <input type="button" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"
+                                    > 
+                                </td>
+                            {{Form::close()}}
+                    @endif
+                     @if($tasks->taskType == "philgeps")
+                            <?php $myForm = 'myForm_' . $taskc->id; ?>
+                            {{Form::open(['url'=>'philgeps', 'id' => $myForm], 'POST')}}
+                                <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
+                                 <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
+                                   <!--
+                                    <th class='workflow-th' width="18%">Reference No.:</th>
+                                    <th class='workflow-th' width="18%">Date Published:</th>
+                                    <th class='workflow-th' width="18%">End Date:</th>
+                                    <th class='workflow-th' colspan="2">Posted By:</th>
+                                    -->
+                                </tr>
+                                <tr class="@if($taskch!=0 && $taskc->task_id==$tasks->id && $tasks->designation_id==0) current-task @endif">
+                                 
+                                    <td class="edit-pr-input">
+                                    Reference No.:
+                                    <input type="text" name="referenceno"  class="form-control" maxlength="100" width="80%" maxlength="100"
+                                    value="<?php
+                                    if (NULL!=Input::old('referenceno'))
+                                    echo Input::old('referenceno');
+                                    ?>"
+                                    >
+                                </td>
+                                    <td>
+                                        Date Published:
+                                        <?php 
+                                        $today = date("m/d/y");
+                                        ?>
+                                        <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
+                                            <input type="text" class="form-control" name="datepublished" id="datepublished" style="text-align: center; width:100%"
+                                            
+                                        <?php
+                                        if (NULL!=Input::old('dateFinished'))
+                                            echo "value ='" . Input::old('dateFinished') ."'";
+                                        else
+                                            echo "value = '" . $today . "'";
+                                        ?>
+                                        
+                                             />
+                                        </div>
+                                    </td>
+                                    <td>
+                                        End Date:
+                                        <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
+                                            <input type="text" class="form-control" name="enddate" id="enddate" style="text-align: center; width:100%" 
+                                            
+                                        <?php
+                                        if (NULL!=Input::old('dateFinished'))
+                                            echo "value ='" . Input::old('dateFinished') ."'";
+                                        else
+                                            echo "value = '" . $today . "'";
+                                        ?>
+                                        
+                                             />
+                                        </div>
+                                    </td>
+                                    <td class="edit-pr-input" colspan="2"> 
+                                        Posted By:
+                                        <input type="text" name="by"  placeholder="Enter name" class="form-control" maxlength="100" width="80%"
+                                        
+                                        <?php
+                                        if (NULL!=Input::old('by'))
+                                            echo "value='".Input::old('by')."'";
+                                        else
+                                        echo "value='none'";
+                                        ?>
+                                        
                                         >
                                     </td>
                           
@@ -1426,6 +1504,35 @@
                                     </td>
                                     <td align="center">{{$taskp->custom2}}</td>
                                     <td class="edit-pr-input" colspan="2" align="center">{{$taskp->custom3}}</td>
+                                    <td align="center">
+                                @if($taskche==0&&$taskp->status=="Done")
+                                <a class='iframe btn btn-success' href='taskedit/{{$taskp->id}}' title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
+                                @endif
+                            </td>
+                       
+                        @endif
+                        @if($tasks->taskType=="philgeps")
+                               
+                                </tr>
+                                <tr>
+                                   
+                                    <td>
+                                        Reference No.:<br>
+                                        <center>{{$taskp->custom1}}</center>
+                                        <span class="add-on"><i class="icon-th"></i></span>
+                                    </td>
+                                    <td >
+                                        Date Published:<br>
+                                        <center>{{$taskp->custom2}}</center>
+                                        </td>
+                                    <td class="edit-pr-input" >
+                                        End Date:<br>
+                                        <center>{{$taskp->custom3}}</center>
+                                        </td>
+                                    <td colspan="2" >
+                                        Posted By:<br>
+                                        <center>{{$taskp->assignee}}</center>
+                                        </td>
                                     <td align="center">
                                 @if($taskche==0&&$taskp->status=="Done")
                                 <a class='iframe btn btn-success' href='taskedit/{{$taskp->id}}' title="Edit"><span class="glyphicon glyphicon-edit"></span></a>

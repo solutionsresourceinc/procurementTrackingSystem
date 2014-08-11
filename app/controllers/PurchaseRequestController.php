@@ -2462,4 +2462,90 @@ public function taskedit($id)
 	return Redirect::back();
 }
 
+
+
+public function philgeps()
+{
+Session::put('goToChecklist', 'true' ); 
+//Initializations
+$referenceno=strip_tags(Input::get('referenceno'));
+$datepublished=Input::get('datepublished');
+$enddate=Input::get('enddate');
+$by=Input::get('by');
+$taskdetails_id=Input::get('taskdetails_id');
+$check=0;
+
+//Validation Process
+if(ctype_alnum(str_replace(array(' ', '-', '.', ',', 'ñ', 'Ñ'),'',$by)))
+        $check=$check+1;
+if(ctype_alnum(str_replace(array(' ', '-', '.'),'',$referenceno)))
+        $check=$check+1;
+
+if ($check==2)
+{
+	$taskd= TaskDetails::find($taskdetails_id);
+	$docs=Document::find($taskd->doc_id);
+
+$id=$docs->pr_id;
+	$delcount= Count::where('doc_id', $docs->id)->delete();
+	$userx= User::get();
+	foreach($userx as $userv)
+	{
+		$count= new Count;
+		$count->user_id= $userv->id;
+		$count->doc_id= $docs->id;
+		$count->save();
+	}
+
+	Session::put('successchecklist','Saved.');
+
+	$taskd= TaskDetails::find($taskdetails_id);
+	$taskd->status="Done";
+	$taskd->custom1=$referenceno;
+	$taskd->custom2=$datepublished;
+	$taskd->custom3=$enddate;
+	$taskd->assignee=$by;
+
+	$taskd->save();
+	$tasknext=TaskDetails::find($taskdetails_id+1);
+	$tasknextc=TaskDetails::where('id', $taskdetails_id+1)->where('doc_id', $docs->pr_id)->count();
+date_default_timezone_set("Asia/Manila");
+$upDate = date('Y-m-d H:i:s');
+DB::table('purchase_request')->where('id',$id)->update(array('updated_at' => $upDate));
+	if ($tasknextc!=0)
+	{
+		//Project Type Filter
+		$counter=1;
+		$tasknext=TaskDetails::find($taskdetails_id+$counter);
+	
+		while($tasknext->status=="Lock"||$tasknext->status=="Done")
+		{
+			$counter=$counter+1;
+			$tasknext=TaskDetails::find($taskdetails_id+$counter);
+		}
+	
+		$tasknext->status="New";
+		$tasknext->save();
+		//End Project Type Filter
+	}
+	else
+	{
+		$purchase= Purchase::find($docs->pr_id);
+		$purchase->status="Closed";
+		$purchase->save();
+		$request_id = Input::get('pr_id');
+		return Redirect::to("purchaseRequest/vieweach/$request_id");
+	}
+}
+else
+{
+	Session::put('errorchecklist','Invalid input.');
+	return Redirect::back()->withInput();
+}	
+	
+return Redirect::back();
+
+
+}
+
 }

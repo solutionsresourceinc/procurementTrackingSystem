@@ -103,6 +103,7 @@ Route::post('rfq', ['uses' => 'PurchaseRequestController@rfq']);
 Route::post('dateby', ['uses' => 'PurchaseRequestController@dateby']);
 Route::post('datebyremark', ['uses' => 'PurchaseRequestController@datebyremark']);
 Route::post('dateonly', ['uses' => 'PurchaseRequestController@dateonly']);
+Route::post('philgeps', ['uses' => 'PurchaseRequestController@philgeps']);
 //End Checklist Rowtype Routes
 
 
