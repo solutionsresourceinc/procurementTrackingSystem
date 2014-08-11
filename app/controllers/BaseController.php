@@ -34,7 +34,7 @@ class BaseController extends Controller {
 	    	{
 	        	$randomString .= rand(1,9);
 	    	}
-	    	return $randomString;
+	    	return number_format($randomString);
 		}
 
 		$numLoop = 1;

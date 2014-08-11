@@ -42,29 +42,55 @@
 			<span class="glyphicon glyphicon-step-backward"></span>&nbsp;Back
 		</button>		
 	</div>
-	<div class="col-md-3 no-print">
-		<?php $searchBy = 0; ?> <!-- REMOVE THIS EVENTUALLY -->            
-			<select id="searchBy" name="searchBy" class="form-control" onchange="changeSearch(this.value)">
-                <option value="0" <?php if($searchBy == '0'){ echo "selected";} ?> >Search by</option>
-                <option value="all" <?php if($searchBy == 'all'){ echo "selected";} ?> >Display All</option>
-                <option value="controlNo" <?php if($searchBy == 'controlNo'){ echo "selected";} ?> >Control No.</option>
-                <option value="projectPurpose" <?php if($searchBy == 'projectPurpose'){ echo "selected";} ?> >Project/Purpose</option>
-                <option value="1" <?php if($searchBy == '1'){ echo "selected";} ?> >Mode-SVP Below 50k</option>
-                <option value="2" <?php if($searchBy == '2'){ echo "selected";} ?> >Mode-SVP Above 50k,Below 500k</option>
-                <option value="3" <?php if($searchBy == '3'){ echo "selected";} ?> >Mode-Bidding</option>
-                <option value="4" <?php if($searchBy == '4'){ echo "selected";} ?> >Mode-Pakyaw</option>
-                <option value="5" <?php if($searchBy == '5'){ echo "selected";} ?> >Mode-Direct Contracting</option>
-                <option value="Shopping" <?php if($searchBy == 'Shopping'){ echo "selected";} ?> >Mode-Shopping</option>
-                <option value="amount" <?php if($searchBy == 'amount'){ echo "selected";} ?>>Amount</option>
-                <option value="dateReceived" <?php if($searchBy == 'dateReceived'){ echo "selected";} ?>>Date Received</option>
-            </select>
-        </div>   
+
+	<form method="POST" action="">
+	<div class="col-md-3 no-print">     
+		<select id="searchBy" name="searchBy" class="form-control" onchange="changeSearch(this.value)">
+            <option value="0" <?php if($searchBy == '0'){ echo "selected";} ?> >Search by</option>
+            <option value="all" <?php if($searchBy == 'all'){ echo "selected";} ?> >Display All</option>
+            <option value="dateReceived" <?php if($searchBy == 'dateReceived'){ echo "selected";} ?>>Date Received</option>
+            <option value="controlNo" <?php if($searchBy == 'controlNo'){ echo "selected";} ?> >BAC No</option>
+            <option value="office" <?php if($searchBy == 'office'){ echo "selected";} ?> >Dept</option>
+            <option value="projectPurpose" <?php if($searchBy == 'projectPurpose'){ echo "selected";} ?> >Particulars</option>
+            <option value="budgetdate" <?php if($searchBy == 'budgetdate'){ echo "selected";} ?> >Budget</option>
+            <option value="sourceOfFund" <?php if($searchBy == 'sourceOfFund'){ echo "selected";} ?> >Source of Fund</option>
+            <option value="amount" <?php if($searchBy == 'amount'){ echo "selected";} ?>>Amount</option>
+            <option value="dateapproved" <?php if($searchBy == 'dateapproved'){ echo "selected";} ?>>Date Approved</option>
+            <option value="supplier" <?php if($searchBy == 'supplier'){ echo "selected";} ?>>Supplier</option>
+            <option value="1" <?php if($searchBy == '1'){ echo "selected";} ?> >Mode-SVP Below 50k</option>
+            <option value="2" <?php if($searchBy == '2'){ echo "selected";} ?> >Mode-SVP Above 50k,Below 500k</option>
+            <option value="3" <?php if($searchBy == '3'){ echo "selected";} ?> >Mode-Bidding</option>
+            <option value="4" <?php if($searchBy == '4'){ echo "selected";} ?> >Mode-Pakyaw</option>
+            <option value="5" <?php if($searchBy == '5'){ echo "selected";} ?> >Mode-Direct Contracting</option>
+            <option value="Shopping" <?php if($searchBy == 'Shopping'){ echo "selected";} ?> >Mode-Shopping</option>
+        </select>
+    </div>   
 	<div class="input-group col-md-3 no-print" id="searchBox">
-      <input onkeyup="disableButton()"id="searchTerm" name="searchTerm" placeholder="Enter search keywords" type="text" class="form-control" onchange="detectInput()">
+      <input onkeyup="disableButton()" id="searchTerm" name="searchTerm" placeholder="Enter search keywords" type="text" class="form-control" onchange="detectInput()">
       <span class="input-group-btn">
         <button class="btn btn-primary" name="searchButton" id="searchButton" type="submit">Search</button>
       </span>
     </div>
+
+	<div id="allButton" class="no-print">
+        <button class="btn btn-primary col-md-3" name="allButton" id="allButton" type="submit">Display</button>
+    	<br/>
+    	<br/>
+    </div>
+
+    <div class="form-group no-print" id="searchDate" style="display: none;">
+        <div class="input-daterange input-group" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="yyyy-mm-dd">
+            <input onchange="dateButton()" type="text" class="form-control" name="start" id="start" style="text-align: center"/>
+            <span class="input-group-addon" style="vertical-align: top;height:20px">to</span>
+            <input onchange="dateButton()" type="text" id="end" class="form-control" name="end" style="text-align: center" />
+            <span class="input-group-btn">
+                <button type="submit" class="btn btn-primary" id="betDate" name="betDate">Search</button>
+            </span>
+            <!-- <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button> -->
+        </div>
+    </div>
+    </form>
+
 <div style="margin-top: 30px">
 	<table class="table table-striped display" border="1">
 		<thead>
@@ -91,25 +117,47 @@
 					<td>{{{$request->officeName}}}</td>
 					<td>{{{$request->projectPurpose}}}</td>
 					<td>
-						@if($request->dateFinished == '0000-00-00 00:00:00')
-							<font color="grey">N/A</font>
-						@else
-							{{{(new \DateTime($request->dateFinished))->format('Y-m-d')}}}
-						@endif
-					</td>
-					<td>{{{$request->sourceOfFund}}}</td>
-					<td>{{{number_format($request->amount)}}}</td>
-					<td>
+						@if(isset($flag) && $flag == 0)
 						<?php
 							$dateApproved = DB::table('purchase_request')
 							->join('document', 'purchase_request.id', '=', 'document.pr_id')
 							->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
-							->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('tasks.taskName', '=', 'Date Signed by Gov:')->where('tasks.section_id', '=', '1')->where('purchase_request.status', '=', 'Active')->where('purchase_request.controlNo', '=', $request->controlNo)->first();
+							->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('tasks.section_id', '=', '1')->where('purchase_request.controlNo', '=', $request->controlNo)->first();
 						?>
-						@if($dateApproved->custom1 == "")
-							<font color="grey">N/A</font>
+							@if($request->dateFinished == '0000-00-00 00:00:00')
+								<font color="grey">N/A</font>
+							@else
+								{{{(new \DateTime($request->dateFinished))->format('Y-m-d')}}}
+							@endif
 						@else
-							{{{ $dateApproved->custom1 }}}			
+							@if($request->dateFinished == '0000-00-00 00:00:00')
+								<font color="grey">N/A</font>
+							@else
+								{{{(new \DateTime($request->dateFinished))->format('Y-m-d')}}}
+							@endif
+						@endif
+					</td>
+					<td>{{{$request->sourceOfFund}}}</td>
+					<td>{{{$request->amount}}}</td>
+					<td>
+						@if(isset($flag) && $flag == 0)
+							@if($request->dateFinished == '0000-00-00 00:00:00')
+								<font color="grey">N/A</font>
+							@else
+								{{{(new \DateTime($request->dateFinished))->format('Y-m-d')}}}
+							@endif
+						@else
+							<?php
+								$dateApproved = DB::table('purchase_request')
+								->join('document', 'purchase_request.id', '=', 'document.pr_id')
+								->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+								->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('tasks.taskName', '=', 'SIGNED BY GOV')->where('tasks.section_id', '=', '1')->where('purchase_request.controlNo', '=', $request->controlNo)->first();
+							?>
+							@if($dateApproved->dateFinished == "0000-00-00 00:00:00")
+								<font color="grey">N/A</font>
+							@else
+								{{{(new \DateTime($dateApproved->dateFinished))->format('Y-m-d')}}}	
+							@endif
 						@endif
 					</td>
                     <td>
@@ -135,20 +183,48 @@
                             ?>
                         @endforeach
                     </td>
-					<td>
-						<?php
-							$supplier = DB::table('purchase_request')
-							->join('document', 'purchase_request.id', '=', 'document.pr_id')
-							->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
-							->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('tasks.taskName', '=', 'LCRB / HRB / SUPPLIER')->where('purchase_request.status', '=', 'Active')->where('purchase_request.controlNo', '=', $request->controlNo)->first();
-						?>
-						@if($supplier->custom1 == "")
-							<font color="grey">N/A</font>
+					<td> 
+						@if(isset($supplierFlag) && $supplierFlag == 1)
+							@if($request->custom1 == "")
+								<font color="grey">N/A</font>
+							@else
+								{{{ $request->custom1 }}}			
+							@endif
 						@else
-							{{{ $supplier->custom1 }}}			
+							<?php
+								$supplier = DB::table('purchase_request')
+								->join('document', 'purchase_request.id', '=', 'document.pr_id')
+								->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+								->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('tasks.taskName', '=', 'LCRB / HRB / SUPPLIER')->where('purchase_request.controlNo', '=', $request->controlNo)->first();
+							?>
+							@if($supplier->custom1 == "")
+								<font color="grey">N/A</font>
+							@else
+								{{{ $supplier->custom1 }}}			
+							@endif
 						@endif
 					</td>
 					<td>
+						<?php
+							$accomplished = DB::table('purchase_request')->where('controlNo', '=', $request->controlNo)
+							->join('document', 'purchase_request.id', '=', 'document.pr_id')
+							->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+							->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('taskdetails.status', '=', 'Done')->select('tasks.taskName')->orderBy('taskdetails.id', 'DESC')->first();
+						?>
+						@if(isset($accomplished->taskName) && $accomplished->taskName != '')
+							<font color="green"> Accomplished: </font> {{{ $accomplished->taskName }}}
+						@endif
+
+						<?php
+							$pending = DB::table('purchase_request')->where('controlNo', '=', $request->controlNo)
+							->join('document', 'purchase_request.id', '=', 'document.pr_id')
+							->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+							->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('taskdetails.status', '=', 'New')->select('tasks.taskName')->orderBy('taskdetails.id', 'ASC')->first();
+						?>
+						<br/>
+						@if($pending->taskName != '')
+							<font color="red"> For: </font>{{{ $pending->taskName }}}
+						@endif
 					</td>
 				</tr>
 			@endforeach
@@ -162,4 +238,102 @@
         <p><i>No data available</i></p>
     @endif
 </div>
+@stop
+@section('footer')
+<script type="text/javascript">
+	    window.onload = function()
+        {
+            if(document.getElementById('start').value.length == 0 || document.getElementById('end').value.length == 0)
+            {
+                document.getElementById('betDate').disabled = true;
+            }
+
+            if(document.getElementById('searchTerm').value.length == 0)
+            {
+                document.getElementById('searchButton').disabled = true;
+            }
+
+            if(document.getElementById('searchBy').value == 'dateReceived' || document.getElementById('searchBy').value == 'budgetdate' || document.getElementById('searchBy').value == 'dateapproved')
+            {
+                document.getElementById('searchBox').style.display = 'none';
+                document.getElementById('searchDate').style.display = ''; 
+                document.getElementById('allButton').style.display = 'none';
+            }
+            
+            if(document.getElementById('searchBy').value == '0')
+            {
+                document.getElementById('searchTerm').disabled = true;
+                document.getElementById('searchButton').disabled = true;
+                document.getElementById('allButton').style.display = 'none';
+            }
+            
+            if(document.getElementById('searchBy').value == 'all')
+            {
+                document.getElementById('searchDate').style.display = 'none';
+                document.getElementById('searchBox').style.display = 'none'; 
+                // document.getElementById('searchTerm').style.display = 'none';
+                // document.getElementById('searchButton').style.display = 'none';
+                document.getElementById('allButton').style.display = '';
+            }
+            else
+            {
+                // document.getElementById('searchDate').style.display = 'none';
+                document.getElementById('allButton').style.display = 'none';
+            }
+        }
+
+        function changeSearch(value)
+        {
+            if(value == '0')
+            {
+                document.getElementById('searchTerm').disabled = true;
+                document.getElementById('searchButton').disabled = true;
+                document.getElementById('searchBox').style.display = '';
+                document.getElementById('searchTerm').style.display = '';
+                document.getElementById('searchButton').style.display = '';
+                document.getElementById('searchDate').style.display = 'none'; 
+                document.getElementById('allButton').style.display = 'none';
+            }
+            else if(value == 'all')
+            {
+                document.getElementById('allButton').style.display = '';
+                document.getElementById('searchTerm').style.display = 'none';
+                document.getElementById('searchButton').style.display = 'none';
+                document.getElementById('searchBox').style.display = 'none';
+                document.getElementById('searchDate').style.display = 'none';  
+            }
+            else if(value == 'dateReceived' || value == 'budgetdate' || value == 'dateapproved')
+            {
+                document.getElementById('searchBox').style.display = 'none';
+                document.getElementById('searchDate').style.display = ''; 
+                document.getElementById('allButton').style.display = 'none'; 
+            }
+            else
+            {
+                document.getElementById('searchTerm').disabled = false;
+                document.getElementById('searchButton').disabled = true;
+                document.getElementById('searchBox').style.display = '';
+                document.getElementById('searchTerm').style.display = '';
+                document.getElementById('searchButton').style.display = '';
+                document.getElementById('searchDate').style.display = 'none';
+                document.getElementById('allButton').style.display = 'none';  
+            }
+        }
+
+        function disableButton()
+        {
+            if(document.getElementById('searchTerm').value.length != 0)
+                document.getElementById('searchButton').disabled = false;
+            else
+                document.getElementById('searchButton').disabled = true;
+        }
+
+        function dateButton()
+        {
+            if(document.getElementById('start').value.length != 0 && document.getElementById('end').value.length != 0)
+                document.getElementById('betDate').disabled = false;
+            else
+                document.getElementById('betDate').disabled = true;
+        }
+</script>
 @stop
