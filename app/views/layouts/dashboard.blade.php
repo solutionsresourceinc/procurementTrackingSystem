@@ -245,15 +245,6 @@
                                 Summary
                             </a>
                         </li>
-
-                    <li class="{{Request::is('purchaseRequest/compeleteTable') ? 'active':''}}">
-                        <a href="/purchaseRequest/completeTable">
-                            All Purchase Request
-                            <span class="badge pull-right">
-                            <?php echo $count = DB::table('purchase_request')->count(); ?>
-                            </span>
-                        </a>
-                    </li>
                     @endif
                 </ul>
             </li>

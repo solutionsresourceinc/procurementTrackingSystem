@@ -68,20 +68,50 @@
 <div style="margin-top: 30px">
 	<table class="table table-striped display" border="1">
 		<thead>
-			<th width="16.66%"> Control No </th>
-			<th width="16.66%"> Project/Purpose </th>
-			<th width="16.66%"> Mode </th>
-			<th width="16.66%"> Amount </th>
-			<th width="16.66%"> Date </th>
-			<th width="16.66%"> Action </th>
+			<th width="9.09%"> DATE </th>
+			<th width="9.09%"> BAC NO </th>
+			<th width="9.09%"> DEPT </th>
+			<th width="9.09%"> PARTICULARS </th>
+			<th width="9.09%"> BUDGET </th>
+			<th width="9.09%"> SOURCE OF FUNDING </th>
+			<th width="9.09%"> PR AMOUNT </th>
+			<th width="9.09%"> DATE APPROVED </th>
+			<th width="9.09%"> MOP </th>
+			<th width="9.09%"> SUPPLIER </th>
+			<th width="9.09%"> REMARKS </th>
 		</thead>
 		<tbody>
 			@foreach($requests as $request)
 				<tr>
-					<td>{{{$request->controlNo}}}</td>
+					<td>{{{$request->dateReceived}}}</td>
+					<td>{{{str_pad($request->controlNo, 5, '0', STR_PAD_LEFT)}}}</td>
+					<td>{{{$request->officeName}}}</td>
 					<td>{{{$request->projectPurpose}}}</td>
-					<td>Test</td>
+					<td>{{{$request->projectPurpose}}}</td>
+					<td>{{{$request->sourceOfFund}}}</td>
 					<td>{{{number_format($request->amount)}}}</td>
+					<td>Test</td>
+                    <td>
+                    	<?php 
+		                    $doc = new Purchase; 
+	                        $doc = DB::table('document')->where('pr_id', $request->id)->get(); 
+                    	?>
+                        @foreach ($doc as $docs) 
+                            <?php  
+                                $workflow = Workflow::find($docs->work_id)->workFlowName; 
+                                if($workflow == "Small Value Procurement (Below P50,000)")
+                                    echo "SVP (Below P50,000)";
+                                else if($workflow == "Small Value Procurement (Above P50,000 Below P500,000)")
+                                    echo "SVP (Above P50,000 Below P500,000)";
+                                else
+                                    echo $workflow = Workflow::find($docs->work_id)->workFlowName;
+                                if($request->otherType != "Pakyaw" || $request->otherType != "Direct Contracting")
+                                {}
+                                else if($request->otherType != "")
+                                        echo "<br> <i>$request->otherType</i>";
+                            ?>
+                        @endforeach
+                    </td>
 					<td>{{{$request->dateReceived}}}</td>
 					<td>Test</td>
 				</tr>

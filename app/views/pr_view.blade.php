@@ -59,35 +59,11 @@
 @if(Session::get('notice'))
     <div class="alert alert-success"> {{ Session::get('notice') }}</div> 
 @endif
+    <div class="col-md-6">
+        <a href="{{{$link}}}"><span class="btn btn-info">Complete Table View</span></a>
+    </div>
     <!-- START OF SEARCH BOX -->
-    <form method="POST" action="">
-        <div align="left" class="col-md-3" id="noOfResult">
-            <?php
-                error_reporting(0);
-                $page = $_REQUEST["page"]; 
-                Session::put('page',$page);
-            ?>
-
-            @if(!Session::get('page') || $page == 1)
-                @if($pageCounter <= 10)
-                    <i>{{{ $pageCounter }}} of {{{ $pageCounter }}}</i>
-                @else
-                    <i>10 of {{{ $pageCounter }}}</i>
-                @endif
-            @else
-                @if((($page*10)-9) >= $pageCounter)
-                    <i>{{{ (($page*10)-9) }}} - {{{ ($page*10) }}} of {{{ $pageCounter }}} </i>
-                @else
-                    @if(($pageCounter - (($page*10)-9)) == 0)
-                        <i> {{{ (($page*10)-9) }}} of {{{$pageCounter}}} </i>
-                    @elseif( ($pageCounter - (($page*10)-9)) >= 10 )
-                        <i> {{{ (($page*10)-9) }}} - {{{($page*10)}}} of {{{$pageCounter}}} </i>
-                    @else
-                        <i> {{{ (($page*10)-9) }}} - {{{ $pageCounter }}} of {{{$pageCounter}}}</i>
-                    @endif
-                @endif
-            @endif
-        </div>   
+    <form method="POST" action=""> 
         <div class="col-md-3" style="">
             <select id="searchBy" name="searchBy" class="form-control" onchange="changeSearch(this.value)">
                 <option value="0" <?php if($searchBy == '0'){ echo "selected";} ?> >Search by</option>
@@ -127,11 +103,37 @@
             <!-- <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button> -->
         </div>
     </div>
-
     <input type="hidden" id="pageNameHidden" name="pageNameHidden" value="{{{ $pageName }}}" />
     </form> 
+
+    <div align="right" class="col-md-12" id="noOfResult">
+            <?php
+                error_reporting(0);
+                $page = $_REQUEST["page"]; 
+                Session::put('page',$page);
+            ?>
+
+            @if(!Session::get('page') || $page == 1)
+                @if($pageCounter <= 10)
+                    <i>{{{ $pageCounter }}} of {{{ $pageCounter }}}</i>
+                @else
+                    <i>10 of {{{ $pageCounter }}}</i>
+                @endif
+            @else
+                @if((($page*10)-9) >= $pageCounter)
+                    <i>{{{ (($page*10)-9) }}} - {{{ ($page*10) }}} of {{{ $pageCounter }}} </i>
+                @else
+                    @if(($pageCounter - (($page*10)-9)) == 0)
+                        <i> {{{ (($page*10)-9) }}} of {{{$pageCounter}}} </i>
+                    @elseif( ($pageCounter - (($page*10)-9)) >= 10 )
+                        <i> {{{ (($page*10)-9) }}} - {{{($page*10)}}} of {{{$pageCounter}}} </i>
+                    @else
+                        <i> {{{ (($page*10)-9) }}} - {{{ $pageCounter }}} of {{{$pageCounter}}}</i>
+                    @endif
+                @endif
+            @endif
+        </div>  
     <!-- END OF SEARCH BOX -->
-    
     <table class="table table-striped display tablesorter">
         <thead>
             <tr>

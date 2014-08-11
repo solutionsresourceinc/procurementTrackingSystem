@@ -4,6 +4,7 @@ class PurchaseRequestController extends Controller
 {
 	public function view()
 	{
+		$link = "completeTable/active";
 		$pageName = "List of Active Purchase Requests";
 		$date_today =date('Y-m-d H:i:s');
 		$searchBy = '0';
@@ -11,13 +12,13 @@ class PurchaseRequestController extends Controller
 		{
 			$pageCounter = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('requisitioner', Auth::user()->id)->where('status', '=', 'Active')->orderBy('dateReceived', 'DESC')->count();
 			$requests = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('requisitioner', Auth::user()->id)->where('status', '=', 'Active')->orderBy('dateReceived', 'DESC')->paginate(10);
-			return View::make('pr_view')->with('requests',$requests)->with('searchBy',$searchBy)->with('pageCounter',$pageCounter)->with('pageName' ,$pageName);
+			return View::make('pr_view')->with('requests',$requests)->with('searchBy',$searchBy)->with('pageCounter',$pageCounter)->with('pageName' ,$pageName)->with('link',$link);
 		}
 		else
 		{
 			$pageCounter = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('status', '=', 'Active')->orderBy('dateReceived', 'DESC')->count();
 			$requests = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('status', '=', 'Active')->orderBy('dateReceived', 'DESC')->paginate(10);
-			return View::make('pr_view')->with('requests',$requests)->with('searchBy',$searchBy)->with('pageCounter',$pageCounter)->with('pageName' ,$pageName);
+			return View::make('pr_view')->with('requests',$requests)->with('searchBy',$searchBy)->with('pageCounter',$pageCounter)->with('pageName' ,$pageName)->with('link',$link);
 		}	
 	}
 
@@ -31,13 +32,13 @@ class PurchaseRequestController extends Controller
 		{
 			$pageCounter = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('requisitioner', Auth::user()->id)->where('status', '=', 'Closed')->orderBy('dateReceived', 'DESC')->count();
 			$requests = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('requisitioner', Auth::user()->id)->where('status', '=', 'Closed')->orderBy('dateReceived', 'DESC')->paginate(10);
-			return View::make('pr_view')->with('requests',$requests)->with('searchBy',$searchBy)->with('pageCounter',$pageCounter)->with('pageName' ,$pageName);
+			return View::make('pr_view')->with('requests',$requests)->with('searchBy',$searchBy)->with('pageCounter',$pageCounter)->with('pageName' ,$pageName)->with('link', 'completeTableClosed');
 		}
 		else
 		{
 			$pageCounter = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('status', '=', 'Closed')->orderBy('dateReceived', 'DESC')->count();
 			$requests = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('status', '=', 'Closed')->orderBy('dateReceived', 'DESC')->paginate(10);
-			return View::make('pr_view')->with('requests',$requests)->with('searchBy',$searchBy)->with('pageCounter',$pageCounter)->with('pageName' ,$pageName);
+			return View::make('pr_view')->with('requests',$requests)->with('searchBy',$searchBy)->with('pageCounter',$pageCounter)->with('pageName' ,$pageName)->with('link', 'completeTableClosed');
 		}
 	}
 
@@ -51,13 +52,13 @@ class PurchaseRequestController extends Controller
 		{
 			$pageCounter = DB::table('purchase_request')->where('dueDate','<=',$date_today)->where('requisitioner', Auth::user()->id)->where('status', '=', 'Active')->orderBy('dateReceived', 'DESC')->count();
 			$requests = DB::table('purchase_request')->where('dueDate','<=',$date_today)->where('requisitioner', Auth::user()->id)->where('status', '=', 'Active')->orderBy('dateReceived', 'DESC')->paginate(10);
-			return View::make('pr_view')->with('requests',$requests)->with('searchBy',$searchBy)->with('pageCounter',$pageCounter)->with('pageName' ,$pageName);
+			return View::make('pr_view')->with('requests',$requests)->with('searchBy',$searchBy)->with('pageCounter',$pageCounter)->with('pageName' ,$pageName)->with('link', 'completeTableOverdue');
 		}
 		else
 		{
 			$pageCounter = DB::table('purchase_request')->where('dueDate','<=',$date_today)->where('status', '=', 'Active')->orderBy('dateReceived', 'DESC')->count();
 			$requests = DB::table('purchase_request')->where('dueDate','<=',$date_today)->where('status', '=', 'Active')->orderBy('dateReceived', 'DESC')->paginate(10);
-			return View::make('pr_view')->with('requests',$requests)->with('searchBy',$searchBy)->with('pageCounter',$pageCounter)->with('pageName' ,$pageName);
+			return View::make('pr_view')->with('requests',$requests)->with('searchBy',$searchBy)->with('pageCounter',$pageCounter)->with('pageName' ,$pageName)->with('link', 'completeTableOverdue');
 		}
 	}
 
@@ -71,13 +72,13 @@ class PurchaseRequestController extends Controller
 		{
 			$pageCounter = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('requisitioner', Auth::user()->id)->where('status', '=', 'Cancelled')->orderBy('dateReceived', 'DESC')->count();
 			$requests = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('requisitioner', Auth::user()->id)->where('status', '=', 'Cancelled')->orderBy('dateReceived', 'DESC')->paginate(10);
-			return View::make('pr_view')->with('requests',$requests)->with('searchBy',$searchBy)->with('pageCounter',$pageCounter)->with('pageName' ,$pageName);
+			return View::make('pr_view')->with('requests',$requests)->with('searchBy',$searchBy)->with('pageCounter',$pageCounter)->with('pageName' ,$pageName)->with('link', 'completeTableCancelled');
 		}
 		else
 		{
 			$pageCounter = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('status', '=', 'Cancelled')->orderBy('dateReceived', 'DESC')->count();
 			$requests = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('status', '=', 'Cancelled')->orderBy('dateReceived', 'DESC')->paginate(10);
-			return View::make('pr_view')->with('requests',$requests)->with('searchBy',$searchBy)->with('pageCounter',$pageCounter)->with('pageName' ,$pageName);
+			return View::make('pr_view')->with('requests',$requests)->with('searchBy',$searchBy)->with('pageCounter',$pageCounter)->with('pageName' ,$pageName)->with('link', 'completeTableCancelled');
 		}
 	}
 

@@ -20,7 +20,10 @@ Route::get('/', function()
 Route::get( 'janisawesome', 'BaseController@janisawesome');
 
 //---------- Complete Table View route
-Route::get( 'purchaseRequest/completeTable', 'SearchController@completeTable');
+Route::get( 'purchaseRequest/completeTable/active', 'SearchController@completeTableActive');
+Route::get( 'purchaseRequest/completeTable/closed', 'SearchController@completeTableClosed');
+Route::get( 'purchaseRequest/completeTable/cancelled', 'SearchController@completeTableCancelled');
+Route::get( 'purchaseRequest/completeTable/overdue', 'SearchController@completeTableOverdue');
 
 //---------- Login Routes
 Route::get( 'login', 'UserController@login');
