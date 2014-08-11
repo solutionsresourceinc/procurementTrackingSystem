@@ -69,6 +69,16 @@ class TaskSeeder extends Seeder {
         $task->description = 'This is a task description';
         $task->save();
 
+        $task = new Task;
+        $task->wf_id = '1';
+        $task->section_id = '1';
+        $task->taskName = 'Date Signed by Gov:';
+        $task->taskType = 'dateonly';
+        $task->maxDuration = '0';
+        $task->order_id = $orderID++;
+        $task->description = 'This is a task description';
+        $task->save();
+
 
         // WORKFLOW 1 | SECTION 2
         $orderID = 1; // controller for order_id
@@ -89,6 +99,16 @@ class TaskSeeder extends Seeder {
         $task->taskName = 'ABSTRACT OF QUOTATION';
         $task->taskType = 'normal';
         $task->maxDuration = '6';
+        $task->order_id = $orderID++;
+        $task->description = 'This is a task description';
+        $task->save();
+
+        $task = new Task;
+        $task->wf_id = '1';
+        $task->section_id = '2';
+        $task->taskName = 'Date Signed by Gov.';
+        $task->taskType = 'dateonly';
+        $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
@@ -151,6 +171,16 @@ class TaskSeeder extends Seeder {
         $task->section_id = '3';
         $task->taskName = 'BAC (DELIVERY)';
         $task->taskType = 'normal';
+        $task->maxDuration = '0';
+        $task->order_id = $orderID++;
+        $task->description = 'This is a task description';
+        $task->save();
+
+        $task = new Task;
+        $task->wf_id = '1';
+        $task->section_id = '3';
+        $task->taskName = 'Date Signed by Gov:';
+        $task->taskType = 'dateonly';
         $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
@@ -219,6 +249,15 @@ class TaskSeeder extends Seeder {
         $task->description = 'This is a task description';
         $task->save();
 
+        $task = new Task;
+        $task->wf_id = '1';
+        $task->section_id = '4';
+        $task->taskName = 'Date Signed by Gov:';
+        $task->taskType = 'dateonly';
+        $task->maxDuration = '0';
+        $task->order_id = $orderID++;
+        $task->description = 'This is a task description';
+        $task->save();
         //WORKFLOW 2 | SECTION 1 <-- ABOVE 50,000 BELOW 500,000
         $orderID = 1; // controller for order_id
 
@@ -282,6 +321,16 @@ class TaskSeeder extends Seeder {
         $task->description = 'This is a task description';
         $task->save();
 
+        $task = new Task;
+        $task->wf_id = '2';
+        $task->section_id = '1';
+        $task->taskName = 'Date Signed by Gov:';
+        $task->taskType = 'dateonly';
+        $task->maxDuration = '0';
+        $task->order_id = $orderID++;
+        $task->description = 'This is a task description';
+        $task->save();
+
         //WORKFLOW 2 | SECTION 2 ====================================================================================================================================================
         $orderID = 1; // controller for order_id
 
@@ -335,6 +384,15 @@ class TaskSeeder extends Seeder {
         $task->description = 'This is a task description';
         $task->save();
 
+        $task = new Task;
+        $task->wf_id = '2';
+        $task->section_id = '2';
+        $task->taskName = 'Date Signed by Gov:';
+        $task->taskType = 'dateonly';
+        $task->maxDuration = '0';
+        $task->order_id = $orderID++;
+        $task->description = 'This is a task description';
+        $task->save();
         //WORKFLOW 2 | SECTION 3
         $orderID = 1; // controller for order_id
 
@@ -398,6 +456,15 @@ class TaskSeeder extends Seeder {
         $task->description = 'This is a task description';
         $task->save();
 
+        $task = new Task;
+        $task->wf_id = '2';
+        $task->section_id = '3';
+        $task->taskName = 'Date Signed by Gov:';
+        $task->taskType = 'dateonly';
+        $task->maxDuration = '0';
+        $task->order_id = $orderID++;
+        $task->description = 'This is a task description';
+        $task->save();
         //WORKFLOW 2 | SECTION 4
         $orderID = 1; // controller for order_id
 
@@ -461,6 +528,15 @@ class TaskSeeder extends Seeder {
         $task->description = 'This is a task description';
         $task->save();
 
+        $task = new Task;
+        $task->wf_id = '2';
+        $task->section_id = '4';
+        $task->taskName = 'Date Signed by Gov:';
+        $task->taskType = 'dateonly';
+        $task->maxDuration = '0';
+        $task->order_id = $orderID++;
+        $task->description = 'This is a task description';
+        $task->save();
         //WORKFLOW 3 | SECTION 1 <-- ABOVE 500,000
         $orderID = 1; // controller for order_id
 
@@ -509,6 +585,16 @@ class TaskSeeder extends Seeder {
         $task->section_id = '1';
         $task->taskName = 'GSD RELEASE';
         $task->taskType = 'normal';
+        $task->maxDuration = '0';
+        $task->order_id = $orderID++;
+        $task->description = 'This is a task description';
+        $task->save();
+
+        $task = new Task;
+        $task->wf_id = '3';
+        $task->section_id = '1';
+        $task->taskName = 'Date Signed by Gov:';
+        $task->taskType = 'dateonly';
         $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
@@ -637,6 +723,15 @@ class TaskSeeder extends Seeder {
         $task->description = 'This is a task description';
         $task->save();
 
+        $task = new Task;
+        $task->wf_id = '3';
+        $task->section_id = '2';
+        $task->taskName = 'Date Signed by Gov:';
+        $task->taskType = 'dateonly';
+        $task->maxDuration = '0';
+        $task->order_id = $orderID++;
+        $task->description = 'This is a task description';
+        $task->save();
         //WORKFLOW 3 | SECTION 3
         $orderID = 1; // controller for order_id
 
@@ -695,6 +790,16 @@ class TaskSeeder extends Seeder {
         $task->section_id = '3';
         $task->taskName = 'BAC (DELIVERY)';
         $task->taskType = 'normal';
+        $task->maxDuration = '0';
+        $task->order_id = $orderID++;
+        $task->description = 'This is a task description';
+        $task->save();
+
+        $task = new Task;
+        $task->wf_id = '3';
+        $task->section_id = '3';
+        $task->taskName = 'Date Signed by Gov:';
+        $task->taskType = 'dateonly';
         $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
@@ -763,6 +868,16 @@ class TaskSeeder extends Seeder {
         $task->description = 'This is a task description';
         $task->save();
 
+        $task = new Task;
+        $task->wf_id = '3';
+        $task->section_id = '4';
+        $task->taskName = 'Date Signed by Gov:';
+        $task->taskType = 'dateonly';
+        $task->maxDuration = '0';
+        $task->order_id = $orderID++;
+        $task->description = 'This is a task description';
+        $task->save();
+
         // WORKFLOW 4 | SECTION 1
         $orderID = 1; // controller for order_id
 
@@ -816,6 +931,16 @@ class TaskSeeder extends Seeder {
         $task->description = 'This is a task description';
         $task->save();
 
+        $task = new Task;
+        $task->wf_id = '4';
+        $task->section_id = '1';
+        $task->taskName = 'Date Signed by Gov:';
+        $task->taskType = 'dateonly';
+        $task->maxDuration = '0';
+        $task->order_id = $orderID++;
+        $task->description = 'This is a task description';
+        $task->save();
+
         // WORKFLOW 4 | SECTION 2
         $orderID = 1; // controller for order_id
 
@@ -864,6 +989,16 @@ class TaskSeeder extends Seeder {
         $task->section_id = '2';
         $task->taskName = 'ACCOMPLISHMENT REPORT DATE';
         $task->taskType = 'conference';
+        $task->maxDuration = '0';
+        $task->order_id = $orderID++;
+        $task->description = 'This is a task description';
+        $task->save();
+
+        $task = new Task;
+        $task->wf_id = '4';
+        $task->section_id = '2';
+        $task->taskName = 'Date Signed by Gov:';
+        $task->taskType = 'dateonly';
         $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
@@ -942,6 +1077,15 @@ class TaskSeeder extends Seeder {
         $task->description = 'This is a task description';
         $task->save();
 
+        $task = new Task;
+        $task->wf_id = '4';
+        $task->section_id = '3';
+        $task->taskName = 'Date Signed by Gov:';
+        $task->taskType = 'dateonly';
+        $task->maxDuration = '0';
+        $task->order_id = $orderID++;
+        $task->description = 'This is a task description';
+        $task->save();
         // WORKFLOW 5 | SECTION 1
         $orderID = 1; // controller for order_id
 
@@ -995,6 +1139,15 @@ class TaskSeeder extends Seeder {
         $task->description = 'This is a task description';
         $task->save();
 
+        $task = new Task;
+        $task->wf_id = '5';
+        $task->section_id = '1';
+        $task->taskName = 'Date Signed by Gov:';
+        $task->taskType = 'dateonly';
+        $task->maxDuration = '0';
+        $task->order_id = $orderID++;
+        $task->description = 'This is a task description';
+        $task->save();
         // WORKFLOW 5 | SECTION 2
         $orderID = 1; // controller for order_id
 
@@ -1057,6 +1210,16 @@ class TaskSeeder extends Seeder {
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
         $task->save();
+
+        $task = new Task;
+        $task->wf_id = '5';
+        $task->section_id = '2';
+        $task->taskName = 'Date Signed by Gov:';
+        $task->taskType = 'dateonly';
+        $task->maxDuration = '0';
+        $task->order_id = $orderID++;
+        $task->description = 'This is a task description';
+        $task->save();
         
         // WORKFLOW 5 | SECTION 3
         $orderID = 1; // controller for order_id
@@ -1096,6 +1259,16 @@ class TaskSeeder extends Seeder {
         $task->section_id = '3';
         $task->taskName = 'GOVERNORS OFFICE';
         $task->taskType = 'dateby';
+        $task->maxDuration = '0';
+        $task->order_id = $orderID++;
+        $task->description = 'This is a task description';
+        $task->save();
+
+        $task = new Task;
+        $task->wf_id = '5';
+        $task->section_id = '3';
+        $task->taskName = 'Date Signed by Gov:';
+        $task->taskType = 'dateonly';
         $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
@@ -1169,6 +1342,16 @@ class TaskSeeder extends Seeder {
         $task->section_id = '4';
         $task->taskName = 'CHECK RELEASED';
         $task->taskType = 'datebyremark';
+        $task->maxDuration = '0';
+        $task->order_id = $orderID++;
+        $task->description = 'This is a task description';
+        $task->save();
+
+        $task = new Task;
+        $task->wf_id = '5';
+        $task->section_id = '4';
+        $task->taskName = 'Date Signed by Gov:';
+        $task->taskType = 'dateonly';
         $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
