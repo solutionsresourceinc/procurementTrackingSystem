@@ -381,7 +381,7 @@
                                     <th class='workflow-th' colspan="2">Posted By:</th>
                                 </tr>
                                 <tr>
-                                    <td align="center">{{$tasks->taskName}}</td>
+                                    <td >{{$tasks->taskName}}</td>
                                     <td align="center">
                                         {{$taskp->custom1}}
                                         <span class="add-on"><i class="icon-th"></i></span>
@@ -422,7 +422,7 @@
                                     <th class='workflow-th' colspan="2">Checked By:</th>
                                 </tr>
                                 <tr>
-                                    <td align="center">{{$tasks->taskName}}</td>
+                                    <td>{{$tasks->taskName}}</td>
                                     <td align="center">
                                         {{$taskp->custom1}}
                                         <span class="add-on"><i class="icon-th"></i></span>
@@ -449,7 +449,7 @@
                         @endif
                         @if($tasks->taskType=="evaluation")
                               
-                                    <td align="center">{{$tasks->taskName}}</td>
+                                    <td >{{$tasks->taskName}}</td>
                                     <td colspan="2" align="center">
                                         {{$taskp->custom1}}
                                     </td>
@@ -467,7 +467,7 @@
                                     <th class='workflow-th' colspan="2">Contract Agreement:</th>
                                 </tr>
                                 <tr>
-                                    <td align="center">{{$tasks->taskName}}</td>
+                                    <td >{{$tasks->taskName}}</td>
                                     <td align="center">
                                         <?php 
                                         $today = date("m/d/y");
@@ -485,7 +485,7 @@
                                     <th class='workflow-th' colspan="2">Minutes of Bidding:</th>
                                 </tr>
                                 <tr>
-                                    <td align="center">{{$tasks->taskName}}</td>
+                                    <td >{{$tasks->taskName}}</td>
                                     <td align="center">
                                         <?php 
                                         $today = date("m/d/y");
@@ -503,7 +503,7 @@
                                     <th class='workflow-th' colspan="2">By:</th>
                                 </tr>
                                 <tr>
-                                    <td align="center">{{$tasks->taskName}}</td>
+                                    <td >{{$tasks->taskName}}</td>
                                     <td align="center">
                                         {{$taskp->custom1}}
                                     </td>
