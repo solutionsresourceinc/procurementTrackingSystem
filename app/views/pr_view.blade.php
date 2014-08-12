@@ -88,8 +88,10 @@
       </span>
     </div>
     
-    <div id="allButton">
+    <div id="allButton" style="display: none;">
         <button class="btn btn-primary col-md-3" name="allButton" id="allButton" type="submit">Display</button>
+        <br/>
+        <br/>
     </div>
 
     <div class="form-group" id="searchDate" style="display: none;">

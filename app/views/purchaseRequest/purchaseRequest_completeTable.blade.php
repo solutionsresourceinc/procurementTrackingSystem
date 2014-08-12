@@ -72,7 +72,7 @@
       </span>
     </div>
 
-	<div id="allButton" class="no-print">
+	<div id="allButton" class="no-print" style="display: none;">
         <button class="btn btn-primary col-md-3" name="allButton" id="allButton" type="submit">Display</button>
     	<br/>
     	<br/>
