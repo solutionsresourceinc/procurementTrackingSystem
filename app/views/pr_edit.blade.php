@@ -597,12 +597,34 @@
                                     </div>
                                 </td>
                                 <td class="edit-pr-input">
-                                    <input type="number" name="daysOfAction" class="form-control"  min="0"  width="100%" maxlength="12"
+
+                                            @if($sectiondays==0&&$prdays==0)
+
+                                            <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($purchaseToEdit->dateReceived))}}">
+                              
+                                            @elseif("1899-11-30 00:00:00"==$taskc->dateFinished||"0000-00-00 00:00:00"==$taskc->dateFinished)
+
+
+                                            <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($taskc->updated_at))}}">
+
+                                            @else
+
+                                            <?php 
+                                                $taskprev= TaskDetails::find($taskc->id-1); 
+
+                                            ?>
+                                            <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($taskprev->dateFinished))}}">
+
+                                            @endif
+
+                                    <input id="daysOfAction" type="number" name="daysOfAction" class="form-control"  min="0"  width="100%" maxlength="12" 
                                     <?php
                                     if (NULL!=Input::old('daysOfAction'))
-                                    echo "value='".Input::old('daysOfAction')."'";
+                                        echo "value='".Input::old('daysOfAction')."'";
                                     else if ('0'!=$taskc->daysOfAction)
                                         echo "value='".$taskc->daysOfAction."'";
+                                    else
+                                        echo "value='1'";
                                     ?>
                                     >
                                 </td>
@@ -1037,7 +1059,7 @@
                                         $today = date("m/d/y");
                                         ?>
                                         <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
-                                            <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%"
+                                            <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" onchange="changeDOA(this.value)"
                                         <?php
                                         if (NULL!=Input::old('dateFinished'))
                                             echo "value ='" . Input::old('dateFinished') ."'";
@@ -1051,7 +1073,25 @@
                                         </div>
                                     </td>
                                     <td class="edit-pr-input" colspan="2">  
-                                        <input type="number" name="noofdays"  class="form-control" maxlength="12" width="80%" placeholder="Enter no. of days"
+                                            @if($sectiondays==0&&$prdays==0)
+
+                                            <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($purchaseToEdit->dateReceived))}}">
+                                
+                                            @elseif("1899-11-30 00:00:00"==$taskc->dateFinished||"0000-00-00 00:00:00"==$taskc->dateFinished)
+
+
+                                            <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($taskc->updated_at))}}">
+
+                                            @else
+
+                                            <?php 
+                                                $taskprev= TaskDetails::find($taskc->id-1); 
+
+                                            ?>
+                                            <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($taskprev->dateFinished))}}">
+
+                                            @endif
+                                        <input type="number" name="noofdays"  class="form-control" maxlength="12" width="80%" placeholder="Enter no. of days" id="daysOfAction"
                                         
                                         <?php
                                         if (NULL!=Input::old('noofdays'))
@@ -1120,8 +1160,8 @@
                                         <?php 
                                         $today = date("m/d/y");
                                         ?>
-                                        <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
-                                            <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" 
+                                        <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%" >
+                                            <input type="text" class="form-control" name="date" id="date" onchange="changeDOA(this.value)" style="text-align: center; width:100%" 
                                         <?php
                                         if (NULL!=Input::old('dateFinished'))
                                             echo "value ='" . Input::old('dateFinished') ."'";
@@ -1133,8 +1173,27 @@
                                         />
                                         </div>
                                     </td>
+                                            @if($sectiondays==0&&$prdays==0)
+
+                                            <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($purchaseToEdit->dateReceived))}}">
+                          
+
+                                            @elseif("1899-11-30 00:00:00"==$taskc->dateFinished||"0000-00-00 00:00:00"==$taskc->dateFinished)
+
+
+                                            <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($taskc->updated_at))}}">
+
+                                            @else
+
+                                            <?php 
+                                                $taskprev= TaskDetails::find($taskc->id-1); 
+
+                                            ?>
+                                            <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($taskprev->dateFinished))}}">
+
+                                            @endif
                                     <td><input type="number" name="noofdays"  class="form-control" maxlength="100" width="80%" placeholder="Enter no. of days accomplished"
-                                        value="
+                                        id="daysOfAction"
                                         <?php
                                         if (NULL!=Input::old('noofdays'))
                                             echo "value=".Input::old('noofdays');
@@ -1144,7 +1203,6 @@
                                             echo "value=1";
                                      
                                         ?>
-                                        "
                                         ></td>
                                     <td class="edit-pr-input" colspan="2">  
                                         <input type="text" name="contractmeeting"  class="form-control" maxlength="100" width="80%" placeholder="Enter contract agreement"
@@ -1183,7 +1241,7 @@
                                         $today = date("m/d/y");
                                         ?>
                                         <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
-                                            <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" 
+                                            <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%"  onchange="changeDOA(this.value)"
                                             
                                         <?php
                                         if (NULL!=Input::old('dateFinished'))
@@ -1198,19 +1256,38 @@
                                         </div>
                                     </td>
                                     <td class="edit-pr-input">  
+                                            @if($sectiondays==0&&$prdays==0)
+
+                                            <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($purchaseToEdit->dateReceived))}}">
+                                        
+
+                                            @elseif("1899-11-30 00:00:00"==$taskc->dateFinished||"0000-00-00 00:00:00"==$taskc->dateFinished)
+
+
+                                            <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($taskc->updated_at))}}">
+
+                                            @else
+
+                                            <?php 
+                                                $taskprev= TaskDetails::find($taskc->id-1); 
+
+                                            ?>
+                                            <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($taskprev->dateFinished))}}">
+
+                                            @endif
                                         <input type="number" name="noofdays"  class="form-control" maxlength="12" width="80%" placeholder="Enter no. of days accomplished"
-                                        value="
+                                        id="daysOfAction"
                                         <?php
                                         if (NULL!=Input::old('noofdays'))
                                             echo "value=".Input::old('noofdays');
-                                         else if (NULL!=$taskc->custom2)
-                                        echo "value='".$taskc->custom2."'";
+                                        else if (NULL!=$taskc->custom2)
+                                            echo "value='".$taskc->custom2."'";
                                         else
                                             echo "value=1";
                                         
                                             
                                         ?>
-                                        "
+                                        
                                         >
                                     </td>
                                     <td class="edit-pr-input" colspan="2">  
@@ -2206,7 +2283,16 @@ function doneauto()
 
     function changeDOA(value)
     {
-        alert(value);
+var datebasis = document.getElementById("datebasis").value;
+var date1 = new Date(value);
+var date2 = new Date(datebasis);
+var timeDiff = Math.abs(date2.getTime() - date1.getTime());
+var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); 
+if(diffDays==0)
+    diffDays=1;
+        document.getElementById("daysOfAction").value=diffDays;
+        
+ 
     }
 </script>
 

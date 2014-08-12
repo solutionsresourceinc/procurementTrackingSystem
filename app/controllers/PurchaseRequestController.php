@@ -1881,6 +1881,7 @@ $noofdays=Input::get('noofdays');
 $taskdetails_id=Input::get('taskdetails_id');
 $check=0;
 
+
 //Validation Process
 if(ctype_digit($noofdays))
         $check=$check+1;
@@ -1910,6 +1911,11 @@ $id=$docs->pr_id;
 	$taskd->status="Done";
 	$taskd->custom1=$date;
 	$taskd->custom2=$noofdays;
+
+	$timestamp = strtotime($date);
+	$dtime=date("Y-m-d H:i:s", $timestamp);
+
+	$taskd->dateFinished=$dtime;
 
 
 	$taskd->save();
@@ -2075,7 +2081,10 @@ $id=$docs->pr_id;
 	$taskd->custom1=$date;
 	$taskd->custom2=$noofdays;
 	$taskd->custom3=$contractmeeting;
+	$timestamp = strtotime($date);
+	$dtime=date("Y-m-d H:i:s", $timestamp);
 
+	$taskd->dateFinished=$dtime;
 	$taskd->save();
 	$tasknext=TaskDetails::find($taskdetails_id+1);
 	$tasknextc=TaskDetails::where('id', $taskdetails_id+1)->where('doc_id', $docs->pr_id)->count();
