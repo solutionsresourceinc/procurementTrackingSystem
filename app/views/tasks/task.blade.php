@@ -33,6 +33,7 @@ td{
 @section('content')
 
 <?php
+error_reporting(0);
 $taskdetails_id=Session::get('taskdetails_id');
 Session::forget('taskdetails_id');
 $taskd =TaskDetails::find($taskdetails_id);
