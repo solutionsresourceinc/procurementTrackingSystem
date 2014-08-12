@@ -165,6 +165,961 @@ $assign_user=User::find(Auth::user()->id);
 <br/>
 @if ($taskd->status=="Active")
 
+<!--Tasks Forms-->
+
+
+                  <table border='1' class='workflow-table'>
+<?php
+
+                $tasks= Task::find($taskd->task_id);
+
+
+                //Get Cursor Value
+                $taskc= TaskDetails::find($taskd->id);
+                //Queries
+                $workflow= Workflow::find($docs->work_id);
+                $taskp =TaskDetails::where('doc_id', $docs->id)->where('task_id', $tasks->id)->first();
+
+                    if ($tasks->taskType=="normal")
+                    {
+                        echo "<tr><th width='30%'></th>";
+                      
+                        echo "<th class='workflow-th' width='18%'>Date:</th>";
+                        echo "<th class='workflow-th' width='12.5%'>Days of Action</th>";
+                      
+                        echo "</tr>";
+                    }
+                    if ($tasks->taskType=="datebyremark")
+                    {
+                        echo "<tr><th width='30%'></th>";
+                        echo "<th class='workflow-th' >Date:</th>";
+                       
+                       
+                        echo "</tr>";
+                    }
+                    if ($tasks->taskType=="dateby")
+                    {
+                        echo "<tr><th width='30%'></th>";
+                        echo "<th class='workflow-th' colspan='2'>Date:</th>";
+                        
+                        echo "</tr>";
+                    }
+                    if ($tasks->taskType=="evaluation")
+                    {
+                        echo "<tr><th width='30%'></th>";
+                        echo "<th class='workflow-th' colspan='2'>Date:</th>";
+                        echo "<th class='workflow-th' colspan='2'>No. of Days Accomplished:</th>";
+                        echo "</tr>";
+                    }
+                
+                    //Cursor Open form 
+                    //Displayer 
+                    $taskp =TaskDetails::where('doc_id', $docs->id)->where('task_id', $tasks->id)->first();   
+?>
+                        
+                                @if(Session::get('successchecklist'))
+                                <tr>
+                                 <br>
+                                    <div class="alert alert-success"> {{ Session::get('successchecklist') }}</div> 
+                                  
+                                </tr>
+                                @endif
+                                @if(Session::get('errorchecklist'))
+                                <tr>
+                                <br>
+                                    <div class="alert alert-danger"> {{ Session::get('errorchecklist') }}</div> 
+                                    
+                                </tr>
+                                @endif
+                          <tr class='current-task'>
+                        <?php
+          
+                        if ($tasks->taskType!="cheque"&&$tasks->taskType!="published"&&$tasks->taskType!="contract"&&$tasks->taskType!="meeting"&&$tasks->taskType!="rfq"&&$tasks->taskType!="documents"&&$tasks->taskType!="evaluation"&&$tasks->taskType!="preparation")
+                        {
+                            echo "<td>";
+                            echo $tasks->taskName."</td>";
+                        }
+                    
+                    //Task Forms
+
+       $myForm = 'taskform' ;
+                
+                    ?>
+
+                    @if($tasks->taskType == "normal")
+                           
+
+                            {{Form::open(['url'=>'checklistedit', 'id' => $myForm], 'POST')}}
+                                <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
+                                 <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
+                            <input type="hidden" name="remarks" id="hiddenremarks" value=" " > 
+                                    <input type ="hidden" name="assignee" 
+                                    <?php
+                                    echo "value='".Auth::user()->lastname.", ".Auth::user()->firstname."'";
+                                    ?>
+                                    >
+                       
+                                <td class="edit-pr-input"> 
+                                    <?php 
+                                    $today = date("m/d/y");
+                                    ?>
+                                    <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
+                                        <input type="text" class="form-control" onchange="changeDOA(this.value)" name="dateFinished" id="dateFinished" style="text-align: center; width:100%"
+                                        <?php
+                                        if (NULL!=Input::old('dateFinished'))
+                                            echo "value ='" . Input::old('dateFinished') ."'";
+                                        else if ("0000-00-00 00:00:00"!=$taskc->dateFinished)
+                                    
+                                            echo "value='".$taskc->dateFinished."'";
+                                
+                                        else
+                                            echo "value = '" . $today . "'";
+                                        ?>
+                                        />
+                                    </div>
+                                </td>
+                                <td class="edit-pr-input">
+
+                                            @if($sectiondays==0&&$prdays==0)
+
+                                            <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($purchaseToEdit->dateReceived))}}">
+                              
+                                            @elseif("1899-11-30 00:00:00"==$taskc->dateFinished||"0000-00-00 00:00:00"==$taskc->dateFinished)
+
+
+                                            <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($taskc->updated_at))}}">
+
+                                            @else
+
+                                            <?php 
+                                                $taskprev= TaskDetails::find($taskc->id-1); 
+
+                                            ?>
+                                            <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($taskprev->dateFinished))}}">
+
+                                            @endif
+
+                                    <input id="daysOfAction" type="number" name="daysOfAction" class="form-control"  min="0"  width="100%" maxlength="12" 
+                                    <?php
+                                    if (NULL!=Input::old('daysOfAction'))
+                                        echo "value='".Input::old('daysOfAction')."'";
+                                    else if ('0'!=$taskc->daysOfAction)
+                                        echo "value='".$taskc->daysOfAction."'";
+                                    else
+                                        echo "value='1'";
+                                    ?>
+                                    >
+                                </td>
+                              
+                         
+                            {{Form::close()}}
+                    @endif
+                    @if($tasks->taskType == "certification")
+                          
+                            {{Form::open(['url'=>'certification', 'id' => $myForm], 'POST')}}
+                                <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
+                               <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
+                                <td class="edit-pr-input" colspan="2">
+                                    <input type="radio" name="radio" value="yes" />&nbsp;&nbsp;Yes &nbsp;&nbsp;
+                                    <input type="radio" name="radio" value="no" />&nbsp;&nbsp;No<br />
+                                </td>
+                                
+                                      <input type ="hidden" name="by" 
+                                    <?php
+                                    echo "value='".Auth::user()->lastname.", ".Auth::user()->firstname."'";
+                                    ?>
+                                    >
+
+                        
+                            {{Form::close()}}
+                    @endif
+                    @if($tasks->taskType == "posting")
+                      
+                            {{Form::open(['url'=>'posting', 'id' => $myForm], 'POST')}}
+                                <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
+                                 <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
+                                <td class="edit-pr-input">
+                                    Reference No. : 
+                                    <input type="text" name="referenceno"  class="form-control" maxlength="100" width="80%" maxlength="100"
+                                    value="<?php
+                                    if (NULL!=Input::old('referenceno'))
+                                    echo Input::old('referenceno');
+                                    else if (NULL!=$taskc->custom1)
+                                        echo "value='".$taskc->custom1."'";
+                                    ?>"
+                                    >
+                                </td>
+                                <td class="edit-pr-input"> 
+                                    Date: 
+                                    <?php 
+                                    $today = date("m/d/y");
+                                    ?>
+                                    <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
+                                        <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" 
+                                        <?php
+                                        if (NULL!=Input::old('dateFinished'))
+                                            echo "value ='" . Input::old('dateFinished') ."'";
+                                        else if (NULL!=$taskc->custom2)
+                                        echo "value='".$taskc->custom2."'";
+                                        else
+                                            echo "value = '" . $today . "'";
+                                        ?>
+                                        
+                                        />
+                                    </div>
+                                </td>
+                                       <input type ="hidden" name="by" 
+                                    <?php
+                                    echo "value='".Auth::user()->lastname.", ".Auth::user()->firstname."'";
+                                    ?>
+                                    >
+
+                         
+                            {{Form::close()}}
+                    @endif
+                    @if($tasks->taskType == "supplier")
+                      
+                            {{Form::open(['url'=>'supplier', 'id' => $myForm], 'POST')}}
+                                <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
+                                 <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
+                                <td class="edit-pr-input" colspan="2">
+                                    <input type="text" name="supplier"  class="form-control" maxlength="100" width="80%" placeholder="Enter supplier"
+                                     value="<?php
+                                    if (NULL!=Input::old('supplier'))
+                                    echo Input::old('supplier');
+                                    else if (NULL!=$taskc->custom1)
+                                        echo "value='".$taskc->custom1."'";
+                                    ?>"
+
+                                    >
+                                </td>
+                                
+                                <td class="edit-pr-input" colspan="2">
+                                    <input type="decimal" name="amount"  id="amount" class="form-control" maxlength="12" width="80%" placeholder="Enter amount" onkeypress="return isNumberKey(event)" onchange="checklist_changeAmount(this.id,this.value)"
+                                     value="<?php
+                                    if (NULL!=Input::old('amount'))
+                                    echo Input::old('amount');
+                                     else if (NULL!=$taskc->custom2)
+                                        echo "value='".$taskc->custom2."'";
+                                    ?>"
+                                    >
+                                </td>
+
+                            {{Form::close()}}
+                    @endif
+                    @if($tasks->taskType == "cheque")
+                          
+                            {{Form::open(['url'=>'cheque', 'id' => $myForm], 'POST')}}
+                                <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
+                                 <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
+                                <td class="edit-pr-input" colspan="2">
+                    
+                                    <input type="decimal" name="amt"  id="amt" class="form-control" maxlength="12" width="80%" placeholder="Enter cheque amount" onkeypress="return isNumberKey(event)" onchange="checklist_changeAmount(this.id,this.value)"
+                                     value="<?php
+                                    if (NULL!=Input::old('amt'))
+                                    echo Input::old('amt');
+                                     else if (NULL!=$taskc->custom1)
+                                        echo "value='".$taskc->custom1."'";
+                                    ?>"
+                                    >
+                                </td>
+                                <td class="edit-pr-input" colspan="2">
+                                    
+                                    <input type="decimal" name="num"  class="form-control" maxlength="12" width="80%" placeholder="Enter cheque number"
+                                     value="<?php
+                                    if (NULL!=Input::old('num'))
+                                    echo Input::old('num');
+                                 else if (NULL!=$taskc->custom2)
+                                        echo "value='".$taskc->custom2."'";
+                                    ?>"
+                                    >
+                                </td>
+                                <td class="edit-pr-input" colspan="2">
+                               
+                                    <?php 
+                                    $today = date("m/d/y");
+                                    ?>
+                                    <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
+                                        <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" 
+                                        <?php
+                                        if (NULL!=Input::old('dateFinished'))
+                                            echo "value ='" . Input::old('dateFinished') ."'";
+                                         else if (NULL!=$taskc->custom3)
+                                        echo "value='".$taskc->custom3."'";
+                                        else
+                                            echo "value = '" . $today . "'";
+                                        ?>
+                                        />
+                                    </div>
+                                </td>
+                                
+
+                            {{Form::close()}}
+                    @endif
+                    @if($tasks->taskType == "published")
+                        
+                            {{Form::open(['url'=>'published', 'id' => $myForm], 'POST')}}
+                                <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
+                                 <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
+                                    <td> </td>
+                                    <th class='workflow-th' width="18%">Date Published:</th>
+                                    <th class='workflow-th' width="18%">End Date:</th>
+                                    <th class='workflow-th' colspan="2">Posted By:</th>
+
+                                </tr>
+                                <tr class="@if($taskch!=0 && $taskc->task_id==$tasks->id && $tasks->designation_id==0) current-task @endif">
+                                    <td>{{$tasks->taskName}}</td>
+                                    <td>
+                                        <?php 
+                                        $today = date("m/d/y");
+                                        ?>
+                                        <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
+                                            <input type="text" class="form-control" name="datepublished" id="datepublished" style="text-align: center; width:100%"
+                                            
+                                        <?php
+                                        if (NULL!=Input::old('dateFinished'))
+                                            echo "value ='" . Input::old('dateFinished') ."'";
+                                         else if (NULL!=$taskc->custom1)
+                                        echo "value='".$taskc->custom1."'";
+                                        else
+                                            echo "value = '" . $today . "'";
+                                        ?>
+                                        
+                                             />
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
+                                            <input type="text" class="form-control" name="enddate" id="enddate" style="text-align: center; width:100%" 
+                                            
+                                        <?php
+                                        if (NULL!=Input::old('dateFinished'))
+                                            echo "value ='" . Input::old('dateFinished') ."'";
+                                         else if (NULL!=$taskc->custom2)
+                                        echo "value='".$taskc->custom2."'";
+                                        else
+                                            echo "value = '" . $today . "'";
+                                        ?>
+                                        
+                                             />
+                                        </div>
+                                    </td>
+                                            <input type ="hidden" name="by" 
+                                    <?php
+                                    echo "value='".Auth::user()->lastname.", ".Auth::user()->firstname."'";
+                                    ?>
+                                    >
+                          
+                                
+                                <td style="border-left: none; text-align: center;">
+                                
+                                    <input type="button" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"
+                                    > 
+                                </td>
+                            {{Form::close()}}
+                    @endif
+                    @if($tasks->taskType == "philgeps")
+      
+                            {{Form::open(['url'=>'philgeps', 'id' => $myForm], 'POST')}}
+                                <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
+                                 <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
+                                 
+                                </tr>
+                                <tr class="@if($taskch!=0 && $taskc->task_id==$tasks->id && $tasks->designation_id==0) current-task @endif">
+                                 
+                                    <td class="edit-pr-input">
+                                    Reference No.:
+                                    <input type="text" name="referenceno"  class="form-control" maxlength="100" width="80%" maxlength="100"
+                                    <?php
+                                    if (NULL!=Input::old('referenceno'))
+                                    echo "value='".Input::old('referenceno')."'";
+                                 else if (NULL!=$taskc->custom1)
+                                        echo "value='".$taskc->custom1."'";
+                                    ?>
+                                    >
+                                </td>
+                                    <td>
+                                        Date Published:
+                                        <?php 
+                                        $today = date("m/d/y");
+                                        ?>
+                                        <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
+                                            <input type="text" class="form-control" name="datepublished" id="datepublished" style="text-align: center; width:100%"
+                                            
+                                        <?php
+                                        if (NULL!=Input::old('dateFinished'))
+                                            echo "value ='" . Input::old('dateFinished') ."'";
+                                         else if (NULL!=$taskc->custom2)
+                                        echo "value='".$taskc->custom2."'";
+                                        else
+                                            echo "value = '" . $today . "'";
+                                        ?>
+                                        
+                                             />
+                                        </div>
+                                    </td>
+                                    <td>
+                                        End Date:
+                                        <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
+                                            <input type="text" class="form-control" name="enddate" id="enddate" style="text-align: center; width:100%" 
+                                            
+                                        <?php
+                                        if (NULL!=Input::old('dateFinished'))
+                                            echo "value ='" . Input::old('dateFinished') ."'";
+                                         else if (NULL!=$taskc->custom3)
+                                        echo "value='".$taskc->custom3."'";
+                                        else
+                                            echo "value = '" . $today . "'";
+                                        ?>
+                                        
+                                             />
+                                        </div>
+                                    </td>
+                                            <input type ="hidden" name="by" 
+                                    <?php
+                                    echo "value='".Auth::user()->lastname.", ".Auth::user()->firstname."'";
+                                    ?>
+                                    >
+                                
+                                <td style="border-left: none; text-align: center;">
+                                
+                                    <input type="button" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"
+                                    > 
+                                </td>
+                            {{Form::close()}}
+                    @endif
+                    @if($tasks->taskType == "documents")
+                   
+                            {{Form::open(['url'=>'documents', 'id' => $myForm], 'POST')}}
+                                <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
+                                 <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
+                                    <td> </td>
+                                    <th class='workflow-th'>Eligibility Documents:</th>
+                                    <th class='workflow-th'>Date of Bidding:</th>
+                                    <th class='workflow-th' colspan="2">Checked By:</th>
+                                </tr>
+                                <tr class="@if($taskch!=0 && $taskc->task_id==$tasks->id && $tasks->designation_id==0) current-task @endif">
+                                    <td>{{$tasks->taskName}}</td>
+                                    <td>
+                                        <?php 
+                                        $today = date("m/d/y");
+                                        ?>
+                                        <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
+                                            <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" 
+                                            
+                                        <?php
+                                        if (NULL!=Input::old('dateFinished'))
+                                            echo "value ='" . Input::old('dateFinished') ."'";
+                                         else if (NULL!=$taskc->custom1)
+                                        echo "value='".$taskc->custom1."'";
+                                        else
+                                            echo "value = '" . $today . "'";
+                                        ?>
+                                        
+                                            />
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
+                                            <input type="text" class="form-control" name="biddingdate" id="biddingdate" style="text-align: center; width:100%" 
+                                           
+                                        <?php
+                                        if (NULL!=Input::old('dateFinished'))
+                                            echo "value ='" . Input::old('dateFinished') ."'";
+                                         else if (NULL!=$taskc->custom2)
+                                        echo "value='".$taskc->custom2."'";
+                                        else
+                                            echo "value = '" . $today . "'";
+                                        ?>
+                                        
+                                            />
+                                        </div>
+                                    </td>
+                                            <input type ="hidden" name="by" 
+                                    <?php
+                                    echo "value='".Auth::user()->lastname.", ".Auth::user()->firstname."'";
+                                    ?>
+                                    >
+
+                                   
+                            
+                            {{Form::close()}}
+                    @endif
+                    @if($tasks->taskType == "evaluation")
+      
+                            {{Form::open(['url'=>'evaluations', 'id' => $myForm], 'POST')}}
+                                <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
+                                 <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
+                                    <td> </td>
+                                    <th class='workflow-th' colspan="2">Date:</th>
+                                    <th class='workflow-th' colspan="2">No. Of Days Accomplished:</th>
+                                </tr>
+                                <tr class="@if($taskch!=0 && $taskc->task_id==$tasks->id && $tasks->designation_id==0) current-task @endif">
+                                    <td>{{$tasks->taskName}}</td>
+                                    <td colspan="2">
+                                        <?php 
+                                        $today = date("m/d/y");
+                                        ?>
+                                        <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
+                                            <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" onchange="changeDOA(this.value)"
+                                        <?php
+                                        if (NULL!=Input::old('dateFinished'))
+                                            echo "value ='" . Input::old('dateFinished') ."'";
+                                         else if (NULL!=$taskc->custom1)
+                                        echo "value='".$taskc->custom1."'";
+                                        else
+                                            echo "value = '" . $today . "'";
+                                        ?>
+                                        
+                                        />
+                                        </div>
+                                    </td>
+                                    <td class="edit-pr-input" colspan="2">  
+                                            @if($sectiondays==0&&$prdays==0)
+
+                                            <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($purchaseToEdit->dateReceived))}}">
+                                
+                                            @elseif("1899-11-30 00:00:00"==$taskc->dateFinished||"0000-00-00 00:00:00"==$taskc->dateFinished)
+
+
+                                            <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($taskc->updated_at))}}">
+
+                                            @else
+
+                                            <?php 
+                                                $taskprev= TaskDetails::find($taskc->id-1); 
+
+                                            ?>
+                                            <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($taskprev->dateFinished))}}">
+
+                                            @endif
+                                        <input type="number" name="noofdays"  class="form-control" maxlength="12" width="80%" placeholder="Enter no. of days" id="daysOfAction"
+                                        
+                                        <?php
+                                        if (NULL!=Input::old('noofdays'))
+                                            echo "value=".Input::old('noofdays');
+                                         else if (NULL!=$taskc->custom2)
+                                        echo "value='".$taskc->custom2."'";
+                                        else
+                                            echo "value=1";
+                                       
+                                        ?>
+                                        
+                                        >
+                                    </td>   
+                 
+                        
+                        
+                            {{Form::close()}}
+                    @endif
+                    @if($tasks->taskType == "conference")
+                       
+                            {{Form::open(['url'=>'conference', 'id' => $myForm], 'POST')}}
+                                <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
+                                 <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
+                                    <td colspan="4">
+                                    <?php 
+                                    $today = date("m/d/y");
+                                    ?>
+                                    <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
+                                        <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" 
+                                        
+                                        <?php
+                                        if (NULL!=Input::old('dateFinished'))
+                                            echo "value ='" . Input::old('dateFinished') ."'";
+                                         else if (NULL!=$taskc->custom1)
+                                        echo "value='".$taskc->custom1."'";
+                                        else
+                                            echo "value = '" . $today . "'";
+                                        ?>
+                                        
+                                        />
+                                    </div>
+                                    </td>
+                         
+                            {{Form::close()}}
+                    @endif
+                    @if($tasks->taskType == "contract")
+                 
+                            {{Form::open(['url'=>'contractmeeting', 'id' => $myForm], 'POST')}}
+                                <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
+                                 <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
+                                    <td> </td>
+                                    <th class='workflow-th'>Date:</th>
+                                    <th class='workflow-th'>No. of Days Accomplished:</th>
+                                    <th class='workflow-th' colspan="2">Contract Agreement:</th>
+                                </tr>
+                                <tr class="@if($taskch!=0 && $taskc->task_id==$tasks->id && $tasks->designation_id==0) current-task @endif">
+                                    <td>{{$tasks->taskName}}</td>
+                                    <td>
+                                        <?php 
+                                        $today = date("m/d/y");
+                                        ?>
+                                        <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%" >
+                                            <input type="text" class="form-control" name="date" id="date" onchange="changeDOA(this.value)" style="text-align: center; width:100%" 
+                                        <?php
+                                        if (NULL!=Input::old('dateFinished'))
+                                            echo "value ='" . Input::old('dateFinished') ."'";
+                                         else if (NULL!=$taskc->custom1)
+                                        echo "value='".$taskc->custom1."'";
+                                        else
+                                            echo "value = '" . $today . "'";
+                                        ?>
+                                        />
+                                        </div>
+                                    </td>
+                                            @if($sectiondays==0&&$prdays==0)
+
+                                            <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($purchaseToEdit->dateReceived))}}">
+                          
+
+                                            @elseif("1899-11-30 00:00:00"==$taskc->dateFinished||"0000-00-00 00:00:00"==$taskc->dateFinished)
+
+
+                                            <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($taskc->updated_at))}}">
+
+                                            @else
+
+                                            <?php 
+                                                $taskprev= TaskDetails::find($taskc->id-1); 
+
+                                            ?>
+                                            <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($taskprev->dateFinished))}}">
+
+                                            @endif
+                                    <td><input type="number" name="noofdays"  class="form-control" maxlength="100" width="80%" placeholder="Enter no. of days accomplished"
+                                        id="daysOfAction"
+                                        <?php
+                                        if (NULL!=Input::old('noofdays'))
+                                            echo "value=".Input::old('noofdays');
+                                         else if (NULL!=$taskc->custom2)
+                                        echo "value='".$taskc->custom2."'";
+                                        else
+                                            echo "value=1";
+                                     
+                                        ?>
+                                        ></td>
+                                    <td class="edit-pr-input" colspan="2">  
+                                        <input type="text" name="contractmeeting"  class="form-control" maxlength="100" width="80%" placeholder="Enter contract agreement"
+                                        value="
+                                        <?php
+                                        if (NULL!=Input::old('contractmeeting'))
+                                            echo Input::old('contractmeeting');
+                                         else if (NULL!=$taskc->custom3)
+                                        echo "value='".$taskc->custom3."'";
+                                        
+                                        ?>
+                                        "
+                                        >
+                                    </td>
+                      
+                            {{Form::close()}}
+                    @endif
+                    @if($tasks->taskType == "meeting")
+               
+                            {{Form::open(['url'=>'contractmeeting', 'id' => $myForm], 'POST')}}
+                                <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
+                                 <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
+                                    <td> </td>
+                                    <th class='workflow-th'>Date:</th>
+                                    <th class='workflow-th'>No. of Days Accomplished:</th>
+                                    <th class='workflow-th' colspan="2">Minutes of Bidding:</th>
+                                </tr>
+                                <tr class="@if($taskch!=0 && $taskc->task_id==$tasks->id && $tasks->designation_id==0) current-task @endif">
+                                    <td>{{$tasks->taskName}}</td>
+                                    <td>
+                                        <?php 
+                                        $today = date("m/d/y");
+                                        ?>
+                                        <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
+                                            <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%"  onchange="changeDOA(this.value)"
+                                            
+                                        <?php
+                                        if (NULL!=Input::old('dateFinished'))
+                                            echo "value ='" . Input::old('dateFinished') ."'";
+                                         else if (NULL!=$taskc->custom1)
+                                        echo "value='".$taskc->custom1."'";
+                                        else
+                                            echo "value = '" . $today . "'";
+                                        ?>
+                                        
+                                            />
+                                        </div>
+                                    </td>
+                                    <td class="edit-pr-input">  
+                                            @if($sectiondays==0&&$prdays==0)
+
+                                            <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($purchaseToEdit->dateReceived))}}">
+                                        
+
+                                            @elseif("1899-11-30 00:00:00"==$taskc->dateFinished||"0000-00-00 00:00:00"==$taskc->dateFinished)
+
+
+                                            <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($taskc->updated_at))}}">
+
+                                            @else
+
+                                            <?php 
+                                                $taskprev= TaskDetails::find($taskc->id-1); 
+
+                                            ?>
+                                            <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($taskprev->dateFinished))}}">
+
+                                            @endif
+                                        <input type="number" name="noofdays"  class="form-control" maxlength="12" width="80%" placeholder="Enter no. of days accomplished"
+                                        id="daysOfAction"
+                                        <?php
+                                        if (NULL!=Input::old('noofdays'))
+                                            echo "value=".Input::old('noofdays');
+                                        else if (NULL!=$taskc->custom2)
+                                            echo "value='".$taskc->custom2."'";
+                                        else
+                                            echo "value=1";
+                                        
+                                            
+                                        ?>
+                                        
+                                        >
+                                    </td>
+                                    <td class="edit-pr-input" colspan="2">  
+                                        <input type="text" name="contractmeeting"  class="form-control" maxlength="100" width="80%" placeholder="Enter minutes of meeting"
+                                        value="
+                                        <?php
+                                        if (NULL!=Input::old('contractmeeting'))
+                                            echo Input::old('contractmeeting');
+                                         else if (NULL!=$taskc->custom3)
+                                        echo "value='".$taskc->custom3."'";
+                                        
+                                            
+                                        ?>
+                                        "
+                                        >
+                                    </td>
+                          
+                          
+                            {{Form::close()}}
+                    @endif
+                    @if($tasks->taskType == "rfq")
+                
+                            {{Form::open(['url'=>'rfq', 'id' => $myForm], 'POST')}}
+                                <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
+                                 <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
+                                    <td> </td>
+                                    <th class='workflow-th'>No. of Suppliers:</th>
+                                    <th class='workflow-th'>Date of RF (Within PGEPS 7 Days):</th>
+                                    <th class='workflow-th' colspan="2">By:</th>
+                                </tr>
+                                <tr class="@if($taskch!=0 && $taskc->task_id==$tasks->id && $tasks->designation_id==0) current-task @endif">
+                                    <td>{{$tasks->taskName}}</td>
+                                    <td><input type="number" name="noofsuppliers"  class="form-control" maxlength="12" width="80%" placeholder="Enter no. of suppliers"
+                                        value="
+                                        <?php
+                                        if (NULL!=Input::old('noofsuppliers'))
+                                            echo Input::old('noofsuppliers');
+                                         else if (NULL!=$taskc->custom1)
+                                        echo "value='".$taskc->custom1."'";
+                                       
+                                        ?>
+                                        "
+                                        ></td>
+                                    <td>
+                                        <?php 
+                                        $today = date("m/d/y");
+                                        ?>
+                                        <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
+                                            <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" 
+                                        <?php
+                                        if (NULL!=Input::old('dateFinished'))
+                                            echo "value ='" . Input::old('dateFinished') ."'";
+                                         else if (NULL!=$taskc->custom2)
+                                        echo "value='".$taskc->custom2."'";
+                                        else
+                                            echo "value = '" . $today . "'";
+                                        ?>
+                                        
+                                        />
+                                        </div>
+                                    </td>
+                                             <input type ="hidden" name="by" 
+                                    <?php
+                                    echo "value='".Auth::user()->lastname.", ".Auth::user()->firstname."'";
+                                    ?>
+                                    >
+                         
+                            {{Form::close()}}
+                    @endif
+                    @if($tasks->taskType == "dateby")
+                       
+                            {{Form::open(['url'=>'dateby', 'id' => $myForm], 'POST')}}
+                                <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
+                                 <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
+                                <td class="edit-pr-input" colspan="2"> 
+                                    <?php 
+                                    $today = date("m/d/y");
+                                    ?>
+                                    <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
+                                        <input type="text" class="form-control" name="dateFinished" id="dateFinished" style="text-align: center; width:100%" 
+                                        
+                                        <?php
+                                        if (NULL!=Input::old('dateFinished'))
+                                            echo "value ='" . Input::old('dateFinished') ."'";
+                                         else if ("0000-00-00 00:00:00"!=$taskc->dateFinished)
+                                        echo "value='".$taskc->dateFinished."'";
+                                        else
+                                            echo "value = '" . $today . "'";
+                                        ?>
+                                        
+                                        />
+                                    </div>
+                                </td>
+                                       <input type ="hidden" name="assignee" 
+                                    <?php
+                                    echo "value='".Auth::user()->lastname.", ".Auth::user()->firstname."'";
+                                    ?>
+                                    >
+                       
+                            {{Form::close()}}   
+                    @endif
+                    @if($tasks->taskType == "datebyremark")
+
+                            {{Form::open(['url'=>'datebyremark', 'id' => $myForm], 'POST')}}
+                                <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
+                                 <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
+                                
+                                <td class="edit-pr-input"> 
+                                    <?php 
+                                    $today = date("m/d/y");
+                                    ?>
+                                    <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
+
+                                        <input type="text" class="form-control" name="dateFinished" id="dateFinished" style="text-align: center; width:100%" 
+                                        
+                                        <?php
+                                        if (NULL!=Input::old('dateFinished'))
+                                            echo "value ='" . Input::old('dateFinished') ."'";
+                                         else if ("0000-00-00 00:00:00"!=$taskc->dateFinished)
+                                        echo "value='".$taskc->dateFinished."'";
+                                        else
+                                            echo "value = '" . $today . "'";
+                                        ?>
+                                        
+                                        />
+                                    </div>
+                                </td>
+                                        <input type ="hidden" name="assignee" 
+                                    <?php
+                                    echo "value='".Auth::user()->lastname.", ".Auth::user()->firstname."'";
+                                    ?>
+                                    >
+                               
+                     
+                            {{Form::close()}}
+                    @endif
+                    @if($tasks->taskType == "dateonly")
+                   
+                            {{Form::open(['url'=>'dateonly', 'id' => $myForm], 'POST')}}
+                                <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
+                                 <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
+                                
+                                <td class="edit-pr-input" colspan="4"> 
+                                    <?php 
+                                    $today = date("m/d/y");
+                                    ?>
+                                    <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
+
+                                        <input type="text" class="form-control" name="dateFinished" id="dateFinished" style="text-align: center; width:100%" 
+                                        
+                                        <?php
+                                        if (NULL!=Input::old('dateFinished'))
+                                            echo "value ='" . Input::old('dateFinished') ."'";
+                                         else if ("0000-00-00 00:00:00"!=$taskc->dateFinished)
+                                        echo "value='".$taskc->dateFinished."'";
+                                        else
+                                            echo "value = '" . $today . "'";
+                                        ?>
+                                        
+                                        />
+                                    </div>
+                                </td>
+                                
+                      
+                          
+                            {{Form::close()}}
+                    @endif
+
+                    <!--End Task Forms-->
+                        
+                    <!--END Cursor Open Form-->        
+                   
+                    </table>
+<br><br>
+
+<!--Remarks-->
+<p style="font-weight: bold">Remarks: </p>
+<?php 
+
+if (Session::get('errorremark'))
+echo  "<div class='alert alert-danger'>".Session::get('errorremark')."</div>";
+if (Session::get('successremark'))
+echo  "<div class='alert alert-success'>".Session::get('successremark')."</div>";
+Session::forget('errorremark');
+Session::forget('successremark');
+?>
+
+<div id="remarkd" onclick="show()">
+<p>
+<?php
+echo $taskd->remarks;
+if ($taskd->remarks==NULL || $taskd->remarks==' ' )
+{
+?>
+No remark.
+<?php
+}
+?>
+</p>
+</div>
+<br>
+<button type="button" class="btn btn-success " onclick="doneauto('taskform')" id="hidebtn">Done</button>
+
+<div id ="formr">
+{{ Form::open(['url'=>'remarks'], 'POST') }}
+@if($taskd->remarks==NULL)
+{{ Form::textarea('remarks','', array('class'=>'form-control', 'rows'=>'3', 'maxlength'=>'255', 'style'=>'resize:vertical', 'id'=>'remarksform')) }}
+@else
+{{ Form::textarea('remarks',$taskd->remarks, array('class'=>'form-control', 'rows'=>'3', 'maxlength'=>'255', 'style'=>'resize:vertical', 'id'=>'remarksform' )) }}
+
+@endif
+<input type ="hidden" name="taskdetails_id" value="{{$taskd->id}}">
+<br>
+<input type="button"  onclick="hideRemarks()"  value="Cancel" class='btn btn-default' />
+&nbsp;
+{{ Form::submit('Save',array('class'=>'btn btn-warning')) }}
+&nbsp;
+<button type="button" class="btn btn-success " onclick="remarksauto()" id="showbtn">Done</button>
+{{ Form::close() }}
+</div>
+<!--End Remarks-->
+
+
+<!--End Tasks Forms-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <!--Upload Image-->
 <?php
@@ -220,7 +1175,7 @@ $assign_user=User::find(Auth::user()->id);
                     </td>
                     <td>
                    
-                            <input type="hidden" name="hide" value="{{$attachment->id}}">
+                          <input type="hidden" name="hide" value="{{$attachment->id}}">
                         <button type="button" onclick="delimage({{$count}})" ><span class="glyphicon glyphicon-trash"></span></button>
       
                         <?php $count+=1; ?>
@@ -381,6 +1336,7 @@ function doneauto()
       var formname= "taskform";
       document.getElementById(formname).submit();
     }
+
     function autouploadsaved(value)
     {
     var formname= "createform";
@@ -390,7 +1346,18 @@ function doneauto()
     $("#createform").attr('action', text); 
     document.getElementById(formname).submit();
     }
+function remarksauto()
+    {
+      
+      
+      var remarks = document.getElementById('remarksform').value;
+      alert(remarks);
+      document.getElementById('hiddenremarks').value = remarks;
 
+
+      var formname= "taskform";
+      document.getElementById(formname).submit();
+    }
 
    </script>
 @stop
