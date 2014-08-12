@@ -1,4 +1,13 @@
 @extends('layouts.default')
+
+@section('header')
+    {{ HTML::style('date_picker/bootstrap-datetimepicker.min.css')}}
+    {{ HTML::script('date_picker/bootstrap-datetimepicker.js') }}
+    {{ HTML::script('date_picker/bootstrap-datetimepicker.fr.js') }}
+    {{ HTML::style('css/datepicker.css')}}
+    {{ HTML::script('js/bootstrap-datepicker.js') }}
+@stop
+
 @section('content')
 <style type="text/css">
 	th,td {
@@ -330,4 +339,17 @@
                 document.getElementById('betDate').disabled = true;
         }
 </script>
+
+{{ HTML::script('js/bootstrap-ajax.js');}}
+    <script src="js/bootstrap-datepicker.js"></script>
+    <script type="text/javascript">
+        // When the document is ready
+        $(document).ready(function () {
+            
+            $('.input-daterange').datepicker({
+                todayBtn: "linked"
+            });
+        });
+    </script>
+
 @stop
