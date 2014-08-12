@@ -410,7 +410,7 @@
                 $taskche= TaskDetails::where('doc_id', $docs->id)->where('status', 'Edit')->count(); 
                 $taskch= TaskDetails::where('doc_id', $docs->id)->where('status', 'Edit')->orWhere('status', 'New')->orWhere('status', 'Active')->count(); 
                 //Get Cursor Value
-                $taskc= TaskDetails::where('doc_id', $docs->id)->where('status', 'Edit')->orWhere('status', 'New')->orWhere('status', 'Active')->first(); 
+                $taskc= TaskDetails::where('doc_id', $docs->id)->where('status', 'New')->orWhere('status', 'Edit')->orWhere('status', 'Active')->first(); 
                 
                 //Queries
                 $workflow= Workflow::find($docs->work_id);
@@ -636,14 +636,14 @@
                                 
                                 <td class="edit-pr-input" colspan="2">
                                     <input type="text" name="by"  placeholder="Enter name" class="form-control" maxlength="100" width="80%" maxlength="100"
-                                    value="<?php
+                                    <?php
                                     if (NULL!=Input::old('by'))
-                                    echo Input::old('by');
+                                    echo "value='".Input::old('by')."'";
                                     else if (NULL!=$taskc->custom2)
                                         echo "value='".$taskc->custom2."'";
                                     else
-                                    echo 'None';
-                                    ?>"
+                                    echo "value='".'None'."'";
+                                    ?>
                                     >
                                 </td>
 
