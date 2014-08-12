@@ -65,7 +65,7 @@
         </select>
     </div>   
 	<div class="input-group col-md-3 no-print" id="searchBox">
-      <input onkeyup="disableButton()" id="searchTerm" name="searchTerm" placeholder="Enter search keywords" type="text" class="form-control" onchange="detectInput()">
+      <input onchange="disableButton()" onkeyup="disableButton()" id="searchTerm" name="searchTerm" placeholder="Enter search keywords" type="text" class="form-control" onchange="detectInput()">
       <span class="input-group-btn">
         <button class="btn btn-primary" name="searchButton" id="searchButton" type="submit">Search</button>
       </span>

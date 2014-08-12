@@ -59,9 +59,13 @@
 @if(Session::get('notice'))
     <div class="alert alert-success"> {{ Session::get('notice') }}</div> 
 @endif
+    @if(!Entrust::hasRole('Requisitioner'))
     <div class="col-md-6">
         <a href="{{{$link}}}"><span class="btn btn-info">Complete Table View</span></a>
     </div>
+    @else
+    <div class="col-md-6"></div>
+    @endif
     <!-- START OF SEARCH BOX -->
     <form method="POST" action=""> 
         <div class="col-md-3" style="">
@@ -82,7 +86,7 @@
         </div>   
         
     <div class="input-group" id="searchBox">
-      <input onkeyup="disableButton()"id="searchTerm" name="searchTerm" placeholder="Enter search keywords" type="text" class="form-control" onchange="detectInput()">
+      <input onkeyup="disableButton()" onchange="disableButton()" id="searchTerm" name="searchTerm" placeholder="Enter search keywords" type="text" class="form-control" onchange="detectInput()">
       <span class="input-group-btn">
         <button class="btn btn-primary" name="searchButton" id="searchButton" type="submit">Search</button>
       </span>
