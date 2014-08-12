@@ -234,7 +234,7 @@ class SearchController extends BaseController {
 				->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
 				->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where(DB::raw('YEAR(purchase_request.dateReceived)'), '=', $starty)->where(DB::raw('MONTH(purchase_request.dateReceived)'), '=', $startm)->where(DB::raw('DAY(purchase_request.dateReceived)'), '=', $startd)->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Closed')->paginate(15);
 
-				$requests = DB::table('purchase_request')
+				$pageCounter = DB::table('purchase_request')
 				->join('offices', 'purchase_request.office', '=', 'offices.id')
 				->join('document', 'purchase_request.id', '=', 'document.pr_id')
 				->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
@@ -509,7 +509,7 @@ class SearchController extends BaseController {
 				->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
 				->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where(DB::raw('YEAR(purchase_request.dateReceived)'), '=', $starty)->where(DB::raw('MONTH(purchase_request.dateReceived)'), '=', $startm)->where(DB::raw('DAY(purchase_request.dateReceived)'), '=', $startd)->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Active')->where('purchase_request.dueDate', '<=', date('Y-m-d H:i:s'))->paginate(15);
 
-				$requests = DB::table('purchase_request')
+				$pageCounter = DB::table('purchase_request')
 				->join('offices', 'purchase_request.office', '=', 'offices.id')
 				->join('document', 'purchase_request.id', '=', 'document.pr_id')
 				->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
