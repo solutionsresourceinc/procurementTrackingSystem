@@ -135,8 +135,7 @@
                         ?>
 
                         {{ Form::label('dispCN', 'Control No.', array('class' => 'create-label')) }}
-                        <input type="text"  name="dispCN"  class="form-control" value="{{
-                        $purchaseToEdit->controlNo}}"disabled>
+                        <input type="text"  name="dispCN"  class="form-control" value="<?php echo str_pad($purchaseToEdit->controlNo, 5, '0', STR_PAD_LEFT); ?>"disabled>
                         <input type="hidden" name="controlNo" value="{{
                         $purchaseToEdit->controlNo}}">
                     </div>
