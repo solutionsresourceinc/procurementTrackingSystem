@@ -34,6 +34,7 @@ class BaseController extends Controller {
 	    	{
 	        	$randomString .= rand(1,9);
 	    	}
+	    	$randomString .= ".00";
 	    	return number_format($randomString);
 		}
 
@@ -72,11 +73,11 @@ class BaseController extends Controller {
 			$purchase_save = $purchase->save();
 			if($purchase_save)
 			{
-				if($purchase->amount <= "50000")
+				if($purchase->amount <= 50000)
 					$amtControl = 1;
-				else if($purchase->amount > "50000" && $purchase->amount < "500000")
+				else if($purchase->amount > 50000 && $purchase->amount < 500000)
 					$amtControl = 2;
-				else if($purchase->amount >= "500000")
+				else if($purchase->amount >= 500000)
 					$amtControl = 3;
 
 				$document->pr_id = $purchase->id;

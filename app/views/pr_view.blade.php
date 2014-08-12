@@ -148,8 +148,12 @@
                 <th>Mode</th>
                 <th style="text-align: center">Amount</th>
                 <th>Date Received</th>
-                @if(!Entrust::hasRole('Requisitioner'))
-                    <th>Action</th>
+                @if($pageName != 'List of Cancelled Purchase Requests')
+                @if($pageName != 'List of Closed Purchase Requests')
+                    @if(!Entrust::hasRole('Requisitioner'))
+                        <th>Action</th>
+                    @endif
+                @endif
                 @endif
             </tr>
         </thead>
@@ -203,27 +207,31 @@
                     </td>
                     <td align="right" width="12%"> {{{ $request->amount }}} </td>
                     <td align="center" width="20%">{{{ $request->dateReceived }}}</td>
-                    @if(!Entrust::hasRole('Requisitioner'))
-                        @if(Entrust::hasRole('Procurement Personnel'))
-                            @if(Auth::user()->id == $request->created_by)
-                                <td width="13%">
-                                    <a data-toggle="tooltip" data-placement="top" class='iframe btn btn-success' href='edit/{{$request->id}}' title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
-                                    <form method="POST" action="delete" id="myForm_{{ $request->id }}" name="myForm" style="display: -webkit-inline-box;">
-                                       <input type="hidden" name="del_pr" value="{{ $request->id }}">
-                                       <center> <a href="changeForm/{{ $request->id }}" class="btn ajax btn-danger" data-method="post" data-replace="#pr_form" data-toggle="modal" data-target="#confirmDelete" data-toggle="tooltip" title="Cancel"><span class="glyphicon glyphicon-remove"></span></a></center>
-                                   </form>
-                                </td>
-                            @else
-                                <td width="13%"></td>
+                    @if($pageName != 'List of Cancelled Purchase Requests')
+                        @if($pageName != 'List of Closed Purchase Requests')
+                            @if(!Entrust::hasRole('Requisitioner'))
+                                @if(Entrust::hasRole('Procurement Personnel'))
+                                    @if(Auth::user()->id == $request->created_by)
+                                        <td width="13%">
+                                            <a data-toggle="tooltip" data-placement="top" class='iframe btn btn-success' href='edit/{{$request->id}}' title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
+                                            <form method="POST" action="delete" id="myForm_{{ $request->id }}" name="myForm" style="display: -webkit-inline-box;">
+                                               <input type="hidden" name="del_pr" value="{{ $request->id }}">
+                                               <center> <a href="changeForm/{{ $request->id }}" class="btn ajax btn-danger" data-method="post" data-replace="#pr_form" data-toggle="modal" data-target="#confirmDelete" data-toggle="tooltip" title="Cancel"><span class="glyphicon glyphicon-remove"></span></a></center>
+                                           </form>
+                                        </td>
+                                    @else
+                                        <td width="13%"></td>
+                                    @endif
+                                @else
+                                    <td width="13%">
+                                        <a data-toggle="tooltip" data-placement="top" class='iframe btn btn-success' href='edit/{{$request->id}}' title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
+                                        <form method="POST" action="delete" id="myForm_{{ $request->id }}" name="myForm" style="display: -webkit-inline-box;">
+                                           <input type="hidden" name="del_pr" value="{{ $request->id }}">
+                                           <center> <a href="changeForm/{{ $request->id }}" class="btn ajax btn-danger" data-method="post" data-replace="#pr_form" data-toggle="modal" data-target="#confirmDelete" data-toggle="tooltip" title="Cancel"><span class="glyphicon glyphicon-remove"></span></a></center>
+                                       </form>
+                                    </td>
+                                @endif
                             @endif
-                        @else
-                            <td width="13%">
-                                <a data-toggle="tooltip" data-placement="top" class='iframe btn btn-success' href='edit/{{$request->id}}' title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
-                                <form method="POST" action="delete" id="myForm_{{ $request->id }}" name="myForm" style="display: -webkit-inline-box;">
-                                   <input type="hidden" name="del_pr" value="{{ $request->id }}">
-                                   <center> <a href="changeForm/{{ $request->id }}" class="btn ajax btn-danger" data-method="post" data-replace="#pr_form" data-toggle="modal" data-target="#confirmDelete" data-toggle="tooltip" title="Cancel"><span class="glyphicon glyphicon-remove"></span></a></center>
-                               </form>
-                            </td>
                         @endif
                     @endif
                 </tr>
