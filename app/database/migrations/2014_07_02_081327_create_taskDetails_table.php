@@ -12,7 +12,7 @@ class CreateTaskDetailsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('taskDetails', function(Blueprint $table)
+		Schema::create('taskdetails', function(Blueprint $table)
 		{
 			$table->increments('id');
 			$table->string('status', 45);

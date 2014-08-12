@@ -12,7 +12,7 @@ class CreateOtherDetailsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('otherDetails', function($table)
+		Schema::create('otherdetails', function($table)
 		{
 			$table->increments('id');
 			$table->string('label', 45);
