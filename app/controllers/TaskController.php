@@ -202,9 +202,13 @@ class TaskController extends Controller {
 		$task_row = Task::find($taskDetails->task_id);
 		$addToDateReceived = $task_row->maxDuration;
 
+
 		// Get date today and the due date;
 		$dateReceived = date('Y-m-d H:i:s');
-		$dueDate = date('Y-m-d H:i:s', strtotime("$addToDateReceived days" ));
+		if($addToDateReceived == 0)
+			$dueDate = '9999-01-01 00:00:00';
+		else
+			$dueDate = date('Y-m-d H:i:s', strtotime("$addToDateReceived days" ));
 
 		$taskDetails->dateReceived = $dateReceived;
 		$taskDetails->dueDate = $dueDate;
