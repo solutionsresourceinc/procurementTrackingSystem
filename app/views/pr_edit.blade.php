@@ -583,7 +583,7 @@
                                     $today = date("m/d/y");
                                     ?>
                                     <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
-                                        <input type="text" class="form-control" name="dateFinished" id="dateFinished" style="text-align: center; width:100%"
+                                        <input type="text" class="form-control" onchange="changeDOA(this.value)" name="dateFinished" id="dateFinished" style="text-align: center; width:100%"
                                         <?php
                                         if (NULL!=Input::old('dateFinished'))
                                             echo "value ='" . Input::old('dateFinished') ."'";
@@ -2203,6 +2203,11 @@ function doneauto()
 
     $("#createform").attr('action', text); 
     document.getElementById(formname).submit();
+    }
+
+    function changeDOA(value)
+    {
+        alert(value);
     }
 </script>
 
