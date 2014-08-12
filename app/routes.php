@@ -148,14 +148,14 @@ Route::get('task/{id}', [ 'uses' => 'TaskController@taskpagecall']);
 
 
 //---------- Image Module Components
-Route::post('newcreate', ['uses' => 'purchaseRequestController@create_submit', 'as'=>'/newcreate']);
+Route::post('newcreate', ['uses' => 'PurchaseRequestController@create_submit', 'as'=>'/newcreate']);
 
-Route::post('autoupload', ['uses' => 'purchaseRequestController@autoupload', 'as'=>'/autoupload']);
-Route::post('autouploadsaved', ['uses' => 'purchaseRequestController@autouploadsaved', 'as'=>'/autouploadsaved']);
+Route::post('autoupload', ['uses' => 'PurchaseRequestController@autoupload', 'as'=>'/autoupload']);
+Route::post('autouploadsaved', ['uses' => 'PurchaseRequestController@autouploadsaved', 'as'=>'/autouploadsaved']);
 
-Route::post('newedit', ['uses' => 'purchaseRequestController@edit_submit', 'as'=>'/newedit']);
-Route::post('addimage', ['uses' => 'purchaseRequestController@addimage']);
-Route::post('delimage', ['uses'=> 'purchaseRequestController@delimage']);
+Route::post('newedit', ['uses' => 'PurchaseRequestController@edit_submit', 'as'=>'/newedit']);
+Route::post('addimage', ['uses' => 'PurchaseRequestController@addimage']);
+Route::post('delimage', ['uses'=> 'PurchaseRequestController@delimage']);
 
 
 //---------- AJAX Routes
