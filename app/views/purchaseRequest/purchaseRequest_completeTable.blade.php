@@ -62,7 +62,6 @@
             <option value="3" <?php if($searchBy == '3'){ echo "selected";} ?> >Mode-Bidding</option>
             <option value="4" <?php if($searchBy == '4'){ echo "selected";} ?> >Mode-Pakyaw</option>
             <option value="5" <?php if($searchBy == '5'){ echo "selected";} ?> >Mode-Direct Contracting</option>
-            <option value="Shopping" <?php if($searchBy == 'Shopping'){ echo "selected";} ?> >Mode-Shopping</option>
         </select>
     </div>   
 	<div class="input-group col-md-3 no-print" id="searchBox">
@@ -93,7 +92,7 @@
 
 <div style="margin-top: 30px">
 	<table class="table table-striped display" border="1">
-		<thead>
+        <thead>
 			<th width="9.09%"> DATE </th>
 			<th width="9.09%"> BAC NO </th>
 			<th width="9.09%"> DEPT </th>
