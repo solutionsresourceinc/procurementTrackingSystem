@@ -1,67 +1,71 @@
 @extends('layouts.dashboard')
 
 @section('header')
-{{ HTML::style('date_picker/bootstrap-datetimepicker.min.css')}}
-   {{ HTML::script('date_picker/bootstrap-datetimepicker.js') }}
-   {{ HTML::script('date_picker/bootstrap-datetimepicker.fr.js') }}
-   {{ HTML::style('css/datepicker.css')}}
-   {{ HTML::script('js/bootstrap-datepicker.js') }}
-{{ HTML::script('js/bootstrap.file-input.js') }} 
-<script type="text/javascript">
-function codeAddress() 
-{
-if(document.layers) document.layers['remarkd'].visibility="show";
-if(document.getElementById) document.getElementById("remarkd").style.visibility="visible";
-if(document.all) document.all.remarkd.style.visibility="visible";
+    {{ HTML::style('date_picker/bootstrap-datetimepicker.min.css')}}
+    {{ HTML::script('date_picker/bootstrap-datetimepicker.js') }}
+    {{ HTML::script('date_picker/bootstrap-datetimepicker.fr.js') }}
+    {{ HTML::style('css/datepicker.css')}}
+    {{ HTML::script('js/bootstrap-datepicker.js') }}
+    {{ HTML::script('js/bootstrap.file-input.js') }} 
 
-if(document.layers) document.layers['formr'].visibility="hide";
-if(document.getElementById) document.getElementById("formr").style.visibility="hidden";
-if(document.all) document.all.formr.style.visibility="hidden";
-}
-window.onload = codeAddress;
-</script>
+    <script type="text/javascript">
 
-<style type="text/css">
-td{
-   padding:5px 10px;
-   vertical-align:top;
-   word-break:break-word;
-}
-</style>
+      function codeAddress() 
+      {
+        if(document.layers) document.layers['remarkd'].visibility="show";
+        if(document.getElementById) document.getElementById("remarkd").style.visibility="visible";
+        if(document.all) document.all.remarkd.style.visibility="visible";
+
+        if(document.layers) document.layers['formr'].visibility="hide";
+        if(document.getElementById) document.getElementById("formr").style.visibility="hidden";
+        if(document.all) document.all.formr.style.visibility="hidden";
+      }
+
+      window.onload = codeAddress;
+    </script>
+
+    <style type="text/css">
+    td{
+        padding:5px 10px;
+        vertical-align:top;
+        word-break:break-word;
+      }
+    </style>
 @stop
 
 @section('content')
 
-<?php
-error_reporting(0);
-$taskdetails_id=Session::get('taskdetails_id');
-Session::forget('taskdetails_id');
-$taskd =TaskDetails::find($taskdetails_id);
-$task= Task::find($taskd->task_id);
-$doc= Document::find($taskd->doc_id);
-$purchase = Purchase::find($doc->pr_id);
-$date_today = $date_today = date('Y-m-d H:i:s');
-?>
+  <?php
+  //Initializers
+  error_reporting(0);
+  $taskdetails_id=Session::get('taskdetails_id');
+  Session::forget('taskdetails_id');
+  $taskd =TaskDetails::find($taskdetails_id);
+  $task= Task::find($taskd->task_id);
+  $doc= Document::find($taskd->doc_id);
+  $purchase = Purchase::find($doc->pr_id);
+  $date_today = $date_today = date('Y-m-d H:i:s');
+  //End Initializers
+  ?>
 
-{{Session::put('backTo',"task/$taskdetails_id");}}
+  {{Session::put('backTo',"task/$taskdetails_id");}}
 
 <h2 class="pull-left">Task Details</h2>
 
 <div class="pull-right options">
-
 @if($taskd->status == "Active" && $taskd->dueDate > $date_today)
-<a href="{{ URL::to('task/active') }}" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left"></span> Back</a>
+  <a href="{{ URL::to('task/active') }}" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left"></span> Back</a>
 @elseif($taskd->status == "New")
-<a href="{{ URL::to('task/new') }}" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left"></span> Back</a>
+  <a href="{{ URL::to('task/new') }}" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left"></span> Back</a>
 @elseif($taskd->status == "Closed")
-<a href="{{ URL::to('task/active') }}" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left"></span> Back</a>
+  <a href="{{ URL::to('task/active') }}" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left"></span> Back</a>
 @else
-<a href="{{ URL::to('task/overdue') }}" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left"></span> Back</a>
+  <a href="{{ URL::to('task/overdue') }}" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left"></span> Back</a>
 @endif
 </div>
+
 <!--Trigger to Change Routing-->
 {{Session::put('changeroute','change')}}
-
 <!--End Trigger to Change Routing-->
 
 <hr class="clear" />
@@ -71,55 +75,51 @@ $date_today = $date_today = date('Y-m-d H:i:s');
 
 <table border=0 width="100%">
 <tr>
-<td>
-<h3 class="pull-left">{{$task->taskName}}</h3>
-<?php
-if($taskd->status=="New")
-{
-?>	
+  <td>
+    <h3 class="pull-left">{{$task->taskName}}</h3>
+  
+@if($taskd->status=="New")
 {{ Form::open(['route'=>'accept_task']) }}
 {{ Form::hidden('hide_taskid',$taskdetails_id) }}
 {{ Form::submit('Accept Task', ['class' => 'btn btn-sm btn-primary accept-button', 'style' => 'margin-bottom: 10px'])}}     
 {{ Form::close() }}
-<?php
-}
-?>
+@endif
+
 <hr class="clear" />
-</td>
+  </td>
 </tr>
 
 <tr> 
-<td>
-<span style="font-weight: bold">Description: </span><br/>
-<p>{{$task->description}}</p>
-</td>
+  <td>
+    <span style="font-weight: bold">Description: </span><br/>
+    <p>{{$task->description}}</p>
+  </td>
 <tr>
 
 <tr> 
-<td>
-<span style="font-weight: bold">Control No. : </span><br/>
-<p><?php echo str_pad($purchase->controlNo, 5, '0', STR_PAD_LEFT); ?></p>
-
-</td>
+  <td>
+    <span style="font-weight: bold">Control No. : </span><br/>
+    <p><?php echo str_pad($purchase->controlNo, 5, '0', STR_PAD_LEFT); ?></p>
+  </td>
 <tr>
 
 <tr> 
-<td>
-<span style="font-weight: bold">Project/Purpose: </span><br/>
-<p><a href="{{ URL::to('purchaseRequest/vieweach/'.$purchase->id) }}" ><?php echo $purchase->projectPurpose; ?> </a></p>
-
-</td>
+  <td>
+  <span style="font-weight: bold">Project/Purpose: </span><br/>
+  <p><a href="{{ URL::to('purchaseRequest/vieweach/'.$purchase->id) }}" ><?php echo $purchase->projectPurpose; ?> </a></p>
+  </td>
 <tr>
+
 @if(Session::get('successchecklist'))
-               <div class="alert alert-success"> {{ Session::get('successchecklist') }}</div> 
-           @endif
+  <div class="alert alert-success"> {{ Session::get('successchecklist') }}</div> 
+@endif
 
-           @if(Session::get('errorchecklist'))
-               <div class="alert alert-danger"> {{ Session::get('errorchecklist') }}</div> 
-           @endif
-
-           {{Session::forget('successchecklist');}}
-           {{Session::forget('errorchecklist');}}
+@if(Session::get('errorchecklist'))
+  <div class="alert alert-danger"> {{ Session::get('errorchecklist') }}</div> 
+@endif
+  
+  {{Session::forget('successchecklist');}}
+  {{Session::forget('errorchecklist');}}
 
 <?php
 if ($taskd->status=="Done")
@@ -129,13 +129,10 @@ Redirect::to('task/active');
 
 if ($taskd->status=="Active")
 {
-
 $date_today =date('Y-m-d H:i:s');
-?>
-
-<?php
 $assign_user=User::find(Auth::user()->id);
                         $name=$assign_user->lastname.", ".$assign_user->firstname;
+}
 ?>
 
 <input type="hidden" name ="by" value= "{{$name}}">
@@ -157,631 +154,6 @@ $assign_user=User::find(Auth::user()->id);
 
 
 
-@if($task->taskType=='certification')
-{{Form::open(['url'=>'certification'], 'POST')}}
-<?php
-$assign_user=User::find(Auth::user()->id);
-                        $name=$assign_user->lastname.", ".$assign_user->firstname;
-?>
-<input type="hidden" name ="by" value= "{{$name}}">
-<tr> 
-<td>
-<span style="font-weight: bold">PPMP Certification: </span><br/>
-<p>
-<input type="radio" name="radio" value="yes" />&nbsp;&nbsp;Yes &nbsp;&nbsp;
-                           <input type="radio" name="radio" value="no" />&nbsp;&nbsp;No<br />
-                       </p>
-
-</td>
-</tr>
-<tr>
-<td>
-<input type ="hidden" name="taskdetails_id" value="{{$taskd->id}}">
-<input type ="hidden" name="pr_id" value="{{$purchase->id}}">
-<input type="submit" class="btn btn-sm btn-success" value="Done">
-
-</td>
-</tr>
-{{Form::close()}}
-@if($tasks->taskType == "dateonly")
-                            <?php $myForm = 'myForm_' . $taskc->id; ?>
-                            {{Form::open(['url'=>'dateonly', 'id' => $myForm], 'POST')}}
-                                <input type="hidden" name="taskdetails_id" value="{{$taskd->id}}">
-                                 <Input type="hidden" name="pr_id" value="{{$purchase->id}}" );>
-                                
-                                <td class="edit-pr-input"> 
-                                    <?php 
-                                    $today = date("m/d/y");
-                                    ?>
-                                    <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
-
-                                        <input type="text" class="form-control" name="dateFinished" id="dateFinished" style="text-align: center; width:100%" 
-                                        
-                                        <?php
-                                        if (NULL!=Input::old('dateFinished'))
-                                            echo "value ='" . Input::old('dateFinished') ."'";
-                                        else
-                                            echo "value = '" . $today . "'";
-                                        ?>
-                                        
-                                        />
-                                    </div>
-                                </td>
-                                
-                                </tr>
-                                <tr class="current-task">
-                                <td colspan="4" style="border-right: none"></td>
-                                <td style="border-left: none; text-align: center;">
-                                
-                                    <input type="button" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"> 
-                                </td>
-                            {{Form::close()}}
-@endif
-
-
-@elseif($task->taskType=='posting')
-{{Form::open(['url'=>'posting'], 'POST')}}
-<?php
-$assign_user=User::find(Auth::user()->id);
-                        $name=$assign_user->lastname.", ".$assign_user->firstname;
-$birth = new DateTime($taskd->dateReceived); 
-$today = new DateTime(); 
-$diff = $birth->diff($today); 
-$aDays= $diff->format('%d');
-
-$converteddate = $today->format('m/d/y');
-?>
-<input type="hidden" name ="by" value= "{{$name}}">
-<input type="hidden" name="date" value="{{$converteddate}}">
-<tr> 
-<td>
-<span style="font-weight: bold">Reference Number: </span><br/>
-<p>
-<input type="text" name="referenceno"  class="form-control" maxlength="100" width="80%" maxlength="100" style="margin-top: 10px;" placeholder="Enter Reference Number">
-                       </p>
-
-</td>
-</tr>
-<tr>
-<td>
-<input type ="hidden" name="taskdetails_id" value="{{$taskd->id}}">
-<input type ="hidden" name="pr_id" value="{{$purchase->id}}">
-{{ Form::submit('Done',array('class'=>'btn btn-sm btn-success')) }} 
-</td>
-</tr>
-{{Form::close()}}
-
-@elseif($task->taskType=='supplier')
-{{Form::open(['url'=>'supplier'], 'POST')}}
-<?php
-$assign_user=User::find(Auth::user()->id);
-                        $name=$assign_user->lastname.", ".$assign_user->firstname;
-?>
-<input type="hidden" name ="by" value= "{{$name}}">
-
-<tr> 
-<td>
-<span style="font-weight: bold">Supplier: </span><br/>
-<p>
-<input type="text" name="supplier"  class="form-control" maxlength="100" width="80%" placeholder="Enter supplier" style="margin-top: 10px;">
-                       </p>
-<span style="font-weight: bold">Amount: </span><br/>
-<p>
-<input type="decimal" name="amount"  class="form-control" maxlength="12" width="80%" placeholder="Enter amount" style="margin-top: 10px;">
-                       </p>
-</td>
-</tr>
-<tr>
-<td>
-<input type ="hidden" name="taskdetails_id" value="{{$taskd->id}}">
-<input type ="hidden" name="pr_id" value="{{$purchase->id}}">
-{{ Form::submit('Done',array('class'=>'btn btn-sm btn-success')) }}	
-</td>
-</tr>
-{{Form::close()}}
-@elseif($task->taskType=='cheque')
-{{Form::open(['url'=>'cheque'], 'POST')}}
-<?php
-$assign_user=User::find(Auth::user()->id);
-                        $name=$assign_user->lastname.", ".$assign_user->firstname;
-?>
-<input type="hidden" name ="by" value= "{{$name}}">
-<tr> 
-<td>
-<span style="font-weight: bold">Cheque Amount: </span><br/>
-<p>
-<input type="decimal" name="amt"  class="form-control" maxlength="12" width="80%" placeholder="Enter cheque amount" style="margin-top: 10px;">
-                       </p>
-<span style="font-weight: bold">Cheque Number: </span><br/>
-<p>
-<input type="decimal" name="amount"  class="form-control" maxlength="12" width="80%" placeholder="Enter amount" style="margin-top: 10px;">
-                       </p>
-<span style="font-weight: bold">Cheque Date: </span><br/>
-<p>
-<?php 
-                               $today = date("m/d/y");
-                               ?>
-                               <input class="datepicker" size="16" type="text" name="date" class="form-control" value="{{$today}}" width="100%" placeholder="Enter cheque date">
-                               <span class="add-on"><i class="icon-th"></i></span>
-                       </p>
-</td>
-</tr>
-<tr>
-<td>
-<input type ="hidden" name="taskdetails_id" value="{{$taskd->id}}">
-<input type ="hidden" name="pr_id" value="{{$purchase->id}}">
-{{ Form::submit('Done',array('class'=>'btn btn-sm btn-success')) }}	
-</td>
-</tr>
-{{Form::close()}}	
-@elseif($task->taskType=='conference')
-{{Form::open(['url'=>'conference'], 'POST')}}
-<tr> 
-<td>
-<span style="font-weight: bold">Conference Date: </span><br/>
-<p>
-<?php 
-                           $today = date("m/d/y");
-                           ?>
-                           <input class="datepicker" size="16" type="text" name="date" class="form-control" value="{{$today}}" width="100%"  style="margin-top: 10px;">
-                           <span class="add-on"><i class="icon-th"></i></span>
-                       </p>
-</td>
-</tr>
-<tr>
-<td>
-<input type ="hidden" name="taskdetails_id" value="{{$taskd->id}}">
-<input type ="hidden" name="pr_id" value="{{$purchase->id}}">
-{{ Form::submit('Done',array('class'=>'btn btn-sm btn-success')) }}	
-</td>
-</tr>
-{{Form::close()}}	
-
-@elseif($task->taskType=='published')
-
-{{Form::open(['url'=>'published'], 'POST')}}
-<?php
-$assign_user=User::find(Auth::user()->id);
-                        $name=$assign_user->lastname.", ".$assign_user->firstname;
-?>
-<input type="hidden" name ="by" value= "{{$name}}">
-<tr> 
-<td width="50%">
-<span style="font-weight: bold">Date Published: </span><br/>
-<p>
-<?php 
-                           $today = date("m/d/y");
-                           ?>
-                           <input class="datepicker" size="16" type="text" name="datepublished" class="form-control" value="{{$today}}" width="100%"  style="margin-top: 10px;">
-                           <span class="add-on"><i class="icon-th"></i></span>
-                       </p>
-<span style="font-weight: bold">End Date: </span><br/>
-<p>
-<?php 
-                           $today = date("m/d/y");
-                           ?>
-                           <input class="datepicker" size="16" type="text" name="datepublished" class="form-control" value="{{$today}}" width="100%"  style="margin-top: 10px;">
-                           <span class="add-on"><i class="icon-th"></i></span>
-                       </p>
-</td>
-</tr>
-<tr>
-<td>
-<span style="font-weight: bold">Posted By: </span><br/>
-<p>
-<input type="text" name="by"  placeholder="Enter name" class="form-control" maxlength="100" width="80%"  style="margin-top: 10px;">
-                       </p>
-</td>
-</tr>
-<tr>
-<td>
-<input type ="hidden" name="taskdetails_id" value="{{$taskd->id}}">
-<input type ="hidden" name="pr_id" value="{{$purchase->id}}">
-{{ Form::submit('Done',array('class'=>'btn btn-sm btn-success')) }}	
-</td>
-</tr>	
-{{Form::close()}}
-@elseif($task->taskType=='philgeps')
-
-{{Form::open(['url'=>'philgeps'], 'POST')}}
-<?php
-$assign_user=User::find(Auth::user()->id);
-                        $name=$assign_user->lastname.", ".$assign_user->firstname;
-?>
-<input type="hidden" name ="by" value= "{{$name}}">
-<tr> 
-
-                                <td >
-                                   <span style="font-weight: bold"> Reference No.:</span><br/>
-                                    <input type="text" name="referenceno"  class="form-control" maxlength="100" width="80%" maxlength="100"
-                                    value="<?php
-                                    if (NULL!=Input::old('referenceno'))
-                                    echo Input::old('referenceno');
-                                    ?>"
-                                    >
-                                </td>
-<td width="50%">
-<span style="font-weight: bold">Date Published: </span><br/>
-<p>
-<?php 
-                           $today = date("m/d/y");
-                           ?>
-                           <input class="datepicker" size="16" type="text" name="datepublished" class="form-control" value="{{$today}}" width="100%"  style="margin-top: 10px;">
-                           <span class="add-on"><i class="icon-th"></i></span>
-                       </p>
-<span style="font-weight: bold">End Date: </span><br/>
-<p>
-<?php 
-                           $today = date("m/d/y");
-                           ?>
-                           <input class="datepicker" size="16" type="text" name="datepublished" class="form-control" value="{{$today}}" width="100%"  style="margin-top: 10px;">
-                           <span class="add-on"><i class="icon-th"></i></span>
-                       </p>
-</td>
-</tr>
-<tr>
-<td>
-<span style="font-weight: bold">Posted By: </span><br/>
-<p>
-<input type="text" name="by"  placeholder="Enter name" class="form-control" maxlength="100" width="80%"  style="margin-top: 10px;">
-                       </p>
-</td>
-</tr>
-<tr>
-<td>
-<input type ="hidden" name="taskdetails_id" value="{{$taskd->id}}">
-<input type ="hidden" name="pr_id" value="{{$purchase->id}}">
-{{ Form::submit('Done',array('class'=>'btn btn-sm btn-success')) }} 
-</td>
-</tr> 
-{{Form::close()}}
-@elseif($task->taskType=='documents')
-{{Form::open(['url'=>'documents'], 'POST')}}
-<?php
-$assign_user=User::find(Auth::user()->id);
-                        $name=$assign_user->lastname.", ".$assign_user->firstname;
-?>
-<input type="hidden" name ="by" value= "{{$name}}">
-<tr> 
-<td width="50%">
-<span style="font-weight: bold">Eligibility Documents: </span><br/>
-<p>
-<?php 
-                           $today = date("m/d/y");
-                               ?>
-                               <input class="datepicker" size="16" type="text" name="date" class="form-control" value="{{$today}}" width="100%" style="margin-top: 10px;">
-                               <span class="add-on"><i class="icon-th"></i></span>
-                       </p>
-<span style="font-weight: bold">Date of Bidding: </span><br/>
-<p>
-<input class="datepicker" size="16" type="text" name="biddingdate" class="form-control" value="{{$today}}" width="100%" style="margin-top: 10px;">
-<span class="add-on"><i class="icon-th"></i></span>
-                       </p>
-</td>
-</tr>
-<tr>
-<td>
-<span style="font-weight: bold">Checked By: </span><br/>
-<p>
-<input type="text" name="by"  class="form-control" maxlength="100" width="80%" placeholder="Enter name" style="margin-top: 10px;">
-                       </p>
-</td>
-</tr>
-<tr>
-<td>
-<input type ="hidden" name="taskdetails_id" value="{{$taskd->id}}">
-<input type ="hidden" name="pr_id" value="{{$purchase->id}}">
-{{ Form::submit('Done',array('class'=>'btn btn-sm btn-success')) }}	
-</td>
-</tr>
-{{Form::close()}}	
-@elseif($task->taskType=='evaluation')
-{{Form::open(['url'=>'evaluations'], 'POST')}}
-<?php
-$assign_user=User::find(Auth::user()->id);
-                        $name=$assign_user->lastname.", ".$assign_user->firstname;
-?>
-<input type="hidden" name ="by" value= "{{$name}}">
-<tr> 
-<td width="50%">
-<span style="font-weight: bold">Date: </span><br/>
-<p>
-<?php 
-                           $today = date("m/d/y");
-                               ?>
-                               <input class="datepicker" size="16" type="text" name="date" class="form-control" value="{{$today}}" width="100%" style="margin-top: 10px;">
-                               <span class="add-on"><i class="icon-th"></i></span>
-                       </p>
-<span style="font-weight: bold">No. of Days Accomplished: </span><br/>
-<p>
-<input type="number" name="noofdays"  class="form-control" maxlength="100" width="80%" placeholder="Enter no. of days" style="margin-top: 10px;">
-                       </p>
-</td>
-</tr>
-<tr>
-<td>
-<input type ="hidden" name="taskdetails_id" value="{{$taskd->id}}">
-<input type ="hidden" name="pr_id" value="{{$purchase->id}}">
-{{ Form::submit('Done',array('class'=>'btn btn-sm btn-success')) }}	
-</td>
-</tr>	
-{{Form::close()}}
-@elseif($task->taskType=='contract' || $task->taskType=='meeting')
-{{Form::open(['url'=>'contractmeeting'], 'POST')}}
-<?php
-$assign_user=User::find(Auth::user()->id);
-                        $name=$assign_user->lastname.", ".$assign_user->firstname;
-?>
-<input type="hidden" name ="by" value= "{{$name}}">
-<tr> 
-<td width="50%">
-<span style="font-weight: bold">
-@if($task->taskType=='contract') 
-Notice of Award Date: 
-@else 
-Notice to Proceed
-@endif
-</span><br/>
-<p>
-<?php 
-                               $today = date("m/d/y");
-                               ?>
-                               <input class="datepicker" size="16" type="text" name="date" class="form-control" value="{{$today}}" width="100%" style="margin-top: 10px;">
-                               <span class="add-on"><i class="icon-th"></i></span>
-                       </p>
-<span style="font-weight: bold">No. of Days Accomplished: </span><br/>
-<p>
-<input type="number" name="noofdays"  class="form-control" maxlength="100" width="80%" placeholder="Enter no. of days accomplished" style="margin-top: 10px;">
-                       </p>
-                       <span style="font-weight: bold">
-                       	@if($task->taskType=='contract') 
-                       	Contract Agreement: 
-                       	@else
-                       	Minutes of Meeting:
-                       	@endif
-                       </span><br/>
-<p>
-<input type="text" name="contractmeeting"  class="form-control" maxlength="100" width="80%" placeholder="@if($task->taskType=='contract') Enter contract agreement @else Enter minutes of meeting @endif" style="margin-top: 10px;">
-                       </p>
-</td>
-</tr>
-<tr>
-<td>
-<input type ="hidden" name="taskdetails_id" value="{{$taskd->id}}">
-<input type ="hidden" name="pr_id" value="{{$purchase->id}}">
-{{ Form::submit('Done',array('class'=>'btn btn-sm btn-success')) }}	
-</td>
-</tr>
-{{Form::close()}}	
-@endif
-
-<?php } 
-
-else 
-{ 
-?>
-
-<tr>
-<td>
-<span style="font-weight: bold">Max Duration: </span><br/>
-{{ $task->maxDuration }}
-</td>
-</tr>
-
-<?php 
-}
-?>
-
-
-<tr>
-<td>
-
-
-@if($task->taskType=='normal')
-@if($taskd->status!="New")
-{{ Form::open(array('method' => 'post', 'url' => 'done', 'id'=>"taskform"))}}
-<input type ="hidden" name="task_id" value="{{$task->id}}">
-<input type ="hidden" name="doc_id" value="{{$doc->id}}">
-<input type ="hidden" name="pr_id" value="{{$purchase->id}}">
-<input type ="hidden" name="taskdetails_id" value="{{$taskd->id}}">
-{{ Form::close() }}
-<br>
-<p style="font-weight: bold">Remarks: </p>
-<?php 
-
-if (Session::get('errorremark'))
-echo  "<div class='alert alert-danger'>".Session::get('errorremark')."</div>";
-if (Session::get('successremark'))
-echo  "<div class='alert alert-success'>".Session::get('successremark')."</div>";
-Session::forget('errorremark');
-Session::forget('successremark');
-?>
-
-<div id="remarkd" onclick="show()">
-<p>
-<?php
-echo $taskd->remarks;
-if ($taskd->remarks==NULL || $taskd->remarks==' ' )
-{
-?>
-No remark.
-<?php
-}
-?>
-</p>
-</div>
-<br>
-<button type="button" class="btn btn-success " onclick="doneauto('taskform')" id="hidebtn">Done</button>
-
-<div id ="formr">
-{{ Form::open(['url'=>'remarks'], 'POST') }}
-@if($taskd->remarks==NULL)
-{{ Form::textarea('remarks','', array('class'=>'form-control', 'rows'=>'3', 'maxlength'=>'255', 'style'=>'resize:vertical', 'id'=>'taskform')) }}
-@else
-{{ Form::textarea('remarks',$taskd->remarks, array('class'=>'form-control', 'rows'=>'3', 'maxlength'=>'255', 'style'=>'resize:vertical', 'id'=>'taskform' )) }}
-
-@endif
-<input type ="hidden" name="taskdetails_id" value="{{$taskd->id}}">
-<br>
-<input type="button"  onclick="hideRemarks()"  value="Cancel" class='btn btn-default' />
-&nbsp;
-{{ Form::submit('Save',array('class'=>'btn btn-warning')) }}
-&nbsp;
-<button type="button" class="btn btn-success " onclick="doneauto()" >Done</button>
-{{ Form::close() }}
-</div>
-<br>
-&nbsp;
-
-
-
-@endif
-
-@endif
-@if($task->taskType=='dateby')
-@if($taskd->status!="New")
-{{ Form::open(array('method' => 'post', 'url' => 'done', 'id'=>"taskform")) }}
-<?php
-
-$birth = new DateTime($taskd->dateReceived); 
-$today = new DateTime(); 
-$diff = $birth->diff($today); 
-$aDays= $diff->format('%d');
-
-$converteddate = $today->format('m/d/y');
-
-$assign_user=User::find(Auth::user()->id);
-                        $name=$assign_user->lastname.", ".$assign_user->firstname;
-?>
-<input type="hidden" name ="assignee" value= "{{$name}}">
-<input type ="hidden" name="dateFinished" value="{{$converteddate}}">
-<input type ="hidden" name="taskdetails_id" value="{{$taskd->id}}">
-{{ Form::submit('Done',array('class'=>'btn btn-sm btn-success')) }}
-{{ Form::close() }}
-<br>
-<p style="font-weight: bold">Remarks: </p>
-<?php 
-
-if (Session::get('errorremark'))
-echo  "<div class='alert alert-danger'>".Session::get('errorremark')."</div>";
-if (Session::get('successremark'))
-echo  "<div class='alert alert-success'>".Session::get('successremark')."</div>";
-Session::forget('errorremark');
-Session::forget('successremark');
-?>
-
-<div id="remarkd" onclick="show()">
-<p>
-<?php
-echo $taskd->remarks;
-if ($taskd->remarks==NULL || $taskd->remarks==' ')
-{
-?>
-No remark.
-<?php
-}
-?>
-</p>
-</div>
-<br>
-<button type="button" class="btn btn-success " onclick="doneauto('taskform')" id="hidebtn">Done</button>
-
-<div id ="formr">
-{{ Form::open(['url'=>'remarks'], 'POST') }}
-@if($taskd->remarks==NULL)
-{{ Form::textarea('remarks','', array('class'=>'form-control', 'rows'=>'3', 'maxlength'=>'255', 'style'=>'resize:vertical', 'id'=>'taskform')) }}
-@else
-{{ Form::textarea('remarks',$taskd->remarks, array('class'=>'form-control', 'rows'=>'3', 'maxlength'=>'255', 'style'=>'resize:vertical', 'id'=>'taskform' )) }}
-
-@endif
-<input type ="hidden" name="taskdetails_id" value="{{$taskd->id}}">
-<br>
-<input type="button"  onclick="hideRemarks()"  value="Cancel" class='btn btn-default' />
-&nbsp;
-{{ Form::submit('Save',array('class'=>'btn btn-warning')) }}
-&nbsp;
-<button type="button" class="btn btn-success " onclick="doneauto()" >Done</button>
-{{ Form::close() }}
-</div>
-<br>
-&nbsp;
-
-
-@endif
-
-@endif
-@if($task->taskType=='datebyremark')
-@if($taskd->status!="New")
-{{ Form::open(array('method' => 'post', 'url' => 'done', 'id'=>"taskform")) }}
-<?php
-
-$birth = new DateTime($taskd->dateReceived); 
-$today = new DateTime(); 
-$diff = $birth->diff($today); 
-$aDays= $diff->format('%d');
-
-$converteddate = $today->format('m/d/y');
-
-$assign_user=User::find(Auth::user()->id);
-                        $name=$assign_user->lastname.", ".$assign_user->firstname;
-?>
-<input type="hidden" name ="assignee" value= "{{$name}}">
-<input type ="hidden" name="dateFinished" value="{{$converteddate}}">
-<input type ="hidden" name="taskdetails_id" value="{{$taskd->id}}">
-{{ Form::submit('Done',array('class'=>'btn btn-sm btn-success')) }}
-{{ Form::close() }}
-<br>
-<p style="font-weight: bold">Remarks: </p>
-<?php 
-
-if (Session::get('errorremark'))
-echo  "<div class='alert alert-danger'>".Session::get('errorremark')."</div>";
-if (Session::get('successremark'))
-echo  "<div class='alert alert-success'>".Session::get('successremark')."</div>";
-Session::forget('errorremark');
-Session::forget('successremark');
-?>
-
-<div id="remarkd" onclick="show()">
-<p>
-<?php
-echo $taskd->remarks;
-if ($taskd->remarks==NULL || $taskd->remarks==' ')
-{
-?>
-No remark.
-<?php
-}
-?>
-</p>
-</div>
-<br>
-<button type="button" class="btn btn-success " onclick="doneauto('taskform')" id="hidebtn">Done</button>
-
-<div id ="formr">
-{{ Form::open(['url'=>'remarks'], 'POST') }}
-@if($taskd->remarks==NULL)
-{{ Form::textarea('remarks','', array('class'=>'form-control', 'rows'=>'3', 'maxlength'=>'255', 'style'=>'resize:vertical', 'id'=>'taskform')) }}
-@else
-{{ Form::textarea('remarks',$taskd->remarks, array('class'=>'form-control', 'rows'=>'3', 'maxlength'=>'255', 'style'=>'resize:vertical', 'id'=>'taskform' )) }}
-
-@endif
-<input type ="hidden" name="taskdetails_id" value="{{$taskd->id}}">
-<br>
-<input type="button"  onclick="hideRemarks()"  value="Cancel" class='btn btn-default' />
-&nbsp;
-{{ Form::submit('Save',array('class'=>'btn btn-warning')) }}
-&nbsp;
-<button type="button" class="btn btn-success " onclick="doneauto()" >Done</button>
-{{ Form::close() }}
-</div>
-<br>
-&nbsp;
-
-
-@endif
-
-@endif
 <hr class="clear" />
 </td>
 </tr>
@@ -893,9 +265,11 @@ No remark.
 <br/>
 </div>
 </div>
+
 @stop
 
 @section('footer')
+
 <script type="text/javascript">
 $('input[type=file]').bootstrapFileInput();
    $('.file-inputs').bootstrapFileInput();

@@ -260,7 +260,7 @@
                             $user_id = Auth::user()->id;
                             $designations=DB::table('user_has_designation')->where('users_id',$user_id)->get();
                             $counting=0;
-                            $taskcount=Taskdetails::where('status', 'New'
+                            $taskcount=TaskDetails::where('status', 'New'
                             )->get();
 
             foreach ($taskcount as $taskcounter) 
@@ -287,7 +287,7 @@
                     <?php
                         $user_id = Auth::user()->id;
                         $date_today =date('Y-m-d H:i:s');
-                        $taskcount=Taskdetails::where('status', 'Active')->where("dueDate",">",$date_today)->whereAssigneeId($user_id)->count();
+                        $taskcount=TaskDetails::where('status', 'Active')->where("dueDate",">",$date_today)->whereAssigneeId($user_id)->count();
                         echo $taskcount;
                     ?>
                 </span></a>
@@ -298,7 +298,7 @@
                         <?php
                             $taskcount=0;
                             $date_today =date('Y-m-d H:i:s');
-                            $taskd=Taskdetails::where('status', 'Active')->where("dueDate","<",$date_today)->whereAssigneeId($user_id)->count();
+                            $taskd=TaskDetails::where('status', 'Active')->where("dueDate","<",$date_today)->whereAssigneeId($user_id)->count();
                             echo $taskd;
                         ?>
 
