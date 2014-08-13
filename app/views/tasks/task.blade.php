@@ -143,6 +143,13 @@ $assign_user=User::find(Auth::user()->id);
 <p><font color="red">{{ $taskd->dueDate; }}</font></p>
 </td>
 </tr>
+@elseif( $taskd->dueDate=="9999-01-01 00:00:00")
+<tr>
+<td>
+<span style="font-weight: bold">Due Date: </span><br/>
+<p>None</p>
+</td>
+</tr>
 @else
 <tr>
 <td>
@@ -1358,6 +1365,7 @@ function remarksauto()
       var formname= "taskform";
       document.getElementById(formname).submit();
     }
+
 
    </script>
 @stop
