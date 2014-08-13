@@ -111,7 +111,7 @@
         <thead>
 			<th width="9.09%"> DATE </th>
 			<th width="9.09%"> BAC NO </th>
-			<th width="9.09%"> DEPT </th>
+			<th width="9.09%"> DEPARTMENT </th>
 			<th width="9.09%"> PARTICULARS </th>
 			<th width="9.09%"> BUDGET </th>
 			<th width="9.09%"> SOURCE OF FUNDING </th>
