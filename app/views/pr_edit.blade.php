@@ -409,7 +409,7 @@
                 $taskche= TaskDetails::where('doc_id', $docs->id)->where('status', 'Edit')->count(); 
                 $taskch= TaskDetails::where('doc_id', $docs->id)->where('status', 'Edit')->orWhere('status', 'New')->orWhere('status', 'Active')->count(); 
                 //Get Cursor Value
-                $taskc= TaskDetails::where('doc_id', $docs->id)->where('status', 'New')->orWhere('status', 'Edit')->orWhere('status', 'Active')->first(); 
+                $taskc= TaskDetails::where('doc_id', $docs->id)->where('status', 'New')->orWhere('status', 'Edit')->first(); 
                 
                 //Queries
                 $workflow= Workflow::find($docs->work_id);
@@ -524,7 +524,7 @@
                     //Displayer 
                     $taskp =TaskDetails::where('doc_id', $docs->id)->where('task_id', $tasks->id)->first();
 
-                    if ($taskch!=0 && $taskc->task_id==$tasks->id && $tasks->designation_id==0)
+                    if ($taskch!=0 && $taskc->task_id==$tasks->id && ($tasks->designation_id==0||$taskc->status="Edit"))
                     {   
                         ?>
                         

@@ -1,10 +1,10 @@
 @extends('layouts.dashboard')
 
 @section('header')
-    {{ HTML::style('date_picker/bootstrap-datetimepicker.min.css')}}
+
     {{ HTML::script('date_picker/bootstrap-datetimepicker.js') }}
     {{ HTML::script('date_picker/bootstrap-datetimepicker.fr.js') }}
-    {{ HTML::style('css/datepicker.css')}}
+ {{ HTML::style('css/datepicker.css')}}
     {{ HTML::script('js/bootstrap-datepicker.js') }}
     {{ HTML::script('js/bootstrap.file-input.js') }} 
 
@@ -25,7 +25,7 @@
     </script>
 
     <style type="text/css">
-    td{
+    .tableTask td{
         padding:5px 10px;
         vertical-align:top;
         word-break:break-word;
@@ -175,7 +175,7 @@ $assign_user=User::find(Auth::user()->id);
 <!--Tasks Forms-->
 
 
-                  <table border='1' class='workflow-table'>
+                  <table border='1' class='workflow-table' id='tableTask'>
 <?php
 
                 $tasks= Task::find($taskd->task_id);
@@ -259,7 +259,7 @@ $assign_user=User::find(Auth::user()->id);
                             {{Form::open(['url'=>'checklistedit', 'id' => $myForm], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
                                  <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
-                            <input type="hidden" name="remarks" id="hiddenremarks" value=" " > 
+                            <input type="hidden" name="remarks" id="hiddenremarks"  > 
                                     <input type ="hidden" name="assignee" 
                                     <?php
                                     echo "value='".Auth::user()->lastname.", ".Auth::user()->firstname."'";
@@ -1368,4 +1368,15 @@ function remarksauto()
 
 
    </script>
+   {{ HTML::script('js/bootstrap-ajax.js');}}
+    <script src="js/bootstrap-datepicker.js"></script>
+    <script type="text/javascript">
+        // When the document is ready
+        $(document).ready(function () {
+            
+            $('.input-daterange').datepicker({
+                todayBtn: "linked"
+            });
+        });
+    </script>
 @stop
