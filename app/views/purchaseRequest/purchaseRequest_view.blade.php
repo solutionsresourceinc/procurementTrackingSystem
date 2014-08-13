@@ -105,10 +105,10 @@
 					<td class="proc-headers" colspan="3"><h4 style="line-height: 25px;">
 						<?php $workName = DB::table('workflow')->where('id',$wfName->work_id)->first(); ?>
 
-                        @if($purchase->otherType != "")
-                            <?php $workflowNameWithOtherType = $workName->workFlowName . " - " . $purchase->otherType; ?> 
+                        @if($workName->workFlowName == $purchase->otherType)
+                            <?php $workflowNameWithOtherType = $workName->workFlowName; ?> 
                         @else
-                            <?php $workflowNameWithOtherType = $workName->workFlowName ?> 
+                            <?php $workflowNameWithOtherType = $workName->workFlowName . " - " . $purchase->otherType; ?> 
                         @endif
 
                         {{{ strtoupper($workflowNameWithOtherType) }}}

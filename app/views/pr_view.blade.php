@@ -150,8 +150,8 @@
                 <th>Date Received</th>
                 @if($pageName != 'List of Cancelled Purchase Requests')
                 @if($pageName != 'List of Closed Purchase Requests')
-                    @if(!Entrust::hasRole('Requisitioner'))
                         <th>Action</th>
+                    @if(!Entrust::hasRole('Requisitioner'))
                     @endif
                 @endif
                 @endif
@@ -197,13 +197,11 @@
                                     echo "SVP (Above P50,000 Below P500,000)";
                                 else
                                     echo $workflow = Workflow::find($docs->work_id)->workFlowName;
-                                if($request->otherType != "Pakyaw" || $request->otherType != "Direct Contracting")
-                                {}
-                                else if($request->otherType != "")
-                                        echo "<br> <i>$request->otherType</i>";
-
                             ?>
                         @endforeach
+                                @if($request->otherType != 'Pakyaw' && $request->otherType != 'Direct Contracting')
+                                    <br/><i>{{{$request->otherType}}}</i>
+                                @endif
                     </td>
                     <td align="right" width="12%"> {{{ $request->amount }}} </td>
                     <td align="center" width="20%">{{{ $request->dateReceived }}}</td>
@@ -225,6 +223,15 @@
                                 @else
                                     <td width="13%">
                                         <a data-toggle="tooltip" data-placement="top" class='iframe btn btn-success' href='edit/{{$request->id}}' title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
+                                        <form method="POST" action="delete" id="myForm_{{ $request->id }}" name="myForm" style="display: -webkit-inline-box;">
+                                           <input type="hidden" name="del_pr" value="{{ $request->id }}">
+                                           <center> <a href="changeForm/{{ $request->id }}" class="btn ajax btn-danger" data-method="post" data-replace="#pr_form" data-toggle="modal" data-target="#confirmDelete" data-toggle="tooltip" title="Cancel"><span class="glyphicon glyphicon-remove"></span></a></center>
+                                       </form>
+                                    </td>
+                                @endif
+                            @else
+                                @if(Auth::user()->id == $request->requisitioner)
+                                    <td width="13%">
                                         <form method="POST" action="delete" id="myForm_{{ $request->id }}" name="myForm" style="display: -webkit-inline-box;">
                                            <input type="hidden" name="del_pr" value="{{ $request->id }}">
                                            <center> <a href="changeForm/{{ $request->id }}" class="btn ajax btn-danger" data-method="post" data-replace="#pr_form" data-toggle="modal" data-target="#confirmDelete" data-toggle="tooltip" title="Cancel"><span class="glyphicon glyphicon-remove"></span></a></center>

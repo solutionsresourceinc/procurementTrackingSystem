@@ -130,7 +130,12 @@
 					</td>
 					<td>{{{str_pad($request->controlNo, 5, '0', STR_PAD_LEFT)}}}</td>
 					<td>{{{$request->officeName}}}</td>
-					<td>{{{$request->projectPurpose}}}</td>
+					<td>
+                        {{{$request->projectPurpose}}}
+                        @if($request->otherType != 'Pakyaw' || $request->otherType != 'Direct Contracting')
+                            <br/><i> {{{ $request->otherType }}} </i>
+                        @endif
+                    </td>
 					<td>
                         @if(isset($cancelled) && $cancelled == 0)
                             <?php
