@@ -288,25 +288,27 @@ $assign_user=User::find(Auth::user()->id);
                                 </td>
                                 <td class="edit-pr-input">
 
-                                            @if($sectiondays==0&&$prdays==0)
+                                         
+                                            <?php 
+                                            $newid=$taskc->id-1;
+                                                $taskprev= TaskDetails::find($newid); 
+
+                                            ?>
+                                            @if($taskprev->doc_id!=$taskc->doc_id)
+
 
                                             <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($purchaseToEdit->dateReceived))}}">
                               
-                                            @elseif("1899-11-30 00:00:00"==$taskc->dateFinished||"0000-00-00 00:00:00"==$taskc->dateFinished)
+                                            @elseif("1899-11-30 00:00:00"==$taskprev->dateFinished||"0000-00-00 00:00:00"==$taskprev->dateFinished)
 
-
-                                            <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($taskc->updated_at))}}">
+                                            <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($taskprev->updated_at))}}">
 
                                             @else
 
-                                            <?php 
-                                                $taskprev= TaskDetails::find($taskc->id-1); 
-
-                                            ?>
+                                    
                                             <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($taskprev->dateFinished))}}">
 
                                             @endif
-
                                     <input id="daysOfAction" type="number" name="daysOfAction" class="form-control"  min="0"  width="100%" maxlength="12" 
                                     <?php
                                     if (NULL!=Input::old('daysOfAction'))
@@ -691,21 +693,24 @@ $assign_user=User::find(Auth::user()->id);
                                         </div>
                                     </td>
                                     <td class="edit-pr-input" colspan="2">  
-                                            @if($sectiondays==0&&$prdays==0)
+                                         
+                                            <?php 
+                                            $newid=$taskc->id-1;
+                                                $taskprev= TaskDetails::find($newid); 
+
+                                            ?>
+                                            @if($taskprev->doc_id!=$taskc->doc_id)
+
 
                                             <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($purchaseToEdit->dateReceived))}}">
-                                
-                                            @elseif("1899-11-30 00:00:00"==$taskc->dateFinished||"0000-00-00 00:00:00"==$taskc->dateFinished)
+                              
+                                            @elseif("1899-11-30 00:00:00"==$taskprev->dateFinished||"0000-00-00 00:00:00"==$taskprev->dateFinished)
 
-
-                                            <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($taskc->updated_at))}}">
+                                            <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($taskprev->updated_at))}}">
 
                                             @else
 
-                                            <?php 
-                                                $taskprev= TaskDetails::find($taskc->id-1); 
-
-                                            ?>
+                                    
                                             <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($taskprev->dateFinished))}}">
 
                                             @endif
@@ -786,22 +791,24 @@ $assign_user=User::find(Auth::user()->id);
                                         />
                                         </div>
                                     </td>
-                                            @if($sectiondays==0&&$prdays==0)
+                                          
+                                            <?php 
+                                            $newid=$taskc->id-1;
+                                                $taskprev= TaskDetails::find($newid); 
+
+                                            ?>
+                                            @if($taskprev->doc_id!=$taskc->doc_id)
+
 
                                             <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($purchaseToEdit->dateReceived))}}">
-                          
+                              
+                                            @elseif("1899-11-30 00:00:00"==$taskprev->dateFinished||"0000-00-00 00:00:00"==$taskprev->dateFinished)
 
-                                            @elseif("1899-11-30 00:00:00"==$taskc->dateFinished||"0000-00-00 00:00:00"==$taskc->dateFinished)
-
-
-                                            <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($taskc->updated_at))}}">
+                                            <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($taskprev->updated_at))}}">
 
                                             @else
 
-                                            <?php 
-                                                $taskprev= TaskDetails::find($taskc->id-1); 
-
-                                            ?>
+                                    
                                             <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($taskprev->dateFinished))}}">
 
                                             @endif
@@ -866,22 +873,24 @@ $assign_user=User::find(Auth::user()->id);
                                         </div>
                                     </td>
                                     <td class="edit-pr-input">  
-                                            @if($sectiondays==0&&$prdays==0)
+                                            
+                                            <?php 
+                                            $newid=$taskc->id-1;
+                                                $taskprev= TaskDetails::find($newid); 
+
+                                            ?>
+                                            @if($taskprev->doc_id!=$taskc->doc_id)
+
 
                                             <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($purchaseToEdit->dateReceived))}}">
-                                        
+                              
+                                            @elseif("1899-11-30 00:00:00"==$taskprev->dateFinished||"0000-00-00 00:00:00"==$taskprev->dateFinished)
 
-                                            @elseif("1899-11-30 00:00:00"==$taskc->dateFinished||"0000-00-00 00:00:00"==$taskc->dateFinished)
-
-
-                                            <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($taskc->updated_at))}}">
+                                            <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($taskprev->updated_at))}}">
 
                                             @else
 
-                                            <?php 
-                                                $taskprev= TaskDetails::find($taskc->id-1); 
-
-                                            ?>
+                                    
                                             <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($taskprev->dateFinished))}}">
 
                                             @endif
