@@ -409,7 +409,7 @@
                 $taskche= TaskDetails::where('doc_id', $docs->id)->where('status', 'Edit')->count(); 
                 $taskch= TaskDetails::where('doc_id', $docs->id)->where('status', 'Edit')->orWhere('status', 'New')->orWhere('status', 'Active')->count(); 
                 //Get Cursor Value
-                $taskc= TaskDetails::where('doc_id', $docs->id)->where('status', 'New')->orWhere('status', 'Edit')->orWhere('status', 'Active')->first(); 
+                $taskc= TaskDetails::where('doc_id', $docs->id)->where('status', 'New')->orWhere('status', 'Edit')->first(); 
                 
                 //Queries
                 $workflow= Workflow::find($docs->work_id);
@@ -422,6 +422,8 @@
                 foreach($section as $sections)
                 {
                     $sectiondays=0;
+
+
                     $task= Task::where('section_id', $sections->section_order_id)->where('wf_id', $workflow->id)->orderBy('order_id', 'ASC')->get();
                     echo "<div class='panel panel-success'><div class='panel-heading'><h3 class='panel-title'>".$sections->section_order_id.". ".$sections->sectionName."</h3></div>";
                  
@@ -524,7 +526,32 @@
                     //Displayer 
                     $taskp =TaskDetails::where('doc_id', $docs->id)->where('task_id', $tasks->id)->first();
 
-                    if ($taskch!=0 && $taskc->task_id==$tasks->id && $tasks->designation_id==0)
+
+                    //Total Initializers Function
+                        if($prdays==0)
+                        {
+                            
+                            if("1899-11-30 00:00:00"==$taskc->dateFinished||"0000-00-00 00:00:00"==$taskc->dateFinished)
+                                $prfirstdate=date('m/d/y', strtotime($taskc->updated_at));
+
+                            else
+                                $prfirstdate=date('m/d/y', strtotime($taskc->dateFinished));
+
+
+                        }
+                         
+                        if ($sectiondays==0)
+                       {
+
+                            if("1899-11-30 00:00:00"==$taskc->dateFinished||"0000-00-00 00:00:00"==$taskc->dateFinished)
+                                $sectionfirstdate=date('Y-m-d', strtotime($taskc->updated_at));
+
+                            else
+                                $sectionfirstdate=date('Y-m-d', strtotime($taskc->dateFinished));
+                       }
+                    //End Initializers Total Function
+
+                    if ($taskch!=0 && $taskc->task_id==$tasks->id && ($tasks->designation_id==0||$taskc->status="Edit"))
                     {   
                         ?>
                         
@@ -558,7 +585,11 @@
                     ?>
 
                     @if($tasks->taskType == "normal")
-                            <?php $myForm = 'myForm_' . $taskc->id; ?>
+                            <?php $myForm = 'myForm_' . $taskc->id; 
+
+
+
+                            ?>
                             {{Form::open(['url'=>'checklistedit', 'id' => $myForm], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
                                  <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
@@ -598,21 +629,24 @@
                                 </td>
                                 <td class="edit-pr-input">
 
-                                            @if($sectiondays==0&&$prdays==0)
+                                           
+                                            <?php 
+                                            $newid=$taskc->id-1;
+                                                $taskprev= TaskDetails::find($newid); 
+
+                                            ?>
+                                            @if($taskprev->doc_id!=$taskc->doc_id)
+
 
                                             <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($purchaseToEdit->dateReceived))}}">
                               
-                                            @elseif("1899-11-30 00:00:00"==$taskc->dateFinished||"0000-00-00 00:00:00"==$taskc->dateFinished)
+                                            @elseif("1899-11-30 00:00:00"==$taskprev->dateFinished||"0000-00-00 00:00:00"==$taskprev->dateFinished)
 
-
-                                            <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($taskc->updated_at))}}">
+                                            <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($taskprev->updated_at))}}">
 
                                             @else
 
-                                            <?php 
-                                                $taskprev= TaskDetails::find($taskc->id-1); 
-
-                                            ?>
+                                    
                                             <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($taskprev->dateFinished))}}">
 
                                             @endif
@@ -892,12 +926,7 @@
                             {{Form::open(['url'=>'philgeps', 'id' => $myForm], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
                                  <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
-                                   <!--
-                                    <th class='workflow-th' width="18%">Reference No.:</th>
-                                    <th class='workflow-th' width="18%">Date Published:</th>
-                                    <th class='workflow-th' width="18%">End Date:</th>
-                                    <th class='workflow-th' colspan="2">Posted By:</th>
-                                    -->
+          
                                 </tr>
                                 <tr class="@if($taskch!=0 && $taskc->task_id==$tasks->id && $tasks->designation_id==0) current-task @endif">
                                  
@@ -1073,21 +1102,24 @@
                                         </div>
                                     </td>
                                     <td class="edit-pr-input" colspan="2">  
-                                            @if($sectiondays==0&&$prdays==0)
+                              
+                                            <?php 
+                                            $newid=$taskc->id-1;
+                                                $taskprev= TaskDetails::find($newid); 
+
+                                            ?>
+                                            @if($taskprev->doc_id!=$taskc->doc_id)
+
 
                                             <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($purchaseToEdit->dateReceived))}}">
-                                
-                                            @elseif("1899-11-30 00:00:00"==$taskc->dateFinished||"0000-00-00 00:00:00"==$taskc->dateFinished)
+                              
+                                            @elseif("1899-11-30 00:00:00"==$taskprev->dateFinished||"0000-00-00 00:00:00"==$taskprev->dateFinished)
 
-
-                                            <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($taskc->updated_at))}}">
+                                            <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($taskprev->updated_at))}}">
 
                                             @else
 
-                                            <?php 
-                                                $taskprev= TaskDetails::find($taskc->id-1); 
-
-                                            ?>
+                                    
                                             <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($taskprev->dateFinished))}}">
 
                                             @endif
@@ -1173,22 +1205,24 @@
                                         />
                                         </div>
                                     </td>
-                                            @if($sectiondays==0&&$prdays==0)
+                                          
+                                            <?php 
+                                            $newid=$taskc->id-1;
+                                                $taskprev= TaskDetails::find($newid); 
+
+                                            ?>
+                                            @if($taskprev->doc_id!=$taskc->doc_id)
+
 
                                             <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($purchaseToEdit->dateReceived))}}">
-                          
+                              
+                                            @elseif("1899-11-30 00:00:00"==$taskprev->dateFinished||"0000-00-00 00:00:00"==$taskprev->dateFinished)
 
-                                            @elseif("1899-11-30 00:00:00"==$taskc->dateFinished||"0000-00-00 00:00:00"==$taskc->dateFinished)
-
-
-                                            <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($taskc->updated_at))}}">
+                                            <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($taskprev->updated_at))}}">
 
                                             @else
 
-                                            <?php 
-                                                $taskprev= TaskDetails::find($taskc->id-1); 
-
-                                            ?>
+                                    
                                             <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($taskprev->dateFinished))}}">
 
                                             @endif
@@ -1256,22 +1290,24 @@
                                         </div>
                                     </td>
                                     <td class="edit-pr-input">  
-                                            @if($sectiondays==0&&$prdays==0)
+                                           
+                                            <?php 
+                                            $newid=$taskc->id-1;
+                                                $taskprev= TaskDetails::find($newid); 
+
+                                            ?>
+                                            @if($taskprev->doc_id!=$taskc->doc_id)
+
 
                                             <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($purchaseToEdit->dateReceived))}}">
-                                        
+                              
+                                            @elseif("1899-11-30 00:00:00"==$taskprev->dateFinished||"0000-00-00 00:00:00"==$taskprev->dateFinished)
 
-                                            @elseif("1899-11-30 00:00:00"==$taskc->dateFinished||"0000-00-00 00:00:00"==$taskc->dateFinished)
-
-
-                                            <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($taskc->updated_at))}}">
+                                            <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($taskprev->updated_at))}}">
 
                                             @else
 
-                                            <?php 
-                                                $taskprev= TaskDetails::find($taskc->id-1); 
-
-                                            ?>
+                                    
                                             <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($taskprev->dateFinished))}}">
 
                                             @endif
@@ -1738,10 +1774,7 @@
                                 <a class='iframe btn btn-success' href='taskedit/{{$taskp->id}}' title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
                                 @endif
                             </td>
-                                    <?php
-                                    $sectiondays=$sectiondays+$taskp->custom2;
-                                    $prdays=$prdays+$taskp->custom2;
-                                    ?>
+                                  
 
                         @endif
                         @if($tasks->taskType=="conference")
@@ -1771,10 +1804,7 @@
                                     </td>
                                     <td class="edit-pr-input" align="center">  
                                         {{$taskp->custom2}}
-                                    <?php
-                                    $sectiondays=$sectiondays+$taskp->custom2;
-                                    $prdays=$prdays+$taskp->custom2;
-                                    ?>
+
                                     </td>
                                     <td class="edit-pr-input" colspan="2" align="center">  
                                         {{$taskp->custom3}}
@@ -1803,10 +1833,7 @@
                                     </td>
                                     <td class="edit-pr-input" align="center">  
                                         {{$taskp->custom2}}
-                                    <?php
-                                    $sectiondays=$sectiondays+$taskp->custom2;
-                                    $prdays=$prdays+$taskp->custom2;
-                                    ?>
+                          
                                     </td>
                                     <td class="edit-pr-input" colspan="2" align="center">  
                                         {{$taskp->custom3}}
@@ -1926,8 +1953,7 @@
 
                         <?php 
                         //End Task Display
-                        $sectiondays=$sectiondays+$taskp->daysOfAction;
-                        $prdays=$prdays+$taskp->daysOfAction;
+                     
 
                         
                     }   
@@ -1978,6 +2004,80 @@
                     //End of Addon Display
 
                     }
+
+                    //Total Function Counting
+
+                    $lastdate=date('Y-m-d', strtotime($taskc->updated_at));
+
+                    $start = new DateTime($sectionfirstdate);
+                    $end = new DateTime($lastdate);
+                    // otherwise the  end date is excluded (bug?)
+                    $end->modify('+1 day');
+                    $interval = $end->diff($start);
+
+                    // total days
+                    $days = $interval->days;
+
+                    // create an iterateable period of date (P1D equates to 1 day)
+                    $period = new DatePeriod($start, new DateInterval('P1D'), $end);
+
+                    // best stored as array, so you can add more than one
+                    $holidays = array('2012-09-07');
+
+foreach($period as $dt) 
+{
+    $curr = $dt->format('D');
+
+    // for the updated question
+    if (in_array($dt->format('Y-m-d'), $holidays)) {
+       $days--;
+    }
+
+    // substract if Saturday or Sunday
+    if ($curr == 'Sat' || $curr == 'Sun') {
+        $days--;
+    }
+}
+
+
+$sectiondays=$days;
+
+                    $start = new DateTime($prfirstdate);
+                    $end = new DateTime($lastdate);
+                    // otherwise the  end date is excluded (bug?)
+                    $end->modify('+1 day');
+                    $interval = $end->diff($start);
+
+                    // total days
+                    $days = $interval->days;
+
+                    // create an iterateable period of date (P1D equates to 1 day)
+                    $period = new DatePeriod($start, new DateInterval('P1D'), $end);
+
+                    // best stored as array, so you can add more than one
+                    $holidays = array('2012-09-07');
+
+foreach($period as $dt) 
+{
+    $curr = $dt->format('D');
+
+    // for the updated question
+    if (in_array($dt->format('Y-m-d'), $holidays)) {
+       $days--;
+    }
+
+    // substract if Saturday or Sunday
+    if ($curr == 'Sat' || $curr == 'Sun') {
+        $days--;
+    }
+}
+
+
+$prdays=$days;
+
+
+
+                    //End Total Function Counting
 
                     ?>
 
@@ -2281,15 +2381,19 @@ function doneauto()
     document.getElementById(formname).submit();
     }
 
-    function changeDOA(value)
+        function changeDOA(value)
     {
 var datebasis = document.getElementById("datebasis").value;
 var date1 = new Date(value);
 var date2 = new Date(datebasis);
-var timeDiff = Math.abs(date2.getTime() - date1.getTime());
-var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); 
+var timeDiff = date1.getTime() - date2.getTime();
+var diffDays = timeDiff / (1000 * 3600 * 24); 
 if(diffDays==0)
     diffDays=1;
+else if(diffDays<0)
+    diffDays=0;
+else
+    diffDays= Math.ceil(diffDays);
         document.getElementById("daysOfAction").value=diffDays;
         
  
