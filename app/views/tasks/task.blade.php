@@ -259,7 +259,7 @@ $assign_user=User::find(Auth::user()->id);
                             {{Form::open(['url'=>'checklistedit', 'id' => $myForm], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
                                  <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
-                            <input type="hidden" name="remarks" id="hiddenremarks"  > 
+                            <input type="hidden" name="remarks" id="hiddenremarks"  value="{{$taskd->remarks}}"> 
                                     <input type ="hidden" name="assignee" 
                                     <?php
                                     echo "value='".Auth::user()->lastname.", ".Auth::user()->firstname."'";
@@ -326,6 +326,7 @@ $assign_user=User::find(Auth::user()->id);
                             {{Form::open(['url'=>'certification', 'id' => $myForm], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
                                <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
+                                 <input type="hidden" name="remarks" id="hiddenremarks"  value="{{$taskd->remarks}}"> 
                                 <td class="edit-pr-input" colspan="2">
                                     <input type="radio" name="radio" value="yes" />&nbsp;&nbsp;Yes &nbsp;&nbsp;
                                     <input type="radio" name="radio" value="no" />&nbsp;&nbsp;No<br />
@@ -345,6 +346,7 @@ $assign_user=User::find(Auth::user()->id);
                             {{Form::open(['url'=>'posting', 'id' => $myForm], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
                                  <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
+                                     <input type="hidden" name="remarks" id="hiddenremarks"  value="{{$taskd->remarks}}"> 
                                 <td class="edit-pr-input">
                                     Reference No. : 
                                     <input type="text" name="referenceno"  class="form-control" maxlength="100" width="80%" maxlength="100"
@@ -389,6 +391,7 @@ $assign_user=User::find(Auth::user()->id);
                             {{Form::open(['url'=>'supplier', 'id' => $myForm], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
                                  <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
+                                     <input type="hidden" name="remarks" id="hiddenremarks"  value="{{$taskd->remarks}}"> 
                                 <td class="edit-pr-input" colspan="2">
                                     <input type="text" name="supplier"  class="form-control" maxlength="100" width="80%" placeholder="Enter supplier"
                                      value="<?php
@@ -419,6 +422,7 @@ $assign_user=User::find(Auth::user()->id);
                             {{Form::open(['url'=>'cheque', 'id' => $myForm], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
                                  <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
+                                     <input type="hidden" name="remarks" id="hiddenremarks"  value="{{$taskd->remarks}}"> 
                                 <td class="edit-pr-input" colspan="2">
                     
                                     <input type="decimal" name="amt"  id="amt" class="form-control" maxlength="12" width="80%" placeholder="Enter cheque amount" onkeypress="return isNumberKey(event)" onchange="checklist_changeAmount(this.id,this.value)"
@@ -468,6 +472,7 @@ $assign_user=User::find(Auth::user()->id);
                             {{Form::open(['url'=>'published', 'id' => $myForm], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
                                  <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
+                                     <input type="hidden" name="remarks" id="hiddenremarks"  value="{{$taskd->remarks}}"> 
                                     <td> </td>
                                     <th class='workflow-th' width="18%">Date Published:</th>
                                     <th class='workflow-th' width="18%">End Date:</th>
@@ -529,7 +534,8 @@ $assign_user=User::find(Auth::user()->id);
       
                             {{Form::open(['url'=>'philgeps', 'id' => $myForm], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
-                                 <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
+                                 <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" >
+                                     <input type="hidden" name="remarks" id="hiddenremarks"  value="{{$taskd->remarks}}"> 
                                  
                                 </tr>
                                 <tr class="@if($taskch!=0 && $taskc->task_id==$tasks->id && $tasks->designation_id==0) current-task @endif">
@@ -599,7 +605,8 @@ $assign_user=User::find(Auth::user()->id);
                    
                             {{Form::open(['url'=>'documents', 'id' => $myForm], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
-                                 <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
+                                 <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" >
+                                     <input type="hidden" name="remarks" id="hiddenremarks"  value="{{$taskd->remarks}}"> 
                                     <td> </td>
                                     <th class='workflow-th'>Eligibility Documents:</th>
                                     <th class='workflow-th'>Date of Bidding:</th>
@@ -656,7 +663,8 @@ $assign_user=User::find(Auth::user()->id);
       
                             {{Form::open(['url'=>'evaluations', 'id' => $myForm], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
-                                 <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
+                                 <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" >
+                                     <input type="hidden" name="remarks" id="hiddenremarks"  value="{{$taskd->remarks}}"> 
                                     <td> </td>
                                     <th class='workflow-th' colspan="2">Date:</th>
                                     <th class='workflow-th' colspan="2">No. Of Days Accomplished:</th>
@@ -723,7 +731,8 @@ $assign_user=User::find(Auth::user()->id);
                        
                             {{Form::open(['url'=>'conference', 'id' => $myForm], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
-                                 <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
+                                 <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" >
+                                     <input type="hidden" name="remarks" id="hiddenremarks"  value="{{$taskd->remarks}}"> 
                                     <td colspan="4">
                                     <?php 
                                     $today = date("m/d/y");
@@ -750,7 +759,8 @@ $assign_user=User::find(Auth::user()->id);
                  
                             {{Form::open(['url'=>'contractmeeting', 'id' => $myForm], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
-                                 <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
+                                 <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" >
+                                     <input type="hidden" name="remarks" id="hiddenremarks"  value="{{$taskd->remarks}}"> 
                                     <td> </td>
                                     <th class='workflow-th'>Date:</th>
                                     <th class='workflow-th'>No. of Days Accomplished:</th>
@@ -826,7 +836,8 @@ $assign_user=User::find(Auth::user()->id);
                
                             {{Form::open(['url'=>'contractmeeting', 'id' => $myForm], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
-                                 <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
+                                 <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" >
+                                     <input type="hidden" name="remarks" id="hiddenremarks"  value="{{$taskd->remarks}}"> 
                                     <td> </td>
                                     <th class='workflow-th'>Date:</th>
                                     <th class='workflow-th'>No. of Days Accomplished:</th>
@@ -910,7 +921,8 @@ $assign_user=User::find(Auth::user()->id);
                 
                             {{Form::open(['url'=>'rfq', 'id' => $myForm], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
-                                 <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
+                                 <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" >
+                                     <input type="hidden" name="remarks" id="hiddenremarks"  value="{{$taskd->remarks}}"> 
                                     <td> </td>
                                     <th class='workflow-th'>No. of Suppliers:</th>
                                     <th class='workflow-th'>Date of RF (Within PGEPS 7 Days):</th>
@@ -959,7 +971,8 @@ $assign_user=User::find(Auth::user()->id);
                        
                             {{Form::open(['url'=>'dateby', 'id' => $myForm], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
-                                 <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
+                                 <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" >
+                                     <input type="hidden" name="remarks" id="hiddenremarks"  value="{{$taskd->remarks}}"> 
                                 <td class="edit-pr-input" colspan="2"> 
                                     <?php 
                                     $today = date("m/d/y");
@@ -991,7 +1004,8 @@ $assign_user=User::find(Auth::user()->id);
 
                             {{Form::open(['url'=>'datebyremark', 'id' => $myForm], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
-                                 <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
+                                 <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" >
+                                     <input type="hidden" name="remarks" id="hiddenremarks"  value="{{$taskd->remarks}}"> 
                                 
                                 <td class="edit-pr-input"> 
                                     <?php 
@@ -1026,7 +1040,8 @@ $assign_user=User::find(Auth::user()->id);
                    
                             {{Form::open(['url'=>'dateonly', 'id' => $myForm], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
-                                 <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
+                                 <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" >
+                                     <input type="hidden" name="remarks" id="hiddenremarks"  value="{{$taskd->remarks}}"> 
                                 
                                 <td class="edit-pr-input" colspan="4"> 
                                     <?php 
@@ -1087,7 +1102,7 @@ No remark.
 </p>
 </div>
 <br>
-<button type="button" class="btn btn-success " onclick="doneauto('taskform')" id="hidebtn">Done</button>
+<button type="button" class="btn btn-success "  id="hidebtn" data-toggle="modal" data-target="#confirmDelete" >Done</button>
 
 <div id ="formr">
 {{ Form::open(['url'=>'remarks'], 'POST') }}
@@ -1103,7 +1118,7 @@ No remark.
 &nbsp;
 {{ Form::submit('Save',array('class'=>'btn btn-warning')) }}
 &nbsp;
-<button type="button" class="btn btn-success " onclick="remarksauto()" id="showbtn">Done</button>
+<button type="button" class="btn btn-success "  id="showbtn" data-toggle="modal" data-target="#confirmDelete"  >Done</button>
 {{ Form::close() }}
 </div>
 <!--End Remarks-->
@@ -1228,6 +1243,26 @@ No remark.
 </div>
 </div>
 
+
+   <!-- CODES FOR MODAL -->
+    <div class="modal fade" id="confirmDelete" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title"><b>Confirm Submission</b></h4>
+          </div>
+          <div class="modal-body">
+            <p>Are you sure you want to submit edit?</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">Cancel</button>
+            <button type="button" class="btn btn-success" id="confirmModal" value="Submit" onclick="remarksauto()">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- CODES FOR MODAL END -->
 @stop
 
 @section('footer')
@@ -1358,7 +1393,7 @@ function remarksauto()
       
       
       var remarks = document.getElementById('remarksform').value;
-      alert(remarks);
+      
       document.getElementById('hiddenremarks').value = remarks;
 
 
