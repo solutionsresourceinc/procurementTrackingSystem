@@ -26,7 +26,7 @@
         {
             border-collapse: collapse !important;
             padding : 0px !important;
-            font-size : 86% !important;
+            font-size : 84% !important;
             height : 4px !important;
         }
 
@@ -107,7 +107,7 @@
     </form>
 
 <div style="margin-top: 30px">
-	<table class="table table-striped display" border="1">
+	<table class="table table-striped display" border="1" bordercolor="black">
         <thead>
 			<th width="9.09%"> DATE </th>
 			<th width="9.09%"> BAC NO </th>
