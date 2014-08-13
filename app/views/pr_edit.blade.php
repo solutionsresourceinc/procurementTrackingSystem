@@ -418,11 +418,11 @@
                 
                 $sectioncheck=0;
                 $prdays=0;
-      
+         $lastid=0;
                 foreach($section as $sections)
                 {
                     $sectiondays=0;
-
+                 
 
                     $task= Task::where('section_id', $sections->section_order_id)->where('wf_id', $workflow->id)->orderBy('order_id', 'ASC')->get();
                     echo "<div class='panel panel-success'><div class='panel-heading'><h3 class='panel-title'>".$sections->section_order_id.". ".$sections->sectionName."</h3></div>";
@@ -528,27 +528,38 @@
 
 
                     //Total Initializers Function
-                        if($prdays==0)
+                           $taskprevc =TaskDetails::find($taskp->id-1);
+
+                        if($taskprevc->doc_id!=$docs->id||($taskp->id-1)==0)
                         {
-                            
-                            if("1899-11-30 00:00:00"==$taskc->dateFinished||"0000-00-00 00:00:00"==$taskc->dateFinished)
-                                $prfirstdate=date('m/d/y', strtotime($taskc->updated_at));
-
-                            else
-                                $prfirstdate=date('m/d/y', strtotime($taskc->dateFinished));
-
+                                $prfirstdate=date('Y-m-d', strtotime($purchaseToEdit->dateReceived));
+                                $sectionfirstdate=date('Y-m-d', strtotime($purchaseToEdit->dateReceived));
+                        }
+                        else if ($taskp->status=="Pending")
+                        {
 
                         }
-                         
-                        if ($sectiondays==0)
-                       {
+                        else
+                        {
+                            if ($sectiondays==0)
+                            { 
+                              
+                                $lookid=$taskp->id;
+                                $taskprevlast =TaskDetails::find($taskc->id-1);
+                                $sectionfirstdate=date('Y-m-d', strtotime($taskprevlast->dateFinished));
+                            }
 
-                            if("1899-11-30 00:00:00"==$taskc->dateFinished||"0000-00-00 00:00:00"==$taskc->dateFinished)
-                                $sectionfirstdate=date('Y-m-d', strtotime($taskc->updated_at));
-
+                            if($taskc->id=$taskp->id)
+                                $lastid=$taskc->id-1;
                             else
-                                $sectionfirstdate=date('Y-m-d', strtotime($taskc->dateFinished));
-                       }
+                                $lastid=$taskp->id;
+
+                        }                         
+                        
+                    
+
+                        
+                   
                     //End Initializers Total Function
 
                     if ($taskch!=0 && $taskc->task_id==$tasks->id && ($tasks->designation_id==0||$taskc->status="Edit"))
@@ -2007,8 +2018,10 @@
 
                     //Total Function Counting
 
-                    $lastdate=date('Y-m-d', strtotime($taskc->updated_at));
+                    $taskp =TaskDetails::find($lastid);
 
+                        $lastdate=date('Y-m-d', strtotime($taskp->dateFinished));
+            
                     $start = new DateTime($sectionfirstdate);
                     $end = new DateTime($lastdate);
                     // otherwise the  end date is excluded (bug?)
@@ -2074,6 +2087,7 @@ foreach($period as $dt)
 
 
 $prdays=$days;
+
 
 
 
