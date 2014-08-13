@@ -133,20 +133,31 @@
 					<td>{{{$request->projectPurpose}}}</td>
 					<td>
                         @if(isset($cancelled) && $cancelled == 0)
-                                <font color="grey">N/A</font>
-                        @else
-                            <?php error_reporting(0); ?>
-    						@if(isset($flag) && $flag == 0)
-    						<?php
-    							$dateApproved = DB::table('purchase_request')
-    							->join('document', 'purchase_request.id', '=', 'document.pr_id')
+                            <?php
+                                $cancelledBudget = DB::table('purchase_request')
+                                ->join('document', 'purchase_request.id', '=', 'document.pr_id')
     							->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
     							->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('tasks.section_id', '=', '1')->where('purchase_request.controlNo', '=', $request->controlNo)->first();
-    						?>
-    							@if($dateApproved->dateFinished == '0000-00-00 00:00:00')
-    								<font color="grey">N/A</font>
-    							@else
-    								{{{(new \DateTime($dateApproved->dateFinished))->format('Y-m-d')}}}
+                            
+                            ?>
+                            @if($cancelledBudget != "")
+                                {{{(new \DateTime($cancelledBudget->dateFinished))->format('Y-m-d')}}}
+                            @else
+                                <font color="grey">N/A</font>
+                            @endif
+                        @else
+                            <?php error_reporting(0); ?>
+                            @if(isset($flag) && $flag == 0)
+                            <?php
+                                $dateApproved = DB::table('purchase_request')
+                                ->join('document', 'purchase_request.id', '=', 'document.pr_id')
+                                ->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+                                ->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('tasks.section_id', '=', '1')->where('purchase_request.controlNo', '=', $request->controlNo)->first();
+                            ?>
+                                @if($dateApproved->dateFinished == '0000-00-00 00:00:00')
+                                    <font color="grey">N/A</font>
+                                @else
+                                    {{{(new \DateTime($dateApproved->dateFinished))->format('Y-m-d')}}}
                                 @endif
                             @else
                                 @if($request->dateFinished == '0000-00-00 00:00:00')
@@ -161,7 +172,18 @@
 					<td>{{{$request->amount}}}</td>
 					<td>
                         @if(isset($cancelled) && $cancelled == 0)
+                            <?php
+                                $cancelledApproved = DB::table('purchase_request')
+                                ->join('document', 'purchase_request.id', '=', 'document.pr_id')
+                                ->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+                                ->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('tasks.taskName', '=', 'SIGNED BY GOV')->where('tasks.section_id', '=', '1')->where('purchase_request.controlNo', '=', $request->controlNo)->first();
+                            
+                            ?>
+                            @if($cancelledApproved != "")
+                                {{{(new \DateTime($cancelledApproved->dateFinished))->format('Y-m-d')}}}
+                            @else
                                 <font color="grey">N/A</font>
+                            @endif
                         @else
     						@if(isset($flag) && $flag == 0)
     							@if($request->dateFinished == '0000-00-00 00:00:00')
@@ -209,7 +231,17 @@
 								{{{ $request->custom1 }}}			
 							@endif
                         @elseif(isset($cancelled) && $cancelled == 0)
-								<font color="grey">N/A</font>
+							<?php
+                                $cancelledSupplier = DB::table('purchase_request')
+                                ->join('document', 'purchase_request.id', '=', 'document.pr_id')
+                                ->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+                                ->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('tasks.taskName', '=', 'LCRB / HRB / SUPPLIER')->where('purchase_request.controlNo', '=', $request->controlNo)->first();                            
+                            ?>
+                            @if($cancelledSupplier != "")
+                                {{{ $cancelledSupplier->custom1 }}}
+                            @else
+                                <font color="grey">N/A</font>
+                            @endif
                         @else
                             <?php
                                 $supplier = DB::table('purchase_request')
@@ -219,14 +251,24 @@
                             ?>
                             @if($supplier->custom1 == "")
                                 <font color="grey">N/A</font>
-							@else
-								{{{ $supplier->custom1 }}}			
-							@endif
-						@endif
-					</td>
-					<td>
+                            @else
+                                {{{ $supplier->custom1 }}}          
+                            @endif
+                        @endif
+                    </td>
+                    <td>
                         @if(isset($cancelled) && $cancelled == 0)
+                             <?php
+                                $accomplished = DB::table('purchase_request')->where('controlNo', '=', $request->controlNo)
+                                ->join('document', 'purchase_request.id', '=', 'document.pr_id')
+                                ->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+                                ->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('taskdetails.status', '=', 'Done')->select('tasks.taskName')->orderBy('taskdetails.id', 'DESC')->first();
+                            ?>
+                            @if(isset($accomplished->taskName) && $accomplished->taskName != '')
+                                <font color="green"><b> Accomplished :<Br/> </b></font> {{{ $accomplished->taskName }}}
+                            @else
                                 <font color="grey">N/A</font>
+                            @endif
                         @else
     						<?php
     							$accomplished = DB::table('purchase_request')->where('controlNo', '=', $request->controlNo)
@@ -235,7 +277,7 @@
     							->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('taskdetails.status', '=', 'Done')->select('tasks.taskName')->orderBy('taskdetails.id', 'DESC')->first();
     						?>
     						@if(isset($accomplished->taskName) && $accomplished->taskName != '')
-    							<font color="green"> Accomplished: </font> {{{ $accomplished->taskName }}}
+    							<font color="green"><b> Accomplished: </b></font> {{{ $accomplished->taskName }}}
     						@endif
 
     						<?php
@@ -245,8 +287,8 @@
     							->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('taskdetails.status', '=', 'New')->select('tasks.taskName')->orderBy('taskdetails.id', 'ASC')->first();
     						?>
     						<br/>
-    						@if($pending->taskName != '')
-    							<font color="red"> For: </font>{{{ $pending->taskName }}}
+    						@if( isset($pending->taskName) && $pending->taskName != '')
+    							<font color="red"><b> For: </b></font>{{{ $pending->taskName }}}
     						@endif
                         @endif
 					</td>
