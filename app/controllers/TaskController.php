@@ -234,7 +234,7 @@ class TaskController extends Controller {
 	    else
 	    {
 	    	Session::put('errorremark', 'Invalid remarks.');
-	       	return Redirect::back();
+	       	return Redirect::back()->withInput();
 		}
 	}
 

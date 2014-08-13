@@ -1,7 +1,12 @@
 @extends('layouts.dashboard')
 
 @section('header')
-	{{ HTML::style('css/datepicker.css')}}
+    <script src="js/foundation-datepicker.js"></script>
+    {{ HTML::script('datepicker_range/foundation-datepicker.js')}}
+    {{ HTML::style('datepicker_range/foundation-datepicker.css')}}
+
+
+
 
 	
 @stop
@@ -14,10 +19,13 @@
     <form class="form ajax" action="summary/changeDate" method="post" role="form" class="form-inline">
         <div class="form-group col-md-9">
             <div class="input-daterange input-group" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="yyyy-mm-dd">
-                <input type="text" class="form-control" name="start" id="start" style="text-align: center"/>
+                <input type="text" class="form-control" name="start" value="" id="dpd1" style="text-align: center" readonly placeholder="Click to select date">
                 <span class="input-group-addon" style="vertical-align: top;height:20px">to</span>
-                <input type="text" id="end" class="form-control" name="end" style="text-align: center" />
+                <input type="text" class="form-control" name="end" value="" id="dpd2" style="text-align: center" readonly placeholder="Click to select date">
             </div>
+
+
+
         </div>
         {{ Form::submit('Apply', array('class' => 'btn btn-success col-md-3')) }}
     </form>
@@ -54,16 +62,44 @@
 @section('footer')
     {{ HTML::script('js/bootstrap-ajax.js');}}
 
-	<!-- Load jQuery and bootstrap datepicker scripts -->
-    <!--script src="js/jquery-1.9.1.min.js"></script-->
-    <script src="js/bootstrap-datepicker.js"></script>
-    <script type="text/javascript">
-        // When the document is ready
-        $(document).ready(function () {
-            
-            $('.input-daterange').datepicker({
-                todayBtn: "linked"
+
+    <script>
+            $(function () {
+                
+                // implementation of disabled form fields
+                var nowTemp = new Date();
+                var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate() + 1, 0, 0, 0, 0);
+                
+                var checkin = $('#dpd1').fdatepicker(
+                {
+                    onRender: function (date) 
+                    {
+                        return date.valueOf() > now.valueOf() ? 'disabled' : '';
+                    }
+                }).on('changeDate', function (ev) {
+                    if (ev.date.valueOf() > checkout.date.valueOf()) {
+                        var newDate = new Date(ev.date)
+                        newDate.setDate(newDate.getDate() + 1);
+                        checkout.update(newDate);
+                    }
+                    checkin.hide();
+                    $('#dpd2')[0].focus();
+                }).data('datepicker');
+                
+                var checkout = $('#dpd2').fdatepicker({
+                    onRender: function (date) {
+                        // return date.valueOf() < checkin.date.valueOf() ? 'disabled' : '';
+                        if(date.valueOf() < checkin.date.valueOf() || date.valueOf() > now.valueOf())
+                        {
+                            return 'disabled';
+                        }
+       
+
+                    }
+                }).on('changeDate', function (ev) {
+                    checkout.hide();
+                }).data('datepicker');
             });
-        });
-    </script>
+            
+        </script>
 @stop
