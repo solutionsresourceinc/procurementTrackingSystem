@@ -217,9 +217,9 @@
                             ->join('document', 'purchase_request.id', '=', 'document.pr_id')->first(); 
                     	?>
                         @if($workName->work_id == 1)
-                            SVP
+                            SVP (Below P50,000)
                         @elseif($workName->work_id == 2)
-                            SVP
+                            SVP (Between P50,000 and P500,000)
                         @elseif($workName->work_id == 3)
                             BIDDING
                         @elseif($workName->work_id == 4)
