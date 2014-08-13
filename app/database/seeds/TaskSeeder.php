@@ -324,7 +324,7 @@ class TaskSeeder extends Seeder {
         $task->wf_id = '2';
         $task->section_id = '2';
         $task->taskName = 'PGEPS POSTING';
-        $task->taskType = 'posting';
+        $task->taskType = 'philgeps';
         $task->maxDuration = '0';
         $task->order_id = $orderID++;
         $task->description = 'This is a task description';
