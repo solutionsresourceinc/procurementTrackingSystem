@@ -182,7 +182,8 @@
                 
                 $sectioncheck=0;
                 $prdays=0;
-      
+                $lastid=0;
+        
                 foreach($section as $sections)
                 {
                     $sectiondays=0;
@@ -264,7 +265,59 @@
 
                     //Displayer 
                     $taskp =TaskDetails::where('doc_id', $docs->id)->where('task_id', $tasks->id)->first();
+                    //Total Initializers Function
+                           $taskprevc =TaskDetails::find($taskp->id-1);
+                        //Handle Section 1 set prfirst and sectionfirst
+                        if($tasks->section_id=="1")
+                        {
+                                $prfirstdate=date('Y-m-d', strtotime($purchase->dateReceived));
+                                $sectionfirstdate=date('Y-m-d', strtotime($purchase->dateReceived));
+                                if($taskc->id==$taskp->id)
+                                    $lastid=$taskc->id-1;
+                                else
+                                    $lastid=$taskp->id;
+                        }
+                        //Handle Pending task record nothing
+                        else if ($taskp->status=="Pending")
+                        {
 
+                        }
+                        //Handles othe 
+                        else
+                        {
+                            $taskprevlast =TaskDetails::find($taskp->id-1);
+                             $taskprevtask=Task::find($taskprevlast->task_id);
+
+                               if ($taskprevtask->section_id!=$tasks->section_id)
+                                { 
+                              
+                                
+                                    
+                                    $sectionfirstdate=date('Y-m-d', strtotime($taskprevlast->dateFinished));
+
+                                
+                                }
+                            $taskctask=Task::find($taskc->task_id);
+                            if($taskctask->section_id==$tasks->section_id)
+                            {
+                                if($taskc->id==$taskp->id)
+                                    $lastid=$taskc->id-1;
+                                else
+                                    $lastid=$taskp->id;
+                             
+                            }
+                            else
+                            {
+                                $lastid=$taskp->id;
+                           
+                            }
+
+                        }                         
+                    
+                   
+                  
+                    
+                    //End Initializers Total Function
                  
                     if(1==1)
                     {
@@ -629,6 +682,85 @@
 
                     }
 
+//Total Function Counting
+
+                    $taskp =TaskDetails::find($lastid);
+
+                    $lastdate=date('Y-m-d', strtotime($taskp->dateFinished));
+                    
+                    echo "<br>PR".$prfirstdate;
+                    echo "<br>Section first".$sectionfirstdate;
+                    echo "<br>Last".$lastdate;
+                    $start = new DateTime($sectionfirstdate);
+                    $end = new DateTime($lastdate);
+                    // otherwise the  end date is excluded (bug?)
+                    $end->modify('+1 day');
+                    $interval = $end->diff($start);
+
+                    // total days
+                    $days = $interval->days;
+
+                    // create an iterateable period of date (P1D equates to 1 day)
+                    $period = new DatePeriod($start, new DateInterval('P1D'), $end);
+
+                    // best stored as array, so you can add more than one
+                    $holidays = array('2012-09-07');
+
+foreach($period as $dt) 
+{
+    $curr = $dt->format('D');
+
+    // for the updated question
+    if (in_array($dt->format('Y-m-d'), $holidays)) {
+       $days--;
+    }
+
+    // substract if Saturday or Sunday
+    if ($curr == 'Sat' || $curr == 'Sun') {
+        $days--;
+    }
+}
+
+
+$sectiondays=$days;
+
+                    $start = new DateTime($prfirstdate);
+                    $end = new DateTime($lastdate);
+                    // otherwise the  end date is excluded (bug?)
+                    $end->modify('+1 day');
+                    $interval = $end->diff($start);
+
+                    // total days
+                    $days = $interval->days;
+
+                    // create an iterateable period of date (P1D equates to 1 day)
+                    $period = new DatePeriod($start, new DateInterval('P1D'), $end);
+
+                    // best stored as array, so you can add more than one
+                    $holidays = array('2012-09-07');
+
+foreach($period as $dt) 
+{
+    $curr = $dt->format('D');
+
+    // for the updated question
+    if (in_array($dt->format('Y-m-d'), $holidays)) {
+       $days--;
+    }
+
+    // substract if Saturday or Sunday
+    if ($curr == 'Sat' || $curr == 'Sun') {
+        $days--;
+    }
+}
+
+
+$prdays=$days;
+
+
+
+
+                    //End Total Function Counting
                     ?>
 
                     @if($workflow->workFlowName!="Direct Contracting")

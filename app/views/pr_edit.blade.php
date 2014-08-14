@@ -418,7 +418,7 @@
                 
                 $sectioncheck=0;
                 $prdays=0;
-         $lastid=0;
+                $lastid=0;
                 foreach($section as $sections)
                 {
                     $sectiondays=0;
@@ -529,48 +529,56 @@
 
                     //Total Initializers Function
                            $taskprevc =TaskDetails::find($taskp->id-1);
-
-                        if($taskprevc->doc_id!=$docs->id||($taskp->id-1)==0)
+                        //Handle Section 1 set prfirst and sectionfirst
+                        if($tasks->section_id=="1")
                         {
                                 $prfirstdate=date('Y-m-d', strtotime($purchaseToEdit->dateReceived));
                                 $sectionfirstdate=date('Y-m-d', strtotime($purchaseToEdit->dateReceived));
+                                if($taskc->id==$taskp->id)
+                                    $lastid=$taskc->id-1;
+                                else
+                                    $lastid=$taskp->id;
                         }
+                        //Handle Pending task record nothing
                         else if ($taskp->status=="Pending")
                         {
 
                         }
+                        //Handles othe 
                         else
                         {
-                            if($taskc->id=$taskp->id)
-                                $lastid=$taskc->id-1;
-                            else
-                                $lastid=$taskp->id;
+                            $taskprevlast =TaskDetails::find($taskp->id-1);
+                             $taskprevtask=Task::find($taskprevlast->task_id);
 
-                            if ($sectiondays==0)
-                            { 
+                               if ($taskprevtask->section_id!=$tasks->section_id)
+                                { 
                               
-                                $lookid=$taskp->id;
-                                $taskprevlast =TaskDetails::find($taskc->id-1);
-                                $sectionfirstdate=date('Y-m-d', strtotime($taskprevlast->dateFinished));
+                                
+                                    
+                                    $sectionfirstdate=date('Y-m-d', strtotime($taskprevlast->dateFinished));
 
                                 
+                                }
+                            $taskctask=Task::find($taskc->task_id);
+                            if($taskctask->section_id==$tasks->section_id)
+                            {
+                                if($taskc->id==$taskp->id)
+                                    $lastid=$taskc->id-1;
+                                else
+                                    $lastid=$taskp->id;
+                             
                             }
-
-
-                           if($taskc->task_id<$taskp->task_id)
-                                {
-                                     $sectionfirstdate=date('Y-m-d', strtotime($taskp->dateFinished));
-                                }
-                                  if($tasks->section_id=="1")
-                                {
-                                      $sectionfirstdate=date('Y-m-d', strtotime($purchaseToEdit->dateReceived));
-                                }
+                            else
+                            {
+                                $lastid=$taskp->id;
+                           
+                            }
 
                         }                         
                     
                    
-                        
-                   
+                  
+                    
                     //End Initializers Total Function
 
                     if ($taskch!=0 && $taskc->task_id==$tasks->id && ($tasks->designation_id==0||$taskc->status="Edit"))
@@ -2032,10 +2040,7 @@
                     $taskp =TaskDetails::find($lastid);
 
                     $lastdate=date('Y-m-d', strtotime($taskp->dateFinished));
-                    
-                    echo "<br>PR".$prfirstdate;
-                    echo "<br>Section first".$sectionfirstdate;
-                    echo "<br>Last".$lastdate;
+               
                     $start = new DateTime($sectionfirstdate);
                     $end = new DateTime($lastdate);
                     // otherwise the  end date is excluded (bug?)
