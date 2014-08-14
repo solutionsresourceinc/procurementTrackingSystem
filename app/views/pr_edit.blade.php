@@ -418,7 +418,7 @@
                 
                 $sectioncheck=0;
                 $prdays=0;
-         $lastid=0;
+                $lastid=0;
                 foreach($section as $sections)
                 {
                     $sectiondays=0;
@@ -497,7 +497,7 @@
                         echo "<th class='workflow-th' width='18%'>Date:</th>";
                         echo "<th class='workflow-th' width='12.5%'>Days of Action</th>";
                         echo "<th class='workflow-th'>Remarks</th>";
-                        echo "<th class='workflow-th' colspan='2'>Action</th></tr>";
+                        echo "<th class='workflow-th' colspan='2'></th></tr>";
                     }
                     if ($previousTaskType!="datebyremark"&&$tasks->taskType=="datebyremark")
                     {
@@ -505,21 +505,21 @@
                         echo "<th class='workflow-th' >Date:</th>";
                         echo "<th class='workflow-th' >By:</th>";
                         echo "<th class='workflow-th' colspan='2'>Remarks</th>";
-                        echo "<th class='workflow-th' colspan='2'>Action</th></tr>";
+                        echo "<th class='workflow-th' colspan='2'></th></tr>";
                     }
                     if ($previousTaskType!="dateby"&&$tasks->taskType=="dateby")
                     {
                         echo "<tr><th width='30%'></th>";
                         echo "<th class='workflow-th' colspan='2'>Date:</th>";
                         echo "<th class='workflow-th' colspan='2'>By:</th>";
-                        echo "<th class='workflow-th' colspan='2'>Action</th></tr>";
+                        echo "<th class='workflow-th' colspan='2'></th></tr>";
                     }
                     if ($previousTaskType!="evaluation"&&$tasks->taskType=="evaluation")
                     {
                         echo "<tr><th width='30%'></th>";
                         echo "<th class='workflow-th' colspan='2'>Date:</th>";
                         echo "<th class='workflow-th' colspan='2'>No. of Days Accomplished:</th>";
-                        echo "<th class='workflow-th' colspan='2'>Action</th></tr>";
+                        echo "<th class='workflow-th' colspan='2'></th></tr>";
                     }
                     $previousTaskType=$tasks->taskType;
                     //Cursor Open form 
@@ -529,48 +529,56 @@
 
                     //Total Initializers Function
                            $taskprevc =TaskDetails::find($taskp->id-1);
-
-                        if($taskprevc->doc_id!=$docs->id||($taskp->id-1)==0)
+                        //Handle Section 1 set prfirst and sectionfirst
+                        if($tasks->section_id=="1")
                         {
                                 $prfirstdate=date('Y-m-d', strtotime($purchaseToEdit->dateReceived));
                                 $sectionfirstdate=date('Y-m-d', strtotime($purchaseToEdit->dateReceived));
+                                if($taskc->id==$taskp->id)
+                                    $lastid=$taskc->id-1;
+                                else
+                                    $lastid=$taskp->id;
                         }
+                        //Handle Pending task record nothing
                         else if ($taskp->status=="Pending")
                         {
 
                         }
+                        //Handles othe 
                         else
                         {
-                            if($taskc->id=$taskp->id)
-                                $lastid=$taskc->id-1;
-                            else
-                                $lastid=$taskp->id;
+                            $taskprevlast =TaskDetails::find($taskp->id-1);
+                             $taskprevtask=Task::find($taskprevlast->task_id);
 
-                            if ($sectiondays==0)
-                            { 
+                               if ($taskprevtask->section_id!=$tasks->section_id)
+                                { 
                               
-                                $lookid=$taskp->id;
-                                $taskprevlast =TaskDetails::find($taskc->id-1);
-                                $sectionfirstdate=date('Y-m-d', strtotime($taskprevlast->dateFinished));
+                                
+                                    
+                                    $sectionfirstdate=date('Y-m-d', strtotime($taskprevlast->dateFinished));
 
                                 
+                                }
+                            $taskctask=Task::find($taskc->task_id);
+                            if($taskctask->section_id==$tasks->section_id)
+                            {
+                                if($taskc->id==$taskp->id)
+                                    $lastid=$taskc->id-1;
+                                else
+                                    $lastid=$taskp->id;
+                             
                             }
-
-
-                           if($taskc->task_id<$taskp->task_id)
-                                {
-                                     $sectionfirstdate=date('Y-m-d', strtotime($taskp->dateFinished));
-                                }
-                                  if($tasks->section_id=="1")
-                                {
-                                      $sectionfirstdate=date('Y-m-d', strtotime($purchaseToEdit->dateReceived));
-                                }
+                            else
+                            {
+                                $lastid=$taskp->id;
+                           
+                            }
 
                         }                         
                     
                    
-                        
-                   
+                  
+                    
                     //End Initializers Total Function
 
                     if ($taskch!=0 && $taskc->task_id==$tasks->id && ($tasks->designation_id==0||$taskc->status="Edit"))
@@ -595,7 +603,6 @@
                         <?php
                         echo "<tr class='current-task'>";
 
-                        //if ($tasks->taskType!="cheque"&&$tasks->taskType!="published"&&$tasks->taskType!="contract"&&$tasks->taskType!="meeting"&&$tasks->taskType!="rfq")
                         if ($tasks->taskType!="cheque"&&$tasks->taskType!="published"&&$tasks->taskType!="contract"&&$tasks->taskType!="meeting"&&$tasks->taskType!="rfq"&&$tasks->taskType!="documents"&&$tasks->taskType!="evaluation"&&$tasks->taskType!="preparation")
                         {
                             echo "<td>";
@@ -695,7 +702,7 @@
                                     ?>
                                     >
                                 </td>
-                                <td style="border-left: none; text-align: center;">
+                                <td style="border-left: none; text-align: center;" colspan="2">
                                 
                                     <input type="button" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"> 
                                 </td>
@@ -707,8 +714,8 @@
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
                                <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
                                 <td class="edit-pr-input" colspan="2">
-                                    <input type="radio" name="radio" value="yes" />&nbsp;&nbsp;Yes &nbsp;&nbsp;
-                                    <input type="radio" name="radio" value="no" />&nbsp;&nbsp;No<br />
+                                    <input type="radio" name="radio" value="yes" CHECKED>&nbsp;&nbsp;Yes &nbsp;&nbsp;
+                                    <input type="radio" name="radio" value="no" >&nbsp;&nbsp;No<br />
                                 </td>
                                 
                                 <td class="edit-pr-input" colspan="2">
@@ -724,7 +731,7 @@
                                     >
                                 </td>
 
-                                <td style="border-left: none; text-align: center;">
+                                <td style="border-left: none; text-align: center;" colspan="2">
                                                                 
                                     <input type="button" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"> 
                                 </td>
@@ -779,7 +786,7 @@
                                     >
                                 </td>
 
-                                <td style="border-left: none; text-align: center;">
+                                <td style="border-left: none; text-align: center;" colspan="2">
                                 
                                     <input type="button" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"> 
                                 </td>
@@ -813,7 +820,7 @@
                                     >
                                 </td>
 
-                                <td style="border-left: none; text-align: center;">
+                                <td style="border-left: none; text-align: center;" colspan="2">
                                 
                                     <input type="button" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"> 
                                 </td>
@@ -864,7 +871,7 @@
                                         />
                                     </div>
                                 </td>
-                                
+                                <td colspan="2">
 
 
                                 
@@ -1088,7 +1095,7 @@
 
                                    
                             
-                                <td style="border-left: none; text-align: center;">
+                                <td style="border-left: none; text-align: center;" colspan="2">
                                 
                                     <input type="button" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"> 
                                 </td>
@@ -1161,7 +1168,7 @@
                                     </td>   
                  
                         
-                                <td style="border-left: none; text-align: center;">
+                                <td style="border-left: none; text-align: center;" colspan="2">
                                 
                                     <input type="button" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"> 
                                 </td>
@@ -1192,7 +1199,7 @@
                                     </div>
                                     </td>
                                
-                                <td style="border-left: none; text-align: center;">
+                                <td style="border-left: none; text-align: center;" colspan="2">
                                                                     
                                     <input type="button" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"> 
                                 </td>
@@ -1274,7 +1281,7 @@
                                         >
                                     </td>
                       
-                                <td style="border-left: none; text-align: center;">
+                                <td style="border-left: none; text-align: center;" colspan="2">
                                 
                                     <input type="button" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"> 
                                 </td>
@@ -1364,7 +1371,7 @@
                                     </td>
                           
                             
-                                <td style="border-left: none; text-align: center;">
+                                <td style="border-left: none; text-align: center;" colspan="2">
                                 
                                     <input type="button" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"> 
                                 </td>
@@ -1427,7 +1434,7 @@
                                     </td>
                                   
                           
-                                <td style="border-left: none; text-align: center;">
+                                <td style="border-left: none; text-align: center;" colspan="2">
                                 
                                     <input type="button" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"> 
                                 </td>
@@ -1472,7 +1479,7 @@
                                         
                                     >
                                 </td>
-                                 <td style="border-left: none; text-align: center;">
+                                 <td style="border-left: none; text-align: center;" colspan="2">
                                 
                                     <input type="button" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"> 
                                 </td>
@@ -1535,7 +1542,7 @@
                                     >
                                 </td>
                                
-                                <td style="border-left: none; text-align: center;">
+                                <td style="border-left: none; text-align: center;" colspan="2">
                                 
                                     <input type="button" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"> 
                                 </td>
@@ -1569,7 +1576,7 @@
                                 </td>
                                 
                       
-                                <td style="border-left: none; text-align: center;">
+                                <td style="border-left: none; text-align: center;" colspan="2">
                                 
                                     <input type="button" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"> 
                                 </td>
@@ -1716,7 +1723,7 @@
                                     <th class='workflow-th' width="18%">Date Published:</th>
                                     <th class='workflow-th' width="18%">End Date:</th>
                                     <th class='workflow-th' colspan="2">Posted By:</th>
-                                    <th class='workflow-th'>Action</th>
+                                    <th class='workflow-th'></th>
                                 </tr>
                                 <tr>
                                     <td >{{$tasks->taskName}}</td>
@@ -1767,7 +1774,7 @@
                                     <th class='workflow-th'>Eligibility Documents:</th>
                                     <th class='workflow-th'>Date of Bidding:</th>
                                     <th class='workflow-th' colspan="2">Checked By:</th>
-                                    <th class='workflow-th'>Action</th>
+                                    <th class='workflow-th'></th>
                                 </tr>
                                 <tr>
                                     <td align>{{$tasks->taskName}}</td>
@@ -1814,7 +1821,7 @@
                                     <th class='workflow-th'>Date:</th>
                                     <th class='workflow-th'>No. of Days Accomplished:</th>
                                     <th class='workflow-th' colspan="2">Contract Agreement:</th>
-                                    <th class='workflow-th'>Action</th>
+                                    <th class='workflow-th'></th>
                                 </tr>
                                 <tr>
                                     <td>{{$tasks->taskName}}</td>
@@ -1843,7 +1850,7 @@
                                     <th class='workflow-th'>Date:</th>
                                     <th class='workflow-th'>No. of Days Accomplished:</th>
                                     <th class='workflow-th' colspan="2">Minutes of Bidding:</th>
-                                    <th class='workflow-th'>Action</th>
+                                    <th class='workflow-th'></th>
                                 </tr>
                                 <tr>
                                     <td>{{$tasks->taskName}}</td>
@@ -1871,7 +1878,7 @@
                                     <th class='workflow-th'>No. of Supplier:</th>
                                     <th class='workflow-th'>Date of RF (Within PGEPS 7 Days):</th>
                                     <th class='workflow-th' colspan="2">By:</th>
-                                    <th class='workflow-th'>Action</th>
+                                    <th class='workflow-th'></th>
                                 </tr>
                                 <tr>
                                     <td >{{$tasks->taskName}}</td>
@@ -2032,10 +2039,7 @@
                     $taskp =TaskDetails::find($lastid);
 
                     $lastdate=date('Y-m-d', strtotime($taskp->dateFinished));
-                    
-                    echo "<br>PR".$prfirstdate;
-                    echo "<br>Section first".$sectionfirstdate;
-                    echo "<br>Last".$lastdate;
+               
                     $start = new DateTime($sectionfirstdate);
                     $end = new DateTime($lastdate);
                     // otherwise the  end date is excluded (bug?)

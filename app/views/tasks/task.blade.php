@@ -36,6 +36,7 @@
 @section('content')
 
   <?php
+
   //Initializers
   error_reporting(0);
   $taskdetails_id=Session::get('taskdetails_id');
@@ -46,6 +47,7 @@
   $purchase = Purchase::find($doc->pr_id);
     $purchaseToEdit = Purchase::find($doc->pr_id);
   $date_today = $date_today = date('Y-m-d H:i:s');
+
   //End Initializers
   ?>
 
@@ -137,7 +139,14 @@ $assign_user=User::find(Auth::user()->id);
 ?>
 
 <input type="hidden" name ="by" value= "{{$name}}">
-@if( $date_today > $taskd->dueDate )
+@if($taskd->status=="New")
+<tr>
+<td>
+<span style="font-weight: bold">No. of Days: </span><br/>
+<p><font >{{ $task->maxDuration; }}</font></p>
+</td>
+</tr>
+@elseif( $date_today > $taskd->dueDate )
 <tr>
 <td>
 <span style="font-weight: bold">Due Date: </span><br/>
@@ -331,8 +340,8 @@ $assign_user=User::find(Auth::user()->id);
                                <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
                                  <input type="hidden" name="remarks" id="hiddenremarks"  value="{{$taskd->remarks}}"> 
                                 <td class="edit-pr-input" colspan="2">
-                                    <input type="radio" name="radio" value="yes" />&nbsp;&nbsp;Yes &nbsp;&nbsp;
-                                    <input type="radio" name="radio" value="no" />&nbsp;&nbsp;No<br />
+                                    <input type="radio" name="radio" value="yes" CHECKED>&nbsp;&nbsp;Yes &nbsp;&nbsp;
+                                    <input type="radio" name="radio" value="no" >&nbsp;&nbsp;No<br />
                                 </td>
                                 
                                       <input type ="hidden" name="by" 
@@ -1441,5 +1450,61 @@ else
         
  
     }
+       function checklist_changeAmount(id,amount)
+    {
+       amount = amount.replace(',',''); 
+        var its_a_number = amount.match(/^[0-9,.]+$/i);
+        if (its_a_number != null)
+        {
+            decimal_amount = parseFloat(amount).toFixed(2);
+            if(decimal_amount == 0 || decimal_amount == "0.00")
+            {
+                document.getElementById(id).value = "0.00";
+                window.old_amount = 0.00; 
+            }
+            else
+            {
+                var parts = decimal_amount.toString().split(".");
+                parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                parts =  parts.join(".");
+                if(parts == "NaN")
+                {
+                    document.getElementById(id).value = "0.00";
+                    window.old_amount = 0.00; 
+                }
+                else
+                {
+                    document.getElementById(id).value = parts;
+                    window.old_amount = parts;
+                }
+                     
+            }
+        }
+        else if(!window.old_amount)
+        {
+            document.getElementById(id).value = "0.00";
+            window.old_amount = 0.00; 
+            amount = 0;
+        }
+        else
+        {
+            document.getElementById(id).value = window.old_amount;
+            amount = 0;
+        }
+
+    }
+
+    function isNumberKey(evt)
+    {
+         var charCode = (evt.which) ? evt.which : event.keyCode
+        if(charCode == 44 || charCode == 46)
+             return true;
+
+        if (charCode > 31 && (charCode < 48 || charCode > 57))
+             return false;
+
+        return true;
+    }
+
     </script>
 @stop
