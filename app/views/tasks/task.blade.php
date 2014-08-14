@@ -36,6 +36,7 @@
 @section('content')
 
   <?php
+
   //Initializers
   error_reporting(0);
   $taskdetails_id=Session::get('taskdetails_id');
@@ -46,6 +47,7 @@
   $purchase = Purchase::find($doc->pr_id);
     $purchaseToEdit = Purchase::find($doc->pr_id);
   $date_today = $date_today = date('Y-m-d H:i:s');
+
   //End Initializers
   ?>
 

@@ -275,6 +275,13 @@ class TaskController extends Controller {
 		$taskd = TaskDetails::find($id);
 		$task= Task::find($taskd->task_id);
 		$desig= UserHasDesignation::where('users_id', $user_id)->where('designation_id', $task->designation_id)->count();
+		
+		if ($taskd->status=="Done")
+{
+  
+return Redirect::to("task/active");
+}
+
 		if ($taskd->status=="New")
 		{
 			if($desig==0)

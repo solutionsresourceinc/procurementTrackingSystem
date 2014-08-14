@@ -688,9 +688,7 @@
 
                     $lastdate=date('Y-m-d', strtotime($taskp->dateFinished));
                     
-                    echo "<br>PR".$prfirstdate;
-                    echo "<br>Section first".$sectionfirstdate;
-                    echo "<br>Last".$lastdate;
+            
                     $start = new DateTime($sectionfirstdate);
                     $end = new DateTime($lastdate);
                     // otherwise the  end date is excluded (bug?)
