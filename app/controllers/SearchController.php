@@ -2,8 +2,18 @@
 
 class SearchController extends BaseController {
 
+	public function setPage()
+	{
+		$pageNumber = Input::get('hide_pageNumber');
+		Session::put('pagination', $pageNumber);
+
+		return Redirect::to('purchaseRequest/completeTable/active');
+
+	}
+
 	public function completeActiveSearch()
 	{
+
 		$searchBy = Input::get('searchBy');
 		$searchTerm = trim(Input::get('searchTerm'));
 		$flag = 0;
@@ -681,12 +691,21 @@ class SearchController extends BaseController {
 
 	public function completeTableActive()
 	{
+		if(Session::get('pagination'))
+		{
+			$pagination = Session::get('pagination');
+		}
+		else
+		{
+			$pagination = 15;
+		}
+
 		// $requests = DB::table('purchase_request')->paginate(20);
 		$requests = DB::table('purchase_request')
 		->join('offices', 'purchase_request.office', '=', 'offices.id')
 		->join('document', 'purchase_request.id', '=', 'document.pr_id')
 		->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
-		->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Active')->paginate(15);
+		->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Active')->paginate($pagination);
 
 		$pageCounter = DB::table('purchase_request')
 		->join('offices', 'purchase_request.office', '=', 'offices.id')

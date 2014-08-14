@@ -12,6 +12,9 @@
 |
 */
 
+
+Route::post('setPage', ['uses' => 'SearchController@setPage', 'as'=>'/setPage']);
+
 Route::get('/', function()
 {
 	return Redirect::to('login');
