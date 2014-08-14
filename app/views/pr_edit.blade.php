@@ -497,7 +497,7 @@
                         echo "<th class='workflow-th' width='18%'>Date:</th>";
                         echo "<th class='workflow-th' width='12.5%'>Days of Action</th>";
                         echo "<th class='workflow-th'>Remarks</th>";
-                        echo "<th class='workflow-th' colspan='2'>Action</th></tr>";
+                        echo "<th class='workflow-th' colspan='2'></th></tr>";
                     }
                     if ($previousTaskType!="datebyremark"&&$tasks->taskType=="datebyremark")
                     {
@@ -505,21 +505,21 @@
                         echo "<th class='workflow-th' >Date:</th>";
                         echo "<th class='workflow-th' >By:</th>";
                         echo "<th class='workflow-th' colspan='2'>Remarks</th>";
-                        echo "<th class='workflow-th' colspan='2'>Action</th></tr>";
+                        echo "<th class='workflow-th' colspan='2'></th></tr>";
                     }
                     if ($previousTaskType!="dateby"&&$tasks->taskType=="dateby")
                     {
                         echo "<tr><th width='30%'></th>";
                         echo "<th class='workflow-th' colspan='2'>Date:</th>";
                         echo "<th class='workflow-th' colspan='2'>By:</th>";
-                        echo "<th class='workflow-th' colspan='2'>Action</th></tr>";
+                        echo "<th class='workflow-th' colspan='2'></th></tr>";
                     }
                     if ($previousTaskType!="evaluation"&&$tasks->taskType=="evaluation")
                     {
                         echo "<tr><th width='30%'></th>";
                         echo "<th class='workflow-th' colspan='2'>Date:</th>";
                         echo "<th class='workflow-th' colspan='2'>No. of Days Accomplished:</th>";
-                        echo "<th class='workflow-th' colspan='2'>Action</th></tr>";
+                        echo "<th class='workflow-th' colspan='2'></th></tr>";
                     }
                     $previousTaskType=$tasks->taskType;
                     //Cursor Open form 
@@ -1723,7 +1723,7 @@
                                     <th class='workflow-th' width="18%">Date Published:</th>
                                     <th class='workflow-th' width="18%">End Date:</th>
                                     <th class='workflow-th' colspan="2">Posted By:</th>
-                                    <th class='workflow-th'>Action</th>
+                                    <th class='workflow-th'></th>
                                 </tr>
                                 <tr>
                                     <td >{{$tasks->taskName}}</td>
@@ -1774,7 +1774,7 @@
                                     <th class='workflow-th'>Eligibility Documents:</th>
                                     <th class='workflow-th'>Date of Bidding:</th>
                                     <th class='workflow-th' colspan="2">Checked By:</th>
-                                    <th class='workflow-th'>Action</th>
+                                    <th class='workflow-th'></th>
                                 </tr>
                                 <tr>
                                     <td align>{{$tasks->taskName}}</td>
@@ -1821,7 +1821,7 @@
                                     <th class='workflow-th'>Date:</th>
                                     <th class='workflow-th'>No. of Days Accomplished:</th>
                                     <th class='workflow-th' colspan="2">Contract Agreement:</th>
-                                    <th class='workflow-th'>Action</th>
+                                    <th class='workflow-th'></th>
                                 </tr>
                                 <tr>
                                     <td>{{$tasks->taskName}}</td>
@@ -1850,7 +1850,7 @@
                                     <th class='workflow-th'>Date:</th>
                                     <th class='workflow-th'>No. of Days Accomplished:</th>
                                     <th class='workflow-th' colspan="2">Minutes of Bidding:</th>
-                                    <th class='workflow-th'>Action</th>
+                                    <th class='workflow-th'></th>
                                 </tr>
                                 <tr>
                                     <td>{{$tasks->taskName}}</td>
@@ -1878,7 +1878,7 @@
                                     <th class='workflow-th'>No. of Supplier:</th>
                                     <th class='workflow-th'>Date of RF (Within PGEPS 7 Days):</th>
                                     <th class='workflow-th' colspan="2">By:</th>
-                                    <th class='workflow-th'>Action</th>
+                                    <th class='workflow-th'></th>
                                 </tr>
                                 <tr>
                                     <td >{{$tasks->taskName}}</td>
