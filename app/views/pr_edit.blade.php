@@ -603,7 +603,6 @@
                         <?php
                         echo "<tr class='current-task'>";
 
-                        //if ($tasks->taskType!="cheque"&&$tasks->taskType!="published"&&$tasks->taskType!="contract"&&$tasks->taskType!="meeting"&&$tasks->taskType!="rfq")
                         if ($tasks->taskType!="cheque"&&$tasks->taskType!="published"&&$tasks->taskType!="contract"&&$tasks->taskType!="meeting"&&$tasks->taskType!="rfq"&&$tasks->taskType!="documents"&&$tasks->taskType!="evaluation"&&$tasks->taskType!="preparation")
                         {
                             echo "<td>";
@@ -872,7 +871,7 @@
                                         />
                                     </div>
                                 </td>
-                                
+                                <td>
 
 
                                 
