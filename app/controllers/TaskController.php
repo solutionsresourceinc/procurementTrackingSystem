@@ -154,24 +154,24 @@ class TaskController extends Controller {
 		$taskd->daysOfAction=$aDays;
 		$taskd->dateFinished=$today;
 		$taskd->save();
-			date_default_timezone_set("Asia/Manila");
-	$upDate = date('Y-m-d H:i:s');
-	DB::table('purchase_request')->where('id',$id)->update(array('updated_at' => $upDate));
+		date_default_timezone_set("Asia/Manila");
+		$upDate = date('Y-m-d H:i:s');
+		DB::table('purchase_request')->where('id',$id)->update(array('updated_at' => $upDate));
 		$tasknext=TaskDetails::find($taskdetails_id+1);
 		if ($tasknext->doc_id==$taskd->doc_id)
 		{
-		//Project Type Filter
-		$counter=1;
-		$tasknext=TaskDetails::find($taskdetails_id+$counter);
-	
-		while($tasknext->status=="Lock")
-		{
-			$counter=$counter+1;
+			//Project Type Filter
+			$counter=1;
 			$tasknext=TaskDetails::find($taskdetails_id+$counter);
-		}
 	
-		$tasknext->status="New";
-		$tasknext->save();
+			while($tasknext->status=="Lock")
+			{
+				$counter=$counter+1;
+				$tasknext=TaskDetails::find($taskdetails_id+$counter);
+			}
+	
+			$tasknext->status="New";
+			$tasknext->save();
 		//End Project Type Filter
 		}
 		else
@@ -199,10 +199,7 @@ class TaskController extends Controller {
 		$taskDetails = TaskDetails::find($id);
 		$taskDetails->assignee_id = $user_id;
 		$taskDetails->status = "Active";
-		if ($taskDetails->status=="Done"){
-			Session::put('errorchecklist', 'Cannot accept task.');
-			return Redirect::to("task/$id");
-		}
+		
 		$task_row = Task::find($taskDetails->task_id);
 		$addToDateReceived = $task_row->maxDuration;
 
@@ -281,10 +278,10 @@ class TaskController extends Controller {
 		$desig= UserHasDesignation::where('users_id', $user_id)->where('designation_id', $task->designation_id)->count();
 		
 		if ($taskd->status=="Done")
-{
+		{
   
-return Redirect::to("task/active");
-}
+			return Redirect::to("task/active");
+		}
 
 		if ($taskd->status=="New")
 		{

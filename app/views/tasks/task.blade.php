@@ -1095,6 +1095,8 @@ $assign_user=User::find(Auth::user()->id);
                     </table>
 <br><br>
 
+
+@if($task->taskType=="normal"||$task->taskType=="datebyremark")
 <!--Remarks-->
 <p style="font-weight: bold">Remarks: </p>
 <?php 
@@ -1141,6 +1143,12 @@ No remark.
 {{ Form::close() }}
 </div>
 <!--End Remarks-->
+@else
+<input type ="hidden" name="remarks" value=" " id="remarksform" >
+<button type="button" class="btn btn-success "  id="hidebtn" data-toggle="modal" data-target="#confirmDelete" >Done</button>
+<br>
+<br>
+@endif
 
 
 <!--End Tasks Forms-->
