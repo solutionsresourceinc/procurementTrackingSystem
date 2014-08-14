@@ -19,9 +19,9 @@
     <form class="form ajax" action="summary/changeDate" method="post" role="form" class="form-inline">
         <div class="form-group col-md-9">
             <div class="input-daterange input-group" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="yyyy-mm-dd">
-                <input type="text" class="form-control" name="start" value="" id="dpd1" style="text-align: center" readonly placeholder="Click to select date">
+                <input type="text" class="form-control" name="start" value="" id="dpd1" style="text-align: center" placeholder="Click to select date" onchange="checkInput()">
                 <span class="input-group-addon" style="vertical-align: top;height:20px">to</span>
-                <input type="text" class="form-control" name="end" value="" id="dpd2" style="text-align: center" readonly placeholder="Click to select date">
+                <input type="text" class="form-control" name="end" value="" id="dpd2" style="text-align: center"  placeholder="Click to select date" onchange="checkInput()">
             </div>
 
 

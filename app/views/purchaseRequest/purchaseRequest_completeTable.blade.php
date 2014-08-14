@@ -6,60 +6,79 @@
     {{ HTML::script('date_picker/bootstrap-datetimepicker.fr.js') }}
     {{ HTML::style('css/datepicker.css')}}
     {{ HTML::script('js/bootstrap-datepicker.js') }}
+
+    <style type="text/css">
+        th,td {
+            text-align: center;
+            font-size: 12px;
+        }
+
+        @media print /*FOR PRINT LAYOUT*/
+        {    
+            .no-print, .no-print *
+            {
+                display: none !important;
+            }
+                
+            table, tr, td, th, p, h1, h2, h3, h4, h5
+            {
+                border-collapse: collapse !important;
+                padding : 0px !important;
+                font-size : 86% !important;
+                height : 4px !important;
+            }
+
+            .panel, .panel-heading
+            {
+                margin: 0px !important;
+                /*padding : 5px !important;*/
+            }
+
+            table {
+                margin-top: 20px;
+            }
+        }
+    </style>
 @stop
 
 @section('content')
-<style type="text/css">
-	th,td {
-		text-align: center;
-		font-size: 12px;
-	}
-
-	@media print /*FOR PRINT LAYOUT*/
-    {    
-        .no-print, .no-print *
-        {
-            display: none !important;
-        }
-            
-        table, tr, td, th, p, h1, h2, h3, h4, h5
-        {
-            border-collapse: collapse !important;
-            padding : 0px !important;
-            font-size : 84% !important;
-            height : 4px !important;
-        }
-
-        .panel, .panel-heading
-        {
-            margin: 0px !important;
-            /*padding : 5px !important;*/
-        }
-
-        table {
-        	margin-top: 20px;
-        }
-    }
-</style>
-	<br/>
-	<br/>
+    {{ Form::open(array('action' => '/setPage','files' => true, 'id'=>'setPage'), 'POST') }}
+        <input type="hidden" name="hide_pageNumber" id="hide_pageNumber">
+    {{ Form::close(); }}
+    <br/>
+    <br/>
     @if(isset($msg))
         <div class="col-md-12 no-print alert alert-danger">
             {{{ $msg }}}
         </div>
     @endif
-	<div class="btn-group pull-left col-md-6 no-print">
+    <div class="btn-group pull-left col-md-3 no-print">
         <button class="btn btn-info no-print" onclick="window.print()">
             <span class="glyphicon glyphicon-print"></span>&nbsp;&nbsp;Print
         </button>
-		<button type="button" class="btn btn-default no-print" onclick="window.location.href='{{ URL::to('back') }}'">
-			<span class="glyphicon glyphicon-step-backward"></span>&nbsp;Back
-		</button>		
-	</div>
+        <button type="button" class="btn btn-default no-print" onclick="window.location.href='{{ URL::to('back') }}'">
+            <span class="glyphicon glyphicon-step-backward"></span>&nbsp;Back
+        </button>       
+    </div>
+    
+    <form method="POST" action="">
 
-	<form method="POST" action="">
-	<div class="col-md-3 no-print">     
-		<select id="searchBy" name="searchBy" class="form-control" onchange="changeSearch(this.value)">
+    <div class="col-md-2 no-print">
+        <!-- TEMPORARY -->
+        <select name="pageNumber" onchange="goButton(this.value)"id="pageNumber" class="form-control">
+            <option value="0">Items per page</option>
+            <option value="5">5 per page</option>
+            <option value="10">10 per page</option>
+            <option value="15">15 per page</option>
+        </select>
+    </div>    
+
+    <div class="col-md-1 no-print" style="margin-left: -25px;">
+        <button class="btn btn-primary" type="button" id="go" name="go" onclick="setPage()">Go!</button>
+    </div>    
+
+    <div class="col-md-3 no-print">     
+        <select id="searchBy" name="searchBy" class="form-control" onchange="changeSearch(this.value)">
             <option value="0" <?php if($searchBy == '0'){ echo "selected";} ?> >Search by</option>
             <option value="all" <?php if($searchBy == 'all'){ echo "selected";} ?> >Display All</option>
             <option value="dateReceived" <?php if($searchBy == 'dateReceived'){ echo "selected";} ?>>Date Received</option>
@@ -80,17 +99,17 @@
             <option value="5" <?php if($searchBy == '5'){ echo "selected";} ?> >Mode-Direct Contracting</option>
         </select>
     </div>   
-	<div class="input-group col-md-3 no-print" id="searchBox">
+    <div class="input-group col-md-3 no-print" id="searchBox">
       <input onchange="disableButton()" onkeyup="disableButton()" id="searchTerm" name="searchTerm" placeholder="Enter search keywords" type="text" class="form-control" onchange="detectInput()">
       <span class="input-group-btn">
         <button class="btn btn-primary" name="searchButton" id="searchButton" type="submit">Search</button>
       </span>
     </div>
 
-	<div id="allButton" class="no-print" style="display: none;">
+    <div id="allButton" class="no-print" style="display: none;">
         <button class="btn btn-primary col-md-3" name="allButton" id="allButton" type="submit">Display</button>
-    	<br/>
-    	<br/>
+        <br/>
+        <br/>
     </div>
 
     <div class="form-group no-print" id="searchDate" style="display: none;">
@@ -107,42 +126,37 @@
     </form>
 
 <div style="margin-top: 30px">
-	<table class="table table-striped display" border="1" bordercolor="black">
+    <table class="table table-striped display" border="1">
         <thead>
-			<th width="9.09%"> DATE </th>
-			<th width="9.09%"> BAC NO </th>
-			<th width="9.09%"> DEPARTMENT </th>
-			<th width="9.09%"> PARTICULARS </th>
-			<th width="9.09%"> BUDGET </th>
-			<th width="9.09%"> SOURCE OF FUNDING </th>
-			<th width="9.09%"> PR AMOUNT </th>
-			<th width="9.09%"> DATE APPROVED </th>
-			<th width="9.09%"> MOP </th>
-			<th width="9.09%"> SUPPLIER </th>
-			<th width="9.09%"> REMARKS </th>
-		</thead>
-		<tbody>
-			@foreach($requests as $request)  
-				<tr>
-					<td>
-						<?php $prDate = DB::table('purchase_request')->where('controlNo', '=', $request->controlNo)->first(); ?>
-						{{{(new \DateTime($prDate->dateReceived))->format('Y-m-d')}}}
-					</td>
-					<td>{{{str_pad($request->controlNo, 5, '0', STR_PAD_LEFT)}}}</td>
-					<td>{{{$request->officeName}}}</td>
-					<td>
-                        {{{$request->projectPurpose}}}
-                        @if($request->otherType != 'Pakyaw' || $request->otherType != 'Direct Contracting')
-                            <br/><i> {{{ $request->otherType }}} </i>
-                        @endif
+            <th width="9.09%"> DATE </th>
+            <th width="9.09%"> BAC NO </th>
+            <th width="9.09%"> DEPARTMENT </th>
+            <th width="9.09%"> PARTICULARS </th>
+            <th width="9.09%"> BUDGET </th>
+            <th width="9.09%"> SOURCE OF FUNDING </th>
+            <th width="9.09%"> PR AMOUNT </th>
+            <th width="9.09%"> DATE APPROVED </th>
+            <th width="9.09%"> MOP </th>
+            <th width="9.09%"> SUPPLIER </th>
+            <th width="9.09%"> REMARKS </th>
+        </thead>
+        <tbody>
+            @foreach($requests as $request)  
+                <tr>
+                    <td>
+                        <?php $prDate = DB::table('purchase_request')->where('controlNo', '=', $request->controlNo)->first(); ?>
+                        {{{(new \DateTime($prDate->dateReceived))->format('Y-m-d')}}}
                     </td>
-					<td>
+                    <td>{{{str_pad($request->controlNo, 5, '0', STR_PAD_LEFT)}}}</td>
+                    <td>{{{$request->officeName}}}</td>
+                    <td>{{{$request->projectPurpose}}}</td>
+                    <td>
                         @if(isset($cancelled) && $cancelled == 0)
                             <?php
                                 $cancelledBudget = DB::table('purchase_request')
                                 ->join('document', 'purchase_request.id', '=', 'document.pr_id')
-    							->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
-    							->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('tasks.section_id', '=', '1')->where('purchase_request.controlNo', '=', $request->controlNo)->first();
+                                ->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+                                ->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('tasks.section_id', '=', '1')->where('purchase_request.controlNo', '=', $request->controlNo)->first();
                             
                             ?>
                             @if($cancelledBudget != "")
@@ -169,13 +183,13 @@
                                     <font color="grey">N/A</font>
                                 @else
                                     {{{(new \DateTime($request->dateFinished))->format('Y-m-d')}}}
-    							@endif
-				            @endif
+                                @endif
+                            @endif
                         @endif
-					</td>
-					<td>{{{$request->sourceOfFund}}}</td>
-					<td>{{{$request->amount}}}</td>
-					<td>
+                    </td>
+                    <td>{{{$request->sourceOfFund}}}</td>
+                    <td>{{{$request->amount}}}</td>
+                    <td>
                         @if(isset($cancelled) && $cancelled == 0)
                             <?php
                                 $cancelledApproved = DB::table('purchase_request')
@@ -190,36 +204,36 @@
                                 <font color="grey">N/A</font>
                             @endif
                         @else
-    						@if(isset($flag) && $flag == 0)
-    							@if($request->dateFinished == '0000-00-00 00:00:00')
-    								<font color="grey">N/A</font>
-    							@else
-    								{{{(new \DateTime($request->dateFinished))->format('Y-m-d')}}}
-    							@endif
-    						@else
-    							<?php
-    								$dateApproved = DB::table('purchase_request')
-    								->join('document', 'purchase_request.id', '=', 'document.pr_id')
-    								->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
-    								->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('tasks.taskName', '=', 'SIGNED BY GOV')->where('tasks.section_id', '=', '1')->where('purchase_request.controlNo', '=', $request->controlNo)->first();
-    							?>
-    							@if($dateApproved->dateFinished == "0000-00-00 00:00:00")
-    								<font color="grey">N/A</font>
-    							@else
-    								{{{(new \DateTime($dateApproved->dateFinished))->format('Y-m-d')}}}	
-    							@endif
-    						@endif
+                            @if(isset($flag) && $flag == 0)
+                                @if($request->dateFinished == '0000-00-00 00:00:00')
+                                    <font color="grey">N/A</font>
+                                @else
+                                    {{{(new \DateTime($request->dateFinished))->format('Y-m-d')}}}
+                                @endif
+                            @else
+                                <?php
+                                    $dateApproved = DB::table('purchase_request')
+                                    ->join('document', 'purchase_request.id', '=', 'document.pr_id')
+                                    ->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+                                    ->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('tasks.taskName', '=', 'SIGNED BY GOV')->where('tasks.section_id', '=', '1')->where('purchase_request.controlNo', '=', $request->controlNo)->first();
+                                ?>
+                                @if($dateApproved->dateFinished == "0000-00-00 00:00:00")
+                                    <font color="grey">N/A</font>
+                                @else
+                                    {{{(new \DateTime($dateApproved->dateFinished))->format('Y-m-d')}}} 
+                                @endif
+                            @endif
                         @endif
-					</td>
+                    </td>
                     <td>
-                    	<?php 
-	                        $workName = DB::table('purchase_request')->where('controlNo', '=', $request->controlNo)
+                        <?php 
+                            $workName = DB::table('purchase_request')->where('controlNo', '=', $request->controlNo)
                             ->join('document', 'purchase_request.id', '=', 'document.pr_id')->first(); 
-                    	?>
+                        ?>
                         @if($workName->work_id == 1)
-                            SVP (Below P50,000)
+                            SVP
                         @elseif($workName->work_id == 2)
-                            SVP (Between P50,000 and P500,000)
+                            SVP
                         @elseif($workName->work_id == 3)
                             BIDDING
                         @elseif($workName->work_id == 4)
@@ -228,15 +242,15 @@
                             DIRECT CONTRACTING
                         @endif
                     </td>
-					<td> 
-						@if(isset($supplierFlag) && $supplierFlag == 1)
-							@if($request->custom1 == "")
-								<font color="grey">N/A</font>
-							@else
-								{{{ $request->custom1 }}}			
-							@endif
+                    <td> 
+                        @if(isset($supplierFlag) && $supplierFlag == 1)
+                            @if($request->custom1 == "")
+                                <font color="grey">N/A</font>
+                            @else
+                                {{{ $request->custom1 }}}           
+                            @endif
                         @elseif(isset($cancelled) && $cancelled == 0)
-							<?php
+                            <?php
                                 $cancelledSupplier = DB::table('purchase_request')
                                 ->join('document', 'purchase_request.id', '=', 'document.pr_id')
                                 ->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
@@ -275,32 +289,32 @@
                                 <font color="grey">N/A</font>
                             @endif
                         @else
-    						<?php
-    							$accomplished = DB::table('purchase_request')->where('controlNo', '=', $request->controlNo)
-    							->join('document', 'purchase_request.id', '=', 'document.pr_id')
-    							->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
-    							->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('taskdetails.status', '=', 'Done')->select('tasks.taskName')->orderBy('taskdetails.id', 'DESC')->first();
-    						?>
-    						@if(isset($accomplished->taskName) && $accomplished->taskName != '')
-    							<font color="green"><b> Accomplished: </b></font> {{{ $accomplished->taskName }}}
-    						@endif
+                            <?php
+                                $accomplished = DB::table('purchase_request')->where('controlNo', '=', $request->controlNo)
+                                ->join('document', 'purchase_request.id', '=', 'document.pr_id')
+                                ->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+                                ->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('taskdetails.status', '=', 'Done')->select('tasks.taskName')->orderBy('taskdetails.id', 'DESC')->first();
+                            ?>
+                            @if(isset($accomplished->taskName) && $accomplished->taskName != '')
+                                <font color="green"><b> Accomplished: </b></font> {{{ $accomplished->taskName }}}
+                            @endif
 
-    						<?php
-    							$pending = DB::table('purchase_request')->where('controlNo', '=', $request->controlNo)
-    							->join('document', 'purchase_request.id', '=', 'document.pr_id')
-    							->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
-    							->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('taskdetails.status', '=', 'New')->select('tasks.taskName')->orderBy('taskdetails.id', 'ASC')->first();
-    						?>
-    						<br/>
-    						@if( isset($pending->taskName) && $pending->taskName != '')
-    							<font color="red"><b> For: </b></font>{{{ $pending->taskName }}}
-    						@endif
+                            <?php
+                                $pending = DB::table('purchase_request')->where('controlNo', '=', $request->controlNo)
+                                ->join('document', 'purchase_request.id', '=', 'document.pr_id')
+                                ->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+                                ->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('taskdetails.status', '=', 'New')->select('tasks.taskName')->orderBy('taskdetails.id', 'ASC')->first();
+                            ?>
+                            <br/>
+                            @if( isset($pending->taskName) && $pending->taskName != '')
+                                <font color="red"><b> For: </b></font>{{{ $pending->taskName }}}
+                            @endif
                         @endif
-					</td>
-				</tr>
-			@endforeach
-		</tbody>
-	</table>
+                    </td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
 </div>
 <div id="pages" align="center" class="no-print">
     @if($pageCounter != 0)
@@ -312,8 +326,13 @@
 @stop
 @section('footer')
 <script type="text/javascript">
-	    window.onload = function()
+        window.onload = function()
         {
+            if(document.getElementById('pageNumber').value == '0')
+            {
+                document.getElementById('go').disabled = true;
+            }
+
             if(document.getElementById('start').value.length == 0 || document.getElementById('end').value.length == 0)
             {
                 document.getElementById('betDate').disabled = true;
@@ -351,6 +370,14 @@
                 // document.getElementById('searchDate').style.display = 'none';
                 document.getElementById('allButton').style.display = 'none';
             }
+        }
+
+        function goButton(value)
+        {
+            if(value != '0')
+                {document.getElementById('go').disabled = false;}
+            else
+                {document.getElementById('go').disabled = true;}
         }
 
         function changeSearch(value)
@@ -418,6 +445,18 @@
                 todayBtn: "linked"
             });
         });
+
+        function setPage()
+        {
+            //alert('hey');
+            var pageNumber = document.getElementById('pageNumber').value;
+            document.getElementById('hide_pageNumber').value = pageNumber;
+
+            //alert(pageNumber);
+            document.getElementById('setPage').submit();
+        }
     </script>
+
+
 
 @stop
