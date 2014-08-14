@@ -365,9 +365,8 @@ class PurchaseRequestController extends Controller
 					Session::forget('imgerror');
 				}
 
-		    	$connected = true;
-		    	// $connected = @fsockopen("www.google.com", 80);  //website, port  (try 80 or 443)
-		   		if (!$connected)
+		    	$connected = @fsockopen("www.google.com", 80);  //website, port  (try 80 or 443)
+		   		if ($connected)
 		   		{
 					$sendee = DB::table('users')->where('id',$purchase->requisitioner)->first();
 					$email = $sendee->email;
