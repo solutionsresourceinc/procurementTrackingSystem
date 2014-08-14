@@ -88,8 +88,16 @@
                             $date_today =date('Y-m-d H:i:s');
                             $cpurchase= DB::table('purchase_request')->where('dueDate','>',$date_today)->where('status', '=', 'Active')->get();
                                 foreach ($cpurchase as $cpurchases ) {
+                                    $doccount=Document::where('pr_id', $cpurchases->id)->count();
+                                    if($doccount==0)
+                                    {
+                                    $count=0;
+                                    }
+                                    else
+                                    {
                                     $doc=Document::where('pr_id', $cpurchases->id)->first();
                                     $count= DB::table('count')->where('doc_id', $doc->id)->where('user_id', $cuser)->count();
+                                    }      
                                     if($count==0)
                                     {}
                                     else
@@ -129,9 +137,16 @@
                                         $cpurchase= DB::table('purchase_request')->where('status', '=', 'Closed')->get();
                                         foreach ($cpurchase as $cpurchases ) 
                                         {
+                                             $doccount=Document::where('pr_id', $cpurchases->id)->count();
+                                    if($doccount==0)
+                                    {
+                                    $count=0;
+                                    }
+                                    else
+                                    {
                                             $doc=Document::where('pr_id', $cpurchases->id)->first();
                                             $count= DB::table('count')->where('doc_id', $doc->id)->where('user_id', $cuser)->count();
-                                            
+                                            }
                                             if($count==0)
                                             {}
                                             else
@@ -170,9 +185,16 @@
                     
                                     foreach ($cpurchase as $cpurchases ) 
                                     {
+                                         $doccount=Document::where('pr_id', $cpurchases->id)->count();
+                                    if($doccount==0)
+                                    {
+                                    $count=0;
+                                    }
+                                    else
+                                    {
                                         $doc=Document::where('pr_id', $cpurchases->id)->first();
                                         $count= DB::table('count')->where('doc_id', $doc->id)->where('user_id', $cuser)->count();
-                                    
+                                    }
                                         if($count==0)
                                         {}
                                         else
@@ -210,8 +232,16 @@
                                     $cpurchase= DB::table('purchase_request')->where('status', '=', 'Cancelled')->orWhere('status', '=', 'In progress')->get();
                                     foreach ($cpurchase as $cpurchases ) 
                                     {
+                                         $doccount=Document::where('pr_id', $cpurchases->id)->count();
+                                    if($doccount==0)
+                                    {
+                                    $count=0;
+                                    }
+                                    else
+                                    {
                                         $doc=Document::where('pr_id', $cpurchases->id)->first();
                                         $count= DB::table('count')->where('doc_id', $doc->id)->where('user_id', $cuser)->count();
+                                    }
                                         if($count==0)
                                         {
                                         }
