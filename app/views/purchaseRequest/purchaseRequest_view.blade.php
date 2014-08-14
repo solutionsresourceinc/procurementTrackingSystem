@@ -172,7 +172,12 @@
                 $docs=DB::table('document')->where('pr_id', '=',$id )->first();
                 $workflow=DB::table('workflow')->get();
                 $taskch= TaskDetails::where('doc_id', $docs->id)->where('status', 'New')->orWhere('status', 'Active')->count(); 
+
                 //Get Cursor Value
+                if($taskch==0)
+                $taskc= TaskDetails::where('doc_id', $docs->id)->where('status', 'Done')->orderBy('id', 'DESC')->first(); 
+                
+                else
                 $taskc= TaskDetails::where('doc_id', $docs->id)->where('status', 'New')->orWhere('status', 'Active')->first(); 
                 
                 //Queries
