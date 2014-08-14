@@ -97,7 +97,7 @@ class PurchaseRequestController extends Controller
 	{
 
 		//Image Upload
-		$purchasecheck=Purchase::orderby('id', 'DESC')->count();
+		$purchasecheck=Purchase::where('id', '>', '0')->count();
 		if($purchasecheck!=0)
 		{
 			$purchase=Purchase::orderby('id', 'DESC')->first();
