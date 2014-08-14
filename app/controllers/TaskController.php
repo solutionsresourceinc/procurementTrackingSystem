@@ -193,12 +193,16 @@ class TaskController extends Controller {
 
 	public function assignTask()
 	{
+
 		$id = Input::get('hide_taskid');
 		$user_id = Auth::user()->id;
 		$taskDetails = TaskDetails::find($id);
 		$taskDetails->assignee_id = $user_id;
 		$taskDetails->status = "Active";
-		
+		if ($taskDetails->status=="Done"){
+			Session::put('errorchecklist', 'Cannot accept task.');
+			return Redirect::to("task/$id");
+		}
 		$task_row = Task::find($taskDetails->task_id);
 		$addToDateReceived = $task_row->maxDuration;
 
