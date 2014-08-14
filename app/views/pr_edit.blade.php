@@ -714,8 +714,8 @@
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
                                <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
                                 <td class="edit-pr-input" colspan="2">
-                                    <input type="radio" name="radio" value="yes" />&nbsp;&nbsp;Yes &nbsp;&nbsp;
-                                    <input type="radio" name="radio" value="no" />&nbsp;&nbsp;No<br />
+                                    <input type="radio" name="radio" value="yes" CHECKED>&nbsp;&nbsp;Yes &nbsp;&nbsp;
+                                    <input type="radio" name="radio" value="no" >&nbsp;&nbsp;No<br />
                                 </td>
                                 
                                 <td class="edit-pr-input" colspan="2">

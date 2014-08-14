@@ -340,8 +340,8 @@ $assign_user=User::find(Auth::user()->id);
                                <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
                                  <input type="hidden" name="remarks" id="hiddenremarks"  value="{{$taskd->remarks}}"> 
                                 <td class="edit-pr-input" colspan="2">
-                                    <input type="radio" name="radio" value="yes" />&nbsp;&nbsp;Yes &nbsp;&nbsp;
-                                    <input type="radio" name="radio" value="no" />&nbsp;&nbsp;No<br />
+                                    <input type="radio" name="radio" value="yes" CHECKED>&nbsp;&nbsp;Yes &nbsp;&nbsp;
+                                    <input type="radio" name="radio" value="no" >&nbsp;&nbsp;No<br />
                                 </td>
                                 
                                       <input type ="hidden" name="by" 
