@@ -139,7 +139,14 @@ $assign_user=User::find(Auth::user()->id);
 ?>
 
 <input type="hidden" name ="by" value= "{{$name}}">
-@if( $date_today > $taskd->dueDate )
+@if($taskd->status=="New")
+<tr>
+<td>
+<span style="font-weight: bold">No. of Days: </span><br/>
+<p><font >{{ $task->maxDuration; }}</font></p>
+</td>
+</tr>
+@elseif( $date_today > $taskd->dueDate )
 <tr>
 <td>
 <span style="font-weight: bold">Due Date: </span><br/>
