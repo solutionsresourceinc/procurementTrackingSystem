@@ -541,23 +541,34 @@
                         }
                         else
                         {
+                            if($taskc->id=$taskp->id)
+                                $lastid=$taskc->id-1;
+                            else
+                                $lastid=$taskp->id;
+
                             if ($sectiondays==0)
                             { 
                               
                                 $lookid=$taskp->id;
                                 $taskprevlast =TaskDetails::find($taskc->id-1);
                                 $sectionfirstdate=date('Y-m-d', strtotime($taskprevlast->dateFinished));
+
+                                
                             }
 
-                            if($taskc->id=$taskp->id)
-                                $lastid=$taskc->id-1;
-                            else
-                                $lastid=$taskp->id;
+
+                           if($taskc->task_id<$taskp->task_id)
+                                {
+                                     $sectionfirstdate=date('Y-m-d', strtotime($taskp->dateFinished));
+                                }
+                                  if($tasks->section_id=="1")
+                                {
+                                      $sectionfirstdate=date('Y-m-d', strtotime($purchaseToEdit->dateReceived));
+                                }
 
                         }                         
-                        
                     
-
+                   
                         
                    
                     //End Initializers Total Function
@@ -2020,8 +2031,11 @@
 
                     $taskp =TaskDetails::find($lastid);
 
-                        $lastdate=date('Y-m-d', strtotime($taskp->dateFinished));
-            
+                    $lastdate=date('Y-m-d', strtotime($taskp->dateFinished));
+                    
+                    echo "<br>PR".$prfirstdate;
+                    echo "<br>Section first".$sectionfirstdate;
+                    echo "<br>Last".$lastdate;
                     $start = new DateTime($sectionfirstdate);
                     $end = new DateTime($lastdate);
                     // otherwise the  end date is excluded (bug?)
