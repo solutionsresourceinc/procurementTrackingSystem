@@ -634,7 +634,7 @@
                         @endif
                         @if($tasks->taskType=="dateonly")
     
-                           <td align="center">
+                           <td align="center" colspan="4">
                             <?php 
                                 
                                 if($taskp->custom1!=NULL) 
