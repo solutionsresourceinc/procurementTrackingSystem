@@ -1651,7 +1651,7 @@
                                 echo $dremarks; 
                             ?>
                             </td>
-                            <td align="center">
+                            <td align="center" colspan="2">
                                 @if($taskche==0&&$taskp->status=="Done")
                                 <a class='iframe btn btn-success' href='taskedit/{{$taskp->id}}' title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
                                 @endif
