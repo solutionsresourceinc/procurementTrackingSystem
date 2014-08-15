@@ -312,7 +312,7 @@
                                 $pending = DB::table('purchase_request')->where('controlNo', '=', $request->controlNo)
                                 ->join('document', 'purchase_request.id', '=', 'document.pr_id')
                                 ->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
-                                ->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('taskdetails.status', '=', 'New')->select('tasks.taskName')->orderBy('taskdetails.id', 'ASC')->first();
+                                ->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('taskdetails.status', '=', 'New')->orWhere('taskdetails.status', '=', 'Active')->select('tasks.taskName')->orderBy('taskdetails.id', 'ASC')->first();
                             ?>
                             
                             @if( isset($pending->taskName) && $pending->taskName != '')
