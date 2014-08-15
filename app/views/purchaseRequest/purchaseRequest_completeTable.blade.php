@@ -41,12 +41,7 @@
     </style>
 @stop
 
-@section('content')
-    {{ Form::open(array('action' => '/setPage','files' => true, 'id'=>'setPage'), 'POST') }}
-        <input type="hidden" name="hide_pageNumber" id="hide_pageNumber">
-    {{ Form::close(); }}
-    <br/>
-    <br/>
+@section('content') 
     @if(isset($msg))
         <div class="col-md-12 no-print alert alert-danger">
             {{{ $msg }}}
@@ -64,17 +59,21 @@
     <form method="POST" action="">
 
     <div class="col-md-2 no-print">
-        <!-- TEMPORARY -->
-        <select name="pageNumber" onchange="goButton(this.value)"id="pageNumber" class="form-control">
-            <option value="0">Items per page</option>
-            <option value="5">5 per page</option>
-            <option value="10">10 per page</option>
-            <option value="15">15 per page</option>
+    <input type="hidden" name="pageCount" id="pageCount" value="{{{ $pageCounter }}}">
+    <?php
+        if(!isset($pageNumber))
+            $pageNumber = 0;
+    ?>
+        <select name="pageNumber" onchange="goButton(this.value)" id="pageNumber" class="form-control">
+            <option value="0" <?php if($pageNumber == '0'){ echo "selected"; } ?>>Items per page</option>
+            <option value="5" <?php if($pageNumber == '5'){ echo "selected"; } ?>>5 per page</option>
+            <option value="10" <?php if($pageNumber == '10'){ echo "selected"; } ?>>10 per page</option>
+            <option value="15" <?php if($pageNumber == '15'){ echo "selected"; } ?>>15 per page</option>
         </select>
     </div>    
 
     <div class="col-md-1 no-print" style="margin-left: -25px;">
-        <button class="btn btn-primary" type="button" id="go" name="go" onclick="setPage()">Go!</button>
+        <button class="btn btn-primary" type="submit" id="go" name="go">Go!</button>
     </div>    
 
     <div class="col-md-3 no-print">     
@@ -126,7 +125,7 @@
     </form>
 
 <div style="margin-top: 30px">
-    <table class="table table-striped display" border="1">
+    <table class="table table-striped display" id="main-table" border="1">
         <thead>
             <th width="9.09%"> DATE </th>
             <th width="9.09%"> BAC NO </th>
@@ -296,7 +295,17 @@
                                 ->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('taskdetails.status', '=', 'Done')->select('tasks.taskName')->orderBy('taskdetails.id', 'DESC')->first();
                             ?>
                             @if(isset($accomplished->taskName) && $accomplished->taskName != '')
-                                <font color="green"><b> Accomplished: </b></font> {{{ $accomplished->taskName }}}
+                                <font color="green"><b> Accomplished: </b></font> {{{ $accomplished->taskName }}}<br/>
+                            @endif
+
+                            <?php
+                                $editing = DB::table('purchase_request')->where('controlNo', '=', $request->controlNo)
+                                ->join('document', 'purchase_request.id', '=', 'document.pr_id')
+                                ->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+                                ->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('taskdetails.status', '=', 'Edit')->select('tasks.taskName')->first();
+                            ?>
+                            @if(isset($editing->taskName) && $editing->taskName != '')
+                                <font color="orange"><b> Editting: </b></font> {{{ $editing->taskName }}}<br/>
                             @endif
 
                             <?php
@@ -305,7 +314,7 @@
                                 ->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
                                 ->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('taskdetails.status', '=', 'New')->select('tasks.taskName')->orderBy('taskdetails.id', 'ASC')->first();
                             ?>
-                            <br/>
+                            
                             @if( isset($pending->taskName) && $pending->taskName != '')
                                 <font color="red"><b> For: </b></font>{{{ $pending->taskName }}}
                             @endif
@@ -318,7 +327,7 @@
 </div>
 <div id="pages" align="center" class="no-print">
     @if($pageCounter != 0)
-        <center>{{ $requests->links(); }}</center>
+        <center></center>
     @else
         <p><i>No data available</i></p>
     @endif
@@ -326,6 +335,12 @@
 @stop
 @section('footer')
 <script type="text/javascript">
+        
+        if(document.getElementById('pageCount').value == 0)
+        {
+            document.getElementById('tablePagination').style.display = false;
+        }
+
         window.onload = function()
         {
             if(document.getElementById('pageNumber').value == '0')
@@ -371,6 +386,13 @@
                 document.getElementById('allButton').style.display = 'none';
             }
         }
+        
+        // window.my_id = document.getElementById('pageNumber').value;
+        // alert(window.my_id);
+
+        $('#main-table').oneSimpleTablePagination({
+            rowsPerPage: <?php if($pageNumber == 0){echo "10";}else{echo $pageNumber;} ?>
+        });
 
         function goButton(value)
         {
@@ -445,16 +467,6 @@
                 todayBtn: "linked"
             });
         });
-
-        function setPage()
-        {
-            //alert('hey');
-            var pageNumber = document.getElementById('pageNumber').value;
-            document.getElementById('hide_pageNumber').value = pageNumber;
-
-            //alert(pageNumber);
-            document.getElementById('setPage').submit();
-        }
     </script>
 
 
