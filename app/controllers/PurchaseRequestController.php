@@ -1169,6 +1169,7 @@ $timestamp = strtotime($mydate);
 $dateFinished= date("Y-m-d H:i:s", $timestamp);
 $daysOfAction=Input::get('daysOfAction');
 $remarks=" ".strip_tags(Input::get('remarks'));
+$remarks = preg_replace('/\s+/', ' ',$remarks);
 $check=0;
 
 //Validation Process
@@ -2266,6 +2267,7 @@ $timestamp = strtotime($mydate);
 $dateFinished= date("Y-m-d H:i:s", $timestamp);
 
 $remarks=" ".strip_tags(Input::get('remarks'));
+$remarks = preg_replace('/\s+/', ' ',$remarks);
 $check=0;
 
 //Validation Process

@@ -653,9 +653,11 @@
                                         if (NULL!=Input::old('dateFinished'))
                                             echo "value ='" . Input::old('dateFinished') ."'";
                                         else if ("0000-00-00 00:00:00"!=$taskc->dateFinished)
-                                    
-                                            echo "value='".$taskc->dateFinished."'";
-                                
+                                        {   
+                                            $datef = date("m/d/y", strtotime($taskc->dateFinished));
+                                         
+                                            echo "value='".$datef."'";
+                                        }
                                         else
                                             echo "value = '" . $today . "'";
                                         ?>
@@ -745,6 +747,7 @@
                                 >
                                                                 
                                     <input type="button" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"> 
+                               
                                 </td>
                             {{Form::close()}}
                     @endif
@@ -1467,7 +1470,11 @@
                                         if (NULL!=Input::old('dateFinished'))
                                             echo "value ='" . Input::old('dateFinished') ."'";
                                          else if ("0000-00-00 00:00:00"!=$taskc->dateFinished)
-                                        echo "value='".$taskc->dateFinished."'";
+                                        {   
+                                            $datef = date("m/d/y", strtotime($taskc->dateFinished));
+                                         
+                                            echo "value='".$datef."'";
+                                        }
                                         else
                                             echo "value = '" . $today . "'";
                                         ?>
@@ -1516,8 +1523,12 @@
                                         <?php
                                         if (NULL!=Input::old('dateFinished'))
                                             echo "value ='" . Input::old('dateFinished') ."'";
-                                         else if ("0000-00-00 00:00:00"!=$taskc->dateFinished)
-                                        echo "value='".$taskc->dateFinished."'";
+                                        else if ("0000-00-00 00:00:00"!=$taskc->dateFinished)
+                                        {   
+                                            $datef = date("m/d/y", strtotime($taskc->dateFinished));
+                                         
+                                            echo "value='".$datef."'";
+                                        }
                                         else
                                             echo "value = '" . $today . "'";
                                         ?>
@@ -1576,8 +1587,12 @@
                                         <?php
                                         if (NULL!=Input::old('dateFinished'))
                                             echo "value ='" . Input::old('dateFinished') ."'";
-                                         else if ("0000-00-00 00:00:00"!=$taskc->dateFinished)
-                                        echo "value='".$taskc->dateFinished."'";
+                                        else if ("0000-00-00 00:00:00"!=$taskc->dateFinished)
+                                        {   
+                                            $datef = date("m/d/y", strtotime($taskc->dateFinished));
+                                         
+                                            echo "value='".$datef."'";
+                                        }
                                         else
                                             echo "value = '" . $today . "'";
                                         ?>
