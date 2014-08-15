@@ -13,9 +13,13 @@
         $date_today = date('m/d/Y');
         echo "<input type='hidden' value='$date_today' id='date_today'>";
     ?>
+
 	<h1 class="page-header">Summary</h1>
 
+
+
 	<br/><br/>
+    <div class="alert alert-danger" id="invalidDate" style="display:none;">Invalid date.</div>
     <!--<div class="form-inline" style="width: 80%; margin: 0px 15px;">-->
     <form class="form ajax" action="summary/changeDate" method="post" role="form" class="form-inline">
         <div class="form-group col-md-9">
@@ -25,7 +29,7 @@
                 <input type="text" class="form-control" name="end" value="" id="dpd2" style="text-align: center"  placeholder="Click to select date" onchange="checkInput(this.value,this.id)">
             </div>
         </div>
-        {{ Form::submit('Apply', array('class' => 'btn btn-success col-md-3')) }}
+        {{ Form::submit('Apply', array('class' => 'btn btn-success col-md-3','onclick'=>'hideAlert()')) }}
     </form>
     <!--</div>-->
 
@@ -53,6 +57,8 @@
             </div>
         </div>
     </div>
+    <a href="" id="showModal" title="Description" data-placement="top" data-method="post" data-replace="#description_body"  class="btn-info" data-toggle="modal" data-target="#description" style="visibility:hidden;"><span class="glyphicon glyphicon-list-alt"></span></a><br>
+
     
 
 @stop
@@ -106,11 +112,16 @@
         var dateToday = new Date(dateTodayTemp);
         if(dateInput > dateToday)
         {
-            alert("date input can't be greater than date today!");
+            document.getElementById('invalidDate').style.display = 'block';
             document.getElementById("dpd1").value = dateTodayTemp;
             document.getElementById("dpd2").value = dateTodayTemp;
 
         }
+    }
+
+    function hideAlert()
+    {
+        document.getElementById('invalidDate').style.display = 'none';
     }
 </script>
 @stop
