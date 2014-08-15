@@ -46,7 +46,7 @@ class BaseController extends Controller {
 			$purchase->requisitioner = "1";
 			$purchase->dateRequested = date('Y-m-d H:i:s');
 			$purchase->dateReceived = date('Y-m-d H:i:s');
-			$purchase->status = 'Active';
+			$purchase->status = 'Cancelled';
 			$purchase->otherType = " ";
 
 			// Get latest control number
