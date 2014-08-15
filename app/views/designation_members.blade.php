@@ -54,10 +54,6 @@
 
 @section('content')
 	
-	<!--CODE REVIEW:
-	    - remove comments
-	    - variables must be descriptive
-	-->
 
     <h1 class="page-header">Designation Members</h1>
 	<div class="alert alert-info">  Select an Item to Add/Remove </div>
@@ -135,8 +131,6 @@
             $('.selectpicker').selectpicker({
                 'selectedText': 'cat'
             });
-
-            //$('.selectpicker').selectpicker('hide');
         });
     </script>
 

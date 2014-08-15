@@ -5,11 +5,6 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateWorkflowTable extends Migration {
 
-	/**
-	 * Run the migrations.
-	 *
-	 * @return void
-	 */
 	public function up()
 	{
 		Schema::create('workflow', function(Blueprint $table)
@@ -21,11 +16,6 @@ class CreateWorkflowTable extends Migration {
 		});
 	}
 
-	/**
-	 * Reverse the migrations.
-	 *
-	 * @return void
-	 */
 	public function down()
 	{
 		Schema::drop('workflow');

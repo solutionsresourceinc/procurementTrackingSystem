@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('header')
-<!---->
+
     {{ HTML::style('date_picker/bootstrap-datetimepicker.min.css')}}
     {{ HTML::script('date_picker/bootstrap-datetimepicker.js') }}
     {{ HTML::script('date_picker/bootstrap-datetimepicker.fr.js') }}

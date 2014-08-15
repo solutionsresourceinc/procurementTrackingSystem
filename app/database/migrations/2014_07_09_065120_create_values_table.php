@@ -5,11 +5,6 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateValuesTable extends Migration {
 
-	/**
-	 * Run the migrations.
-	 *
-	 * @return void
-	 */
 	public function up()
 	{
 		Schema::create('values', function($table)
@@ -21,11 +16,6 @@ class CreateValuesTable extends Migration {
 		});
 	}		
 
-	/**
-	 * Reverse the migrations.
-	 *
-	 * @return void
-	 */
 	public function down()
 	{
 		Schema::drop('values');
