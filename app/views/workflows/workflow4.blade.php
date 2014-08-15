@@ -55,8 +55,8 @@
 			<tr>
 				<th class="workflow-th" width="25%">TASK</th>
 				<th class="workflow-th" width="10%">NO. OF DAYS</th>
-				<th class="workflow-th" width="45%">DESIGNATION ASSIGNED</th>
-				<th class="workflow-th" width="25%">ACTION</th>
+				<th class="workflow-th" width="35%">DESIGNATION ASSIGNED</th>
+				<th class="workflow-th" width="15%">ACTION</th>
 			</tr>
 
 			<?php $sections = DB::table('tasks')->where('wf_id','4')->get(); ?>
@@ -81,7 +81,7 @@
 								<div class="mode1" id="insert_{{$section->id}}">None</div>
 							@endif
 							
-							<?php $designations = DB::table('designation')->get(); ?>
+							<?php $designations = DB::table('designation')->orderBy('designation', 'ASC')->get(); ?>
 
 							<form class="form ajax" action="/workflow/submit/{{$section->id}}" data-replace="#insert_{{$section->id}}" method="post" role="form" class="form-inline">
 
@@ -157,8 +157,8 @@
 			<tr>
 				<th class="workflow-th" width="25%">TASK</th>
 				<th class="workflow-th" width="10%">NO. OF DAYS</th>
-				<th class="workflow-th" width="45%">DESIGNATION ASSIGNED</th>
-				<th class="workflow-th" width="25%">ACTION</th>
+				<th class="workflow-th" width="35%">DESIGNATION ASSIGNED</th>
+				<th class="workflow-th" width="15%">ACTION</th>
 			</tr>
 			<?php $sections = DB::table('tasks')->where('wf_id','4')->get(); ?>
 
@@ -180,7 +180,7 @@
 								<div class="mode1" id="insert_{{$section->id}}">None</div>
 							@endif
 							
-							<?php $designations = DB::table('designation')->get();	?>
+							<?php $designations = DB::table('designation')->orderBy('designation', 'ASC')->get();	?>
 
 							<form class="form ajax" action="/workflow/submit/{{$section->id}}" data-replace="#insert_{{$section->id}}" method="post" role="form" class="form-inline">
 								<select name ="designa" class = "form-control mode2 edit-text" style="width:100%">
@@ -258,8 +258,8 @@
 			<tr>
 				<th class="workflow-th" width="25%">TASK</th>
 				<th class="workflow-th" width="10%">NO. OF DAYS</th>
-				<th class="workflow-th" width="45%">DESIGNATION ASSIGNED</th>
-				<th class="workflow-th" width="25%">ACTION</th>
+				<th class="workflow-th" width="35%">DESIGNATION ASSIGNED</th>
+				<th class="workflow-th" width="15%">ACTION</th>
 			</tr>
 			<?php $sections = DB::table('tasks')->where('wf_id','4')->get(); ?>
 
@@ -281,7 +281,7 @@
 							@else
 								<div class="mode1" id="insert_{{$section->id}}">None</div>
 							@endif	
-							<?php $designations = DB::table('designation')->get();	?>
+							<?php $designations = DB::table('designation')->orderBy('designation', 'ASC')->get();	?>
 
 							<form class="form ajax" action="/workflow/submit/{{$section->id}}" data-replace="#insert_{{$section->id}}" method="post" role="form" class="form-inline">
 								<select name ="designa" class = "form-control mode2 edit-text" style="width:100%">

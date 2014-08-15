@@ -82,7 +82,7 @@
 							<div class="mode1" id="insert_{{$section->id}}">None</div>
 						@endif
 							
-						<?php $designations = DB::table('designation')->get(); ?>
+						<?php $designations = DB::table('designation')->orderBy('designation', 'ASC')->get(); ?>
 
 						<form class="form ajax" action="/workflow/submit/{{$section->id}}" data-replace="#insert_{{$section->id}}" method="post" role="form" class="form-inline">
 
@@ -179,7 +179,7 @@
 							@else
 								<div class="mode1" id="insert_{{$section->id}}">None</div>
 							@endif
-							<?php $designations = DB::table('designation')->get(); ?>
+							<?php $designations = DB::table('designation')->orderBy('designation', 'ASC')->get(); ?>
 
 							<form class="form ajax" action="/workflow/submit/{{$section->id}}" data-replace="#insert_{{$section->id}}" method="post" role="form" class="form-inline">
 								<select name ="designa" id="designa" class = "form-control mode2 edit-text" style="width:100%">
@@ -277,7 +277,7 @@
 						@else
 							<div class="mode1" id="insert_{{$section->id}}">None</div>
 						@endif
-							<?php $designations = DB::table('designation')->get(); ?>
+							<?php $designations = DB::table('designation')->orderBy('designation', 'ASC')->get(); ?>
 
 						<form class="form ajax" action="/workflow/submit/{{$section->id}}" data-replace="#insert_{{$section->id}}" method="post" role="form" class="form-inline">
 							<select name ="designa" id="designa" class = "form-control mode2 edit-text" style="width:100%">
@@ -380,7 +380,7 @@
 								<div class="mode1" id="insert_{{$section->id}}">None</div>
 							@endif
 							
-							<?php $designations = DB::table('designation')->get(); ?>
+							<?php $designations = DB::table('designation')->orderBy('designation', 'ASC')->get(); ?>
 							<form class="form ajax" action="/workflow/submit/{{$section->id}}" data-replace="#insert_{{$section->id}}" method="post" role="form" class="form-inline">
 								<select name ="designa" id="designa" class = "form-control mode2 edit-text" style="width:100%">
 									<option value=0 id="none" >None                                 </option>
