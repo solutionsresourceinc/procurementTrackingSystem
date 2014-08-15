@@ -298,7 +298,7 @@
                               
                                 
                                     
-                                    $sectionfirstdate=date('Y-m-d', strtotime($taskprevlast->dateFinished));
+                                    $sectionfirstdate=date('Y-m-d', strtotime($taskp->dateFinished));
 
                                 
                                 }

@@ -2146,7 +2146,7 @@ $prdays=$days;
                             <td></td>
                             <td></td> -->
                             <td colspan="4"><center><?php 
-                            if ($sectiondays==16296)
+                            if ($sectiondays>10000)
                                 echo "0";
                             else
                                 echo $sectiondays;

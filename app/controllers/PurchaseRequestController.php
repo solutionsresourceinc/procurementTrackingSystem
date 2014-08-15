@@ -1685,7 +1685,7 @@ $id=$docs->pr_id;
 date_default_timezone_set("Asia/Manila");
 $upDate = date('Y-m-d H:i:s');
 DB::table('purchase_request')->where('id',$id)->update(array('updated_at' => $upDate));
-DB::table('taskdetails')->where('id', $taskdetails_id)->update(array('dateFinished' => $date));
+DB::table('taskdetails')->where('id', $taskdetails_id)->update(array('dateFinished' => $upDate));
 	if ($tasknextc!=0)
 	{
 		//Project Type Filter
