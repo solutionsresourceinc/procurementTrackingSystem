@@ -587,7 +587,7 @@
                     
                     //End Initializers Total Function
 
-                    if ($taskch!=0 && $taskc->task_id==$tasks->id && ($tasks->designation_id==0||$taskc->status="Edit"))
+                    if ($taskch!=0 && $taskc->task_id==$tasks->id && ($taskc->status=="Edit"||$taskc->status=="New"))
                     {   
                         ?>
                         
@@ -709,8 +709,9 @@
                                     >
                                 </td>
                                 <td style="border-left: none; text-align: center;" colspan="2">
-                                
+                              
                                     <input type="button" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"> 
+                            
                                 </td>
                             {{Form::close()}}
                     @endif
@@ -725,6 +726,7 @@
                                 </td>
                                 
                                 <td class="edit-pr-input" colspan="2">
+                                    <?php echo $taskc->status.$taskc->id; ?>
                                     <input type="text" name="by"  placeholder="Enter name" class="form-control" maxlength="100" width="80%" maxlength="100"
                                     <?php
                                     if (NULL!=Input::old('by'))
@@ -736,35 +738,10 @@
                                     ?>
                                     >
                                 </td>
-                                @if($taskc->status=="Edit")
-                                <td class="edit-pr-input">   
-                                    <?php 
-                                    $today = date("m/d/y");
-                                    ?>
-                                   
-                                    <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
-                                        <input type="text" class="form-control" onchange="changeDOA(this.value)" name="dateFinished" id="dateFinished" style="text-align: center; width:100%"
-                                        <?php
-                                        if (NULL!=Input::old('dateFinished'))
-                                            echo "value ='" . Input::old('dateFinished') ."'";
-                                        else if ("0000-00-00 00:00:00"!=$taskc->dateFinished)
-                                    
-                                            echo "value='".$taskc->dateFinished."'";
-                                
-                                        else
-                                            echo "value = '" . $today . "'";
-                                        ?>
-                                        />
-                                    </div>
-                                </td>
-                                @endif
+                  
 
                                 <td style="border-left: none; text-align: center;" 
-                                <?php if ($taskc->status=="Edit")
-                                        echo "colspan='1'";
-                                        else
-                                            echo "colspan='2'";
-                                ?>
+                           colspan='2'
                                 >
                                                                 
                                     <input type="button" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"> 
@@ -879,12 +856,12 @@
                                 <td class="edit-pr-input" colspan="2">
                                     
                                     <input type="decimal" name="num"  class="form-control" maxlength="12" width="80%" placeholder="Enter cheque number"
-                                     value="<?php
+                                     <?php
                                     if (NULL!=Input::old('num'))
-                                    echo Input::old('num');
+                                    echo "value='".Input::old('num')."'";
                                  else if (NULL!=$taskc->custom2)
                                         echo "value='".$taskc->custom2."'";
-                                    ?>"
+                                    ?>
                                     >
                                 </td>
                                 <td class="edit-pr-input" colspan="2">
@@ -924,7 +901,7 @@
                                     <th class='workflow-th' colspan="2">Posted By:</th>
 
                                 </tr>
-                                <tr class="@if($taskch!=0 && $taskc->task_id==$tasks->id && $tasks->designation_id==0) current-task @endif">
+                                <tr class="@if($taskch!=0 && $taskc->task_id==$tasks->id) current-task @endif">
                                     <td>{{$tasks->taskName}}</td>
                                     <td>
                                         <?php 
@@ -991,7 +968,7 @@
                                  <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
           
                                 </tr>
-                                <tr class="@if($taskch!=0 && $taskc->task_id==$tasks->id && $tasks->designation_id==0) current-task @endif">
+                                <tr class="@if($taskch!=0 && $taskc->task_id==$tasks->id ) current-task @endif">
                                  
                                     <td class="edit-pr-input">
                                     Reference No.:
@@ -1075,7 +1052,7 @@
                                     <th class='workflow-th'>Date of Bidding:</th>
                                     <th class='workflow-th' colspan="2">Checked By:</th>
                                 </tr>
-                                <tr class="@if($taskch!=0 && $taskc->task_id==$tasks->id && $tasks->designation_id==0) current-task @endif">
+                                <tr class="@if($taskch!=0 && $taskc->task_id==$tasks->id ) current-task @endif">
                                     <td>{{$tasks->taskName}}</td>
                                     <td>
                                         <?php 
@@ -1144,7 +1121,7 @@
                                     <th class='workflow-th' colspan="2">Date:</th>
                                     <th class='workflow-th' colspan="2">No. Of Days Accomplished:</th>
                                 </tr>
-                                <tr class="@if($taskch!=0 && $taskc->task_id==$tasks->id && $tasks->designation_id==0) current-task @endif">
+                                <tr class="@if($taskch!=0 && $taskc->task_id==$tasks->id ) current-task @endif">
                                     <td>{{$tasks->taskName}}</td>
                                     <td colspan="2">
                                         <?php 
@@ -1249,7 +1226,7 @@
                                     <th class='workflow-th'>No. of Days Accomplished:</th>
                                     <th class='workflow-th' colspan="2">Contract Agreement:</th>
                                 </tr>
-                                <tr class="@if($taskch!=0 && $taskc->task_id==$tasks->id && $tasks->designation_id==0) current-task @endif">
+                                <tr class="@if($taskch!=0 && $taskc->task_id==$tasks->id ) current-task @endif">
                                     <td>{{$tasks->taskName}}</td>
                                     <td>
                                         <?php 
@@ -1331,7 +1308,7 @@
                                     <th class='workflow-th'>No. of Days Accomplished:</th>
                                     <th class='workflow-th' colspan="2">Minutes of Bidding:</th>
                                 </tr>
-                                <tr class="@if($taskch!=0 && $taskc->task_id==$tasks->id && $tasks->designation_id==0) current-task @endif">
+                                <tr class="@if($taskch!=0 && $taskc->task_id==$tasks->id) current-task @endif">
                                     <td>{{$tasks->taskName}}</td>
                                     <td>
                                         <?php 
@@ -1421,7 +1398,7 @@
                                     <th class='workflow-th'>Date of RF (Within PGEPS 7 Days):</th>
                                     <th class='workflow-th' colspan="2">By:</th>
                                 </tr>
-                                <tr class="@if($taskch!=0 && $taskc->task_id==$tasks->id && $tasks->designation_id==0) current-task @endif">
+                                <tr class="@if($taskch!=0 && $taskc->task_id==$tasks->id) current-task @endif">
                                     <td>{{$tasks->taskName}}</td>
                                     <td><input type="number" name="noofsuppliers"  class="form-control" maxlength="12" width="80%" placeholder="Enter no. of suppliers"
                                         value="

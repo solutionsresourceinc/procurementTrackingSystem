@@ -197,6 +197,16 @@ class TaskController extends Controller {
 		$task_row = Task::find($taskDetails->task_id);
 		$addToDateReceived = $task_row->maxDuration;
 
+			$taskd= TaskDetails::find($id);
+	$docs=Document::find($taskd->doc_id);
+		if ($taskd->status=="Done"){
+			Session::put('errorchecklist', 'Accept failed. Task was already completed by another user.');
+			return Redirect::back();
+		}
+		else if ($taskd->status=="Active"){
+			Session::put('errorchecklist', 'Accept failed. Task was already accepted by another user.');
+			return Redirect::back();
+		}
 
 		// Get date today and the due date;
 		$dateReceived = date('Y-m-d H:i:s');
