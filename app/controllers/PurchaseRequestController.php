@@ -1192,7 +1192,7 @@ if (($check==3||($remarks==" "&&$check==2))&&$assignee!=NULL)
 	$taskd= TaskDetails::find($taskdetails_id);
 	$docs=Document::find($taskd->doc_id);
 		if ($taskd->status=="Done"){
-			Session::put('errorchecklist', 'Saved failed. Task was already complete.');
+			Session::put('errorchecklist', 'Saved failed. Task was already completed by another user.');
 			return Redirect::back();
 		}
 
@@ -1364,7 +1364,7 @@ if ($check==1)
 	$taskd= TaskDetails::find($taskdetails_id);
 	$docs=Document::find($taskd->doc_id);
 if ($taskd->status=="Done"){
-			Session::put('errorchecklist', 'Saved failed. Task was already complete.');
+				Session::put('errorchecklist', 'Saved failed. Task was already completed by another user.');
 			return Redirect::back();
 		}
 $id=$docs->pr_id;
@@ -1452,7 +1452,7 @@ if ($check==2)
 	$taskd= TaskDetails::find($taskdetails_id);
 	$docs=Document::find($taskd->doc_id);
 if ($taskd->status=="Done"){
-			Session::put('errorchecklist', 'Saved failed. Task was already complete.');
+					Session::put('errorchecklist', 'Saved failed. Task was already completed by another user.');
 			return Redirect::back();
 		}
 $id=$docs->pr_id;
@@ -1538,7 +1538,7 @@ if ($check==2)
 	$taskd= TaskDetails::find($taskdetails_id);
 	$docs=Document::find($taskd->doc_id);
 if ($taskd->status=="Done"){
-			Session::put('errorchecklist', 'Saved failed. Task was already complete.');
+			Session::put('errorchecklist', 'Saved failed. Task was already completed by another user.');
 			return Redirect::back();
 		}
 $id=$docs->pr_id;
@@ -1630,7 +1630,7 @@ if ($check==2)
 	$taskd= TaskDetails::find($taskdetails_id);
 	$docs=Document::find($taskd->doc_id);
 if ($taskd->status=="Done"){
-			Session::put('errorchecklist', 'Saved failed. Task was already complete.');
+						Session::put('errorchecklist', 'Saved failed. Task was already completed by another user.');
 			return Redirect::back();
 		}
 $id=$docs->pr_id;
@@ -1741,7 +1741,7 @@ if ($check==1)
 	$taskd= TaskDetails::find($taskdetails_id);
 	$docs=Document::find($taskd->doc_id);
 if ($taskd->status=="Done"){
-			Session::put('errorchecklist', 'Saved failed. Task was already complete.');
+					Session::put('errorchecklist', 'Saved failed. Task was already completed by another user.');
 			return Redirect::back();
 		}
 $id=$docs->pr_id;
@@ -1832,7 +1832,7 @@ if ($check==1)
 	$taskd= TaskDetails::find($taskdetails_id);
 	$docs=Document::find($taskd->doc_id);
 if ($taskd->status=="Done"){
-			Session::put('errorchecklist', 'Saved failed. Task was already complete.');
+					Session::put('errorchecklist', 'Saved failed. Task was already completed by another user.');
 			return Redirect::back();
 		}
 $id=$docs->pr_id;
@@ -1922,7 +1922,7 @@ if ($check==1)
 	$taskd= TaskDetails::find($taskdetails_id);
 	$docs=Document::find($taskd->doc_id);
 if ($taskd->status=="Done"){
-			Session::put('errorchecklist', 'Saved failed. Task was already complete.');
+						Session::put('errorchecklist', 'Saved failed. Task was already completed by another user.');
 			return Redirect::back();
 		}
 $id=$docs->pr_id;
@@ -2011,7 +2011,7 @@ if ($check==0)
 	$taskd= TaskDetails::find($taskdetails_id);
 	$docs=Document::find($taskd->doc_id);
 if ($taskd->status=="Done"){
-			Session::put('errorchecklist', 'Saved failed. Task was already complete.');
+						Session::put('errorchecklist', 'Saved failed. Task was already completed by another user.');
 			return Redirect::back();
 		}
 $id=$docs->pr_id;
@@ -2099,7 +2099,7 @@ if ($check==2)
 	$taskd= TaskDetails::find($taskdetails_id);
 	$docs=Document::find($taskd->doc_id);
 if ($taskd->status=="Done"){
-			Session::put('errorchecklist', 'Saved failed. Task was already complete.');
+						Session::put('errorchecklist', 'Saved failed. Task was already completed by another user.');
 			return Redirect::back();
 		}
 $id=$docs->pr_id;
@@ -2191,7 +2191,7 @@ if ($check==2)
 	$taskd= TaskDetails::find($taskdetails_id);
 	$docs=Document::find($taskd->doc_id);
 if ($taskd->status=="Done"){
-			Session::put('errorchecklist', 'Saved failed. Task was already complete.');
+					Session::put('errorchecklist', 'Saved failed. Task was already completed by another user.');
 			return Redirect::back();
 		}
 $id=$docs->pr_id;
@@ -2282,7 +2282,7 @@ if (($check==2||($remarks==" "&&$check==1))&&$assignee!=NULL)
 	$taskd= TaskDetails::find($taskdetails_id);
 	$docs=Document::find($taskd->doc_id);
 if ($taskd->status=="Done"){
-			Session::put('errorchecklist', 'Saved failed. Task was already complete.');
+					Session::put('errorchecklist', 'Saved failed. Task was already completed by another user.');
 			return Redirect::back();
 		}
 $id=$docs->pr_id;
@@ -2372,7 +2372,7 @@ if (($check==1)&&$assignee!=NULL)
 	$taskd= TaskDetails::find($taskdetails_id);
 	$docs=Document::find($taskd->doc_id);
 if ($taskd->status=="Done"){
-			Session::put('errorchecklist', 'Saved failed. Task was already complete.');
+					Session::put('errorchecklist', 'Saved failed. Task was already completed by another user.');
 			return Redirect::back();
 		}
 $id=$docs->pr_id;
@@ -2451,7 +2451,7 @@ if ($check==1)
 	$taskd= TaskDetails::find($taskdetails_id);
 	$docs=Document::find($taskd->doc_id);
 if ($taskd->status=="Done"){
-			Session::put('errorchecklist', 'Saved failed. Task was already complete.');
+			Session::put('errorchecklist', 'Saved failed. Task was already completed by another user.');
 			return Redirect::back();
 		}
 	$id=$docs->pr_id;
@@ -2527,7 +2527,7 @@ public function taskedit($id)
 			$taskd->save();
 	}
 	else{
-		Session::put('errorchecklist', 'A task is currently being edited.');
+		Session::put('errorchecklist', 'A task is currently being edited by another user.');
 	}
 
 	Session::put('goToChecklist', 'true' ); 
@@ -2558,7 +2558,7 @@ if ($check==2)
 	$taskd= TaskDetails::find($taskdetails_id);
 	$docs=Document::find($taskd->doc_id);
 if ($taskd->status=="Done"){
-			Session::put('errorchecklist', 'Saved failed. Task was already complete.');
+					Session::put('errorchecklist', 'Saved failed. Task was already completed by another user.');
 			return Redirect::back();
 		}
 $id=$docs->pr_id;
