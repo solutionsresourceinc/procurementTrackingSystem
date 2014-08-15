@@ -2,14 +2,11 @@
 
 @section('header')
 <!---->
-
     {{ HTML::style('date_picker/bootstrap-datetimepicker.min.css')}}
     {{ HTML::script('date_picker/bootstrap-datetimepicker.js') }}
     {{ HTML::script('date_picker/bootstrap-datetimepicker.fr.js') }}
     {{ HTML::style('css/datepicker.css')}}
     {{ HTML::script('js/bootstrap-datepicker.js') }}
-
-
     
     <!--Image Display-->
     {{ HTML::script('js/lightbox.min.js') }} 
@@ -29,16 +26,13 @@
         document.onkeypress = stopRKey; 
     </script>
 
-    <script src="js/foundation-datepicker.js"></script>
-    {{ HTML::script('datepicker_range/foundation-datepicker.js')}}
-    {{ HTML::style('datepicker_range/foundation-datepicker.css')}}
-    
-
 @stop
 
 
 
 @section('content')
+
+
 
     <?php
         
@@ -644,13 +638,11 @@
                                     >
                                 </td>
                                 <td class="edit-pr-input"> 
-                                    <!-- START OF EDU IS LOVE -->
                                     <?php 
-                                        $date_today = date('m/d/Y');
-                                        echo "<input type='hidden' value='$date_today' id='date_today'>";
+                                    $today = date("m/d/y");
                                     ?>
                                     <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
-                                        <input type="text" class="form-control" onchange="changeDOA(this.value)" name="dateFinished" value="" id="dpd1" style="text-align: center; width:100%" placeholder="Click to select date" 
+                                        <input type="text" class="form-control" onchange="changeDOA(this.value)" name="dateFinished" id="dateFinished" style="text-align: center; width:100%"
                                         <?php
                                         if (NULL!=Input::old('dateFinished'))
                                             echo "value ='" . Input::old('dateFinished') ."'";
@@ -663,8 +655,6 @@
                                         ?>
                                         />
                                     </div>
-
-                                    
                                 </td>
                                 <td class="edit-pr-input">
 
@@ -2325,6 +2315,15 @@ $prdays=$days;
 
 </script>
 
+<script type="text/javascript">
+    // When the document is ready
+    $(document).ready(function () {
+            
+        $('.input-daterange').datepicker({
+            todayBtn: "linked"
+        });
+    });
+</script>
 
 <script>
 function autouploadsaved(value)
@@ -2431,57 +2430,6 @@ else
         
  
     }
-
 </script>
 
-<script>
-    $(function () {
-        // implementation of disabled form fields
-        var nowTemp = new Date();
-        var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate() + 1, 0, 0, 0, 0);
-                
-        var checkin = $('#dpd1').fdatepicker(
-        {
-            onRender: function (date) 
-            {
-                var datebasis = document.getElementById('datebasis').value;
-                datebasis = new Date(datebasis);
-                //alert(datebasis);
-
-                if( date.valueOf() > now.valueOf()  || date.valueOf() < datebasis.valueOf() )
-                {
-                    return 'disabled'; 
-                }
-                else
-                {
-                    return '';
-                }
-                
-            }
-        }).on('changeDate', function (ev) {
-        if (ev.date.valueOf() > checkout.date.valueOf()) 
-        {
-            var newDate = new Date(ev.date)
-            newDate.setDate(newDate.getDate() + 1);
-            checkout.update(newDate);
-        }
-            checkin.hide();
-            $('#dpd2')[0].focus();
-            }).data('datepicker');
-                
-        var checkout = $('#dpd2').fdatepicker({
-            onRender: function (date) {
-            // return date.valueOf() < checkin.date.valueOf() ? 'disabled' : '';
-                if(date.valueOf() < checkin.date.valueOf() || date.valueOf() > now.valueOf())
-                {
-                    return 'disabled';
-                }
-
-            }
-        }).on('changeDate', function (ev) {
-            checkout.hide();
-        }).data('datepicker');
-    });
-
-</script>
 @stop
