@@ -2446,7 +2446,7 @@ else
             {
                 var datebasis = document.getElementById('datebasis').value;
                 datebasis = new Date(datebasis);
-                alert(datebasis);
+                //alert(datebasis);
 
                 if( date.valueOf() > now.valueOf()  || date.valueOf() < datebasis.valueOf() )
                 {
