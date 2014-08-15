@@ -1,10 +1,5 @@
 <?php
 
-/*
-	CODE REVIEW:
-		- remove unnecessary comments
-*/
-
 class OfficeController extends BaseController {
 
 	protected $office;
@@ -15,22 +10,14 @@ class OfficeController extends BaseController {
 		$this->office = $office;
 	}
 
-	/**
-	 * Display an arranged listing of all offices in the database.
-	 *
-	 * @return Response
-	 */
+
 	public function index()
 	{
 		$offices=$this->office->orderBy('officeName','asc')->paginate(50);
 		return View::make('offices', compact('offices'));
 	}
 
-	/**
-	 * Store a newly created office in the database.
-	 *
-	 * @return Response
-	 */
+
 	public function store()
 	{
 		$checkofficename=0;
@@ -38,17 +25,21 @@ class OfficeController extends BaseController {
 		$offices = new Office;
 		$offices = DB::table('offices')->get();
 
-		foreach ($offices as $office){
+		foreach ($offices as $office)
+		{
 			if ($office->officeName==Input::get( 'officeName' )){ $checkofficename=1; }
 		}
-		if ($checkofficename != 0){
+
+		if ($checkofficename != 0)
+		{
 			return Redirect::back()->withInput()->with('duplicate-error', 'Office is already exisiting in the list.');
 		}
 
 		$rules = ['officeName' => 'required|alpha_spaces|max:100|allNum'];
 		$validation = Validator::make(Input::all(), $rules);
 
-		if($validation->fails()){
+		if($validation->fails())
+		{
 			return Redirect::back()->withInput()->withErrors($validation->messages())->with('invalid', 'Invalid input for office name.');
 		}
 
@@ -65,11 +56,6 @@ class OfficeController extends BaseController {
 		}
 	}
 
-	/**
-	 * Update the specified office in the database.
-	 *
-	 * @return Response
-	 */
 	public function update($id)
 	{
 		$rules = ['ofcname' => 'required|alpha_spaces|max:100|allNum|unique:offices,officeName'];
@@ -83,10 +69,8 @@ class OfficeController extends BaseController {
 
 		if($validation->fails())
 		{
-			//return Redirect::back()->withInput()->withErrors($validation->messages());
 			$updateOffice = Office::find($id);
 			$message = $validation->messages()->first();
-
 
 			if($updateOffice->officeName  == Input::get('ofcname'))
 			{
@@ -102,8 +86,7 @@ class OfficeController extends BaseController {
 
 				);
 
-			return Response::json($data);
-
+				return Response::json($data);
 			}
 			else
 			{
@@ -117,10 +100,7 @@ class OfficeController extends BaseController {
 					),
 				);
 				return Response::json($data);
-
 			}
-
-			
 		}
 		else
 		{
@@ -140,28 +120,20 @@ class OfficeController extends BaseController {
 			);
 			return Response::json($data);
 		}
-		
-		
-		//return Redirect::to('/offices')->with('success','Successfully updated office name');
 	}
 
-	/**
-	 * Remove a specific office in the database.
-	 *
-	 * @return Response
-	 */
 	public function deleteOffice($id)
 	{
 		$deleteoffice = Office::find($id);
 		$deleteoffice->delete();
-
-	
 		$users = User::where('office_id',$id)->get();
 
-	foreach ($users as $user) {
+		foreach ($users as $user) 
+		{
 			$user->office_id = 0;
 			$user->save();
-	}
+		}
+		
 		return Redirect::to('/offices')->with('success','Successfully deleted');
 	}
 }
