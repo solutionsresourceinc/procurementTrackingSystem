@@ -13,6 +13,27 @@
         $date_today = date('m/d/Y');
         echo "<input type='hidden' value='$date_today' id='date_today'>";
     ?>
+
+    <!-- Modal Alert -->
+    <div class="modal fade" id="description" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title"><b>Date Invalid</b></h4>
+                </div>
+                <center>
+                    <div class="modal-body" id="description_body">
+                        <p>Date input can't be greater than date today!</p>
+                    </div>
+                </center>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 	<h1 class="page-header">Summary</h1>
 
 	<br/><br/>
@@ -53,6 +74,8 @@
             </div>
         </div>
     </div>
+    <a href="" id="showModal" title="Description" data-placement="top" data-method="post" data-replace="#description_body"  class="btn-info" data-toggle="modal" data-target="#description" style="visibility:hidden;"><span class="glyphicon glyphicon-list-alt"></span></a><br>
+
     
 
 @stop
@@ -106,7 +129,7 @@
         var dateToday = new Date(dateTodayTemp);
         if(dateInput > dateToday)
         {
-            alert("date input can't be greater than date today!");
+            document.getElementById('showModal').click();
             document.getElementById("dpd1").value = dateTodayTemp;
             document.getElementById("dpd2").value = dateTodayTemp;
 
