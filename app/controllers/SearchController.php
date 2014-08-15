@@ -2,26 +2,13 @@
 
 class SearchController extends BaseController {
 
-	public function setPage()
-	{
-		$pageNumber = Input::get('hide_pageNumber');
-		Session::put('pagination', $pageNumber);
-
-		return Redirect::to('purchaseRequest/completeTable/active');
-	}
-
 	public function completeActiveSearch()
 	{
-		if(Session::get('pagination'))
-			$pagination = Session::get('pagination');
-		else
-			$pagination = 15;
-
 		$searchBy = Input::get('searchBy');
 		$searchTerm = trim(Input::get('searchTerm'));
 		$flag = 0;
 		$supplierFlag = 0;
-
+		
 		if($searchBy == 'dateReceived')
 		{
 			$start = Input::get('start');
@@ -40,7 +27,7 @@ class SearchController extends BaseController {
 				->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where(DB::raw('YEAR(purchase_request.dateReceived)'), '=', $starty)->where(DB::raw('MONTH(purchase_request.dateReceived)'), '=', $startm)->where(DB::raw('DAY(purchase_request.dateReceived)'), '=', $startd)->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Active');
 
 				$pageCounter = $requests->count(); 
-				$requests = $requests->paginate($pagination);
+				$requests = $requests->orderBy('purchase_request.dateReceived', 'DESC')->get();
 			}
 			else
 			{
@@ -50,11 +37,20 @@ class SearchController extends BaseController {
 				->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
 				->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->whereBetween('purchase_request.dateReceived', array($start, $end))->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Active');
 				$pageCounter = $requests->count(); 
-				$requests = $requests->paginate($pagination);
+				$requests = $requests->orderBy('purchase_request.dateReceived', 'DESC')->get();
 			}
 		}
-		else if($searchBy == 'all')
-		{ return App::make('SearchController')->completeTableActive(); }
+		else if($searchBy == 'all' || $searchBy == '0')
+		{
+			$requests = DB::table('purchase_request')
+			->join('offices', 'purchase_request.office', '=', 'offices.id')
+			->join('document', 'purchase_request.id', '=', 'document.pr_id')
+			->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+			->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Active');
+			$pageCounter = $requests->count();
+			$requests = $requests->orderBy('purchase_request.dateReceived', 'DESC')->get();
+			return View::make('purchaseRequest.purchaseRequest_completeTable')->with('requests',$requests)->with('pageCounter',$pageCounter)->with('searchBy','0')->with('pageNumber', Input::get('pageNumber'));
+		}
 		else if($searchBy == 'controlNo')
 		{
 			$requests = DB::table('purchase_request')
@@ -63,7 +59,7 @@ class SearchController extends BaseController {
 			->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
 			->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('purchase_request.controlNo', 'LIKE', "%$searchTerm%")->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Active');
 			$pageCounter = $requests->count(); 
-			$requests = $requests->paginate($pagination);
+			$requests = $requests->orderBy('purchase_request.dateReceived', 'DESC')->get();
 		}
 		else if($searchBy == 'office')
 		{
@@ -73,7 +69,7 @@ class SearchController extends BaseController {
 			->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
 			->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('offices.officeName', 'LIKE', "%$searchTerm%")->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Active');
 			$pageCounter = $requests->count(); 
-			$requests = $requests->paginate($pagination);
+			$requests = $requests->orderBy('purchase_request.dateReceived', 'DESC')->get();
 		}
 		else if($searchBy == 'projectPurpose' || $searchBy == 'sourceOfFund' || $searchBy == 'amount')
 		{
@@ -91,7 +87,7 @@ class SearchController extends BaseController {
 			->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
 			->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where($searchBy, 'LIKE', "%$searchTerm%")->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Active');
 			$pageCounter = $requests->count(); 
-			$requests = $requests->paginate($pagination);
+			$requests = $requests->orderBy('purchase_request.dateReceived', 'DESC')->get();
 		}
 		else if($searchBy == 'budgetdate')
 		{
@@ -110,7 +106,7 @@ class SearchController extends BaseController {
 				->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
 				->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where(DB::raw('YEAR(taskdetails.dateFinished)'), '=', $starty)->where(DB::raw('MONTH(taskdetails.dateFinished)'), '=', $startm)->where(DB::raw('DAY(taskdetails.dateFinished)'), '=', $startd)->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Active');
 				$pageCounter = $requests->count(); 
-				$requests = $requests->paginate($pagination);
+				$requests = $requests->orderBy('purchase_request.dateReceived', 'DESC')->get();
 			}
 			else
 			{
@@ -120,7 +116,7 @@ class SearchController extends BaseController {
 				->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
 				->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->whereBetween('taskdetails.dateFinished', array($start, $end))->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Active');
 				$pageCounter = $requests->count(); 
-				$requests = $requests->paginate($pagination);	
+				$requests = $requests->orderBy('purchase_request.dateReceived', 'DESC')->get();	
 			}
 			$flag = 1;
 		}
@@ -141,7 +137,7 @@ class SearchController extends BaseController {
 				->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
 				->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where(DB::raw('YEAR(taskdetails.dateFinished)'), '=', $starty)->where(DB::raw('MONTH(taskdetails.dateFinished)'), '=', $startm)->where(DB::raw('DAY(taskdetails.dateFinished)'), '=', $startd)->where('tasks.taskName', '=', 'SIGNED BY GOV')->where('purchase_request.status', '=', 'Active');
 				$pageCounter = $requests->count(); 
-				$requests = $requests->paginate($pagination);
+				$requests = $requests->orderBy('purchase_request.dateReceived', 'DESC')->get();
 			}
 			else
 			{
@@ -151,7 +147,7 @@ class SearchController extends BaseController {
 				->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
 				->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->whereBetween('taskdetails.dateFinished', array($start, $end))->where('tasks.taskName', '=', 'SIGNED BY GOV')->where('purchase_request.status', '=', 'Active');
 				$pageCounter = $requests->count(); 
-				$requests = $requests->paginate($pagination);	
+				$requests = $requests->orderBy('purchase_request.dateReceived', 'DESC')->get();	
 			}
 			$flag = 1;
 		}
@@ -163,7 +159,7 @@ class SearchController extends BaseController {
 			->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
 			->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('tasks.taskName', '=', 'LCRB / HRB / SUPPLIER')->where('purchase_request.status', '=', 'Active')->where('taskdetails.custom1', 'LIKE', "%$searchTerm%");
 			$pageCounter = $requests->count(); 
-			$requests = $requests->paginate($pagination);
+			$requests = $requests->orderBy('purchase_request.dateReceived', 'DESC')->get();
 			$supplierFlag = 1;
 		}
 		else if($searchBy == '1' || $searchBy == '2' || $searchBy == '3' || $searchBy == '4' || $searchBy == '5')
@@ -174,9 +170,9 @@ class SearchController extends BaseController {
 			->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
 			->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('document.work_id', '=', $searchBy)->where('purchase_request.projectPurpose', 'LIKE', "%$searchTerm%")->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Active');
 			$pageCounter = $requests->count(); 
-			$requests = $requests->paginate($pagination);
+			$requests = $requests->orderBy('purchase_request.dateReceived', 'DESC')->get();
 		}
-		return View::make('purchaseRequest.purchaseRequest_completeTable')->with('requests',$requests)->with('pageCounter',$pageCounter)->with('searchBy', $searchBy)->with('flag', $flag)->with('supplierFlag', $supplierFlag);
+		return View::make('purchaseRequest.purchaseRequest_completeTable')->with('pageNumber', Input::get('pageNumber'))->with('requests',$requests)->with('pageCounter',$pageCounter)->with('searchBy', $searchBy)->with('flag', $flag)->with('supplierFlag', $supplierFlag);
 	} 
 
 	public function completeClosedSearch()
@@ -208,7 +204,7 @@ class SearchController extends BaseController {
 				->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
 				->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where(DB::raw('YEAR(purchase_request.dateReceived)'), '=', $starty)->where(DB::raw('MONTH(purchase_request.dateReceived)'), '=', $startm)->where(DB::raw('DAY(purchase_request.dateReceived)'), '=', $startd)->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Closed');
 				$pageCounter = $requests->count(); 
-				$requests = $requests->paginate($pagination);
+				$requests = $requests->orderBy('purchase_request.dateReceived', 'DESC')->get();
 			}
 			else
 			{
@@ -218,7 +214,7 @@ class SearchController extends BaseController {
 				->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
 				->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->whereBetween('purchase_request.dateReceived', array($start, $end))->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Closed');
 				$pageCounter = $requests->count(); 
-				$requests = $requests->paginate($pagination);	
+				$requests = $requests->orderBy('purchase_request.dateReceived', 'DESC')->get();	
 			}
 		}
 		else if($searchBy == 'all')
@@ -231,7 +227,7 @@ class SearchController extends BaseController {
 			->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
 			->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('purchase_request.controlNo', 'LIKE', "%$searchTerm%")->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Closed');
 			$pageCounter = $requests->count(); 
-			$requests = $requests->paginate($pagination);
+			$requests = $requests->orderBy('purchase_request.dateReceived', 'DESC')->get();
 		}
 		else if($searchBy == 'office')
 		{
@@ -241,7 +237,7 @@ class SearchController extends BaseController {
 			->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
 			->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('offices.officeName', 'LIKE', "%$searchTerm%")->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Closed');
 			$pageCounter = $requests->count(); 
-			$requests = $requests->paginate($pagination);
+			$requests = $requests->orderBy('purchase_request.dateReceived', 'DESC')->get();
 		}
 		else if($searchBy == 'projectPurpose' || $searchBy == 'sourceOfFund' || $searchBy == 'amount')
 		{
@@ -259,7 +255,7 @@ class SearchController extends BaseController {
 			->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
 			->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where($searchBy, 'LIKE', "%$searchTerm%")->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Closed');
 			$pageCounter = $requests->count(); 
-			$requests = $requests->paginate($pagination);
+			$requests = $requests->orderBy('purchase_request.dateReceived', 'DESC')->get();
 		}
 		else if($searchBy == 'budgetdate')
 		{
@@ -278,7 +274,7 @@ class SearchController extends BaseController {
 				->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
 				->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where(DB::raw('YEAR(taskdetails.dateFinished)'), '=', $starty)->where(DB::raw('MONTH(taskdetails.dateFinished)'), '=', $startm)->where(DB::raw('DAY(taskdetails.dateFinished)'), '=', $startd)->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Closed');
 				$pageCounter = $requests->count(); 
-				$requests = $requests->paginate($pagination);
+				$requests = $requests->orderBy('purchase_request.dateReceived', 'DESC')->get();
 			}
 			else
 			{
@@ -288,7 +284,7 @@ class SearchController extends BaseController {
 				->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
 				->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->whereBetween('taskdetails.dateFinished', array($start, $end))->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Closed');
 				$pageCounter = $requests->count(); 
-				$requests = $requests->paginate($pagination);	
+				$requests = $requests->orderBy('purchase_request.dateReceived', 'DESC')->get();	
 			}
 			$flag = 1;
 		}
@@ -309,7 +305,7 @@ class SearchController extends BaseController {
 				->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
 				->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where(DB::raw('YEAR(taskdetails.dateFinished)'), '=', $starty)->where(DB::raw('MONTH(taskdetails.dateFinished)'), '=', $startm)->where(DB::raw('DAY(taskdetails.dateFinished)'), '=', $startd)->where('tasks.taskName', '=', 'SIGNED BY GOV')->where('purchase_request.status', '=', 'Closed');
 				$pageCounter = $requests->count(); 
-				$requests = $requests->paginate($pagination);
+				$requests = $requests->orderBy('purchase_request.dateReceived', 'DESC')->get();
 			}
 			else
 			{
@@ -319,7 +315,7 @@ class SearchController extends BaseController {
 				->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
 				->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->whereBetween('taskdetails.dateFinished', array($start, $end))->where('tasks.taskName', '=', 'SIGNED BY GOV')->where('purchase_request.status', '=', 'Closed');
 				$pageCounter = $requests->count(); 
-				$requests = $requests->paginate($pagination);
+				$requests = $requests->orderBy('purchase_request.dateReceived', 'DESC')->get();
 			}
 			$flag = 1;
 		}
@@ -331,7 +327,7 @@ class SearchController extends BaseController {
 			->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
 			->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('tasks.taskName', '=', 'LCRB / HRB / SUPPLIER')->where('purchase_request.status', '=', 'Closed')->where('taskdetails.custom1', 'LIKE', "%$searchTerm%");
 			$pageCounter = $requests->count(); 
-			$requests = $requests->paginate($pagination);
+			$requests = $requests->orderBy('purchase_request.dateReceived', 'DESC')->get();
 			$supplierFlag = 1;
 		}
 		return View::make('purchaseRequest.purchaseRequest_completeTable')->with('requests',$requests)->with('pageCounter',$pageCounter)->with('searchBy', $searchBy)->with('flag', $flag)->with('supplierFlag', $supplierFlag);
@@ -364,7 +360,7 @@ class SearchController extends BaseController {
 				->join('offices', 'purchase_request.office', '=', 'offices.id')
 				->join('document', 'purchase_request.id', '=', 'document.pr_id')->where(DB::raw('YEAR(purchase_request.dateReceived)'), '=', $starty)->where(DB::raw('MONTH(purchase_request.dateReceived)'), '=', $startm)->where(DB::raw('DAY(purchase_request.dateReceived)'), '=', $startd)->where('purchase_request.status', '=', 'Cancelled');
 				$pageCounter = $requests->count(); 
-				$requests = $requests->paginate($pagination);
+				$requests = $requests->orderBy('purchase_request.dateReceived', 'DESC')->get();
 			}
 			else
 			{
@@ -372,7 +368,7 @@ class SearchController extends BaseController {
 				->join('offices', 'purchase_request.office', '=', 'offices.id')
 				->join('document', 'purchase_request.id', '=', 'document.pr_id')->whereBetween('purchase_request.dateReceived', array($start, $end))->where('purchase_request.status', '=', 'Cancelled');
 				$pageCounter = $requests->count(); 
-				$requests = $requests->paginate($pagination);
+				$requests = $requests->orderBy('purchase_request.dateReceived', 'DESC')->get();
 			}
 		}
 		else if($searchBy == 'all')
@@ -383,7 +379,7 @@ class SearchController extends BaseController {
 			->join('offices', 'purchase_request.office', '=', 'offices.id')
 			->join('document', 'purchase_request.id', '=', 'document.pr_id')->where('purchase_request.controlNo', 'LIKE', "%$searchTerm%")->where('purchase_request.status', '=', 'Cancelled');
 			$pageCounter = $requests->count(); 
-			$requests = $requests->paginate($pagination);
+			$requests = $requests->orderBy('purchase_request.dateReceived', 'DESC')->get();
 		}
 		else if($searchBy == 'office')
 		{
@@ -391,7 +387,7 @@ class SearchController extends BaseController {
 			->join('offices', 'purchase_request.office', '=', 'offices.id')
 			->join('document', 'purchase_request.id', '=', 'document.pr_id')->where('offices.officeName', 'LIKE', "%$searchTerm%")->where('purchase_request.status', '=', 'Cancelled');
 			$pageCounter = $requests->count(); 
-			$requests = $requests->paginate($pagination);
+			$requests = $requests->orderBy('purchase_request.dateReceived', 'DESC')->get();
 		}
 		else if($searchBy == 'projectPurpose' || $searchBy == 'sourceOfFund' || $searchBy == 'amount')
 		{
@@ -407,7 +403,7 @@ class SearchController extends BaseController {
 			->join('offices', 'purchase_request.office', '=', 'offices.id')
 			->join('document', 'purchase_request.id', '=', 'document.pr_id')->where($searchBy, 'LIKE', "%$searchTerm%")->where('purchase_request.status', '=', 'Cancelled');
 			$pageCounter = $requests->count(); 
-			$requests = $requests->paginate($pagination);
+			$requests = $requests->orderBy('purchase_request.dateReceived', 'DESC')->get();
 		}
 		return View::make('purchaseRequest.purchaseRequest_completeTable')->with('cancelled', '0')->with('requests',$requests)->with('pageCounter',$pageCounter)->with('searchBy', $searchBy)->with('flag', $flag)->with('supplierFlag', $supplierFlag);
 	} 		
@@ -441,7 +437,7 @@ class SearchController extends BaseController {
 				->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
 				->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where(DB::raw('YEAR(purchase_request.dateReceived)'), '=', $starty)->where(DB::raw('MONTH(purchase_request.dateReceived)'), '=', $startm)->where(DB::raw('DAY(purchase_request.dateReceived)'), '=', $startd)->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Active')->where('purchase_request.dueDate', '<=', date('Y-m-d H:i:s'));
 				$pageCounter = $requests->count(); 
-				$requests = $requests->paginate($pagination);
+				$requests = $requests->orderBy('purchase_request.dateReceived', 'DESC')->get();
 			}
 			else
 			{
@@ -451,7 +447,7 @@ class SearchController extends BaseController {
 				->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
 				->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->whereBetween('purchase_request.dateReceived', array($start, $end))->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Active')->where('purchase_request.dueDate', '<=', date('Y-m-d H:i:s'));
 				$pageCounter = $requests->count(); 
-				$requests = $requests->paginate($pagination);
+				$requests = $requests->orderBy('purchase_request.dateReceived', 'DESC')->get();
 			}
 		}
 		else if($searchBy == 'all')
@@ -464,7 +460,7 @@ class SearchController extends BaseController {
 			->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
 			->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('purchase_request.controlNo', 'LIKE', "%$searchTerm%")->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Active')->where('purchase_request.dueDate', '<=', date('Y-m-d H:i:s'));
 			$pageCounter = $requests->count(); 
-			$requests = $requests->paginate($pagination);
+			$requests = $requests->orderBy('purchase_request.dateReceived', 'DESC')->get();
 		}
 		else if($searchBy == 'office')
 		{
@@ -474,7 +470,7 @@ class SearchController extends BaseController {
 			->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
 			->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('offices.officeName', 'LIKE', "%$searchTerm%")->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Active')->where('purchase_request.dueDate', '<=', date('Y-m-d H:i:s'));
 			$pageCounter = $requests->count(); 
-			$requests = $requests->paginate($pagination);
+			$requests = $requests->orderBy('purchase_request.dateReceived', 'DESC')->get();
 		}
 		else if($searchBy == 'projectPurpose' || $searchBy == 'sourceOfFund' || $searchBy == 'amount')
 		{
@@ -492,7 +488,7 @@ class SearchController extends BaseController {
 			->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
 			->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where($searchBy, 'LIKE', "%$searchTerm%")->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Active')->where('purchase_request.dueDate', '<=', date('Y-m-d H:i:s'));
 			$pageCounter = $requests->count(); 
-			$requests = $requests->paginate($pagination);
+			$requests = $requests->orderBy('purchase_request.dateReceived', 'DESC')->get();
 			// return $requests;
 		}
 		else if($searchBy == 'budgetdate')
@@ -512,7 +508,7 @@ class SearchController extends BaseController {
 				->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
 				->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where(DB::raw('YEAR(taskdetails.dateFinished)'), '=', $starty)->where(DB::raw('MONTH(taskdetails.dateFinished)'), '=', $startm)->where(DB::raw('DAY(taskdetails.dateFinished)'), '=', $startd)->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Active')->where('purchase_request.dueDate', '<=', date('Y-m-d H:i:s'));
 				$pageCounter = $requests->count(); 
-				$requests = $requests->paginate($pagination);
+				$requests = $requests->orderBy('purchase_request.dateReceived', 'DESC')->get();
 			}
 			else
 			{
@@ -522,7 +518,7 @@ class SearchController extends BaseController {
 				->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
 				->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->whereBetween('taskdetails.dateFinished', array($start, $end))->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.dueDate', '<=', date('Y-m-d H:i:s'))->where('purchase_request.status', '=', 'Active');
 				$pageCounter = $requests->count(); 
-				$requests = $requests->paginate($pagination);
+				$requests = $requests->orderBy('purchase_request.dateReceived', 'DESC')->get();
 			}
 			$flag = 1;
 		}
@@ -543,7 +539,7 @@ class SearchController extends BaseController {
 				->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
 				->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where(DB::raw('YEAR(taskdetails.dateFinished)'), '=', $starty)->where(DB::raw('MONTH(taskdetails.dateFinished)'), '=', $startm)->where(DB::raw('DAY(taskdetails.dateFinished)'), '=', $startd)->where('tasks.taskName', '=', 'SIGNED BY GOV')->where('purchase_request.status', '=', 'Active')->where('purchase_request.dueDate', '<=', date('Y-m-d H:i:s'));
 				$pageCounter = $requests->count(); 
-				$requests = $requests->paginate($pagination);
+				$requests = $requests->orderBy('purchase_request.dateReceived', 'DESC')->get();
 			}
 			else
 			{
@@ -553,7 +549,7 @@ class SearchController extends BaseController {
 				->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
 				->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->whereBetween('taskdetails.dateFinished', array($start, $end))->where('tasks.taskName', '=', 'SIGNED BY GOV')->where('purchase_request.status', '=', 'Active')->where('purchase_request.dueDate', '<=', date('Y-m-d H:i:s'));
 				$pageCounter = $requests->count(); 
-				$requests = $requests->paginate($pagination);	
+				$requests = $requests->orderBy('purchase_request.dateReceived', 'DESC')->get();	
 			}
 			$flag = 1;
 		}
@@ -565,7 +561,7 @@ class SearchController extends BaseController {
 			->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
 			->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('tasks.taskName', '=', 'LCRB / HRB / SUPPLIER')->where('purchase_request.status', '=', 'Active')->where('taskdetails.custom1', 'LIKE', "%$searchTerm%")->where('purchase_request.dueDate', '<=', date('Y-m-d H:i:s'));
 			$pageCounter = $requests->count(); 
-			$requests = $requests->paginate($pagination);
+			$requests = $requests->orderBy('purchase_request.dateReceived', 'DESC')->get();
 			$supplierFlag = 1;
 		}
 		return View::make('purchaseRequest.purchaseRequest_completeTable')->with('requests',$requests)->with('pageCounter',$pageCounter)->with('searchBy', $searchBy)->with('flag', $flag)->with('supplierFlag', $supplierFlag);
@@ -573,36 +569,28 @@ class SearchController extends BaseController {
 
 	public function completeTableActive()
 	{
-		if(Session::get('pagination'))
-			$pagination = Session::get('pagination');
-		else
-			$pagination = 15;
-
 		$requests = DB::table('purchase_request')
 		->join('offices', 'purchase_request.office', '=', 'offices.id')
 		->join('document', 'purchase_request.id', '=', 'document.pr_id')
 		->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
 		->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Active');
-		$requests = $requests->paginate($pagination);
 		$pageCounter = $requests->count();
+		$requests = $requests->orderBy('purchase_request.dateReceived', 'DESC')->get();
 
 		return View::make('purchaseRequest.purchaseRequest_completeTable')->with('requests',$requests)->with('pageCounter',$pageCounter)->with('searchBy','0');
 	}
 
 	public function completeTableClosed()
 	{
-		if(Session::get('pagination'))
-			$pagination = Session::get('pagination');
-		else
-			$pagination = 15;
 		
 		$requests = DB::table('purchase_request')
 		->join('offices', 'purchase_request.office', '=', 'offices.id')
 		->join('document', 'purchase_request.id', '=', 'document.pr_id')
-		->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+		->join('taskdetails'
+			, 'taskdetails.doc_id', '=', 'document.id')
 		->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.status', '=', 'Closed');
 		$pageCounter = $requests->count();
-		$requests = $requests->paginate($pagination);
+		$requests = $requests->orderBy('purchase_request.dateReceived', 'DESC')->get();
 
 		return View::make('purchaseRequest.purchaseRequest_completeTable')->with('searchBy','0')->with('requests',$requests)->with('pageCounter',$pageCounter);
 	}
@@ -620,7 +608,7 @@ class SearchController extends BaseController {
 		->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
 		->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('purchase_request.dueDate', '<=', date('Y-m-d H:i:s'))->where('purchase_request.status', '=', 'Active');
 		$pageCounter = $requests->count();
-		$requests = $requests->paginate($pagination);
+		$requests = $requests->orderBy('purchase_request.dateReceived', 'DESC')->get();
 
 		return View::make('purchaseRequest.purchaseRequest_completeTable')->with('searchBy','0')->with('requests',$requests)->with('pageCounter',$pageCounter);
 	}
@@ -630,13 +618,13 @@ class SearchController extends BaseController {
 		if(Session::get('pagination'))
 			$pagination = Session::get('pagination');
 		else
-			$pagination = 15;
-		
+			$pagination = 5;
+
 		$requests = DB::table('purchase_request')
 		->join('offices', 'purchase_request.office', '=', 'offices.id')
 		->join('document', 'purchase_request.id', '=', 'document.pr_id')->where('purchase_request.status', '=', 'Cancelled');
 		$pageCounter = $requests->count();
-		$requests = $requests->paginate($pagination);
+		$requests = $requests->orderBy('purchase_request.dateReceived', 'DESC')->get();
 
 		return View::make('purchaseRequest.purchaseRequest_completeTable')->with('requests',$requests)->with('pageCounter',$pageCounter)->with('searchBy','0')->with('cancelled','0');
 	}

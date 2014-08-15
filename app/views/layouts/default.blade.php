@@ -3,16 +3,23 @@
 		<meta charset="utf-8">
 		<title>Tarlac Procurement Tracking System</title>
 
-		{{ HTML::style('css/bootstrap.min.css') }}
-		{{ HTML::style('css/bootstrap-theme.min.css') }}
-		{{ HTML::style('css/theme.css') }}
-		{{ HTML::style('css/signin.css') }}
+		{{ HTML::style('css/bootstrap.css') }}
+        {{ HTML::style('css/bootstrap.min.css') }}
+        {{ HTML::style('css/bootstrap-theme.min.css') }}
+        {{ HTML::style('css/theme.css') }}
+        {{ HTML::style('css/signin.css') }}
+        {{ HTML::style('css/custom.css') }}
+        {{ HTML::style('css/sb-admin.css') }}
+        {{ HTML::style('font-awesome/css/font-awesome.min.css') }}
 
-		{{ HTML::style('css/custom.css') }}
+        {{ HTML::script('http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js') }}
 
-		{{ HTML::script('http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js') }}
+        {{ HTML::script('js/bootstrap.min.js') }}
+        {{ HTML::script('js/jquery-1.10.2.js') }}
+        {{ HTML::script('js/oneSimpleTablePaging-1.0.js') }}
 
-		{{ HTML::script('js/bootstrap.min.js') }}
+        {{ HTML::script('js/jquery.tablesorter.min.js')}}
+
 		@yield('header')
 		<style>
 			body { background-image:url('../bg.png'); }
