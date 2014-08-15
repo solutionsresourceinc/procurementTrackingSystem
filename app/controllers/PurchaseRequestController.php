@@ -2536,6 +2536,19 @@ public function taskedit($id)
 	return Redirect::back();
 }
 
+public function taskcanceledit($id)
+{
+
+	$taskd= TaskDetails::find($id);
+
+
+			$taskd->status="Done";
+			$taskd->save();
+	
+	
+	Session::put('goToChecklist', 'true' ); 
+	return Redirect::back();
+}
 
 
 public function philgeps()
