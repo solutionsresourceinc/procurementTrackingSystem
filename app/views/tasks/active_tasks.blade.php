@@ -2,7 +2,7 @@
 
 @section('content')
     <h1 class="page-header">Active Tasks</h1>
-    
+
 @if(Session::get('successchecklist'))
   <div class="alert alert-success"> {{ Session::get('successchecklist') }}</div> 
 @endif
@@ -10,10 +10,15 @@
 @if(Session::get('errorchecklist'))
   <div class="alert alert-danger"> {{ Session::get('errorchecklist') }}</div> 
 @endif
-  
+      <?php
+Session::forget('errorremark');
+Session::forget('successremark');
+Session::forget('successchecklist');
+Session::forget('errorchecklist');
+?>
     <div class="list-group">
     {{Session::forget('imgerror');}}
-                   {{Session::forget('imgsuccess');}}
+    {{Session::forget('imgsuccess');}}
 
         <!-- Get all task details with id = task->id -->
         <?php
@@ -57,10 +62,5 @@
         </div>
 
     </div>
-    <?php
-Session::forget('errorremark');
-Session::forget('successremark');
-Session::forget('successchecklist');
-Session::forget('errorchecklist');
-?>
+
 @stop    

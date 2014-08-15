@@ -726,7 +726,7 @@
                                 </td>
                                 
                                 <td class="edit-pr-input" colspan="2">
-                                    <?php echo $taskc->status.$taskc->id; ?>
+                                
                                     <input type="text" name="by"  placeholder="Enter name" class="form-control" maxlength="100" width="80%" maxlength="100"
                                     <?php
                                     if (NULL!=Input::old('by'))
