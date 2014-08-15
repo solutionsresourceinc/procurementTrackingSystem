@@ -302,7 +302,7 @@
                                 $editing = DB::table('purchase_request')->where('controlNo', '=', $request->controlNo)
                                 ->join('document', 'purchase_request.id', '=', 'document.pr_id')
                                 ->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
-                                ->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('taskdetails.status', '=', 'Edit')->select('tasks.taskName')->first();
+                                ->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('taskdetails.status', '=', 'Edit')->select('tasks.taskName')->orderBy('taskdetails.id', 'DESC')->first();
                             ?>
                             @if(isset($editing->taskName) && $editing->taskName != '')
                                 <font color="orange"><b> Editting: </b></font> {{{ $editing->taskName }}}<br/>
