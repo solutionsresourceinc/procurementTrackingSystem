@@ -560,7 +560,7 @@
                               
                                 
                                     
-                                    $sectionfirstdate=date('Y-m-d', strtotime($taskprevlast->dateFinished));
+                                    $sectionfirstdate=date('Y-m-d', strtotime($taskp->dateFinished));
 
                                 }
                             $taskctask=Task::find($taskc->task_id);
@@ -1576,7 +1576,7 @@
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
                                  <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
                                 
-                                <td class="edit-pr-input" colspan="4"> 
+                                <td class="edit-pr-input" colspan="3"> 
                                     <?php 
                                     $today = date("m/d/y");
                                     ?>
