@@ -487,7 +487,7 @@ $assign_user=User::find(Auth::user()->id);
                                
                                     <th class='workflow-th' width="18%">Date Published:</th>
                                     <th class='workflow-th' width="18%">End Date:</th>
-                                    <th class='workflow-th' colspan="2">Posted By:</th>
+                                   
 
                                 </tr>
                                 <tr class="@if($taskch!=0 && $taskc->task_id==$tasks->id && $tasks->designation_id==0) current-task @endif">
@@ -518,8 +518,8 @@ $assign_user=User::find(Auth::user()->id);
                                         <?php
                                         if (NULL!=Input::old('dateFinished'))
                                             echo "value ='" . Input::old('dateFinished') ."'";
-                                         else if (NULL!=$taskc->custom2)
-                                        echo "value='".$taskc->custom2."'";
+                                        else if (NULL!=$taskc->custom2)
+                                            echo "value='".$taskc->custom2."'";
                                         else
                                             echo "value = '" . $today . "'";
                                         ?>
@@ -567,6 +567,9 @@ $assign_user=User::find(Auth::user()->id);
                                             <input type="text" class="form-control" name="datepublished" id="datepublished" style="text-align: center; width:100%"
                                             
                                         <?php
+
+
+                                        
                                         if (NULL!=Input::old('dateFinished'))
                                             echo "value ='" . Input::old('dateFinished') ."'";
                                          else if (NULL!=$taskc->custom2)
