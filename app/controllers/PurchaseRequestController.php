@@ -2520,8 +2520,17 @@ public function taskedit($id)
 {
 
 	$taskd= TaskDetails::find($id);
-	$taskd->status="Edit";
-	$taskd->save();
+
+	$taskeditcount=TaskDetails::where('doc_id', $taskd->doc_id)->where('status','Edit')->count();
+	if ($taskeditcount==0) {
+			$taskd->status="Edit";
+			$taskd->save();
+	}
+	else{
+		Session::put('errorchecklist', 'A task is currently being edited.');
+	}
+
+	Session::put('goToChecklist', 'true' ); 
 	return Redirect::back();
 }
 
