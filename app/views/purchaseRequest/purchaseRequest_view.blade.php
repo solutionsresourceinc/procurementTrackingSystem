@@ -309,7 +309,7 @@
                                     $lastid=$taskc->id-1;
                                 else
                                     $lastid=$taskp->id;
-                                
+
                                 if ($purchase->status=="Closed")
                                      $lastid=$taskp->id;
                              
@@ -776,7 +776,7 @@ $prdays=$days;
                             <td></td>
                             <td></td> -->
                             <td colspan="4"><center><?php 
-                            if ($sectiondays==16296)
+                            if ($sectiondays>10000)
                                 echo "0";
                             else
                                 echo $sectiondays;

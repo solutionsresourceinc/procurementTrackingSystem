@@ -705,7 +705,7 @@
                                     ?>
                                     >
                                 </td>
-                                <td style="border-left: none; text-align: center;" >
+                                <td style="border-left: none; text-align: center;"  colspan="2">
                              
                                
 
@@ -751,7 +751,7 @@
                                 </td>
                   
 
-                        <td style="border-left: none; text-align: center;" >
+                        <td style="border-left: none; text-align: center;" colspan="2">
                              
                                
 
@@ -821,7 +821,7 @@
                                     >
                                 </td>
 
-                               <td style="border-left: none; text-align: center;" >
+                               <td style="border-left: none; text-align: center;" colspan="2" >
                              
                                
 
@@ -870,7 +870,7 @@
                                     >
                                 </td>
 
-                                <td style="border-left: none; text-align: center;" >
+                                <td style="border-left: none; text-align: center;" colspan="2">
                              
                                
 
@@ -918,7 +918,7 @@
                                     ?>
                                     >
                                 </td>
-                                <td class="edit-pr-input" colspan="2">
+                                <td class="edit-pr-input" colspan="1">
                                
                                     <?php 
                                     $today = date("m/d/y");
@@ -936,7 +936,7 @@
                                         />
                                     </div>
                                 </td>
-                               <td style="border-left: none; text-align: center;" >
+                               <td style="border-left: none; text-align: center;" colspan="2" >
                              
                                
 
@@ -1021,7 +1021,7 @@
                                     </td>
                           
                                 
-                              <td style="border-left: none; text-align: center;" >
+                              <td style="border-left: none; text-align: center;" colspan="2" >
                              
                                
 
@@ -1116,7 +1116,7 @@
                                     </td>
                           
                                 
-                               <td style="border-left: none; text-align: center;" >
+                               <td style="border-left: none; text-align: center;" colspan="2">
                              
                                
 
@@ -1201,7 +1201,7 @@
 
                                    
                             
-                             <td style="border-left: none; text-align: center;" >
+                             <td style="border-left: none; text-align: center;" colspan="2">
                              
                                
 
@@ -1288,7 +1288,7 @@
                                         >
                                     </td>   
                  
-                        <td style="border-left: none; text-align: center;" >
+                        <td style="border-left: none; text-align: center;" colspan="2">
                              
                                
 
@@ -1334,7 +1334,7 @@
                                     </div>
                                     </td>
                                
-                         <td style="border-left: none; text-align: center;" >
+                         <td style="border-left: none; text-align: center;" colspan="2">
                              
                                
 
@@ -1431,7 +1431,7 @@
                                         >
                                     </td>
                       
-                           <td style="border-left: none; text-align: center;" >
+                           <td style="border-left: none; text-align: center;" colspan="2">
                              
                                
 
@@ -1536,7 +1536,7 @@
                                     </td>
                           
                             
-                              <td style="border-left: none; text-align: center;" >
+                              <td style="border-left: none; text-align: center;" colspan="2">
                              
                                
 
@@ -1614,7 +1614,7 @@
                                     </td>
                                   
                           
-                             <td style="border-left: none; text-align: center;" >
+                             <td style="border-left: none; text-align: center;" colspan="2">
                              
                                
 
@@ -1678,7 +1678,7 @@
                                         
                                     >
                                 </td>
-                              <td style="border-left: none; text-align: center;" >
+                              <td style="border-left: none; text-align: center;" colspan="2">
                              
                                
 
@@ -1760,7 +1760,7 @@
                                     >
                                 </td>
                                
-                               <td style="border-left: none; text-align: center;" >
+                               <td style="border-left: none; text-align: center;" colspan="2" >
                              
                                
 
@@ -1812,7 +1812,7 @@
                                     </div>
                                 </td>
                                 
-                      <td style="border-left: none; text-align: center;" >
+                      <td style="border-left: none; text-align: center;" colspan="2">
                              
                                
 
