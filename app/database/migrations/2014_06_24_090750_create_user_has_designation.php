@@ -5,11 +5,6 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateUserHasDesignation extends Migration {
 
-	/**
-	 * Run the migrations.
-	 *
-	 * @return void
-	 */
 	public function up()
 	{
 		Schema::create('user_has_designation', function(Blueprint $table)
@@ -19,11 +14,6 @@ class CreateUserHasDesignation extends Migration {
 		});
 	}
 
-	/**
-	 * Reverse the migrations.
-	 *
-	 * @return void
-	 */
 	public function down()
 	{
 		Schema::drop('user_has_designation');

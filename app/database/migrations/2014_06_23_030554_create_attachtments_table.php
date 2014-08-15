@@ -5,11 +5,6 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateAttachtmentsTable extends Migration {
 
-	/**
-	 * Run the migrations.
-	 *
-	 * @return void
-	 */
 	public function up()
 	{
 		Schema::create('attachments', function($table)
@@ -21,11 +16,7 @@ class CreateAttachtmentsTable extends Migration {
             $table->integer('doc_id')->references('id')->on('document');
 		});
 	}
-	/**
-	 * Reverse the migrations.
-	 *
-	 * @return void
-	 */
+
 	public function down()
 	{
 		Schema::drop('attachments');

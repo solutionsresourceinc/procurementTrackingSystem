@@ -1,17 +1,6 @@
 
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Application Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register all of the routes for an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the Closure to execute when that URI is requested.
-|
-*/
-
 
 Route::post('setPage', ['uses' => 'SearchController@setPage', 'as'=>'/setPage']);
 
@@ -137,7 +126,6 @@ Route::get('workflow', function(){
 
 
 //---------- Roles Create Routes (Disabled)
-	//Route::get('create_roles','UserController@getRole');
 Route::get('task/new', 'TaskController@newTask');
 Route::post('deladdtask', 'TaskController@deladdtask');
 Route::post('addtask', [ 'uses' => 'TaskController@addtask']);
