@@ -6,29 +6,17 @@ class DesignationController extends BaseController {
 
 	public function __construct(Designation $designation)
 	{
-		
 		$this->designation = $designation;
 	}
 
-	/**
-	 * Display an arranged listing of all designations in the database.
-	 *
-	 * @return Response
-	 */
 	public function index()
 	{
 		$designations=$this->designation->orderBy('designation','asc')->paginate(50);
 		return View::make('designation', compact('designations'));
 	}
 
-	/**
-	 * Store a newly created designation in the database.
-	 *
-	 * @return Response
-	 */
 	public function store()
 	{
-
 		$designation = new Designation;
 		$designation->designation = Input::get( 'designationName' );
 		if($designation->save())
@@ -44,18 +32,11 @@ class DesignationController extends BaseController {
 				Session::put('main_error', $message );
 			}
 
-			
-			
 			return Redirect::back()->withInput()->withErrors($this->designation->errors)->with('invalid', $message);
 		}
 
 	}
 
-	/**
-	 * Update the specified designation in the database.
-	 *
-	 * @return Response
-	 */
 	public function update($id)
 	{
 		$rules = ['dsgntn-name' => 'required|alpha_spaces|max:100|allNum|unique:designation,designation'];
@@ -100,9 +81,6 @@ class DesignationController extends BaseController {
 				);
 			}
 
-			
-
-
 			return Response::json($data);
 		}
 		else
@@ -125,11 +103,7 @@ class DesignationController extends BaseController {
 		}
 	}
 
-	/**
-	 * Remove a specific office in the database.
-	 *
-	 * @return Response
-	 */
+
 	public function deleteDesignation($id)
 	{
 		$deleteAsignee = UserHasDesignation::where('designation_id', '=', $id);
@@ -147,23 +121,25 @@ class DesignationController extends BaseController {
 		$notselected_users = DB::select("select * from users where id not in ( select users_id from user_has_designation where designation_id = $id )");
 
 
-//Block URL access for non existing designation
+		//Block URL access for non existing designation
+		$existence = Designation::where('id',$id)->get();
+		$exist=0;
+		foreach ($existence as $designate) 
+		{
+			$exist= $exist+1;
+		}
 
-$existence = Designation::where('id',$id)->get();
-$exist=0;
-foreach ($existence as $designate) {
-	$exist= $exist+1;
-}
-if ($exist==0)
-
-	
-		return Redirect::to('/designation');
-	else
-		return View::make('designation_members')
+		if ($exist==0)
+		{
+			return Redirect::to('/designation');
+		}
+		else
+		{
+			return View::make('designation_members')
 			->with('designation_id',$id)
 			->with('notselected_users',$notselected_users)
 			->with('selected_users',$selected_users);
-	
+		}
 	}
 
 	public function save_members()
@@ -171,15 +147,9 @@ if ($exist==0)
 		$members_selected = Input::get('members_selected');
 		$members = explode(",", $members_selected);
 
-
-		// Delete all user in user_has_designation table with id = x;
 		$designation_id = Input::get('designation_id');
 		UserHasDesignation::where('designation_id', '=', $designation_id )->delete();
 		
-		//get all the values in select and convert it to array
-		
-
-		// saving to database
 		foreach ($members as $key) 
 		{
 			if($key != 0)
@@ -197,7 +167,6 @@ if ($exist==0)
 		$message = "Successfully updated the members in $name.";
 		Session::put('success_members', $message );
 		return Redirect::to('designation');
-
 	}
 	public function assign()
 	{
@@ -205,6 +174,6 @@ if ($exist==0)
 		$assignd = Task::find($id);
 		$assignd->d_id = Input::get('designa');
 		$assignd->save();
-				return Redirect::back()->with('success','Successfully deleted');
+		return Redirect::back()->with('success','Successfully deleted');
 	}
 }

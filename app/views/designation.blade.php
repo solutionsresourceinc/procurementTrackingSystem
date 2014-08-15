@@ -2,10 +2,6 @@
 
 @section('content')
 
-	<!--CODE REVIEW:
-	    - remove comments
-	    - variables must be descriptive
-	-->
 
     <h1 class="page-header">Designations</h1>
 

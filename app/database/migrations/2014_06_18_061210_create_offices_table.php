@@ -5,11 +5,6 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateOfficesTable extends Migration {
 
-	/**
-	 * Run the migrations.
-	 *
-	 * @return void
-	 */
 	public function up()
 	{
 		Schema::create('offices', function(Blueprint $table)
@@ -19,11 +14,6 @@ class CreateOfficesTable extends Migration {
 		});
 	}
 
-	/**
-	 * Reverse the migrations.
-	 *
-	 * @return void
-	 */
 	public function down()
 	{
 		Schema::drop('offices');

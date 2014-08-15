@@ -5,11 +5,6 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateCountTable extends Migration {
 
-	/**
-	 * Run the migrations.
-	 *
-	 * @return void
-	 */
 	public function up()
 	{
 		Schema::create('count', function(Blueprint $table)
@@ -21,11 +16,6 @@ class CreateCountTable extends Migration {
 		});
 	}
 
-	/**
-	 * Reverse the migrations.
-	 *
-	 * @return void
-	 */
 	public function down()
 	{
 		Schema::drop('count');

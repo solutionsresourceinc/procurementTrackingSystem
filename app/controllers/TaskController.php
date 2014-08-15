@@ -12,7 +12,6 @@ class TaskController extends Controller {
 
 		foreach ($user_designations as $designation) 
 		{
-			
 			if($counter == 1)
 			{
 				if($designation->designation_id == 0)
@@ -41,7 +40,6 @@ class TaskController extends Controller {
 			array_push($taskIds, $task->id);
 		}
 
-
 		return View::make('tasks.new_tasks')->with('taskIds',$taskIds);
 	}
 
@@ -55,7 +53,6 @@ class TaskController extends Controller {
 
 		foreach ($user_designations as $designation) 
 		{
-			
 			if($counter == 1)
 			{
 				if($designation->designation_id == 0)
@@ -160,7 +157,6 @@ class TaskController extends Controller {
 		$tasknext=TaskDetails::find($taskdetails_id+1);
 		if ($tasknext->doc_id==$taskd->doc_id)
 		{
-			//Project Type Filter
 			$counter=1;
 			$tasknext=TaskDetails::find($taskdetails_id+$counter);
 	
@@ -172,7 +168,6 @@ class TaskController extends Controller {
 	
 			$tasknext->status="New";
 			$tasknext->save();
-		//End Project Type Filter
 		}
 		else
 		{
@@ -180,7 +175,6 @@ class TaskController extends Controller {
 			$purchase->status="Closed";
 			$purchase->save();
 		}
-		// return Redirect::to('task/active');
 		$request_id = Input::get('pr_id');
 		return Redirect::to("purchaseRequest/vieweach/$request_id");
 	}

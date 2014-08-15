@@ -35,8 +35,6 @@ class DatabaseSeeder extends Seeder {
 		$this->call('UserHasDesignationSeeder');
 		$this->command->info('The UserHasDesignation table has been seeded!');
 
-
-
 		DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 	}
 

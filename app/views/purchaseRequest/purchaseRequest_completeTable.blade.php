@@ -391,7 +391,7 @@
         // alert(window.my_id);
 
         $('#main-table').oneSimpleTablePagination({
-            rowsPerPage: <?php if($pageNumber == 0){echo "10";}else{echo $pageNumber;} ?>
+            rowsPerPage: <?php if($pageNumber == 0){echo "15";}else{echo $pageNumber;} ?>
         });
 
         function goButton(value)

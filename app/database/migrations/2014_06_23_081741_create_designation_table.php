@@ -5,11 +5,6 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateDesignationTable extends Migration {
 
-	/**
-	 * Run the migrations.
-	 *
-	 * @return void
-	 */
 	public function up()
 	{
 		Schema::create('designation', function(Blueprint $table)
@@ -20,11 +15,6 @@ class CreateDesignationTable extends Migration {
 		});
 	}
 
-	/**
-	 * Reverse the migrations.
-	 *
-	 * @return void
-	 */
 	public function down()
 	{
 		Schema::drop('designation');

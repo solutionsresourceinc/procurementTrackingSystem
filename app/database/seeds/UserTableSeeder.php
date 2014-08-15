@@ -7,19 +7,6 @@ class UserTableSeeder extends Seeder {
 
         $user = new User;
 
-       /* User::create([
-            'id'        => '1',
-            'username'    => 'admin1',
-            'firstname' => 'admin_fname',
-            'lastname' => 'admin_lname',
-            'email' => 'admin@gmail.com',
-            'password' => '$2y$10$fM./ADP/FL3iECvlJOubkuBs/OPtbbYZns9PnHC8VPz0WVAA4B99q',
-            'password_confirmation' => '$2y$10$fM./ADP/FL3iECvlJOubkuBs/OPtbbYZns9PnHC8VPz0WVAA4B99q',
-            'confirmation_code' => 'ok',
-            'confirmed' => 1,
-            'office_id' => 1,
-        ]);
-        */
         // Seeding of Administrator account
         $user->id = '1';
         $user->username = 'admin1';
