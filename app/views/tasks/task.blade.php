@@ -284,9 +284,12 @@ $assign_user=User::find(Auth::user()->id);
                                         <?php
                                         if (NULL!=Input::old('dateFinished'))
                                             echo "value ='" . Input::old('dateFinished') ."'";
-                                        else if ("0000-00-00 00:00:00"!=$taskc->dateFinished)
-                                    
-                                            echo "value='".$taskc->dateFinished."'";
+                                       else if ("0000-00-00 00:00:00"!=$taskc->dateFinished)
+                                        {   
+                                            $datef = date("m/d/y", strtotime($taskc->dateFinished));
+                                         
+                                            echo "value='".$datef."'";
+                                        }
                                 
                                         else
                                             echo "value = '" . $today . "'";
@@ -996,8 +999,12 @@ $assign_user=User::find(Auth::user()->id);
                                         <?php
                                         if (NULL!=Input::old('dateFinished'))
                                             echo "value ='" . Input::old('dateFinished') ."'";
-                                         else if ("0000-00-00 00:00:00"!=$taskc->dateFinished)
-                                        echo "value='".$taskc->dateFinished."'";
+                                       else if ("0000-00-00 00:00:00"!=$taskc->dateFinished)
+                                        {   
+                                            $datef = date("m/d/y", strtotime($taskc->dateFinished));
+                                         
+                                            echo "value='".$datef."'";
+                                        }
                                         else
                                             echo "value = '" . $today . "'";
                                         ?>
@@ -1031,8 +1038,12 @@ $assign_user=User::find(Auth::user()->id);
                                         <?php
                                         if (NULL!=Input::old('dateFinished'))
                                             echo "value ='" . Input::old('dateFinished') ."'";
-                                         else if ("0000-00-00 00:00:00"!=$taskc->dateFinished)
-                                        echo "value='".$taskc->dateFinished."'";
+                                    else if ("0000-00-00 00:00:00"!=$taskc->dateFinished)
+                                        {   
+                                            $datef = date("m/d/y", strtotime($taskc->dateFinished));
+                                         
+                                            echo "value='".$datef."'";
+                                        }
                                         else
                                             echo "value = '" . $today . "'";
                                         ?>
@@ -1067,8 +1078,12 @@ $assign_user=User::find(Auth::user()->id);
                                         <?php
                                         if (NULL!=Input::old('dateFinished'))
                                             echo "value ='" . Input::old('dateFinished') ."'";
-                                         else if ("0000-00-00 00:00:00"!=$taskc->dateFinished)
-                                        echo "value='".$taskc->dateFinished."'";
+                                       else if ("0000-00-00 00:00:00"!=$taskc->dateFinished)
+                                        {   
+                                            $datef = date("m/d/y", strtotime($taskc->dateFinished));
+                                         
+                                            echo "value='".$datef."'";
+                                        }
                                         else
                                             echo "value = '" . $today . "'";
                                         ?>
