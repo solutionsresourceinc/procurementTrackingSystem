@@ -772,18 +772,28 @@ $prdays=$days;
                             <!-- <td></td>
                             <td></td>
                             <td></td> -->
-                            <td width="12.5%" colspan="4"><center>{{$sectiondays}}</center></td>
+                            <td colspan="4"><center><?php 
+                            if ($sectiondays==16296)
+                                echo "0";
+                            else
+                                echo $sectiondays;
+                                ?></center></td>
                     </tr>
                     @endif
                     </table></div></div>
                     
                     <?php
                 }
-                echo "<div class='panel panel-success'><div class='panel-body'>
+                 echo "<div class='panel panel-success'><div class='panel-body'>
                         <table border='1' class='proc-details'>
                             <tr>
                                 <td width='66%'><h4 style='margin-left: 10px'>TOTAL NO. OF DAYS FROM PR TO PAYMENT: </h4></td>
-                                <td><h4 style='margin-left: 50px;'>".$prdays."</h4></td>
+                            <td><h4 style='margin-left: 50px;'>";
+                            if($prdays==16296)
+                            echo "0";
+                            else
+                            echo $prdays;
+                            echo "</h4></td>
                             </tr>
                         </table>
                     </div></div>"; 

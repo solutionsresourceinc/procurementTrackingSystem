@@ -185,7 +185,7 @@ $assign_user=User::find(Auth::user()->id);
 <!--Tasks Forms-->
 
 
-                  <table border='1' class='workflow-table' id='tableTask'>
+                  <table border='0' class='workflow-table' id='tableTask'>
 <?php
 
                 $tasks= Task::find($taskd->task_id);
@@ -199,7 +199,7 @@ $assign_user=User::find(Auth::user()->id);
 
                     if ($tasks->taskType=="normal")
                     {
-                        echo "<tr><th width='30%'></th>";
+                        echo "<tr>";
                       
                         echo "<th class='workflow-th' width='18%'>Date:</th>";
                         echo "<th class='workflow-th' width='12.5%'>Days of Action</th>";
@@ -208,7 +208,7 @@ $assign_user=User::find(Auth::user()->id);
                     }
                     if ($tasks->taskType=="datebyremark")
                     {
-                        echo "<tr><th width='30%'></th>";
+                        echo "<tr>";
                         echo "<th class='workflow-th' >Date:</th>";
                        
                        
@@ -216,14 +216,14 @@ $assign_user=User::find(Auth::user()->id);
                     }
                     if ($tasks->taskType=="dateby")
                     {
-                        echo "<tr><th width='30%'></th>";
+                        echo "<tr>";
                         echo "<th class='workflow-th' colspan='2'>Date:</th>";
                         
                         echo "</tr>";
                     }
                     if ($tasks->taskType=="evaluation")
                     {
-                        echo "<tr><th width='30%'></th>";
+                        echo "<tr>";
                         echo "<th class='workflow-th' colspan='2'>Date:</th>";
                         echo "<th class='workflow-th' colspan='2'>No. of Days Accomplished:</th>";
                         echo "</tr>";
@@ -253,8 +253,7 @@ $assign_user=User::find(Auth::user()->id);
           
                         if ($tasks->taskType!="cheque"&&$tasks->taskType!="published"&&$tasks->taskType!="contract"&&$tasks->taskType!="meeting"&&$tasks->taskType!="rfq"&&$tasks->taskType!="documents"&&$tasks->taskType!="evaluation"&&$tasks->taskType!="preparation")
                         {
-                            echo "<td>";
-                            echo $tasks->taskName."</td>";
+                           
                         }
                     
                     //Task Forms
@@ -336,8 +335,8 @@ $assign_user=User::find(Auth::user()->id);
                     @if($tasks->taskType == "certification")
                           
                             {{Form::open(['url'=>'certification', 'id' => $myForm], 'POST')}}
-                                <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
-                               <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
+                              <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
+                              <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
                                  <input type="hidden" name="remarks" id="hiddenremarks"  value="{{$taskd->remarks}}"> 
                                 <td class="edit-pr-input" colspan="2">
                                     <input type="radio" name="radio" value="yes" CHECKED>&nbsp;&nbsp;Yes &nbsp;&nbsp;
@@ -485,14 +484,14 @@ $assign_user=User::find(Auth::user()->id);
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
                                  <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
                                      <input type="hidden" name="remarks" id="hiddenremarks"  value="{{$taskd->remarks}}"> 
-                                    <td> </td>
+                               
                                     <th class='workflow-th' width="18%">Date Published:</th>
                                     <th class='workflow-th' width="18%">End Date:</th>
                                     <th class='workflow-th' colspan="2">Posted By:</th>
 
                                 </tr>
                                 <tr class="@if($taskch!=0 && $taskc->task_id==$tasks->id && $tasks->designation_id==0) current-task @endif">
-                                    <td>{{$tasks->taskName}}</td>
+                                   
                                     <td>
                                         <?php 
                                         $today = date("m/d/y");
@@ -535,11 +534,7 @@ $assign_user=User::find(Auth::user()->id);
                                     >
                           
                                 
-                                <td style="border-left: none; text-align: center;">
-                                
-                                    <input type="button" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"
-                                    > 
-                                </td>
+                             
                             {{Form::close()}}
                     @endif
                     @if($tasks->taskType == "philgeps")
@@ -606,11 +601,7 @@ $assign_user=User::find(Auth::user()->id);
                                     ?>
                                     >
                                 
-                                <td style="border-left: none; text-align: center;">
-                                
-                                    <input type="button" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"
-                                    > 
-                                </td>
+                             
                             {{Form::close()}}
                     @endif
                     @if($tasks->taskType == "documents")
@@ -619,13 +610,13 @@ $assign_user=User::find(Auth::user()->id);
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
                                  <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" >
                                      <input type="hidden" name="remarks" id="hiddenremarks"  value="{{$taskd->remarks}}"> 
-                                    <td> </td>
+                                 
                                     <th class='workflow-th'>Eligibility Documents:</th>
                                     <th class='workflow-th'>Date of Bidding:</th>
                                     <th class='workflow-th' colspan="2">Checked By:</th>
                                 </tr>
                                 <tr class="@if($taskch!=0 && $taskc->task_id==$tasks->id && $tasks->designation_id==0) current-task @endif">
-                                    <td>{{$tasks->taskName}}</td>
+                                  
                                     <td>
                                         <?php 
                                         $today = date("m/d/y");
@@ -677,12 +668,12 @@ $assign_user=User::find(Auth::user()->id);
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
                                  <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" >
                                      <input type="hidden" name="remarks" id="hiddenremarks"  value="{{$taskd->remarks}}"> 
-                                    <td> </td>
+
                                     <th class='workflow-th' colspan="2">Date:</th>
                                     <th class='workflow-th' colspan="2">No. Of Days Accomplished:</th>
                                 </tr>
                                 <tr class="@if($taskch!=0 && $taskc->task_id==$tasks->id && $tasks->designation_id==0) current-task @endif">
-                                    <td>{{$tasks->taskName}}</td>
+                                   
                                     <td colspan="2">
                                         <?php 
                                         $today = date("m/d/y");
@@ -727,11 +718,11 @@ $assign_user=User::find(Auth::user()->id);
                                         
                                         <?php
                                         if (NULL!=Input::old('noofdays'))
-                                            echo "value=".Input::old('noofdays');
-                                         else if (NULL!=$taskc->custom2)
-                                        echo "value='".$taskc->custom2."'";
+                                          echo "value=".Input::old('noofdays');
+                                        else if (NULL!=$taskc->custom2)
+                                          echo "value='".$taskc->custom2."'";
                                         else
-                                            echo "value=1";
+                                          echo "value=1";
                                        
                                         ?>
                                         
@@ -776,13 +767,13 @@ $assign_user=User::find(Auth::user()->id);
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
                                  <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" >
                                      <input type="hidden" name="remarks" id="hiddenremarks"  value="{{$taskd->remarks}}"> 
-                                    <td> </td>
+                           
                                     <th class='workflow-th'>Date:</th>
                                     <th class='workflow-th'>No. of Days Accomplished:</th>
                                     <th class='workflow-th' colspan="2">Contract Agreement:</th>
                                 </tr>
                                 <tr class="@if($taskch!=0 && $taskc->task_id==$tasks->id && $tasks->designation_id==0) current-task @endif">
-                                    <td>{{$tasks->taskName}}</td>
+                              
                                     <td>
                                         <?php 
                                         $today = date("m/d/y");
@@ -855,13 +846,13 @@ $assign_user=User::find(Auth::user()->id);
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
                                  <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" >
                                      <input type="hidden" name="remarks" id="hiddenremarks"  value="{{$taskd->remarks}}"> 
-                                    <td> </td>
+                               
                                     <th class='workflow-th'>Date:</th>
                                     <th class='workflow-th'>No. of Days Accomplished:</th>
                                     <th class='workflow-th' colspan="2">Minutes of Bidding:</th>
                                 </tr>
                                 <tr class="@if($taskch!=0 && $taskc->task_id==$tasks->id && $tasks->designation_id==0) current-task @endif">
-                                    <td>{{$tasks->taskName}}</td>
+                             
                                     <td>
                                         <?php 
                                         $today = date("m/d/y");
@@ -942,13 +933,13 @@ $assign_user=User::find(Auth::user()->id);
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
                                  <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" >
                                      <input type="hidden" name="remarks" id="hiddenremarks"  value="{{$taskd->remarks}}"> 
-                                    <td> </td>
+                                
                                     <th class='workflow-th'>No. of Suppliers:</th>
                                     <th class='workflow-th'>Date of RF (Within PGEPS 7 Days):</th>
                                     <th class='workflow-th' colspan="2">By:</th>
                                 </tr>
                                 <tr class="@if($taskch!=0 && $taskc->task_id==$tasks->id && $tasks->designation_id==0) current-task @endif">
-                                    <td>{{$tasks->taskName}}</td>
+                           
                                     <td><input type="number" name="noofsuppliers"  class="form-control" maxlength="12" width="80%" placeholder="Enter no. of suppliers"
                                         value="
                                         <?php

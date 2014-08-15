@@ -48,5 +48,8 @@
         </div>
 
     </div>
-
+    <?php
+Session::forget('errorremark');
+Session::forget('successremark');
+?>
 @stop    

@@ -532,8 +532,11 @@
                         //Handle Section 1 set prfirst and sectionfirst
                         if($tasks->section_id=="1")
                         {
+
                                 $prfirstdate=date('Y-m-d', strtotime($purchaseToEdit->dateReceived));
                                 $sectionfirstdate=date('Y-m-d', strtotime($purchaseToEdit->dateReceived));
+                            
+
                                 if($taskc->id==$taskp->id)
                                     $lastid=$taskc->id-1;
                                 else
@@ -547,6 +550,8 @@
                         //Handles othe 
                         else
                         {
+
+
                             $taskprevlast =TaskDetails::find($taskp->id-1);
                              $taskprevtask=Task::find($taskprevlast->task_id);
 
@@ -557,7 +562,6 @@
                                     
                                     $sectionfirstdate=date('Y-m-d', strtotime($taskprevlast->dateFinished));
 
-                                
                                 }
                             $taskctask=Task::find($taskc->task_id);
                             if($taskctask->section_id==$tasks->section_id)
@@ -573,6 +577,8 @@
                                 $lastid=$taskp->id;
                            
                             }
+
+
 
                         }                         
                     
@@ -713,7 +719,7 @@
                             {{Form::open(['url'=>'certification', 'id' => $myForm], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
                                <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
-                                <td class="edit-pr-input" colspan="2">
+                                <td class="edit-pr-input" colspan="1">
                                     <input type="radio" name="radio" value="yes" CHECKED>&nbsp;&nbsp;Yes &nbsp;&nbsp;
                                     <input type="radio" name="radio" value="no" >&nbsp;&nbsp;No<br />
                                 </td>
@@ -730,8 +736,36 @@
                                     ?>
                                     >
                                 </td>
+                                @if($taskc->status=="Edit")
+                                <td class="edit-pr-input">   
+                                    <?php 
+                                    $today = date("m/d/y");
+                                    ?>
+                                   
+                                    <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
+                                        <input type="text" class="form-control" onchange="changeDOA(this.value)" name="dateFinished" id="dateFinished" style="text-align: center; width:100%"
+                                        <?php
+                                        if (NULL!=Input::old('dateFinished'))
+                                            echo "value ='" . Input::old('dateFinished') ."'";
+                                        else if ("0000-00-00 00:00:00"!=$taskc->dateFinished)
+                                    
+                                            echo "value='".$taskc->dateFinished."'";
+                                
+                                        else
+                                            echo "value = '" . $today . "'";
+                                        ?>
+                                        />
+                                    </div>
+                                </td>
+                                @endif
 
-                                <td style="border-left: none; text-align: center;" colspan="2">
+                                <td style="border-left: none; text-align: center;" 
+                                <?php if ($taskc->status=="Edit")
+                                        echo "colspan='1'";
+                                        else
+                                            echo "colspan='2'";
+                                ?>
+                                >
                                                                 
                                     <input type="button" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"> 
                                 </td>
@@ -2119,18 +2153,30 @@ $prdays=$days;
                             <!-- <td></td>
                             <td></td>
                             <td></td> -->
-                            <td colspan="4"><center>{{$sectiondays}}</center></td>
+                            <td colspan="4"><center><?php 
+                            if ($sectiondays==16296)
+                                echo "0";
+                            else
+                                echo $sectiondays;
+                                ?></center></td>
                     </tr>
                     @endif
                     </table></div></div>
                     
                     <?php
                 }
+
+
                 echo "<div class='panel panel-success'><div class='panel-body'>
                         <table border='1' class='proc-details'>
                             <tr>
                                 <td width='66%'><h4 style='margin-left: 10px'>TOTAL NO. OF DAYS FROM PR TO PAYMENT: </h4></td>
-                                <td><h4 style='margin-left: 50px;'>".$prdays."</h4></td>
+                            <td><h4 style='margin-left: 50px;'>";
+                            if($prdays==16296)
+                            echo "0";
+                            else
+                            echo $prdays;
+                            echo "</h4></td>
                             </tr>
                         </table>
                     </div></div>"; 
