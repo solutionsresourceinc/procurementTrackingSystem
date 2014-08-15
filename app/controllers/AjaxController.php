@@ -25,13 +25,14 @@ class AjaxController extends Controller
 		if($designation == 0)
 		{
 			$data = array(
-				"html" => "<div id='insert_$id' class='mode1'> None  </div>"
+				"html" => "<div id='insert_$id' class='mode1'> None  </div> <input type='hidden' id='hide_currentDesignation' class='hide_currentDesignation' value='0' > "
 			);
 		}
 		else
 		{
 			$data = array(
-				"html" => "<div id='insert_$id' class='mode1'> $des_name  </div>"
+				"html" => "<div id='insert_$id' class='mode1'> $des_name  </div> <input type='hidden' id='hide_currentDesignation' class='hide_currentDesignation' value='$assignd->designation_id' > "
+
 			);
 		}
 
@@ -40,7 +41,7 @@ class AjaxController extends Controller
 
 	public function SummarySubmit()
 	{
-
+ 
 		$start = date('Y-m-d', strtotime(Input::get('start')));
 		$end = date('Y-m-d', strtotime(Input::get('end')));
 		$date_today = date('Y-m-d');
