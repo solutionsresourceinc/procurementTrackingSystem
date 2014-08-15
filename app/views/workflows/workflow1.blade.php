@@ -76,10 +76,12 @@
 							@foreach ($designations as $designation)
 							<div class="mode1" id="insert_{{$section->id}}">
 								{{ $designation->designation }}
+								<input type="hidden" id="hide_currentDesignation" class="hide_currentDesignation" value="{{$designation->id}}">
 							</div>
 							@endforeach
 						@else
 							<div class="mode1" id="insert_{{$section->id}}">None</div>
+							<input type="hidden" id="hide_currentDesignation" class="hide_currentDesignation" value="0">
 						@endif
 							
 						<?php $designations = DB::table('designation')->orderBy('designation', 'ASC')->get(); ?>
@@ -87,9 +89,9 @@
 						<form class="form ajax" action="/workflow/submit/{{$section->id}}" data-replace="#insert_{{$section->id}}" method="post" role="form" class="form-inline">
 
 							<select name ="designa" id="designa" class = "form-control mode2 edit-text" style="width:100%">
-								<option value="0" selected id="none">None</option>
+								<option value="0" selected id="0">None</option>
 								@foreach ($designations as $designation)
-								<option value="{{$designation->id}}" >{{$designation->designation}}</option>
+								<option value="{{$designation->id}}" id="{{$designation->id}}">{{$designation->designation}}</option>
 								@endforeach
 							</select>
 
@@ -169,30 +171,34 @@
 						<td> {{{ $section->taskName }}} </td>
 						<td>{{{ $section->maxDuration }}}</td>
 						<td> 
-							<?php $designations = DB::table('designation')->where('id', $designation_id)->get();	?>
-							@if($designation_id!=0)
+						<?php  $designations = DB::table('designation')->where('id', $designation_id)->get();	?>
+						@if($designation_id!=0)
+							@foreach ($designations as $designation)
+							<div class="mode1" id="insert_{{$section->id}}">
+								{{ $designation->designation }}
+								<input type="hidden" id="hide_currentDesignation" class="hide_currentDesignation" value="{{$designation->id}}">
+							</div>
+							@endforeach
+						@else
+							<div class="mode1" id="insert_{{$section->id}}">None</div>
+							<input type="hidden" id="hide_currentDesignation" class="hide_currentDesignation" value="0">
+						@endif
+							
+						<?php $designations = DB::table('designation')->orderBy('designation', 'ASC')->get(); ?>
+
+						<form class="form ajax" action="/workflow/submit/{{$section->id}}" data-replace="#insert_{{$section->id}}" method="post" role="form" class="form-inline">
+
+							<select name ="designa" id="designa" class = "form-control mode2 edit-text" style="width:100%">
+								<option value="0" selected id="0">None</option>
 								@foreach ($designations as $designation)
-									<div class="mode1" id="insert_{{$section->id}}">
-										{{$designation->designation }}
-									</div>
+								<option value="{{$designation->id}}" id="{{$designation->id}}">{{$designation->designation}}</option>
 								@endforeach
-							@else
-								<div class="mode1" id="insert_{{$section->id}}">None</div>
-							@endif
-							<?php $designations = DB::table('designation')->orderBy('designation', 'ASC')->get(); ?>
+							</select>
 
-							<form class="form ajax" action="/workflow/submit/{{$section->id}}" data-replace="#insert_{{$section->id}}" method="post" role="form" class="form-inline">
-								<select name ="designa" id="designa" class = "form-control mode2 edit-text" style="width:100%">
-									<option value="0" id="none">None</option>
-									@foreach ($designations as $designation)
-									<option value="{{$designation->id}}">{{$designation->designation}}</option>
-									@endforeach
-								</select>
+							<input type="hidden" value="{{$section->id}}" name ="task_id">
 
-								<input type="hidden" value="{{$section->id}}" name ="task_id">
-
-							{{ Form::close() }}
-						</td>
+						{{ Form::close() }}
+					</td>
 
 						<td class="col-md-4">
 
@@ -266,27 +272,31 @@
 				<tr>
 					<td> {{{ $section->taskName }}} </td>
 					<td>{{{ $section->maxDuration }}}</td>
-					<td>
-						<?php $designations = DB::table('designation')->where('id', $designation_id)->get(); ?>
+					<td> 
+						<?php  $designations = DB::table('designation')->where('id', $designation_id)->get();	?>
 						@if($designation_id!=0)
 							@foreach ($designations as $designation)
 							<div class="mode1" id="insert_{{$section->id}}">
-								{{$designation->designation }}
+								{{ $designation->designation }}
+								<input type="hidden" id="hide_currentDesignation" class="hide_currentDesignation" value="{{$designation->id}}">
 							</div>
 							@endforeach
 						@else
 							<div class="mode1" id="insert_{{$section->id}}">None</div>
+							<input type="hidden" id="hide_currentDesignation" class="hide_currentDesignation" value="0">
 						@endif
-							<?php $designations = DB::table('designation')->orderBy('designation', 'ASC')->get(); ?>
+							
+						<?php $designations = DB::table('designation')->orderBy('designation', 'ASC')->get(); ?>
 
 						<form class="form ajax" action="/workflow/submit/{{$section->id}}" data-replace="#insert_{{$section->id}}" method="post" role="form" class="form-inline">
-							<select name ="designa" id="designa" class = "form-control mode2 edit-text" style="width:100%">
-								<option value=0 id="none"> None                                 </option>
-								@foreach ($designations as $designation)
-								<option value="{{$designation->id}}">{{$designation->designation}}</option>
-								@endforeach
 
+							<select name ="designa" id="designa" class = "form-control mode2 edit-text" style="width:100%">
+								<option value="0" selected id="0">None</option>
+								@foreach ($designations as $designation)
+								<option value="{{$designation->id}}" id="{{$designation->id}}">{{$designation->designation}}</option>
+								@endforeach
 							</select>
+
 							<input type="hidden" value="{{$section->id}}" name ="task_id">
 
 						{{ Form::close() }}
@@ -367,32 +377,35 @@
 					<tr>
 						<td> {{{ $section->taskName }}} </td>
 						<td>{{{ $section->maxDuration }}}</td>
-						<td>
-							<?php $designations = DB::table('designation')->where('id', $designation_id)->get(); ?>
-							@if($designation_id!=0)						
-								@foreach ($designations as $designation)
-								<div class="mode1" id="insert_{{$section->id}}">
-									{{$designation->designation }}
-								</div>
-								@endforeach
-
-							@else
-								<div class="mode1" id="insert_{{$section->id}}">None</div>
-							@endif
+						<td> 
+						<?php  $designations = DB::table('designation')->where('id', $designation_id)->get();	?>
+						@if($designation_id!=0)
+							@foreach ($designations as $designation)
+							<div class="mode1" id="insert_{{$section->id}}">
+								{{ $designation->designation }}
+								<input type="hidden" id="hide_currentDesignation" class="hide_currentDesignation" value="{{$designation->id}}">
+							</div>
+							@endforeach
+						@else
+							<div class="mode1" id="insert_{{$section->id}}">None</div>
+							<input type="hidden" id="hide_currentDesignation" class="hide_currentDesignation" value="0">
+						@endif
 							
-							<?php $designations = DB::table('designation')->orderBy('designation', 'ASC')->get(); ?>
-							<form class="form ajax" action="/workflow/submit/{{$section->id}}" data-replace="#insert_{{$section->id}}" method="post" role="form" class="form-inline">
-								<select name ="designa" id="designa" class = "form-control mode2 edit-text" style="width:100%">
-									<option value=0 id="none" >None                                 </option>
-									@foreach ($designations as $designation)
-									<option value="{{$designation->id}}">{{$designation->designation}}</option>
-									@endforeach
+						<?php $designations = DB::table('designation')->orderBy('designation', 'ASC')->get(); ?>
 
-								</select>
-								<input type="hidden" value="{{$section->id}}" name ="task_id">
+						<form class="form ajax" action="/workflow/submit/{{$section->id}}" data-replace="#insert_{{$section->id}}" method="post" role="form" class="form-inline">
 
-							{{ Form::close() }}
-						</td>
+							<select name ="designa" id="designa" class = "form-control mode2 edit-text" style="width:100%">
+								<option value="0" selected id="0">None</option>
+								@foreach ($designations as $designation)
+								<option value="{{$designation->id}}" id="{{$designation->id}}">{{$designation->designation}}</option>
+								@endforeach
+							</select>
+
+							<input type="hidden" value="{{$section->id}}" name ="task_id">
+
+						{{ Form::close() }}
+					</td>
 						<td class="col-md-4">
 
 							{{HTML::decode (Form::button('<span class="glyphicon glyphicon-edit"></span>', ['class' => 'btn btn-success table-actions allow-edit mode1', 'data-original-title' => 'Assign Designation', 'data-placement' => 'top', 'data-toggle' => 'tooltip']))}}
