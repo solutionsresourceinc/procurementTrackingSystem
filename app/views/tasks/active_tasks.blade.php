@@ -51,5 +51,7 @@
     <?php
 Session::forget('errorremark');
 Session::forget('successremark');
+Session::forget('successchecklist');
+Session::forget('errorchecklist');
 ?>
 @stop    

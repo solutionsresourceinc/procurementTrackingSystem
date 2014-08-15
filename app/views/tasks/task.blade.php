@@ -1098,6 +1098,7 @@ if (Session::get('successremark'))
 echo  "<div class='alert alert-success'>".Session::get('successremark')."</div>";
 Session::forget('errorremark');
 Session::forget('successremark');
+
 ?>
 
 <div id="remarkd" onclick="show()">
@@ -1280,6 +1281,12 @@ No remark.
         </div>
       </div>
     </div>
+    <?php
+    Session::forget('errorremark');
+Session::forget('successremark');
+Session::forget('successchecklist');
+Session::forget('errorchecklist');
+?>
     <!-- CODES FOR MODAL END -->
 @stop
 
