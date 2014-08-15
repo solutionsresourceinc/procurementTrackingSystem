@@ -570,6 +570,9 @@
                                     $lastid=$taskc->id-1;
                                 else
                                     $lastid=$taskp->id;
+
+                                if ($purchase->status=="Closed")
+                                     $lastid=$taskp->id;
                              
                             }
                             else
@@ -621,9 +624,6 @@
 
                     @if($tasks->taskType == "normal")
                             <?php $myForm = 'myForm_' . $taskc->id; 
-
-
-
                             ?>
                             {{Form::open(['url'=>'checklistedit', 'id' => $myForm], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
@@ -636,7 +636,6 @@
                                     else if (Null!=$taskc->assignee)
                                     
                                     echo "value='".$taskc->assignee."'";
-                                
 
                                     else
                                     echo "value='".'None'."'";
@@ -711,9 +710,12 @@
                                     >
                                 </td>
                                 <td style="border-left: none; text-align: center;" colspan="2">
-                              
-                                    <input type="button" class="btn btn-success" value="Submit" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"> 
-                            
+                             
+                              <button class='iframe btn btn-success' @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"><span class="glyphicon glyphicon-floppy-disk"></span></button>
+ 
+                                @if($taskp->status=="Edit")
+                                <button class='iframe btn btn-default' href='taskcanceledit/{{$taskp->id}}' title="Cancel"><span class="glyphicon glyphicon-floppy-remove"></span></button>
+                                @endif
                                 </td>
                             {{Form::close()}}
                     @endif
@@ -813,24 +815,24 @@
                                  <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
                                 <td class="edit-pr-input" colspan="2">
                                     <input type="text" name="supplier"  class="form-control" maxlength="100" width="80%" placeholder="Enter supplier"
-                                     value="<?php
+                                     <?php
                                     if (NULL!=Input::old('supplier'))
-                                    echo Input::old('supplier');
+                                    echo "value='".Input::old('supplier')."'";
                                     else if (NULL!=$taskc->custom1)
                                         echo "value='".$taskc->custom1."'";
-                                    ?>"
+                                    ?>
 
                                     >
                                 </td>
                                 
                                 <td class="edit-pr-input" colspan="2">
                                     <input type="decimal" name="amount"  id="amount" class="form-control" maxlength="12" width="80%" placeholder="Enter amount" onkeypress="return isNumberKey(event)" onchange="checklist_changeAmount(this.id,this.value)"
-                                     value="<?php
+                                     <?php
                                     if (NULL!=Input::old('amount'))
-                                    echo Input::old('amount');
+                                    echo "value='".Input::old('amount')."'";
                                      else if (NULL!=$taskc->custom2)
                                         echo "value='".$taskc->custom2."'";
-                                    ?>"
+                                    ?>
                                     >
                                 </td>
 
@@ -848,12 +850,12 @@
                                 <td class="edit-pr-input" colspan="2">
                     
                                     <input type="decimal" name="amt"  id="amt" class="form-control" maxlength="12" width="80%" placeholder="Enter cheque amount" onkeypress="return isNumberKey(event)" onchange="checklist_changeAmount(this.id,this.value)"
-                                     value="<?php
+                                     <?php
                                     if (NULL!=Input::old('amt'))
-                                    echo Input::old('amt');
+                                    echo "value='".Input::old('amt')."'";
                                      else if (NULL!=$taskc->custom1)
                                         echo "value='".$taskc->custom1."'";
-                                    ?>"
+                                    ?>
                                     >
                                 </td>
                                 <td class="edit-pr-input" colspan="2">

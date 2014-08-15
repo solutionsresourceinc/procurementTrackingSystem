@@ -309,6 +309,9 @@
                                     $lastid=$taskc->id-1;
                                 else
                                     $lastid=$taskp->id;
+                                
+                                if ($purchase->status=="Closed")
+                                     $lastid=$taskp->id;
                              
                             }
                             else
