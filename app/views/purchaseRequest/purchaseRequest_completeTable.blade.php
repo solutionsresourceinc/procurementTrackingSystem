@@ -234,7 +234,7 @@
                         @elseif($workName->work_id == 2)
                             SVP (Above 50k Below 500k)
                         @elseif($workName->work_id == 3)
-                            BIDDING 
+                            BIDDING
                         @elseif($workName->work_id == 4)
                             PAKYAW
                         @elseif($workName->work_id == 5)
