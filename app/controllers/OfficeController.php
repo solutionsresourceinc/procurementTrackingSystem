@@ -125,15 +125,26 @@ class OfficeController extends BaseController {
 	public function deleteOffice($id)
 	{
 		$deleteoffice = Office::find($id);
-		$deleteoffice->delete();
-		$users = User::where('office_id',$id)->get();
+		$usersInOffice = User::where('office_id',$id)->count();
 
-		foreach ($users as $user) 
+		if($usersInOffice == 0)
 		{
-			$user->office_id = 0;
-			$user->save();
+			$deleteoffice->delete();
+			$users = User::where('office_id',$id)->get();
+
+			foreach ($users as $user) 
+			{
+				$user->office_id = 0;
+				$user->save();
+			}
+			return Redirect::to('/offices')->with('success','Successfully deleted');
 		}
+		else
+		{
+			return Redirect::to('/offices')->with('invalid','Unable to delete non-empty office.');
+		}
+
 		
-		return Redirect::to('/offices')->with('success','Successfully deleted');
+		
 	}
 }
