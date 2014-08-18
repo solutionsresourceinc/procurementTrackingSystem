@@ -140,17 +140,17 @@
             @endif
         </div>  
     <!-- END OF SEARCH BOX -->
-    <table class="table table-striped display tablesorter">
+    <table class="table table-striped display tablesorter" border=0>
         <thead>
             <tr>
-                <th>Control No.</th>
-                <th>Project/Purpose</th>
-                <th>Mode</th>
-                <th style="text-align: center">Amount</th>
-                <th>Date Received</th>
+                <th width="12%">Control No.</th>
+                <th >Project/Purpose</th>
+                <th width="20%">Mode</th>
+                <th width="15%" style="text-align: center">Amount</th>
+                <th width="20%">Date Received</th>
                 @if($pageName != 'List of Cancelled Purchase Requests')
                 @if($pageName != 'List of Closed Purchase Requests')
-                        <th>Action</th>
+                        <th width="10%">Action</th>
                     @if(!Entrust::hasRole('Requisitioner'))
                     @endif
                 @endif
@@ -173,8 +173,8 @@
                             echo "class ='success'";
                     ?>
                 >
-                    <td width="10%"><?php echo str_pad($request->controlNo, 5, '0', STR_PAD_LEFT); ?></td>
-                    <td width="27%">
+                    <td><?php echo str_pad($request->controlNo, 5, '0', STR_PAD_LEFT); ?></td>
+                    <td>
                         @if(Entrust::hasRole('Administrator')||Entrust::hasRole('Procurement Personnel'))
                             <a data-toggle="tooltip" data-placement="top" class="purpose" href="{{ URL::to('purchaseRequest/vieweach/'. $request->id) }}" title="View Project Details">
                                 {{ $request->projectPurpose; }}
@@ -187,7 +187,7 @@
                         $doc = new Purchase; 
                         $doc = DB::table('document')->where('pr_id', $request->id)->get(); 
                     ?>
-                    <td width="18%">
+                    <td>
                         @foreach ($doc as $docs) 
                             <?php  
                                 $workflow = Workflow::find($docs->work_id)->workFlowName; 
@@ -203,14 +203,14 @@
                                     <br/><i>{{{$request->otherType}}}</i>
                                 @endif
                     </td>
-                    <td align="right" width="12%"> {{{ $request->amount }}} </td>
-                    <td align="center" width="20%">{{{ $request->dateReceived }}}</td>
+                    <td align="right" > {{{ $request->amount }}} </td>
+                    <td align="center" >{{{ $request->dateReceived }}}</td>
                     @if($pageName != 'List of Cancelled Purchase Requests')
                         @if($pageName != 'List of Closed Purchase Requests')
                             @if(!Entrust::hasRole('Requisitioner'))
                                 @if(Entrust::hasRole('Procurement Personnel'))
                                     @if(Auth::user()->id == $request->created_by)
-                                        <td width="13%">
+                                        <td>
                                             <a data-toggle="tooltip" data-placement="top" class='iframe btn btn-success' href='edit/{{$request->id}}' title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
                                             <form method="POST" action="delete" id="myForm_{{ $request->id }}" name="myForm" style="display: -webkit-inline-box;">
                                                <input type="hidden" name="del_pr" value="{{ $request->id }}">
@@ -218,10 +218,10 @@
                                            </form>
                                         </td>
                                     @else
-                                        <td width="13%"></td>
+                                        <td></td>
                                     @endif
                                 @else
-                                    <td width="13%">
+                                    <td >
                                         <a data-toggle="tooltip" data-placement="top" class='iframe btn btn-success' href='edit/{{$request->id}}' title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
                                         <form method="POST" action="delete" id="myForm_{{ $request->id }}" name="myForm" style="display: -webkit-inline-box;">
                                            <input type="hidden" name="del_pr" value="{{ $request->id }}">
@@ -231,7 +231,7 @@
                                 @endif
                             @else
                                 @if(Auth::user()->id == $request->requisitioner)
-                                    <td width="13%">
+                                    <td>
                                         <form method="POST" action="delete" id="myForm_{{ $request->id }}" name="myForm" style="display: -webkit-inline-box;">
                                            <input type="hidden" name="del_pr" value="{{ $request->id }}">
                                            <center> <a href="changeForm/{{ $request->id }}" class="btn ajax btn-danger" data-method="post" data-replace="#pr_form" data-toggle="modal" data-target="#confirmDelete" data-toggle="tooltip" title="Cancel"><span class="glyphicon glyphicon-remove"></span></a></center>
