@@ -339,7 +339,7 @@
 @section('footer')
 <script type="text/javascript">
         
-        if(document.getElementById('pageCount').value == 0)
+        if(document.getElementById('pageCount').value == 0 || document.getElementById('pageCount').value <= <?php if($pageNumber == 0){echo "15";}else{echo $pageNumber;} ?>)
         {
             document.getElementById('tablePagination').style.display = false;
         }
@@ -458,6 +458,7 @@
             else
                 document.getElementById('betDate').disabled = true;
         }
+
 </script>
 
 {{ HTML::script('js/bootstrap-ajax.js');}}

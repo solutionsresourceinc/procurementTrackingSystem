@@ -29,24 +29,25 @@ class BaseController extends Controller {
 	    	{
 	        	$randomString .= rand(1,9);
 	    	}
-	    	$randomString .= ".00";
-	    	return number_format($randomString);
+
+	    	return $randomString;
 		}
 
 		$numLoop = 1;
 		while($numLoop < 301)
 		{
-			$amtControl = generateRandomAmount();
 			$purchase = new Purchase;
 			$document = new Document;
 			$purchase->projectPurpose = generateRandomString();
 			$purchase->sourceOfFund = generateRandomString();
-			$purchase->amount = generateRandomAmount();
+			$controlAmt = generateRandomAmount();
+            $controlAmt .= ".00";
+            $purchase->amount = number_format($controlAmt);
 			$purchase->office = "1";
 			$purchase->requisitioner = "1";
 			$purchase->dateRequested = date('Y-m-d H:i:s');
 			$purchase->dateReceived = date('Y-m-d H:i:s');
-			$purchase->status = 'Cancelled';
+			$purchase->status = 'Active';
 			$purchase->otherType = " ";
 
 			// Get latest control number
@@ -68,12 +69,12 @@ class BaseController extends Controller {
 			$purchase_save = $purchase->save();
 			if($purchase_save)
 			{
-				if($purchase->amount <= 50000)
+				if($controlAmt < 50000)
 					$amtControl = 1;
-				else if($purchase->amount > 50000 && $purchase->amount < 500000)
+				else if($controlAmt >= 50000 && $controlAmt <= 500000)
 					$amtControl = 2;
-				else if($purchase->amount >= 500000)
-					$amtControl = 3;
+				else if($controlAmt >= 500000)
+					$amtControl = 3;;
 
 				$document->pr_id = $purchase->id;
 				$document->work_id = $amtControl;

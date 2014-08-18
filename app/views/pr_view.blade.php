@@ -39,7 +39,6 @@
 <div class="modal fade" id="confirmDelete" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h4 class="modal-title"><b>Cancel Purchase Request</b></h4>
@@ -150,9 +149,7 @@
                 <th width="20%">Date Received</th>
                 @if($pageName != 'List of Cancelled Purchase Requests')
                 @if($pageName != 'List of Closed Purchase Requests')
-                        <th width="10%">Action</th>
-                    @if(!Entrust::hasRole('Requisitioner'))
-                    @endif
+                    <th width="10%">Action</th>
                 @endif
                 @endif
             </tr>
@@ -162,13 +159,13 @@
                 <tr id="content"
                     <?php
                         $useroffice=Auth::user()->office_id;
-                        $doc = new Document; 
-                        $doc = DB::table('document')->where('pr_id', $request->id)->first();  
+                        $doc = new Document;
+                        $doc = DB::table('document')->where('pr_id', $request->id)->first();
                         $doc_id= $doc->id;
                         $userx= Auth::User()->id;
                         $counter=0;
                         $counter=Count::where('user_id', $userx)->where('doc_id', $doc_id)->count();
-                        
+
                         if ($counter!=0)
                             echo "class ='success'";
                     ?>
@@ -183,14 +180,14 @@
                             {{ $request->projectPurpose; }}
                         @endif
                     </td>
-                    <?php 
-                        $doc = new Purchase; 
-                        $doc = DB::table('document')->where('pr_id', $request->id)->get(); 
+                    <?php
+                        $doc = new Purchase;
+                        $doc = DB::table('document')->where('pr_id', $request->id)->get();
                     ?>
                     <td>
-                        @foreach ($doc as $docs) 
-                            <?php  
-                                $workflow = Workflow::find($docs->work_id)->workFlowName; 
+                        @foreach ($doc as $docs)
+                            <?php
+                                $workflow = Workflow::find($docs->work_id)->workFlowName;
                                 if($workflow == "Small Value Procurement (Below P50,000)")
                                     echo "SVP (Below P50,000)";
                                 else if($workflow == "Small Value Procurement (Above P50,000 Below P500,000)")
@@ -205,42 +202,36 @@
                     </td>
                     <td align="right" > {{{ $request->amount }}} </td>
                     <td align="center" >{{{ $request->dateReceived }}}</td>
+                    <td>
                     @if($pageName != 'List of Cancelled Purchase Requests')
                         @if($pageName != 'List of Closed Purchase Requests')
                             @if(!Entrust::hasRole('Requisitioner'))
                                 @if(Entrust::hasRole('Procurement Personnel'))
                                     @if(Auth::user()->id == $request->created_by)
-                                        <td>
                                             <a data-toggle="tooltip" data-placement="top" class='iframe btn btn-success' href='edit/{{$request->id}}' title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
                                             <form method="POST" action="delete" id="myForm_{{ $request->id }}" name="myForm" style="display: -webkit-inline-box;">
                                                <input type="hidden" name="del_pr" value="{{ $request->id }}">
                                                <center> <a href="changeForm/{{ $request->id }}" class="btn ajax btn-danger" data-method="post" data-replace="#pr_form" data-toggle="modal" data-target="#confirmDelete" data-toggle="tooltip" title="Cancel"><span class="glyphicon glyphicon-remove"></span></a></center>
                                            </form>
-                                        </td>
-                                    @else
-                                        <td></td>
                                     @endif
                                 @else
-                                    <td >
-                                        <a data-toggle="tooltip" data-placement="top" class='iframe btn btn-success' href='edit/{{$request->id}}' title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
-                                        <form method="POST" action="delete" id="myForm_{{ $request->id }}" name="myForm" style="display: -webkit-inline-box;">
-                                           <input type="hidden" name="del_pr" value="{{ $request->id }}">
-                                           <center> <a href="changeForm/{{ $request->id }}" class="btn ajax btn-danger" data-method="post" data-replace="#pr_form" data-toggle="modal" data-target="#confirmDelete" data-toggle="tooltip" title="Cancel"><span class="glyphicon glyphicon-remove"></span></a></center>
-                                       </form>
-                                    </td>
+                                    <a data-toggle="tooltip" data-placement="top" class='iframe btn btn-success' href='edit/{{$request->id}}' title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
+                                    <form method="POST" action="delete" id="myForm_{{ $request->id }}" name="myForm" style="display: -webkit-inline-box;">
+                                       <input type="hidden" name="del_pr" value="{{ $request->id }}">
+                                       <center> <a href="changeForm/{{ $request->id }}" class="btn ajax btn-danger" data-method="post" data-replace="#pr_form" data-toggle="modal" data-target="#confirmDelete" data-toggle="tooltip" title="Cancel"><span class="glyphicon glyphicon-remove"></span></a></center>
+                                   </form>
                                 @endif
                             @else
                                 @if(Auth::user()->id == $request->requisitioner)
-                                    <td>
-                                        <form method="POST" action="delete" id="myForm_{{ $request->id }}" name="myForm" style="display: -webkit-inline-box;">
-                                           <input type="hidden" name="del_pr" value="{{ $request->id }}">
-                                           <center> <a href="changeForm/{{ $request->id }}" class="btn ajax btn-danger" data-method="post" data-replace="#pr_form" data-toggle="modal" data-target="#confirmDelete" data-toggle="tooltip" title="Cancel"><span class="glyphicon glyphicon-remove"></span></a></center>
-                                       </form>
-                                    </td>
+                                    <form method="POST" action="delete" id="myForm_{{ $request->id }}" name="myForm" style="display: -webkit-inline-box;">
+                                       <input type="hidden" name="del_pr" value="{{ $request->id }}">
+                                       <center> <a href="changeForm/{{ $request->id }}" class="btn ajax btn-danger" data-method="post" data-replace="#pr_form" data-toggle="modal" data-target="#confirmDelete" data-toggle="tooltip" title="Cancel"><span class="glyphicon glyphicon-remove"></span></a></center>
+                                   </form>
                                 @endif
                             @endif
                         @endif
                     @endif
+                    </td>
                 </tr>
             @endforeach
         </tbody>
