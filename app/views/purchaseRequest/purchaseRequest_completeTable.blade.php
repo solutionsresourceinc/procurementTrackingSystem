@@ -230,11 +230,11 @@
                             ->join('document', 'purchase_request.id', '=', 'document.pr_id')->first(); 
                         ?>
                         @if($workName->work_id == 1)
-                            SVP
+                            SVP (Below 50k)
                         @elseif($workName->work_id == 2)
-                            SVP
+                            SVP (Above 50k Below 500k)
                         @elseif($workName->work_id == 3)
-                            BIDDING
+                            BIDDING 
                         @elseif($workName->work_id == 4)
                             PAKYAW
                         @elseif($workName->work_id == 5)
