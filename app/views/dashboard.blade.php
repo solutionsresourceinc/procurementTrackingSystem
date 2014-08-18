@@ -101,7 +101,7 @@
 
                 <?php
                     if(Entrust::hasRole('Requisitioner'))
-                        $requests =  DB::table('purchase_request')->where('requisitioner', $id)->orderBy('updated_at', 'DESC')->take(5)->get();
+                        $requests =  DB::table('purchase_request')->where('office', Auth::user()->office_id)->orderBy('updated_at', 'DESC')->take(5)->get();
                     else
                         $requests =  DB::table('purchase_request')->orderBy('updated_at', 'DESC')->take(5)->get();
                 ?>
