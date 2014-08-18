@@ -141,7 +141,7 @@ class OfficeController extends BaseController {
 		}
 		else
 		{
-			return Redirect::to('/offices')->with('invalid','Unable to delete non-empty office.');
+			return Redirect::to('/offices')->with('invalid','Unable to delete non-empty office. ');
 		}
 
 		
