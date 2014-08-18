@@ -3,7 +3,7 @@
 @section('content')
     <h1 class="page-header">Dashboard</h1>
 
-    <?php 
+    <?php
         $id=Auth::User()->id;
         $role= DB::table('assigned_roles')->where('user_id',$id)->first();
     ?>
@@ -15,7 +15,7 @@
         $chequeCount = 0;
 
         $reports = Reports::all();
-        foreach ($reports as $report) 
+        foreach ($reports as $report)
         {
             $POCount = $POCount + $report->pOrderCount;
             $chequeCount = $chequeCount + $report->chequeCount;
@@ -84,7 +84,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <span style="font-size: 18px;">Latest Update
-                    @if($role->role_id!=1) 
+                    @if($role->role_id!=1)
                         <a href="{{ URL::to('purchaseRequest/create') }}" class="btn btn-sm btn-primary" style="float: right; padding: 3px 10px;">Create New</a>
                     @endif
                 </span>
@@ -112,20 +112,16 @@
                             <tr>
                             <td width="10%"> <?php echo str_pad($request->controlNo, 5, '0', STR_PAD_LEFT); ?></td>
                             <td width="30%">
-                                @if($role->role_id!=1) 
-                                    <a data-toggle="tooltip" data-placement="top" class="purpose" href="{{ URL::to('purchaseRequest/vieweach/'. $request->id) }}" title="View Project Details">
-                                    @endif
-                                        {{ $request->projectPurpose; }}
-                                @if($role->role_id!=1)</a>@endif
+                                    <a data-toggle="tooltip" data-placement="top" class="purpose" href="{{ URL::to('purchaseRequest/vieweach/'. $request->id) }}" title="View Project Details">{{ $request->projectPurpose; }}</a>
                             </td>
-                            <?php 
-                                $doc = new Purchase; 
-                                $doc = DB::table('document')->where('pr_id', $request->id)->get(); 
+                            <?php
+                                $doc = new Purchase;
+                                $doc = DB::table('document')->where('pr_id', $request->id)->get();
                             ?>
                             <td width="30%">
-                                @foreach ($doc as $docs) 
-                                    <?php  
-                                    $workflow = Workflow::find($docs->work_id)->workFlowName; 
+                                @foreach ($doc as $docs)
+                                    <?php
+                                    $workflow = Workflow::find($docs->work_id)->workFlowName;
                                     if($workflow == "Small Value Procurement (Below P50,000)")
                                     {
                                         echo "SVP (Below P50,000)";
@@ -159,6 +155,6 @@
                 </tbody>
             </table>
             </div>
-        </div>  
+        </div>
     </div>
 @stop

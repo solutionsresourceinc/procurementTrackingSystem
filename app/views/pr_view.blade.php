@@ -24,7 +24,7 @@
 {{Session::put('backTo','purchaseRequest/view');}}
 
 <h1 class="pull-left"> {{{ $pageName }}} </h1>
-    
+
     @if ( Entrust::hasRole('Administrator') || Entrust::hasRole('Procurement Personnel'))
       <div class="pull-right options">
             <a href="{{ URL::to('purchaseRequest/create') }}" class="btn btn-success">Create New</a>
@@ -56,7 +56,7 @@
     </div>
 </form>
 @if(Session::get('notice'))
-    <div class="alert alert-success"> {{ Session::get('notice') }}</div> 
+    <div class="alert alert-success"> {{ Session::get('notice') }}</div>
 @endif
     @if(!Entrust::hasRole('Requisitioner'))
     <div class="col-md-6">
@@ -66,7 +66,7 @@
     <div class="col-md-6"></div>
     @endif
     <!-- START OF SEARCH BOX -->
-    <form method="POST" action=""> 
+    <form method="POST" action="">
         <div class="col-md-3" style="">
             <select id="searchBy" name="searchBy" class="form-control" onchange="changeSearch(this.value)">
                 <option value="0" <?php if($searchBy == '0'){ echo "selected";} ?> >Search by</option>
@@ -82,15 +82,15 @@
                 <option value="amount" <?php if($searchBy == 'amount'){ echo "selected";} ?>>Amount</option>
                 <option value="dateReceived" <?php if($searchBy == 'dateReceived'){ echo "selected";} ?>>Date Received</option>
             </select>
-        </div>   
-        
+        </div>
+
     <div class="input-group" id="searchBox">
       <input onkeyup="disableButton()" onchange="disableButton()" id="searchTerm" name="searchTerm" placeholder="Enter search keywords" type="text" class="form-control" onchange="detectInput()">
       <span class="input-group-btn">
         <button class="btn btn-primary" name="searchButton" id="searchButton" type="submit">Search</button>
       </span>
     </div>
-    
+
     <div id="allButton" style="display: none;">
         <button class="btn btn-primary col-md-3" name="allButton" id="allButton" type="submit">Display</button>
         <br/>
@@ -109,12 +109,12 @@
         </div>
     </div>
     <input type="hidden" id="pageNameHidden" name="pageNameHidden" value="{{{ $pageName }}}" />
-    </form> 
+    </form>
 
     <div align="right" class="col-md-12" id="noOfResult">
             <?php
                 error_reporting(0);
-                $page = $_REQUEST["page"]; 
+                $page = $_REQUEST["page"];
                 Session::put('page',$page);
             ?>
 
@@ -137,7 +137,7 @@
                     @endif
                 @endif
             @endif
-        </div>  
+        </div>
     <!-- END OF SEARCH BOX -->
     <table class="table table-striped display tablesorter" border=0>
         <thead>
@@ -172,13 +172,9 @@
                 >
                     <td><?php echo str_pad($request->controlNo, 5, '0', STR_PAD_LEFT); ?></td>
                     <td>
-                        @if(Entrust::hasRole('Administrator')||Entrust::hasRole('Procurement Personnel'))
-                            <a data-toggle="tooltip" data-placement="top" class="purpose" href="{{ URL::to('purchaseRequest/vieweach/'. $request->id) }}" title="View Project Details">
-                                {{ $request->projectPurpose; }}
-                            </a>
-                        @else
+                        <a data-toggle="tooltip" data-placement="top" class="purpose" href="{{ URL::to('purchaseRequest/vieweach/'. $request->id) }}" title="View Project Details">
                             {{ $request->projectPurpose; }}
-                        @endif
+                        </a>
                     </td>
                     <?php
                         $doc = new Purchase;
@@ -243,7 +239,7 @@
             <p><i>No data available</i></p>
         @endif
     </div>
- 
+
 {{Session::forget('notice'); }}
 {{Session::forget('main_error'); }}
 {{Session::forget('imgerror'); }}
@@ -264,7 +260,7 @@
     <script type="text/javascript">
         // When the document is ready
         $(document).ready(function () {
-            
+
             $('.input-daterange').datepicker({
                 todayBtn: "linked"
             });
@@ -292,21 +288,21 @@
             if(document.getElementById('searchBy').value == 'dateReceived')
             {
                 document.getElementById('searchBox').style.display = 'none';
-                document.getElementById('searchDate').style.display = ''; 
+                document.getElementById('searchDate').style.display = '';
                 document.getElementById('allButton').style.display = 'none';
             }
-            
+
             if(document.getElementById('searchBy').value == '0')
             {
                 document.getElementById('searchTerm').disabled = true;
                 document.getElementById('searchButton').disabled = true;
                 document.getElementById('allButton').style.display = 'none';
             }
-            
+
             if(document.getElementById('searchBy').value == 'all')
             {
                 document.getElementById('searchDate').style.display = 'none';
-                document.getElementById('searchBox').style.display = 'none'; 
+                document.getElementById('searchBox').style.display = 'none';
                 // document.getElementById('searchTerm').style.display = 'none';
                 // document.getElementById('searchButton').style.display = 'none';
                 document.getElementById('allButton').style.display = '';
@@ -327,7 +323,7 @@
                 document.getElementById('searchBox').style.display = '';
                 document.getElementById('searchTerm').style.display = '';
                 document.getElementById('searchButton').style.display = '';
-                document.getElementById('searchDate').style.display = 'none'; 
+                document.getElementById('searchDate').style.display = 'none';
                 document.getElementById('allButton').style.display = 'none';
             }
             else if(value == 'all')
@@ -336,13 +332,13 @@
                 document.getElementById('searchTerm').style.display = 'none';
                 document.getElementById('searchButton').style.display = 'none';
                 document.getElementById('searchBox').style.display = 'none';
-                document.getElementById('searchDate').style.display = 'none';  
+                document.getElementById('searchDate').style.display = 'none';
             }
             else if(value == 'dateReceived')
             {
                 document.getElementById('searchBox').style.display = 'none';
-                document.getElementById('searchDate').style.display = ''; 
-                document.getElementById('allButton').style.display = 'none'; 
+                document.getElementById('searchDate').style.display = '';
+                document.getElementById('allButton').style.display = 'none';
             }
             else
             {
@@ -352,7 +348,7 @@
                 document.getElementById('searchTerm').style.display = '';
                 document.getElementById('searchButton').style.display = '';
                 document.getElementById('searchDate').style.display = 'none';
-                document.getElementById('allButton').style.display = 'none';  
+                document.getElementById('allButton').style.display = 'none';
             }
         }
 
@@ -372,7 +368,7 @@
                 document.getElementById('betDate').disabled = true;
         }
 
-        $('input.filter').on('keyup', function() 
+        $('input.filter').on('keyup', function()
         {
             var rex = new RegExp($(this).val(), 'i');
             var div_noOfResult = document.getElementById('noOfResult');
@@ -404,7 +400,7 @@
                 {
                     var lastPR = 10 * page;
                     var firstPR = lastPR - 9;
-                   
+
                     if(firstPR >=  countPR)
                     {
                          displayResult = firstPR + " - " + lastPR + " of " + countPR;
@@ -418,7 +414,7 @@
                         if(remainingPR == 0)
                             var displayResult = firstPR + " of " + countPR;
                         else if(remainingPR >= 10)
-                            var displayResult = firstPR + " - " + lastPR2 + " of " + countPR; 
+                            var displayResult = firstPR + " - " + lastPR2 + " of " + countPR;
                         else
                             var displayResult = firstPR + " - " + lastPR + " of " + countPR;
                     }
@@ -450,13 +446,13 @@
                     document.getElementById('table_id2').style.display = 'table';
                     document.getElementById('table_id3').style.display = 'none';
                 }
-                    var noOfSearched = rowNum - 1; 
+                    var noOfSearched = rowNum - 1;
                     document.getElementById('noOfResult').innerHTML =  noOfSearched+ " result(s) ";
-                
+
             }
-            
+
         });
-       
+
         // END
 
         $('#confirmDelete').on('show.bs.modal', function (e) {
@@ -473,7 +469,7 @@
 
         $('#confirmDelete').find('.modal-footer #confirm').on('click', function(){
             //$(this).data('form').submit();
-            var name = "myForm_" + window.my_id; 
+            var name = "myForm_" + window.my_id;
             document.getElementById(name).submit();
             //alert(name);
         });
@@ -514,5 +510,5 @@
                  document.getElementById('modalSubmit').disabled = true
             }
         }
-        
+
     </script>
