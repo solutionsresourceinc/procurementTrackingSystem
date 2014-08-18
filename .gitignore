@@ -7,3 +7,6 @@ composer.lock
 .DS_Store
 Thumbs.db
 /public/uploads
+.idea/.name
+.idea/workspace.xml
+.idea/
