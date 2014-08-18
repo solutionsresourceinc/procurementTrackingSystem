@@ -10,7 +10,8 @@ class PurchaseRequestController extends Controller
         $searchBy = '0';
         if(Entrust::hasRole('Requisitioner'))
         {
-            $requests = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('requisitioner', Auth::user()->id)->where('status', '=', 'Active')->orderBy('dateReceived', 'DESC');
+            $requests = DB::table('purchase_request')->where('office', '=', Auth::user()->office_id)->where('dueDate','>',$date_today)->where('status', '=', 'Active')->orderBy('dateReceived', 'DESC');
+
             $pageCounter = $requests->count();
             $requests = $requests->paginate(10);
         }
@@ -30,7 +31,7 @@ class PurchaseRequestController extends Controller
         $searchBy = '0';
         if(Entrust::hasRole('Requisitioner'))
         {
-            $requests = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('requisitioner', Auth::user()->id)->where('status', '=', 'Closed')->orderBy('dateReceived', 'DESC');
+            $requests = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('office', Auth::user()->office_id)->where('status', '=', 'Closed')->orderBy('dateReceived', 'DESC');
             $pageCounter = $requests->count();
             $requests = $requests->paginate(10);
         }
@@ -51,7 +52,7 @@ class PurchaseRequestController extends Controller
         $searchBy = '0';
         if(Entrust::hasRole('Requisitioner'))
         {
-            $requests = DB::table('purchase_request')->where('dueDate','<=',$date_today)->where('requisitioner', Auth::user()->id)->where('status', '=', 'Active')->orderBy('dateReceived', 'DESC');
+            $requests = DB::table('purchase_request')->where('dueDate','<=',$date_today)->where('office', Auth::user()->office_id)->where('status', '=', 'Active')->orderBy('dateReceived', 'DESC');
             $pageCounter = $requests->count();
             $requests = $requests->paginate(10);
         }
@@ -71,7 +72,7 @@ class PurchaseRequestController extends Controller
         $searchBy = '0';
         if(Entrust::hasRole('Requisitioner'))
         {
-            $requests = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('requisitioner', Auth::user()->id)->where('status', '=', 'Cancelled')->orderBy('dateReceived', 'DESC');
+            $requests = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('office', Auth::user()->office_id)->where('status', '=', 'Cancelled')->orderBy('dateReceived', 'DESC');
             $pageCounter = $requests->count();
             $requests = $requests->paginate(10);
         }
@@ -453,7 +454,7 @@ class PurchaseRequestController extends Controller
                 }
 
                 $connected = @fsockopen("www.google.com", 80);  //website, port  (try 80 or 443)
-                if ($connected)
+                if (!$connected)
                 {
                     $sendee = DB::table('users')->where('id',$purchase->requisitioner)->first();
                     $email = $sendee->email;
