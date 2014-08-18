@@ -458,6 +458,7 @@
             else
                 document.getElementById('betDate').disabled = true;
         }
+
 </script>
 
 {{ HTML::script('js/bootstrap-ajax.js');}}
