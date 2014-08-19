@@ -452,13 +452,24 @@
                                     <input type="hidden" name="purchase_request_id" value="{{$purchaseToEdit->id}}">
                                     <td colspan="3">
 
-
+                                        @if($otherdetails->label=="Amount")
+                                        <input type="decimal" name="value"  id="amt" class="form-control" maxlength="12" width="80%" placeholder="Enter  amount" onkeypress="return isNumberKey(event)" onchange="checklist_changeAmount(this.id,this.value)"
+                                    value="<?php if($otherdetails->id==Session::get("retainId"))
+                                        {
+                                            echo trim(Session::get("retainOtherDetails"));
+                                        }
+                                        
+                                            ?>">
+                                        @endif
+                                        @else
                                         <input name ="value" type="text" class="form-control" value="<?php if($otherdetails->id==Session::get("retainId"))
                                         {
                                             echo trim(Session::get("retainOtherDetails"));
                                         }
                                         
-                                            ?>"></td>
+                                            ?>">
+                                        @endif
+                                        </td>
                                     <td align="center"><button class ="btn btn-primary">Save</button></td>
                                 {{Form::close()}}
                             @else 
@@ -597,14 +608,14 @@
                                  <br>
                                     <div class="alert alert-success"> {{ Session::get('successchecklist') }}</div> 
                                   
-                                <tr>
+                                </tr>
                                 @endif
                                 @if(Session::get('errorchecklist'))
                                 <tr>
                                 <br>
                                     <div class="alert alert-danger"> {{ Session::get('errorchecklist') }}</div> 
                                     
-                                <tr>
+                                </tr>
                                 @endif
                          
                         <?php
@@ -1227,11 +1238,7 @@
                             {{Form::open(['url'=>'evaluations', 'id' => $myForm], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
                                  <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
-                                    <td> </td>
-                                    <th class='workflow-th' colspan="2">Date:</th>
-                                    <th class='workflow-th' colspan="2">No. Of Days Accomplished:</th>
-                                </tr>
-                                <tr class="@if($taskch!=0 && $taskc->task_id==$tasks->id ) current-task @endif">
+                                   
                                     <td>{{$tasks->taskName}}</td>
                                     <td colspan="2">
                                         <?php 
@@ -1607,7 +1614,7 @@
                                          else if (NULL!=$taskc->custom3)
                                         echo "value='".$taskc->custom3."'";
                                         else
-                                        echo 'None';
+                                        echo "value='".'None'."'";
                                         
                                         ?>
                                         ">
