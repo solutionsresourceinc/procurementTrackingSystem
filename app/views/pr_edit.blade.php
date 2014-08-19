@@ -460,7 +460,7 @@
                                         }
                                         
                                             ?>">
-                                        @endif
+                                        
                                         @else
                                         <input name ="value" type="text" class="form-control" value="<?php if($otherdetails->id==Session::get("retainId"))
                                         {
@@ -724,7 +724,7 @@
                             </tr>
                             <tr class='current-task'>
 
-                                <td colspan="1" align="center" >
+                                <td colspan="5" align="center" >
                                  <button class='iframe btn btn-success' @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"><span class="glyphicon glyphicon-floppy-disk"></span></button>
                               
                                 @if($taskp->status=="Edit")
@@ -840,7 +840,7 @@
                             </tr>
                             <tr class='current-task'>
 
-                                <td colspan="1" align="center" >
+                                <td colspan="5" align="center" >
                                  <button class='iframe btn btn-success' @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"><span class="glyphicon glyphicon-floppy-disk"></span></button>
                               
                                 @if($taskp->status=="Edit")
@@ -889,7 +889,7 @@
                             </tr>
                             <tr class='current-task'>
 
-                                <td colspan="1" align="center" >
+                                <td colspan="5" align="center" >
                                  <button class='iframe btn btn-success' @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"><span class="glyphicon glyphicon-floppy-disk"></span></button>
                               
                                 @if($taskp->status=="Edit")
@@ -955,7 +955,7 @@
                             </tr>
                             <tr class='current-task'>
 
-                                <td colspan="1" align="center" >
+                                <td colspan="5" align="center" >
                                  <button class='iframe btn btn-success' @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"><span class="glyphicon glyphicon-floppy-disk"></span></button>
                               
                                 @if($taskp->status=="Edit")
@@ -1040,7 +1040,7 @@
                             </tr>
                             <tr class='current-task'>
 
-                                <td colspan="1" align="center" >
+                                <td colspan="5" align="center" >
                                  <button class='iframe btn btn-success' @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"><span class="glyphicon glyphicon-floppy-disk"></span></button>
                               
                                 @if($taskp->status=="Edit")
@@ -1135,7 +1135,7 @@
                             </tr>
                             <tr class='current-task'>
 
-                                <td colspan="1" align="center" >
+                                <td colspan="5" align="center" >
                                  <button class='iframe btn btn-success' @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"><span class="glyphicon glyphicon-floppy-disk"></span></button>
                               
                                 @if($taskp->status=="Edit")
@@ -1220,7 +1220,7 @@
                             </tr>
                             <tr class='current-task'>
 
-                                <td colspan="1" align="center" >
+                                <td colspan="5" align="center" >
                                  <button class='iframe btn btn-success' @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"><span class="glyphicon glyphicon-floppy-disk"></span></button>
                               
                                 @if($taskp->status=="Edit")
@@ -1303,7 +1303,7 @@
                             </tr>
                             <tr class='current-task'>
 
-                                <td colspan="1" align="center" >
+                                <td colspan="5" align="center" >
                                  <button class='iframe btn btn-success' @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"><span class="glyphicon glyphicon-floppy-disk"></span></button>
                               
                                 @if($taskp->status=="Edit")
@@ -1349,7 +1349,7 @@
                             </tr>
                             <tr class='current-task'>
 
-                                <td colspan="1" align="center" >
+                                <td colspan="5" align="center" >
                                  <button class='iframe btn btn-success' @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"><span class="glyphicon glyphicon-floppy-disk"></span></button>
                               
                                 @if($taskp->status=="Edit")
@@ -1446,7 +1446,7 @@
                             </tr>
                             <tr class='current-task'>
 
-                                <td colspan="1" align="center" >
+                                <td colspan="5" align="center" >
                                  <button class='iframe btn btn-success' @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"><span class="glyphicon glyphicon-floppy-disk"></span></button>
                               
                                 @if($taskp->status=="Edit")
@@ -1551,7 +1551,7 @@
                             </tr>
                             <tr class='current-task'>
 
-                                <td colspan="1" align="center" >
+                                <td colspan="5" align="center" >
                                  <button class='iframe btn btn-success' @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"><span class="glyphicon glyphicon-floppy-disk"></span></button>
                               
                                 @if($taskp->status=="Edit")
@@ -1629,7 +1629,7 @@
                             </tr>
                             <tr class='current-task'>
 
-                                <td colspan="1" align="center" >
+                                <td colspan="5" align="center" >
                                  <button class='iframe btn btn-success' @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"><span class="glyphicon glyphicon-floppy-disk"></span></button>
                               
                                 @if($taskp->status=="Edit")
@@ -1693,7 +1693,7 @@
                             </tr>
                             <tr class='current-task'>
 
-                                <td colspan="1" align="center" >
+                                <td colspan="5" align="center" >
                                  <button class='iframe btn btn-success' @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"><span class="glyphicon glyphicon-floppy-disk"></span></button>
                               
                                 @if($taskp->status=="Edit")
@@ -1775,7 +1775,7 @@
                             </tr>
                             <tr class='current-task'>
 
-                                <td colspan="1" align="center" >
+                                <td colspan="5" align="center" >
                                  <button class='iframe btn btn-success' @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"><span class="glyphicon glyphicon-floppy-disk"></span></button>
                               
                                 @if($taskp->status=="Edit")
@@ -1827,7 +1827,7 @@
                             </tr>
                             <tr class='current-task'>
 
-                                <td colspan="1" align="center" >
+                                <td colspan="5" align="center" >
                                  <button class='iframe btn btn-success' @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"><span class="glyphicon glyphicon-floppy-disk"></span></button>
                               
                                 @if($taskp->status=="Edit")
@@ -2405,16 +2405,17 @@ $prdays=$days;
                         </table>
                     </div></div>"; 
             ?>
-
-        </div>
-    </div>
-
             {{Session::forget('errorlabel')}}
             {{Session::forget('successlabel')}}
             {{Session::forget('errorchecklist')}}
             {{Session::forget('successchecklist')}}
             {{Session::forget('goToChecklist')}}
 
+
+        </div>
+    </div>
+
+      
     <!-- CODES FOR MODAL -->
     <div class="modal fade" id="confirmDelete" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
       <div class="modal-dialog">
