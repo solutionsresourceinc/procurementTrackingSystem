@@ -772,7 +772,7 @@
                             </tr>
                             <tr class='current-task'>
 
-                                <td colspan="1" align="center" >
+                                <td colspan="5" align="center" >
                                  <button type="button" class='iframe btn btn-success' @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"><span class="glyphicon glyphicon-floppy-disk"></span></button>
                               
                                 @if($taskp->status=="Edit")
@@ -782,7 +782,7 @@
                                 @endif
                                   </td>
                               
-                                
+                                <td></td>
                             {{Form::close()}}
                     @endif
                     @if($tasks->taskType == "posting")
@@ -1061,13 +1061,14 @@
                             {{Form::open(['url'=>'philgeps', 'id' => $myForm], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
                                  <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
-          
+                                    <td colspan="4"></td>
+                                    <td></td>
                                 </tr>
                                 <tr class="@if($taskch!=0 && $taskc->task_id==$tasks->id ) current-task @endif">
                                  
                                     <td class="edit-pr-input">
                                     Reference No.:
-                                    <input type="text" name="referenceno"  class="form-control" maxlength="100" width="80%" maxlength="100"
+                                    <input type="text" name="referenceno"  class="form-control" maxlength="100" width="80%" maxlength="100" placeholder="Enter reference number"
                                     <?php
                                     if (NULL!=Input::old('referenceno'))
                                     echo "value='".Input::old('referenceno')."'";
@@ -1797,7 +1798,7 @@
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
                                  <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
                                 
-                                <td class="edit-pr-input" colspan="3"> 
+                                <td class="edit-pr-input" colspan="4"> 
                                     <?php 
                                     $today = date("m/d/y");
                                     ?>

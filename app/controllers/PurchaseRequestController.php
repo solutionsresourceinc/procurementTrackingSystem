@@ -1144,7 +1144,7 @@ class PurchaseRequestController extends Controller
                 $count->save();
             }
 
-            Session::put('successchecklist','Saved.');
+            Session::put('successchecklist','Task completed.');
 
             $taskd= TaskDetails::find($taskdetails_id);
             $taskd->status="Done";
@@ -1291,7 +1291,7 @@ class PurchaseRequestController extends Controller
                 $count->save();
             }
 
-            Session::put('successchecklist','Saved.');
+            Session::put('successchecklist','Task completed.');
 
             $taskd= TaskDetails::find($taskdetails_id);
             $taskd->status="Done";
@@ -1382,7 +1382,7 @@ class PurchaseRequestController extends Controller
                 $count->save();
             }
 
-            Session::put('successchecklist','Saved.');
+            Session::put('successchecklist','Task completed.');
 
             $taskd= TaskDetails::find($taskdetails_id);
             $taskd->status="Done";
@@ -1466,7 +1466,7 @@ class PurchaseRequestController extends Controller
                 $count->save();
             }
 
-            Session::put('successchecklist','Saved.');
+            Session::put('successchecklist','Task completed.');
 
             $taskd= TaskDetails::find($taskdetails_id);
             $taskd->status="Done";
@@ -1574,7 +1574,7 @@ class PurchaseRequestController extends Controller
                 $count->save();
             }
 
-            Session::put('successchecklist','Saved.');
+            Session::put('successchecklist','Task completed.');
 
             $taskd= TaskDetails::find($taskdetails_id);
             $taskd->status="Done";
@@ -1663,7 +1663,7 @@ class PurchaseRequestController extends Controller
                 $count->save();
             }
 
-            Session::put('successchecklist','Saved.');
+            Session::put('successchecklist','Task completed.');
 
             $taskd= TaskDetails::find($taskdetails_id);
             $taskd->status="Done";
@@ -1758,7 +1758,7 @@ class PurchaseRequestController extends Controller
                 $count->save();
             }
 
-            Session::put('successchecklist','Saved.');
+            Session::put('successchecklist','Task completed.');
 
             $taskd= TaskDetails::find($taskdetails_id);
             $taskd->status="Done";
@@ -1844,7 +1844,7 @@ class PurchaseRequestController extends Controller
                 $count->save();
             }
 
-            Session::put('successchecklist','Saved.');
+            Session::put('successchecklist','Task completed.');
 
             $taskd= TaskDetails::find($taskdetails_id);
             $taskd->status="Done";
@@ -1930,7 +1930,7 @@ class PurchaseRequestController extends Controller
                 $count->save();
             }
 
-            Session::put('successchecklist','Saved.');
+            Session::put('successchecklist','Task completed.');
 
             $taskd= TaskDetails::find($taskdetails_id);
             $taskd->status="Done";
@@ -2015,7 +2015,7 @@ class PurchaseRequestController extends Controller
                 $count->save();
             }
 
-            Session::put('successchecklist','Saved.');
+            Session::put('successchecklist','Task completed.');
 
             $taskd= TaskDetails::find($taskdetails_id);
             $taskd->status="Done";
@@ -2111,7 +2111,7 @@ class PurchaseRequestController extends Controller
                 $count->save();
             }
 
-            Session::put('successchecklist','Saved.');
+            Session::put('successchecklist','Task completed.');
 
             $taskd= TaskDetails::find($taskdetails_id);
             $taskd->status="Done";
@@ -2205,7 +2205,7 @@ class PurchaseRequestController extends Controller
                 $count->save();
             }
 
-            Session::put('successchecklist','Saved.');
+            Session::put('successchecklist','Task completed.');
 
             $taskd= TaskDetails::find($taskdetails_id);
             $taskd->status="Done";
@@ -2291,7 +2291,7 @@ class PurchaseRequestController extends Controller
                 $count->save();
             }
 
-            Session::put('successchecklist','Saved.');
+            Session::put('successchecklist','Task completed.');
 
             $taskd= TaskDetails::find($taskdetails_id);
             $taskd->status="Done";
@@ -2371,7 +2371,7 @@ class PurchaseRequestController extends Controller
                 $count->save();
             }
 
-            Session::put('successchecklist','Saved.');
+            Session::put('successchecklist','Task completed.');
 
             $taskd= TaskDetails::find($taskdetails_id);
             $taskd->status="Done";
@@ -2493,7 +2493,7 @@ class PurchaseRequestController extends Controller
                 $count->save();
             }
 
-            Session::put('successchecklist','Saved.');
+            Session::put('successchecklist','Task completed.');
 
             $taskd= TaskDetails::find($taskdetails_id);
             $taskd->status="Done";
