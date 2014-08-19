@@ -176,12 +176,14 @@ $docs=DB::table('document')->where('pr_id', '=',$id )->first();
 $workflow=DB::table('workflow')->get();
 $taskch= TaskDetails::where('doc_id', $docs->id)->where('status', 'New')->orWhere('status', 'Active')->count();
 
+$taskexist= TaskDetails::where('doc_id', $docs->id)->count();
 //Get Cursor Value
 if($taskch==0)
     $taskc= TaskDetails::where('doc_id', $docs->id)->where('status', 'Done')->orderBy('id', 'DESC')->first();
 
 else
     $taskc= TaskDetails::where('doc_id', $docs->id)->where('status', 'New')->orWhere('status', 'Active')->first();
+
 
 //Queries
 $workflow= Workflow::find($docs->work_id);
@@ -232,7 +234,8 @@ foreach($section as $sections)
     }
     //End of Addon Display
     $previousTaskType="0";
-
+    
+if ($taskexist!=0){
     foreach ($task as $tasks)
     {
         $taskcount =TaskDetails::where('doc_id', $docs->id)->where('task_id', $tasks->id)->count();
@@ -790,6 +793,8 @@ foreach($section as $sections)
 
 <?php
 }
+
+
 echo "<div class='panel panel-success'><div class='panel-body'>
                         <table border='1' class='proc-details'>
                             <tr>
@@ -804,6 +809,7 @@ echo "</h4></td>
                         </table>
                     </div></div>";
 //end section
+                }
 ?>
 
 <?php
