@@ -7,6 +7,7 @@
         <!-- Get all task details with id = task->id -->
         <?php
             $user_id = Auth::user()->id;
+            
             $taskDetails_row = TaskDetails::whereIn('task_id',$taskIds)->whereStatus("New")->whereAssigneeId(0)->paginate(10); 
         ?>
 
