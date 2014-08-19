@@ -2139,7 +2139,7 @@
                                     <td align="center">
                                         {{$taskp->custom2}}
                                     </td>
-                                    <td class="edit-pr-input" colspan="2" align="center"> {{$taskp->custom2}}</td>
+                                    <td  colspan="2" align="center"> {{$taskp->custom3}}</td>
                                     <td align="center">
                                 @if($taskche==0&&$taskp->status=="Done")
                                 <a class='iframe btn btn-success' href='taskedit/{{$taskp->id}}' title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
