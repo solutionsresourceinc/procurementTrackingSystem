@@ -1135,7 +1135,7 @@ No remark.
 <br>
 <button type="button" class="btn btn-success "  id="hidebtn" data-toggle="modal" data-target="#confirmDelete" >Done</button>
 
-<div id ="formr">
+<div id ="formr" style="display: none">
 {{ Form::open(['url'=>'remarks'], 'POST') }}
 @if($taskd->remarks==NULL)
 {{ Form::textarea('remarks','', array('class'=>'form-control', 'rows'=>'3', 'maxlength'=>'255', 'style'=>'resize:vertical', 'id'=>'remarksform')) }}
@@ -1386,7 +1386,7 @@ function hideRemarks()
    document.getElementById("hidebtn").style.display="block";
 if(document.layers) document.layers['formr'].display="none";
 if(document.getElementById) document.getElementById("formr").style.display="none";
-if(document.all) document.all.formr.style.display="hidden";
+if(document.all) document.all.formr.style.display="none";
 
 if(document.layers) document.layers['remarkd'].display="block";
 if(document.getElementById) document.getElementById("remarkd").style.display="block";
