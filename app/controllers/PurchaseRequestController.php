@@ -1071,7 +1071,12 @@ class PurchaseRequestController extends Controller
 
         //Initializations
         $taskdetails_id= Input::get('taskdetails_id');
-        $assignee=strip_tags(Input::get('assignee'));
+
+        $assignee=" ".strip_tags(Input::get('assignee'));
+         $assignee = preg_replace('/\s+/', ' ',$assignee);
+         if($assignee==" ")
+            $assignee="None";
+
         $mydate=Input::get('dateFinished');
         $timestamp = strtotime($mydate);
         $dateFinished= date("Y-m-d H:i:s", $timestamp);
@@ -1252,7 +1257,13 @@ class PurchaseRequestController extends Controller
         Session::put('goToChecklist', 'true' );
         //Initializations
         $radio=Input::get('radio');
-        $by=strip_tags(Input::get('by'));
+       
+
+        $by=" ".strip_tags(Input::get('by'));
+         $by= preg_replace('/\s+/', ' ',$by);
+         if($by==" ")
+            $by="None";
+
         $taskdetails_id=Input::get('taskdetails_id');
         $check=0;
 
@@ -1332,7 +1343,13 @@ class PurchaseRequestController extends Controller
         //Initializations
         $date=Input::get('date');
         $referenceno=strip_tags(Input::get('referenceno'));
-        $by=strip_tags(Input::get('by'));
+       
+
+        $by=" ".strip_tags(Input::get('by'));
+         $by= preg_replace('/\s+/', ' ',$by);
+         if($by==" ")
+            $by="None";
+
         $taskdetails_id=Input::get('taskdetails_id');
         $check=0;
 
@@ -1612,7 +1629,13 @@ class PurchaseRequestController extends Controller
         //Initializations
         $datepublished=Input::get('datepublished');
         $enddate=Input::get('enddate');
-        $by=Input::get('by');
+       
+
+        $by=" ".strip_tags(Input::get('by'));
+         $by= preg_replace('/\s+/', ' ',$by);
+         if($by==" ")
+            $by="None";
+
         $taskdetails_id=Input::get('taskdetails_id');
         $check=0;
 
@@ -1699,7 +1722,12 @@ class PurchaseRequestController extends Controller
         //Initializations
         $date=Input::get('date');
         $biddingdate=Input::get('biddingdate');
-        $by=Input::get('by');
+       
+
+        $by=" ".strip_tags(Input::get('by'));
+         $by= preg_replace('/\s+/', ' ',$by);
+         if($by==" ")
+            $by="None";
         $taskdetails_id=Input::get('taskdetails_id');
         $check=0;
         $taskd= TaskDetails::find($taskdetails_id);
@@ -2046,7 +2074,11 @@ class PurchaseRequestController extends Controller
         $noofsuppliers=Input::get('noofsuppliers');
         $date=Input::get('date');
 
-        $by=Input::get('by');
+
+        $by=" ".strip_tags(Input::get('by'));
+         $by= preg_replace('/\s+/', ' ',$by);
+         if($by==" ")
+            $by="None";
 
         $taskdetails_id=Input::get('taskdetails_id');
         $check=0;
@@ -2132,7 +2164,10 @@ class PurchaseRequestController extends Controller
         Session::put('goToChecklist', 'true' );
         //Initializations
         $taskdetails_id= Input::get('taskdetails_id');
-        $assignee=strip_tags(Input::get('assignee'));
+        $assignee=" ".strip_tags(Input::get('assignee'));
+         $assignee = preg_replace('/\s+/', ' ',$assignee);
+         if($assignee==" ")
+            $assignee="None";
         $mydate=Input::get('dateFinished');
         $timestamp = strtotime($mydate);
         $dateFinished= date("Y-m-d H:i:s", $timestamp);
@@ -2224,7 +2259,10 @@ class PurchaseRequestController extends Controller
         Session::put('goToChecklist', 'true' );
         //Initializations
         $taskdetails_id= Input::get('taskdetails_id');
-        $assignee=strip_tags(Input::get('assignee'));
+        $assignee=" ".strip_tags(Input::get('assignee'));
+         $assignee = preg_replace('/\s+/', ' ',$assignee);
+         if($assignee==" ")
+            $assignee="None";
         $mydate=Input::get('dateFinished');
         $timestamp = strtotime($mydate);
         $dateFinished= date("Y-m-d H:i:s", $timestamp);
@@ -2418,7 +2456,13 @@ class PurchaseRequestController extends Controller
         $referenceno=strip_tags(Input::get('referenceno'));
         $datepublished=Input::get('datepublished');
         $enddate=Input::get('enddate');
-        $by=Input::get('by');
+       
+
+        $by=" ".strip_tags(Input::get('by'));
+         $by= preg_replace('/\s+/', ' ',$by);
+         if($by==" ")
+            $by="None";
+
         $taskdetails_id=Input::get('taskdetails_id');
         $check=0;
         
