@@ -12,13 +12,13 @@
 
       function codeAddress() 
       {
-        if(document.layers) document.layers['remarkd'].visibility="show";
-        if(document.getElementById) document.getElementById("remarkd").style.visibility="visible";
-        if(document.all) document.all.remarkd.style.visibility="visible";
+        if(document.layers) document.layers['remarkd'].display="block";
+        if(document.getElementById) document.getElementById("remarkd").style.display="block";
+        if(document.all) document.all.remarkd.style.display="block";
 
-        if(document.layers) document.layers['formr'].visibility="hide";
-        if(document.getElementById) document.getElementById("formr").style.visibility="hidden";
-        if(document.all) document.all.formr.style.visibility="hidden";
+        if(document.layers) document.layers['formr'].display="none";
+        if(document.getElementById) document.getElementById("formr").style.display="none";
+        if(document.all) document.all..formrstyle.display="none";
       }
 
       window.onload = codeAddress;
@@ -1311,15 +1311,15 @@ return true;
 }
 function show(){
   
-  document.getElementById("hidebtn").style.visibility="hidden";
+  document.getElementById("hidebtn").style.display="none";
 
-if(document.layers) document.layers['formr'].visibility="show";
-if(document.getElementById) document.getElementById("formr").style.visibility="visible";
-if(document.all) document.all.formr.style.visibility="visible";
+if(document.layers) document.layers['formr'].display="block";
+if(document.getElementById) document.getElementById("formr").style.display="block";
+if(document.all) document.all.formr.style.display="block";
 
-if(document.layers) document.layers['remarkd'].visibility="hide";
-if(document.getElementById) document.getElementById("remarkd").style.visibility="hidden";
-if(document.all) document.all.remarkd.style.visibility="hidden";
+if(document.layers) document.layers['remarkd'].display="none";
+if(document.getElementById) document.getElementById("remarkd").style.display="none";
+if(document.all) document.all.remarkd.style.display="none";
 }
 </script>
 
@@ -1383,14 +1383,14 @@ function fix_format2()
 
 function hideRemarks()
 {
-   document.getElementById("hidebtn").style.visibility="visible";
-if(document.layers) document.layers['formr'].visibility="hide";
-if(document.getElementById) document.getElementById("formr").style.visibility="hidden";
-if(document.all) document.all.formr.style.visibility="hidden";
+   document.getElementById("hidebtn").style.display="block";
+if(document.layers) document.layers['formr'].display="none";
+if(document.getElementById) document.getElementById("formr").style.display="none";
+if(document.all) document.all.formr.style.display="hidden";
 
-if(document.layers) document.layers['remarkd'].visibility="show";
-if(document.getElementById) document.getElementById("remarkd").style.visibility="visible";
-if(document.all) document.all.remarkd.style.visibility="visible";
+if(document.layers) document.layers['remarkd'].display="block";
+if(document.getElementById) document.getElementById("remarkd").style.display="block";
+if(document.all) document.all.remarkd.style.display="block";
 }
 
 $('.datepicker').datepicker();
