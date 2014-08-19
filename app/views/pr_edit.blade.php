@@ -2397,7 +2397,7 @@ $prdays=$days;
                             <tr>
                                 <td width='66%'><h4 style='margin-left: 10px'>TOTAL NO. OF DAYS FROM PR TO PAYMENT: </h4></td>
                             <td><h4 style='margin-left: 50px;'>";
-                            if($prdays==16296)
+                            if($prdays>10000)
                             echo "0";
                             else
                             echo $prdays;
