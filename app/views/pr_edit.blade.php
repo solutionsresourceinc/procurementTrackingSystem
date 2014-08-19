@@ -734,7 +734,7 @@
                                 
                                 @endif
                                   </td>
-                                  <td></td>
+                                  <td colspan="2"></td>
                               
                                 
                             {{Form::close()}}
