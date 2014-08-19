@@ -3,7 +3,7 @@
 class TaskDetails extends Eloquent{
 
 	// RELATIONSHIPS
-	protected $table = 'taskDetails';
+	protected $table = 'taskdetails';
 
 	public function tasks()
 	{
