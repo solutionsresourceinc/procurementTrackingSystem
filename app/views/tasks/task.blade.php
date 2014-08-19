@@ -248,7 +248,7 @@ $assign_user=User::find(Auth::user()->id);
                                     
                                 </tr>
                                 @endif
-                          <tr class='current-task'>
+                          <tr >
                         <?php
           
                         if ($tasks->taskType!="cheque"&&$tasks->taskType!="published"&&$tasks->taskType!="contract"&&$tasks->taskType!="meeting"&&$tasks->taskType!="rfq"&&$tasks->taskType!="documents"&&$tasks->taskType!="evaluation"&&$tasks->taskType!="preparation")
@@ -493,7 +493,7 @@ $assign_user=User::find(Auth::user()->id);
                                    
 
                                 </tr>
-                                <tr class="@if($taskch!=0 && $taskc->task_id==$tasks->id && $tasks->designation_id==0) current-task @endif">
+                                <tr class="@if($taskch!=0 && $taskc->task_id==$tasks->id && $tasks->designation_id==0)  @endif">
                                    
                                     <td>
                                         <?php 
@@ -548,7 +548,7 @@ $assign_user=User::find(Auth::user()->id);
                                      <input type="hidden" name="remarks" id="hiddenremarks"  value="{{$taskd->remarks}}"> 
                                  
                                 </tr>
-                                <tr class="@if($taskch!=0 && $taskc->task_id==$tasks->id && $tasks->designation_id==0) current-task @endif">
+                                <tr class="@if($taskch!=0 && $taskc->task_id==$tasks->id && $tasks->designation_id==0)  @endif">
                                  
                                     <td class="edit-pr-input">
                                     Reference No.:
@@ -621,7 +621,7 @@ $assign_user=User::find(Auth::user()->id);
                                     <th class='workflow-th'>Date of Bidding:</th>
                                     <th class='workflow-th' colspan="2">Checked By:</th>
                                 </tr>
-                                <tr class="@if($taskch!=0 && $taskc->task_id==$tasks->id && $tasks->designation_id==0) current-task @endif">
+                                <tr class="@if($taskch!=0 && $taskc->task_id==$tasks->id && $tasks->designation_id==0)  @endif">
                                   
                                     <td>
                                         <?php 
@@ -678,7 +678,7 @@ $assign_user=User::find(Auth::user()->id);
                                     <th class='workflow-th' colspan="2">Date:</th>
                                     <th class='workflow-th' colspan="2">No. Of Days Accomplished:</th>
                                 </tr>
-                                <tr class="@if($taskch!=0 && $taskc->task_id==$tasks->id && $tasks->designation_id==0) current-task @endif">
+                                <tr class="@if($taskch!=0 && $taskc->task_id==$tasks->id && $tasks->designation_id==0)  @endif">
                                    
                                     <td colspan="2">
                                         <?php 
@@ -778,7 +778,7 @@ $assign_user=User::find(Auth::user()->id);
                                     <th class='workflow-th'>No. of Days Accomplished:</th>
                                     <th class='workflow-th' colspan="2">Contract Agreement:</th>
                                 </tr>
-                                <tr class="@if($taskch!=0 && $taskc->task_id==$tasks->id && $tasks->designation_id==0) current-task @endif">
+                                <tr class="@if($taskch!=0 && $taskc->task_id==$tasks->id && $tasks->designation_id==0)  @endif">
                               
                                     <td>
                                         <?php 
@@ -857,7 +857,7 @@ $assign_user=User::find(Auth::user()->id);
                                     <th class='workflow-th'>No. of Days Accomplished:</th>
                                     <th class='workflow-th' colspan="2">Minutes of Bidding:</th>
                                 </tr>
-                                <tr class="@if($taskch!=0 && $taskc->task_id==$tasks->id && $tasks->designation_id==0) current-task @endif">
+                                <tr class="@if($taskch!=0 && $taskc->task_id==$tasks->id && $tasks->designation_id==0)  @endif">
                              
                                     <td>
                                         <?php 
@@ -944,7 +944,7 @@ $assign_user=User::find(Auth::user()->id);
                                     <th class='workflow-th'>Date of RF (Within PGEPS 7 Days):</th>
                                     <th class='workflow-th' colspan="2">By:</th>
                                 </tr>
-                                <tr class="@if($taskch!=0 && $taskc->task_id==$tasks->id && $tasks->designation_id==0) current-task @endif">
+                                <tr class="@if($taskch!=0 && $taskc->task_id==$tasks->id && $tasks->designation_id==0) @endif">
                            
                                     <td><input type="number" name="noofsuppliers"  class="form-control" maxlength="12" width="80%" placeholder="Enter no. of suppliers"
                                         
@@ -1162,21 +1162,6 @@ No remark.
 
 
 <!--End Tasks Forms-->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

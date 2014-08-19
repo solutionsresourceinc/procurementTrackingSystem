@@ -734,6 +734,7 @@
                                 
                                 @endif
                                   </td>
+                                  <td></td>
                               
                                 
                             {{Form::close()}}
@@ -850,6 +851,7 @@
                                 
                                 @endif
                                   </td>
+                                  <td></td>
                               
                                 
                             {{Form::close()}}
@@ -899,7 +901,7 @@
                                 
                                 @endif
                                   </td>
-                              
+                              <td></td>
                                 
                             {{Form::close()}}
                     @endif
@@ -965,7 +967,7 @@
                                 
                                 @endif
                                   </td>
-                              
+                              <td></td>
                                 
                             {{Form::close()}}
                     @endif
@@ -1051,7 +1053,7 @@
                                 @endif
                                   </td>
                               
-                                
+                                <td></td>
                             {{Form::close()}}
                     @endif
                      @if($tasks->taskType == "philgeps")
@@ -1146,7 +1148,7 @@
                                 @endif
                                   </td>
                               
-                                
+                                <td></td>
                             {{Form::close()}}
                     @endif
                     @if($tasks->taskType == "documents")
@@ -1230,7 +1232,7 @@
                                 
                                 @endif
                                   </td>
-                              
+                              <td></td>
                                 
                             {{Form::close()}}
                     @endif
@@ -1314,7 +1316,7 @@
                                 @endif
                                   </td>
                               
-                                
+                                <td></td>
                             {{Form::close()}}
                     @endif
                     @if($tasks->taskType == "conference")
@@ -1359,7 +1361,7 @@
                                 
                                 @endif
                                   </td>
-                              
+                              <td></td>
                                 
                             {{Form::close()}}
                     @endif
@@ -1457,7 +1459,7 @@
                                 @endif
                                   </td>
                               
-                                
+                                <td></td>
                             {{Form::close()}}
                     @endif
                     @if($tasks->taskType == "meeting")
@@ -1561,7 +1563,7 @@
                                 
                                 @endif
                                   </td>
-                              
+                              <td></td>
                                 
                             {{Form::close()}}
                     @endif
@@ -1640,7 +1642,7 @@
                                 @endif
                                   </td>
                               
-                                
+                                <td></td>
                             {{Form::close()}}
                     @endif
                     @if($tasks->taskType == "dateby")
@@ -1703,7 +1705,7 @@
                                 
                                 @endif
                                   </td>
-                              
+                              <td></td>
                                 
                             {{Form::close()}}
                         
@@ -1786,7 +1788,7 @@
                                 @endif
                                   </td>
                               
-                                
+                                <td></td>
                             {{Form::close()}}
                     @endif
                     @if($tasks->taskType == "dateonly")
@@ -1837,7 +1839,7 @@
                                 
                                 @endif
                                   </td>
-                              
+                              <td></td>
                                 
                             {{Form::close()}}
                     @endif

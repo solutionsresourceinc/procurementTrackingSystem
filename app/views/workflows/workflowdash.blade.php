@@ -13,7 +13,7 @@
 @stop
 
 @section('content')
-    <?php include('app/views/workflows/delete_task.blade.php'); ?>
+    <?php include(app_path().'/views/workflows/delete_task.blade.php'); ?>
     <!--CODE REVIEW:
         - remove comments
     -->
