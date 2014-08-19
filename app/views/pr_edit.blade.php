@@ -710,7 +710,7 @@
                                     <input type="text" name="remarks"  class="form-control" maxlength="255" width="100%"
                                     <?php
                                     if (NULL!=Input::old('remarks'))
-                                    echo Input::old('remarks');
+                                    echo "value='".Input::old('remarks')."'";
                                     else if (NULL!=$taskc->remarks)
                                         echo "value='".$taskc->remarks."'";
 
@@ -792,12 +792,12 @@
                                 <td class="edit-pr-input">
                                     Reference No. : 
                                     <input type="text" name="referenceno"  class="form-control" maxlength="100" width="80%" maxlength="100"
-                                    value="<?php
+                                    <?php
                                     if (NULL!=Input::old('referenceno'))
-                                    echo Input::old('referenceno');
+                                    echo "value='".Input::old('referenceno')."'";
                                     else if (NULL!=$taskc->custom1)
                                         echo "value='".$taskc->custom1."'";
-                                    ?>"
+                                    ?>
                                     >
                                 </td>
                                 <td class="edit-pr-input"> 
@@ -822,14 +822,14 @@
                                 <td class="edit-pr-input" colspan="3">
                                     By: 
                                     <input type="text" name="by"  placeholder="Enter name" class="form-control" maxlength="100" width="80%" maxlength="100"
-                                     value="<?php
+                                     <?php
                                     if (NULL!=Input::old('by'))
-                                    echo Input::old('by');
+                                    echo "value='".Input::old('by')."'";
                                      else if (NULL!=$taskc->custom3)
                                         echo "value='".$taskc->custom3."'";
                                     else
-                                    echo 'None';
-                                    ?>"
+                                    echo "value='".'None'."'";
+                                    ?>
                                     >
                                 </td>
 
@@ -1019,16 +1019,16 @@
                                     </td>
                                     <td class="edit-pr-input" colspan="2">  
                                         <input type="text" name="by"  placeholder="Enter name" class="form-control" maxlength="100" width="80%"
-                                        value="
+                                        
                                         <?php
                                         if (NULL!=Input::old('by'))
-                                            echo Input::old('by');
+                                            echo "value='".Input::old('by')."'";
                                          else if (NULL!=$taskc->custom3)
                                         echo "value='".$taskc->custom3."'";
                                         else
-                                        echo 'None';
+                                        echo "value='".'None'."'";
                                         ?>
-                                        "
+                                        
                                         >
                                     </td>
                           
@@ -1198,16 +1198,16 @@
                                     </td>
                                     <td class="edit-pr-input" colspan="2" >  
                                         <input type="text" name="by"  class="form-control" maxlength="100" width="80%" placeholder="Enter name"
-                                        value="
+                                        
                                         <?php
                                         if (NULL!=Input::old('by'))
-                                            echo Input::old('by');
+                                            echo "value='".Input::old('by')."'";
                                          else if (NULL!=$taskc->custom3)
                                         echo "value='".$taskc->custom3."'";
                                         else
-                                        echo 'None';
+                                        echo "value='".'None'."'";
                                         ?>
-                                        "
+                                        
                                         >
                                     </td>
 
@@ -1427,15 +1427,15 @@
                                         ></td>
                                     <td class="edit-pr-input" colspan="2">  
                                         <input type="text" name="contractmeeting"  class="form-control" maxlength="100" width="80%" placeholder="Enter contract agreement"
-                                        value="
+                                        
                                         <?php
                                         if (NULL!=Input::old('contractmeeting'))
-                                            echo Input::old('contractmeeting');
+                                            echo "value='".Input::old('contractmeeting')."'";
                                          else if (NULL!=$taskc->custom3)
                                         echo "value='".$taskc->custom3."'";
                                         
                                         ?>
-                                        "
+                                        
                                         >
                                     </td>
                       
@@ -1530,16 +1530,16 @@
                                     </td>
                                     <td class="edit-pr-input" colspan="2">  
                                         <input type="text" name="contractmeeting"  class="form-control" maxlength="100" width="80%" placeholder="Enter minutes of meeting"
-                                        value="
+                                        
                                         <?php
                                         if (NULL!=Input::old('contractmeeting'))
-                                            echo Input::old('contractmeeting');
+                                            echo "value='".Input::old('contractmeeting')."'";
                                          else if (NULL!=$taskc->custom3)
                                         echo "value='".$taskc->custom3."'";
                                         
                                             
                                         ?>
-                                        "
+                                        
                                         >
                                     </td>
                           
@@ -1578,15 +1578,15 @@
                                 <tr class="@if($taskch!=0 && $taskc->task_id==$tasks->id) current-task @endif">
                                     <td>{{$tasks->taskName}}</td>
                                     <td><input type="number" name="noofsuppliers"  class="form-control" maxlength="12" width="80%" placeholder="Enter no. of suppliers"
-                                        value="
+                                        
                                         <?php
                                         if (NULL!=Input::old('noofsuppliers'))
-                                            echo Input::old('noofsuppliers');
+                                            echo "value='".Input::old('noofsuppliers')."'";
                                          else if (NULL!=$taskc->custom1)
                                         echo "value='".$taskc->custom1."'";
                                        
                                         ?>
-                                        "
+                                        
                                         ></td>
                                     <td>
                                         <?php 
