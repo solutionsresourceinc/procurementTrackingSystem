@@ -320,7 +320,7 @@ $assign_user=User::find(Auth::user()->id);
                                             <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($taskprev->dateFinished))}}">
 
                                             @endif
-                                    <input id="daysOfAction" type="number" name="daysOfAction" class="form-control"  min="0"  width="100%" maxlength="12" 
+                                    <input  style="text-align: center" id="daysOfAction" type="number" name="daysOfAction" class="form-control"  min="0"  width="100%" maxlength="12" 
                                     <?php
                                     if (NULL!=Input::old('daysOfAction'))
                                         echo "value='".Input::old('daysOfAction')."'";
@@ -363,7 +363,7 @@ $assign_user=User::find(Auth::user()->id);
                                      <input type="hidden" name="remarks" id="hiddenremarks"  value="{{$taskd->remarks}}"> 
                                 <td class="edit-pr-input">
                                     Reference No. : 
-                                    <input type="text" name="referenceno"  class="form-control" maxlength="100" width="80%" maxlength="100"
+                                    <input  style="text-align: center" type="text" name="referenceno"  class="form-control" maxlength="100" width="80%" maxlength="100"
                                     <?php
                                     if (NULL!=Input::old('referenceno'))
                                     echo "value='".Input::old('referenceno')."'";
@@ -407,7 +407,7 @@ $assign_user=User::find(Auth::user()->id);
                                  <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
                                      <input type="hidden" name="remarks" id="hiddenremarks"  value="{{$taskd->remarks}}"> 
                                 <td class="edit-pr-input" colspan="2">
-                                    <input type="text" name="supplier"  class="form-control" maxlength="100" width="80%" placeholder="Enter supplier"
+                                    <input  style="text-align: center" type="text" name="supplier"  class="form-control" maxlength="100" width="80%" placeholder="Enter supplier"
                                      <?php
                                     if (NULL!=Input::old('supplier'))
                                     echo "value='".Input::old('supplier')."'";
@@ -419,7 +419,7 @@ $assign_user=User::find(Auth::user()->id);
                                 </td>
                                 
                                 <td class="edit-pr-input" colspan="2">
-                                    <input type="decimal" name="amount"  id="amount" class="form-control" maxlength="12" width="80%" placeholder="Enter amount" onkeypress="return isNumberKey(event)" onchange="checklist_changeAmount(this.id,this.value)"
+                                    <input  style="text-align: center" type="decimal" name="amount"  id="amount" class="form-control" maxlength="12" width="80%" placeholder="Enter amount" onkeypress="return isNumberKey(event)" onchange="checklist_changeAmount(this.id,this.value)"
                                      <?php
                                     if (NULL!=Input::old('amount'))
                                     echo "value='".Input::old('amount')."'";
@@ -439,7 +439,7 @@ $assign_user=User::find(Auth::user()->id);
                                      <input type="hidden" name="remarks" id="hiddenremarks"  value="{{$taskd->remarks}}"> 
                                 <td class="edit-pr-input" colspan="2">
                     
-                                    <input type="decimal" name="amt"  id="amt" class="form-control" maxlength="12" width="80%" placeholder="Enter cheque amount" onkeypress="return isNumberKey(event)" onchange="checklist_changeAmount(this.id,this.value)"
+                                    <input   style="text-align: center" type="decimal" name="amt"  id="amt" class="form-control" maxlength="12" width="80%" placeholder="Enter cheque amount" onkeypress="return isNumberKey(event)" onchange="checklist_changeAmount(this.id,this.value)"
                                      <?php
                                     if (NULL!=Input::old('amt'))
                                     echo "value='".Input::old('amt')."'";
@@ -450,7 +450,7 @@ $assign_user=User::find(Auth::user()->id);
                                 </td>
                                 <td class="edit-pr-input" colspan="2">
                                     
-                                    <input type="decimal" name="num"  class="form-control" maxlength="12" width="80%" placeholder="Enter cheque number"
+                                    <input  style="text-align: center" type="decimal" name="num"  class="form-control" maxlength="12" width="80%" placeholder="Enter cheque number"
                                      <?php
                                     if (NULL!=Input::old('num'))
                                     echo "value='".Input::old('num')."'";
@@ -552,7 +552,7 @@ $assign_user=User::find(Auth::user()->id);
                                  
                                     <td class="edit-pr-input">
                                     Reference No.:
-                                    <input type="text" name="referenceno"  class="form-control" maxlength="100" width="80%" maxlength="100"
+                                    <input  style="text-align: center" type="text" name="referenceno"  class="form-control" maxlength="100" width="80%" maxlength="100"
                                     <?php
                                     if (NULL!=Input::old('referenceno'))
                                     echo "value='".Input::old('referenceno')."'";
@@ -720,7 +720,7 @@ $assign_user=User::find(Auth::user()->id);
                                             <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($taskprev->dateFinished))}}">
 
                                             @endif
-                                        <input type="number" name="noofdays"  class="form-control" maxlength="12" width="80%" placeholder="Enter no. of days" id="daysOfAction"
+                                        <input  style="text-align: center" type="number" name="noofdays"  class="form-control" maxlength="12" width="80%" placeholder="Enter no. of days" id="daysOfAction"
                                         
                                         <?php
                                         if (NULL!=Input::old('noofdays'))
@@ -818,7 +818,7 @@ $assign_user=User::find(Auth::user()->id);
                                             <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($taskprev->dateFinished))}}">
 
                                             @endif
-                                    <td><input type="number" name="noofdays"  class="form-control" maxlength="100" width="80%" placeholder="Enter no. of days accomplished"
+                                    <td><input  style="text-align: center" type="number" name="noofdays"  class="form-control" maxlength="100" width="80%" placeholder="Enter no. of days accomplished"
                                         id="daysOfAction"
                                         <?php
                                         if (NULL!=Input::old('noofdays'))
@@ -831,7 +831,7 @@ $assign_user=User::find(Auth::user()->id);
                                         ?>
                                         ></td>
                                     <td class="edit-pr-input" colspan="2">  
-                                        <input type="text" name="contractmeeting"  class="form-control" maxlength="100" width="80%" placeholder="Enter contract agreement"
+                                        <input  style="text-align: center" type="text" name="contractmeeting"  class="form-control" maxlength="100" width="80%" placeholder="Enter contract agreement"
                                         
                                         <?php
                                         if (NULL!=Input::old('contractmeeting'))
@@ -900,7 +900,7 @@ $assign_user=User::find(Auth::user()->id);
                                             <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($taskprev->dateFinished))}}">
 
                                             @endif
-                                        <input type="number" name="noofdays"  class="form-control" maxlength="12" width="80%" placeholder="Enter no. of days accomplished"
+                                        <input  style="text-align: center" type="number" name="noofdays"  class="form-control" maxlength="12" width="80%" placeholder="Enter no. of days accomplished"
                                         id="daysOfAction"
                                         <?php
                                         if (NULL!=Input::old('noofdays'))
@@ -916,7 +916,7 @@ $assign_user=User::find(Auth::user()->id);
                                         >
                                     </td>
                                     <td class="edit-pr-input" colspan="2">  
-                                        <input type="text" name="contractmeeting"  class="form-control" maxlength="100" width="80%" placeholder="Enter minutes of meeting"
+                                        <input  style="text-align: center" type="text" name="contractmeeting"  class="form-control" maxlength="100" width="80%" placeholder="Enter minutes of meeting"
                                         
                                         <?php
                                         if (NULL!=Input::old('contractmeeting'))
@@ -946,7 +946,7 @@ $assign_user=User::find(Auth::user()->id);
                                 </tr>
                                 <tr class="@if($taskch!=0 && $taskc->task_id==$tasks->id && $tasks->designation_id==0) @endif">
                            
-                                    <td><input type="number" name="noofsuppliers"  class="form-control" maxlength="12" width="80%" placeholder="Enter no. of suppliers"
+                                    <td><input  style="text-align: center" type="number" name="noofsuppliers"  class="form-control" maxlength="12" width="80%" placeholder="Enter no. of suppliers"
                                         
                                         <?php
                                         if (NULL!=Input::old('noofsuppliers'))
