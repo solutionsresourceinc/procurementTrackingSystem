@@ -7,6 +7,11 @@
  {{ HTML::style('css/datepicker.css')}}
     {{ HTML::script('js/bootstrap-datepicker.js') }}
     {{ HTML::script('js/bootstrap.file-input.js') }} 
+     <!--Image Display-->
+    {{ HTML::script('js/lightbox.min.js') }} 
+    {{ HTML::style('css/lightbox.css')}}
+    
+    <!--End Image Display-->
 
     <script type="text/javascript">
 

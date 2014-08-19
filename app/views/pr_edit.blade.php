@@ -506,7 +506,7 @@
                         echo "<tr><th width='30%'></th>";
                         echo "<th class='workflow-th' width='18%'>By:</th>";
                         echo "<th class='workflow-th' width='18%'>Date:</th>";
-                        echo "<th class='workflow-th' width='12.5%'>Days of Action</th>";
+                        echo "<th class='workflow-th' width='10%'>Days of Action</th>";
                         echo "<th class='workflow-th'>Remarks</th>";
                         echo "<th class='workflow-th' colspan='2'></th></tr>";
                     }
@@ -528,9 +528,9 @@
                     if ($previousTaskType!="evaluation"&&$tasks->taskType=="evaluation")
                     {
                         echo "<tr><th width='30%'></th>";
-                        echo "<th class='workflow-th' colspan='2'>Date:</th>";
-                        echo "<th class='workflow-th' colspan='2'>No. of Days Accomplished:</th>";
-                        echo "<th class='workflow-th' colspan='2'></th></tr>";
+                        echo "<th class='workflow-th' colspan='2' >Date:</th>";
+                        echo "<th class='workflow-th' colspan='2' >No. of Days Accomplished:</th>";
+                        echo "<th class='workflow-th' colspan='2' ></th></tr>";
                     }
                     $previousTaskType=$tasks->taskType;
                     //Cursor Open form 
