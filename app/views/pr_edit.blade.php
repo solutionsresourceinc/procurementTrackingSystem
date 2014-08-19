@@ -1608,17 +1608,17 @@
                                     </td>
                                     <td class="edit-pr-input" colspan="2">  
                                         <input type="text" name="by"  class="form-control" maxlength="100" width="80%" placeholder="Enter name"
-                                        value="
+                                        
                                         <?php
                                         if (NULL!=Input::old('by'))
-                                            echo Input::old('by');
+                                            echo "value='".Input::old('by')."'";
                                          else if (NULL!=$taskc->custom3)
                                         echo "value='".$taskc->custom3."'";
                                         else
                                         echo "value='".'None'."'";
                                         
                                         ?>
-                                        ">
+                                        >
                                     </td>
                                   
                           
@@ -2372,7 +2372,7 @@ $prdays=$days;
 
                     ?>
 
-                    @if($workflow->workFlowName!="Direct Contracting")
+                 
                     <tr>
                             <td>TOTAL NO. OF DAYS</td>
                             <!-- <td></td>
@@ -2385,7 +2385,7 @@ $prdays=$days;
                                 echo $sectiondays;
                                 ?></center></td>
                     </tr>
-                    @endif
+          
                     </table></div></div>
                     
                     <?php
@@ -2430,7 +2430,7 @@ $prdays=$days;
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">Cancel</button>
-            <button type="button" class="btn btn-success" id="confirmModal" value="Submit"  onclick="this.disabled = true">Submit</button>
+            <button type="button" class="btn btn-success" id="confirmModal" value="Submit" >Submit</button>
           </div>
         </div>
       </div>
@@ -2669,12 +2669,7 @@ function autouploadsaved(value)
       var formname= "form_"+value;
       document.getElementById(formname).submit();
     }
-function doneauto()
-    {
-      //alert('form_'+value);
-      var formname= "taskform";
-      document.getElementById(formname).submit();
-    }
+
     function autouploadsaved(value)
     {
     var formname= "createform";
