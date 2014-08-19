@@ -364,12 +364,12 @@ $assign_user=User::find(Auth::user()->id);
                                 <td class="edit-pr-input">
                                     Reference No. : 
                                     <input type="text" name="referenceno"  class="form-control" maxlength="100" width="80%" maxlength="100"
-                                    value="<?php
+                                    <?php
                                     if (NULL!=Input::old('referenceno'))
-                                    echo Input::old('referenceno');
+                                    echo "value='".Input::old('referenceno')."'";
                                     else if (NULL!=$taskc->custom1)
                                         echo "value='".$taskc->custom1."'";
-                                    ?>"
+                                    ?>
                                     >
                                 </td>
                                 <td class="edit-pr-input"> 
@@ -408,24 +408,24 @@ $assign_user=User::find(Auth::user()->id);
                                      <input type="hidden" name="remarks" id="hiddenremarks"  value="{{$taskd->remarks}}"> 
                                 <td class="edit-pr-input" colspan="2">
                                     <input type="text" name="supplier"  class="form-control" maxlength="100" width="80%" placeholder="Enter supplier"
-                                     value="<?php
+                                     <?php
                                     if (NULL!=Input::old('supplier'))
-                                    echo Input::old('supplier');
+                                    echo "value='".Input::old('supplier')."'";
                                     else if (NULL!=$taskc->custom1)
                                         echo "value='".$taskc->custom1."'";
-                                    ?>"
+                                    ?>
 
                                     >
                                 </td>
                                 
                                 <td class="edit-pr-input" colspan="2">
                                     <input type="decimal" name="amount"  id="amount" class="form-control" maxlength="12" width="80%" placeholder="Enter amount" onkeypress="return isNumberKey(event)" onchange="checklist_changeAmount(this.id,this.value)"
-                                     value="<?php
+                                     <?php
                                     if (NULL!=Input::old('amount'))
-                                    echo Input::old('amount');
+                                    echo "value='".Input::old('amount')."'";
                                      else if (NULL!=$taskc->custom2)
                                         echo "value='".$taskc->custom2."'";
-                                    ?>"
+                                    ?>
                                     >
                                 </td>
 
@@ -440,23 +440,23 @@ $assign_user=User::find(Auth::user()->id);
                                 <td class="edit-pr-input" colspan="2">
                     
                                     <input type="decimal" name="amt"  id="amt" class="form-control" maxlength="12" width="80%" placeholder="Enter cheque amount" onkeypress="return isNumberKey(event)" onchange="checklist_changeAmount(this.id,this.value)"
-                                     value="<?php
+                                     <?php
                                     if (NULL!=Input::old('amt'))
-                                    echo Input::old('amt');
+                                    echo "value='".Input::old('amt')."'";
                                      else if (NULL!=$taskc->custom1)
                                         echo "value='".$taskc->custom1."'";
-                                    ?>"
+                                    ?>
                                     >
                                 </td>
                                 <td class="edit-pr-input" colspan="2">
                                     
                                     <input type="decimal" name="num"  class="form-control" maxlength="12" width="80%" placeholder="Enter cheque number"
-                                     value="<?php
+                                     <?php
                                     if (NULL!=Input::old('num'))
-                                    echo Input::old('num');
+                                    echo "value='".Input::old('num')."'";
                                  else if (NULL!=$taskc->custom2)
                                         echo "value='".$taskc->custom2."'";
-                                    ?>"
+                                    ?>
                                     >
                                 </td>
                                 <td class="edit-pr-input" colspan="2">
@@ -832,15 +832,15 @@ $assign_user=User::find(Auth::user()->id);
                                         ></td>
                                     <td class="edit-pr-input" colspan="2">  
                                         <input type="text" name="contractmeeting"  class="form-control" maxlength="100" width="80%" placeholder="Enter contract agreement"
-                                        value="
+                                        
                                         <?php
                                         if (NULL!=Input::old('contractmeeting'))
-                                            echo Input::old('contractmeeting');
+                                            echo "value='".Input::old('contractmeeting')."'";
                                          else if (NULL!=$taskc->custom3)
                                         echo "value='".$taskc->custom3."'";
                                         
                                         ?>
-                                        "
+                                        
                                         >
                                     </td>
                       
@@ -917,16 +917,16 @@ $assign_user=User::find(Auth::user()->id);
                                     </td>
                                     <td class="edit-pr-input" colspan="2">  
                                         <input type="text" name="contractmeeting"  class="form-control" maxlength="100" width="80%" placeholder="Enter minutes of meeting"
-                                        value="
+                                        
                                         <?php
                                         if (NULL!=Input::old('contractmeeting'))
-                                            echo Input::old('contractmeeting');
+                                            echo "value='".Input::old('contractmeeting')."'";
                                          else if (NULL!=$taskc->custom3)
                                         echo "value='".$taskc->custom3."'";
                                         
                                             
                                         ?>
-                                        "
+                                        
                                         >
                                     </td>
                           
@@ -947,15 +947,15 @@ $assign_user=User::find(Auth::user()->id);
                                 <tr class="@if($taskch!=0 && $taskc->task_id==$tasks->id && $tasks->designation_id==0) current-task @endif">
                            
                                     <td><input type="number" name="noofsuppliers"  class="form-control" maxlength="12" width="80%" placeholder="Enter no. of suppliers"
-                                        value="
+                                        
                                         <?php
                                         if (NULL!=Input::old('noofsuppliers'))
-                                            echo Input::old('noofsuppliers');
+                                            echo "value='".Input::old('noofsuppliers')."'";
                                          else if (NULL!=$taskc->custom1)
                                         echo "value='".$taskc->custom1."'";
                                        
                                         ?>
-                                        "
+                                        
                                         ></td>
                                     <td>
                                         <?php 
