@@ -1079,7 +1079,13 @@ class PurchaseRequestController extends Controller
         $remarks=" ".strip_tags(Input::get('remarks'));
         $remarks = preg_replace('/\s+/', ' ',$remarks);
         $check=0;
-
+         $taskd= TaskDetails::find($taskdetails_id);
+            $docs=Document::find($taskd->doc_id);
+            if ($taskd->status=="Done")
+            {
+                Session::put('errorchecklist', 'Saved failed. Task was already completed by another user.');
+                return Redirect::back();
+            }
         //Validation Process
 
         if(ctype_alpha(str_replace(array(' ', '-', '.', ',', 'ñ', 'Ñ'),'',$remarks)))
@@ -1096,13 +1102,7 @@ class PurchaseRequestController extends Controller
 
         if (($check==3||($remarks==" "&&$check==2))&&$assignee!=NULL)
         {
-            $taskd= TaskDetails::find($taskdetails_id);
-            $docs=Document::find($taskd->doc_id);
-            if ($taskd->status=="Done")
-            {
-                Session::put('errorchecklist', 'Saved failed. Task was already completed by another user.');
-                return Redirect::back();
-            }
+           
 
             $id=$docs->pr_id;
             //PO Section Check
@@ -1422,7 +1422,13 @@ class PurchaseRequestController extends Controller
         $amount=Input::get('amount');
         $taskdetails_id=Input::get('taskdetails_id');
         $check=0;
-
+        $taskd= TaskDetails::find($taskdetails_id);
+            $docs=Document::find($taskd->doc_id);
+            if ($taskd->status=="Done")
+            {
+                Session::put('errorchecklist', 'Saved failed. Task was already completed by another user.');
+                return Redirect::back();
+            }
         //Validation Process
         if(ctype_alnum(str_replace(array(' ', '-', '.',"'"),'',$supplier)))
             $check=$check+1;
@@ -1431,13 +1437,7 @@ class PurchaseRequestController extends Controller
 
         if ($check==2)
         {
-            $taskd= TaskDetails::find($taskdetails_id);
-            $docs=Document::find($taskd->doc_id);
-            if ($taskd->status=="Done")
-            {
-                Session::put('errorchecklist', 'Saved failed. Task was already completed by another user.');
-                return Redirect::back();
-            }
+            
             $id=$docs->pr_id;
             $delcount= Count::where('doc_id', $docs->id)->delete();
             $userx= User::get();
@@ -1702,6 +1702,13 @@ class PurchaseRequestController extends Controller
         $by=Input::get('by');
         $taskdetails_id=Input::get('taskdetails_id');
         $check=0;
+        $taskd= TaskDetails::find($taskdetails_id);
+            $docs=Document::find($taskd->doc_id);
+            if ($taskd->status=="Done")
+            {
+                Session::put('errorchecklist', 'Saved failed. Task was already completed by another user.');
+                return Redirect::back();
+            }
 
         //Validation Process
         if(ctype_alnum(str_replace(array(' ', '-', '.', ',', 'ñ', 'Ñ'),'',$by)))
@@ -1711,14 +1718,7 @@ class PurchaseRequestController extends Controller
 
         if ($check==1)
         {
-            $taskd= TaskDetails::find($taskdetails_id);
-            $docs=Document::find($taskd->doc_id);
-            if ($taskd->status=="Done")
-            {
-                Session::put('errorchecklist', 'Saved failed. Task was already completed by another user.');
-                return Redirect::back();
-            }
-
+            
             $id=$docs->pr_id;
             $delcount= Count::where('doc_id', $docs->id)->delete();
             $userx= User::get();
@@ -1877,12 +1877,7 @@ class PurchaseRequestController extends Controller
         $date=Input::get('date');
         $taskdetails_id=Input::get('taskdetails_id');
         $check=0;
-        if (trim(Input::get('date'))=="01/01/70")
-            $check=-1;
-        //Validation Process
 
-        if ($check==0)
-        {
             $taskd= TaskDetails::find($taskdetails_id);
             $docs=Document::find($taskd->doc_id);
             if ($taskd->status=="Done")
@@ -1890,6 +1885,12 @@ class PurchaseRequestController extends Controller
                 Session::put('errorchecklist', 'Saved failed. Task was already completed by another user.');
                 return Redirect::back();
             }
+        if (trim(Input::get('date'))=="01/01/70")
+            $check=-1;
+        //Validation Process
+
+        if ($check==0)
+        {
             $id=$docs->pr_id;
             $delcount= Count::where('doc_id', $docs->id)->delete();
             $userx= User::get();
@@ -1958,7 +1959,13 @@ class PurchaseRequestController extends Controller
 
         $taskdetails_id=Input::get('taskdetails_id');
         $check=0;
-
+         $taskd= TaskDetails::find($taskdetails_id);
+            $docs=Document::find($taskd->doc_id);
+            if ($taskd->status=="Done")
+            {
+                Session::put('errorchecklist', 'Saved failed. Task was already completed by another user.');
+                return Redirect::back();
+            }
         //Validation Process
         if(ctype_alnum(str_replace(array(' ', '-', '.'),'',$contractmeeting)))
             $check=$check+1;
@@ -1968,13 +1975,7 @@ class PurchaseRequestController extends Controller
             $check=0;
         if ($check==2)
         {
-            $taskd= TaskDetails::find($taskdetails_id);
-            $docs=Document::find($taskd->doc_id);
-            if ($taskd->status=="Done")
-            {
-                Session::put('errorchecklist', 'Saved failed. Task was already completed by another user.');
-                return Redirect::back();
-            }
+           
             $id=$docs->pr_id;
             $delcount= Count::where('doc_id', $docs->id)->delete();
             $userx= User::get();
@@ -2139,6 +2140,13 @@ class PurchaseRequestController extends Controller
         $remarks=" ".strip_tags(Input::get('remarks'));
         $remarks = preg_replace('/\s+/', ' ',$remarks);
         $check=0;
+         $taskd= TaskDetails::find($taskdetails_id);
+            $docs=Document::find($taskd->doc_id);
+            if ($taskd->status=="Done")
+            {
+                Session::put('errorchecklist', 'Saved failed. Task was already completed by another user.');
+                return Redirect::back();
+            }
 
         //Validation Process
 
@@ -2150,13 +2158,7 @@ class PurchaseRequestController extends Controller
 
         if (($check==2||($remarks==" "&&$check==1))&&$assignee!=NULL)
         {
-            $taskd= TaskDetails::find($taskdetails_id);
-            $docs=Document::find($taskd->doc_id);
-            if ($taskd->status=="Done")
-            {
-                Session::put('errorchecklist', 'Saved failed. Task was already completed by another user.');
-                return Redirect::back();
-            }
+           
             $id=$docs->pr_id;
             $delcount= Count::where('doc_id', $docs->id)->delete();
             $userx= User::get();
@@ -2227,19 +2229,19 @@ class PurchaseRequestController extends Controller
         $timestamp = strtotime($mydate);
         $dateFinished= date("Y-m-d H:i:s", $timestamp);
         $check=0;
-
-        //Validation Process
-        if(ctype_alpha(str_replace(array(' ', '-', '.', ',', 'ñ', 'Ñ'),'',$assignee)))
-            $check=$check+1;
-        if (($check==1)&&$assignee!=NULL)
-        {
-            $taskd= TaskDetails::find($taskdetails_id);
+         $taskd= TaskDetails::find($taskdetails_id);
             $docs=Document::find($taskd->doc_id);
             if($taskd->status=="Done")
             {
                 Session::put('errorchecklist', 'Saved failed. Task was already completed by another user.');
                 return Redirect::back();
             }
+        //Validation Process
+        if(ctype_alpha(str_replace(array(' ', '-', '.', ',', 'ñ', 'Ñ'),'',$assignee)))
+            $check=$check+1;
+        if (($check==1)&&$assignee!=NULL)
+        {
+           
             $id=$docs->pr_id;
             $delcount= Count::where('doc_id', $docs->id)->delete();
             $userx= User::get();
@@ -2306,20 +2308,20 @@ class PurchaseRequestController extends Controller
 
         $taskdetails_id=Input::get('taskdetails_id');
         $check=0;
-
-        //Validation Process
-        $check=1;
-        if (trim(Input::get('date'))=="01/01/70")
-            $check=0;
-        if ($check==1)
-        {
-            $taskd= TaskDetails::find($taskdetails_id);
+        $taskd= TaskDetails::find($taskdetails_id);
             $docs=Document::find($taskd->doc_id);
             if($taskd->status=="Done")
             {
                 Session::put('errorchecklist', 'Saved failed. Task was already completed by another user.');
                 return Redirect::back();
             }
+        //Validation Process
+        $check=1;
+        if (trim(Input::get('date'))=="01/01/70")
+            $check=0;
+        if ($check==1)
+        {
+            
             $id=$docs->pr_id;
             $delcount= Count::where('doc_id', $docs->id)->delete();
             $userx= User::get();
@@ -2419,6 +2421,14 @@ class PurchaseRequestController extends Controller
         $by=Input::get('by');
         $taskdetails_id=Input::get('taskdetails_id');
         $check=0;
+        
+            $taskd= TaskDetails::find($taskdetails_id);
+            $docs=Document::find($taskd->doc_id);
+            if($taskd->status=="Done")
+            {
+                Session::put('errorchecklist', 'Saved failed. Task was already completed by another user.');
+                return Redirect::back();
+            }
 
         //Validation Process
         if(ctype_alnum(str_replace(array(' ', '-', '.', ',', 'ñ', 'Ñ'),'',$by)))
@@ -2428,13 +2438,6 @@ class PurchaseRequestController extends Controller
 
         if ($check==2)
         {
-            $taskd= TaskDetails::find($taskdetails_id);
-            $docs=Document::find($taskd->doc_id);
-            if($taskd->status=="Done")
-            {
-                Session::put('errorchecklist', 'Saved failed. Task was already completed by another user.');
-                return Redirect::back();
-            }
             $id=$docs->pr_id;
             $delcount= Count::where('doc_id', $docs->id)->delete();
             $userx= User::get();

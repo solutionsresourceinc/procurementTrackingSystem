@@ -614,6 +614,7 @@
                                 <tr>
                                 <br>
                                     <div class="alert alert-danger"> {{ Session::get('errorchecklist') }}</div> 
+                                    {{Session::forget('errorchecklist')}}
                                     
                                 </tr>
                                 @endif
@@ -725,7 +726,7 @@
                             <tr class='current-task'>
 
                                 <td colspan="5" align="center" >
-                                 <button class='iframe btn btn-success' @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"><span class="glyphicon glyphicon-floppy-disk"></span></button>
+                                 <button class='iframe btn btn-success' @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" ><span class="glyphicon glyphicon-floppy-disk"></span></button>
                               
                                 @if($taskp->status=="Edit")
                                 
@@ -2429,7 +2430,7 @@ $prdays=$days;
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">Cancel</button>
-            <button type="button" class="btn btn-success" id="confirmModal" value="Submit">Submit</button>
+            <button type="button" class="btn btn-success" id="confirmModal" value="Submit"  onclick="this.disabled = true">Submit</button>
           </div>
         </div>
       </div>
