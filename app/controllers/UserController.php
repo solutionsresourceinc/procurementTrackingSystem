@@ -10,10 +10,12 @@ class UserController extends BaseController {
 
         DB::table('users')->where('id', $id)->update(array('confirmed' => 0));
         
-        $taskcountcheck=DB::table('taskdetails')->where('status', 'Active')->where('assignee_id', $id)->count();
-        if($taskcountcheck!=0)
-        DB::table('taskdetails')->where('status', 'Active')->where('assignee_id', $id)->update(array( 'assignee_id' => '0', 'status' => "New"));
-           
+        $taskcount=DB::table('taskdetails')->count();
+        if($taskcount!=0){
+            $taskcountcheck=DB::table('taskdetails')->where('status', 'Active')->where('assignee_id', $id)->count();
+            if($taskcountcheck!=0)
+                DB::table('taskdetails')->where('status', 'Active')->where('assignee_id', $id)->update(array( 'assignee_id' => '0', 'status' => "New"));
+        }
         return Redirect::to('user/view');
     }
 
