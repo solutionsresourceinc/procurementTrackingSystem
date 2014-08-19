@@ -206,7 +206,9 @@ class PurchaseRequestController extends Controller
     public function create_submit()
     {
         //Image Upload
-        $purchasecheck=Purchase::where('id', '>', '0')->count();
+        $users = DB::table('users')->get();
+       
+        $purchasecheck = DB::table('purchase_request')->count();
         if($purchasecheck!=0)
         {
             $purchase=Purchase::orderby('id', 'DESC')->first();
