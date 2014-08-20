@@ -128,6 +128,9 @@
 <div style="margin-top: 30px">
     <table class="table table-striped display" id="main-table" border="1">
         <thead>
+            <th colspan="11"> <b> {{{ $pageType }}} </b> </th>
+        </thead>
+        <thead>
             <th width="9.09%"> DATE </th>
             <th width="9.09%"> BAC NO </th>
             <th width="9.09%"> DEPARTMENT </th>

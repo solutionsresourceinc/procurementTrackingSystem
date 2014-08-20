@@ -587,7 +587,7 @@ class SearchController extends BaseController {
         $pageCounter = $requests->count();
         $requests = $requests->orderBy('purchase_request.dateReceived', 'DESC')->get();
 
-        return View::make('purchaseRequest.purchaseRequest_completeTable')->with('requests',$requests)->with('pageCounter',$pageCounter)->with('searchBy','0');
+        return View::make('purchaseRequest.purchaseRequest_completeTable')->with('requests',$requests)->with('pageCounter',$pageCounter)->with('searchBy','0')->with('pageType','List of Active Purchase Requests');
     }
 
     public function completeTableClosed()
@@ -602,7 +602,7 @@ class SearchController extends BaseController {
         $pageCounter = $requests->count();
         $requests = $requests->orderBy('purchase_request.dateReceived', 'DESC')->get();
 
-        return View::make('purchaseRequest.purchaseRequest_completeTable')->with('searchBy','0')->with('requests',$requests)->with('pageCounter',$pageCounter);
+        return View::make('purchaseRequest.purchaseRequest_completeTable')->with('searchBy','0')->with('requests',$requests)->with('pageCounter',$pageCounter)->with('pageType','List of Closed Purchase Requests');
     }
 
     public function completeTableOverdue()
@@ -620,7 +620,7 @@ class SearchController extends BaseController {
         $pageCounter = $requests->count();
         $requests = $requests->orderBy('purchase_request.dateReceived', 'DESC')->get();
 
-        return View::make('purchaseRequest.purchaseRequest_completeTable')->with('searchBy','0')->with('requests',$requests)->with('pageCounter',$pageCounter);
+        return View::make('purchaseRequest.purchaseRequest_completeTable')->with('searchBy','0')->with('requests',$requests)->with('pageCounter',$pageCounter)->with('pageType','List of Overdue Purchase Requests');
     }
 
     public function completeTableCancelled()
@@ -636,7 +636,7 @@ class SearchController extends BaseController {
         $pageCounter = $requests->count();
         $requests = $requests->orderBy('purchase_request.dateReceived', 'DESC')->get();
 
-        return View::make('purchaseRequest.purchaseRequest_completeTable')->with('requests',$requests)->with('pageCounter',$pageCounter)->with('searchBy','0')->with('cancelled','0');
+        return View::make('purchaseRequest.purchaseRequest_completeTable')->with('requests',$requests)->with('pageCounter',$pageCounter)->with('searchBy','0')->with('cancelled','0')->with('pageType','List of Cancelled Purchase Requests');
     }
 
     public function search()
