@@ -12,12 +12,13 @@
             text-align: center;
             font-size: 12px;
         }
-
+        @page { size: landscape; }
         @media print /*FOR PRINT LAYOUT*/
         {
             .no-print, .no-print *
             {
                 display: none !important;
+
             }
 
             table, tr, td, th, p, h1, h2, h3, h4, h5
@@ -284,7 +285,7 @@
                                 ->join('section', 'section.workflow_id', '=', 'tasks.wf_id')->where('taskdetails.status', '=', 'Done')->select('tasks.taskName')->orderBy('taskdetails.id', 'DESC')->select('section.sectionName', 'tasks.taskName')->first();
                             ?>
                             @if(isset($accomplished->taskName) && $accomplished->taskName != '')
-                                <font color="green"><b> Accomplished :<Br/> </b></font> {{{ $accomplished->sectionName }}} - {{{ $accomplished->taskName }}}
+                                <font color="green"><b> Accomplished:<Br/> </b></font> {{{ $accomplished->sectionName }}} - {{{ $accomplished->taskName }}}
                             @else
                                 <font color="grey">N/A</font>
                             @endif

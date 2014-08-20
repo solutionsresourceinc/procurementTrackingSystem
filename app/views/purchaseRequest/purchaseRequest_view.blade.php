@@ -234,7 +234,7 @@ foreach($section as $sections)
     }
     //End of Addon Display
     $previousTaskType="0";
-    
+
 if ($taskexist!=0){
     foreach ($task as $tasks)
     {
@@ -856,8 +856,8 @@ $doc=DB::table('document')->where('pr_id', '=',$id )->first();
 
 ?>
 {{ Form::open(array('url' => 'taskimage', 'files' => true, 'id'=>'createform'), 'POST') }}
-<label class="create-label">Related files:</label>
-<div class="panel panel-default fc-div">
+<label class="create-label no-print">Related files:</label>
+<div class="panel panel-default fc-div no-print">
     <div class="panel-body" style="padding: 5px 20px;">
 
         <!--Image Module-->
@@ -867,7 +867,7 @@ $doc=DB::table('document')->where('pr_id', '=',$id )->first();
         ?>
 
         <br>
-        <input name="file[]" type="file"  multiple title="Select image to attach" onchange="autouploadsaved()"/>
+        <input name="file[]" type="file"  class="no-print" multiple title="Select image to attach" onchange="autouploadsaved()"/>
         <br>
         <br>
         <input name="doc_id" type="hidden" value="{{ $doc->id }}">
