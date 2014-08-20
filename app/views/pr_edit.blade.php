@@ -2279,7 +2279,8 @@ $prdays=$days;
 
                     ?>
 
-                 
+                     @if($workflow->workFlowName=="Direct Contracting"&&$sections->section_order_id=="2")
+                     @else
                     <tr>
                             <td>TOTAL NO. OF DAYS</td>
                             
@@ -2290,6 +2291,7 @@ $prdays=$days;
                                 echo $sectiondays;
                                 ?></center></td>
                     </tr>
+                    @endif
           
                     </table></div></div>
                     

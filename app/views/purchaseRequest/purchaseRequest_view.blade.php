@@ -325,16 +325,9 @@ if ($taskexist!=0){
                 $lastid=$taskp->id;
 
             }
-
         }
-
-
-
-
         //End Initializers Total Function
 
-        if(1==1)
-        {
 
             echo "<tr>";
 
@@ -349,7 +342,7 @@ if ($taskexist!=0){
 
             ?>
 
-            @if ($tasks->taskType=="normal")
+     @if ($tasks->taskType=="normal")
             <td align="center">
                 <?php
                 if($taskp->assignee!=NULL)
@@ -388,8 +381,8 @@ if ($taskexist!=0){
                 }
                 ?>
             </td>
-            @endif
-            @if($tasks->taskType=="certification")
+  @endif
+      @if($tasks->taskType=="certification")
             <td colspan="2" align="center">
                 <input type="radio" name="displayradio" value="yes"
                     <?php if($taskp->custom1=="yes") echo " checked";?>
@@ -402,8 +395,8 @@ if ($taskexist!=0){
                 By:
                 {{$taskp->custom2;}}
             </td>
-            @endif
-            @if($tasks->taskType=="posting")
+        @endif
+    @if($tasks->taskType=="posting")
             <td colspan="2" align="center">
                 Reference No. :
                 {{$taskp->custom1;}}
@@ -416,8 +409,8 @@ if ($taskexist!=0){
                 By:
                 {{$taskp->custom3;}}
             </td>
-            @endif
-            @if($tasks->taskType == "supplier")
+    @endif
+     @if($tasks->taskType == "supplier")
             <td class="edit-pr-input" colspan="2" align="center">
                 {{$taskp->custom1}}
             </td>
@@ -426,8 +419,8 @@ if ($taskexist!=0){
                 AMOUNT:
                 {{$taskp->custom2}}
             </td>
-            @endif
-            @if($tasks->taskType=="cheque")
+    @endif
+     @if($tasks->taskType=="cheque")
             <td class="edit-pr-input" colspan="2" align="center">
                 CHEQUE AMOUNT:&nbsp;&nbsp;&nbsp;
                 {{$taskp->custom1}}
@@ -440,8 +433,8 @@ if ($taskexist!=0){
                 CHEQUE DATE:&nbsp;&nbsp;&nbsp;
                 {{$taskp->custom3}}
             </td>
-            @endif
-            @if($tasks->taskType=="published")
+        @endif
+        @if($tasks->taskType=="published")
             <td> </td>
             <th class='workflow-th' width="18%">Date Published:</th>
             <th class='workflow-th' width="18%">End Date:</th>
@@ -456,8 +449,8 @@ if ($taskexist!=0){
                 <td align="center">{{$taskp->custom2}}</td>
                 <td class="edit-pr-input" colspan="2" align="center">{{$taskp->custom3}}</td>
 
-                @endif
-                @if($tasks->taskType=="philgeps")
+        @endif
+        @if($tasks->taskType=="philgeps")
 
             </tr>
             <tr>
@@ -480,60 +473,42 @@ if ($taskexist!=0){
                     <center>{{$taskp->assignee}}</center>
                 </td>
 
-
-                @endif
-                @if($tasks->taskType=="documents")
+        @endif
+        @if($tasks->taskType=="documents")
                 <td> </td>
                 <th class='workflow-th'>Eligibility Documents:</th>
                 <th class='workflow-th'>Date of Bidding:</th>
                 <th class='workflow-th' colspan="2">Checked By:</th>
-            </tr>
-            <tr>
+             </tr>
+             <tr>
                 <td>{{$tasks->taskName}}</td>
                 <td align="center">
                     {{$taskp->custom1}}
                     <span class="add-on"><i class="icon-th"></i></span>
                 </td>
                 <td align="center">{{$taskp->custom2}}</td>
-                <td class="edit-pr-input" colspan="2" align="center">{{$taskp->custom3}}</td>
-                <!--td>
-                {{$tasks->taskName}}
-                <br>
-                {{$taskp->custom1}}
-                <span class="add-on"><i class="icon-th"></i></span>
-                </td>
-                <td>
-                Date of Bidding
-                <br>
-                {{$taskp->custom2}}
-                </td>
-                <td >
-                Checked By
-                </td>
-                <td class="edit-pr-input" colspan="2">
-                {{$taskp->custom3}}
-                </td-->
-                @endif
-                @if($tasks->taskType=="evaluation")
+                <td class="edit-pr-input" colspan="2" align="center">{{$taskp->custom3}}</td>         
+        @endif
+        @if($tasks->taskType=="evaluation")
 
                 <td >{{$tasks->taskName}}</td>
                 <td colspan="2" align="center">
                     {{$taskp->custom1}}
                 </td>
                 <td class="edit-pr-input" colspan="2" align="center"> {{$taskp->custom2}}</td>
-                @endif
-                @if($tasks->taskType=="conference")
+        @endif
+        @if($tasks->taskType=="conference")
                 <td colspan="4" align="center">
                     {{$taskp->custom1}}
                 </td>
-                @endif
-                @if($tasks->taskType=="contract")
+        @endif
+        @if($tasks->taskType=="contract")
                 <td> </td>
                 <th class='workflow-th'>Date:</th>
                 <th class='workflow-th'>No. of Days Accomplished:</th>
                 <th class='workflow-th' colspan="2">Contract Agreement:</th>
-            </tr>
-            <tr>
+                </tr>
+                <tr>
                 <td >{{$tasks->taskName}}</td>
                 <td align="center">
                     <?php
@@ -543,15 +518,14 @@ if ($taskexist!=0){
                 </td>
                 <td class="edit-pr-input" align="center">{{$taskp->custom2}}</td>
                 <td class="edit-pr-input" colspan="2" align="center">{{$taskp->custom3}}</td>
-
-                @endif
-                @if($tasks->taskType=="meeting")
+        @endif
+            @if($tasks->taskType=="meeting")
                 <td> </td>
                 <th class='workflow-th'>Date:</th>
                 <th class='workflow-th'>No. of Days Accomplished:</th>
                 <th class='workflow-th' colspan="2">Minutes of Bidding:</th>
-            </tr>
-            <tr>
+                </tr>
+                <tr>
                 <td >{{$tasks->taskName}}</td>
                 <td align="center">
                     <?php
@@ -561,35 +535,33 @@ if ($taskexist!=0){
                 </td>
                 <td class="edit-pr-input" align="center">{{$taskp->custom2}}</td>
                 <td class="edit-pr-input" colspan="2" align="center">{{$taskp->custom3}}</td>
-
-                @endif
-                @if($tasks->taskType=="rfq")
+            @endif
+            @if($tasks->taskType=="rfq")
                 <td> </td>
                 <th class='workflow-th'>Supplier:</th>
                 <th class='workflow-th'>Date of RF (Within PGEPS 7 Days):</th>
                 <th class='workflow-th' colspan="2">By:</th>
-            </tr>
-            <tr>
-            <td >{{$tasks->taskName}}</td>
-            <td align="center">
+                </tr>
+                <tr>
+                <td >{{$tasks->taskName}}</td>
+                <td align="center">
                 {{$taskp->custom1}}
-            </td>
-            <td align="center">
+                </td>
+                <td align="center">
                 {{$taskp->custom2}}
-            </td>
-            <td  colspan="2" class="edit-pr-input" align="center"> {{$taskp->custom3}}</td>
-
+                 </td>
+                <td  colspan="2" class="edit-pr-input" align="center"> {{$taskp->custom3}}</td>
             @endif
-            @if($tasks->taskType=="dateby")
-            <td colspan="2" align="center">
+    @if($tasks->taskType=="dateby")
+                <td colspan="2" align="center">
                 <?php
                 $date = new DateTime($taskp->dateFinished);
                 $datef = $date->format('m/d/y');
                 if($taskp->dateFinished!="0000-00-00 00:00:00")
                     echo $datef;
                 ?>
-            </td>
-            <td colspan="2" align="center">
+                </td>
+                <td colspan="2" align="center">
                 <?php
                 if($taskp->assignee!=NULL)
                 {
@@ -604,9 +576,9 @@ if ($taskexist!=0){
                 $date = new DateTime($taskp->dateFinished);
                 $datef = $date->format('m/d/y');
                 ?>
-            </td>
-            @endif
-            @if($tasks->taskType=="datebyremark")
+                 </td>
+     @endif
+    @if($tasks->taskType=="datebyremark")
             <td align="center">
                 <?php
                 $date = new DateTime($taskp->dateFinished);
@@ -640,8 +612,8 @@ if ($taskexist!=0){
                 }
                 ?>
             </td>
-            @endif
-            @if($tasks->taskType=="dateonly")
+      @endif
+      @if($tasks->taskType=="dateonly")
 
             <td align="center" colspan="4">
                 <?php
@@ -650,18 +622,16 @@ if ($taskexist!=0){
                     echo  $taskp->custom1;
                 ?>
             </td>
-
-
-            @endif
+        @endif
             <?php
             //End Task Display
             $sectiondays=$sectiondays+$taskp->daysOfAction;
             $prdays=$prdays+$taskp->daysOfAction;
 
 
-        }
+        
         echo "</tr>";
-    }
+    }}
     //Addon Display
     $otherc=OtherDetails::where('section_id', $sections->id)->count();
 
@@ -690,137 +660,132 @@ if ($taskexist!=0){
             <?php
 
             }
-
         }
         //End of Addon Display
+    }
+                 //Total Function Counting
 
+                    $taskp =TaskDetails::find($lastid);
+
+                    $lastdate=date('Y-m-d', strtotime($taskp->dateFinished));
+               
+                    $start = new DateTime($sectionfirstdate);
+                    $end = new DateTime($lastdate);
+                    // otherwise the  end date is excluded (bug?)
+                    $end->modify('+1 day');
+                    $interval = $end->diff($start);
+
+                    // total days
+                    $days = $interval->days;
+
+                    // create an iterateable period of date (P1D equates to 1 day)
+                    $period = new DatePeriod($start, new DateInterval('P1D'), $end);
+
+                    // best stored as array, so you can add more than one
+                    $holidays = array('2012-09-07');
+
+foreach($period as $dt) 
+{
+    $curr = $dt->format('D');
+
+    // for the updated question
+    if (in_array($dt->format('Y-m-d'), $holidays)) {
+       $days--;
     }
 
-//Total Function Counting
-
-    $taskp =TaskDetails::find($lastid);
-
-    $lastdate=date('Y-m-d', strtotime($taskp->dateFinished));
-
-
-    $start = new DateTime($sectionfirstdate);
-    $end = new DateTime($lastdate);
-    // otherwise the  end date is excluded (bug?)
-    $end->modify('+1 day');
-    $interval = $end->diff($start);
-
-    // total days
-    $days = $interval->days;
-
-    // create an iterateable period of date (P1D equates to 1 day)
-    $period = new DatePeriod($start, new DateInterval('P1D'), $end);
-
-    // best stored as array, so you can add more than one
-    $holidays = array('2012-09-07');
-
-    foreach($period as $dt)
-    {
-        $curr = $dt->format('D');
-
-        // for the updated question
-        if (in_array($dt->format('Y-m-d'), $holidays)) {
-            $days--;
-        }
-
-        // substract if Saturday or Sunday
-        if ($curr == 'Sat' || $curr == 'Sun') {
-            $days--;
-        }
+    // substract if Saturday or Sunday
+    if ($curr == 'Sat' || $curr == 'Sun') {
+        $days--;
     }
-
-
-    $sectiondays=$days;
-
-    $start = new DateTime($prfirstdate);
-    $end = new DateTime($lastdate);
-    // otherwise the  end date is excluded (bug?)
-    $end->modify('+1 day');
-    $interval = $end->diff($start);
-
-    // total days
-    $days = $interval->days;
-
-    // create an iterateable period of date (P1D equates to 1 day)
-    $period = new DatePeriod($start, new DateInterval('P1D'), $end);
-
-    // best stored as array, so you can add more than one
-    $holidays = array('2012-09-07');
-
-    foreach($period as $dt)
-    {
-        $curr = $dt->format('D');
-
-        // for the updated question
-        if (in_array($dt->format('Y-m-d'), $holidays)) {
-            $days--;
-        }
-
-        // substract if Saturday or Sunday
-        if ($curr == 'Sat' || $curr == 'Sun') {
-            $days--;
-        }
-    }
-
-
-    $prdays=$days;
-
-
-
-
-    //End Total Function Counting
-    ?>
-
-    @if($workflow->workFlowName!="Direct Contracting")
-    <tr>
-        <td>TOTAL NO. OF DAYS</td>
-        <!-- <td></td>
-        <td></td>
-        <td></td> -->
-        <td colspan="4"><center><?php
-                if ($sectiondays>10000)
-                    echo "0";
-                else
-                    echo $sectiondays;
-                ?></center></td>
-    </tr>
-    @endif
-    </table></div></div>
-
-<?php
 }
 
 
-echo "<div class='panel panel-success'><div class='panel-body'>
+                    $sectiondays=$days;
+
+                    $start = new DateTime($prfirstdate);
+                    $end = new DateTime($lastdate);
+                    // otherwise the  end date is excluded (bug?)
+                    $end->modify('+1 day');
+                    $interval = $end->diff($start);
+
+                    // total days
+                    $days = $interval->days;
+
+                    // create an iterateable period of date (P1D equates to 1 day)
+                    $period = new DatePeriod($start, new DateInterval('P1D'), $end);
+
+                    // best stored as array, so you can add more than one
+                    $holidays = array('2012-09-07');
+
+foreach($period as $dt) 
+{
+    $curr = $dt->format('D');
+
+    // for the updated question
+    if (in_array($dt->format('Y-m-d'), $holidays)) {
+       $days--;
+    }
+
+    // substract if Saturday or Sunday
+    if ($curr == 'Sat' || $curr == 'Sun') {
+        $days--;
+    }
+}
+
+
+$prdays=$days;
+
+
+
+
+                    //End Total Function Counting
+
+                    ?>
+
+            @if($workflow->workFlowName=="Direct Contracting"&&$sections->section_order_id=="2")
+            @else
+                    <tr>
+                            <td>TOTAL NO. OF DAYS</td>
+                            
+                            <td colspan="4"><center><?php 
+                            if ($sectiondays>10000)
+                                echo "0";
+                            else
+                                echo $sectiondays;
+                                ?></center></td>
+                    </tr>
+            @endif
+          
+                    </table></div></div>
+                    
+                    <?php
+                }
+
+
+                echo "<div class='panel panel-success'><div class='panel-body'>
                         <table border='1' class='proc-details'>
                             <tr>
                                 <td width='66%'><h4 style='margin-left: 10px'>TOTAL NO. OF DAYS FROM PR TO PAYMENT: </h4></td>
                             <td><h4 style='margin-left: 50px;'>";
-if($prdays>10000)
-    echo "0";
-else
-    echo $prdays;
-echo "</h4></td>
+                            if($prdays>10000)
+                            echo "0";
+                            else
+                            echo $prdays;
+                            echo "</h4></td>
                             </tr>
                         </table>
-                    </div></div>";
-//end section
-                }
-?>
+                    </div></div>"; 
+            ?>
+            {{Session::forget('errorlabel')}}
+            {{Session::forget('successlabel')}}
+            {{Session::forget('errorchecklist')}}
+            {{Session::forget('successchecklist')}}
+            {{Session::forget('goToChecklist')}}
 
-<?php
-function data_uri($image, $mime)
-{
-    $base64   = base64_encode($image);
-    return ('data:' . $mime . ';base64,' . $base64);
-}
-?>
+
 
 <!-- images section -->
+
 
 <div id="img-section" class="no-print">
 
@@ -928,30 +893,25 @@ $doc=DB::table('document')->where('pr_id', '=',$id )->first();
     <?php
     $attachmentc = DB::table('attachments')->where('doc_id', $doc_id)->count();
     if ($attachmentc!=0)
-
         $attachments = DB::table('attachments')->where('doc_id', $doc_id)->get();
     $srclink="uploads\\";
     ?>
 
     <?php $count=1; ?>
     @foreach ($attachments as $attachment)
-
-
-
     {{ Form::open(array('method' => 'post', 'url' => 'delimage', 'id'=>"form_$count")) }}
     <input type="hidden" name="hide" value="{{$attachment->id}}">
     {{Form::close()}}
-
-
     <?php $count+=1;  ?>
     @endforeach
-</div>
 @endif
 {{ Session::forget('notice'); }}
 @stop
 
 @section('footer')
+
 <script type="text/javascript">
+
     $('input[type=file]').bootstrapFileInput();
     $('.file-inputs').bootstrapFileInput();
 
