@@ -10,7 +10,7 @@ class CreateOfficesTable extends Migration {
 		Schema::create('offices', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->string('officeName', 100);
+			$table->string('officeName', 100)->nullable();
 		});
 	}
 

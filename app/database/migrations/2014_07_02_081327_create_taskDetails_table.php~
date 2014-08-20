@@ -10,7 +10,7 @@ class CreateTaskDetailsTable extends Migration {
 		Schema::create('taskdetails', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->string('status', 45);
+			$table->string('status', 45)->nullable();
 			$table->string('remarks', 255)->nullable();
 			$table->string('assignee', 255)->nullable();
 			$table->integer('daysOfAction')->nullable();

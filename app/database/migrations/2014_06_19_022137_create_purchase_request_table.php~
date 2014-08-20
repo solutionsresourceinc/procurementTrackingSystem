@@ -15,18 +15,18 @@ class CreatePurchaseRequestTable extends Migration {
 		Schema::create('purchase_request', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->string('projectPurpose', 255);
-			$table->string('projectType', 255);
-			$table->string('sourceOfFund', 255);
-			$table->string('amount', 45);
-			$table->integer('controlNo');
-			$table->string('status', 255);
-			$table->integer('requisitioner')->references('id')->on('users');
-			$table->integer('office')->references('id')->on('offices');
+			$table->string('projectPurpose', 255)->nullable();
+			$table->string('projectType', 255)->nullable();
+			$table->string('sourceOfFund', 255)->nullable();
+			$table->string('amount', 45)->nullable();
+			$table->integer('controlNo')->nullable();
+			$table->string('status', 255)->nullable();
+			$table->integer('requisitioner')->references('id')->on('users')->nullable();
+			$table->integer('office')->references('id')->on('offices')->nullable();
 			$table->string('reason', 255)->nullable();
-			$table->dateTime('dateRequested')->nullable();
-			$table->dateTime('dateReceived');
-			$table->dateTime('dueDate')->nullable();
+			$table->dateTime('dateRequested')->default("00:00:00 00:00:00");
+			$table->dateTime('dateReceived')->default("00:00:00 00:00:00");
+			$table->dateTime('dueDate')->default("00:00:00 00:00:00");
 			$table->string('otherType', 255)->nullable();
 			$table->integer('created_by')->unsigned();
 			$table->timestamps();
