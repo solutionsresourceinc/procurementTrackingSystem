@@ -175,7 +175,7 @@ class SearchController extends BaseController {
         else
             return App::make('SearchController')->completeTableActive();
 
-        return View::make('purchaseRequest.purchaseRequest_completeTable')->with('pageNumber', Input::get('pageNumber'))->with('requests',$requests)->with('pageCounter',$pageCounter)->with('searchBy', $searchBy)->with('flag', $flag)->with('supplierFlag', $supplierFlag);
+        return View::make('purchaseRequest.purchaseRequest_completeTable')->with('pageNumber', Input::get('pageNumber'))->with('requests',$requests)->with('pageCounter',$pageCounter)->with('searchBy', $searchBy)->with('flag', $flag)->with('supplierFlag', $supplierFlag)->with('pageType','List of Active Purchase Requests');
     }
 
     public function completeClosedSearch()
@@ -336,7 +336,7 @@ class SearchController extends BaseController {
         else
             return App::make('SearchController')->completeTableClosed();
 
-        return View::make('purchaseRequest.purchaseRequest_completeTable')->with('requests',$requests)->with('pageCounter',$pageCounter)->with('searchBy', $searchBy)->with('flag', $flag)->with('supplierFlag', $supplierFlag);
+        return View::make('purchaseRequest.purchaseRequest_completeTable')->with('requests',$requests)->with('pageCounter',$pageCounter)->with('searchBy', $searchBy)->with('flag', $flag)->with('supplierFlag', $supplierFlag)->with('pageType','List of Closed Purchase Requests');
     }
 
     public function completeCancelledSearch()
@@ -413,7 +413,7 @@ class SearchController extends BaseController {
         }
         else
             return App::make('SearchController')->completeTableCancelled();
-        return View::make('purchaseRequest.purchaseRequest_completeTable')->with('cancelled', '0')->with('requests',$requests)->with('pageCounter',$pageCounter)->with('searchBy', $searchBy)->with('flag', $flag)->with('supplierFlag', $supplierFlag);
+        return View::make('purchaseRequest.purchaseRequest_completeTable')->with('cancelled', '0')->with('requests',$requests)->with('pageCounter',$pageCounter)->with('searchBy', $searchBy)->with('flag', $flag)->with('supplierFlag', $supplierFlag)->with('pageType','List of Cancelled Purchase Requests');
     }
 
     public function completeOverdueSearch()
@@ -574,7 +574,7 @@ class SearchController extends BaseController {
         }
         else
             return App::make('SearchController')->completeTableOverdue();
-        return View::make('purchaseRequest.purchaseRequest_completeTable')->with('requests',$requests)->with('pageCounter',$pageCounter)->with('searchBy', $searchBy)->with('flag', $flag)->with('supplierFlag', $supplierFlag);
+        return View::make('purchaseRequest.purchaseRequest_completeTable')->with('requests',$requests)->with('pageCounter',$pageCounter)->with('searchBy', $searchBy)->with('flag', $flag)->with('supplierFlag', $supplierFlag)->with('pageType','List of Overdue Purchase Requests');
     }
 
     public function completeTableActive()
