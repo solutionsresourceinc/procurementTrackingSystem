@@ -1357,6 +1357,11 @@ class TaskSeeder extends Seeder {
         ]);
         OtherDetails::create([
             'id'        => '4',
+            'label'    => 'Remarks',
+            'section_id' => '17',
+        ]);
+        OtherDetails::create([
+            'id'        => '5',
             'label'    => 'Amount',
             'section_id' => '18',
         ]);
