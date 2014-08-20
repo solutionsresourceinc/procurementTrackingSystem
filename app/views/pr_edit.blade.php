@@ -719,13 +719,7 @@
                                 </td>
                                 <td style="border-left: none; text-align: center;"  colspan="2">
                              
-                               
-
-                                </td>
-                            </tr>
-                            <tr class='current-task'>
-
-                                <td colspan="5" align="center" >
+                            
                                  <button class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" ><span class="glyphicon glyphicon-floppy-disk"></span></button>
                               
                                 @if($taskp->status=="Edit")
@@ -733,8 +727,9 @@
                                     <a  href='taskcanceledit/{{$taskp->id}}' ><button type="button" class='iframe btn btn-default' title="Cancel"><span class="glyphicon glyphicon-floppy-remove"></span></button></a>
                                 
                                 @endif
-                                  </td>
-                                  <td colspan="2"></td>
+
+                                </td>
+                            
                               
                                 
                             {{Form::close()}}
@@ -762,27 +757,20 @@
                                     ?>
                                     >
                                 </td>
-                  
-
-                        <td style="border-left: none; text-align: center;" colspan="2">
+                     <td style="border-left: none; text-align: center;"  colspan="2">
                              
-                               
-
-                                </td>
-                            </tr>
-                            <tr class='current-task'>
-
-                                <td colspan="5" align="center" >
-                                 <button type="button" class='iframe btn btn-success' @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"><span class="glyphicon glyphicon-floppy-disk"></span></button>
+                            
+                                 <button class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" ><span class="glyphicon glyphicon-floppy-disk"></span></button>
                               
                                 @if($taskp->status=="Edit")
                                 
                                     <a  href='taskcanceledit/{{$taskp->id}}' ><button type="button" class='iframe btn btn-default' title="Cancel"><span class="glyphicon glyphicon-floppy-remove"></span></button></a>
                                 
                                 @endif
-                                  </td>
-                              
-                                <td></td>
+
+                                </td>
+                            
+                            
                             {{Form::close()}}
                     @endif
                     @if($tasks->taskType == "posting")
@@ -834,24 +822,19 @@
                                     >
                                 </td>
 
-                               <td style="border-left: none; text-align: center;" colspan="2" >
+                                 <td style="border-left: none; text-align: center;"  colspan="2">
                              
-                               
-
-                                </td>
-                            </tr>
-                            <tr class='current-task'>
-
-                                <td colspan="5" align="center" >
-                                 <button  type="button" class='iframe btn btn-success' @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"><span class="glyphicon glyphicon-floppy-disk"></span></button>
+                            
+                                 <button class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" ><span class="glyphicon glyphicon-floppy-disk"></span></button>
                               
                                 @if($taskp->status=="Edit")
                                 
                                     <a  href='taskcanceledit/{{$taskp->id}}' ><button type="button" class='iframe btn btn-default' title="Cancel"><span class="glyphicon glyphicon-floppy-remove"></span></button></a>
                                 
                                 @endif
-                                  </td>
-                                  <td></td>
+
+                                </td>
+                            
                               
                                 
                             {{Form::close()}}
@@ -884,24 +867,19 @@
                                     >
                                 </td>
 
-                                <td style="border-left: none; text-align: center;" colspan="2">
+                                  <td style="border-left: none; text-align: center;"  colspan="2">
                              
-                               
-
-                                </td>
-                            </tr>
-                            <tr class='current-task'>
-
-                                <td colspan="5" align="center" >
-                                 <button  type="button" class='iframe btn btn-success' @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"><span class="glyphicon glyphicon-floppy-disk"></span></button>
+                            
+                                 <button class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" ><span class="glyphicon glyphicon-floppy-disk"></span></button>
                               
                                 @if($taskp->status=="Edit")
                                 
                                     <a  href='taskcanceledit/{{$taskp->id}}' ><button type="button" class='iframe btn btn-default' title="Cancel"><span class="glyphicon glyphicon-floppy-remove"></span></button></a>
                                 
                                 @endif
-                                  </td>
-                              <td></td>
+
+                                </td>
+                            
                                 
                             {{Form::close()}}
                     @endif
@@ -950,24 +928,19 @@
                                         />
                                     </div>
                                 </td>
-                               <td style="border-left: none; text-align: center;" colspan="2" >
+                                  <td style="border-left: none; text-align: center;"  colspan="2">
                              
-                               
-
-                                </td>
-                            </tr>
-                            <tr class='current-task'>
-
-                                <td colspan="5" align="center" >
-                                 <button type="button" class='iframe btn btn-success' @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"><span class="glyphicon glyphicon-floppy-disk"></span></button>
+                            
+                                 <button class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" ><span class="glyphicon glyphicon-floppy-disk"></span></button>
                               
                                 @if($taskp->status=="Edit")
                                 
                                     <a  href='taskcanceledit/{{$taskp->id}}' ><button type="button" class='iframe btn btn-default' title="Cancel"><span class="glyphicon glyphicon-floppy-remove"></span></button></a>
                                 
                                 @endif
-                                  </td>
-                              <td></td>
+
+                                </td>
+                            
                                 
                             {{Form::close()}}
                     @endif
@@ -1033,27 +1006,19 @@
                                         
                                         >
                                     </td>
-                          
-                                
-                              <td style="border-left: none; text-align: center;" colspan="2" >
+                             <td style="border-left: none; text-align: center;"  colspan="2">
                              
-                               
-
-                                </td>
-                            </tr>
-                            <tr class='current-task'>
-
-                                <td colspan="5" align="center" >
-                                 <button type="button" class='iframe btn btn-success' @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"><span class="glyphicon glyphicon-floppy-disk"></span></button>
+                            
+                                 <button class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" ><span class="glyphicon glyphicon-floppy-disk"></span></button>
                               
                                 @if($taskp->status=="Edit")
                                 
                                     <a  href='taskcanceledit/{{$taskp->id}}' ><button type="button" class='iframe btn btn-default' title="Cancel"><span class="glyphicon glyphicon-floppy-remove"></span></button></a>
                                 
                                 @endif
-                                  </td>
-                              
-                                <td></td>
+
+                                </td>
+                            
                             {{Form::close()}}
                     @endif
                      @if($tasks->taskType == "philgeps")
@@ -1131,25 +1096,19 @@
                                     </td>
                           
                                 
-                               <td style="border-left: none; text-align: center;" colspan="2">
+                               <td style="border-left: none; text-align: center;"  colspan="2">
                              
-                               
-
-                                </td>
-                            </tr>
-                            <tr class='current-task'>
-
-                                <td colspan="5" align="center" >
-                                 <button  type="button"  class='iframe btn btn-success' @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"><span class="glyphicon glyphicon-floppy-disk"></span></button>
+                            
+                                 <button class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" ><span class="glyphicon glyphicon-floppy-disk"></span></button>
                               
                                 @if($taskp->status=="Edit")
                                 
                                     <a  href='taskcanceledit/{{$taskp->id}}' ><button type="button" class='iframe btn btn-default' title="Cancel"><span class="glyphicon glyphicon-floppy-remove"></span></button></a>
                                 
                                 @endif
-                                  </td>
-                              
-                                <td></td>
+
+                                </td>
+                            
                             {{Form::close()}}
                     @endif
                     @if($tasks->taskType == "documents")
@@ -1215,26 +1174,19 @@
                                     </td>
 
                                    
-                            
-                             <td style="border-left: none; text-align: center;" colspan="2">
+                               <td style="border-left: none; text-align: center;"  colspan="2">
                              
-                               
-
-                                </td>
-                            </tr>
-                            <tr class='current-task'>
-
-                                <td colspan="5" align="center" >
-                                 <button type="button" class='iframe btn btn-success' @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"><span class="glyphicon glyphicon-floppy-disk"></span></button>
+                            
+                                 <button class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" ><span class="glyphicon glyphicon-floppy-disk"></span></button>
                               
                                 @if($taskp->status=="Edit")
                                 
                                     <a  href='taskcanceledit/{{$taskp->id}}' ><button type="button" class='iframe btn btn-default' title="Cancel"><span class="glyphicon glyphicon-floppy-remove"></span></button></a>
                                 
                                 @endif
-                                  </td>
-                              <td></td>
-                                
+
+                                </td>
+                            
                             {{Form::close()}}
                     @endif
                     @if($tasks->taskType == "evaluation")
@@ -1299,25 +1251,19 @@
                                         >
                                     </td>   
                  
-                        <td style="border-left: none; text-align: center;" colspan="2">
+                      <td style="border-left: none; text-align: center;"  colspan="2">
                              
-                               
-
-                                </td>
-                            </tr>
-                            <tr class='current-task'>
-
-                                <td colspan="5" align="center" >
-                                 <button type="button"  class='iframe btn btn-success' @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"><span class="glyphicon glyphicon-floppy-disk"></span></button>
+                            
+                                 <button class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" ><span class="glyphicon glyphicon-floppy-disk"></span></button>
                               
                                 @if($taskp->status=="Edit")
                                 
                                     <a  href='taskcanceledit/{{$taskp->id}}' ><button type="button" class='iframe btn btn-default' title="Cancel"><span class="glyphicon glyphicon-floppy-remove"></span></button></a>
                                 
                                 @endif
-                                  </td>
-                              
-                                <td></td>
+
+                                </td>
+                            
                             {{Form::close()}}
                     @endif
                     @if($tasks->taskType == "conference")
@@ -1345,24 +1291,19 @@
                                     </div>
                                     </td>
                                
-                         <td style="border-left: none; text-align: center;" colspan="2">
+                           <td style="border-left: none; text-align: center;"  colspan="2">
                              
-                               
-
-                                </td>
-                            </tr>
-                            <tr class='current-task'>
-
-                                <td colspan="5" align="center" >
-                                 <button type="button"  class='iframe btn btn-success' @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"><span class="glyphicon glyphicon-floppy-disk"></span></button>
+                            
+                                 <button class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" ><span class="glyphicon glyphicon-floppy-disk"></span></button>
                               
                                 @if($taskp->status=="Edit")
                                 
                                     <a  href='taskcanceledit/{{$taskp->id}}' ><button type="button" class='iframe btn btn-default' title="Cancel"><span class="glyphicon glyphicon-floppy-remove"></span></button></a>
                                 
                                 @endif
-                                  </td>
-                              <td></td>
+
+                                </td>
+                            
                                 
                             {{Form::close()}}
                     @endif
@@ -1442,25 +1383,19 @@
                                         >
                                     </td>
                       
-                           <td style="border-left: none; text-align: center;" colspan="2">
+                            <td style="border-left: none; text-align: center;"  colspan="2">
                              
-                               
-
-                                </td>
-                            </tr>
-                            <tr class='current-task'>
-
-                                <td colspan="5" align="center" >
-                                 <button type="button"  class='iframe btn btn-success' @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"><span class="glyphicon glyphicon-floppy-disk"></span></button>
+                            
+                                 <button class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" ><span class="glyphicon glyphicon-floppy-disk"></span></button>
                               
                                 @if($taskp->status=="Edit")
                                 
                                     <a  href='taskcanceledit/{{$taskp->id}}' ><button type="button" class='iframe btn btn-default' title="Cancel"><span class="glyphicon glyphicon-floppy-remove"></span></button></a>
                                 
                                 @endif
-                                  </td>
-                              
-                                <td></td>
+
+                                </td>
+                            
                             {{Form::close()}}
                     @endif
                     @if($tasks->taskType == "meeting")
@@ -1545,26 +1480,19 @@
                                         
                                         >
                                     </td>
-                          
-                            
-                              <td style="border-left: none; text-align: center;" colspan="2">
+                             <td style="border-left: none; text-align: center;"  colspan="2">
                              
-                               
-
-                                </td>
-                            </tr>
-                            <tr class='current-task'>
-
-                                <td colspan="5" align="center" >
-                                 <button type="button"  class='iframe btn btn-success' @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"><span class="glyphicon glyphicon-floppy-disk"></span></button>
+                            
+                                 <button class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" ><span class="glyphicon glyphicon-floppy-disk"></span></button>
                               
                                 @if($taskp->status=="Edit")
                                 
                                     <a  href='taskcanceledit/{{$taskp->id}}' ><button type="button" class='iframe btn btn-default' title="Cancel"><span class="glyphicon glyphicon-floppy-remove"></span></button></a>
                                 
                                 @endif
-                                  </td>
-                              <td></td>
+
+                                </td>
+                            
                                 
                             {{Form::close()}}
                     @endif
@@ -1624,26 +1552,19 @@
                                         >
                                     </td>
                                   
-                          
-                             <td style="border-left: none; text-align: center;" colspan="2">
+                             <td style="border-left: none; text-align: center;"  colspan="2">
                              
-                               
-
-                                </td>
-                            </tr>
-                            <tr class='current-task'>
-
-                                <td colspan="5" align="center" >
-                                 <button type="button"  class='iframe btn btn-success' @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"><span class="glyphicon glyphicon-floppy-disk"></span></button>
+                            
+                                 <button class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" ><span class="glyphicon glyphicon-floppy-disk"></span></button>
                               
                                 @if($taskp->status=="Edit")
                                 
                                     <a  href='taskcanceledit/{{$taskp->id}}' ><button type="button" class='iframe btn btn-default' title="Cancel"><span class="glyphicon glyphicon-floppy-remove"></span></button></a>
                                 
                                 @endif
-                                  </td>
-                              
-                                <td></td>
+
+                                </td>
+                            
                             {{Form::close()}}
                     @endif
                     @if($tasks->taskType == "dateby")
@@ -1689,24 +1610,19 @@
                                         
                                     >
                                 </td>
-                              <td style="border-left: none; text-align: center;" colspan="2">
+                                 <td style="border-left: none; text-align: center;"  colspan="2">
                              
-                               
-
-                                </td>
-                            </tr>
-                            <tr class='current-task'>
-
-                                <td colspan="5" align="center" >
-                                 <button type="button"  class='iframe btn btn-success' @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"><span class="glyphicon glyphicon-floppy-disk"></span></button>
+                            
+                                 <button class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" ><span class="glyphicon glyphicon-floppy-disk"></span></button>
                               
                                 @if($taskp->status=="Edit")
                                 
                                     <a  href='taskcanceledit/{{$taskp->id}}' ><button type="button" class='iframe btn btn-default' title="Cancel"><span class="glyphicon glyphicon-floppy-remove"></span></button></a>
                                 
                                 @endif
-                                  </td>
-                              <td></td>
+
+                                </td>
+                            
                                 
                             {{Form::close()}}
                         
@@ -1771,25 +1687,19 @@
                                     >
                                 </td>
                                
-                               <td style="border-left: none; text-align: center;" colspan="2" >
+                                 <td style="border-left: none; text-align: center;"  colspan="2">
                              
-                               
-
-                                </td>
-                            </tr>
-                            <tr class='current-task'>
-
-                                <td colspan="5" align="center" >
-                                 <button type="button"  class='iframe btn btn-success' @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"><span class="glyphicon glyphicon-floppy-disk"></span></button>
+                            
+                                 <button class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" ><span class="glyphicon glyphicon-floppy-disk"></span></button>
                               
                                 @if($taskp->status=="Edit")
                                 
                                     <a  href='taskcanceledit/{{$taskp->id}}' ><button type="button" class='iframe btn btn-default' title="Cancel"><span class="glyphicon glyphicon-floppy-remove"></span></button></a>
                                 
                                 @endif
-                                  </td>
-                              
-                                <td></td>
+
+                                </td>
+                            
                             {{Form::close()}}
                     @endif
                     @if($tasks->taskType == "dateonly")
@@ -1823,25 +1733,19 @@
                                     </div>
                                 </td>
                                 
-                      <td style="border-left: none; text-align: center;" colspan="2">
+                       <td style="border-left: none; text-align: center;"  colspan="2">
                              
-                               
-
-                                </td>
-                            </tr>
-                            <tr class='current-task'>
-
-                                <td colspan="5" align="center" >
-                                 <button type="button"  class='iframe btn btn-success' @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})"><span class="glyphicon glyphicon-floppy-disk"></span></button>
+                            
+                                 <button class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" ><span class="glyphicon glyphicon-floppy-disk"></span></button>
                               
                                 @if($taskp->status=="Edit")
                                 
                                     <a  href='taskcanceledit/{{$taskp->id}}' ><button type="button" class='iframe btn btn-default' title="Cancel"><span class="glyphicon glyphicon-floppy-remove"></span></button></a>
                                 
                                 @endif
-                                  </td>
-                              <td></td>
-                                
+
+                                </td>
+                            
                             {{Form::close()}}
                     @endif
                     <!--End Task Forms-->
