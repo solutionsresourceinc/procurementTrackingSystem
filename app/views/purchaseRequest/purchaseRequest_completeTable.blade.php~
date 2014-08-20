@@ -59,7 +59,7 @@
                         $back = "purchaseRequest/closed";
                 else if($pageType == 'List of Overdue Purchase Requests')
                         $back = "purchaseRequest/overdue";
-                else if($pageType == 'List of Cancelled Purchase Requests')
+                else if($pageType == 'List of CancelledPurchase Requests')
                         $back = "purchaseRequest/cancelled";
                 else
                         $back = "dashboard";
