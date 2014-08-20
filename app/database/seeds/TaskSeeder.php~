@@ -11,6 +11,7 @@ class TaskSeeder extends Seeder {
 
         $task = new Task;
         $task->wf_id = '1';
+        $task->asignee_id = '0';
         $task->section_id = '1';
         $task->taskName = 'PPMP CERTIFICATION';
         $task->taskType = 'certification';

@@ -10,7 +10,7 @@ class CreateOtherDetailsTable extends Migration {
 		Schema::create('otherdetails', function($table)
 		{
 			$table->increments('id');
-			$table->string('label', 45)->nullable();
+			$table->string('label', 45);
 			$table->integer('section_id')->references('id')->on('section')->nullable();
 		});
 	}
