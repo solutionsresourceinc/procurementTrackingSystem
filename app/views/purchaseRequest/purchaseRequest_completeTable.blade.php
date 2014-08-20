@@ -14,12 +14,12 @@
         }
 
         @media print /*FOR PRINT LAYOUT*/
-        {    
+        {
             .no-print, .no-print *
             {
                 display: none !important;
             }
-                
+
             table, tr, td, th, p, h1, h2, h3, h4, h5
             {
                 border-collapse: collapse !important;
@@ -41,7 +41,7 @@
     </style>
 @stop
 
-@section('content') 
+@section('content')
     @if(isset($msg))
         <div class="col-md-12 no-print alert alert-danger">
             {{{ $msg }}}
@@ -53,9 +53,9 @@
         </button>
         <button type="button" class="btn btn-default no-print" onclick="window.location.href='{{ URL::to('back') }}'">
             <span class="glyphicon glyphicon-step-backward"></span>&nbsp;Back
-        </button>       
+        </button>
     </div>
-    
+
     <form method="POST" action="">
 
     <div class="col-md-2 no-print">
@@ -70,13 +70,13 @@
             <option value="10" <?php if($pageNumber == '10'){ echo "selected"; } ?>>10 per page</option>
             <option value="15" <?php if($pageNumber == '15'){ echo "selected"; } ?>>15 per page</option>
         </select>
-    </div>    
+    </div>
 
     <div class="col-md-1 no-print" style="margin-left: -25px;">
         <button class="btn btn-primary" type="submit" id="go" name="go">Go!</button>
-    </div>    
+    </div>
 
-    <div class="col-md-3 no-print">     
+    <div class="col-md-3 no-print">
         <select id="searchBy" name="searchBy" class="form-control" onchange="changeSearch(this.value)">
             <option value="0" <?php if($searchBy == '0'){ echo "selected";} ?> >Search by</option>
             <option value="all" <?php if($searchBy == 'all'){ echo "selected";} ?> >Display All</option>
@@ -97,7 +97,7 @@
             <option value="4" <?php if($searchBy == '4'){ echo "selected";} ?> >Mode-Pakyaw</option>
             <option value="5" <?php if($searchBy == '5'){ echo "selected";} ?> >Mode-Direct Contracting</option>
         </select>
-    </div>   
+    </div>
     <div class="input-group col-md-3 no-print" id="searchBox">
       <input onchange="disableButton()" onkeyup="disableButton()" id="searchTerm" name="searchTerm" placeholder="Enter search keywords" type="text" class="form-control" onchange="detectInput()">
       <span class="input-group-btn">
@@ -140,7 +140,7 @@
             <th width="9.09%"> REMARKS </th>
         </thead>
         <tbody>
-            @foreach($requests as $request)  
+            @foreach($requests as $request)
                 <tr>
                     <td>
                         <?php $prDate = DB::table('purchase_request')->where('controlNo', '=', $request->controlNo)->first(); ?>
@@ -156,7 +156,7 @@
                                 ->join('document', 'purchase_request.id', '=', 'document.pr_id')
                                 ->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
                                 ->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('tasks.taskName', '=', 'BUDGET / ACTG')->where('tasks.section_id', '=', '1')->where('purchase_request.controlNo', '=', $request->controlNo)->first();
-                            
+
                             ?>
                             @if($cancelledBudget != "")
                                 {{{(new \DateTime($cancelledBudget->dateFinished))->format('Y-m-d')}}}
@@ -195,7 +195,7 @@
                                 ->join('document', 'purchase_request.id', '=', 'document.pr_id')
                                 ->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
                                 ->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('tasks.taskName', '=', 'SIGNED BY GOV')->where('tasks.section_id', '=', '1')->where('purchase_request.controlNo', '=', $request->controlNo)->first();
-                            
+
                             ?>
                             @if($cancelledApproved != "")
                                 {{{(new \DateTime($cancelledApproved->dateFinished))->format('Y-m-d')}}}
@@ -219,15 +219,15 @@
                                 @if($dateApproved->dateFinished == "0000-00-00 00:00:00")
                                     <font color="grey">N/A</font>
                                 @else
-                                    {{{(new \DateTime($dateApproved->dateFinished))->format('Y-m-d')}}} 
+                                    {{{(new \DateTime($dateApproved->dateFinished))->format('Y-m-d')}}}
                                 @endif
                             @endif
                         @endif
                     </td>
                     <td>
-                        <?php 
+                        <?php
                             $workName = DB::table('purchase_request')->where('controlNo', '=', $request->controlNo)
-                            ->join('document', 'purchase_request.id', '=', 'document.pr_id')->first(); 
+                            ->join('document', 'purchase_request.id', '=', 'document.pr_id')->first();
                         ?>
                         @if($workName->work_id == 1)
                             SVP (Below 50k)
@@ -241,19 +241,19 @@
                             DIRECT CONTRACTING
                         @endif
                     </td>
-                    <td> 
+                    <td>
                         @if(isset($supplierFlag) && $supplierFlag == 1)
                             @if($request->custom1 == "")
                                 <font color="grey">N/A</font>
                             @else
-                                {{{ $request->custom1 }}}           
+                                {{{ $request->custom1 }}}
                             @endif
                         @elseif(isset($cancelled) && $cancelled == 0)
                             <?php
                                 $cancelledSupplier = DB::table('purchase_request')
                                 ->join('document', 'purchase_request.id', '=', 'document.pr_id')
                                 ->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
-                                ->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('tasks.taskName', '=', 'LCRB / HRB / SUPPLIER')->where('purchase_request.controlNo', '=', $request->controlNo)->first();                            
+                                ->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('tasks.taskName', '=', 'LCRB / HRB / SUPPLIER')->where('purchase_request.controlNo', '=', $request->controlNo)->first();
                             ?>
                             @if($cancelledSupplier != "")
                                 {{{ $cancelledSupplier->custom1 }}}
@@ -270,7 +270,7 @@
                             @if($supplier->custom1 == "")
                                 <font color="grey">N/A</font>
                             @else
-                                {{{ $supplier->custom1 }}}          
+                                {{{ $supplier->custom1 }}}
                             @endif
                         @endif
                     </td>
@@ -338,15 +338,10 @@
 @stop
 @section('footer')
 <script type="text/javascript">
-        
-        if(document.getElementById('pageCount').value == 0 || document.getElementById('pageCount').value <= <?php if($pageNumber == 0){echo "15";}else{echo $pageNumber;} ?>)
-        {
-            document.getElementById('tablePagination').style.display = false;
-        }
 
         window.onload = function()
         {
-            if(document.getElementById('pageNumber').value == '0')
+            if(document.getElementById('pageNumber').value == 0)
             {
                 document.getElementById('go').disabled = true;
             }
@@ -364,21 +359,21 @@
             if(document.getElementById('searchBy').value == 'dateReceived' || document.getElementById('searchBy').value == 'budgetdate' || document.getElementById('searchBy').value == 'dateapproved')
             {
                 document.getElementById('searchBox').style.display = 'none';
-                document.getElementById('searchDate').style.display = ''; 
+                document.getElementById('searchDate').style.display = '';
                 document.getElementById('allButton').style.display = 'none';
             }
-            
+
             if(document.getElementById('searchBy').value == '0')
             {
                 document.getElementById('searchTerm').disabled = true;
                 document.getElementById('searchButton').disabled = true;
                 document.getElementById('allButton').style.display = 'none';
             }
-            
+
             if(document.getElementById('searchBy').value == 'all')
             {
                 document.getElementById('searchDate').style.display = 'none';
-                document.getElementById('searchBox').style.display = 'none'; 
+                document.getElementById('searchBox').style.display = 'none';
                 // document.getElementById('searchTerm').style.display = 'none';
                 // document.getElementById('searchButton').style.display = 'none';
                 document.getElementById('allButton').style.display = '';
@@ -389,7 +384,12 @@
                 document.getElementById('allButton').style.display = 'none';
             }
         }
-        
+
+        if(document.getElementById('pageCount').value == 0 || document.getElementById('pageCount').value <= <?php if($pageNumber == 0){echo "15";}else{echo $pageNumber;} ?>)
+        {
+            document.getElementById('tablePagination').style.display = false;
+        }
+
         // window.my_id = document.getElementById('pageNumber').value;
         // alert(window.my_id);
 
@@ -414,7 +414,7 @@
                 document.getElementById('searchBox').style.display = '';
                 document.getElementById('searchTerm').style.display = '';
                 document.getElementById('searchButton').style.display = '';
-                document.getElementById('searchDate').style.display = 'none'; 
+                document.getElementById('searchDate').style.display = 'none';
                 document.getElementById('allButton').style.display = 'none';
             }
             else if(value == 'all')
@@ -423,13 +423,13 @@
                 document.getElementById('searchTerm').style.display = 'none';
                 document.getElementById('searchButton').style.display = 'none';
                 document.getElementById('searchBox').style.display = 'none';
-                document.getElementById('searchDate').style.display = 'none';  
+                document.getElementById('searchDate').style.display = 'none';
             }
             else if(value == 'dateReceived' || value == 'budgetdate' || value == 'dateapproved')
             {
                 document.getElementById('searchBox').style.display = 'none';
-                document.getElementById('searchDate').style.display = ''; 
-                document.getElementById('allButton').style.display = 'none'; 
+                document.getElementById('searchDate').style.display = '';
+                document.getElementById('allButton').style.display = 'none';
             }
             else
             {
@@ -439,7 +439,7 @@
                 document.getElementById('searchTerm').style.display = '';
                 document.getElementById('searchButton').style.display = '';
                 document.getElementById('searchDate').style.display = 'none';
-                document.getElementById('allButton').style.display = 'none';  
+                document.getElementById('allButton').style.display = 'none';
             }
         }
 
@@ -466,7 +466,7 @@
     <script type="text/javascript">
         // When the document is ready
         $(document).ready(function () {
-            
+
             $('.input-daterange').datepicker({
                 todayBtn: "linked"
             });

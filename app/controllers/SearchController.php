@@ -172,6 +172,9 @@ class SearchController extends BaseController {
             $pageCounter = $requests->count();
             $requests = $requests->orderBy('purchase_request.dateReceived', 'DESC')->get();
         }
+        else
+            return App::make('SearchController')->completeTableActive();
+
         return View::make('purchaseRequest.purchaseRequest_completeTable')->with('pageNumber', Input::get('pageNumber'))->with('requests',$requests)->with('pageCounter',$pageCounter)->with('searchBy', $searchBy)->with('flag', $flag)->with('supplierFlag', $supplierFlag);
     }
 
@@ -330,6 +333,9 @@ class SearchController extends BaseController {
             $requests = $requests->orderBy('purchase_request.dateReceived', 'DESC')->get();
             $supplierFlag = 1;
         }
+        else
+            return App::make('SearchController')->completeTableClosed();
+
         return View::make('purchaseRequest.purchaseRequest_completeTable')->with('requests',$requests)->with('pageCounter',$pageCounter)->with('searchBy', $searchBy)->with('flag', $flag)->with('supplierFlag', $supplierFlag);
     }
 
@@ -405,6 +411,8 @@ class SearchController extends BaseController {
             $pageCounter = $requests->count();
             $requests = $requests->orderBy('purchase_request.dateReceived', 'DESC')->get();
         }
+        else
+            return App::make('SearchController')->completeTableCancelled();
         return View::make('purchaseRequest.purchaseRequest_completeTable')->with('cancelled', '0')->with('requests',$requests)->with('pageCounter',$pageCounter)->with('searchBy', $searchBy)->with('flag', $flag)->with('supplierFlag', $supplierFlag);
     }
 
@@ -564,6 +572,8 @@ class SearchController extends BaseController {
             $requests = $requests->orderBy('purchase_request.dateReceived', 'DESC')->get();
             $supplierFlag = 1;
         }
+        else
+            return App::make('SearchController')->completeTableOverdue();
         return View::make('purchaseRequest.purchaseRequest_completeTable')->with('requests',$requests)->with('pageCounter',$pageCounter)->with('searchBy', $searchBy)->with('flag', $flag)->with('supplierFlag', $supplierFlag);
     }
 
