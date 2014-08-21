@@ -25,7 +25,7 @@ class TaskController extends Controller {
 			}
 			else
 			{
-				$userDesignations = $userDesignations . ",$designation->designation_id";
+				$userDesignations = $userDesignations . ", $designation->designation_id";
 			}
 			$counter++;
 		}

@@ -172,7 +172,7 @@
                     
                     <div class="col-md-6">
                         {{ Form::label('amount', 'Amount', array('class' => 'create-label')) }}
-                        {{ Form::text('amount', $purchaseToEdit->amount ,array('class'=>'form-control','onchange'=>'numberWithCommas(this.value)','id'=>'num','disabled')) }}
+                        {{ Form::text('amount', $purchaseToEdit->amount ,array('class'=>'form-control','onchange'=>'numberWithCommas(this.value)','id'=>'num2','disabled')) }}
                     </div>
            
                 </div>
@@ -636,10 +636,11 @@
                             <?php $myForm = 'myForm_' . $taskc->id; 
                             ?>
                             {{Form::open(['url'=>'checklistedit', 'id' => $myForm], 'POST')}}
+
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
                                  <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
                                 <td class="edit-pr-input">
-                                    <input type ="text" name="assignee" placeholder="Enter name" class="form-control" width="100%" maxlength="100"
+                                    <input id="assignee" type ="text" name="assignee" placeholder="Enter name" class="form-control" width="100%" maxlength="100" onkeyup="authsubmitnormal()"
                                     <?php
                                     if (NULL!=Input::old('assignee'))
                                     echo "value='".Input::old('assignee')."'";
@@ -657,7 +658,7 @@
                                     $today = date("m/d/y");
                                     ?>
                                     <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
-                                        <input type="text" class="form-control" onchange="changeDOA(this.value)" name="dateFinished" id="dateFinished" style="text-align: center; width:100%"
+                                        <input type="text" class="form-control" onchange="changeDOA(this.value)" name="dateFinished" id="dateFinished" style="text-align: center; width:100%" onkeyup="authsubmitnormal()"
                                         <?php
                                         if (NULL!=Input::old('dateFinished'))
                                             echo "value ='" . Input::old('dateFinished') ."'";
@@ -682,32 +683,33 @@
                                             @if($taskprev->doc_id!=$taskc->doc_id)
 
 
-                                            <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($purchaseToEdit->dateReceived))}}">
+                                            <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($purchaseToEdit->dateReceived))}}" onkeyup="authsubmitnormal()">
                               
                                             @elseif("1899-11-30 00:00:00"==$taskprev->dateFinished||"0000-00-00 00:00:00"==$taskprev->dateFinished)
 
-                                            <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($taskprev->updated_at))}}">
+                                            <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($taskprev->updated_at))}}" onkeyup="authsubmitnormal()">
 
                                             @else
 
                                     
-                                            <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($taskprev->dateFinished))}}">
+                                            <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($taskprev->dateFinished))}}" onkeyup="authsubmitnormal()">
 
                                             @endif
 
-                                    <input id="daysOfAction" type="number" name="daysOfAction" class="form-control"  min="0"  width="100%" maxlength="12" 
+                                    <input id="daysOfAction" type="number" name="daysOfAction" class="form-control"  min="0"  width="100%" maxlength="12" onkeyup="authsubmitnormal()"
                                     <?php
                                     if (NULL!=Input::old('daysOfAction'))
-                                        echo "value='".Input::old('daysOfAction')."'";
-                                    else if ('0'!=$taskc->daysOfAction)
-                                        echo "value='".$taskc->daysOfAction."'";
+                                        echo " value = '".Input::old('daysOfAction')."'";
+                                    else if ('0'<$taskc->daysOfAction)
+                                        echo " value = '".$taskc->daysOfAction."'";
                                     else
-                                        echo "value='1'";
+                                        echo " value = '".'1'."'";
+                                  
                                     ?>
                                     >
                                 </td>
                                 <td class="edit-pr-input">
-                                    <input type="text" name="remarks"  class="form-control" maxlength="255" width="100%"
+                                    <input type="text" name="remarks"  class="form-control" maxlength="255" width="100%" onkeyup="authsubmitnormal()"
                                     <?php
                                     if (NULL!=Input::old('remarks'))
                                     echo "value='".Input::old('remarks')."'";
@@ -720,8 +722,9 @@
                                 <td style="border-left: none; text-align: center;"  colspan="2">
                              
                             
-                                 <button class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" ><span class="glyphicon glyphicon-floppy-disk"></span></button>
-                              
+                                 <button id="csubmit" class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" ><span class="glyphicon glyphicon-floppy-disk" ></span></button>
+                                    <br>
+                                    
                                 @if($taskp->status=="Edit")
                                 
                                     <a  href='taskcanceledit/{{$taskp->id}}' ><button type="button" class='iframe btn btn-default' title="Cancel"><span class="glyphicon glyphicon-floppy-remove"></span></button></a>
@@ -746,7 +749,7 @@
                                 
                                 <td class="edit-pr-input" colspan="2">
                                 
-                                    <input type="text" name="by"  placeholder="Enter name" class="form-control" maxlength="100" width="80%" maxlength="100"
+                                    <input id="assignee" type="text" name="by"  placeholder="Enter name" class="form-control" maxlength="100" width="80%" maxlength="100" onkeyup="authsubmitcertification()"
                                     <?php
                                     if (NULL!=Input::old('by'))
                                     echo "value='".Input::old('by')."'";
@@ -757,10 +760,10 @@
                                     ?>
                                     >
                                 </td>
-                     <td style="border-left: none; text-align: center;"  colspan="2">
+                                 <td style="border-left: none; text-align: center;"  colspan="2">
                              
                             
-                                 <button class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" ><span class="glyphicon glyphicon-floppy-disk"></span></button>
+                                 <button id= "csubmit" class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" ><span class="glyphicon glyphicon-floppy-disk"  ></span></button>
                               
                                 @if($taskp->status=="Edit")
                                 
@@ -772,15 +775,16 @@
                             
                             
                             {{Form::close()}}
-                    @endif
-                    @if($tasks->taskType == "posting")
-                    <?php $myForm = 'myForm_' . $taskc->id; ?>
+                   
+         @endif
+         @if($tasks->taskType == "posting")
+                             <?php $myForm = 'myForm_' . $taskc->id; ?>
                             {{Form::open(['url'=>'posting', 'id' => $myForm], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
                                  <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
                                 <td class="edit-pr-input">
                                     Reference No. : 
-                                    <input type="text" name="referenceno"  class="form-control" maxlength="100" width="80%" maxlength="100"
+                                    <input id="referenceno" type="text" name="referenceno"  class="form-control" maxlength="100" width="80%" maxlength="100" onkeyup="authsubmitposting()"
                                     <?php
                                     if (NULL!=Input::old('referenceno'))
                                     echo "value='".Input::old('referenceno')."'";
@@ -795,7 +799,7 @@
                                     $today = date("m/d/y");
                                     ?>
                                     <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
-                                        <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" 
+                                        <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" onkeyup="authsubmitposting()"
                                         <?php
                                         if (NULL!=Input::old('dateFinished'))
                                             echo "value ='" . Input::old('dateFinished') ."'";
@@ -810,7 +814,7 @@
                                 </td>
                                 <td class="edit-pr-input" colspan="3">
                                     By: 
-                                    <input type="text" name="by"  placeholder="Enter name" class="form-control" maxlength="100" width="80%" maxlength="100"
+                                    <input id ="by" type="text" name="by"  placeholder="Enter name" class="form-control" maxlength="100" width="80%" maxlength="100" onkeyup="authsubmitposting()"
                                      <?php
                                     if (NULL!=Input::old('by'))
                                     echo "value='".Input::old('by')."'";
@@ -825,7 +829,7 @@
                                  <td style="border-left: none; text-align: center;"  colspan="2">
                              
                             
-                                 <button class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" ><span class="glyphicon glyphicon-floppy-disk"></span></button>
+                                 <button id="csubmit" class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" ><span class="glyphicon glyphicon-floppy-disk"></span></button>
                               
                                 @if($taskp->status=="Edit")
                                 
@@ -833,19 +837,16 @@
                                 
                                 @endif
 
-                                </td>
-                            
-                              
-                                
+                                </td>    
                             {{Form::close()}}
-                    @endif
+         @endif
                     @if($tasks->taskType == "supplier")
                             <?php $myForm = 'myForm_' . $taskc->id; ?>
                             {{Form::open(['url'=>'supplier', 'id' => $myForm], 'POST')}}
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
                                  <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
                                 <td class="edit-pr-input" colspan="2">
-                                    <input type="text" name="supplier"  class="form-control" maxlength="100" width="80%" placeholder="Enter supplier"
+                                    <input id="supplier" type="text" name="supplier"  class="form-control" maxlength="100" width="80%" placeholder="Enter supplier" onkeyup="authsubmitsupplier()"
                                      <?php
                                     if (NULL!=Input::old('supplier'))
                                     echo "value='".Input::old('supplier')."'";
@@ -857,7 +858,7 @@
                                 </td>
                                 
                                 <td class="edit-pr-input" colspan="2">
-                                    <input type="decimal" name="amount"  id="amount" class="form-control" maxlength="12" width="80%" placeholder="Enter amount" onkeypress="return isNumberKey(event)" onchange="checklist_changeAmount(this.id,this.value)"
+                                    <input type="decimal" name="amount"  id="amount" class="form-control" maxlength="12" width="80%" placeholder="Enter amount" onkeypress="return isNumberKey(event)" onchange="checklist_changeAmount(this.id,this.value)" onkeyup="authsubmitsupplier()"
                                      <?php
                                     if (NULL!=Input::old('amount'))
                                     echo "value='".Input::old('amount')."'";
@@ -870,7 +871,7 @@
                                   <td style="border-left: none; text-align: center;"  colspan="2">
                              
                             
-                                 <button class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" ><span class="glyphicon glyphicon-floppy-disk"></span></button>
+                                 <button id="csubmit" class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" disabled><span class="glyphicon glyphicon-floppy-disk"></span></button>
                               
                                 @if($taskp->status=="Edit")
                                 
@@ -890,7 +891,7 @@
                                  <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
                                 <td class="edit-pr-input" colspan="2">
                     
-                                    <input type="decimal" name="amt"  id="amt" class="form-control" maxlength="12" width="80%" placeholder="Enter cheque amount" onkeypress="return isNumberKey(event)" onchange="checklist_changeAmount(this.id,this.value)"
+                                    <input type="decimal" name="amt"  id="amt" class="form-control" maxlength="12" width="80%" placeholder="Enter cheque amount" onkeypress="return isNumberKey(event)" onkeyup="authsubmitcheque()" onchange="checklist_changeAmount(this.id,this.value)"
                                      <?php
                                     if (NULL!=Input::old('amt'))
                                     echo "value='".Input::old('amt')."'";
@@ -901,7 +902,7 @@
                                 </td>
                                 <td class="edit-pr-input" colspan="2">
                                     
-                                    <input type="decimal" name="num"  class="form-control" maxlength="12" width="80%" placeholder="Enter cheque number"
+                                    <input id="num" type="decimal" name="num"  class="form-control" maxlength="12" width="80%" placeholder="Enter cheque number" onkeyup="authsubmitcheque()"
                                      <?php
                                     if (NULL!=Input::old('num'))
                                     echo "value='".Input::old('num')."'";
@@ -915,8 +916,8 @@
                                     <?php 
                                     $today = date("m/d/y");
                                     ?>
-                                    <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
-                                        <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" 
+                                    <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%"> 
+                                        <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" onkeyup="authsubmitcheque()"
                                         <?php
                                         if (NULL!=Input::old('dateFinished'))
                                             echo "value ='" . Input::old('dateFinished') ."'";
@@ -931,7 +932,7 @@
                                   <td style="border-left: none; text-align: center;"  colspan="2">
                              
                             
-                                 <button class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" ><span class="glyphicon glyphicon-floppy-disk"></span></button>
+                                 <button id ="csubmit" class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" disabled><span class="glyphicon glyphicon-floppy-disk"></span></button>
                               
                                 @if($taskp->status=="Edit")
                                 
@@ -962,7 +963,7 @@
                                         $today = date("m/d/y");
                                         ?>
                                         <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
-                                            <input type="text" class="form-control" name="datepublished" id="datepublished" style="text-align: center; width:100%"
+                                            <input type="text" class="form-control" name="datepublished" id="datepublished" style="text-align: center; width:100%" onkeyup="authsubmitpublished()"
                                             
                                         <?php
                                         if (NULL!=Input::old('dateFinished'))
@@ -978,7 +979,7 @@
                                     </td>
                                     <td>
                                         <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
-                                            <input type="text" class="form-control" name="enddate" id="enddate" style="text-align: center; width:100%" 
+                                            <input type="text" class="form-control" name="enddate" id="enddate" style="text-align: center; width:100%"  onkeyup="authsubmitpublished()"
                                             
                                         <?php
                                         if (NULL!=Input::old('dateFinished'))
@@ -994,7 +995,7 @@
                                     </td>
                                     <td class="edit-pr-input" colspan="2">  
                                         <input type="text" name="by"  placeholder="Enter name" class="form-control" maxlength="100" width="80%"
-                                        
+                                        id="by" onkeyup="authsubmitpublished()"
                                         <?php
                                         if (NULL!=Input::old('by'))
                                             echo "value='".Input::old('by')."'";
@@ -1009,7 +1010,7 @@
                              <td style="border-left: none; text-align: center;"  colspan="2">
                              
                             
-                                 <button class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" ><span class="glyphicon glyphicon-floppy-disk"></span></button>
+                                 <button id="csubmit" class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" ><span class="glyphicon glyphicon-floppy-disk"></span></button>
                               
                                 @if($taskp->status=="Edit")
                                 
@@ -1033,7 +1034,7 @@
                                  
                                     <td class="edit-pr-input">
                                     Reference No.:
-                                    <input type="text" name="referenceno"  class="form-control" maxlength="100" width="80%" maxlength="100" placeholder="Enter reference number"
+                                    <input id="referenceno" type="text" name="referenceno"  class="form-control" maxlength="100" width="80%" maxlength="100" placeholder="Enter reference number" onkeyup="authsubmitphilgeps()"
                                     <?php
                                     if (NULL!=Input::old('referenceno'))
                                     echo "value='".Input::old('referenceno')."'";
@@ -1048,7 +1049,7 @@
                                         $today = date("m/d/y");
                                         ?>
                                         <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
-                                            <input type="text" class="form-control" name="datepublished" id="datepublished" style="text-align: center; width:100%"
+                                            <input type="text" class="form-control" name="datepublished" id="datepublished" style="text-align: center; width:100%" onkeyup="authsubmitphilgeps()"
                                             
                                         <?php
                                         if (NULL!=Input::old('dateFinished'))
@@ -1065,7 +1066,7 @@
                                     <td>
                                         End Date:
                                         <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
-                                            <input type="text" class="form-control" name="enddate" id="enddate" style="text-align: center; width:100%" 
+                                            <input type="text" class="form-control" name="enddate" id="enddate" style="text-align: center; width:100%" onkeyup="authsubmitphilgeps()"
                                             
                                         <?php
                                         if (NULL!=Input::old('dateFinished'))
@@ -1081,7 +1082,7 @@
                                     </td>
                                     <td class="edit-pr-input" colspan="2"> 
                                         Posted By:
-                                        <input type="text" name="by"  placeholder="Enter name" class="form-control" maxlength="100" width="80%"
+                                        <input type="text" name="by"  placeholder="Enter name" class="form-control" maxlength="100" width="80%" id="by" onkeyup="authsubmitphilgeps()"
                                         
                                         <?php
                                         if (NULL!=Input::old('by'))
@@ -1099,7 +1100,7 @@
                                <td style="border-left: none; text-align: center;"  colspan="2">
                              
                             
-                                 <button class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" ><span class="glyphicon glyphicon-floppy-disk"></span></button>
+                                 <button id="csubmit" class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" disabled ><span class="glyphicon glyphicon-floppy-disk" disabled></span></button>
                               
                                 @if($taskp->status=="Edit")
                                 
@@ -1128,7 +1129,8 @@
                                         $today = date("m/d/y");
                                         ?>
                                         <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
-                                            <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" 
+                                            <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" onkeyup="authsubmitdocuments()"
+                                            
                                             
                                         <?php
                                         if (NULL!=Input::old('dateFinished'))
@@ -1144,7 +1146,7 @@
                                     </td>
                                     <td>
                                         <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
-                                            <input type="text" class="form-control" name="biddingdate" id="biddingdate" style="text-align: center; width:100%" 
+                                            <input type="text" class="form-control" name="biddingdate" id="biddingdate" style="text-align: center; width:100%" onkeyup="authsubmitdocuments()"
                                            
                                         <?php
                                         if (NULL!=Input::old('dateFinished'))
@@ -1159,7 +1161,7 @@
                                         </div>
                                     </td>
                                     <td class="edit-pr-input" colspan="2" >  
-                                        <input type="text" name="by"  class="form-control" maxlength="100" width="80%" placeholder="Enter name"
+                                        <input id="by" type="text" name="by"  class="form-control" maxlength="100" width="80%" placeholder="Enter name" onkeyup="authsubmitdocuments()"
                                         
                                         <?php
                                         if (NULL!=Input::old('by'))
@@ -1177,7 +1179,7 @@
                                <td style="border-left: none; text-align: center;"  colspan="2">
                              
                             
-                                 <button class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" ><span class="glyphicon glyphicon-floppy-disk"></span></button>
+                                 <button id="csubmit" class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" ><span class="glyphicon glyphicon-floppy-disk" ></span></button>
                               
                                 @if($taskp->status=="Edit")
                                 
@@ -1201,7 +1203,7 @@
                                         $today = date("m/d/y");
                                         ?>
                                         <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
-                                            <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" onchange="changeDOA(this.value)"
+                                            <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" onchange="changeDOA(this.value)" onkeyup="authsubmitevaluation()"
                                         <?php
                                         if (NULL!=Input::old('dateFinished'))
                                             echo "value ='" . Input::old('dateFinished') ."'";
@@ -1236,7 +1238,7 @@
                                             <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($taskprev->dateFinished))}}">
 
                                             @endif
-                                        <input type="number" name="noofdays"  class="form-control" maxlength="12" width="80%" placeholder="Enter no. of days" id="daysOfAction"
+                                        <input type="number" name="noofdays"  class="form-control" maxlength="12" width="80%" placeholder="Enter no. of days" id="daysOfAction" onkeyup="authsubmitevaluation()"
                                         
                                         <?php
                                         if (NULL!=Input::old('noofdays'))
@@ -1254,8 +1256,8 @@
                       <td style="border-left: none; text-align: center;"  colspan="2">
                              
                             
-                                 <button class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" ><span class="glyphicon glyphicon-floppy-disk"></span></button>
-                              
+                               
+                                 <button id="csubmit" class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" ><span class="glyphicon glyphicon-floppy-disk"></span></button>
                                 @if($taskp->status=="Edit")
                                 
                                     <a  href='taskcanceledit/{{$taskp->id}}' ><button type="button" class='iframe btn btn-default' title="Cancel"><span class="glyphicon glyphicon-floppy-remove"></span></button></a>
@@ -1276,7 +1278,7 @@
                                     $today = date("m/d/y");
                                     ?>
                                     <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
-                                        <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" 
+                                        <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" onkeyup="authsubmitconference()" 
                                         
                                         <?php
                                         if (NULL!=Input::old('dateFinished'))
@@ -1294,7 +1296,7 @@
                            <td style="border-left: none; text-align: center;"  colspan="2">
                              
                             
-                                 <button class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" ><span class="glyphicon glyphicon-floppy-disk"></span></button>
+                                 <button id="csubmit" class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" ><span class="glyphicon glyphicon-floppy-disk"></span></button>
                               
                                 @if($taskp->status=="Edit")
                                 
@@ -1324,7 +1326,7 @@
                                         $today = date("m/d/y");
                                         ?>
                                         <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%" >
-                                            <input type="text" class="form-control" name="date" id="date" onchange="changeDOA(this.value)" style="text-align: center; width:100%" 
+                                            <input type="text" class="form-control" name="date" id="date" onchange="changeDOA(this.value)" style="text-align: center; width:100%"  onkeyup="authsubmitcontract()"
                                         <?php
                                         if (NULL!=Input::old('dateFinished'))
                                             echo "value ='" . Input::old('dateFinished') ."'";
@@ -1358,7 +1360,7 @@
 
                                             @endif
                                     <td><input type="number" name="noofdays"  class="form-control" maxlength="100" width="80%" placeholder="Enter no. of days accomplished"
-                                        id="daysOfAction"
+                                        id="daysOfAction"  onkeyup="authsubmitcontract()"
                                         <?php
                                         if (NULL!=Input::old('noofdays'))
                                             echo "value=".Input::old('noofdays');
@@ -1370,8 +1372,8 @@
                                         ?>
                                         ></td>
                                     <td class="edit-pr-input" colspan="2">  
-                                        <input type="text" name="contractmeeting"  class="form-control" maxlength="100" width="80%" placeholder="Enter contract agreement"
-                                        
+                                        <input type="text" id="contractmeeting" name="contractmeeting"  class="form-control" maxlength="100" width="80%" placeholder="Enter contract agreement"
+                                         onkeyup="authsubmitcontract()"
                                         <?php
                                         if (NULL!=Input::old('contractmeeting'))
                                             echo "value='".Input::old('contractmeeting')."'";
@@ -1386,7 +1388,7 @@
                             <td style="border-left: none; text-align: center;"  colspan="2">
                              
                             
-                                 <button class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" ><span class="glyphicon glyphicon-floppy-disk"></span></button>
+                                 <button id="csubmit" class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" disabled><span class="glyphicon glyphicon-floppy-disk"></span></button>
                               
                                 @if($taskp->status=="Edit")
                                 
@@ -1415,7 +1417,7 @@
                                         $today = date("m/d/y");
                                         ?>
                                         <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
-                                            <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%"  onchange="changeDOA(this.value)"
+                                            <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%"  onchange="changeDOA(this.value)"  onkeyup="authsubmitcontract()"
                                             
                                         <?php
                                         if (NULL!=Input::old('dateFinished'))
@@ -1452,7 +1454,7 @@
 
                                             @endif
                                         <input type="number" name="noofdays"  class="form-control" maxlength="12" width="80%" placeholder="Enter no. of days accomplished"
-                                        id="daysOfAction"
+                                        id="daysOfAction"  onkeyup="authsubmitcontract()"
                                         <?php
                                         if (NULL!=Input::old('noofdays'))
                                             echo "value=".Input::old('noofdays');
@@ -1467,7 +1469,7 @@
                                         >
                                     </td>
                                     <td class="edit-pr-input" colspan="2">  
-                                        <input type="text" name="contractmeeting"  class="form-control" maxlength="100" width="80%" placeholder="Enter minutes of meeting"
+                                        <input type="text" id="contractmeeting" name="contractmeeting"  class="form-control" maxlength="100" width="80%" placeholder="Enter minutes of meeting"  onkeyup="authsubmitcontract()"
                                         
                                         <?php
                                         if (NULL!=Input::old('contractmeeting'))
@@ -1483,7 +1485,7 @@
                              <td style="border-left: none; text-align: center;"  colspan="2">
                              
                             
-                                 <button class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" ><span class="glyphicon glyphicon-floppy-disk"></span></button>
+                                 <button id="csubmit" class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" ><span class="glyphicon glyphicon-floppy-disk"></span></button>
                               
                                 @if($taskp->status=="Edit")
                                 
@@ -1508,7 +1510,7 @@
                                 </tr>
                                 <tr class="@if($taskch!=0 && $taskc->task_id==$tasks->id) current-task @endif">
                                     <td>{{$tasks->taskName}}</td>
-                                    <td><input type="number" name="noofsuppliers"  class="form-control" maxlength="12" width="80%" placeholder="Enter no. of suppliers"
+                                    <td><input id="noofsuppliers" type="number" name="noofsuppliers"  class="form-control" maxlength="12" width="80%" placeholder="Enter no. of suppliers" onkeyup="authsubmitrfq()"
                                         
                                         <?php
                                         if (NULL!=Input::old('noofsuppliers'))
@@ -1524,7 +1526,7 @@
                                         $today = date("m/d/y");
                                         ?>
                                         <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
-                                            <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" 
+                                            <input  type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%"  onkeyup="authsubmitrfq()"
                                         <?php
                                         if (NULL!=Input::old('dateFinished'))
                                             echo "value ='" . Input::old('dateFinished') ."'";
@@ -1538,7 +1540,7 @@
                                         </div>
                                     </td>
                                     <td class="edit-pr-input" colspan="2">  
-                                        <input type="text" name="by"  class="form-control" maxlength="100" width="80%" placeholder="Enter name"
+                                        <input id="by" type="text" name="by"  class="form-control" maxlength="100" width="80%" placeholder="Enter name" onkeyup="authsubmitrfq()"
                                         
                                         <?php
                                         if (NULL!=Input::old('by'))
@@ -1555,7 +1557,7 @@
                              <td style="border-left: none; text-align: center;"  colspan="2">
                              
                             
-                                 <button class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" ><span class="glyphicon glyphicon-floppy-disk"></span></button>
+                                 <button id="csubmit" class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" disabled><span class="glyphicon glyphicon-floppy-disk"></span></button>
                               
                                 @if($taskp->status=="Edit")
                                 
@@ -1577,7 +1579,7 @@
                                     $today = date("m/d/y");
                                     ?>
                                     <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
-                                        <input type="text" class="form-control" name="dateFinished" id="dateFinished" style="text-align: center; width:100%" 
+                                        <input type="text" class="form-control" name="dateFinished" id="dateFinished" style="text-align: center; width:100%" onkeyup="authsubmitdateby()"
                                         
                                         <?php
                                         if (NULL!=Input::old('dateFinished'))
@@ -1596,8 +1598,8 @@
                                     </div>
                                 </td>
                                 <td class="edit-pr-input" colspan="2">
-                                    <input type ="text" name="assignee" placeholder="Enter name" class="form-control" width="100%" maxlength="100" 
-                                    placeholder="Enter name"
+                                    <input id="assignee" type ="text" name="assignee" placeholder="Enter name" class="form-control" width="100%" maxlength="100" 
+                                    placeholder="Enter name" onkeyup="authsubmitdateby()"
                                     
                                         <?php
                                         if (NULL!=Input::old('assignee'))
@@ -1613,7 +1615,7 @@
                                  <td style="border-left: none; text-align: center;"  colspan="2">
                              
                             
-                                 <button class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" ><span class="glyphicon glyphicon-floppy-disk"></span></button>
+                                 <button id+"csubmit" class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" ><span class="glyphicon glyphicon-floppy-disk"></span></button>
                               
                                 @if($taskp->status=="Edit")
                                 
@@ -1641,7 +1643,7 @@
                                     ?>
                                     <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
 
-                                        <input type="text" class="form-control" name="dateFinished" id="dateFinished" style="text-align: center; width:100%" 
+                                        <input type="text" class="form-control" name="dateFinished" id="dateFinished" style="text-align: center; width:100%"  onkeyup="authsubmitdateby()"
                                         
                                         <?php
                                         if (NULL!=Input::old('dateFinished'))
@@ -1660,7 +1662,7 @@
                                     </div>
                                 </td>
                                 <td class="edit-pr-input">
-                                    <input type ="text" name="assignee" placeholder="Enter name" class="form-control" width="100%" maxlength="100" placeholder="Enter name"
+                                    <input id="assignee" type ="text" name="assignee" placeholder="Enter name" class="form-control" width="100%" maxlength="100" placeholder="Enter name" onkeyup="authsubmitdateby()"
                                     
                                         <?php
                                         if (NULL!=Input::old('assignee'))
@@ -1674,7 +1676,7 @@
                                     >
                                 </td>
                                 <td class="edit-pr-input" colspan="2">
-                                    <input type="text" name="remarks"  class="form-control" maxlength="255" width="100%"
+                                    <input type="text" name="remarks"  class="form-control" maxlength="255" width="100%" onkeyup="authsubmitdateby()"
                                     
                                         <?php
                                         if (NULL!=Input::old('remarks'))
@@ -1690,7 +1692,7 @@
                                  <td style="border-left: none; text-align: center;"  colspan="2">
                              
                             
-                                 <button class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" ><span class="glyphicon glyphicon-floppy-disk"></span></button>
+                                 <button id="csubmit" class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" ><span class="glyphicon glyphicon-floppy-disk"></span></button>
                               
                                 @if($taskp->status=="Edit")
                                 
@@ -1714,7 +1716,7 @@
                                     ?>
                                     <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
 
-                                        <input type="text" class="form-control" name="dateFinished" id="dateFinished" style="text-align: center; width:100%" 
+                                        <input type="text" class="form-control" name="dateFinished" id="dateFinished" style="text-align: center; width:100%" onkeyup="authsubmitdateonly()"
                                         
                                         <?php
                                         if (NULL!=Input::old('dateFinished'))
@@ -1736,7 +1738,7 @@
                        <td style="border-left: none; text-align: center;"  colspan="2">
                              
                             
-                                 <button class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" ><span class="glyphicon glyphicon-floppy-disk"></span></button>
+                                 <button id="csubmit" class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" ><span class="glyphicon glyphicon-floppy-disk"></span></button>
                               
                                 @if($taskp->status=="Edit")
                                 
@@ -2139,7 +2141,7 @@
                             ?>
                             </td>
                             
-                            <td align="center">
+                            <td align="center" colspan="2">
                                 @if($taskche==0&&$taskp->status=="Done")
                                 <a class='iframe btn btn-success' href='taskedit/{{$taskp->id}}' title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
                                 @endif
@@ -2383,17 +2385,18 @@ $prdays=$days;
             decimal_amount = parseFloat(amount).toFixed(2);
             if(decimal_amount == 0 || decimal_amount == "0.00")
             {
-                document.getElementById("num").value = "1.00";
+                document.getElementById("num2").value = "1.00";
             }
             else
             {
                 var parts = decimal_amount.toString().split(".");
                 parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                 parts =  parts.join(".");
-                document.getElementById("num").value = parts;
+                document.getElementById("num2").value = parts;
                 window.old_amount = parts; 
             }
         }
+
         else if(!window.old_amount)
         {
             document.getElementById("num").value = "1.00";
@@ -2587,23 +2590,317 @@ function autouploadsaved(value)
     document.getElementById(formname).submit();
     }
 
-        function changeDOA(value)
+    function changeDOA(value)
     {
-var datebasis = document.getElementById("datebasis").value;
-var date1 = new Date(value);
-var date2 = new Date(datebasis);
-var timeDiff = date1.getTime() - date2.getTime();
-var diffDays = timeDiff / (1000 * 3600 * 24); 
-if(diffDays==0)
-    diffDays=1;
-else if(diffDays<0)
-    diffDays=0;
-else
-    diffDays= Math.ceil(diffDays);
-        document.getElementById("daysOfAction").value=diffDays;
+        var datebasis = document.getElementById("datebasis").value;
+        var date1 = new Date(value);
+        var date2 = new Date(datebasis);
+        var timeDiff = date1.getTime() - date2.getTime();
+        var diffDays = timeDiff / (1000 * 3600 * 24); 
+        if(diffDays==0)
+            diffDays=1;
+        else if(diffDays<0)
+            diffDays=0;
+        else
+            diffDays= Math.ceil(diffDays);
+             document.getElementById("daysOfAction").value=diffDays;
         
  
     }
+
+
+
+
+
+
+        function authsubmitnormal()
+        {
+            var assignee = document.getElementById("assignee").value;
+            var dateFinished= document.getElementById("dateFinished").value;
+            var daysOfAction= document.getElementById("daysOfAction").value;
+
+
+                assignee = assignee.trim();
+                dateFinished = dateFinished.trim();
+                daysOfAction = daysOfAction.trim();
+
+            if(assignee != "" && dateFinished != "" && daysOfAction != "")
+            {
+                document.getElementById('csubmit').disabled = false ;
+            }
+            else
+            {
+                 document.getElementById('csubmit').disabled = true
+            }
+        }
+        function authsubmitcertification()
+        {
+            var assignee = document.getElementById("assignee").value;
+          
+
+
+                assignee = assignee.trim();
+             
+
+            if(assignee != "" )
+            {
+                document.getElementById('csubmit').disabled = false ;
+            }
+            else
+            {
+                 document.getElementById('csubmit').disabled = true
+            }
+        }
+
+        function authsubmitposting()
+        {
+            var referenceno = document.getElementById("referenceno").value;
+            var date= document.getElementById("date").value;
+            var by= document.getElementById("by").value;
+
+
+                referenceno = referenceno.trim();
+                date = date.trim();
+                by = by.trim();
+
+            if(referenceno != "" && date != "" && by != "")
+            {
+                document.getElementById('csubmit').disabled = false ;
+            }
+            else
+            {
+                 document.getElementById('csubmit').disabled = true
+            }
+        }
+        function authsubmitsupplier()
+        {
+            var supplier = document.getElementById("supplier").value;
+            var amount= document.getElementById("amount").value;
+
+
+                amount = amount.trim();
+                supplier = supplier.trim();
+
+            if(supplier != "" && amount != "")
+            {
+                document.getElementById('csubmit').disabled = false ;
+            }
+            else
+            {
+                 document.getElementById('csubmit').disabled = true
+            }
+        }
+         function authsubmitcheque()
+        {
+            var amt = document.getElementById("amt").value;
+            var num= document.getElementById("num").value;
+            var date= document.getElementById("date").value;
+                amt = amt.trim();
+                num = num.trim();
+                date = date.trim();
+        if(amt != "" && num != "" && date != "")
+            {
+                document.getElementById('csubmit').disabled = false ;
+            }
+            else
+            {
+                 document.getElementById('csubmit').disabled = true
+            }
+        }
+          function authsubmitpublished()
+        {
+            var datepublished = document.getElementById("datepublished").value;
+            var enddate= document.getElementById("enddate").value;
+            var by= document.getElementById("by").value;
+                datepublished = datepublished.trim();
+                enddate = enddate.trim();
+                by = by.trim();
+            if(datepublished != "" && enddate != "" && by != "")
+            {
+                document.getElementById('csubmit').disabled = false ;
+            }
+            else
+            {
+                 document.getElementById('csubmit').disabled = true
+            }
+        }
+           function authsubmitphilgeps()
+        {
+            var referenceno = document.getElementById("referenceno").value;
+            var datepublished= document.getElementById("datepublished").value;
+            var by= document.getElementById("by").value;
+             var enddate= document.getElementById("enddate").value;
+
+
+                referenceno = referenceno.trim();
+                datepublished = datepublished.trim();
+                by = by.trim();
+                enddate = enddate.trim();
+
+    enddate = enddate.trim();
+
+            if(referenceno != "" && datepublished != "" && by != ""  && enddate != "")
+            {
+                document.getElementById('csubmit').disabled = false ;
+            }
+            else
+            {
+                 document.getElementById('csubmit').disabled = true
+            }
+        }
+
+            function authsubmitdocuments()
+        {
+          
+            var biddingdate= document.getElementById("biddingdate").value;
+            var by= document.getElementById("by").value;
+             var date= document.getElementById("date").value;
+
+                biddingdate = biddingdate.trim();
+                by = by.trim();
+                date = date.trim();
+
+            if(biddingdate != "" && by != ""  && date != "")
+            {
+                document.getElementById('csubmit').disabled = false ;
+            }
+            else
+            {
+                 document.getElementById('csubmit').disabled = true
+            }
+        }
+
+
+            function authsubmitevaluation()
+        {
+          
+            var daysOfAction= document.getElementById("daysOfAction").value;
+           
+             var date= document.getElementById("date").value;
+
+                daysOfAction = daysOfAction.trim();
+
+                date = date.trim();
+
+            if(daysOfAction != "" && date != "" )
+            {
+                document.getElementById('csubmit').disabled = false ;
+            }
+            else
+            {
+                 document.getElementById('csubmit').disabled = true
+            }
+        }
+        function authsubmitconference()
+        {
+          
+            var date= document.getElementById("date").value;
+           
+
+
+                date = date.trim();
+
+            if(date != "" )
+            {
+                document.getElementById('csubmit').disabled = false ;
+            }
+            else
+            {
+                 document.getElementById('csubmit').disabled = true
+            }
+        }
+         function authsubmitcontract()
+        {
+          
+            var date= document.getElementById("date").value;
+
+                date = date.trim();
+
+
+                     var daysOfAction= document.getElementById("daysOfAction").value;
+
+                daysOfAction = daysOfAction.trim();
+                     var contractmeeting= document.getElementById("contractmeeting").value;
+
+                contractmeeting = contractmeeting.trim();
+
+            if(date != "" && daysOfAction != "" && contractmeeting != "")
+            {
+                document.getElementById('csubmit').disabled = false ;
+            }
+            else
+            {
+                 document.getElementById('csubmit').disabled = true
+            }
+        }
+
+
+         function authsubmitrfq()
+        {
+          
+            var date= document.getElementById("date").value;
+
+                date = date.trim();
+
+
+                     var noofsuppliers= document.getElementById("noofsuppliers").value;
+
+                noofsuppliers = noofsuppliers.trim();
+                     var by= document.getElementById("by").value;
+
+                by = by.trim();
+
+            if(date != "" && noofsuppliers != "" && by != "")
+            {
+                document.getElementById('csubmit').disabled = false ;
+            }
+            else
+            {
+                 document.getElementById('csubmit').disabled = true
+            }
+        }
+         function authsubmitdateby()
+        {
+          
+            var dateFinished= document.getElementById("dateFinished").value;
+
+                dateFinished = dateFinished.trim();
+
+
+                     var assignee= document.getElementById("assignee").value;
+
+                assignee = assignee.trim();
+                   
+
+
+            if(dateFinished != "" && assignee != "" )
+            {
+                document.getElementById('csubmit').disabled = false ;
+            }
+            else
+            {
+                 document.getElementById('csubmit').disabled = true
+            }
+        }
+         function authsubmitdateonly()
+        {
+          
+            var dateFinished= document.getElementById("dateFinished").value;
+
+                dateFinished = dateFinished.trim();
+
+
+                
+            if(dateFinished != "" )
+            {
+                document.getElementById('csubmit').disabled = false ;
+            }
+            else
+            {
+                 document.getElementById('csubmit').disabled = true
+            }
+        }
+       
 </script>
 
 @stop
