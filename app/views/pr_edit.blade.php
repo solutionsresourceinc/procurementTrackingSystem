@@ -439,7 +439,7 @@
                         foreach ($otherd as $otherdetails) 
                         {
                             
-                            if($otherdetails->label!="Total Days for BAC Documents Preparation"&&$otherdetails->label!="Compliance")
+                            if($otherdetails->label!="Total Days for BAC Documents Preparation"&&$otherdetails->label!="Compliance" || $otherdetails->label!="Remarks")
                             {
 
                             echo "<tr><td width='30%'>".$otherdetails->label."</td>";
@@ -1510,7 +1510,7 @@
                                 </tr>
                                 <tr class="@if($taskch!=0 && $taskc->task_id==$tasks->id) current-task @endif">
                                     <td>{{$tasks->taskName}}</td>
-                                    <td><input id="noofsuppliers" type="number" name="noofsuppliers"  class="form-control" maxlength="12" width="80%" placeholder="Enter no. of suppliers" onkeyup="authsubmitrfq()"
+                                    <td><input id="noofsuppliers" type="number" name="noofsuppliers"  class="form-control" min="0" maxlength="12" width="80%" placeholder="Enter no. of suppliers" onkeyup="authsubmitrfq()"
                                         
                                         <?php
                                         if (NULL!=Input::old('noofsuppliers'))
@@ -2165,7 +2165,7 @@
                         $otherd= OtherDetails::where('section_id', $sections->id)->get();
                         foreach ($otherd as $otherdetails) 
                         {
-                            if($otherdetails->label=="Total Days for BAC Documents Preparation"||$otherdetails->label=="Compliance")
+                            if($otherdetails->label=="Total Days for BAC Documents Preparation"||$otherdetails->label=="Compliance" || $otherdetails->label=="Remarks")
                             {
 
                             echo "<tr><td width='30%'>".$otherdetails->label."</td>";
