@@ -6,6 +6,7 @@
     {{ HTML::script('date_picker/bootstrap-datetimepicker.fr.js') }}
     {{ HTML::style('css/datepicker.css')}}
     {{ HTML::script('js/bootstrap-datepicker.js') }}
+    {{ HTML::script('js/oneSimpleTablePaging-1.0.js') }}
     <script src="js/jquery.tablesorter.min.js"></script>
     <script src="js/jquery.tablesorter.widgets.min.js"></script>
     <script>
@@ -139,7 +140,7 @@
             @endif
         </div>
     <!-- END OF SEARCH BOX -->
-    <table class="table table-striped display tablesorter" border=0>
+    <table class="table table-striped display tablesorter" id="main-table" border=0>
         <thead>
             <tr>
                 <th width="12%">Control No.</th>
@@ -232,14 +233,14 @@
             @endforeach
         </tbody>
     <table>
-    <div id="pages" align="center">
+    <div id="pages" align="center" class="no-print">
         @if($pageCounter != 0)
-            <center>{{ $requests->links(); }}</center>
+        <center></center>
         @else
-            <p><i>No data available</i></p>
+        <p><i>No data available</i></p>
         @endif
     </div>
-
+    <input type="hidden" value=" {{{ $pageCounter }}} " id="pageCount" name="pageCount">
 {{Session::forget('notice'); }}
 {{Session::forget('main_error'); }}
 {{Session::forget('imgerror'); }}
@@ -265,6 +266,11 @@
                 todayBtn: "linked"
             });
         });
+
+        $('#main-table').oneSimpleTablePagination({
+            rowsPerPage: 10
+        });
+
     </script>
 
 
@@ -275,6 +281,11 @@
         // START *code for search box
         window.onload = function()
         {
+            if(document.getElementById('pageCount').value == 0 || document.getElementById('pageCount').value <= 10)
+            {
+                document.getElementById('tablePagination').style.display = 'none';
+            }
+
             if(document.getElementById('start').value.length == 0 || document.getElementById('end').value.length == 0)
             {
                 document.getElementById('betDate').disabled = true;
