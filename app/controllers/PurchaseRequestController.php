@@ -459,7 +459,7 @@ class PurchaseRequestController extends Controller
                 }
 
                 $connected = @fsockopen("www.google.com", 80);  //website, port  (try 80 or 443)
-                if (!$connected)
+                if ($connected)
                 {
                     $sendee = DB::table('users')->where('id',$purchase->requisitioner)->first();
                     $email = $sendee->email;
