@@ -333,7 +333,7 @@
                     <td>
                    
                             <input type="hidden" name="hide" value="{{$attachment->id}}">
-                        <button type="button" onclick="delimage({{$count}})" ><span class="glyphicon glyphicon-trash"></span></button>
+                        <button type="button" onclick="delimage({{$count}})" title="Delete" ><span class="glyphicon glyphicon-trash"></span></button>
       
                         <?php $count+=1; ?>
                     </td>
@@ -439,7 +439,7 @@
                         foreach ($otherd as $otherdetails) 
                         {
                             
-                            if($otherdetails->label!="Total Days for BAC Documents Preparation"&&$otherdetails->label!="Compliance")
+                            if($otherdetails->label!="Total Days for BAC Documents Preparation"&&$otherdetails->label!="Compliance" || $otherdetails->label!="Remarks")
                             {
 
                             echo "<tr><td width='30%'>".$otherdetails->label."</td>";
@@ -722,7 +722,7 @@
                                 <td style="border-left: none; text-align: center;"  colspan="2">
                              
                             
-                                 <button id="csubmit" class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" ><span class="glyphicon glyphicon-floppy-disk" ></span></button>
+                                 <button id="csubmit" class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" title="Save"><span class="glyphicon glyphicon-floppy-disk" ></span></button>
                                     <br>
                                     
                                 @if($taskp->status=="Edit")
@@ -763,7 +763,7 @@
                                  <td style="border-left: none; text-align: center;"  colspan="2">
                              
                             
-                                 <button id= "csubmit" class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" ><span class="glyphicon glyphicon-floppy-disk"  ></span></button>
+                                 <button id= "csubmit" class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" title="Save"><span class="glyphicon glyphicon-floppy-disk"  ></span></button>
                               
                                 @if($taskp->status=="Edit")
                                 
@@ -829,7 +829,7 @@
                                  <td style="border-left: none; text-align: center;"  colspan="2">
                              
                             
-                                 <button id="csubmit" class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" ><span class="glyphicon glyphicon-floppy-disk"></span></button>
+                                 <button id="csubmit" class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" title="Save" ><span class="glyphicon glyphicon-floppy-disk"></span></button>
                               
                                 @if($taskp->status=="Edit")
                                 
@@ -871,7 +871,7 @@
                                   <td style="border-left: none; text-align: center;"  colspan="2">
                              
                             
-                                 <button id="csubmit" class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" disabled><span class="glyphicon glyphicon-floppy-disk"></span></button>
+                                 <button id="csubmit" class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" title="Save" disabled><span class="glyphicon glyphicon-floppy-disk"></span></button>
                               
                                 @if($taskp->status=="Edit")
                                 
@@ -932,7 +932,7 @@
                                   <td style="border-left: none; text-align: center;"  colspan="2">
                              
                             
-                                 <button id ="csubmit" class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" disabled><span class="glyphicon glyphicon-floppy-disk"></span></button>
+                                 <button id ="csubmit" class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" title="Save" disabled><span class="glyphicon glyphicon-floppy-disk"></span></button>
                               
                                 @if($taskp->status=="Edit")
                                 
@@ -1010,7 +1010,7 @@
                              <td style="border-left: none; text-align: center;"  colspan="2">
                              
                             
-                                 <button id="csubmit" class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" ><span class="glyphicon glyphicon-floppy-disk"></span></button>
+                                 <button id="csubmit" class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" title="Save"><span class="glyphicon glyphicon-floppy-disk"></span></button>
                               
                                 @if($taskp->status=="Edit")
                                 
@@ -1100,7 +1100,7 @@
                                <td style="border-left: none; text-align: center;"  colspan="2">
                              
                             
-                                 <button id="csubmit" class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" disabled ><span class="glyphicon glyphicon-floppy-disk" disabled></span></button>
+                                 <button id="csubmit" class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" title="Save" disabled ><span class="glyphicon glyphicon-floppy-disk" disabled></span></button>
                               
                                 @if($taskp->status=="Edit")
                                 
@@ -1179,7 +1179,7 @@
                                <td style="border-left: none; text-align: center;"  colspan="2">
                              
                             
-                                 <button id="csubmit" class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" ><span class="glyphicon glyphicon-floppy-disk" ></span></button>
+                                 <button id="csubmit" class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" title="Save"><span class="glyphicon glyphicon-floppy-disk" ></span></button>
                               
                                 @if($taskp->status=="Edit")
                                 
@@ -1257,7 +1257,7 @@
                              
                             
                                
-                                 <button id="csubmit" class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" ><span class="glyphicon glyphicon-floppy-disk"></span></button>
+                                 <button id="csubmit" class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" title="Save"><span class="glyphicon glyphicon-floppy-disk"></span></button>
                                 @if($taskp->status=="Edit")
                                 
                                     <a  href='taskcanceledit/{{$taskp->id}}' ><button type="button" class='iframe btn btn-default' title="Cancel"><span class="glyphicon glyphicon-floppy-remove"></span></button></a>
@@ -1296,7 +1296,7 @@
                            <td style="border-left: none; text-align: center;"  colspan="2">
                              
                             
-                                 <button id="csubmit" class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" ><span class="glyphicon glyphicon-floppy-disk"></span></button>
+                                 <button id="csubmit" class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" title="Save"><span class="glyphicon glyphicon-floppy-disk"></span></button>
                               
                                 @if($taskp->status=="Edit")
                                 
@@ -1388,7 +1388,7 @@
                             <td style="border-left: none; text-align: center;"  colspan="2">
                              
                             
-                                 <button id="csubmit" class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" disabled><span class="glyphicon glyphicon-floppy-disk"></span></button>
+                                 <button id="csubmit" class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" title="Save" disabled><span class="glyphicon glyphicon-floppy-disk"></span></button>
                               
                                 @if($taskp->status=="Edit")
                                 
@@ -1485,7 +1485,7 @@
                              <td style="border-left: none; text-align: center;"  colspan="2">
                              
                             
-                                 <button id="csubmit" class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" ><span class="glyphicon glyphicon-floppy-disk"></span></button>
+                                 <button id="csubmit" class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" title="Save" ><span class="glyphicon glyphicon-floppy-disk"></span></button>
                               
                                 @if($taskp->status=="Edit")
                                 
@@ -1510,7 +1510,7 @@
                                 </tr>
                                 <tr class="@if($taskch!=0 && $taskc->task_id==$tasks->id) current-task @endif">
                                     <td>{{$tasks->taskName}}</td>
-                                    <td><input id="noofsuppliers" type="number" name="noofsuppliers"  class="form-control" maxlength="12" width="80%" placeholder="Enter no. of suppliers" onkeyup="authsubmitrfq()"
+                                    <td><input id="noofsuppliers" type="number" name="noofsuppliers"  class="form-control" min="0" maxlength="12" width="80%" placeholder="Enter no. of suppliers" onkeyup="authsubmitrfq()"
                                         
                                         <?php
                                         if (NULL!=Input::old('noofsuppliers'))
@@ -1557,7 +1557,7 @@
                              <td style="border-left: none; text-align: center;"  colspan="2">
                              
                             
-                                 <button id="csubmit" class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" disabled><span class="glyphicon glyphicon-floppy-disk"></span></button>
+                                 <button id="csubmit" class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" title="Save" disabled><span class="glyphicon glyphicon-floppy-disk"></span></button>
                               
                                 @if($taskp->status=="Edit")
                                 
@@ -1615,7 +1615,7 @@
                                  <td style="border-left: none; text-align: center;"  colspan="2">
                              
                             
-                                 <button id+"csubmit" class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" ><span class="glyphicon glyphicon-floppy-disk"></span></button>
+                                 <button id+"csubmit" class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" title="Save"><span class="glyphicon glyphicon-floppy-disk"></span></button>
                               
                                 @if($taskp->status=="Edit")
                                 
@@ -1692,7 +1692,7 @@
                                  <td style="border-left: none; text-align: center;"  colspan="2">
                              
                             
-                                 <button id="csubmit" class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" ><span class="glyphicon glyphicon-floppy-disk"></span></button>
+                                 <button id="csubmit" class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" title="Save" ><span class="glyphicon glyphicon-floppy-disk"></span></button>
                               
                                 @if($taskp->status=="Edit")
                                 
@@ -1738,7 +1738,7 @@
                        <td style="border-left: none; text-align: center;"  colspan="2">
                              
                             
-                                 <button id="csubmit" class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" ><span class="glyphicon glyphicon-floppy-disk"></span></button>
+                                 <button id="csubmit" class='iframe btn btn-success' type="button" @if(Session::get('goToChecklist'))  autofocus  @endif data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $taskc->id }})" title="Save"><span class="glyphicon glyphicon-floppy-disk"></span></button>
                               
                                 @if($taskp->status=="Edit")
                                 
@@ -2165,7 +2165,7 @@
                         $otherd= OtherDetails::where('section_id', $sections->id)->get();
                         foreach ($otherd as $otherdetails) 
                         {
-                            if($otherdetails->label=="Total Days for BAC Documents Preparation"||$otherdetails->label=="Compliance")
+                            if($otherdetails->label=="Total Days for BAC Documents Preparation"||$otherdetails->label=="Compliance" || $otherdetails->label=="Remarks")
                             {
 
                             echo "<tr><td width='30%'>".$otherdetails->label."</td>";

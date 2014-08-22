@@ -8,7 +8,7 @@
         <?php
             $user_id = Auth::user()->id;
             
-            $taskDetails_row = TaskDetails::whereIn('task_id',$taskIds)->whereStatus("New")->whereAssigneeId(0)->paginate(10); 
+            $taskDetails_row = TaskDetails::whereIn('task_id',$taskIds)->whereStatus("New")->paginate(10); 
         ?>
 
         @foreach($taskDetails_row as $taskDetail)
