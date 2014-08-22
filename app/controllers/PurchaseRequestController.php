@@ -13,13 +13,13 @@ class PurchaseRequestController extends Controller
             $requests = DB::table('purchase_request')->where('office', '=', Auth::user()->office_id)->where('dueDate','>',$date_today)->where('status', '=', 'Active')->orderBy('dateReceived', 'DESC');
 
             $pageCounter = $requests->count();
-            $requests = $requests->paginate(10);
+            $requests = $requests->get();
         }
         else
         {
             $requests = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('status', '=', 'Active')->orderBy('dateReceived', 'DESC');
             $pageCounter = $requests->count();
-            $requests = $requests->paginate(10);
+            $requests = $requests->get();
         }
         return View::make('pr_view')->with('requests',$requests)->with('searchBy',$searchBy)->with('pageCounter',$pageCounter)->with('pageName' ,$pageName)->with('link',$link);
     }
@@ -33,13 +33,13 @@ class PurchaseRequestController extends Controller
         {
             $requests = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('office', Auth::user()->office_id)->where('status', '=', 'Closed')->orderBy('dateReceived', 'DESC');
             $pageCounter = $requests->count();
-            $requests = $requests->paginate(10);
+            $requests = $requests->get();
         }
         else
         {
             $requests = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('status', '=', 'Closed')->orderBy('dateReceived', 'DESC');
             $pageCounter = $requests->count();
-            $requests = $requests->paginate(10);
+            $requests = $requests->get();
         }
         return View::make('pr_view')->with('requests',$requests)->with('searchBy',$searchBy)->with('pageCounter',$pageCounter)->with('pageName' ,$pageName)->with('link', 'completeTable/closed');
     }
@@ -54,13 +54,13 @@ class PurchaseRequestController extends Controller
         {
             $requests = DB::table('purchase_request')->where('dueDate','<=',$date_today)->where('office', Auth::user()->office_id)->where('status', '=', 'Active')->orderBy('dateReceived', 'DESC');
             $pageCounter = $requests->count();
-            $requests = $requests->paginate(10);
+            $requests = $requests->get();
         }
         else
         {
             $requests = DB::table('purchase_request')->where('dueDate','<=',$date_today)->where('status', '=', 'Active')->orderBy('dateReceived', 'DESC');
             $pageCounter = $requests->count();
-            $requests = $requests->paginate(10);
+            $requests = $requests->get();
         }
         return View::make('pr_view')->with('requests',$requests)->with('searchBy',$searchBy)->with('pageCounter',$pageCounter)->with('pageName' ,$pageName)->with('link', 'completeTable/overdue');
     }
@@ -74,13 +74,13 @@ class PurchaseRequestController extends Controller
         {
             $requests = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('office', Auth::user()->office_id)->where('status', '=', 'Cancelled')->orderBy('dateReceived', 'DESC');
             $pageCounter = $requests->count();
-            $requests = $requests->paginate(10);
+            $requests = $requests->get();
         }
         else
         {
             $requests = DB::table('purchase_request')->where('dueDate','>',$date_today)->where('status', '=', 'Cancelled')->orderBy('dateReceived', 'DESC');
             $pageCounter = $requests->count();
-            $requests = $requests->paginate(10);
+            $requests = $requests->get();
         }
         return View::make('pr_view')->with('requests',$requests)->with('searchBy',$searchBy)->with('pageCounter',$pageCounter)->with('pageName' ,$pageName)->with('link', 'completeTable/cancelled');
     }
@@ -207,7 +207,7 @@ class PurchaseRequestController extends Controller
     {
         //Image Upload
         $users = DB::table('users')->get();
-       
+
         $purchasecheck = DB::table('purchase_request')->count();
         if($purchasecheck!=0)
         {
@@ -309,7 +309,7 @@ class PurchaseRequestController extends Controller
             }
         }
         //End Image Upload
-        
+
         $purchase = new Purchase;
         $document = new Document;
         $purchase->projectPurpose = strip_tags(Input::get( 'projectPurpose' ));
@@ -317,10 +317,10 @@ class PurchaseRequestController extends Controller
         $purchase->amount = Input::get( 'amount' );
         $purchase->office = Input::get( 'office' );
         $purchase->requisitioner = Input::get( 'requisitioner' );
-        
+
         if(!Input::get('dateRequested') == '')
                 $purchase->dateRequested = Input::get( 'dateRequested' );
-                
+
         $purchase->dateReceived = Input::get( 'dateReceived' );
         $purchase->status = 'Active';
         $purchase->otherType = Input::get('otherType');
@@ -1110,7 +1110,7 @@ class PurchaseRequestController extends Controller
 
         if (($check==3||($remarks==" "&&$check==2))&&$assignee!=NULL)
         {
-           
+
 
             $id=$docs->pr_id;
             //PO Section Check
@@ -1260,7 +1260,7 @@ class PurchaseRequestController extends Controller
         Session::put('goToChecklist', 'true' );
         //Initializations
         $radio=Input::get('radio');
-       
+
 
         $by=" ".strip_tags(Input::get('by'));
          $by= preg_replace('/\s+/', ' ',$by);
@@ -1346,7 +1346,7 @@ class PurchaseRequestController extends Controller
         //Initializations
         $date=Input::get('date');
         $referenceno=strip_tags(Input::get('referenceno'));
-       
+
 
         $by=" ".strip_tags(Input::get('by'));
          $by= preg_replace('/\s+/', ' ',$by);
@@ -1457,7 +1457,7 @@ class PurchaseRequestController extends Controller
 
         if ($check==2)
         {
-            
+
             $id=$docs->pr_id;
             $delcount= Count::where('doc_id', $docs->id)->delete();
             $userx= User::get();
@@ -1632,7 +1632,7 @@ class PurchaseRequestController extends Controller
         //Initializations
         $datepublished=Input::get('datepublished');
         $enddate=Input::get('enddate');
-       
+
 
         $by=" ".strip_tags(Input::get('by'));
          $by= preg_replace('/\s+/', ' ',$by);
@@ -1725,7 +1725,7 @@ class PurchaseRequestController extends Controller
         //Initializations
         $date=Input::get('date');
         $biddingdate=Input::get('biddingdate');
-       
+
 
         $by=" ".strip_tags(Input::get('by'));
          $by= preg_replace('/\s+/', ' ',$by);
@@ -1749,7 +1749,7 @@ class PurchaseRequestController extends Controller
 
         if ($check==1)
         {
-            
+
             $id=$docs->pr_id;
             $delcount= Count::where('doc_id', $docs->id)->delete();
             $userx= User::get();
@@ -2006,7 +2006,7 @@ class PurchaseRequestController extends Controller
             $check=0;
         if ($check==2)
         {
-           
+
             $id=$docs->pr_id;
             $delcount= Count::where('doc_id', $docs->id)->delete();
             $userx= User::get();
@@ -2196,7 +2196,7 @@ class PurchaseRequestController extends Controller
 
         if (($check==2||($remarks==" "&&$check==1))&&$assignee!=NULL)
         {
-           
+
             $id=$docs->pr_id;
             $delcount= Count::where('doc_id', $docs->id)->delete();
             $userx= User::get();
@@ -2282,7 +2282,7 @@ class PurchaseRequestController extends Controller
             $check=$check+1;
         if (($check==1)&&$assignee!=NULL)
         {
-           
+
             $id=$docs->pr_id;
             $delcount= Count::where('doc_id', $docs->id)->delete();
             $userx= User::get();
@@ -2362,7 +2362,7 @@ class PurchaseRequestController extends Controller
             $check=0;
         if ($check==1)
         {
-            
+
             $id=$docs->pr_id;
             $delcount= Count::where('doc_id', $docs->id)->delete();
             $userx= User::get();
@@ -2459,7 +2459,7 @@ class PurchaseRequestController extends Controller
         $referenceno=strip_tags(Input::get('referenceno'));
         $datepublished=Input::get('datepublished');
         $enddate=Input::get('enddate');
-       
+
 
         $by=" ".strip_tags(Input::get('by'));
          $by= preg_replace('/\s+/', ' ',$by);
@@ -2468,7 +2468,7 @@ class PurchaseRequestController extends Controller
 
         $taskdetails_id=Input::get('taskdetails_id');
         $check=0;
-        
+
             $taskd= TaskDetails::find($taskdetails_id);
             $docs=Document::find($taskd->doc_id);
             if($taskd->status=="Done")
