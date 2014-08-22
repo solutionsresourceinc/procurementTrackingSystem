@@ -108,7 +108,7 @@ class DesignationController extends BaseController {
 	{
 		$deleteAsignee = UserHasDesignation::where('designation_id', '=', $id);
 		$deleteAsignee->delete();
-	
+
 		$deletedesignation = Designation::find($id);
 		$deletedesignation->delete();
 
@@ -118,13 +118,12 @@ class DesignationController extends BaseController {
 	public function members($id)
 	{
 		$selected_users = DB::select("select * from users join user_has_designation on users.id = user_has_designation.users_id where user_has_designation.designation_id = $id");
-		$notselected_users = DB::select("select * from users where id not in ( select users_id from user_has_designation where designation_id = $id )");
-
+		$notselected_users = DB::select("select * from users where id not in ( select users_id from user_has_designation where designation_id = $id) and confirmed = 1");
 
 		//Block URL access for non existing designation
 		$existence = Designation::where('id',$id)->get();
 		$exist=0;
-		foreach ($existence as $designate) 
+		foreach ($existence as $designate)
 		{
 			$exist= $exist+1;
 		}
@@ -149,8 +148,8 @@ class DesignationController extends BaseController {
 
 		$designation_id = Input::get('designation_id');
 		UserHasDesignation::where('designation_id', '=', $designation_id )->delete();
-		
-		foreach ($members as $key) 
+
+		foreach ($members as $key)
 		{
 			if($key != 0)
 			{
@@ -159,7 +158,7 @@ class DesignationController extends BaseController {
 				$uhd->designation_id = $designation_id;
 				$uhd->save();
 			}
-			
+
 		}
 
 		$designation_name = Designation::find($designation_id);
