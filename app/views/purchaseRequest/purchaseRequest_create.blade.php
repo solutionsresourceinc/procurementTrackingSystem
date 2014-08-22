@@ -7,26 +7,26 @@
 	{{ HTML::script('date_picker/bootstrap-datetimepicker.fr.js') }}
 
 
-	{{ HTML::script('js/lightbox.min.js') }} 
+	{{ HTML::script('js/lightbox.min.js') }}
 	{{ HTML::style('css/lightbox.css')}}
 
 
-	{{ HTML::script('js/jquery.chained.min.js') }} 
-	{{ HTML::script('js/bootstrap.file-input.js') }} 
+	{{ HTML::script('js/jquery.chained.min.js') }}
+	{{ HTML::script('js/bootstrap.file-input.js') }}
 
 	<style>
 		.nopadding {
 		   padding: 0 !important;
 		   margin: 0 !important;
 		}
-	</style> 
+	</style>
 
 @stop
 
 
 
 @section('content')
-	<?php 
+	<?php
 		date_default_timezone_set("Asia/Manila");
 		$date_today = date('Y-m-d H:i:s');
 	?>
@@ -56,13 +56,13 @@
 	<div class="form-create fc-div">
 		{{ Form::open(array('action' => '/newcreate','files' => true, 'id'=>'createform'), 'POST') }}
 		<div class="row">
-			<div>	
+			<div>
 				@if(Session::get('notice'))
-				<div class="alert alert-success"> {{ Session::get('notice') }}</div> 
+				<div class="alert alert-success"> {{ Session::get('notice') }}</div>
 				@endif
 
 				@if(Session::get('main_error'))
-				<div class="alert alert-danger"> {{ Session::get('main_error') }}</div> 
+				<div class="alert alert-danger"> {{ Session::get('main_error') }}</div>
 				@endif
 
 				<div class="form-group">
@@ -72,7 +72,7 @@
 							<select  disabled name="modeOfProcurement" id="modeOfProcurement" class="form-control" data-live-search="true">
 								<option value="">None</option>
 								@foreach($workflow as $wf)
-								<option value="{{ $wf->id }}" 
+								<option value="{{ $wf->id }}"
 									<?php
 									if(Input::old('hide_modeOfProcurement') == $wf->id)
 										echo "selected";
@@ -101,7 +101,7 @@
 						<input type="hidden" name="Procurement" id="hide_modeOfProcurement">
 
 						<div class="col-md-3">
-							<?php 
+							<?php
 								$cn = 0;
 								$purchase_controlNo = Purchase::orderBy('ControlNo', 'DESC')->first();
 								if(!$purchase_controlNo == NuLL)
@@ -145,9 +145,9 @@
 							@endif
 						</div>
 
-						
+
 					</div>
-					<br/>	
+					<br/>
 
 					<div class="row">
 						<div class="col-md-6">
@@ -162,7 +162,7 @@
 
 						<div class="col-md-6">
 							{{ Form::label('amount', 'Amount *', array('class' => 'create-label')) }}
-							{{ Form::text('amount','',array('class'=>'form-control','onchange'=>'numberWithCommas(this.value)', 'onkeypress' => 'return isNumberKey(event)','id'=>'num','maxlength'=>'12', 'placeholder' => 'Enter amount')) }}
+							{{ Form::text('amount','',array('onpaste'=>'return false','class'=>'form-control','onchange'=>'numberWithCommas(this.value)', 'onkeypress' => 'return isNumberKey(event)','id'=>'num','maxlength'=>'12', 'placeholder' => 'Enter amount')) }}
 						@if (Session::get('error_amount'))
 							<font color="red"><i>{{ Session::get('error_amount') }}</i></font>
 						@endif
@@ -176,7 +176,7 @@
 							<select id="office" name="office" class="form-control" data-live-search="true">
 								<option value="">Please select</option>
 								@foreach($office as $off)
-									<option value="{{ $off->id }}" 
+									<option value="{{ $off->id }}"
 										<?php if(Input::old('office')==$off->id)
 											echo "selected" ?>
 										>
@@ -211,7 +211,7 @@
 							@endif
 						</div>
 					</div>
-			
+
 					<div class="row">
 						<div class="form-group col-md-6" id="template">
 							{{ Form::label('dateTime', 'Date Received *', array('class' => 'create-label')) }}
@@ -246,16 +246,16 @@
 					<div class="panel panel-default fc-div">
 						<div class="panel-body" style="padding: 5px 20px;">
 					<!--Image Module-->
-					
+
 
 							<br/>
 
 							<?php
 								$id = 0;
-								$purchase = Purchase::orderBy('id', 'ASC')->get(); 
+								$purchase = Purchase::orderBy('id', 'ASC')->get();
 							?>
 
-							@foreach ($purchase as $purchases) 
+							@foreach ($purchase as $purchases)
 								<?php	$id = $purchases->id; ?>
 							@endforeach
 
@@ -264,7 +264,7 @@
 								$document = Document::orderBy('id', 'ASC')->get();
 							?>
 
-							@foreach ($document as $docs) 
+							@foreach ($document as $docs)
 								<?php	$doc_id = $docs->id; ?>
 							@endforeach
 
@@ -280,35 +280,35 @@
 
 							{{ Form::close() }}
 							@if(Session::get('imgsuccess'))
-								<div class="alert alert-success"> {{ Session::get('imgsuccess') }}</div> 
+								<div class="alert alert-success"> {{ Session::get('imgsuccess') }}</div>
 							@endif
 
 							@if(Session::get('imgerror'))
-								<div class="alert alert-danger"> {{ Session::get('imgerror') }}</div> 
+								<div class="alert alert-danger"> {{ Session::get('imgerror') }}</div>
 							@endif
             				<?php
 								$id = 0;
-								$purchase = Purchase::orderBy('id', 'ASC')->get(); 
+								$purchase = Purchase::orderBy('id', 'ASC')->get();
 							?>
 
-							
-           
+
+
 
                 <?php
                 error_reporting(0);
                  $attachmentc = DB::table('attachments')->where('doc_id', $doc_id)->count();
                  if ($attachmentc!=0)
-         
-                    $attachments = DB::table('attachments')->where('doc_id', $doc_id)->get();  
+
+                    $attachments = DB::table('attachments')->where('doc_id', $doc_id)->get();
                     $srclink="uploads\\";
                 ?>
                 <br>
                 <table>
-                
+
                 <?php $count = 1; ?>
-                @foreach ($attachments as $attachment) 
-                <tr>  
-                	<td>  
+                @foreach ($attachments as $attachment)
+                <tr>
+                	<td>
                         <a href="{{asset('uploads/'.$attachment->data)}}" data-lightbox="roadtrip">
                         {{$attachment->data}}
                         </a>
@@ -317,17 +317,17 @@
                     &nbsp;
                     </td>
                     <td>
-                   
+
                             <input type="hidden" name="hide" value="{{$attachment->id}}">
                       	<button type="button" onclick="delimage({{$count}})" ><span class="glyphicon glyphicon-trash" title="Delete"></span></button>
-      
+
                         <?php $count+=1; ?>
                     </td>
                  </tr>
                 @endforeach
             	</table>
             <!-- End Image Module-->
-							
+
 						</div>
 					</div>
 					<!-- End Image Module-->
@@ -337,7 +337,7 @@
 						<a href="/cancelcreate" class="btn btn-default">Cancel</a>
 					</div>
 				</div>
-				 <!--  
+				 <!--
             Image Module
             -->
             <div >
@@ -345,30 +345,30 @@
                 <?php
                  $attachmentc = DB::table('attachments')->where('doc_id', $doc_id)->count();
                  if ($attachmentc!=0)
-                 
-                    $attachments = DB::table('attachments')->where('doc_id', $doc_id)->get();  
+
+                    $attachments = DB::table('attachments')->where('doc_id', $doc_id)->get();
                     $srclink="uploads\\";
                 ?>
-        
+
                 <?php $count=1; ?>
-                @foreach ($attachments as $attachment) 
-        
-           
-                     
+                @foreach ($attachments as $attachment)
+
+
+
                         {{ Form::open(array('method' => 'post', 'url' => 'delimage', 'id'=>"form_$count")) }}
                             <input type="hidden" name="hide" value="{{$attachment->id}}">
                         {{Form::close()}}
-             
-       
+
+
                  <?php $count+=1;  ?>
                 @endforeach
- 
-            <!-- End Image Module-->
-			</div>	
-		</div>		
 
-		{{ Form::close() }}	
-	
+            <!-- End Image Module-->
+			</div>
+		</div>
+
+		{{ Form::close() }}
+
 		{{ Session::forget('notice'); }}
 		{{ Session::forget('main_error'); }}
 		{{ Session::forget('error_projectPurpose'); }}
@@ -404,9 +404,9 @@
 			return true;
 		}
 
-		function numberWithCommas(amount) 
+		function numberWithCommas(amount)
 		{
-			amount = amount.replace(',','');	
+			amount = amount.replace(',','');
 			var its_a_number = amount.match(/^[0-9,.]+$/i);
 			if (its_a_number != null)
 			{
@@ -414,7 +414,7 @@
 				if(decimal_amount == 0 || decimal_amount == "0.00")
 				{
 					document.getElementById("num").value = "0.00";
-					window.old_amount = 0.00; 
+					window.old_amount = 0.00;
 				}
 				else
 				{
@@ -424,20 +424,20 @@
 					if(parts == "NaN")
 					{
 						document.getElementById("num").value = "0.00";
-						window.old_amount = 0.00; 
+						window.old_amount = 0.00;
 					}
 					else
 					{
 						document.getElementById("num").value = parts;
 						window.old_amount = parts;
 					}
-					 
+
 				}
 			}
 			else if(!window.old_amount)
 			{
 				document.getElementById("num").value = "0.00";
-				window.old_amount = 0.00; 
+				window.old_amount = 0.00;
 				amount = 0;
 			}
 			else
@@ -446,7 +446,7 @@
 				amount = 0;
 			}
 
-			newamount =	amount; 
+			newamount =	amount;
 
 			if (newamount >= 0 && newamount < 50000)
 				document.getElementById("modeOfProcurement").selectedIndex = 1;
@@ -526,18 +526,18 @@
 				document.getElementById('projectType').disabled = true;
 				document.getElementById('projectType').selectedIndex = 0;
 
-				window.last_selected = document.getElementById('modeOfProcurement').selectedIndex 
+				window.last_selected = document.getElementById('modeOfProcurement').selectedIndex
 				document.getElementById('modeOfProcurement').selectedIndex = 4;
 				document.getElementById('modeOfProcurement').onchange = 4;
 				document.getElementById("num").onchange = new Function("numberWithCommas2(this.value)");
 				document.getElementById('hide_modeOfProcurement').value = document.getElementById('modeOfProcurement').value;
-				
+
 			}
 			else if(value == "Direct Contracting")
 			{
 				document.getElementById('projectType').disabled = false;
 				document.getElementById('projectType').disabled = false;
-				window.last_selected = document.getElementById('modeOfProcurement').selectedIndex 
+				window.last_selected = document.getElementById('modeOfProcurement').selectedIndex
 				document.getElementById('modeOfProcurement').selectedIndex = 5;
 				document.getElementById('modeOfProcurement').onchange = 5;
 				document.getElementById("num").onchange = new Function("numberWithCommas2(this.value)");
@@ -585,14 +585,14 @@
 		{
 			var formname= "createform";
 			var text= "/autoupload";
-	
 
-			$("#createform").attr('action', text); 
+
+			$("#createform").attr('action', text);
 			document.getElementById(formname).submit();
 		}
-		function numberWithCommas2(amount) 
+		function numberWithCommas2(amount)
 		{
-			amount = amount.replace(',','');	
+			amount = amount.replace(',','');
 			var its_a_number = amount.match(/^[0-9,.]+$/i);
 			if (its_a_number != null)
 			{
@@ -600,7 +600,7 @@
 				if(decimal_amount == 0 || decimal_amount == "0.00")
 				{
 					document.getElementById("num").value = "0.00";
-					window.old_amount = 0.00; 
+					window.old_amount = 0.00;
 				}
 				else
 				{
@@ -610,33 +610,33 @@
 					if(parts == "NaN")
 					{
 						document.getElementById("num").value = "0.00";
-						window.old_amount = 0.00; 
+						window.old_amount = 0.00;
 					}
 					else
 					{
 						document.getElementById("num").value = parts;
 						window.old_amount = parts;
 					}
-					 
+
 				}
 			}
 			else if(!window.old_amount)
 			{
 				document.getElementById("num").value = "0.00";
-				window.old_amount = 0.00; 
+				window.old_amount = 0.00;
 			}
 			else
 			{
 				document.getElementById("num").value = window.old_amount;
 			}
 			document.getElementById('hide_modeOfProcurement').value = document.getElementById('modeOfProcurement').value;
-			
+
 		}
 	</script>
 
 	<script type="text/javascript">
 	    // When the document is ready
-	    $(document).ready(function () 
+	    $(document).ready(function ()
 	    {
 	       var otherType = document.getElementById('otherType').value;
 	       //alert(otherType);
