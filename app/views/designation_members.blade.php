@@ -64,7 +64,10 @@
 		    		<select name="selectfrom" id="select-from" multiple size="15" class="form-control" data-live-search="true">
 			         	{{ $count = 1 }}
 			         	@foreach($notselected_users as $key)	
+
 			         		<?php 
+			         		if ($key->confirmed==0)
+			         			continue;
 				         		$roles=Assigned::where('user_id', $key->id)->first();
 					        	if($roles->role_id!=1){  
 				        	?>
