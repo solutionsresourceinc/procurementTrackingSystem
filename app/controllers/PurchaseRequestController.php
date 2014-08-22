@@ -2545,4 +2545,11 @@ class PurchaseRequestController extends Controller
 
         return Redirect::back();
     }
+
+
+    public function cancelcreate()
+    {
+  Attachments::where('saved', '0')->delete();
+   return Redirect::to("purchaseRequest/view");
+       }
 }
