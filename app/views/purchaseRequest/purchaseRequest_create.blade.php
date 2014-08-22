@@ -319,7 +319,7 @@
                     <td>
                    
                             <input type="hidden" name="hide" value="{{$attachment->id}}">
-                      	<button type="button" onclick="delimage({{$count}})" ><span class="glyphicon glyphicon-trash"></span></button>
+                      	<button type="button" onclick="delimage({{$count}})" ><span class="glyphicon glyphicon-trash" title="Delete"></span></button>
       
                         <?php $count+=1; ?>
                     </td>
