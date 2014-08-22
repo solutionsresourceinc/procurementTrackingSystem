@@ -21,6 +21,7 @@ Route::get( 'purchaseRequest/completeTable/active', 'SearchController@completeTa
 Route::get( 'purchaseRequest/completeTable/closed', 'SearchController@completeTableClosed');
 Route::get( 'purchaseRequest/completeTable/cancelled', 'SearchController@completeTableCancelled');
 Route::get( 'purchaseRequest/completeTable/overdue', 'SearchController@completeTableOverdue');
+Route::get( 'cancelcreate', 'PurchaseRequestController@cancelcreate');
 
 //---------- Login Routes
 Route::get( 'login', 'UserController@login');

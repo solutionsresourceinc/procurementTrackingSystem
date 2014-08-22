@@ -334,7 +334,7 @@
 
 					<div><br>
 						{{ Form::submit('Create Purchase Request',array('class'=>'btn btn-success')) }}
-						<a href="{{ URL::previous() }}" class="btn btn-default">Cancel</a>
+						<a href="/cancelcreate" class="btn btn-default">Cancel</a>
 					</div>
 				</div>
 				 <!--  
