@@ -44,7 +44,7 @@
 @section('content')
 
 @if(Session::get('notice'))
-    <div class="alert alert-success"> {{ Session::get('notice') }}</div>
+    <div class="alert alert-success no-print"> {{ Session::get('notice') }}</div>
 @endif
 
 <h2 class="pull-left">Purchase Request Details </h2>
@@ -64,7 +64,7 @@
         {
             ?>
             <a href="../edit/{{$purchase->id}}" class="btn btn-success no-print">
-                <span class="glyphicon glyphicon-edit"></span>&nbsp;&nbsp;Edit
+                <span class="glyphicon glyphicon-edit no-print"></span>&nbsp;&nbsp;Edit
             </a>
         <?php
         }
@@ -78,7 +78,7 @@
             {
                 ?>
                 <a href="../edit/{{$purchase->id}}" class="btn btn-success no-print">
-                    <span class="glyphicon glyphicon-edit"></span>&nbsp;&nbsp;Edit
+                    <span class="glyphicon glyphicon-edit no-print"></span>&nbsp;&nbsp;Edit
                 </a>
 
 
@@ -487,7 +487,7 @@ if ($taskexist!=0){
                     <span class="add-on"><i class="icon-th"></i></span>
                 </td>
                 <td align="center">{{$taskp->custom2}}</td>
-                <td class="edit-pr-input" colspan="2" align="center">{{$taskp->custom3}}</td>         
+                <td class="edit-pr-input" colspan="2" align="center">{{$taskp->custom3}}</td>
         @endif
         @if($tasks->taskType=="evaluation")
 
@@ -629,7 +629,7 @@ if ($taskexist!=0){
             $prdays=$prdays+$taskp->daysOfAction;
 
 
-        
+
         echo "</tr>";
     }}
     //Addon Display
@@ -668,7 +668,7 @@ if ($taskexist!=0){
                     $taskp =TaskDetails::find($lastid);
 
                     $lastdate=date('Y-m-d', strtotime($taskp->dateFinished));
-               
+
                     $start = new DateTime($sectionfirstdate);
                     $end = new DateTime($lastdate);
                     // otherwise the  end date is excluded (bug?)
@@ -684,7 +684,7 @@ if ($taskexist!=0){
                     // best stored as array, so you can add more than one
                     $holidays = array('2012-09-07');
 
-foreach($period as $dt) 
+foreach($period as $dt)
 {
     $curr = $dt->format('D');
 
@@ -717,7 +717,7 @@ foreach($period as $dt)
                     // best stored as array, so you can add more than one
                     $holidays = array('2012-09-07');
 
-foreach($period as $dt) 
+foreach($period as $dt)
 {
     $curr = $dt->format('D');
 
@@ -746,8 +746,8 @@ $prdays=$days;
             @else
                     <tr>
                             <td>TOTAL NO. OF DAYS</td>
-                            
-                            <td colspan="4"><center><?php 
+
+                            <td colspan="4"><center><?php
                             if ($sectiondays>10000)
                                 echo "0";
                             else
@@ -755,9 +755,9 @@ $prdays=$days;
                                 ?></center></td>
                     </tr>
             @endif
-          
+
                     </table></div></div>
-                    
+
                     <?php
                 }
 
@@ -774,7 +774,7 @@ $prdays=$days;
                             echo "</h4></td>
                             </tr>
                         </table>
-                    </div></div>"; 
+                    </div></div>";
             ?>
             {{Session::forget('errorlabel')}}
             {{Session::forget('successlabel')}}
