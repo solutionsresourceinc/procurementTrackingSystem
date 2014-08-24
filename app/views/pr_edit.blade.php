@@ -846,15 +846,21 @@
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
                                  <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
                                 <td class="edit-pr-input" colspan="2">
-                                    <input id="supplier" type="text" name="supplier"  class="form-control" maxlength="100" width="80%" placeholder="Enter supplier" onkeyup="authsubmitsupplier()"
+                                    <input id="supplier" type="text" name="supplier"  class="form-control" maxlength="100" width="80%" placeholder="Enter supplier" onkeyup="authsubmitsupplier()" 
                                      <?php
+                                      $value = htmlspecialchars($taskc->custom1, ENT_QUOTES);
                                     if (NULL!=Input::old('supplier'))
-                                    echo "value='".Input::old('supplier')."'";
+                                    echo "value=".'"'.Input::old('supplier').'"';
                                     else if (NULL!=$taskc->custom1)
-                                        echo "value='".$taskc->custom1."'";
+
+                                        echo "value='".$value."'";
                                     ?>
 
+
                                     >
+                                    <?php 
+                                    echo $taskc->custom1;
+                                    ?>
                                 </td>
                                 
                                 <td class="edit-pr-input" colspan="2">
@@ -1512,6 +1518,7 @@
                                     <td>{{$tasks->taskName}}</td>
                                     <td><input id="noofsuppliers" type="number" name="noofsuppliers"  class="form-control" min="0" maxlength="12" width="80%" placeholder="Enter no. of suppliers" onkeyup="authsubmitrfq()"
                                         
+                                        />
                                         <?php
                                         if (NULL!=Input::old('noofsuppliers'))
                                             echo "value='".Input::old('noofsuppliers')."'";
@@ -1536,7 +1543,6 @@
                                             echo "value = '" . $today . "'";
                                         ?>
                                         
-                                        />
                                         </div>
                                     </td>
                                     <td class="edit-pr-input" colspan="2">  
