@@ -47,7 +47,7 @@
 
 
 @if(Session::get('notice'))
-	<div class="alert alert-success"> {{ Session::get('notice') }}</div> 
+	<div class="alert alert-success"> {{ Session::get('notice') }}</div>
 @endif
 
 <table id="table_id" class="table table-striped display tablesorter">
@@ -60,7 +60,9 @@
 			<th>Office</th>
 			<?php
 				$admin = Assigned::where('user_id', Auth::User()->id)->first();
-				$users = DB::table('users')->get();
+				$users = DB::table('users');
+                $userCounter = $users->count();
+                $users = $users->paginate(10);
 			?>
 			@if($admin->role_id == 3)
 				<th>Action</th>
@@ -96,7 +98,7 @@
 						<td>Requisitioner</td>
 					@endif
 				@endif
-				
+
 				<?php $offices = Office::where('id',$user->office_id)->get(); ?>
 				<td>
 					@foreach($offices as $office)
@@ -107,9 +109,9 @@
 						@endif
 					@endforeach
 				</td>
-				
+
 				@if($admin->role_id == 3)
-					<td>						
+					<td>
 						@if($admin->role_id == 3)
 							<a class='iframe btn btn-success' href='edit/{{$user->id}}' title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
 						@endif
@@ -132,9 +134,17 @@
 					</td>
 				@endif
 			</tr>
-		@endforeach	    
+		@endforeach
 	</tbody>
 </table>
+<div id="pages" align="center" class="no-print">
+    @if($userCounter != 0)
+    {{ $users->links() }}
+    @else
+    <p><i>No user accounts available</i></p>
+    @endif
+</div>
+
 
 <script type="text/javascript">
 
@@ -151,7 +161,7 @@
 	});
 
 	$('#confirmDelete').find('.modal-footer #confirm').on('click', function(){
-	    var name = "myForm_" + window.my_id; 
+	    var name = "myForm_" + window.my_id;
 	    document.getElementById(name).submit();
  	});
 
@@ -173,8 +183,7 @@
 	});
 
 	$('#confirmActivate').find('.modal-footer #confirm').on('click', function(){
-	     var name = "myForm_" + window.my_id; 
-	     document.getElementById(name).submit();
+	     var name = "myForm_" + window.my_id; mentById(name).submit();
 	});
 	function hello(pass_id)
 	{
