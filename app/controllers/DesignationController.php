@@ -109,6 +109,12 @@ class DesignationController extends BaseController {
 		$deleteAsignee = UserHasDesignation::where('designation_id', '=', $id);
 		$deleteAsignee->delete();
 
+		$tasks=Task::where('designation_id', $id)->get();
+		foreach ($tasks as $task ) {
+			
+		
+		DB::table('taskdetails')->where_in('task_id', $task->id)->update(array('status' => 'New'));
+	}
 		$deletedesignation = Designation::find($id);
 		$deletedesignation->delete();
 
@@ -130,6 +136,7 @@ class DesignationController extends BaseController {
 
 		if ($exist==0)
 		{
+
 			return Redirect::to('/designation');
 		}
 		else
@@ -157,6 +164,15 @@ class DesignationController extends BaseController {
 				$uhd->users_id = $key;
 				$uhd->designation_id = $designation_id;
 				$uhd->save();
+
+				if ($designation_id==0) {
+					$tasks=Task::where('designation_id', $designation_id)->get();
+			foreach ($tasks as $task ) {
+			
+				
+				DB::table('taskdetails')->where('task_id', $task->id)->where('assignee_id', $key)->update(array('status' => 'New'));
+			}
+				}
 			}
 
 		}
