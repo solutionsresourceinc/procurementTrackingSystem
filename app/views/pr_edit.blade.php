@@ -507,8 +507,8 @@
                         echo "<th class='workflow-th' width='18%'>By:</th>";
                         echo "<th class='workflow-th' width='18%'>Date:</th>";
                         echo "<th class='workflow-th' width='10%'>Days of Action</th>";
-                        echo "<th class='workflow-th'>Remarks</th>";
-                        echo "<th class='workflow-th' colspan='2'></th></tr>";
+                        echo "<th class='workflow-th' width='18%'>Remarks</th>";
+                        echo "<th class='workflow-th' colspan='2' ></th></tr>";
                     }
                     if ($previousTaskType!="datebyremark"&&$tasks->taskType=="datebyremark")
                     {
