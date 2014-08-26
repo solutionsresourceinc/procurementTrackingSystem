@@ -332,7 +332,20 @@
                                 ->join('document', 'purchase_request.id', '=', 'document.pr_id')
                                 ->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
                                 ->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')
-                                ->join('section', 'section.workflow_id', '=', 'tasks.wf_id')->where('taskdetails.status', '=', 'New')->select('tasks.taskName')->orderBy('taskdetails.id', 'DESC')->select('section.sectionName', 'tasks.taskName')->first();
+                                ->join('section', 'section.workflow_id', '=', 'tasks.wf_id')->where('taskdetails.status', '=', 'New')->select('tasks.taskName')->orderBy('taskdetails.id', 'DESC')->select('section.sectionName', 'tasks.taskName');
+                            $resultCtr = $active->count();
+                            if($resultCtr == 0)
+                            {
+                                $active = DB::table('purchase_request')->where('controlNo', '=', $request->controlNo)
+                                    ->join('document', 'purchase_request.id', '=', 'document.pr_id')
+                                    ->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+                                    ->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')
+                                    ->join('section', 'section.workflow_id', '=', 'tasks.wf_id')->where('taskdetails.status', '=', 'Active')->select('tasks.taskName')->orderBy('taskdetails.id', 'DESC')->select('section.sectionName', 'tasks.taskName')->first();
+                            }
+                            else
+                            {
+                                $active = $active->first();
+                            }
                             ?>
                             @if(isset($active->taskName) && $active->taskName != '')
                                 <font color="blue"><b> Active: </b></font> {{{ $active->sectionName }}} - {{{ $active->taskName }}}<br/>
