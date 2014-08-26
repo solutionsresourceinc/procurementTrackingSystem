@@ -712,9 +712,9 @@
                                     <input type="text" name="remarks"  class="form-control" maxlength="255" width="100%" onkeyup="authsubmitnormal()"
                                     <?php
                                     if (NULL!=Input::old('remarks'))
-                                    echo "value='".Input::old('remarks')."'";
+                                    echo 'value="'.strip_tags(Input::old('remarks')).'"';
                                     else if (NULL!=$taskc->remarks)
-                                        echo "value='".$taskc->remarks."'";
+                                        echo 'value="'.strip_tags($taskc->remarks).'"';
 
                                     ?>
                                     >
@@ -848,19 +848,17 @@
                                 <td class="edit-pr-input" colspan="2">
                                     <input id="supplier" type="text" name="supplier"  class="form-control" maxlength="100" width="80%" placeholder="Enter supplier" onkeyup="authsubmitsupplier()" 
                                      <?php
-                                      $value = htmlspecialchars($taskc->custom1, ENT_QUOTES);
+    
                                     if (NULL!=Input::old('supplier'))
                                     echo "value=".'"'.Input::old('supplier').'"';
                                     else if (NULL!=$taskc->custom1)
 
-                                        echo "value='".$value."'";
+                                        echo 'value="'.$taskc->custom1.'"';
                                     ?>
 
 
                                     >
-                                    <?php 
-                                    echo $taskc->custom1;
-                                    ?>
+                       
                                 </td>
                                 
                                 <td class="edit-pr-input" colspan="2">
@@ -1686,9 +1684,9 @@
                                     
                                         <?php
                                         if (NULL!=Input::old('remarks'))
-                                            echo "value='".Input::old('remarks')."'";
+                                            echo 'value="'.Input::old('remarks').'"';
                                          else if (NULL!=$taskc->remarks)
-                                        echo "value='".$taskc->remarks."'";
+                                        echo 'value="'.$taskc->remarks.'"';
                                         
                                         ?>
                                         
