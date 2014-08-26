@@ -1096,10 +1096,10 @@ class PurchaseRequestController extends Controller
             }
         //Validation Process
 
-        if(ctype_alpha(str_replace(array(' ', '-', '.', ',', 'ñ', 'Ñ'),'',$remarks)))
+        if(ctype_alnum(str_replace(array(' ', '-', '.', ',', 'ñ', 'Ñ',"'"),'',$remarks)))
             $check=$check+1;
 
-        if(ctype_alpha(str_replace(array(' ', '-', '.', ',', 'ñ', 'Ñ'),'',$assignee)))
+        if(ctype_alpha(str_replace(array(' ', '-', '.', ',', 'ñ', 'Ñ', "'"),'',$assignee)))
             $check=$check+1;
 
         if(ctype_digit($daysOfAction))
@@ -2188,10 +2188,10 @@ class PurchaseRequestController extends Controller
 
         //Validation Process
 
-        if(ctype_alpha(str_replace(array(' ', '-', '.', ',', 'ñ', 'Ñ'),'',$remarks)))
+        if(ctype_alnum(str_replace(array(' ', '-', '.', ',', 'ñ', 'Ñ', "'"),'',$remarks)))
             $check=$check+1;
 
-        if(ctype_alpha(str_replace(array(' ', '-', '.', ',', 'ñ', 'Ñ'),'',$assignee)))
+        if(ctype_alpha(str_replace(array(' ', '-', '.', ',', 'ñ', 'Ñ', "'"),'',$assignee)))
             $check=$check+1;
 
         if (($check==2||($remarks==" "&&$check==1))&&$assignee!=NULL)
