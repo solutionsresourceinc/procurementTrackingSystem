@@ -85,7 +85,7 @@ $attachment=Attachments::where('saved', '0')->get();
         <div class="col-md-3" style="">
             <select id="searchBy" name="searchBy" class="form-control" onchange="changeSearch(this.value)">
                 <option value="0" <?php if($searchBy == '0'){ echo "selected";} ?> >Search by</option>
-                <option value="all" <?php if($searchBy == 'all'){ echo "selected";} ?> >Display ALL</option>
+                <option value="all" <?php if($searchBy == 'all'){ echo "selected";} ?> >Display All</option>
                 <option value="controlNo" <?php if($searchBy == 'controlNo'){ echo "selected";} ?> >Control No.</option>
                 <option value="projectPurpose" <?php if($searchBy == 'projectPurpose'){ echo "selected";} ?> >Project/Purpose</option>
                 <option value="1" <?php if($searchBy == '1'){ echo "selected";} ?> >Mode-SVP Below 50k</option>
