@@ -805,7 +805,7 @@ $prdays=$days;
 
     @foreach ($attachments as $attachment)
     <div class="image-container">
-        <a href="{{asset('uploads/'.$attachment->data)}}" data-lightbox="roadtrip">
+        <a href="{{asset('uploads/'.$attachment->data)}}" data-lightbox="{{$attachment->data}}" title="{{$attachment->data}}">
             <img class="img-thumbnail" src="{{asset('uploads/'.$attachment->data)}}" style="width: 100px; height: 100px;" />
         </a>
 
@@ -860,7 +860,7 @@ $doc=DB::table('document')->where('pr_id', '=',$id )->first();
             @foreach ($attachments as $attachment)
             <tr>
                 <td>
-                    <a href="{{asset('uploads/'.$attachment->data)}}" data-lightbox="roadtrip">
+                    <a href="{{asset('uploads/'.$attachment->data)}}" data-lightbox="roadtrip" title="{{$attachment->data}}">
                         {{$attachment->data}}
                     </a>
                 </td>
