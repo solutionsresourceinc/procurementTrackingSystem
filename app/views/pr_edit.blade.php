@@ -507,8 +507,8 @@
                         echo "<th class='workflow-th' width='18%'>By:</th>";
                         echo "<th class='workflow-th' width='18%'>Date:</th>";
                         echo "<th class='workflow-th' width='10%'>Days of Action</th>";
-                        echo "<th class='workflow-th'>Remarks</th>";
-                        echo "<th class='workflow-th' colspan='2'></th></tr>";
+                        echo "<th class='workflow-th' width='18%'>Remarks</th>";
+                        echo "<th class='workflow-th' colspan='2' ></th></tr>";
                     }
                     if ($previousTaskType!="datebyremark"&&$tasks->taskType=="datebyremark")
                     {
@@ -696,7 +696,7 @@
 
                                             @endif
 
-                                    <input id="daysOfAction" type="number" name="daysOfAction" class="form-control"  min="0"  width="100%" maxlength="12" onkeyup="authsubmitnormal()"
+                                    <input id="daysOfAction" type="number" name="daysOfAction" class="form-control"  min="0"  width="100%" max="999" onkeyup="authsubmitnormal()"
                                     <?php
                                     if (NULL!=Input::old('daysOfAction'))
                                         echo " value = '".Input::old('daysOfAction')."'";
@@ -1244,7 +1244,7 @@
                                             <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($taskprev->dateFinished))}}">
 
                                             @endif
-                                        <input type="number" name="noofdays"  class="form-control" maxlength="12" width="80%" placeholder="Enter no. of days" id="daysOfAction" onkeyup="authsubmitevaluation()"
+                                        <input type="number" name="noofdays"  class="form-control" max="999" width="80%" placeholder="Enter no. of days" id="daysOfAction" onkeyup="authsubmitevaluation()"
                                         
                                         <?php
                                         if (NULL!=Input::old('noofdays'))
@@ -1365,7 +1365,7 @@
                                             <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($taskprev->dateFinished))}}">
 
                                             @endif
-                                    <td><input type="number" name="noofdays"  class="form-control" maxlength="100" width="80%" placeholder="Enter no. of days accomplished"
+                                    <td><input type="number" name="noofdays"  class="form-control" max="999" width="80%" placeholder="Enter no. of days accomplished"
                                         id="daysOfAction"  onkeyup="authsubmitcontract()"
                                         <?php
                                         if (NULL!=Input::old('noofdays'))
@@ -1459,7 +1459,7 @@
                                             <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($taskprev->dateFinished))}}">
 
                                             @endif
-                                        <input type="number" name="noofdays"  class="form-control" maxlength="12" width="80%" placeholder="Enter no. of days accomplished"
+                                        <input type="number" name="noofdays"  class="form-control" max="999" width="80%" placeholder="Enter no. of days accomplished"
                                         id="daysOfAction"  onkeyup="authsubmitcontract()"
                                         <?php
                                         if (NULL!=Input::old('noofdays'))
