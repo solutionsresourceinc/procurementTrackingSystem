@@ -20,6 +20,17 @@
             $POCount = $POCount + $report->pOrderCount;
             $chequeCount = $chequeCount + $report->chequeCount;
         }
+
+        $attachment=Attachments::where('saved', '0')->get();
+  foreach ($attachment as $attachments) {
+
+      $destine= public_path()."/uploads/".$attachments->data;
+
+      $attachments->delete();
+
+      unlink($destine);
+  
+  }
     ?>
 
     @if($role->role_id!=1)
