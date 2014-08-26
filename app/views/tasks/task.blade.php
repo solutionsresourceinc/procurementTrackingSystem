@@ -326,7 +326,7 @@ $assign_user=User::find(Auth::user()->id);
                                             <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($taskprev->dateFinished))}}">
 
                                             @endif
-                                    <input  style="text-align: center" id="daysOfAction" type="number" name="daysOfAction" class="form-control"  min="0"  width="100%" maxlength="12" 
+                                    <input  style="text-align: center" id="daysOfAction" type="number" name="daysOfAction" class="form-control"  min="0"  width="100%" max="999" 
                                     <?php
                                     if (NULL!=Input::old('daysOfAction'))
                                         echo "value='".Input::old('daysOfAction')."'";
@@ -726,7 +726,7 @@ $assign_user=User::find(Auth::user()->id);
                                             <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($taskprev->dateFinished))}}">
 
                                             @endif
-                                        <input  style="text-align: center" type="number" name="noofdays"  class="form-control" maxlength="12" width="80%" placeholder="Enter no. of days" id="daysOfAction"
+                                        <input  style="text-align: center" type="number" name="noofdays"  class="form-control" max="999" width="80%" placeholder="Enter no. of days" id="daysOfAction"
                                         
                                         <?php
                                         if (NULL!=Input::old('noofdays'))
@@ -824,7 +824,7 @@ $assign_user=User::find(Auth::user()->id);
                                             <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($taskprev->dateFinished))}}">
 
                                             @endif
-                                    <td><input  style="text-align: center" type="number" name="noofdays"  class="form-control" maxlength="100" width="80%" placeholder="Enter no. of days accomplished"
+                                    <td><input  style="text-align: center" type="number" name="noofdays"  class="form-control" max="999" width="80%" placeholder="Enter no. of days accomplished"
                                         id="daysOfAction"
                                         <?php
                                         if (NULL!=Input::old('noofdays'))
@@ -906,7 +906,7 @@ $assign_user=User::find(Auth::user()->id);
                                             <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($taskprev->dateFinished))}}">
 
                                             @endif
-                                        <input  style="text-align: center" type="number" name="noofdays"  class="form-control" maxlength="12" width="80%" placeholder="Enter no. of days accomplished"
+                                        <input  style="text-align: center" type="number" name="noofdays"  class="form-control" max="999" width="80%" placeholder="Enter no. of days accomplished"
                                         id="daysOfAction"
                                         <?php
                                         if (NULL!=Input::old('noofdays'))
