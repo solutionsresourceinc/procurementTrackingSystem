@@ -73,7 +73,7 @@ $.prototype.extend(
 
 				function createPaginationElements() {
 					var paginationHTML = "";
-					paginationHTML += "<div id='tablePagination' class='no-print' style=' text-align: center; padding-top: 5px; padding-bottom: 5px;'>";
+					paginationHTML += "<div id='tablePagination' class='no-print' style='display: none; text-align: center; padding-top: 5px; padding-bottom: 5px;'>";
 					paginationHTML += "<a id='tablePagination_firstPage' href='javascript:;' class='btn btn-default'><span class='glyphicon glyphicon-step-backward'></span></a>&nbsp;&nbsp;";
 					paginationHTML += "<a id='tablePagination_prevPage' href='javascript:;' class='btn btn-default'><span class='glyphicon glyphicon-backward'></span></a>&nbsp;&nbsp;";
 					paginationHTML += "Page ";

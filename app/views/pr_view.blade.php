@@ -6,7 +6,7 @@
     {{ HTML::script('date_picker/bootstrap-datetimepicker.fr.js') }}
     {{ HTML::style('css/datepicker.css')}}
     {{ HTML::script('js/bootstrap-datepicker.js') }}
-    {{ HTML::script('js/oneSimpleTablePaging-1.0.js') }}
+    {{ HTML::script('js/oneSimpleTablePaging-1.1.js') }}
     <script src="js/jquery.tablesorter.min.js"></script>
     <script src="js/jquery.tablesorter.widgets.min.js"></script>
     <script>
@@ -21,9 +21,10 @@
     </script>
 @stop
 
+
 @section('content')
 {{Session::put('backTo','purchaseRequest/view');}}
-<?php 
+<?php
 $attachment=Attachments::where('saved', '0')->get();
   foreach ($attachment as $attachments) {
 
@@ -32,17 +33,17 @@ $attachment=Attachments::where('saved', '0')->get();
       $attachments->delete();
 
       unlink($destine);
-  
+
   }
   ?>
 <h1 class="pull-left"> {{{ $pageName }}} </h1>
 
     @if ( Entrust::hasRole('Administrator') || Entrust::hasRole('Procurement Personnel'))
       <div class="pull-right options">
-     
+
            <a href="{{ URL::to('purchaseRequest/create') }}" class="btn btn-success" >Create New</a>
 
-     
+
       </div>
     @endif
 
@@ -295,9 +296,9 @@ $attachment=Attachments::where('saved', '0')->get();
         // START *code for search box
         window.onload = function()
         {
-            if(document.getElementById('pageCount').value == 0 || document.getElementById('pageCount').value <= 10)
+            if(document.getElementById('pageCount').value != 0 || document.getElementById('pageCount').value >= 10)
             {
-                document.getElementById('tablePagination').style.display = 'none';
+                document.getElementById('tablePagination').style.display = '';
             }
 
             if(document.getElementById('start').value.length == 0 || document.getElementById('end').value.length == 0)
