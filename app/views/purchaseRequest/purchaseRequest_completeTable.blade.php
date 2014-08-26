@@ -328,14 +328,25 @@
                             @endif
 
                             <?php
+                            $active = DB::table('purchase_request')->where('controlNo', '=', $request->controlNo)
+                                ->join('document', 'purchase_request.id', '=', 'document.pr_id')
+                                ->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
+                                ->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')
+                                ->join('section', 'section.workflow_id', '=', 'tasks.wf_id')->where('taskdetails.status', '=', 'New')->select('tasks.taskName')->orderBy('taskdetails.id', 'DESC')->select('section.sectionName', 'tasks.taskName')->first();
+                            ?>
+                            @if(isset($active->taskName) && $active->taskName != '')
+                                <font color="blue"><b> Active: </b></font> {{{ $active->sectionName }}} - {{{ $active->taskName }}}<br/>
+                            @endif
+
+                            <?php
                                 $pending = DB::table('purchase_request')->where('controlNo', '=', $request->controlNo)
                                 ->join('document', 'purchase_request.id', '=', 'document.pr_id')
                                 ->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
                                 ->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')
-                                ->join('section', 'section.workflow_id', '=', 'tasks.wf_id')->where('taskdetails.status', '=', 'New')->orWhere('taskdetails.status', '=', 'Active')->select('tasks.taskName')->orderBy('taskdetails.id', 'ASC')->select('section.sectionName', 'tasks.taskName')->first();
+                                ->join('section', 'section.workflow_id', '=', 'tasks.wf_id')->where('taskdetails.status', '=', 'Pending')->select('tasks.taskName')->orderBy('taskdetails.id', 'ASC')->select('section.sectionName', 'tasks.taskName')->first();
                             ?>
                             @if( isset($pending->taskName) && $pending->taskName != '')
-                                <font color="red"><b> For: </b></font> {{{ $pending->sectionName }}} - {{{ $pending->taskName }}}
+                                    <font color="red"><b> For: </b></font> {{{ $pending->sectionName }}} - {{{ $pending->taskName }}}
                             @endif
                         @endif
                     </td>
