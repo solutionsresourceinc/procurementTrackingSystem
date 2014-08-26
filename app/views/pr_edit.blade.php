@@ -407,10 +407,20 @@
             //Cursor Component
                 //Count Cursor
                 $taskche= TaskDetails::where('doc_id', $docs->id)->where('status', 'Edit')->count(); 
-                $taskch= TaskDetails::where('doc_id', $docs->id)->where('status', 'Edit')->orWhere('status', 'New')->orWhere('status', 'Active')->count(); 
-                //Get Cursor Value
-                $taskc= TaskDetails::where('doc_id', $docs->id)->where('status', 'New')->orWhere('status', 'Edit')->first(); 
-                
+                   $taskchen= TaskDetails::where('doc_id', $docs->id)->where('status', 'New')->count(); 
+               if($taskche!=0){
+                $taskch= TaskDetails::where('doc_id', $docs->id)->where('status', 'Edit')->count(); 
+                $taskc= TaskDetails::where('doc_id', $docs->id)->where('status', 'Edit')->first(); 
+            }
+            else if ($taskchen!=0)
+            {
+                $taskch= TaskDetails::where('doc_id', $docs->id)->where('status', 'New')->count(); 
+                  $taskc= TaskDetails::where('doc_id', $docs->id)->where('status', 'New')->first(); 
+            }
+            else{
+                  $taskch= TaskDetails::where('doc_id', $docs->id)->where('status', 'Active')->count(); 
+            }
+              
                 //Queries
                 $workflow= Workflow::find($docs->work_id);
                 $section= Section::where('workflow_id', $workflow->id)->orderBy('section_order_id','ASC')->get();
@@ -1525,7 +1535,7 @@
                                        
                                         ?>
                                         
-                                        ></td>
+                                        </td>
                                     <td>
                                         <?php 
                                         $today = date("m/d/y");
