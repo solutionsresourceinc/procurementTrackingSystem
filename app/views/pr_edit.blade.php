@@ -453,7 +453,7 @@
                                     <td colspan="3">
 
                                         @if($otherdetails->label=="Amount")
-                                        <input type="decimal" name="value"  id="amt" class="form-control" maxlength="12" width="80%" placeholder="Enter  amount" onkeypress="return isNumberKey(event)" onchange="checklist_changeAmount(this.id,this.value)"
+                                        <input type="decimal" name="value"  id="amt" class="form-control" maxlength="12" width="80%" placeholder="Enter amount" onkeypress="return isNumberKey(event)" onchange="checklist_changeAmount(this.id,this.value)"
                                     value="<?php if($otherdetails->id==Session::get("retainId"))
                                         {
                                             echo trim(Session::get("retainOtherDetails"));
