@@ -2127,6 +2127,7 @@ class PurchaseRequestController extends Controller
             $tasknextc=TaskDetails::where('id', $taskdetails_id+1)->where('doc_id', $docs->pr_id)->count();
             date_default_timezone_set("Asia/Manila");
             $upDate = date('Y-m-d H:i:s');
+                     $date= date('Y-m-d H:i:s', strtotime($date));
             DB::table('purchase_request')->where('id',$id)->update(array('updated_at' => $upDate));
             DB::table('taskdetails')->where('id', $taskdetails_id)->update(array('dateFinished' => $date));
             if ($tasknextc!=0)
