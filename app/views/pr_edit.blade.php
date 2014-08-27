@@ -706,7 +706,7 @@
 
                                             @endif
 
-                                    <input id="daysOfAction" type="number" name="daysOfAction" class="form-control"  min="0"  width="100%" max="999" onkeyup="authsubmitnormal()"
+                                    <input id="daysOfAction" type="number" name="daysOfAction" class="form-control"  min="0"  width="100%" max="999" onkeyup="authsubmitnormal()" oninput="maxLengthCheck(this)" maxlength = "3"
                                     <?php
                                     if (NULL!=Input::old('daysOfAction'))
                                         echo " value = '".Input::old('daysOfAction')."'";
@@ -1252,7 +1252,7 @@
                                             <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($taskprev->dateFinished))}}">
 
                                             @endif
-                                        <input type="number" name="noofdays"  class="form-control" max="999" width="80%" placeholder="Enter no. of days" id="daysOfAction" onkeyup="authsubmitevaluation()"
+                                        <input type="number" name="noofdays"  class="form-control" max="999" width="80%" placeholder="Enter no. of days" id="daysOfAction" onkeyup="authsubmitevaluation()" oninput="maxLengthCheck(this)" maxlength = "3"
                                         
                                         <?php
                                         if (NULL!=Input::old('noofdays'))
@@ -1374,7 +1374,7 @@
 
                                             @endif
                                     <td><input type="number" name="noofdays"  class="form-control" max="999" width="80%" placeholder="Enter no. of days accomplished"
-                                        id="daysOfAction"  onkeyup="authsubmitcontract()"
+                                        id="daysOfAction"  onkeyup="authsubmitcontract()" oninput="maxLengthCheck(this)" maxlength = "3"
                                         <?php
                                         if (NULL!=Input::old('noofdays'))
                                             echo "value=".Input::old('noofdays');
@@ -1468,7 +1468,7 @@
 
                                             @endif
                                         <input type="number" name="noofdays"  class="form-control" max="999" width="80%" placeholder="Enter no. of days accomplished"
-                                        id="daysOfAction"  onkeyup="authsubmitcontract()"
+                                        id="daysOfAction"  onkeyup="authsubmitcontract()" oninput="maxLengthCheck(this)" maxlength = "3"
                                         <?php
                                         if (NULL!=Input::old('noofdays'))
                                             echo "value=".Input::old('noofdays');
@@ -2363,6 +2363,14 @@ $prdays=$days;
 @section('footer')
               
     <script type="text/javascript">
+
+
+  function maxLengthCheck(object)
+  {
+    if (object.value.length > object.maxLength)
+      object.value = object.value.slice(0, object.maxLength)
+  }
+
     // JS CODE FOR MODAL START
         
         $('#confirmDelete').find('.modal-footer #confirmModal').on('click', function()
