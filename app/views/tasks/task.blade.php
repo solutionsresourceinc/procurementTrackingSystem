@@ -1216,7 +1216,7 @@ No remark.
                 @foreach ($attachments as $attachment) 
                 <tr>  
                     <td>  
-                        <a href="{{asset('uploads/'.$attachment->data)}}" data-lightbox="roadtrip">
+                        <a href="{{asset('uploads/'.$attachment->data)}}" data-lightbox="roadtrip" title="{{$attachment->data}}">
                         {{$attachment->data}}
                         </a>
                     </td>
@@ -1226,7 +1226,7 @@ No remark.
                     <td>
                    
                           <input type="hidden" name="hide" value="{{$attachment->id}}">
-                        <button type="button" onclick="delimage({{$count}})" ><span class="glyphicon glyphicon-trash" title="Delete"></span></button>
+                        <button type="button" onclick="delimage({{$count}})" class="tool-tip" title="Delete" ><span class="glyphicon glyphicon-trash" title="Delete"></span></button>
       
                         <?php $count+=1; ?>
                     </td>

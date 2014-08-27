@@ -65,7 +65,7 @@
                         $back = "dashboard";
         ?>
         <button type="button" class="btn btn-default no-print" onclick="window.location.href='{{ URL::to($back) }}'">
-            <span class="glyphicon glyphicon-step-backward"></span>&nbsp;Back
+            <span class="glyphicon glyphicon-chevron-left"></span>&nbsp;Back
         </button>
     </div>
 

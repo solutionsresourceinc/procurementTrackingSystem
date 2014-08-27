@@ -89,7 +89,7 @@
     ?>
 
     <button type="button" class="btn btn-default no-print" onclick="window.location.href='{{ URL::to('back') }}'">
-        <span class="glyphicon glyphicon-step-backward"></span>&nbsp;Back
+        <span class="glyphicon glyphicon-chevron-left"></span>&nbsp;Back
     </button>
 
 </div>
@@ -870,7 +870,7 @@ $doc=DB::table('document')->where('pr_id', '=',$id )->first();
                 <td>
 
                     <input type="hidden" name="hide" value="{{$attachment->id}}">
-                    <button type="button" onclick="delimage({{$count}})" ><span class="glyphicon glyphicon-trash" title="Delete"></span></button>
+                    <button type="button" onclick="delimage({{$count}})" class="tool-tip"  title="Delete" ><span class="glyphicon glyphicon-trash" title="Delete"  class="tool-tip"></span></button>
 
                     <?php $count+=1; ?>
                 </td>

@@ -1,4 +1,4 @@
-@extends('layouts.default')
+extends('layouts.default')
 
 @section('header')
     {{ HTML::style('date_picker/bootstrap-datetimepicker.min.css')}}

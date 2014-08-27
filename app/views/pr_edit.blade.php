@@ -323,7 +323,7 @@
                 @foreach ($attachments as $attachment) 
                 <tr>  
                     <td>  
-                        <a href="{{asset('uploads/'.$attachment->data)}}" data-lightbox="roadtrip">
+                        <a href="{{asset('uploads/'.$attachment->data)}}" data-lightbox="roadtrip" title="{{$attachment->data}}">
                         {{$attachment->data}}
                         </a>
                     </td>
@@ -333,7 +333,7 @@
                     <td>
                    
                             <input type="hidden" name="hide" value="{{$attachment->id}}">
-                        <button type="button" onclick="delimage({{$count}})" title="Delete" ><span class="glyphicon glyphicon-trash"></span></button>
+                        <button data-toggle="tooltip" data-placement="top"  class="tool-tip" type="button" onclick="delimage({{$count}})" title="Delete" ><span class="glyphicon glyphicon-trash"></span></button>
       
                         <?php $count+=1; ?>
                     </td>
