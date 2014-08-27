@@ -650,7 +650,7 @@
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
                                  <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
                                 <td class="edit-pr-input">
-                                    <input id="assignee" type ="text" name="assignee" placeholder="Enter name" class="form-control" width="100%" maxlength="100" onkeyup="authsubmitnormal()"
+                                    <input id="assignee" type ="text" name="assignee" placeholder="Enter name" class="form-control" width="100%" maxlength="100" onkeyup="authsubmitnormal()" @if(Session::get('goToChecklist'))  autofocus  @endif
                                     <?php
                                     if (NULL!=Input::old('assignee'))
                                     echo "value='".Input::old('assignee')."'";
@@ -753,7 +753,7 @@
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
                                <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
                                 <td class="edit-pr-input" colspan="1">
-                                    <input type="radio" name="radio" value="yes" CHECKED>&nbsp;&nbsp;Yes &nbsp;&nbsp;
+                                    <input type="radio" name="radio" value="yes" @if(Session::get('goToChecklist'))  autofocus  @endif CHECKED>&nbsp;&nbsp;Yes &nbsp;&nbsp;
                                     <input type="radio" name="radio" value="no" >&nbsp;&nbsp;No<br />
                                 </td>
                                 
@@ -794,7 +794,7 @@
                                  <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
                                 <td class="edit-pr-input">
                                     Reference No. : 
-                                    <input id="referenceno" type="text" name="referenceno"  class="form-control" maxlength="100" width="80%" maxlength="100" onkeyup="authsubmitposting()"
+                                    <input id="referenceno" type="text" name="referenceno"  class="form-control" maxlength="100" width="80%" maxlength="100" onkeyup="authsubmitposting()" @if(Session::get('goToChecklist'))  autofocus  @endif
                                     <?php
                                     if (NULL!=Input::old('referenceno'))
                                     echo "value='".Input::old('referenceno')."'";
@@ -856,7 +856,7 @@
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
                                  <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
                                 <td class="edit-pr-input" colspan="2">
-                                    <input id="supplier" type="text" name="supplier"  class="form-control" maxlength="100" width="80%" placeholder="Enter supplier" onkeyup="authsubmitsupplier()" 
+                                    <input id="supplier" type="text" name="supplier"  class="form-control" maxlength="100" width="80%" placeholder="Enter supplier" onkeyup="authsubmitsupplier()" @if(Session::get('goToChecklist'))  autofocus  @endif
                                      <?php
     
                                     if (NULL!=Input::old('supplier'))
@@ -905,7 +905,7 @@
                                  <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
                                 <td class="edit-pr-input" colspan="2">
                     
-                                    <input type="decimal" name="amt"  id="amt" class="form-control" maxlength="12" width="80%" placeholder="Enter cheque amount" onkeypress="return isNumberKey(event)" onkeyup="authsubmitcheque()" onchange="checklist_changeAmount(this.id,this.value)"
+                                    <input type="decimal" name="amt"  id="amt" class="form-control" maxlength="12" width="80%" placeholder="Enter cheque amount" onkeypress="return isNumberKey(event)" onkeyup="authsubmitcheque()" onchange="checklist_changeAmount(this.id,this.value)" @if(Session::get('goToChecklist'))  autofocus  @endif
                                      <?php
                                     if (NULL!=Input::old('amt'))
                                     echo "value='".Input::old('amt')."'";
@@ -977,7 +977,7 @@
                                         $today = date("m/d/y");
                                         ?>
                                         <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
-                                            <input type="text" class="form-control" name="datepublished" id="datepublished" style="text-align: center; width:100%" onkeyup="authsubmitpublished()"
+                                            <input type="text" class="form-control" name="datepublished" id="datepublished" style="text-align: center; width:100%" onkeyup="authsubmitpublished()" @if(Session::get('goToChecklist'))  autofocus  @endif
                                             
                                         <?php
                                         if (NULL!=Input::old('dateFinished'))
@@ -1048,7 +1048,7 @@
                                  
                                     <td class="edit-pr-input">
                                     Reference No.:
-                                    <input id="referenceno" type="text" name="referenceno"  class="form-control" maxlength="100" width="80%" maxlength="100" placeholder="Enter reference number" onkeyup="authsubmitphilgeps()"
+                                    <input id="referenceno" type="text" name="referenceno"  class="form-control" maxlength="100" width="80%" maxlength="100" placeholder="Enter reference number" onkeyup="authsubmitphilgeps()" @if(Session::get('goToChecklist'))  autofocus  @endif
                                     <?php
                                     if (NULL!=Input::old('referenceno'))
                                     echo "value='".Input::old('referenceno')."'";
@@ -1143,7 +1143,7 @@
                                         $today = date("m/d/y");
                                         ?>
                                         <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
-                                            <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" onkeyup="authsubmitdocuments()"
+                                            <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" onkeyup="authsubmitdocuments()" @if(Session::get('goToChecklist'))  autofocus  @endif
                                             
                                             
                                         <?php
@@ -1217,7 +1217,7 @@
                                         $today = date("m/d/y");
                                         ?>
                                         <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
-                                            <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" onchange="changeDOA(this.value)" onkeyup="authsubmitevaluation()"
+                                            <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" onchange="changeDOA(this.value)" onkeyup="authsubmitevaluation()" @if(Session::get('goToChecklist'))  autofocus  @endif
                                         <?php
                                         if (NULL!=Input::old('dateFinished'))
                                             echo "value ='" . Input::old('dateFinished') ."'";
@@ -1292,7 +1292,7 @@
                                     $today = date("m/d/y");
                                     ?>
                                     <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
-                                        <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" onkeyup="authsubmitconference()" 
+                                        <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" onkeyup="authsubmitconference()" @if(Session::get('goToChecklist'))  autofocus  @endif
                                         
                                         <?php
                                         if (NULL!=Input::old('dateFinished'))
@@ -1340,7 +1340,7 @@
                                         $today = date("m/d/y");
                                         ?>
                                         <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%" >
-                                            <input type="text" class="form-control" name="date" id="date" onchange="changeDOA(this.value)" style="text-align: center; width:100%"  onkeyup="authsubmitcontract()"
+                                            <input type="text" class="form-control" name="date" id="date" onchange="changeDOA(this.value)" style="text-align: center; width:100%"  onkeyup="authsubmitcontract()" @if(Session::get('goToChecklist'))  autofocus  @endif
                                         <?php
                                         if (NULL!=Input::old('dateFinished'))
                                             echo "value ='" . Input::old('dateFinished') ."'";
@@ -1431,7 +1431,7 @@
                                         $today = date("m/d/y");
                                         ?>
                                         <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
-                                            <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%"  onchange="changeDOA(this.value)"  onkeyup="authsubmitcontract()"
+                                            <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%"  onchange="changeDOA(this.value)"  onkeyup="authsubmitcontract()" @if(Session::get('goToChecklist'))  autofocus  @endif
                                             
                                         <?php
                                         if (NULL!=Input::old('dateFinished'))
@@ -1524,7 +1524,7 @@
                                 </tr>
                                 <tr class="@if($taskch!=0 && $taskc->task_id==$tasks->id) current-task @endif">
                                     <td>{{$tasks->taskName}}</td>
-                                    <td><input id="noofsuppliers" type="number" name="noofsuppliers"  class="form-control" min="0" maxlength="12" width="80%" placeholder="Enter no. of suppliers" onkeyup="authsubmitrfq()"
+                                    <td><input id="noofsuppliers" type="number" name="noofsuppliers"  class="form-control" min="0" maxlength="12" width="80%" placeholder="Enter no. of suppliers" onkeyup="authsubmitrfq()" @if(Session::get('goToChecklist'))  autofocus  @endif
                                         
                                         />
                                         <?php
@@ -1593,7 +1593,7 @@
                                     $today = date("m/d/y");
                                     ?>
                                     <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
-                                        <input type="text" class="form-control" name="dateFinished" id="dateFinished" style="text-align: center; width:100%" onkeyup="authsubmitdateby()"
+                                        <input type="text" class="form-control" name="dateFinished" id="dateFinished" style="text-align: center; width:100%" onkeyup="authsubmitdateby()" @if(Session::get('goToChecklist'))  autofocus  @endif
                                         
                                         <?php
                                         if (NULL!=Input::old('dateFinished'))
@@ -1657,7 +1657,7 @@
                                     ?>
                                     <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
 
-                                        <input type="text" class="form-control" name="dateFinished" id="dateFinished" style="text-align: center; width:100%"  onkeyup="authsubmitdateby()"
+                                        <input type="text" class="form-control" name="dateFinished" id="dateFinished" style="text-align: center; width:100%"  onkeyup="authsubmitdateby()" @if(Session::get('goToChecklist'))  autofocus  @endif
                                         
                                         <?php
                                         if (NULL!=Input::old('dateFinished'))
@@ -1730,7 +1730,7 @@
                                     ?>
                                     <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
 
-                                        <input type="text" class="form-control" name="dateFinished" id="dateFinished" style="text-align: center; width:100%" onkeyup="authsubmitdateonly()"
+                                        <input type="text" class="form-control" name="dateFinished" id="dateFinished" style="text-align: center; width:100%" onkeyup="authsubmitdateonly()" @if(Session::get('goToChecklist'))  autofocus  @endif
                                         
                                         <?php
                                         if (NULL!=Input::old('dateFinished'))
@@ -2333,8 +2333,7 @@ $prdays=$days;
             {{Session::forget('successlabel')}}
             {{Session::forget('errorchecklist')}}
             {{Session::forget('successchecklist')}}
-            {{Session::forget('goToChecklist')}}
-
+       
 
         </div>
     </div>
