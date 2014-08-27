@@ -165,7 +165,37 @@
         </table>
     </div>
 </div>
+<!-- images section -->
+@if(Entrust::hasRole('Requisitioner'))
 
+<div id="img-section" class="no-print">
+
+    <?php
+    $docs= Document::where('pr_id', $purchase->id)->first();
+    $attachmentc = DB::table('attachments')->where('doc_id', $docs->id)->count();
+    if ($attachmentc!=0)
+        echo "<h3>"."Attachments"."</h3>";
+
+    $luser=Auth::user()->id;
+    $count= Count::where('doc_id','=', $docs->id)->where('user_id','=', $luser )->delete();
+
+
+    $attachments = DB::table('attachments')->where('doc_id', $docs->id)->get();
+    $srclink="uploads\\";
+    ?>
+
+    @foreach ($attachments as $attachment)
+    <div class="image-container">
+        <a href="{{asset('uploads/'.$attachment->data)}}" data-lightbox="{{$attachment->data}}" title="{{$attachment->data}}">
+            <img class="img-thumbnail" src="{{asset('uploads/'.$attachment->data)}}" style="width: 100px; height: 100px;" />
+        </a>
+
+    </div>
+    @endforeach
+
+</div>
+@endif
+<!--images section-->
 @if(!Entrust::hasRole('Requisitioner'))
 <!-- Section 1  -->
 <?php
