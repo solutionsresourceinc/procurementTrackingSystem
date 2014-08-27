@@ -81,7 +81,7 @@
                     <li class="{{Request::is('purchaseRequest/view') ? 'active':''}}">
                         <a href="/purchaseRequest/view">
                             Active Purchase Requests
-                            <span class="badge pull-right">
+                            <span class="badge pull-right tool-tip" data-placement="left" title="Unread PR">
                             <?php
                             $result=0;
                             $cuser= Auth::user()->id;
@@ -130,7 +130,7 @@
                     <li class="{{Request::is('purchaseRequest/closed') ? 'active':''}}">
                         <a href="/purchaseRequest/closed">
                             Closed Purchase Requests
-                            <span class="badge pull-right">
+                            <span class="badge pull-right tool-tip" data-placement="left" title="Unread PR">
                                <?php
                                         $result=0;
                                         $cuser= Auth::user()->id;
@@ -176,7 +176,7 @@
                     <li class="{{Request::is('purchaseRequest/overdue') ? 'active':''}}">
                         <a href="/purchaseRequest/overdue">
                             Overdue Purchase Requests
-                            <span class="badge pull-right">
+                            <span class="badge pull-right tool-tip" data-placement="left" title="Unread PR">
                                 <?php
                                     $result=0;
                                     $cuser= Auth::user()->id;
@@ -225,7 +225,7 @@
                     <li class="{{Request::is('purchaseRequest/cancelled') ? 'active':''}}">
                         <a href="/purchaseRequest/cancelled">
                             Cancelled Purchase Requests
-                            <span class="badge pull-right">
+                            <span class="badge pull-right tool-tip" data-placement="left" title="Unread PR">
                                 <?php
                                     $result=0;
                                     $cuser= Auth::user()->id;
@@ -285,7 +285,7 @@
             <li class="{{(Request::is('task/new') || Request::is('task/active') || Request::is('task/overdue') || Request::is('task/task-id')) ? 'active' : ''}}"><a href="#" class="unlink">Tasks</a>
                 <ul class="side-submenu">
                     <li class="{{Request::is('task/new') ? 'active':''}}">
-                        <a href="/task/new">New Tasks<span class="badge pull-right">
+                        <a href="/task/new">New Tasks<span class="badge pull-right tool-tip" data-placement="left" title="No. of new task">
                         <?php
                             $user_id = Auth::user()->id;
                             $designations=DB::table('user_has_designation')->where('users_id',$user_id)->get();
@@ -313,7 +313,7 @@
                 </span></a>
             </li>
             <li class="{{Request::is('task/active') ? 'active':''}}">
-                <a href="/task/active">Active Tasks<span class="badge pull-right">
+                <a href="/task/active">Active Tasks<span class="badge pull-right tool-tip" data-placement="left" title="No. of active task">
                     <?php
                         $user_id = Auth::user()->id;
                         $date_today =date('Y-m-d H:i:s');
@@ -323,7 +323,7 @@
                 </span></a>
             </li>
                     <li class="{{Request::is('task/overdue') ? 'active':''}}">
-                        <a href="/task/overdue">Overdue Tasks<span class="badge pull-right">
+                        <a href="/task/overdue">Overdue Tasks<span class="badge pull-right tool-tip" data-placement="left" title="No. of overdue task">
 
                         <?php
                             $taskcount=0;
@@ -393,9 +393,15 @@
 
     <!-- JavaScript -->
 {{ HTML::script('js/bootstrap.min.js') }}
+
 <script type="text/javascript">
         $(document).ready(function(){ 
             $('.btn').tooltip(); 
+
+        });
+
+        $(document).ready(function(){ 
+            $('.tool-tip').tooltip(); 
 
         });
 
