@@ -326,7 +326,7 @@ $assign_user=User::find(Auth::user()->id);
                                             <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($taskprev->dateFinished))}}">
 
                                             @endif
-                                    <input  style="text-align: center" id="daysOfAction" type="number" name="daysOfAction" class="form-control"  min="0"  width="100%" max="999" 
+                                    <input  style="text-align: center" id="daysOfAction" type="number" name="daysOfAction" class="form-control"  min="0"  width="100%" max="999"  
                                     <?php
                                     if (NULL!=Input::old('daysOfAction'))
                                         echo "value='".Input::old('daysOfAction')."'";
@@ -726,7 +726,7 @@ $assign_user=User::find(Auth::user()->id);
                                             <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($taskprev->dateFinished))}}">
 
                                             @endif
-                                        <input  style="text-align: center" type="number" name="noofdays"  class="form-control" max="999" width="80%" placeholder="Enter no. of days" id="daysOfAction"
+                                        <input  style="text-align: center" type="number" name="noofdays"  class="form-control" max="999" width="80%" placeholder="Enter no. of days" id="daysOfAction" oninput="maxLengthCheck(this)" maxlength = "3"
                                         
                                         <?php
                                         if (NULL!=Input::old('noofdays'))
@@ -825,7 +825,7 @@ $assign_user=User::find(Auth::user()->id);
 
                                             @endif
                                     <td><input  style="text-align: center" type="number" name="noofdays"  class="form-control" max="999" width="80%" placeholder="Enter no. of days accomplished"
-                                        id="daysOfAction"
+                                        id="daysOfAction" oninput="maxLengthCheck(this)" maxlength = "3"
                                         <?php
                                         if (NULL!=Input::old('noofdays'))
                                             echo "value=".Input::old('noofdays');
@@ -907,7 +907,7 @@ $assign_user=User::find(Auth::user()->id);
 
                                             @endif
                                         <input  style="text-align: center" type="number" name="noofdays"  class="form-control" max="999" width="80%" placeholder="Enter no. of days accomplished"
-                                        id="daysOfAction"
+                                        id="daysOfAction" oninput="maxLengthCheck(this)" maxlength = "3"
                                         <?php
                                         if (NULL!=Input::old('noofdays'))
                                             echo "value=".Input::old('noofdays');
@@ -1520,6 +1520,12 @@ else
 
         return true;
     }
+
+  function maxLengthCheck(object)
+  {
+    if (object.value.length > object.maxLength)
+      object.value = object.value.slice(0, object.maxLength)
+  }
 
     </script>
 @stop
