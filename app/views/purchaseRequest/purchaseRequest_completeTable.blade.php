@@ -86,7 +86,7 @@
     </div>
 
     <div class="col-md-1 no-print" style="margin-left: -25px;">
-        <button class="btn btn-primary" type="submit" id="go" name="go">Go!</button>
+        <button class="btn btn-primary" type="submit" id="go" name="go">Go</button>
     </div>
 
     <div class="col-md-3 no-print">

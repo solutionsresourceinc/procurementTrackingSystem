@@ -1281,11 +1281,11 @@ No remark.
             <h4 class="modal-title"><b>Confirm Submission</b></h4>
           </div>
           <div class="modal-body">
-            <p>Are you sure you want to submit edit?</p>
+            <p>Are you sure you want to accomplish task?</p>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">Cancel</button>
-            <button type="button" class="btn btn-success" id="confirmModal" value="Submit" onclick="remarksauto()">Submit</button>
+            <button type="button" class="btn btn-success" id="confirmModal" value="Submit" onclick="remarksauto()">Accomplish</button>
           </div>
         </div>
       </div>

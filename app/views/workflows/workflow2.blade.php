@@ -42,7 +42,7 @@
 						<td>
 							<form method="POST" action="deladdtask"  id="myForm_{{ $addedtask->id }}" name="myForm" style="display: -webkit-inline-box;">
 								<input type="hidden" name="id" value="<?php echo $addedtask->id ?>">
-								<button type="button" onclick="hello( {{{ $addedtask->id }}})" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete"><span class="glyphicon glyphicon-trash"></span></button>
+								<button type="button" onclick="hello( {{{ $addedtask->id }}})" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete"  data-toggle="tooltip" data-placement="top"  title="Delete Task"><span class="glyphicon glyphicon-trash"></span></button>
 							</form>
 						</td>
 					</tr> 
@@ -149,7 +149,7 @@
 						<td>
 							<form method="POST" action="deladdtask"  id="myForm_{{ $addedtask->id }}" name="myForm" style="display: -webkit-inline-box;">
 								<input type="hidden" name="id" value="<?php echo $addedtask->id ?>">
-								<button type="button" onclick="hello( {{{ $addedtask->id }}})" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete"><span class="glyphicon glyphicon-trash"></span></button>
+								<button type="button" onclick="hello( {{{ $addedtask->id }}})" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete"  data-toggle="tooltip" data-placement="top"  title="Delete Task"><span class="glyphicon glyphicon-trash"></span></button>
 							</form>
 						</td>
 					</tr> 
@@ -254,7 +254,7 @@
 				<td>
 					<form method="POST" action="deladdtask"  id="myForm_{{ $addedtask->id }}" name="myForm" style="display: -webkit-inline-box;">
 						<input type="hidden" name="id" value="<?php echo $addedtask->id ?>">
-						<button type="button" onclick="hello( {{{ $addedtask->id }}})" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete"><span class="glyphicon glyphicon-trash"></span></button>
+						<button type="button" onclick="hello( {{{ $addedtask->id }}})" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete"  data-toggle="tooltip" data-placement="top"  title="Delete Task"><span class="glyphicon glyphicon-trash"></span></button>
 					</form>
 				</td>
 			</tr> 
@@ -360,7 +360,7 @@
 					<td>
 						<form method="POST" action="deladdtask"  id="myForm_{{ $addedtask->id }}" name="myForm" style="display: -webkit-inline-box;">
 							<input type="hidden" name="id" value="<?php echo $addedtask->id ?>">
-							<button type="button" onclick="hello( {{{ $addedtask->id }}})" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete"><span class="glyphicon glyphicon-trash"></span></button>
+							<button type="button" onclick="hello( {{{ $addedtask->id }}})" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete"  data-toggle="tooltip" data-placement="top"  title="Delete Task"><span class="glyphicon glyphicon-trash"></span></button>
 						</form>
 					</td>
 				</tr> 

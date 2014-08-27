@@ -120,14 +120,14 @@
 							<form method="POST" action="delete" id="myForm_{{ $user->id }}" name="myForm" style="display: -webkit-inline-box;">
 								<input type="hidden" name="hide" value="{{ $user->id }}">
 								<center>
-									<button class="iframe btn btn-warning" type="button" data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $user->id }})"><span class="glyphicon glyphicon-ban-circle"></span></button>
+									<button class="iframe btn btn-warning" type="button" data-toggle="modal" data-target="#confirmDelete" onclick="hello( {{ $user->id }})"  data-toggle="tooltip" data-placement="top"  title="Deactivate User"><span class="glyphicon glyphicon-ban-circle"></span></button>
 								</center>
 							</form>
 						@else
 							<form method="POST" action="activate" id="myForm_{{ $user->id }}" name="myForm" style="display: -webkit-inline-box;">
 								<input type="hidden" name="hide" value="{{ $user->id }}">
 								<center>
-									<button class="iframe btn btn-primary" type="button" data-toggle="modal" data-target="#confirmActivate" onclick="hello( {{ $user->id }})"><span class="glyphicon glyphicon-ok"></span></button>
+									<button class="iframe btn btn-primary" type="button" data-toggle="modal" data-target="#confirmActivate" onclick="hello( {{ $user->id }})"  data-toggle="tooltip" data-placement="top"  title="Activate User"><span class="glyphicon glyphicon-ok"></span></button>
 								</center>
 							</form>
 						@endif

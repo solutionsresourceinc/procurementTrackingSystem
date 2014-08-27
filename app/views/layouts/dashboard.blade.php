@@ -21,6 +21,7 @@
         {{ HTML::style('css/signin.css') }}
         {{ HTML::style('css/custom.css') }}
         {{ HTML::style('css/sb-admin.css') }}
+        
         {{ HTML::style('font-awesome/css/font-awesome.min.css') }}
 
         {{ HTML::script('http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js') }}
@@ -79,7 +80,7 @@
             <li class="{{(Request::is('purchaseRequests') || Request::is('purchaseRequest/view') || Request::is('purchaseRequest/closed') || Request::is('purchaseRequest/overdue') || Request::is('purchaseRequest/cancelled') || Request::is('summary')) ? 'active' : ''}}"><a href="#" class="unlink">Purchase Requests</a>
                 <ul class="side-submenu">
                     <li class="{{Request::is('purchaseRequest/view') ? 'active':''}}">
-                        <a href="/purchaseRequest/view">
+                        <a href="/purchaseRequest/view" data-toggle="tooltip" data-placement="top" title="Unread Purchase Request"    >
                             Active Purchase Requests
                             <span class="badge pull-right">
                             <?php

@@ -1756,7 +1756,7 @@
                               
                                 @if($taskp->status=="Edit")
                                 
-                                    <a  href='taskcanceledit/{{$taskp->id}}' ><button type="button" class='iframe btn btn-default' title="Cancel"><span class="glyphicon glyphicon-floppy-remove"></span></button></a>
+                                    <a  href='taskcanceledit/{{$taskp->id}}' ><button type="button" class='iframe btn btn-default' title="Cancel" data-toggle="tooltip" data-placement="top" ><span class="glyphicon glyphicon-floppy-remove"></span></button></a>
                                 
                                 @endif
 
@@ -2191,7 +2191,7 @@
                                     <input type="hidden" name="otherDetails_id" value="{{$otherdetails->id}}">
                                     <input type="hidden" name="purchase_request_id" value="{{$purchaseToEdit->id}}">
                                     <td colspan="3" ><input name ="value" type="text" class="form-control" maxlength="100"></td>
-                                    <td align="center"><button class ="btn btn-primary" title="Save"><span class="glyphicon glyphicon-floppy-disk" ></span></button></td>
+                                    <td align="center"><button class ="btn btn-primary" title="Save" data-toggle="tooltip" data-placement="top" ><span class="glyphicon glyphicon-floppy-disk" ></span></button></td>
                                 {{Form::close()}}
                             @else 
                                 <td width='48.5%' colspan='3'>{{$values->value}}</td>
@@ -2200,7 +2200,7 @@
                                     
                                     <input type='hidden' name='values_id' value="{{$values->id}}">
                                     <td align='center' colspan="3">
-                                        <button class ='btn btn-default'>Edit</button>
+                                        <button class ='btn btn-default' data-toggle="tooltip" data-placement="top"  title="Edit Task">Edit</button>
                                     </td>
                                   
                 
