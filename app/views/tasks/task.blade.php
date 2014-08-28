@@ -272,9 +272,7 @@ $assign_user=User::find(Auth::user()->id);
                            
 
                             {{Form::open(['url'=>'checklistedit', 'id' => $myForm], 'POST')}}
-                            <input id="custom1" type="hidden" name="custom1">
-                            <input id="custom2" type="hidden" name="custom2">
-                            <input id ="custom3" type="hidden" name="custom3">
+                          
 
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
                                  <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
@@ -291,10 +289,11 @@ $assign_user=User::find(Auth::user()->id);
                                     ?>
                                     <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
                                         <input type="text" class="form-control" onchange="changeDOA(this.value)" name="dateFinished" id="dateFinished" style="text-align: center; width:100%"
-                                       onkeyup="document.getElementById('custom1').value =this.value;"
+                                     
                                         <?php
                                         if (NULL!=Input::old('dateFinished'))
                                             echo "value ='" . Input::old('dateFinished') ."'";
+                                        
                                        else if ("0000-00-00 00:00:00"!=$taskc->dateFinished)
                                         {   
                                             $datef = date("m/d/y", strtotime($taskc->dateFinished));
@@ -331,10 +330,11 @@ $assign_user=User::find(Auth::user()->id);
                                             <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($taskprev->dateFinished))}}">
 
                                             @endif
-                                    <input  style="text-align: center" id="daysOfAction" type="number" name="daysOfAction" class="form-control"  min="0"  width="100%" max="999"  
+                                    <input  style="text-align: center" id="daysOfAction" type="number" name="daysOfAction" class="form-control"  min="0"  width="100%" max="999"     
                                     <?php
                                     if (NULL!=Input::old('daysOfAction'))
                                         echo "value='".Input::old('daysOfAction')."'";
+                                          
                                     else if ('0'!=$taskc->daysOfAction)
                                         echo "value='".$taskc->daysOfAction."'";
                                     else
@@ -1182,9 +1182,7 @@ No remark.
 
 ?>
 {{ Form::open(array('url' => 'taskimage', 'files' => true, 'id'=>'createform'), 'POST') }}
-<input id="custom1" type="hidden" name="custom1">
-                   <input id="custom2" type="hidden" name="custom2">
-                   <input id ="custom3" type="hidden" name="custom3">
+
 <label class="create-label">Related files:</label>
            <div class="panel panel-default fc-div">
                <div class="panel-body" style="padding: 5px 20px;">
@@ -1300,7 +1298,7 @@ No remark.
       </div>
     </div>
     <?php
-    Session::forget('errorremark');
+Session::forget('errorremark');
 Session::forget('successremark');
 Session::forget('successchecklist');
 Session::forget('errorchecklist');
@@ -1426,9 +1424,7 @@ function doneauto()
     {
     var formname= "createform";
     var text= "/autouploadsaved";
-    <input id="custom1" type="hidden" name="custom1">
-                   <input id="custom2" type="hidden" name="custom2">
-                   <input id ="custom3" type="hidden" name="custom3">
+
 
     $("#createform").attr('action', text); 
     document.getElementById(formname).submit();

@@ -401,7 +401,11 @@ class TaskController extends Controller {
 		if (Session::get('imgerror'))
 			Session::forget('imgsuccess');
 					
-		return Redirect::back()->withInput();
+			$data = array(
+				"html" => "<div id='insert_$id' class='mode1'> $des_name  </div> <input type='hidden' id='hide_currentDesignation' class='hide_currentDesignation' value='$assignd->designation_id' > "
+
+			);
+	return Response::json($data);
 		//End Image Upload
 	}
 }
