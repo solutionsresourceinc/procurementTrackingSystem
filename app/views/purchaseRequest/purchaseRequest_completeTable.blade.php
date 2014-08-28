@@ -138,13 +138,13 @@
     </form>
 
 <div style="margin-top: 30px">
-    <table class="table table-striped display" id="main-table" border="1">
+    <table class="" id="main-table" border="1" style="border-style: solid; border-color: black;">
         <thead>
             <th colspan="11"> <b> {{{ $pageType }}} </b> </th>
         </thead>
         <thead>
-            <th width="9.09%"> DATE </th>
-            <th width="9.09%"> BAC NO </th>
+            <th width="7.09%"> DATE </th>
+            <th width="5.09%"> BAC NO </th>
             <th width="9.09%"> DEPARTMENT </th>
             <th width="9.09%"> PARTICULARS </th>
             <th width="9.09%"> BUDGET </th>
@@ -153,7 +153,7 @@
             <th width="9.09%"> DATE APPROVED </th>
             <th width="9.09%"> MOP </th>
             <th width="9.09%"> SUPPLIER </th>
-            <th width="9.09%"> REMARKS </th>
+            <th width="15.09%"> REMARKS </th>
         </thead>
         <tbody>
             @foreach($requests as $request)
@@ -296,11 +296,11 @@
                                 $accomplished = DB::table('purchase_request')->where('controlNo', '=', $request->controlNo)
                                 ->join('document', 'purchase_request.id', '=', 'document.pr_id')
                                 ->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
-                                ->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')
-                                ->join('section', 'section.workflow_id', '=', 'tasks.wf_id')->where('taskdetails.status', '=', 'Done')->select('tasks.taskName')->orderBy('taskdetails.id', 'DESC')->select('section.sectionName', 'tasks.taskName')->first();
+                                ->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('taskdetails.status', '=', 'Done')->select('tasks.taskName')->orderBy('taskdetails.id', 'DESC')->select('tasks.section_id', 'tasks.taskName')->first();
                             ?>
                             @if(isset($accomplished->taskName) && $accomplished->taskName != '')
-                                <font color="green"><b> Accomplished:<Br/> </b></font> {{{ $accomplished->sectionName }}} - {{{ $accomplished->taskName }}}
+                                <?php $section = DB::table('section')->where('section_order_id', '=', $accomplished->section_id)->first(); ?>
+                                <font color="green"><b> Accomplished:<Br/> </b></font> {{{ $section->sectionName }}} - {{{ $accomplished->taskName }}}
                             @else
                                 <font color="grey">N/A</font>
                             @endif
