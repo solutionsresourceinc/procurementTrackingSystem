@@ -224,6 +224,7 @@ $sectioncheck=0;
 $prdays=0;
 $lastid=0;
 
+if ($taskexist!=0){
 foreach($section as $sections)
 {
     $sectiondays=0;
@@ -265,7 +266,6 @@ foreach($section as $sections)
     //End of Addon Display
     $previousTaskType="0";
 
-if ($taskexist!=0){
     foreach ($task as $tasks)
     {
         $taskcount =TaskDetails::where('doc_id', $docs->id)->where('task_id', $tasks->id)->count();
@@ -661,7 +661,9 @@ if ($taskexist!=0){
 
 
         echo "</tr>";
-    }}
+    
+}
+
     //Addon Display
     $otherc=OtherDetails::where('section_id', $sections->id)->count();
 
@@ -789,7 +791,7 @@ $prdays=$days;
                     </table></div></div>
 
                     <?php
-                }
+               } }
 
 
                 echo "<div class='panel panel-success'><div class='panel-body'>
