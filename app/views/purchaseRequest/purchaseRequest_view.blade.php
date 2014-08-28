@@ -364,7 +364,7 @@ foreach($section as $sections)
             if ($tasks->taskType!="cheque"&&$tasks->taskType!="published"&&$tasks->taskType!="contract"&&$tasks->taskType!="meeting"&&$tasks->taskType!="rfq"&&$tasks->taskType!="documents"&&$tasks->taskType!="evaluation"&&$tasks->taskType!="preparation")
             {
                 echo "<td width='30%'>";
-                echo $tasks->taskName."</td>";
+                echo " <b>".$tasks->taskName."</b></td>";
             }
 
             //Task Display
@@ -422,21 +422,21 @@ foreach($section as $sections)
                        disabled> No
             </td>
             <td colspan="2" align="center">
-                By:
+                 <b>By: </b>
                 {{$taskp->custom2;}}
             </td>
         @endif
     @if($tasks->taskType=="posting")
             <td colspan="2" align="center">
-                Reference No. :
+                 <b>Reference No. : </b>
                 {{$taskp->custom1;}}
             </td>
             <td align="center">
-                Date:
+                 <b>Date: </b>
                 {{$taskp->custom2;}}
             </td>
             <td align="center">
-                By:
+                 <b>By: </b>
                 {{$taskp->custom3;}}
             </td>
     @endif
@@ -446,21 +446,21 @@ foreach($section as $sections)
             </td>
 
             <td class="edit-pr-input" colspan="2" align="center">
-                AMOUNT:
+                 <b>AMOUNT: </b>
                 {{$taskp->custom2}}
             </td>
     @endif
      @if($tasks->taskType=="cheque")
             <td class="edit-pr-input" colspan="2" align="center">
-                CHEQUE AMOUNT:&nbsp;&nbsp;&nbsp;
+                 <b>CHEQUE AMOUNT: </b>&nbsp;&nbsp;&nbsp;
                 {{$taskp->custom1}}
             </td>
             <td class="edit-pr-input" colspan="2" align="center">
-                CHEQUE NUMBER:&nbsp;&nbsp;&nbsp;
+                 <b>CHEQUE NUMBER: </b>&nbsp;&nbsp;&nbsp;
                 {{$taskp->custom2}}
             </td>
             <td class="edit-pr-input" colspan="2" align="center">
-                CHEQUE DATE:&nbsp;&nbsp;&nbsp;
+                 <b>CHEQUE DATE: </b>&nbsp;&nbsp;&nbsp;
                 {{$taskp->custom3}}
             </td>
         @endif
@@ -471,7 +471,7 @@ foreach($section as $sections)
             <th class='workflow-th' colspan="2">Posted By:</th>
             </tr>
             <tr>
-                <td >{{$tasks->taskName}}</td>
+                <td > <b>{{$tasks->taskName}} </b></td>
                 <td align="center">
                     {{$taskp->custom1}}
                     <span class="add-on"><i class="icon-th"></i></span>
@@ -486,20 +486,20 @@ foreach($section as $sections)
             <tr>
 
                 <td>
-                    Reference No.:<br>
+                     <b>Reference No.: </b><br>
                     <center>{{$taskp->custom1}}</center>
                     <span class="add-on"><i class="icon-th"></i></span>
                 </td>
                 <td >
-                    Date Published:<br>
+                     <b>Date Published: </b><br>
                     <center>{{$taskp->custom2}}</center>
                 </td>
                 <td class="edit-pr-input" >
-                    End Date:<br>
+                     <b>End Date: </b><br>
                     <center>{{$taskp->custom3}}</center>
                 </td>
                 <td colspan="2" >
-                    Posted By:<br>
+                     <b>Posted By: </b><br>
                     <center>{{$taskp->assignee}}</center>
                 </td>
 
@@ -511,7 +511,7 @@ foreach($section as $sections)
                 <th class='workflow-th' colspan="2">Checked By:</th>
              </tr>
              <tr>
-                <td>{{$tasks->taskName}}</td>
+                <td> <b>{{$tasks->taskName}} </b></td>
                 <td align="center">
                     {{$taskp->custom1}}
                     <span class="add-on"><i class="icon-th"></i></span>
@@ -521,7 +521,7 @@ foreach($section as $sections)
         @endif
         @if($tasks->taskType=="evaluation")
 
-                <td >{{$tasks->taskName}}</td>
+                <td > <b>{{$tasks->taskName}} </b></td>
                 <td colspan="2" align="center">
                     {{$taskp->custom1}}
                 </td>
@@ -539,7 +539,7 @@ foreach($section as $sections)
                 <th class='workflow-th' colspan="2">Contract Agreement:</th>
                 </tr>
                 <tr>
-                <td >{{$tasks->taskName}}</td>
+                <td > <b>{{$tasks->taskName}} </b></td>
                 <td align="center">
                     <?php
                     $today = date("m/d/y");
@@ -556,7 +556,7 @@ foreach($section as $sections)
                 <th class='workflow-th' colspan="2">Minutes of Bidding:</th>
                 </tr>
                 <tr>
-                <td >{{$tasks->taskName}}</td>
+                <td > <b>{{$tasks->taskName}} </b></td>
                 <td align="center">
                     <?php
                     $today = date("m/d/y");
@@ -573,7 +573,7 @@ foreach($section as $sections)
                 <th class='workflow-th' colspan="2">By:</th>
                 </tr>
                 <tr>
-                <td >{{$tasks->taskName}}</td>
+                <td > <b>{{$tasks->taskName}} </b></td>
                 <td align="center">
                 {{$taskp->custom1}}
                 </td>
