@@ -401,7 +401,7 @@ class TaskController extends Controller {
 		if (Session::get('imgerror'))
 			Session::forget('imgsuccess');
 					
-		return Redirect::back();
+		return Redirect::back()->withInput();
 		//End Image Upload
 	}
 }

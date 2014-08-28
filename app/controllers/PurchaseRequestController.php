@@ -1247,11 +1247,12 @@ class PurchaseRequestController extends Controller
     {
           $user_id=Auth::user()->id;
         $purchase= Purchase::find($id);
+        if(Entrust::hasRole('Procurement Personnel')){
          if($user_id != $purchase->created_by)
        {
 
       return Redirect::to('dashboard');
-       }
+       }}
 
     
         return View::make('pr_edit')->with('id',$id);
