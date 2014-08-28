@@ -1865,6 +1865,7 @@ class PurchaseRequestController extends Controller
             date_default_timezone_set("Asia/Manila");
             $upDate = date('Y-m-d H:i:s');
             DB::table('purchase_request')->where('id',$id)->update(array('updated_at' => $upDate));
+                $date= date('Y-m-d H:i:s', strtotime($date));
             DB::table('taskdetails')->where('id', $taskdetails_id)->update(array('dateFinished' => $date));
             if ($tasknextc!=0)
             {
