@@ -28,7 +28,8 @@ return array(
 	|
 	*/
 
-	'host' => 'smtp.gmail.com',
+//	'host' => 'smtp.gmail.com',
+	'host' => 'smtp.mailgun.org',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -54,7 +55,7 @@ return array(
 	|
 	*/
 
-	'from' => array('address' => 'bac.tarlac@gmail.com', 'name' => 'Procurement Tracking System'),
+	'from' => array('address' => 'info@mg.visit-tarlac.com', 'name' => 'Tarlac Procurement Tracking System'),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -80,8 +81,8 @@ return array(
 	|
 	*/
 
-	//'username' => 'laraveldummy@gmail.com',
-	'username' => 'bac.tarlac@gmail.com',
+//    'username' => 'bac.tarlac@gmail.com',
+    'username' => 'info@mg.visit-tarlac.com',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -94,8 +95,8 @@ return array(
 	|
 	*/
 
-	//'password' => 'laravel123',
-	'password' => 'tarlac00',
+//	'password' => 'tarlac00',
+	'password' => 'sr13m41l!9.0',
 
 	/*
 	|--------------------------------------------------------------------------
