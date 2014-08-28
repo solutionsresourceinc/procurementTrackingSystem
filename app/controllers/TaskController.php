@@ -313,6 +313,12 @@ class TaskController extends Controller {
 	{
 
 		$doc_id= Input::get('doc_id');
+		$custom1=Input::get('custom1');
+		$custom2=Input::get('custom2');
+		$custom3=Input::get('custom3');
+		Session::put('custom1', $custom1);
+		Session::put('custom2', $custom2);
+		Session::put('custom3', $custom3);
 		//Image Upload
 		foreach(Input::file('file') as $file)
 		{
@@ -401,11 +407,8 @@ class TaskController extends Controller {
 		if (Session::get('imgerror'))
 			Session::forget('imgsuccess');
 					
-			$data = array(
-				"html" => "<div id='insert_$id' class='mode1'> $des_name  </div> <input type='hidden' id='hide_currentDesignation' class='hide_currentDesignation' value='$assignd->designation_id' > "
-
-			);
-	return Response::json($data);
+		
+		return Redirect::back()->withInput();
 		//End Image Upload
 	}
 }

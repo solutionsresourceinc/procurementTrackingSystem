@@ -272,7 +272,6 @@ $assign_user=User::find(Auth::user()->id);
                            
 
                             {{Form::open(['url'=>'checklistedit', 'id' => $myForm], 'POST')}}
-                          
 
                                 <input type="hidden" name="taskdetails_id" value="{{$taskc->id}}">
                                  <Input type="hidden" name="pr_id" value="{{$purchaseToEdit->id}}" );>
@@ -288,7 +287,7 @@ $assign_user=User::find(Auth::user()->id);
                                     $today = date("m/d/y");
                                     ?>
                                     <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
-                                        <input type="text" class="form-control" onchange="changeDOA(this.value)" name="dateFinished" id="dateFinished" style="text-align: center; width:100%"
+                                        <input type="text" class="form-control" onchange="document.getElementById('custom1').value = this.value; changeDOA(this.value);"  name="dateFinished" id="dateFinished" style="text-align: center; width:100%"
                                      
                                         <?php
                                         if (NULL!=Input::old('dateFinished'))
@@ -300,7 +299,11 @@ $assign_user=User::find(Auth::user()->id);
                                          
                                             echo "value='".$datef."'";
                                         }
-                                
+                                        else if (Session::get('custom1'))
+                                        {
+                                          echo "value='".Session::get('custom1')."'";
+                                          Session::forget('custom1');
+                                        }
                                         else
                                             echo "value = '" . $today . "'";
                                         ?>
@@ -330,13 +333,17 @@ $assign_user=User::find(Auth::user()->id);
                                             <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($taskprev->dateFinished))}}">
 
                                             @endif
-                                    <input  style="text-align: center" id="daysOfAction" type="number" name="daysOfAction" class="form-control"  min="0"  width="100%" max="999"     
+                                     
+                                    <input  style="text-align: center" id="daysOfAction" type="number" name="daysOfAction" class="form-control"  min="0"  width="100%" max="999"     onchange="document.getElementById('custom2').value = this.value;"
                                     <?php
                                     if (NULL!=Input::old('daysOfAction'))
                                         echo "value='".Input::old('daysOfAction')."'";
-                                          
-                                    else if ('0'!=$taskc->daysOfAction)
-                                        echo "value='".$taskc->daysOfAction."'";
+                         
+                                       else if (Session::get('custom2'))
+                                        { $diplay=Session::get('custom2');
+                                          echo 'value="'.$diplay.'"';
+                                          Session::forget('custom2');
+                                        }
                                     else
                                         echo "value='1'";
                                     ?>
@@ -374,12 +381,18 @@ $assign_user=User::find(Auth::user()->id);
                                      <input type="hidden" name="remarks" id="hiddenremarks"  value="{{$taskd->remarks}}"> 
                                 <td class="edit-pr-input">
                                     Reference No. : 
-                                    <input  style="text-align: center" type="text" name="referenceno"  class="form-control" maxlength="100" width="80%" maxlength="100"
+                                    <input  style="text-align: center" type="text" name="referenceno"  class="form-control" maxlength="100" width="80%" maxlength="100"  onchange="document.getElementById('custom1').value = this.value;"
+
                                     <?php
                                     if (NULL!=Input::old('referenceno'))
                                     echo "value='".Input::old('referenceno')."'";
-                                    else if (NULL!=$taskc->custom1)
-                                        echo "value='".$taskc->custom1."'";
+                                    
+                                else if (Session::get('custom1'))
+                                        { $diplay=Session::get('custom1');
+                                          echo 'value="'.$diplay.'"';
+                                          Session::forget('custom2');
+                                }
+
                                     ?>
                                     >
                                 </td>
@@ -389,12 +402,17 @@ $assign_user=User::find(Auth::user()->id);
                                     $today = date("m/d/y");
                                     ?>
                                     <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
-                                        <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" 
+                                        <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%"  onchange="document.getElementById('custom2').value = this.value;"
+
                                         <?php
                                         if (NULL!=Input::old('dateFinished'))
                                             echo "value ='" . Input::old('dateFinished') ."'";
-                                        else if (NULL!=$taskc->custom2)
-                                        echo "value='".$taskc->custom2."'";
+                                      
+ else if (Session::get('custom2'))
+                                        { $diplay=Session::get('custom2');
+                                          echo 'value="'.$diplay.'"';
+                                          Session::forget('custom2');
+                   }
                                         else
                                             echo "value = '" . $today . "'";
                                         ?>
@@ -419,23 +437,32 @@ $assign_user=User::find(Auth::user()->id);
                                      <input type="hidden" name="remarks" id="hiddenremarks"  value="{{$taskd->remarks}}"> 
                                 <td class="edit-pr-input" colspan="2">
                                     <input  style="text-align: center" type="text" name="supplier"  class="form-control" maxlength="100" width="80%" placeholder="Enter supplier"
+                                     onchange="document.getElementById('custom1').value = this.value;"
+
+
                                      <?php
                                     if (NULL!=Input::old('supplier'))
                                     echo "value='".Input::old('supplier')."'";
-                                    else if (NULL!=$taskc->custom1)
-                                        echo "value='".$taskc->custom1."'";
+                                     else if (Session::get('custom1'))
+                                        { 
+                                          echo 'value="'.Session::get('custom1').'"';
+                                          Session::forget('custom1');}
+                          
                                     ?>
 
                                     >
                                 </td>
                                 
                                 <td class="edit-pr-input" colspan="2">
-                                    <input  style="text-align: center" type="decimal" name="amount"  id="amount" class="form-control" maxlength="12" width="80%" placeholder="Enter amount" onkeypress="return isNumberKey(event)" onchange="checklist_changeAmount(this.id,this.value)"
+                                    <input  style="text-align: center" type="decimal" name="amount"  id="amount" class="form-control" maxlength="12" width="80%" placeholder="Enter amount" onkeypress="return isNumberKey(event)" onchange="document.getElementById('custom2').value = this.value; 
+                                    checklist_changeAmount(this.id,this.value);"
                                      <?php
                                     if (NULL!=Input::old('amount'))
                                     echo "value='".Input::old('amount')."'";
-                                     else if (NULL!=$taskc->custom2)
-                                        echo "value='".$taskc->custom2."'";
+                                    else if (Session::get('custom2'))
+            {                          
+     echo 'value="'.Session::get('custom2').'"';
+      Session::forget('custom2');}
                                     ?>
                                     >
                                 </td>
@@ -450,23 +477,32 @@ $assign_user=User::find(Auth::user()->id);
                                      <input type="hidden" name="remarks" id="hiddenremarks"  value="{{$taskd->remarks}}"> 
                                 <td class="edit-pr-input" colspan="2">
                     
-                                    <input   style="text-align: center" type="decimal" name="amt"  id="amt" class="form-control" maxlength="12" width="80%" placeholder="Enter cheque amount" onkeypress="return isNumberKey(event)" onchange="checklist_changeAmount(this.id,this.value)"
+                                    <input   style="text-align: center" type="decimal" name="amt"  id="amt" class="form-control" maxlength="12" width="80%" placeholder="Enter cheque amount" onkeypress="return isNumberKey(event)" onchange="document.getElementById('custom1').value = this.value;
+                                    checklist_changeAmount(this.id,this.value);"
+
                                      <?php
                                     if (NULL!=Input::old('amt'))
                                     echo "value='".Input::old('amt')."'";
-                                     else if (NULL!=$taskc->custom1)
-                                        echo "value='".$taskc->custom1."'";
+                                    
+ else if (Session::get('custom1'))
+            {                          
+     echo 'value="'.Session::get('custom1').'"';
+      Session::forget('custom1');}
                                     ?>
                                     >
                                 </td>
                                 <td class="edit-pr-input" colspan="2">
                                     
-                                    <input  style="text-align: center" type="decimal" name="num"  class="form-control" maxlength="12" width="80%" placeholder="Enter cheque number"
+                                    <input  style="text-align: center" type="decimal" name="num"  class="form-control" maxlength="12" width="80%" placeholder="Enter cheque number"  onchange="document.getElementById('custom2').value = this.value;"
+
                                      <?php
                                     if (NULL!=Input::old('num'))
                                     echo "value='".Input::old('num')."'";
-                                 else if (NULL!=$taskc->custom2)
-                                        echo "value='".$taskc->custom2."'";
+                                
+ else if (Session::get('custom2'))
+            {                          
+     echo 'value="'.Session::get('custom2').'"';
+      Session::forget('custom2');}
                                     ?>
                                     >
                                 </td>
@@ -476,12 +512,15 @@ $assign_user=User::find(Auth::user()->id);
                                     $today = date("m/d/y");
                                     ?>
                                     <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
-                                        <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" 
+                                        <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%"  onchange="document.getElementById('custom3').value = this.value;"
+
                                         <?php
                                         if (NULL!=Input::old('dateFinished'))
                                             echo "value ='" . Input::old('dateFinished') ."'";
-                                         else if (NULL!=$taskc->custom3)
-                                        echo "value='".$taskc->custom3."'";
+                                         else if (Session::get('custom3'))
+            {                          
+     echo 'value="'.Session::get('custom3').'"';
+      Session::forget('custom3');}
                                         else
                                             echo "value = '" . $today . "'";
                                         ?>
@@ -511,13 +550,16 @@ $assign_user=User::find(Auth::user()->id);
                                         $today = date("m/d/y");
                                         ?>
                                         <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
-                                            <input type="text" class="form-control" name="datepublished" id="datepublished" style="text-align: center; width:100%"
+                                            <input type="text" class="form-control" name="datepublished" id="datepublished" style="text-align: center; width:100%"  onchange="document.getElementById('custom1').value = this.value;"
+
                                             
                                         <?php
                                         if (NULL!=Input::old('dateFinished'))
                                             echo "value ='" . Input::old('dateFinished') ."'";
-                                         else if (NULL!=$taskc->custom1)
-                                        echo "value='".$taskc->custom1."'";
+                                        else if (Session::get('custom1'))
+            {                          
+     echo 'value="'.Session::get('custom1').'"';
+      Session::forget('custom1');}
                                         else
                                             echo "value = '" . $today . "'";
                                         ?>
@@ -528,12 +570,15 @@ $assign_user=User::find(Auth::user()->id);
                                     <td>
                                         <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
                                             <input type="text" class="form-control" name="enddate" id="enddate" style="text-align: center; width:100%" 
-                                            
+                                             onchange="document.getElementById('custom2').value = this.value;"
+
                                         <?php
                                         if (NULL!=Input::old('dateFinished'))
                                             echo "value ='" . Input::old('dateFinished') ."'";
-                                        else if (NULL!=$taskc->custom2)
-                                            echo "value='".$taskc->custom2."'";
+                                       else if (Session::get('custom2'))
+            {                          
+     echo 'value="'.Session::get('custom2').'"';
+      Session::forget('custom2');}
                                         else
                                             echo "value = '" . $today . "'";
                                         ?>
@@ -563,12 +608,15 @@ $assign_user=User::find(Auth::user()->id);
                                  
                                     <td class="edit-pr-input">
                                     Reference No.:
-                                    <input  style="text-align: center" type="text" name="referenceno"  class="form-control" maxlength="100" width="80%" maxlength="100"
+                                    <input  style="text-align: center" type="text" name="referenceno"  class="form-control" maxlength="100" width="80%" maxlength="100"  onchange="document.getElementById('custom1').value = this.value;"
+
                                     <?php
                                     if (NULL!=Input::old('referenceno'))
                                     echo "value='".Input::old('referenceno')."'";
-                                 else if (NULL!=$taskc->custom1)
-                                        echo "value='".$taskc->custom1."'";
+                                else if (Session::get('custom1'))
+            {                          
+     echo 'value="'.Session::get('custom1').'"';
+      Session::forget('custom1');}
                                     ?>
                                     >
                                 </td>
@@ -579,16 +627,18 @@ $assign_user=User::find(Auth::user()->id);
                                         ?>
                                         <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
                                             <input type="text" class="form-control" name="datepublished" id="datepublished" style="text-align: center; width:100%"
-                                            
+                                             onchange="document.getElementById('custom2').value = this.value;"
+
                                         <?php
 
 
                                         
                                         if (NULL!=Input::old('dateFinished'))
                                             echo "value ='" . Input::old('dateFinished') ."'";
-                                         else if (NULL!=$taskc->custom2)
-                                        echo "value='".$taskc->custom2."'";
-                                        else
+                                       else if (Session::get('custom2'))
+            {                          
+     echo 'value="'.Session::get('custom2').'"';
+      Session::forget('custom2');}                                        else
                                             echo "value = '" . $today . "'";
                                         ?>
                                         
@@ -599,12 +649,15 @@ $assign_user=User::find(Auth::user()->id);
                                         End Date:
                                         <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
                                             <input type="text" class="form-control" name="enddate" id="enddate" style="text-align: center; width:100%" 
-                                            
+                                             onchange="document.getElementById('custom3').value = this.value;"
+
                                         <?php
                                         if (NULL!=Input::old('dateFinished'))
                                             echo "value ='" . Input::old('dateFinished') ."'";
-                                         else if (NULL!=$taskc->custom3)
-                                        echo "value='".$taskc->custom3."'";
+                                         else if (Session::get('custom3'))
+            {                          
+     echo 'value="'.Session::get('custom3').'"';
+      Session::forget('custom3');}
                                         else
                                             echo "value = '" . $today . "'";
                                         ?>
@@ -639,13 +692,16 @@ $assign_user=User::find(Auth::user()->id);
                                         $today = date("m/d/y");
                                         ?>
                                         <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
-                                            <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" 
+                                            <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%"  onchange="document.getElementById('custom1').value = this.value;"
+
                                             
                                         <?php
                                         if (NULL!=Input::old('dateFinished'))
                                             echo "value ='" . Input::old('dateFinished') ."'";
-                                         else if (NULL!=$taskc->custom1)
-                                        echo "value='".$taskc->custom1."'";
+                                         else if (Session::get('custom1'))
+            {                          
+     echo 'value="'.Session::get('custom1').'"';
+      Session::forget('custom1');}
                                         else
                                             echo "value = '" . $today . "'";
                                         ?>
@@ -655,13 +711,16 @@ $assign_user=User::find(Auth::user()->id);
                                     </td>
                                     <td>
                                         <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
-                                            <input type="text" class="form-control" name="biddingdate" id="biddingdate" style="text-align: center; width:100%" 
+                                            <input type="text" class="form-control" name="biddingdate" id="biddingdate" style="text-align: center; width:100%"  onchange="document.getElementById('custom2').value = this.value;"
+
                                            
                                         <?php
                                         if (NULL!=Input::old('dateFinished'))
                                             echo "value ='" . Input::old('dateFinished') ."'";
-                                         else if (NULL!=$taskc->custom2)
-                                        echo "value='".$taskc->custom2."'";
+                                          else if (Session::get('custom2'))
+            {                          
+     echo 'value="'.Session::get('custom2').'"';
+      Session::forget('custom2');}
                                         else
                                             echo "value = '" . $today . "'";
                                         ?>
@@ -696,12 +755,15 @@ $assign_user=User::find(Auth::user()->id);
                                         $today = date("m/d/y");
                                         ?>
                                         <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
-                                            <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" onchange="changeDOA(this.value)"
+                                            <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" onchange="document.getElementById('custom1').value = this.value;
+changeDOA(this.value);"
                                         <?php
                                         if (NULL!=Input::old('dateFinished'))
                                             echo "value ='" . Input::old('dateFinished') ."'";
-                                         else if (NULL!=$taskc->custom1)
-                                        echo "value='".$taskc->custom1."'";
+                                         else if (Session::get('custom1'))
+            {                          
+     echo 'value="'.Session::get('custom1').'"';
+      Session::forget('custom1');}
                                         else
                                             echo "value = '" . $today . "'";
                                         ?>
@@ -732,12 +794,16 @@ $assign_user=User::find(Auth::user()->id);
 
                                             @endif
                                         <input  style="text-align: center" type="number" name="noofdays"  class="form-control" max="999" width="80%" placeholder="Enter no. of days" id="daysOfAction" oninput="maxLengthCheck(this)" maxlength = "3"
+                                         onchange="document.getElementById('custom2').value = this.value;"
+
                                         
                                         <?php
                                         if (NULL!=Input::old('noofdays'))
                                           echo "value=".Input::old('noofdays');
-                                        else if (NULL!=$taskc->custom2)
-                                          echo "value='".$taskc->custom2."'";
+                                         else if (Session::get('custom2'))
+            {                          
+     echo 'value="'.Session::get('custom2').'"';
+      Session::forget('custom2');}
                                         else
                                           echo "value=1";
                                        
@@ -761,13 +827,16 @@ $assign_user=User::find(Auth::user()->id);
                                     $today = date("m/d/y");
                                     ?>
                                     <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
-                                        <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" 
+                                        <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%"  onchange="document.getElementById('custom1').value = this.value;"
+
                                         
                                         <?php
                                         if (NULL!=Input::old('dateFinished'))
                                             echo "value ='" . Input::old('dateFinished') ."'";
-                                         else if (NULL!=$taskc->custom1)
-                                        echo "value='".$taskc->custom1."'";
+                                         else if (Session::get('custom1'))
+            {                          
+     echo 'value="'.Session::get('custom1').'"';
+      Session::forget('custom1');}
                                         else
                                             echo "value = '" . $today . "'";
                                         ?>
@@ -796,12 +865,14 @@ $assign_user=User::find(Auth::user()->id);
                                         $today = date("m/d/y");
                                         ?>
                                         <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%" >
-                                            <input type="text" class="form-control" name="date" id="date" onchange="changeDOA(this.value)" style="text-align: center; width:100%" 
+                                            <input type="text" class="form-control" name="date" id="date" onchange="document.getElementById('custom1').value = this.value; changeDOA(this.value);" style="text-align: center; width:100%" 
                                         <?php
                                         if (NULL!=Input::old('dateFinished'))
                                             echo "value ='" . Input::old('dateFinished') ."'";
-                                         else if (NULL!=$taskc->custom1)
-                                        echo "value='".$taskc->custom1."'";
+                                         else if (Session::get('custom1'))
+            {                          
+     echo 'value="'.Session::get('custom1').'"';
+      Session::forget('custom1');}
                                         else
                                             echo "value = '" . $today . "'";
                                         ?>
@@ -829,26 +900,32 @@ $assign_user=User::find(Auth::user()->id);
                                             <input id="datebasis" type="hidden" name="datebasis" value="{{date('m/d/y', strtotime($taskprev->dateFinished))}}">
 
                                             @endif
-                                    <td><input  style="text-align: center" type="number" name="noofdays"  class="form-control" max="999" width="80%" placeholder="Enter no. of days accomplished"
+                                    <td><input  style="text-align: center" type="number" name="noofdays"  class="form-control" max="999" width="80%" placeholder="Enter no. of days accomplished"  onchange="document.getElementById('custom2').value = this.value;"
+
                                         id="daysOfAction" oninput="maxLengthCheck(this)" maxlength = "3"
                                         <?php
                                         if (NULL!=Input::old('noofdays'))
                                             echo "value=".Input::old('noofdays');
-                                         else if (NULL!=$taskc->custom2)
-                                        echo "value='".$taskc->custom2."'";
+                                         else if (Session::get('custom2'))
+            {                          
+     echo 'value="'.Session::get('custom2').'"';
+      Session::forget('custom2');}
                                         else
                                             echo "value=1";
                                      
                                         ?>
                                         ></td>
                                     <td class="edit-pr-input" colspan="2">  
-                                        <input  style="text-align: center" type="text" name="contractmeeting"  class="form-control" maxlength="100" width="80%" placeholder="Enter contract agreement"
+                                        <input  style="text-align: center" type="text" name="contractmeeting"  class="form-control" maxlength="100" width="80%" placeholder="Enter contract agreement"  onchange="document.getElementById('custom3').value = this.value;"
+
                                         
                                         <?php
                                         if (NULL!=Input::old('contractmeeting'))
                                             echo "value='".Input::old('contractmeeting')."'";
-                                         else if (NULL!=$taskc->custom3)
-                                        echo "value='".$taskc->custom3."'";
+                                        else if (Session::get('custom3'))
+            {                          
+     echo 'value="'.Session::get('custom3').'"';
+      Session::forget('custom3');}
                                         
                                         ?>
                                         
@@ -875,13 +952,15 @@ $assign_user=User::find(Auth::user()->id);
                                         $today = date("m/d/y");
                                         ?>
                                         <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
-                                            <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%"  onchange="changeDOA(this.value)"
+                                            <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%"  onchange="document.getElementById('custom1').value = this.value; changeDOA(this.value)"
                                             
                                         <?php
                                         if (NULL!=Input::old('dateFinished'))
                                             echo "value ='" . Input::old('dateFinished') ."'";
-                                         else if (NULL!=$taskc->custom1)
-                                        echo "value='".$taskc->custom1."'";
+                                         else if (Session::get('custom1'))
+            {                          
+     echo 'value="'.Session::get('custom1').'"';
+      Session::forget('custom1');}
                                         else
                                             echo "value = '" . $today . "'";
                                         ?>
@@ -912,12 +991,16 @@ $assign_user=User::find(Auth::user()->id);
 
                                             @endif
                                         <input  style="text-align: center" type="number" name="noofdays"  class="form-control" max="999" width="80%" placeholder="Enter no. of days accomplished"
-                                        id="daysOfAction" oninput="maxLengthCheck(this)" maxlength = "3"
+                                        id="daysOfAction" oninput="maxLengthCheck(this)" maxlength = "3"  onchange="document.getElementById('custom2').value = this.value;"
+
                                         <?php
                                         if (NULL!=Input::old('noofdays'))
                                             echo "value=".Input::old('noofdays');
-                                        else if (NULL!=$taskc->custom2)
-                                            echo "value='".$taskc->custom2."'";
+                                        
+ else if (Session::get('custom2'))
+            {                          
+     echo 'value="'.Session::get('custom2').'"';
+      Session::forget('custom2');}
                                         else
                                             echo "value=1";
                                         
@@ -927,13 +1010,17 @@ $assign_user=User::find(Auth::user()->id);
                                         >
                                     </td>
                                     <td class="edit-pr-input" colspan="2">  
-                                        <input  style="text-align: center" type="text" name="contractmeeting"  class="form-control" maxlength="100" width="80%" placeholder="Enter minutes of meeting"
+                                        <input  style="text-align: center" type="text" name="contractmeeting"  class="form-control" maxlength="100" width="80%" placeholder="Enter minutes of meeting"  onchange="document.getElementById('custom3').value = this.value;"
+
                                         
                                         <?php
                                         if (NULL!=Input::old('contractmeeting'))
                                             echo "value='".Input::old('contractmeeting')."'";
-                                         else if (NULL!=$taskc->custom3)
-                                        echo "value='".$taskc->custom3."'";
+                                        
+ else if (Session::get('custom3'))
+            {                          
+     echo 'value="'.Session::get('custom3').'"';
+      Session::forget('custom3');}
                                         
                                             
                                         ?>
@@ -957,13 +1044,16 @@ $assign_user=User::find(Auth::user()->id);
                                 </tr>
                                 <tr class="@if($taskch!=0 && $taskc->task_id==$tasks->id && $tasks->designation_id==0) @endif">
                            
-                                    <td><input  style="text-align: center" type="number" name="noofsuppliers"  class="form-control" maxlength="12" width="80%" placeholder="Enter no. of suppliers"
+                                    <td><input  style="text-align: center" type="number" name="noofsuppliers"  class="form-control" maxlength="12" width="80%" placeholder="Enter no. of suppliers"  onchange="document.getElementById('custom1').value = this.value;"
+
                                         
                                         <?php
                                         if (NULL!=Input::old('noofsuppliers'))
                                             echo "value='".Input::old('noofsuppliers')."'";
-                                         else if (NULL!=$taskc->custom1)
-                                        echo "value='".$taskc->custom1."'";
+                                        else if (Session::get('custom1'))
+            {                          
+     echo 'value="'.Session::get('custom1').'"';
+      Session::forget('custom1');}
                                        
                                         ?>
                                         
@@ -973,12 +1063,15 @@ $assign_user=User::find(Auth::user()->id);
                                         $today = date("m/d/y");
                                         ?>
                                         <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
-                                            <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%" 
+                                            <input type="text" class="form-control" name="date" id="date" style="text-align: center; width:100%"  onchange="document.getElementById('custom2').value = this.value;"
+
                                         <?php
                                         if (NULL!=Input::old('dateFinished'))
                                             echo "value ='" . Input::old('dateFinished') ."'";
-                                         else if (NULL!=$taskc->custom2)
-                                        echo "value='".$taskc->custom2."'";
+                                       else if (Session::get('custom1'))
+            {                          
+     echo 'value="'.Session::get('custom1').'"';
+      Session::forget('custom1');}
                                         else
                                             echo "value = '" . $today . "'";
                                         ?>
@@ -1005,17 +1098,16 @@ $assign_user=User::find(Auth::user()->id);
                                     $today = date("m/d/y");
                                     ?>
                                     <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
-                                        <input type="text" class="form-control" name="dateFinished" id="dateFinished" style="text-align: center; width:100%" 
+                                        <input type="text" class="form-control" name="dateFinished" id="dateFinished" style="text-align: center; width:100%"  onchange="document.getElementById('custom1').value = this.value;"
+
                                         
                                         <?php
                                         if (NULL!=Input::old('dateFinished'))
                                             echo "value ='" . Input::old('dateFinished') ."'";
-                                       else if ("0000-00-00 00:00:00"!=$taskc->dateFinished)
-                                        {   
-                                            $datef = date("m/d/y", strtotime($taskc->dateFinished));
-                                         
-                                            echo "value='".$datef."'";
-                                        }
+                                        else if (Session::get('custom1'))
+            {                          
+     echo 'value="'.Session::get('custom1').'"';
+      Session::forget('custom1');}
                                         else
                                             echo "value = '" . $today . "'";
                                         ?>
@@ -1044,17 +1136,16 @@ $assign_user=User::find(Auth::user()->id);
                                     ?>
                                     <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
 
-                                        <input type="text" class="form-control" name="dateFinished" id="dateFinished" style="text-align: center; width:100%" 
+                                        <input type="text" class="form-control" name="dateFinished" id="dateFinished" style="text-align: center; width:100%"  onchange="document.getElementById('custom1').value = this.value;"
+
                                         
                                         <?php
                                         if (NULL!=Input::old('dateFinished'))
                                             echo "value ='" . Input::old('dateFinished') ."'";
-                                    else if ("0000-00-00 00:00:00"!=$taskc->dateFinished)
-                                        {   
-                                            $datef = date("m/d/y", strtotime($taskc->dateFinished));
-                                         
-                                            echo "value='".$datef."'";
-                                        }
+                                   else if (Session::get('custom1'))
+            {                          
+     echo 'value="'.Session::get('custom1').'"';
+      Session::forget('custom1');}
                                         else
                                             echo "value = '" . $today . "'";
                                         ?>
@@ -1084,17 +1175,16 @@ $assign_user=User::find(Auth::user()->id);
                                     ?>
                                     <div class="input-daterange" id="datepicker" data-date="{{ date('Y-m-d') }}T" data-date-format="mm/dd/yy" style="width:100%">
 
-                                        <input type="text" class="form-control" name="dateFinished" id="dateFinished" style="text-align: center; width:100%" 
+                                        <input type="text" class="form-control" name="dateFinished" id="dateFinished" style="text-align: center; width:100%"  onchange="document.getElementById('custom1').value = this.value;"
+
                                         
                                         <?php
                                         if (NULL!=Input::old('dateFinished'))
                                             echo "value ='" . Input::old('dateFinished') ."'";
-                                       else if ("0000-00-00 00:00:00"!=$taskc->dateFinished)
-                                        {   
-                                            $datef = date("m/d/y", strtotime($taskc->dateFinished));
-                                         
-                                            echo "value='".$datef."'";
-                                        }
+                                      else if (Session::get('custom1'))
+            {                          
+     echo 'value="'.Session::get('custom1').'"';
+      Session::forget('custom1');}
                                         else
                                             echo "value = '" . $today . "'";
                                         ?>
@@ -1249,6 +1339,9 @@ No remark.
                    {{Session::forget('imgerror');}}
                    {{Session::forget('imgsuccess');}}
 
+<input type="hidden" name="custom1" id="custom1" value="">
+<input type="hidden" name="custom2" id="custom2" value="">
+<input type="hidden" name="custom3" id="custom3" value="">
           
            </div>
            {{Form::close()}}
@@ -1423,7 +1516,7 @@ function doneauto()
     function autouploadsaved(value)
     {
     var formname= "createform";
-    var text= "/autouploadsaved";
+    var text= "/taskimage";
 
 
     $("#createform").attr('action', text); 
@@ -1458,6 +1551,7 @@ function remarksauto()
           function changeDOA(value)
     {
 var datebasis = document.getElementById("datebasis").value;
+
 var date1 = new Date(value);
 var date2 = new Date(datebasis);
 var timeDiff = date1.getTime() - date2.getTime();

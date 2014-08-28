@@ -88,7 +88,7 @@ Route::post('purchaseRequest/submitForm/{id}', ['as' => 'submitForm', 'uses' => 
 //Checklist Rowtype Routes
 Route::get('purchaseRequest/edit/taskedit/{id}',[ 'uses' => 'PurchaseRequestController@taskedit']);
 Route::get('purchaseRequest/edit/taskcanceledit/{id}',[ 'uses' => 'PurchaseRequestController@taskcanceledit']);
-Route::post('checklistedit', ['uses' => 'PurchaseRequestController@checklistedit']);
+Route::post('checklistedit', ['uses' => 'PurchaseRequestController@checklistedit', 'as'=>'checklistedit']);
 Route::post('certification', ['uses' => 'PurchaseRequestController@certification']);
 Route::post('posting', ['uses' => 'PurchaseRequestController@posting']);
 Route::post('supplier', ['uses' => 'PurchaseRequestController@supplier']);
@@ -134,7 +134,7 @@ Route::post('addtask', [ 'uses' => 'TaskController@addtask']);
 Route::post('task/new', ['as' => 'accept_task', 'uses' => 'TaskController@assignTask']);
 Route::post('remarks', 'TaskController@remarks');
 Route::post('done', 'TaskController@done');
-Route::post('taskimage', 'TaskController@taskimage');	
+Route::post('taskimage', ['uses'=>'TaskController@taskimage', 'as'=>'taskimage']);	
 Route::get('task/active', 'TaskController@active');
 Route::get('task/overdue', 'TaskController@overdue');
 Route::get('task/{id}', [ 'uses' => 'TaskController@taskpagecall']);
