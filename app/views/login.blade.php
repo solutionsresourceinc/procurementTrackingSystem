@@ -15,14 +15,14 @@
         @if ( Session::get('deactivated') )
             
             <div class="alert alert-danger">
-                <p>Your account has been deactivated. Please consult authorized personnel.</p>
+                <center>Your account has been deactivated. Please consult authorized personnel.</center>
             </div>
         @endif
         
 		@if ( Session::get('error') )
 			
             <div class="alert alert-danger">
-            	<p>User and password does not match. Please try again.</p>
+            	<center>User and password does not match. Please try again.</center>
             </div>
         @endif
 

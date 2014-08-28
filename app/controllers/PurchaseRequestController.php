@@ -751,10 +751,15 @@ class PurchaseRequestController extends Controller
     public function edit()
     {
         $user_id=Auth::user()->id;
+        $purchase= Purchase::find($id);
         //Office restriction
         if (Entrust::hasRole('Administrator')){}
         else if(Entrust::hasRole('Procurement Personnel'))
         {
+
+      
+   
+        
             $useroffice=Auth::user()->office_id;
             $maker= User::find( $purchase->requisitioner);
             $docget=Document::where('pr_id', $purchase->id)->first();
@@ -1240,6 +1245,15 @@ class PurchaseRequestController extends Controller
 
     public function editpagecall($id)
     {
+          $user_id=Auth::user()->id;
+        $purchase= Purchase::find($id);
+         if($user_id != $purchase->created_by)
+       {
+
+      return Redirect::to('dashboard');
+       }
+
+    
         return View::make('pr_edit')->with('id',$id);
     }
 

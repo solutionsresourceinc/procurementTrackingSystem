@@ -35,12 +35,12 @@
 
 
     <?php
-        
+
     //Initialization for page query
     $pass=0; //Use in role restriction.
     $purchaseToEdit=Purchase::find($id);
     $user_id=Auth::User()->id;
-    
+       
     //Retain Inputte Values
 
         if (Input::old('projectPurpose')||Input::old('sourceOfFund')||Input::old('amount')){

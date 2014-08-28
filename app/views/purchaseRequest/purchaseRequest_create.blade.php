@@ -333,7 +333,7 @@
 					<!-- End Image Module-->
 
 					<div><br>
-						{{ Form::submit('Create Purchase Request',array('class'=>'btn btn-success', 'id'=>'submt')) }}
+						{{ Form::submit('Create',array('class'=>'btn btn-success', 'id'=>'submt')) }}
 				
 						<a href="/cancelcreate" class="btn btn-default">Cancel</a>
 					</div>
