@@ -39,7 +39,7 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-				<button type="button" class="btn btn-danger" id="confirm">Activate</button>
+				<button type="button" class="btn btn-primary" id="confirm">Activate</button>
 			</div>
 		</div>
 	</div>
