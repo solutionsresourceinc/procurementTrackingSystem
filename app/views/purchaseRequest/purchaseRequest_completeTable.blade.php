@@ -309,38 +309,36 @@
                                 $accomplished = DB::table('purchase_request')->where('controlNo', '=', $request->controlNo)
                                 ->join('document', 'purchase_request.id', '=', 'document.pr_id')
                                 ->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
-                                ->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')
-                                ->join('section', 'section.workflow_id', '=', 'tasks.wf_id')->where('taskdetails.status', '=', 'Done')->select('tasks.taskName')->orderBy('taskdetails.id', 'DESC')->select('section.sectionName', 'tasks.taskName')->first();
+                                ->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('taskdetails.status', '=', 'Done')->select('tasks.taskName')->orderBy('taskdetails.id', 'DESC')->select('tasks.section_id', 'tasks.taskName')->first();
                             ?>
                             @if(isset($accomplished->taskName) && $accomplished->taskName != '')
-                                <font color="green"><b> Accomplished: </b></font> {{{ $accomplished->sectionName }}} - {{{ $accomplished->taskName }}}<br/>
+                                <?php $section = DB::table('section')->where('section_order_id', '=', $accomplished->section_id)->first(); ?>
+                                <font color="green"><b> Accomplished: </b></font> {{{ $section->sectionName }}} - {{{ $accomplished->taskName }}}<br/>
                             @endif
 
                             <?php
                                 $editing = DB::table('purchase_request')->where('controlNo', '=', $request->controlNo)
                                 ->join('document', 'purchase_request.id', '=', 'document.pr_id')
                                 ->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
-                                ->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')
-                                ->join('section', 'section.workflow_id', '=', 'tasks.wf_id')->where('taskdetails.status', '=', 'Edit')->select('tasks.taskName')->orderBy('taskdetails.id', 'DESC')->select('section.sectionName', 'tasks.taskName')->first();
+                                ->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('taskdetails.status', '=', 'Edit')->select('tasks.taskName')->orderBy('taskdetails.id', 'DESC')->select('tasks.section_id', 'tasks.taskName')->first();
                             ?>
                             @if(isset($editing->taskName) && $editing->taskName != '')
-                                <font color="orange"><b> Editting: </b></font> {{{ $editing->sectionName }}} - {{{ $editing->taskName }}}<br/>
+                                <?php $section = DB::table('section')->where('section_order_id', '=', $editing->section_id)->first(); ?>
+                                <font color="orange"><b> Editting: </b></font> {{{ $section->sectionName }}} - {{{ $editing->taskName }}}<br/>
                             @endif
 
                             <?php
                             $active = DB::table('purchase_request')->where('controlNo', '=', $request->controlNo)
                                 ->join('document', 'purchase_request.id', '=', 'document.pr_id')
                                 ->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
-                                ->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')
-                                ->join('section', 'section.workflow_id', '=', 'tasks.wf_id')->where('taskdetails.status', '=', 'New')->select('tasks.taskName')->orderBy('taskdetails.id', 'DESC')->select('section.sectionName', 'tasks.taskName');
+                                ->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('taskdetails.status', '=', 'New')->select('tasks.taskName')->orderBy('taskdetails.id', 'DESC')->select('tasks.section_id', 'tasks.taskName');
                             $resultCtr = $active->count();
                             if($resultCtr == 0)
                             {
                                 $active = DB::table('purchase_request')->where('controlNo', '=', $request->controlNo)
                                     ->join('document', 'purchase_request.id', '=', 'document.pr_id')
                                     ->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
-                                    ->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')
-                                    ->join('section', 'section.workflow_id', '=', 'tasks.wf_id')->where('taskdetails.status', '=', 'Active')->select('tasks.taskName')->orderBy('taskdetails.id', 'DESC')->select('section.sectionName', 'tasks.taskName')->first();
+                                    ->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('taskdetails.status', '=', 'Active')->select('tasks.taskName')->orderBy('taskdetails.id', 'DESC')->select('tasks.section_id', 'tasks.taskName')->first();
                             }
                             else
                             {
@@ -348,18 +346,19 @@
                             }
                             ?>
                             @if(isset($active->taskName) && $active->taskName != '')
-                                <font color="blue"><b> Active: </b></font> {{{ $active->sectionName }}} - {{{ $active->taskName }}}<br/>
+                                <?php $section = DB::table('section')->where('section_order_id', '=', $active->section_id)->first(); ?>
+                                <font color="blue"><b> Active: </b></font> {{{ $section->sectionName }}} - {{{ $active->taskName }}}<br/>
                             @endif
 
                             <?php
                                 $pending = DB::table('purchase_request')->where('controlNo', '=', $request->controlNo)
                                 ->join('document', 'purchase_request.id', '=', 'document.pr_id')
                                 ->join('taskdetails', 'taskdetails.doc_id', '=', 'document.id')
-                                ->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')
-                                ->join('section', 'section.workflow_id', '=', 'tasks.wf_id')->where('taskdetails.status', '=', 'Pending')->select('tasks.taskName')->orderBy('taskdetails.id', 'ASC')->select('section.sectionName', 'tasks.taskName')->first();
+                                ->join('tasks', 'tasks.id', '=', 'taskdetails.task_id')->where('taskdetails.status', '=', 'Pending')->select('tasks.taskName')->orderBy('taskdetails.id', 'ASC')->select('tasks.taskName', 'tasks.section_id')->first();
                             ?>
                             @if( isset($pending->taskName) && $pending->taskName != '')
-                                    <font color="red"><b> For: </b></font> {{{ $pending->sectionName }}} - {{{ $pending->taskName }}}
+                                <?php $section = DB::table('section')->where('section_order_id', '=', $pending->section_id)->first(); ?>
+                                <font color="red"><b> For: </b></font> {{{ $section->sectionName }}} - {{{ $pending->taskName }}}
                             @endif
                         @endif
                     </td>
