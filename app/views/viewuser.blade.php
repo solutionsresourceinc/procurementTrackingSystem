@@ -183,11 +183,8 @@
 	});
 
 	$('#confirmActivate').find('.modal-footer #confirm').on('click', function(){
-	     var name = "myForm_" + window.my_id; mentById(name).submit();
+	     var name = "myForm_" + window.my_id;
+        document.getElementById(name).submit();
 	});
-	function hello(pass_id)
-	{
-		window.my_id = pass_id;
-	}
 </script>
 @stop
