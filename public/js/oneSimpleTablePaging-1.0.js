@@ -74,13 +74,13 @@ $.prototype.extend(
 				function createPaginationElements() {
 					var paginationHTML = "";
 					paginationHTML += "<div id='tablePagination' class='no-print' style=' text-align: center; padding-top: 5px; padding-bottom: 5px;'>";
-					paginationHTML += "<a id='tablePagination_firstPage' href='javascript:;' class='btn btn-default'><span class='glyphicon glyphicon-step-backward'></span></a>&nbsp;&nbsp;";
-					paginationHTML += "<a id='tablePagination_prevPage' href='javascript:;' class='btn btn-default'><span class='glyphicon glyphicon-backward'></span></a>&nbsp;&nbsp;";
+					paginationHTML += "<a data-toggle='tooltip' data-placement='top' title='First Page' id='tablePagination_firstPage' href='javascript:;' class='btn btn-default'><span class='glyphicon glyphicon-step-backward'></span></a>&nbsp;&nbsp;";
+					paginationHTML += "<a data-toggle='tooltip' data-placement='top' title='Previous Page' id='tablePagination_prevPage' href='javascript:;' class='btn btn-default'><span class='glyphicon glyphicon-backward'></span></a>&nbsp;&nbsp;";
 					paginationHTML += "Page ";
 					paginationHTML += "<input  id='tablePagination_currPage' type='input' value='" + currPageNumber + "' size='1'>";
 					paginationHTML += " of " + totalPages + "&nbsp;&nbsp;&nbsp;";
-					paginationHTML += "<a id='tablePagination_nextPage' href='javascript:;' class='btn btn-default'><span class='glyphicon glyphicon-forward'></span></a>&nbsp;&nbsp;</a>";
-					paginationHTML += "<a id='tablePagination_lastPage' href='javascript:;' class='btn btn-default'><span class='glyphicon glyphicon-step-forward'></span></a>&nbsp;&nbsp;</a>";
+					paginationHTML += "<a data-toggle='tooltip' data-placement='top' title='Next Page' id='tablePagination_nextPage' href='javascript:;' class='btn btn-default'><span class='glyphicon glyphicon-forward'></span></a>&nbsp;&nbsp;</a>";
+					paginationHTML += "<a data-toggle='tooltip' data-placement='top' title='Last Page' id='tablePagination_lastPage' href='javascript:;' class='btn btn-default'><span class='glyphicon glyphicon-step-forward'></span></a>&nbsp;&nbsp;</a>";
 					paginationHTML += "</div>";
 					return paginationHTML;
 				}

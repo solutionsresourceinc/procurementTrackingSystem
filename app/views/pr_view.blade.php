@@ -296,9 +296,13 @@ $attachment=Attachments::where('saved', '0')->get();
         // START *code for search box
         window.onload = function()
         {
-            if(document.getElementById('pageCount').value != 0 || document.getElementById('pageCount').value >= 10)
+
+            if(document.getElementById('pageCount').value != 0)
             {
-                document.getElementById('tablePagination').style.display = '';
+                if(document.getElementById('pageCount').value > 10)
+                {
+                    document.getElementById('tablePagination').style.display = '';
+                }
             }
 
             if(document.getElementById('start').value.length == 0 || document.getElementById('end').value.length == 0)
