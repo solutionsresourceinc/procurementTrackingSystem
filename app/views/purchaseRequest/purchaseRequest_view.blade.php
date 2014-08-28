@@ -777,7 +777,7 @@ $prdays=$days;
             @if($workflow->workFlowName=="Direct Contracting"&&$sections->section_order_id=="2")
             @else
                     <tr>
-                            <td>TOTAL NO. OF DAYS</td>
+                            <td><b>TOTAL NO. OF DAYS</b></td>
 
                             <td colspan="4"><center><?php
                             if ($sectiondays>10000)

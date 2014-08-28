@@ -1838,7 +1838,7 @@
                                 disabled> No
                             </td>
                             <td colspan="2" align="center">
-                                By:         
+                                <b>By:</b>         
                                 {{$taskp->custom2;}}
                             </td>
                             <td align="center">
@@ -1872,7 +1872,7 @@
                                 </td>
                                 
                                 <td class="edit-pr-input" colspan="2" width="20%" align="center">
-                                    Amount: 
+                                    <b>Amount:</b> 
                                     {{$taskp->custom2}}
                                 </td>
                                 <td align="center">
@@ -2298,7 +2298,7 @@ $prdays=$days;
                      @if($workflow->workFlowName=="Direct Contracting"&&$sections->section_order_id=="2")
                      @else
                     <tr>
-                            <td>TOTAL NO. OF DAYS</td>
+                            <td><b>TOTAL NO. OF DAYS</b></td>
                             
                             <td colspan="4"><center><?php 
                             if ($sectiondays>10000)
