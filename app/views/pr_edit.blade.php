@@ -449,10 +449,11 @@
                         foreach ($otherd as $otherdetails) 
                         {
                             
-                            if($otherdetails->label!="Total Days for BAC Documents Preparation"&&$otherdetails->label!="Compliance" || $otherdetails->label!="Remarks")
-                            {
+                            if($otherdetails->label=="Total Days for BAC Documents Preparation"||$otherdetails->label=="Compliance" || $otherdetails->label=="Remarks")
+                            {}
+                            else{
 
-                            echo "<tr><td width='30%'>".$otherdetails->label."</td>";
+                            echo "<tr><td width='30%'><b>".$otherdetails->label."</b></td>";
                             $valuesc=Values::where('otherDetails_id', $otherdetails->id)->where('purchase_request_id', $purchaseToEdit->id)->count();
                             $values=Values::where('otherDetails_id', $otherdetails->id)->where('purchase_request_id', $purchaseToEdit->id)->first();  
                              ?>  
@@ -480,7 +481,7 @@
                                             ?>">
                                         @endif
                                         </td>
-                                    <td align="center" colspan='3'><button class ="btn btn-primary" title="Save"><span class="glyphicon glyphicon-floppy-disk" ></span></button></td>
+                                    <td align="center" colspan='3'><button class ="btn btn-success" title="Save"><span class="glyphicon glyphicon-floppy-disk" ></span></button></td>
                                 {{Form::close()}}
                             @else 
                                 <td width='48.5%' colspan='3'>{{$values->value}}</td>
@@ -2182,7 +2183,7 @@
                             if($otherdetails->label=="Total Days for BAC Documents Preparation"||$otherdetails->label=="Compliance" || $otherdetails->label=="Remarks")
                             {
 
-                            echo "<tr><td width='30%'>".$otherdetails->label."</td>";
+                            echo "<tr><td width='30%'><b>".$otherdetails->label."</b></td>";
                             $valuesc=Values::where('otherDetails_id', $otherdetails->id)->where('purchase_request_id', $purchaseToEdit->id)->count();
                             $values=Values::where('otherDetails_id', $otherdetails->id)->where('purchase_request_id', $purchaseToEdit->id)->first();    
                              ?>
@@ -2191,7 +2192,7 @@
                                     <input type="hidden" name="otherDetails_id" value="{{$otherdetails->id}}">
                                     <input type="hidden" name="purchase_request_id" value="{{$purchaseToEdit->id}}">
                                     <td colspan="3" ><input name ="value" type="text" class="form-control" maxlength="100"></td>
-                                    <td align="center" colspan="3"><button class ="btn btn-primary" title="Save" data-toggle="tooltip" data-placement="top" ><span class="glyphicon glyphicon-floppy-disk" ></span></button></td>
+                                    <td align="center" colspan="3"><button class ="btn btn-success" title="Save" data-toggle="tooltip" data-placement="top" ><span class="glyphicon glyphicon-floppy-disk" ></span></button></td>
                                 {{Form::close()}}
                             @else 
                                 <td width='48.5%' colspan='3'>{{$values->value}}</td>

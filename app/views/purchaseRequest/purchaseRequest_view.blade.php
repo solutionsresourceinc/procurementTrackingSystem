@@ -242,10 +242,11 @@ foreach($section as $sections)
         $otherd= OtherDetails::where('section_id', $sections->id)->get();
         foreach ($otherd as $otherdetails)
         {
-            if($otherdetails->label!="Total Days for BAC Documents Preparation"&&$otherdetails->label!="Compliance")
-            {
+            if($otherdetails->label=="Total Days for BAC Documents Preparation"||$otherdetails->label=="Compliance" || $otherdetails->label=="Remarks")
+                            {}
+        else{
 
-                echo "<tr><td width='30%'>".$otherdetails->label."</td>";
+                echo "<tr><td width='30%'><b>".$otherdetails->label."</b></td>";
                 $valuesc=Values::where('otherDetails_id', $otherdetails->id)->where('purchase_request_id', $purchase->id)->count();
                 $values=Values::where('otherDetails_id', $otherdetails->id)->where('purchase_request_id', $purchase->id)->first();
                 ?>
@@ -673,10 +674,10 @@ foreach($section as $sections)
 
         foreach ($otherd as $otherdetails)
         {
-            if($otherdetails->label=="Total Days for BAC Documents Preparation"||$otherdetails->label=="Compliance")
+           if($otherdetails->label=="Total Days for BAC Documents Preparation"||$otherdetails->label=="Compliance" || $otherdetails->label=="Remarks")
             {
 
-                echo "<tr><td width='30%'>".$otherdetails->label."</td>";
+                echo "<tr><td width='30%'><b>".$otherdetails->label."</b></td>";
                 $valuesc=Values::where('otherDetails_id', $otherdetails->id)->where('purchase_request_id', $purchase->id)->count();
                 $values=Values::where('otherDetails_id', $otherdetails->id)->where('purchase_request_id', $purchase->id)->first();
                 ?>
