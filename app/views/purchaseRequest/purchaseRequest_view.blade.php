@@ -726,7 +726,7 @@ foreach($period as $dt)
     }
 
     // substract if Saturday or Sunday
-    if ($curr == 'Sat' || $curr == 'Sun') {
+    if ($curr == 'day') {
         $days--;
     }
 }
@@ -759,7 +759,7 @@ foreach($period as $dt)
     }
 
     // substract if Saturday or Sunday
-    if ($curr == 'Sat' || $curr == 'Sun') {
+    if ($curr == 'day' ) {
         $days--;
     }
 }
