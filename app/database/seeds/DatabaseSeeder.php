@@ -8,9 +8,6 @@ class DatabaseSeeder extends Seeder {
 
 		Eloquent::unguard();
 
-		$this->call('DesignationSeeder');
-		$this->command->info('The Designation table has been seeded!');
-
 		$this->call('RoleSeeder');
 		$this->command->info('The Role table has been seeded!');
 
