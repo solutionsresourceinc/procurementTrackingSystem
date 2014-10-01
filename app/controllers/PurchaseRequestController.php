@@ -26,13 +26,21 @@ class PurchaseRequestController extends Controller {
 		$purchase->dateRequested = Input::get( 'dateRequested' );
 		$purchase->controlNo = Input::get('controlNo');
 		$purchase->status = 'New';
-		
+
+		// Set due date;
+		$workflow_id = Input::get('modeOfProcurement');
+		$workflow = Workflow::find($workflow_id);
+		$addToDate = $workflow->totalDays;
+
+		date_default_timezone_set("Asia/Manila");
+
+		$dueDate = date('Y-m-d H:i:s', strtotime("+$addToDate days" ));
+		$purchase->dueDate = $dueDate;
+
 
 		// Set creator id
 		$user_id = Auth::user()->id;
 		$purchase->created_by = $user_id;
-
-
 
 		$purchase_save = $purchase->save();
 
@@ -605,8 +613,6 @@ unlink($actual);
         }
 
           return Redirect::back()->with('imgsuccess','Files uploaded.');
-
-
 
 }
 
