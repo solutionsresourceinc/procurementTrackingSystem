@@ -40,9 +40,14 @@ class UserController extends BaseController {
 
         $user->username = trim(Input::get( 'username' ));
         $checkusername = User::where('username', $user->username)->first();
-
-        $user->email = trim(Input::get( 'email' ));
-
+        if(Input::get('role')==1 && Input::get('email')==NULL)
+        {
+            $user->email = "procurementsystemtarlac@gmail.com";
+        }
+        else
+        {    
+            $user->email = trim(Input::get( 'email' ));
+        }
         $user->password = trim(Input::get( 'password' ));
         $user->firstname = trim(Input::get( 'firstname' ));
         $user->lastname = trim(Input::get( 'lastname' ));
@@ -160,6 +165,7 @@ class UserController extends BaseController {
     {
         $id=Auth::user()->id;
         $user = User::find($id);
+
 
         $user->email = Input::get('email');
         $password = " ".Input::get( 'password' );
