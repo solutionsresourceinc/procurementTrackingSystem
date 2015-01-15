@@ -40,13 +40,7 @@
                 @endif
             </div>
 
-            <div class="form-group">
-                <label for="email">Email *</label>
-                <input class="form-control"  type="text" name="email" id="email" value="{{{ Input::old('email') }}}" maxlength="255">
-                @if ( Session::get('email_error') )
-                    <small><font color="red">{{ Session::get('email_error'); }}   </font> </small>
-                 @endif
-            </div>
+           
 
             <div class="form-group">
                 <label for="password">Password *</label>
@@ -63,7 +57,7 @@
 
             <div class="form-group">
                 <label for="role">Role *</label>
-                <select class="form-control" name="role">
+                <select class="form-control" name="role" id="role" onchange="changeEmail(this.value)">
                     {{ $role=Input::old('role'); }}
                     <option value="1" <?php if($role==1) echo "selected"; ?> >Requisitioner</option>
                     <option value="2" <?php if($role==2) echo "selected"; ?> >Procurement Personel</option>
@@ -71,6 +65,13 @@
                 </select>
             </div>
                      
+            <div class="form-group">
+                <label for="email" id="emailText">Email </label>
+                <input class="form-control"  type="text" name="email" id="email" value="{{{ Input::old('email') }}}" maxlength="255">
+                @if ( Session::get('email_error') )
+                    <small><font color="red">{{ Session::get('email_error'); }}   </font> </small>
+                 @endif
+            </div>
             <div class="form-group">
                 <label for="role">Office</label>
                 <select class="form-control" name="office">
@@ -102,5 +103,24 @@
         Session::forget('password_error');
         Session::forget('email_error');
         Session::forget('msg');
+
+
     ?>
+
+    <script type="text/javascript">
+    function changeEmail(value){
+      //  alert(value);
+        if(value==1)
+        {
+            document.getElementById('emailText').innerHTML="Email ";
+
+        }
+        else
+        {
+
+             document.getElementById('emailText').innerHTML="Email *";
+        }
+
+    }
+    </script>
 @stop

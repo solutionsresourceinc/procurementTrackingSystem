@@ -42,7 +42,7 @@ class UserController extends BaseController {
         $checkusername = User::where('username', $user->username)->first();
         if(Input::get('role')==1 && Input::get('email')==NULL)
         {
-            $user->email = "procurementsystemtarlac@gmail.com";
+           // $user->email = "procurementsystemtarlac@gmail.com";
         }
         else
         {    
@@ -73,6 +73,7 @@ class UserController extends BaseController {
             Session::put('username_error', 'Username is already in use.');
         }
         
+
         $checkemail=0;
 
         $users= new User; $users = DB::table('users')->get();
@@ -83,10 +84,13 @@ class UserController extends BaseController {
             { $checkemail=1; $errorcheck=1; }
         }
         
+         if(Input::get('role')==1 && Input::get('email')==NULL){}
+            else{
         if ($checkemail!=0)
         {
             Session::put('email_error', 'Email is already in use.');
         }
+    }
 
         //Validations     
         if(ctype_alnum($user->username)&&(strlen($user->username)>=6)){}
@@ -113,8 +117,10 @@ class UserController extends BaseController {
         if(filter_var($user->email, FILTER_VALIDATE_EMAIL)){}
         else
         {
+             if(Input::get('role')==1 && Input::get('email')==NULL){}
+                else{
             $errorcheck=1;
-            Session::put('email_error', 'Invalid email.');
+            Session::put('email_error', 'Invalid email.');}
         }
 
         if(ctype_alnum($user->password))
@@ -166,8 +172,11 @@ class UserController extends BaseController {
         $id=Auth::user()->id;
         $user = User::find($id);
 
-
-        $user->email = Input::get('email');
+        if($user->email==""&&Input::get('email')==NULL){}
+        else
+        {
+            $user->email = Input::get('email');
+        }
         $password = " ".Input::get( 'password' );
         $cpassword = " ".Input::get( 'password_confirmation' );
 
@@ -187,13 +196,15 @@ class UserController extends BaseController {
             }
         }
         
+        if($user->email==""&&Input::get('email')==NULL){}
+        else{
         if(filter_var($user->email, FILTER_VALIDATE_EMAIL)){}
         else
         {
             $errorcheck=1;
             Session::put('email_error', 'Invalid email.');
         }
-
+        }
         if($passnotchange==1)
         {
 
@@ -246,9 +257,11 @@ class UserController extends BaseController {
     {
         $id=Input::get( 'id' );
         $user = User::find($id);
-
+        if(Input::get('role')==1 && Input::get('email')==NULL){}
+        else
+        {
         $user->email = trim(Input::get( 'email' ));
-
+        }
         $password = " ".Input::get( 'password' );
         $cpassword = " ".Input::get( 'password_confirmation' );
 
@@ -288,14 +301,15 @@ class UserController extends BaseController {
             $errorcheck=1;
             Session::put('lastname_error', 'Invalid last name.');
         }
-    
+        if(Input::get('role')==1 && Input::get('email')==NULL){}
+        else{
         if(filter_var($user->email, FILTER_VALIDATE_EMAIL)){}
         else
         {
             $errorcheck=1;
             Session::put('email_error', 'Invalid email.');
         }
-
+        }
         if($passnotchange==1){}
         elseif(ctype_alnum($password)&&(strlen($password)>=6))
         {

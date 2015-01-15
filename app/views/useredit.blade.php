@@ -35,13 +35,7 @@
                 @endif
             </div>
 
-            <div class="form-group">
-                <label for="email">Email *</label>
-                <input class="form-control"  type="text" name="email" id="email" value="<?php if(NULL!=Input::old('email')){echo Input::old('email');}else{echo $user->email;}?>" maxlength="255">
-                @if ( Session::get('email_error') )
-                    <small><font color="red">{{ Session::get('email_error'); }}   </font> </small>
-                @endif
-            </div>
+            
 
             <div class="form-group">
                 <label for="password">Password </label>
@@ -66,11 +60,19 @@
                     else
                         $role =$assigned->role_id;
                 ?>
-                <select class="form-control" name="role" id="role" >
+                <select class="form-control" name="role" id="role" onchange="changeEmail(this.value)" >
                     <option value="3" <?php if($role==3) echo "selected"; ?>>Admin</option>
                     <option value="2" <?php if($role==2) echo "selected"; ?>>Procurement Personel</option>
                     <option value="1" <?php if($role==1) echo "selected"; ?>>Requisitioner</option>
                 </select>
+            </div>
+
+            <div class="form-group">
+                <label for="email" id="emailText">Email </label>
+                <input class="form-control"  type="text" name="email" id="email" value="<?php if(NULL!=Input::old('email')){echo Input::old('email');}else{echo $user->email;}?>" maxlength="255">
+                @if ( Session::get('email_error') )
+                    <small><font color="red">{{ Session::get('email_error'); }}   </font> </small>
+                @endif
             </div>
 
             <div class="form-group">
@@ -110,4 +112,20 @@
         Session::forget('msg');
     ?>
 
+    <script type="text/javascript">
+    function changeEmail(value){
+      //  alert(value);
+        if(value==1)
+        {
+            document.getElementById('emailText').innerHTML="Email ";
+
+        }
+        else
+        {
+
+             document.getElementById('emailText').innerHTML="Email *";
+        }
+
+    }
+    </script>
 @stop
