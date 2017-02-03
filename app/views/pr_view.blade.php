@@ -45,11 +45,13 @@
 
     <?php 
         error_reporting(0);
+        $date_today =date('Y-m-d H:i:s');
+        
 
         $page = $_REQUEST["page"]; 
         Session::put('page',$page);
 
-        $countPR = Purchase::all()->count();
+        $countPR = Purchase::where('dueDate','>',$date_today)->where('status', '=', 'Active')->where('office', $useroffice)->count();
         echo "<input type='hidden' id='countPR' value='$countPR'>";
         $start = $page;
 
@@ -472,7 +474,7 @@
                     document.getElementById('table_id3').style.display = 'none';
                 }
                     var noOfSearched = rowNum - 1; 
-                    document.getElementById('noOfResult').innerHTML =  noOfSearched+ " result(s) ";;
+                    document.getElementById('noOfResult').innerHTML =  noOfSearched+ " result(s) ";
                 
             }
             
@@ -520,7 +522,7 @@
                        var pair = vars[i].split("=");
                        if(pair[0] == variable){return pair[1];}
                }
-               return(false);
+               return(1);
         }
         
     </script>
